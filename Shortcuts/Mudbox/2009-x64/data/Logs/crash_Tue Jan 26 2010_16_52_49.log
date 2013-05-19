@@ -1,0 +1,1608 @@
+Memory: 1.82 GB/4.00 GB, 54%
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\AOViewPortFilter.mp
+Failed, error code: 126, (0x0000007E), error message: 
+	The specified module could not be found.
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\BTreePicker.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\CCSurfaceSmoother.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\CgMaterial.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\CgViewPortFilter.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\DOFViewPortFilter.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\EnvironmentMapLoader.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\FastBrush.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\FastMoveBrush.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\FileEventHandler.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\GeneralImage.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\HWMeshRenderer.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\HWPicker.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\IBLMaterial.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\LitSphereMaterial.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\MapExtractor.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\MeshDisplace.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\MeshGrid.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\PLYImport.mp
+PLY Import plugin initialized
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\SimpleShaderMaterial.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\TangentGenerator.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\Texture.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\TextureLayers.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\TonemappingViewPortFilter.mp
+Loading plugin C:\Program Files\Autodesk\Mudbox2009\Plugins\AOViewPortFilter.mp
+Possible mesh renderer: HWRenderer
+Possible screen space picker: HWPicker
+Possible material: Simple Blinn Material
+Possible material: Lit Sphere Material
+Possible material: Mudbox Material
+Possible material: CgFX Based Material
+Plugins in memory:
+	0: AOViewPortFilter.mp - No description, Author: Unknown, URL: Unknown, Build time: Unknown
+	1: BTPicker - Balanced Tree Picker, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:35:28
+	2: CCSurfaceSmoother - Catmull-Clark Limit Surface Calculator, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:32:33
+	3: CgMaterial - Cg accelerated material, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:32:20
+	4: CgViewPortFilter - Cg based simple viewport filter, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:32:59
+	5: Depth of Field - Depth of Field Viewport Filter, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:32:54
+	6: EnvironmentMapLoader - Environment Map Loader, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:35:19
+	7: Fast Brush - Hardware accelerated simple sculptor brush, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:33:05
+	8: Fast Move Brush - Fast version of the move tool, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:32:30
+	9: FileEventHandler - Sample file event handler, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:32:56
+	10: General Image - Basic Image Handler, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:32:46
+	11: HWRenderer - Hardware accelerated mesh renderer, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:35:10
+	12: HWPicker - Hardware accelerated mesh pick, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:35:26
+	13: IBL Material - Image Based Lighting, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:35:04
+	14: Lit Sphere Material - Lit Sphere NPR, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:32:26
+	15: TextureBaker - Texture Baking from a low and high resolution mesh, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:32:40
+	16: MeshDisplacer - Displacement operation for meshes, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:35:15
+	17: MeshGrid - Preprocessed Face Count Reduction, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:32:31
+	18: PLY Importer - PLY file import/export plugin, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:35:14
+	19: Blinn Material - Simple Material, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:35:23
+	20: TangentGenerator - Vertex Tangent and Binormal Generator, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:35:30
+	21: Texture - Default Texture Class Implementation, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:33:00
+	22: TextureLayers - Layer Structure for TexturesCg accelerated material, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:35:21
+	23: Tonemapper - Tonemapping Viewport Filter, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:32:57
+	24: Ambient Occlusion - Ambient Occlusion Viewport Filter, Author: Autodesk, URL: http://www.mudbox3d.com, Build time: Oct  2 2008 14:35:18
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Basic Head.mud: Current stream version is 366, file is 342
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Bull.mud: Current stream version is 366, file is 338
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Cube.mud: Current stream version is 366, file is 338
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Human Body.mud: Current stream version is 366, file is 356
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Plane.mud: Current stream version is 366, file is 342
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Reptile.mud: Current stream version is 366, file is 356
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Sphere.mud: Current stream version is 366, file is 342
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Tree Stump.mud: Current stream version is 366, file is 365
+Using shader compile flags -DVERTEX_PROFILE=arbvp1 -DFRAGMENT_PROFILE=arbfp1 -DCG_PROFILE_ARBVP1=1 -DCG_PROFILE_ARBFP1=1
+Additional flags:
+Effect file Effects/advanced.bin loaded and compiled:
+(null)
+=========
+	Valid technique MBMaterial in effect Effects/advanced.bin
+Loading program Shaders/AO/AO.bin for the profile arbfp1
+Loading program Shaders/DOF/Downscale.bin for the profile arbfp1
+Loading program Shaders/DOF/DOF.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/RGBToLuminance.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/MinMax.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/Downscale.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/Gamma.bin for the profile arbfp1
+Sculpt brush selected
+Stamp set to OFF
+Loading preferences
+Autodesk Mudbox 2009, 64 bit
+Meshes/Basic Head.mud: Current stream version is 366, file is 342
+Loading file Meshes/Basic Head.mud, version 342
+Using shader compile flags -DVERTEX_PROFILE=arbvp1 -DFRAGMENT_PROFILE=arbfp1 -DCG_PROFILE_ARBVP1=1 -DCG_PROFILE_ARBFP1=1
+Additional flags:
+Effect file Effects/advanced.bin loaded and compiled:
+(null)
+=========
+	Valid technique MBMaterial in effect Effects/advanced.bin
+Loading program Shaders/PickerVertex.bin for the profile arbvp1
+Redo
+Smooth brush selected
+Stroke: 1.0.0.0.1207296.1207120
+Sculpt brush selected
+Stroke: 1.0.0.1.1220560.1220384
+Undo
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Failed to load template file Templates\SimpleShaderMaterial.xml
+Using shader compile flags -DVERTEX_PROFILE=arbvp1 -DFRAGMENT_PROFILE=arbfp1 -DCG_PROFILE_ARBVP1=1 -DCG_PROFILE_ARBFP1=1
+Additional flags:
+Effect file Effects/SimpleShaderMaterial.bin loaded and compiled:
+(null)
+=========
+	Valid technique SimpleShader in effect Effects/SimpleShaderMaterial.bin
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Subdivide Head
+Mapping 8008 faces upto level 1
+ Calculating CC positions on level 1
+Unmapping level 0
+Recreating UVs
+ Updated texture coordinates (8263 new item)
+Subdivide Head
+Mapping 32032 faces upto level 2
+ Calculating CC positions on level 2
+Unmapping level 1
+Recreating UVs
+ Updated texture coordinates (32539 new item)
+Subdivide Head
+Mapping 128128 faces upto level 3
+ Calculating CC positions on level 3
+Unmapping level 2
+Recreating UVs
+ Updated texture coordinates (129139 new item)
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Smear brush selected
+Stroke: 0.0.0.1.1220560.1220384
+Fill brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Repeat brush selected
+Stamp set to Stamps/bw_brickTile.tif
+Stamp activated
+Stroke: 1.0.0.1.1220560.1220384
+Foamy brush selected
+Stamp set to OFF
+Stamp deactivated
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Fill brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Scrape brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Flatten brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Grab brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Smooth brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Foamy brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Imprint brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stamp set to C:/Users/Kara/Documents/Mudbox/2009-x64/data/Stamps/bw_brickTile.tif
+Stamp activated
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stamp set to C:/Users/Kara/Documents/Mudbox/2009-x64/data/Stamps/bw_coralTiled.tif
+Stroke: 1.0.0.0.1220560.1220384
+Contrast brush selected
+Stamp set to OFF
+Stamp deactivated
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Mask brush selected
+Freeze brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Bulge brush selected
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Smear brush selected
+Stroke: 0.0.0.1.1220560.1220384
+Stroke: 0.0.0.1.1220560.1220384
+Fill brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Scrape brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Freeze brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Smear brush selected
+Stroke: 0.0.0.1.1220560.1220384
+Repeat brush selected
+Stamp activated
+Imprint brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Foamy brush selected
+Stamp set to OFF
+Stamp deactivated
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Freeze brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Camera focus on mouse
+Camera focus on mouse
+Camera focus on selection
+Camera focus on mouse
+Camera focus on mouse
+Stroke: 1.0.0.0.1220560.1220384
+Camera focus on mouse
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Turning wireframe on shaded on
+Turning wireframe on shaded off
+Turning wireframe on shaded on
+Turning wireframe on shaded off
+Turning wireframe on shaded on
+Turning wireframe on shaded off
+Turning wireframe on shaded on
+Turning wireframe on shaded off
+Spray brush selected
+Stamp set to Stamps/bw_brickTile.tif
+Stamp activated
+Stroke: 1.0.0.1.1220560.1220384
+Stamp set to C:/Users/Kara/Documents/Mudbox/2009-x64/data/Stamps/bw_brickTile.tif
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Stamp set to C:/Users/Kara/Documents/Mudbox/2009-x64/data/Stamps/bw_rubble.tif
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Freeze brush selected
+Stamp deactivated
+Stroke: 1.0.0.0.1220560.1220384
+Foamy brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Mask brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Insert new layer
+Select layer
+Stroke: 1.0.0.0.1220560.1220384
+Layer extended, vertex count: 2898
+Select layer
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Select layer
+Stroke: 1.0.0.0.1220560.1220384
+Layer extended, vertex count: 3401
+Stroke: 1.0.0.0.1220560.1220384
+Layer extended, vertex count: 3539
+Stroke: 1.0.0.0.1220560.1220384
+Layer extended, vertex count: 18018
+Bulge brush selected
+Stroke: 1.0.0.1.1220560.1220384
+Layer extended, vertex count: 26155
+Foamy brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Layer extended, vertex count: 33594
+Scrape brush selected
+Smooth brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Layer extended, vertex count: 33862
+Stroke: 1.0.0.0.1220560.1220384
+Layer extended, vertex count: 44945
+Mask brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Layer extended, vertex count: 47893
+Stroke: 1.0.0.0.1220560.1220384
+Layer extended, vertex count: 49986
+Select layer
+Delete layer
+System exception
+Stroke: 1.0.0.0.1220560.1220384
+Scrape brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Clear scene
+ Destructing mesh
+ Destructing mesh
+ Destructing mesh
+ Destructing mesh
+Using shader compile flags -DVERTEX_PROFILE=arbvp1 -DFRAGMENT_PROFILE=arbfp1 -DCG_PROFILE_ARBVP1=1 -DCG_PROFILE_ARBFP1=1
+Additional flags:
+Effect file Effects/advanced.bin loaded and compiled:
+(null)
+=========
+	Valid technique MBMaterial in effect Effects/advanced.bin
+Loading program Shaders/AO/AO.bin for the profile arbfp1
+Loading program Shaders/DOF/Downscale.bin for the profile arbfp1
+Loading program Shaders/DOF/DOF.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/RGBToLuminance.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/MinMax.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/Downscale.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/Gamma.bin for the profile arbfp1
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Basic Head.mud: Current stream version is 366, file is 342
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Bull.mud: Current stream version is 366, file is 338
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Cube.mud: Current stream version is 366, file is 338
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Human Body.mud: Current stream version is 366, file is 356
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Plane.mud: Current stream version is 366, file is 342
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Reptile.mud: Current stream version is 366, file is 356
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Sphere.mud: Current stream version is 366, file is 342
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Tree Stump.mud: Current stream version is 366, file is 365
+Meshes/Plane.mud: Current stream version is 366, file is 342
+Loading file Meshes/Plane.mud, version 342
+Using shader compile flags -DVERTEX_PROFILE=arbvp1 -DFRAGMENT_PROFILE=arbfp1 -DCG_PROFILE_ARBVP1=1 -DCG_PROFILE_ARBFP1=1
+Additional flags:
+Effect file Effects/advanced.bin loaded and compiled:
+(null)
+=========
+	Valid technique MBMaterial in effect Effects/advanced.bin
+Grab brush selected
+Foamy brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Subdivide Plane
+Mapping 400 faces upto level 1
+ Calculating CC positions on level 1
+Unmapping level 0
+Subdivide Plane
+Mapping 1600 faces upto level 2
+ Calculating CC positions on level 2
+Unmapping level 1
+Subdivide Plane
+Mapping 6400 faces upto level 3
+ Calculating CC positions on level 3
+Unmapping level 2
+Subdivide Plane
+Mapping 25600 faces upto level 4
+ Calculating CC positions on level 4
+Unmapping level 3
+Subdivide Plane
+Mapping 102400 faces upto level 5
+ Calculating CC positions on level 5
+Unmapping level 4
+Subdivide Plane
+Mapping 409600 faces upto level 6
+ Calculating CC positions on level 6
+Unmapping level 5
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Flatten brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Smooth brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Grab brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Imprint brush selected
+Stamp activated
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Spray brush selected
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Subdivide Plane
+Mapping 1638400 faces upto level 7
+ Calculating CC positions on level 7
+Unmapping level 6
+Subdivide Plane
+Mapping 6553600 faces upto level 8
+ Calculating CC positions on level 8
+Unmapping level 7
+Clear scene
+ Destructing mesh
+ Destructing mesh
+ Destructing mesh
+ Destructing mesh
+ Destructing mesh
+ Destructing mesh
+ Destructing mesh
+ Destructing mesh
+ Destructing mesh
+Using shader compile flags -DVERTEX_PROFILE=arbvp1 -DFRAGMENT_PROFILE=arbfp1 -DCG_PROFILE_ARBVP1=1 -DCG_PROFILE_ARBFP1=1
+Additional flags:
+Effect file Effects/advanced.bin loaded and compiled:
+(null)
+=========
+	Valid technique MBMaterial in effect Effects/advanced.bin
+Loading program Shaders/AO/AO.bin for the profile arbfp1
+Loading program Shaders/DOF/Downscale.bin for the profile arbfp1
+Loading program Shaders/DOF/DOF.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/RGBToLuminance.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/MinMax.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/Downscale.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/Gamma.bin for the profile arbfp1
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Basic Head.mud: Current stream version is 366, file is 342
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Bull.mud: Current stream version is 366, file is 338
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Cube.mud: Current stream version is 366, file is 338
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Human Body.mud: Current stream version is 366, file is 356
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Plane.mud: Current stream version is 366, file is 342
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Reptile.mud: Current stream version is 366, file is 356
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Sphere.mud: Current stream version is 366, file is 342
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Tree Stump.mud: Current stream version is 366, file is 365
+Meshes/Cube.mud: Current stream version is 366, file is 338
+Loading file Meshes/Cube.mud, version 338
+Using shader compile flags -DVERTEX_PROFILE=arbvp1 -DFRAGMENT_PROFILE=arbfp1 -DCG_PROFILE_ARBVP1=1 -DCG_PROFILE_ARBFP1=1
+Additional flags:
+Effect file Effects/advanced.bin loaded and compiled:
+(null)
+=========
+	Valid technique MBMaterial in effect Effects/advanced.bin
+Stroke: 1.0.0.1.1220560.1220384
+Clear scene
+ Destructing mesh
+Using shader compile flags -DVERTEX_PROFILE=arbvp1 -DFRAGMENT_PROFILE=arbfp1 -DCG_PROFILE_ARBVP1=1 -DCG_PROFILE_ARBFP1=1
+Additional flags:
+Effect file Effects/advanced.bin loaded and compiled:
+(null)
+=========
+	Valid technique MBMaterial in effect Effects/advanced.bin
+Loading program Shaders/AO/AO.bin for the profile arbfp1
+Loading program Shaders/DOF/Downscale.bin for the profile arbfp1
+Loading program Shaders/DOF/DOF.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/RGBToLuminance.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/MinMax.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/Downscale.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/Gamma.bin for the profile arbfp1
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Basic Head.mud: Current stream version is 366, file is 342
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Bull.mud: Current stream version is 366, file is 338
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Cube.mud: Current stream version is 366, file is 338
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Human Body.mud: Current stream version is 366, file is 356
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Plane.mud: Current stream version is 366, file is 342
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Reptile.mud: Current stream version is 366, file is 356
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Sphere.mud: Current stream version is 366, file is 342
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Tree Stump.mud: Current stream version is 366, file is 365
+Importing file C:/Users/Kara/Desktop/Tube.obj
+Scanning file
+	Scan completed. Mesh count: 1
+		Mesh 0 (400 quads): position 0-400, tc 0-441, normal 0-400
+ Creating objects
+ Import completed
+Building adjacency. Number of open edges: 0
+Subdivide pTorus1
+Mapping 1600 faces upto level 1
+ Calculating CC positions on level 1
+Unmapping level 0
+Subdivide pTorus1
+Mapping 6400 faces upto level 2
+ Calculating CC positions on level 2
+Unmapping level 1
+Stroke: 1.0.0.1.1220560.1220384
+Undo
+Stroke: 1.0.0.1.1220560.1220384
+Undo
+Foamy brush selected
+Stamp set to OFF
+Stroke: 1.0.0.0.1220560.1220384
+Undo
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Undo
+Stroke: 1.0.0.0.1220560.1220384
+Undo
+Stroke: 1.0.0.0.1220560.1220384
+Undo
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Spray brush selected
+Stamp activated
+Stroke: 1.0.0.1.1220560.1220384
+Undo
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Fill brush selected
+Stamp set to OFF
+Stamp deactivated
+Stroke: 1.0.0.0.1220560.1220384
+Smear brush selected
+Stroke: 0.0.0.1.1220560.1220384
+Stroke: 0.0.0.1.1220560.1220384
+Scrape brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Starting texture baking with the following parameters:
+nextcommand: 
+THIS: 
+Next: NULL
+Previous: NULL
+Parent: NULL
+Children: NULL
+Visible: true
+Locked: false
+Orthogonalize Tangent To Normal: true
+Orthogonalize Binormal To Normal: true
+Orthogonalize Tangent To Binormal: false
+Orthogonalize Binormal To Tangent: false
+normalizetangent: true
+normalizebinormal: true
+Derive Axis: 4
+Switch Tangent With Binormal: false
+Flip Binormal: false
+Flip Tangent: false
+Flip Normal: false
+Index Source: 1
+Use Vertex Normals: true
+Orientation: 1
+Preset: 1
+: NULL
+Search Distance: 0.88
+Normalize to Search Distance: true
+Keep Zero As Middle Grey: true
+Displacement Map Format: 0
+Displacement Map Settings: 
+Tangent&Binormal Settings: 
+Smooth Normals: true
+Normal Map Space: 1
+Normal Map Format: 0
+Normal Map Settings: 
+Skip Empty Maps: true
+UStart: 1
+URange: 1
+Process Multiple Tiles: true
+<    Multiple Map Support: 
+Test Both Sides: false
+Ray Center: 2
+Method: 0
+Edge Bleeding: 4
+Anti aliasing: 0
+Fill Whole Maps: false
+Map Height: 512
+Map Width: 512
+Displacement Map Filename: C:/Users/Kara/Desktop/Mudbox Output.png
+Create Displacement Map: true
+Normal Map Filename: 
+Create Normal Map: false
+Use Limit Surface: false
+High Resolution Mesh: Select Mesh
+Extract Selected Low Res. Faces Only: false
+Smooth UVs: false
+Use Limit Surface: true
+Low Resolution Mesh: pTorus1 (level: 0, faces: 400)
+Cancel: 0
+Start: 1
+Locked: false
+Visible: true
+Children: NULL
+Parent: Scene
+Previous: pTorus1
+Next: NULL
+THIS: My Extraction Operation 1
+Starting map extraction
+Memory: 1.55 GB/4.00 GB, 61%
+Cleaning up memory
+Memory: 1.54 GB/4.00 GB, 61%
+==== Memory Blocks Begin ====
+(Skipping blocks smaller than 55377)
+Block size:5537784 (4), name: hwpicker map, at 0x14530040
+Block size:5537784 (4), name: hwpicker map, at 0x11f20040
+Block size:1048560 (16), name: normal updater, at 0x053b0040
+Block size:524280 (8), name: mesh global collection, at 0x12e5e600
+Block size:327640 (40), name: mesh restore buffer, at 0x1fdfc010
+Block size:153600 (24), name: mesh vertex data, at 0x08becd30
+Block size:128484 (4), name: hwpicker meshhandle vertexfacemap, at 0x08c250d0
+Block size:102400 (4), name: topology indices, at 0x0896dbe0
+Total: 13.43M
+Free: 1.54G
+==== Memory Blocks End ====
+Allocating face index map
+Memory: 1.54 GB/4.00 GB, 61%
+Preparing the low resolution mesh
+Mapping 1600 faces upto level 1
+ Updated texture coordinates (1681 new item)
+ Calculating CC positions on level 1
+Unmapping level 0
+Creating balanced tree(s) for  (level: 2, faces: 6400) (6400 faces)
+Balanced tree ready for pTorus1
+	node count: 4095
+	max depth: 11
+	max leaf size: 1.185175
+	root: (-0.059172, 0.364066, 0.205795)-22.788240
+Memory: 1.54 GB/4.00 GB, 61%
+Processing tile 0:0 (0.000000-1.000000, 0.000000-1.000000)
+Preparing maps
+Memory: 1.54 GB/4.00 GB, 61%
+Memory: 1.54 GB/4.00 GB, 61%
+Mesh extended at open edges with 0 new quads, 0 new vertices
+	Extracting maps
+	Saving maps
+New texels on maps: 72567
+	saving displacement map to C:/Users/Kara/Desktop/Mudbox Output.png_temp.tif
+saving image: C:/Users/Kara/Desktop/Mudbox Output.png_temp.tif
+	stats: 72797 pixels, 0 cubes, 0 faces
+	cubes per pixel: 0
+	faces per pixel: 0
+	hacked pixels: 0
+	hit/fail: 72565/5664
+Tile processed in 0.640000 seconds.
+
+====================
+Statistics for btree:
+	pick count: 78200
+	number of checked faces: 657703
+	number of checked nodes: 2306553
+	average number of faces per pick: 8
+	average number of nodes per pick: 29
+	maximum number of faces per pick: 25
+	maximum number of nodes per pick: 48
+====================
+Normalizing displacement maps
+Range of displacement maps: [-0.440000:0.440000]
+saving image: C:/Users/Kara/Desktop/Mudbox Output_g0.880000.png
+Normalization finished
+Memory: 1.54 GB/4.00 GB, 61%
+ Destructing mesh
+ Destructing mesh
+Map extraction finished without errorsStroke: 1.0.0.0.1220560.1220384
+Paint Brush brush selected
+Stamp set to C:/Users/Kara/Documents/Mudbox/2009-x64/data/Stamps/bw_coralTiled.tif
+Stamp activated
+Clear scene
+ Destructing mesh
+ Destructing mesh
+ Destructing mesh
+Using shader compile flags -DVERTEX_PROFILE=arbvp1 -DFRAGMENT_PROFILE=arbfp1 -DCG_PROFILE_ARBVP1=1 -DCG_PROFILE_ARBFP1=1
+Additional flags:
+Effect file Effects/advanced.bin loaded and compiled:
+(null)
+=========
+	Valid technique MBMaterial in effect Effects/advanced.bin
+Loading program Shaders/AO/AO.bin for the profile arbfp1
+Loading program Shaders/DOF/Downscale.bin for the profile arbfp1
+Loading program Shaders/DOF/DOF.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/RGBToLuminance.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/MinMax.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/Downscale.bin for the profile arbfp1
+Loading program Shaders/Tonemapping/Gamma.bin for the profile arbfp1
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Basic Head.mud: Current stream version is 366, file is 342
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Bull.mud: Current stream version is 366, file is 338
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Cube.mud: Current stream version is 366, file is 338
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Human Body.mud: Current stream version is 366, file is 356
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Plane.mud: Current stream version is 366, file is 342
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Reptile.mud: Current stream version is 366, file is 356
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Sphere.mud: Current stream version is 366, file is 342
+C:/Program Files/Autodesk/Mudbox2009/Meshes/Tree Stump.mud: Current stream version is 366, file is 365
+Meshes/Bull.mud: Current stream version is 366, file is 338
+Loading file Meshes/Bull.mud, version 338
+Using shader compile flags -DVERTEX_PROFILE=arbvp1 -DFRAGMENT_PROFILE=arbfp1 -DCG_PROFILE_ARBVP1=1 -DCG_PROFILE_ARBFP1=1
+Additional flags:
+Effect file Effects/advanced.bin loaded and compiled:
+(null)
+=========
+	Valid technique MBMaterial in effect Effects/advanced.bin
+Sculpt brush selected
+Stamp set to OFF
+Stroke: 1.0.0.1.1220560.1220384
+Undo
+Subdivide bull
+Mapping 2552 faces upto level 1
+ Calculating CC positions on level 1
+Unmapping level 0
+Subdivide bull
+Mapping 10208 faces upto level 2
+ Calculating CC positions on level 2
+Unmapping level 1
+Subdivide bull
+Mapping 40832 faces upto level 3
+ Calculating CC positions on level 3
+Unmapping level 2
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Undo
+Erase brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Scrape brush selected
+Paint Brush brush selected
+Stamp activated
+Airbrush brush selected
+Stamp set to OFF
+Stamp deactivated
+Pencil brush selected
+Paint Erase brush selected
+ Destructing mesh
+ Destructing mesh
+ Destructing mesh
+ Destructing mesh
+Using shader compile flags -DVERTEX_PROFILE=arbvp1 -DFRAGMENT_PROFILE=arbfp1 -DCG_PROFILE_ARBVP1=1 -DCG_PROFILE_ARBFP1=1
+Additional flags:
+Effect file Effects/advanced.bin loaded and compiled:
+(null)
+=========
+	Valid technique MBMaterial in effect Effects/advanced.bin
+Importing file C:/Users/Kara/Desktop/TESTING MUDBOX/Tube.obj
+Scanning file
+	Scan completed. Mesh count: 1
+		Mesh 0 (400 quads): position 0-400, tc 0-441, normal 0-400
+ Creating objects
+ Import completed
+Building adjacency. Number of open edges: 0
+Foamy brush selected
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Stroke: 1.0.0.0.1220560.1220384
+Subdivide pTorus1
+Mapping 1600 faces upto level 1
+ Calculating CC positions on level 1
+Unmapping level 0
+Subdivide pTorus1
+Mapping 6400 faces upto level 2
+ Calculating CC positions on level 2
+Unmapping level 1
+Subdivide pTorus1
+Mapping 25600 faces upto level 3
+ Calculating CC positions on level 3
+Unmapping level 2
+Stroke: 1.0.0.0.1220560.1220384
+Sculpt brush selected
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Stroke: 1.0.0.1.1220560.1220384
+Saving to file C:/Users/Kara/Desktop/TESTING MUDBOX/Tube.mud, version 366
+Starting texture baking with the following parameters:
+nextcommand: 
+THIS: 
+Next: NULL
+Previous: NULL
+Parent: NULL
+Children: NULL
+Visible: true
+Locked: false
+Orthogonalize Tangent To Normal: true
+Orthogonalize Binormal To Normal: true
+Orthogonalize Tangent To Binormal: false
+Orthogonalize Binormal To Tangent: false
+normalizetangent: true
+normalizebinormal: true
+Derive Axis: 4
+Switch Tangent With Binormal: false
+Flip Binormal: false
+Flip Tangent: false
+Flip Normal: false
+Index Source: 1
+Use Vertex Normals: true
+Orientation: 1
+Preset: 1
+: NULL
+Search Distance: 0.88
+Normalize to Search Distance: true
+Keep Zero As Middle Grey: true
+Displacement Map Format: 0
+Displacement Map Settings: 
+Tangent&Binormal Settings: 
+Smooth Normals: true
+Normal Map Space: 1
+Normal Map Format: 0
+Normal Map Settings: 
+Skip Empty Maps: true
+UStart: 1
+URange: 1
+Process Multiple Tiles: true
+<    Multiple Map Support: 
+Test Both Sides: false
+Ray Center: 2
+Method: 0
+Edge Bleeding: 4
+Anti aliasing: 0
+Fill Whole Maps: false
+Map Height: 1024
+Map Width: 1024
+Displacement Map Filename: C:/Program Files/Autodesk/Mudbox2009/textures/8bittiff.tif
+Create Displacement Map: true
+Normal Map Filename: 
+Create Normal Map: false
+Use Limit Surface: false
+High Resolution Mesh: Select Mesh
+Extract Selected Low Res. Faces Only: false
+Smooth UVs: false
+Use Limit Surface: true
+Low Resolution Mesh: pTorus1 (level: 0, faces: 400)
+Cancel: 0
+Start: 1
+Locked: false
+Visible: true
+Children: NULL
+Parent: Scene
+Previous: pTorus1
+Next: NULL
+THIS: My Extraction Operation 1
+Starting map extraction
+Memory: 1.26 GB/4.00 GB, 68%
+Cleaning up memory
+Memory: 1.26 GB/4.00 GB, 68%
+==== Memory Blocks Begin ====
+(Skipping blocks smaller than 55377)
+Block size:5537784 (4), name: hwpicker map, at 0x17200040
+Block size:5537784 (4), name: hwpicker map, at 0x11f20040
+Block size:1048560 (16), name: normal updater, at 0x053b0040
+Block size:655320 (40), name: mesh restore buffer, at 0x39135010
+Block size:614400 (24), name: mesh vertex data, at 0x12cecd80
+Block size:524280 (8), name: mesh global collection, at 0x12e5e600
+Block size:409600 (4), name: topology indices, at 0x129f7d40
+Block size:153600 (24), name: mesh vertex data, at 0x1fdfc010
+Block size:128484 (4), name: hwpicker meshhandle vertexfacemap, at 0x08c250d0
+Block size:102400 (4), name: topology indices, at 0x1258afc0
+Block size:102400 (4), name: topology faceIDs, at 0x086d8350
+Block size:60516 (36), name: generator TNB, at 0x12b25f70
+Total: 14.90M
+Free: 1.26G
+==== Memory Blocks End ====
+Allocating face index map
+Memory: 1.26 GB/4.00 GB, 68%
+Preparing the low resolution mesh
+Mapping 1600 faces upto level 1
+ Updated texture coordinates (1681 new item)
+ Calculating CC positions on level 1
+Unmapping level 0
+Creating balanced tree(s) for  (level: 3, faces: 25600) (25600 faces)
+Balanced tree ready for pTorus1
+	node count: 16383
+	max depth: 13
+	max leaf size: 0.656510
+	root: (-0.000000, 0.770424, 0.528096)-24.393108
+Memory: 1.25 GB/4.00 GB, 68%
+Processing tile 0:0 (0.000000-1.000000, 0.000000-1.000000)
+Preparing maps
+Memory: 1.25 GB/4.00 GB, 68%
+Memory: 1.25 GB/4.00 GB, 68%
+Mesh extended at open edges with 0 new quads, 0 new vertices
+	Extracting maps
+	Saving maps
+New texels on maps: 294042
+	saving displacement map to C:/Program Files/Autodesk/Mudbox2009/textures/8bittiff.tif_temp.tif
+saving image: C:/Program Files/Autodesk/Mudbox2009/textures/8bittiff.tif_temp.tif
+	stats: 291122 pixels, 0 cubes, 0 faces
+	cubes per pixel: 0
+	faces per pixel: 0
+	hacked pixels: 0
+	hit/fail: 294019/8248
+Tile processed in 1.778000 seconds.
+
+====================
+Statistics for btree:
+	pick count: 302122
+	number of checked faces: 2261549
+	number of checked nodes: 9291082
+	average number of faces per pick: 7
+	average number of nodes per pick: 30
+	maximum number of faces per pick: 22
+	maximum number of nodes per pick: 51
+====================
+Normalizing displacement maps
+Range of displacement maps: [-0.440000:0.440000]
+saving image: C:/Program Files/Autodesk/Mudbox2009/textures/8bittiff_g0.880000.tif
+Normalization finished
+Memory: 1.30 GB/4.00 GB, 67%
+ Destructing mesh
+ Destructing mesh
+Map extraction finished without errorsStarting texture baking with the following parameters:
+nextcommand: 
+THIS: 
+Next: NULL
+Previous: NULL
+Parent: NULL
+Children: NULL
+Visible: true
+Locked: false
+Orthogonalize Tangent To Normal: true
+Orthogonalize Binormal To Normal: true
+Orthogonalize Tangent To Binormal: false
+Orthogonalize Binormal To Tangent: false
+normalizetangent: true
+normalizebinormal: true
+Derive Axis: 4
+Switch Tangent With Binormal: false
+Flip Binormal: false
+Flip Tangent: false
+Flip Normal: false
+Index Source: 1
+Use Vertex Normals: true
+Orientation: 1
+Preset: 1
+: NULL
+Search Distance: 0.88
+Normalize to Search Distance: true
+Keep Zero As Middle Grey: true
+Displacement Map Format: 1
+Displacement Map Settings: 
+Tangent&Binormal Settings: 
+Smooth Normals: true
+Normal Map Space: 1
+Normal Map Format: 0
+Normal Map Settings: 
+Skip Empty Maps: true
+UStart: 1
+URange: 1
+Process Multiple Tiles: true
+<    Multiple Map Support: 
+Test Both Sides: false
+Ray Center: 2
+Method: 0
+Edge Bleeding: 4
+Anti aliasing: 0
+Fill Whole Maps: false
+Map Height: 1024
+Map Width: 1024
+Displacement Map Filename: C:/Users/Kara/Desktop/TESTING MUDBOX/16bitiff.tif
+Create Displacement Map: true
+Normal Map Filename: 
+Create Normal Map: false
+Use Limit Surface: false
+High Resolution Mesh: Select Mesh
+Extract Selected Low Res. Faces Only: false
+Smooth UVs: false
+Use Limit Surface: true
+Low Resolution Mesh: pTorus1 (level: 0, faces: 400)
+Cancel: 0
+Start: 1
+Locked: false
+Visible: true
+Children: NULL
+Parent: Scene
+Previous: My Extraction Operation 1
+Next: NULL
+THIS: My Extraction Operation 2
+Starting map extraction
+Memory: 1.38 GB/4.00 GB, 65%
+Cleaning up memory
+Memory: 1.38 GB/4.00 GB, 65%
+==== Memory Blocks Begin ====
+(Skipping blocks smaller than 55377)
+Block size:5537784 (4), name: hwpicker map, at 0x17200040
+Block size:5537784 (4), name: hwpicker map, at 0x11f20040
+Block size:1048560 (16), name: normal updater, at 0x053b0040
+Block size:655320 (40), name: mesh restore buffer, at 0x39135010
+Block size:614400 (24), name: mesh vertex data, at 0x12cecd80
+Block size:524280 (8), name: mesh global collection, at 0x12e5e600
+Block size:409600 (4), name: topology indices, at 0x129f7d40
+Block size:153600 (24), name: mesh vertex data, at 0x1fdfc010
+Block size:128484 (4), name: hwpicker meshhandle vertexfacemap, at 0x08c250d0
+Block size:102400 (4), name: topology faceIDs, at 0x086d8350
+Block size:102400 (4), name: topology indices, at 0x1258afc0
+Block size:73728 (72), name: map extraction face index table, at 0x12a5bd58
+Block size:60516 (36), name: generator TNB, at 0x12b25f70
+Block size:60516 (36), name: generator TNB, at 0x39214ff0
+Total: 19.03M
+Free: 1.38G
+==== Memory Blocks End ====
+Allocating face index map
+Memory: 1.38 GB/4.00 GB, 65%
+Preparing the low resolution mesh
+Mapping 1600 faces upto level 1
+ Updated texture coordinates (1681 new item)
+ Calculating CC positions on level 1
+Unmapping level 0
+Creating balanced tree(s) for  (level: 3, faces: 25600) (25600 faces)
+Balanced tree ready for pTorus1
+	node count: 16383
+	max depth: 13
+	max leaf size: 0.656510
+	root: (-0.000000, 0.770424, 0.528096)-24.393108
+Memory: 1.38 GB/4.00 GB, 65%
+Processing tile 0:0 (0.000000-1.000000, 0.000000-1.000000)
+Preparing maps
+Memory: 1.37 GB/4.00 GB, 65%
+Memory: 1.37 GB/4.00 GB, 65%
+Mesh extended at open edges with 0 new quads, 0 new vertices
+	Extracting maps
+	Saving maps
+New texels on maps: 294042
+	saving displacement map to C:/Users/Kara/Desktop/TESTING MUDBOX/16bitiff.tif_temp.tif
+saving image: C:/Users/Kara/Desktop/TESTING MUDBOX/16bitiff.tif_temp.tif
+	stats: 291130 pixels, 0 cubes, 0 faces
+	cubes per pixel: 0
+	faces per pixel: 0
+	hacked pixels: 0
+	hit/fail: 294033/8248
+Tile processed in 1.872000 seconds.
+
+====================
+Statistics for btree:
+	pick count: 302119
+	number of checked faces: 2261439
+	number of checked nodes: 9290827
+	average number of faces per pick: 7
+	average number of nodes per pick: 30
+	maximum number of faces per pick: 22
+	maximum number of nodes per pick: 51
+====================
+Normalizing displacement maps
+Range of displacement maps: [-0.440000:0.440000]
+saving image: C:/Users/Kara/Desktop/TESTING MUDBOX/16bitiff_g0.880000.tif
+Normalization finished
+Memory: 1.38 GB/4.00 GB, 65%
+ Destructing mesh
+ Destructing mesh
+Map extraction finished without errorsStarting texture baking with the following parameters:
+nextcommand: 
+THIS: 
+Next: NULL
+Previous: NULL
+Parent: NULL
+Children: NULL
+Visible: true
+Locked: false
+Orthogonalize Tangent To Normal: true
+Orthogonalize Binormal To Normal: true
+Orthogonalize Tangent To Binormal: false
+Orthogonalize Binormal To Tangent: false
+normalizetangent: true
+normalizebinormal: true
+Derive Axis: 4
+Switch Tangent With Binormal: false
+Flip Binormal: false
+Flip Tangent: false
+Flip Normal: false
+Index Source: 1
+Use Vertex Normals: true
+Orientation: 1
+Preset: 1
+: NULL
+Search Distance: 0.88
+Normalize to Search Distance: true
+Keep Zero As Middle Grey: true
+Displacement Map Format: 0
+Displacement Map Settings: 
+Tangent&Binormal Settings: 
+Smooth Normals: true
+Normal Map Space: 1
+Normal Map Format: 0
+Normal Map Settings: 
+Skip Empty Maps: true
+UStart: 1
+URange: 1
+Process Multiple Tiles: true
+<    Multiple Map Support: 
+Test Both Sides: false
+Ray Center: 2
+Method: 0
+Edge Bleeding: 4
+Anti aliasing: 0
+Fill Whole Maps: false
+Map Height: 1024
+Map Width: 1024
+Displacement Map Filename: C:/Users/Kara/Desktop/TESTING MUDBOX/8bittiff.tif
+Create Displacement Map: true
+Normal Map Filename: 
+Create Normal Map: false
+Use Limit Surface: false
+High Resolution Mesh: Select Mesh
+Extract Selected Low Res. Faces Only: false
+Smooth UVs: false
+Use Limit Surface: true
+Low Resolution Mesh: pTorus1 (level: 0, faces: 400)
+Cancel: 0
+Start: 1
+Locked: false
+Visible: true
+Children: NULL
+Parent: Scene
+Previous: My Extraction Operation 2
+Next: NULL
+THIS: My Extraction Operation 3
+Starting map extraction
+Memory: 1.40 GB/4.00 GB, 64%
+Cleaning up memory
+Memory: 1.40 GB/4.00 GB, 64%
+==== Memory Blocks Begin ====
+(Skipping blocks smaller than 55377)
+Block size:5537784 (4), name: hwpicker map, at 0x17200040
+Block size:5537784 (4), name: hwpicker map, at 0x11f20040
+Block size:1048560 (16), name: normal updater, at 0x053b0040
+Block size:655320 (40), name: mesh restore buffer, at 0x39135010
+Block size:614400 (24), name: mesh vertex data, at 0x12cecd80
+Block size:524280 (8), name: mesh global collection, at 0x12e5e600
+Block size:409600 (4), name: topology indices, at 0x129f7d40
+Block size:153600 (24), name: mesh vertex data, at 0x1fdfc010
+Block size:128484 (4), name: hwpicker meshhandle vertexfacemap, at 0x08c250d0
+Block size:102400 (4), name: topology indices, at 0x1258afc0
+Block size:73728 (72), name: map extraction face index table, at 0x3cfac038
+Block size:73728 (72), name: map extraction face index table, at 0x12a5bd58
+Block size:60516 (36), name: generator TNB, at 0x08d28e30
+Block size:60516 (36), name: generator TNB, at 0x39214ff0
+Block size:60516 (36), name: generator TNB, at 0x12b25f70
+Total: 23.06M
+Free: 1.40G
+==== Memory Blocks End ====
+Allocating face index map
+Memory: 1.40 GB/4.00 GB, 64%
+Preparing the low resolution mesh
+Mapping 1600 faces upto level 1
+ Updated texture coordinates (1681 new item)
+ Calculating CC positions on level 1
+Unmapping level 0
+Creating balanced tree(s) for  (level: 3, faces: 25600) (25600 faces)
+Balanced tree ready for pTorus1
+	node count: 16383
+	max depth: 13
+	max leaf size: 0.656510
+	root: (-0.000000, 0.770424, 0.528096)-24.393108
+Memory: 1.40 GB/4.00 GB, 64%
+Processing tile 0:0 (0.000000-1.000000, 0.000000-1.000000)
+Preparing maps
+Memory: 1.39 GB/4.00 GB, 65%
+Memory: 1.39 GB/4.00 GB, 65%
+Mesh extended at open edges with 0 new quads, 0 new vertices
+	Extracting maps
+	Saving maps
+New texels on maps: 294041
+	saving displacement map to C:/Users/Kara/Desktop/TESTING MUDBOX/8bittiff.tif_temp.tif
+saving image: C:/Users/Kara/Desktop/TESTING MUDBOX/8bittiff.tif_temp.tif
+	stats: 291125 pixels, 0 cubes, 0 faces
+	cubes per pixel: 0
+	faces per pixel: 0
+	hacked pixels: 0
+	hit/fail: 294016/8248
+Tile processed in 1.638000 seconds.
+
+====================
+Statistics for btree:
+	pick count: 302118
+	number of checked faces: 2261430
+	number of checked nodes: 9290719
+	average number of faces per pick: 7
+	average number of nodes per pick: 30
+	maximum number of faces per pick: 22
+	maximum number of nodes per pick: 51
+====================
+Normalizing displacement maps
+Range of displacement maps: [-0.440000:0.440000]
+saving image: C:/Users/Kara/Desktop/TESTING MUDBOX/8bittiff_g0.880000.tif
+Normalization finished
+Memory: 1.40 GB/4.00 GB, 65%
+ Destructing mesh
+ Destructing mesh
+Map extraction finished without errorsStarting texture baking with the following parameters:
+nextcommand: 
+THIS: 
+Next: NULL
+Previous: NULL
+Parent: NULL
+Children: NULL
+Visible: true
+Locked: false
+Orthogonalize Tangent To Normal: true
+Orthogonalize Binormal To Normal: true
+Orthogonalize Tangent To Binormal: false
+Orthogonalize Binormal To Tangent: false
+normalizetangent: true
+normalizebinormal: true
+Derive Axis: 4
+Switch Tangent With Binormal: false
+Flip Binormal: false
+Flip Tangent: false
+Flip Normal: false
+Index Source: 1
+Use Vertex Normals: true
+Orientation: 1
+Preset: 1
+: NULL
+Search Distance: 0.88
+Normalize to Search Distance: true
+Keep Zero As Middle Grey: true
+Displacement Map Format: 3
+Displacement Map Settings: 
+Tangent&Binormal Settings: 
+Smooth Normals: true
+Normal Map Space: 1
+Normal Map Format: 0
+Normal Map Settings: 
+Skip Empty Maps: true
+UStart: 1
+URange: 1
+Process Multiple Tiles: true
+<    Multiple Map Support: 
+Test Both Sides: false
+Ray Center: 2
+Method: 0
+Edge Bleeding: 4
+Anti aliasing: 0
+Fill Whole Maps: false
+Map Height: 1024
+Map Width: 1024
+Displacement Map Filename: C:/Users/Kara/Desktop/TESTING MUDBOX/32tiff.tif
+Create Displacement Map: true
+Normal Map Filename: 
+Create Normal Map: false
+Use Limit Surface: false
+High Resolution Mesh: Select Mesh
+Extract Selected Low Res. Faces Only: false
+Smooth UVs: false
+Use Limit Surface: true
+Low Resolution Mesh: pTorus1 (level: 0, faces: 400)
+Cancel: 0
+Start: 1
+Locked: false
+Visible: true
+Children: NULL
+Parent: Scene
+Previous: My Extraction Operation 3
+Next: NULL
+THIS: My Extraction Operation 4
+Starting map extraction
+Memory: 1.40 GB/4.00 GB, 65%
+Cleaning up memory
+Memory: 1.40 GB/4.00 GB, 65%
+==== Memory Blocks Begin ====
+(Skipping blocks smaller than 55377)
+Block size:5537784 (4), name: hwpicker map, at 0x11f20040
+Block size:5537784 (4), name: hwpicker map, at 0x17200040
+Block size:1048560 (16), name: normal updater, at 0x053b0040
+Block size:655320 (40), name: mesh restore buffer, at 0x39135010
+Block size:614400 (24), name: mesh vertex data, at 0x12cecd80
+Block size:524280 (8), name: mesh global collection, at 0x12e5e600
+Block size:409600 (4), name: topology indices, at 0x129f7d40
+Block size:153600 (24), name: mesh vertex data, at 0x1fdfc010
+Block size:128484 (4), name: hwpicker meshhandle vertexfacemap, at 0x08c250d0
+Block size:102400 (4), name: topology indices, at 0x1258afc0
+Block size:73728 (72), name: map extraction face index table, at 0x13429048
+Block size:73728 (72), name: map extraction face index table, at 0x3cfac038
+Block size:73728 (72), name: map extraction face index table, at 0x12a5bd58
+Block size:60516 (36), name: generator TNB, at 0x08d28e30
+Block size:60516 (36), name: generator TNB, at 0x39214ff0
+Block size:60516 (36), name: generator TNB, at 0x12b25f70
+Block size:60516 (36), name: generator TNB, at 0x1267ffb0
+Total: 27.19M
+Free: 1.40G
+==== Memory Blocks End ====
+Allocating face index map
+Memory: 1.39 GB/4.00 GB, 65%
+Preparing the low resolution mesh
+Mapping 1600 faces upto level 1
+ Updated texture coordinates (1681 new item)
+ Calculating CC positions on level 1
+Unmapping level 0
+Creating balanced tree(s) for  (level: 3, faces: 25600) (25600 faces)
+Balanced tree ready for pTorus1
+	node count: 16383
+	max depth: 13
+	max leaf size: 0.656510
+	root: (-0.000000, 0.770424, 0.528096)-24.393108
+Memory: 1.39 GB/4.00 GB, 65%
+Processing tile 0:0 (0.000000-1.000000, 0.000000-1.000000)
+Preparing maps
+Memory: 1.39 GB/4.00 GB, 65%
+Memory: 1.39 GB/4.00 GB, 65%
+Mesh extended at open edges with 0 new quads, 0 new vertices
+	Extracting maps
+	Saving maps
+New texels on maps: 294050
+	saving displacement map to C:/Users/Kara/Desktop/TESTING MUDBOX/32tiff.tif
+saving image: C:/Users/Kara/Desktop/TESTING MUDBOX/32tiff.tif
+	stats: 291125 pixels, 0 cubes, 0 faces
+	cubes per pixel: 0
+	faces per pixel: 0
+	hacked pixels: 0
+	hit/fail: 294026/8248
+Tile processed in 2.059000 seconds.
+
+====================
+Statistics for btree:
+	pick count: 302126
+	number of checked faces: 2261446
+	number of checked nodes: 9290936
+	average number of faces per pick: 7
+	average number of nodes per pick: 30
+	maximum number of faces per pick: 22
+	maximum number of nodes per pick: 51
+====================
+Memory: 1.39 GB/4.00 GB, 65%
+ Destructing mesh
+ Destructing mesh
+Map extraction finished without errorsStarting texture baking with the following parameters:
+nextcommand: 
+THIS: 
+Next: NULL
+Previous: NULL
+Parent: NULL
+Children: NULL
+Visible: true
+Locked: false
+Orthogonalize Tangent To Normal: true
+Orthogonalize Binormal To Normal: true
+Orthogonalize Tangent To Binormal: false
+Orthogonalize Binormal To Tangent: false
+normalizetangent: true
+normalizebinormal: true
+Derive Axis: 4
+Switch Tangent With Binormal: false
+Flip Binormal: false
+Flip Tangent: false
+Flip Normal: false
+Index Source: 1
+Use Vertex Normals: true
+Orientation: 1
+Preset: 1
+: NULL
+Search Distance: 0.88
+Normalize to Search Distance: true
+Keep Zero As Middle Grey: true
+Displacement Map Format: 0
+Displacement Map Settings: 
+Tangent&Binormal Settings: 
+Smooth Normals: true
+Normal Map Space: 1
+Normal Map Format: 0
+Normal Map Settings: 
+Skip Empty Maps: true
+UStart: 1
+URange: 1
+Process Multiple Tiles: true
+<    Multiple Map Support: 
+Test Both Sides: false
+Ray Center: 2
+Method: 0
+Edge Bleeding: 4
+Anti aliasing: 0
+Fill Whole Maps: false
+Map Height: 512
+Map Width: 512
+Displacement Map Filename: C:/Users/Kara/Desktop/TESTING MUDBOX/tga.tga
+Create Displacement Map: true
+Normal Map Filename: 
+Create Normal Map: false
+Use Limit Surface: false
+High Resolution Mesh: Select Mesh
+Extract Selected Low Res. Faces Only: false
+Smooth UVs: false
+Use Limit Surface: true
+Low Resolution Mesh: pTorus1 (level: 0, faces: 400)
+Cancel: 0
+Start: 1
+Locked: false
+Visible: true
+Children: NULL
+Parent: Scene
+Previous: My Extraction Operation 4
+Next: NULL
+THIS: My Extraction Operation 5
+Starting map extraction
+Memory: 1.50 GB/4.00 GB, 62%
+Cleaning up memory
+Memory: 1.50 GB/4.00 GB, 62%
+==== Memory Blocks Begin ====
+(Skipping blocks smaller than 55377)
+Block size:5537784 (4), name: hwpicker map, at 0x11f20040
+Block size:5537784 (4), name: hwpicker map, at 0x17200040
+Block size:1048560 (16), name: normal updater, at 0x053b0040
+Block size:655320 (40), name: mesh restore buffer, at 0x39135010
+Block size:614400 (24), name: mesh vertex data, at 0x12cecd80
+Block size:524280 (8), name: mesh global collection, at 0x12e5e600
+Block size:409600 (4), name: topology indices, at 0x129f7d40
+Block size:153600 (24), name: mesh vertex data, at 0x1fdfc010
+Block size:128484 (4), name: hwpicker meshhandle vertexfacemap, at 0x08c250d0
+Block size:102400 (4), name: topology indices, at 0x1258afc0
+Block size:73728 (72), name: map extraction face index table, at 0x12a5bd58
+Block size:73728 (72), name: map extraction face index table, at 0x13429048
+Block size:73728 (72), name: map extraction face index table, at 0x3cfac038
+Block size:73728 (72), name: map extraction face index table, at 0x3cf0cea8
+Block size:60516 (36), name: generator TNB, at 0x3d3e2b80
+Block size:60516 (36), name: generator TNB, at 0x39214ff0
+Block size:60516 (36), name: generator TNB, at 0x08d28e30
+Block size:60516 (36), name: generator TNB, at 0x12b25f70
+Block size:60516 (36), name: generator TNB, at 0x1267ffb0
+Total: 31.32M
+Free: 1.50G
+==== Memory Blocks End ====
+Allocating face index map
+Memory: 1.50 GB/4.00 GB, 62%
+Preparing the low resolution mesh
+Mapping 1600 faces upto level 1
+ Updated texture coordinates (1681 new item)
+ Calculating CC positions on level 1
+Unmapping level 0
+Creating balanced tree(s) for  (level: 3, faces: 25600) (25600 faces)
+Balanced tree ready for pTorus1
+	node count: 16383
+	max depth: 13
+	max leaf size: 0.656510
+	root: (-0.000000, 0.770424, 0.528096)-24.393108
+Memory: 1.50 GB/4.00 GB, 62%
+Processing tile 0:0 (0.000000-1.000000, 0.000000-1.000000)
+Preparing maps
+Memory: 1.50 GB/4.00 GB, 62%
+Memory: 1.50 GB/4.00 GB, 62%
+Mesh extended at open edges with 0 new quads, 0 new vertices
+	Extracting maps
+	Saving maps
+New texels on maps: 76166
+	saving displacement map to C:/Users/Kara/Desktop/TESTING MUDBOX/tga.tga_temp.tif
+saving image: C:/Users/Kara/Desktop/TESTING MUDBOX/tga.tga_temp.tif
+	stats: 72802 pixels, 0 cubes, 0 faces
+	cubes per pixel: 0
+	faces per pixel: 0
+	hacked pixels: 0
+	hit/fail: 76158/2060
+Tile processed in 0.499000 seconds.
+
+====================
+Statistics for btree:
+	pick count: 78189
+	number of checked faces: 584434
+	number of checked nodes: 2409831
+	average number of faces per pick: 7
+	average number of nodes per pick: 30
+	maximum number of faces per pick: 20
+	maximum number of nodes per pick: 51
+====================
+Normalizing displacement maps
+Range of displacement maps: [-0.440000:0.440000]
+saving image: C:/Users/Kara/Desktop/TESTING MUDBOX/tga_g0.880000.tga
+Normalization finished
+Memory: 1.50 GB/4.00 GB, 62%
+ Destructing mesh
+ Destructing mesh
+Map extraction finished without errorsTotal number of polygons rendered during the session: 2174874514
+Shutdown, memory used: 0 Megabytes

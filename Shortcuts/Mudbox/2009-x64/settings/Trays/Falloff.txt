@@ -1,0 +1,8 @@
+Falloff;0;;0;
+Falloff;1;;1;
+Falloff;2;;2;
+Falloff;3;;3;
+Falloff;4;;4;
+Falloff;5;;5;
+Falloff;6;;6;
+Falloff;7;;7;

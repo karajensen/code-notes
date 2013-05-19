@@ -1,0 +1,229 @@
+
+    menuItem
+        -label "Help Line" 
+        -divider 0
+        -subMenu 0
+        -command "toggleUIComponentVisibility \"Help Line\"; updatePrefsMenu" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "N" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -annotation "Toggle the Help Line on/off" 
+        -italicized 0
+        -boldFont 0
+        menuItem70;
+
+    menuItem
+        -label "Status Line" 
+        -divider 0
+        -subMenu 0
+        -command "toggleUIComponentVisibility \"Status Line\"; updatePrefsMenu" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "NE" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -annotation "Toggle the Status Line on/off" 
+        -italicized 0
+        -boldFont 0
+        menuItem71;
+
+    menuItem
+        -label "Attributes" 
+        -divider 0
+        -subMenu 1
+        -tearOff 0
+        -enable 1
+        -data 0
+        -radialPosition "E" 
+        -allowOptionBoxes 0
+        -postMenuCommandOnce 0
+        -italicized 0
+        -boldFont 0
+        menuItem72;
+
+        menuItem
+            -label "Channel Box / Layer Editor" 
+            -divider 0
+            -subMenu 0
+            -command "toggleUIComponentVisibility \"Channel Box / Layer Editor\"; updatePrefsMenu" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "E" 
+            -enableCommandRepeat 1
+            -echoCommand 0
+            -annotation "Toggle the Channel Box / Layer Editor on/off" 
+            -italicized 0
+            -boldFont 0
+            menuItem73;
+
+        menuItem
+            -label "Attribute Editor" 
+            -divider 0
+            -subMenu 0
+            -command "toggleUIComponentVisibility \"Attribute Editor\"; updatePrefsMenu" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "W" 
+            -enableCommandRepeat 1
+            -echoCommand 0
+            -annotation "Toggle the Attribute Editor on/off" 
+            -italicized 0
+            -boldFont 0
+            menuItem74;
+
+        menuItem
+            -label "Tool Settings" 
+            -divider 0
+            -subMenu 0
+            -command "toggleUIComponentVisibility \"Tool Settings\"; updatePrefsMenu" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "N" 
+            -enableCommandRepeat 1
+            -echoCommand 0
+            -annotation "Toggle the Tool Settings on/off" 
+            -italicized 0
+            -boldFont 0
+            menuItem75;
+
+    setParent -m ..;
+
+    menuItem
+        -label "Tool Box" 
+        -divider 0
+        -subMenu 0
+        -command "toggleUIComponentVisibility \"Tool Box\"; updatePrefsMenu" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "SE" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -annotation "Toggle the Toolbox on/off" 
+        -italicized 0
+        -boldFont 0
+        menuItem76;
+
+    menuItem
+        -label "Time Slider" 
+        -divider 0
+        -subMenu 0
+        -command "toggleUIComponentVisibility \"Time Slider\"; updatePrefsMenu" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "S" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -annotation "Toggle the Time Slider on/off" 
+        -italicized 0
+        -boldFont 0
+        menuItem77;
+
+    menuItem
+        -label "Range Slider" 
+        -divider 0
+        -subMenu 0
+        -command "toggleUIComponentVisibility \"Range Slider\"; updatePrefsMenu" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "SW" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -annotation "Toggle the Range Slider on/off" 
+        -italicized 0
+        -boldFont 0
+        menuItem78;
+
+    menuItem
+        -label "Shelf" 
+        -divider 0
+        -subMenu 0
+        -command "toggleUIComponentVisibility \"Shelf\"; updatePrefsMenu" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "W" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -annotation "Toggle the shelf on/off" 
+        -italicized 0
+        -boldFont 0
+        menuItem79;
+
+    menuItem
+        -label "Command Line" 
+        -divider 0
+        -subMenu 0
+        -command "toggleUIComponentVisibility \"Command Line\"; updatePrefsMenu" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "NW" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -annotation "Toggle the Command Line on/off" 
+        -italicized 0
+        -boldFont 0
+        menuItem80;
+
+setParent -m ..;
+

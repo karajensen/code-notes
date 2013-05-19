@@ -1,0 +1,155 @@
+
+    menuItem
+        -label "Perspective View" 
+        -divider 0
+        -subMenu 0
+        -command "switchModelView persp" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "N" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        menuItem89;
+
+    menuItem
+        -label "Side View" 
+        -divider 0
+        -subMenu 0
+        -command "switchModelView side" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "E" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        menuItem90;
+
+    menuItem
+        -label "Front View" 
+        -divider 0
+        -subMenu 0
+        -command "switchModelView front" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "S" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        menuItem91;
+
+    menuItem
+        -label "Top View" 
+        -divider 0
+        -subMenu 0
+        -command "switchModelView top" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "W" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        menuItem92;
+
+    menuItem
+        -label "Hotbox Style" 
+        -divider 0
+        -subMenu 1
+        -tearOff 0
+        -enable 1
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -italicized 0
+        -boldFont 0
+        menuItem93;
+
+        menuItem
+            -label "Zones and Menu Rows" 
+            -divider 0
+            -subMenu 0
+            -command "hotBox -dh" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -enableCommandRepeat 1
+            -echoCommand 0
+            -italicized 0
+            -boldFont 0
+            menuItem94;
+
+        menuItem
+            -label "Zones Only" 
+            -divider 0
+            -subMenu 0
+            -command "hotBox -dzo" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -enableCommandRepeat 1
+            -echoCommand 0
+            -italicized 0
+            -boldFont 0
+            menuItem95;
+
+        menuItem
+            -label "Center Zone Only" 
+            -divider 0
+            -subMenu 0
+            -command "hotBox -dco" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -enableCommandRepeat 1
+            -echoCommand 0
+            -italicized 0
+            -boldFont 0
+            menuItem96;
+
+    setParent -m ..;
+
+setParent -m ..;
+

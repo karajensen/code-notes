@@ -1,0 +1,163 @@
+
+    menuItem
+        -label "Single Perspective" 
+        -divider 0
+        -subMenu 0
+        -command "setNamedPanelLayout \"Single Perspective View\";" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "N" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        menuItem54;
+
+    menuItem
+        -label "Hypershade/Render/Persp" 
+        -divider 0
+        -subMenu 0
+        -command "setNamedPanelLayout \"Hypershade/Render/Persp\";" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "NE" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        menuItem55;
+
+    menuItem
+        -label "Hypershade/Outliner/Persp" 
+        -divider 0
+        -subMenu 0
+        -command "setNamedPanelLayout \"Hypershade/Outliner/Persp\";" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "SE" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        menuItem56;
+
+    menuItem
+        -label "Hypershade/Persp" 
+        -divider 0
+        -subMenu 0
+        -command "setNamedPanelLayout \"Hypershade/Persp\";" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "E" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        menuItem57;
+
+    menuItem
+        -label "Persp/Outliner" 
+        -divider 0
+        -subMenu 0
+        -command "setNamedPanelLayout \"Persp/Outliner\";" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "S" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        menuItem58;
+
+    menuItem
+        -label "Persp/Graph/Outliner" 
+        -divider 0
+        -subMenu 0
+        -command "setNamedPanelLayout \"Persp/Graph/Outliner\";" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "SW" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        menuItem59;
+
+    menuItem
+        -label "Persp/Graph" 
+        -divider 0
+        -subMenu 0
+        -command "setNamedPanelLayout \"Persp/Graph\";" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "W" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        menuItem60;
+
+    menuItem
+        -label "Persp/Relationship Editor" 
+        -divider 0
+        -subMenu 0
+        -command "setNamedPanelLayout \"Persp/Relationship Editor\";" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "NW" 
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        menuItem61;
+
+setParent -m ..;
+

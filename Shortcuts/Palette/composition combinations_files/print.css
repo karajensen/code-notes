@@ -1,0 +1,194 @@
+html, body {margin: .25em 0 0 0; padding: 0; font-family: "Trebuchet MS",Verdana, Geneva, Arial, Helvetica, sans-serif; color: #333333; width: 94%; background-color: #FFFFFF; color: #555555;}
+* html body {font-size: 100%!important;}
+#printLogo {display: block;}
+
+form {margin: 0; padding: 0;}
+
+#skip {display: none;}
+a.skip, a:link.skip, a:visited.skip {font-size: .6em; text-decoration: none; background-color: inherit; color: #6F5D80;}
+a:hover.skip, a:active.skip {background-color: #EDD9FF; color: #555555;}
+
+#quote {text-align: left;}
+div .spacer {display: none;}
+div .text {background-color: inherit; color: #555555; font-size: .8em; }
+
+
+.colorway1 #global {display: none;}
+
+.colorway2 #global {display: none;}
+
+.colorway3 #global {display: none;}
+
+.colorway4 #global {display: none;}
+
+.colorway5 #global {display: none;}
+
+#global .logo {display: none;}
+
+#global ul {display: none;}
+* html #global ul {display: none;}
+#global li {display: block; float: left; font-size: .95em; font-weight: bold; height: 100%;}
+
+a.global1Sel {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #B33642; color: #FFFF00; text-decoration: none;}
+a.global1 {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #B33642; color: #FFFFFF; text-decoration: none;}
+
+a.global2Sel {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #E8B315; color: #FFFF00; text-decoration: none;}
+a.global2 {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #E8B315; color: #FFFFFF; text-decoration: none;}
+
+a.global3Sel {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #70800D; color: #FFFF00; text-decoration: none;}
+a.global3 {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #70800D; color: #FFFFFF; text-decoration: none;}
+
+a.global4Sel {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #4D648C; color: #FFFF00; text-decoration: none;}
+a.global4 {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #4D648C; color: #FFFFFF; text-decoration: none;}
+
+a.global5Sel {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #6F4D8C; color: #FFFF00; text-decoration: none;}
+a.global5 {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #6F4D8C; color: #FFFFFF; text-decoration: none;}
+
+a.global1Sel:hover {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #B33642; color: #FFFF00; text-decoration: none;}
+a.global1:hover {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #D55460; color: #FFFF00; text-decoration: none;}
+
+a.global2Sel:hover {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #E8B315; color: #FFFF00; text-decoration: none;}
+a.global2:hover {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #E9C316; color: #FFFF00; text-decoration: none;}
+
+a.global3Sel:hover {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #70800D; color: #FFFF00; text-decoration: none;}
+a.global3:hover {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #9DB312; color: #FFFF00; text-decoration: none;}
+
+a.global4:hover {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #707F99; color: #FFFF00; text-decoration: none;}
+a.global4Sel:hover {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #4D648C; color: #FFFF00; text-decoration: none;}
+
+a.global5:hover {display: block; float: left; height: auto; padding: 152px 15px 2px 15px; background-color: #867099; color: #FFFF00; text-decoration: none;} 
+
+.colorway1 .selectedDiv {position: relative; margin-top: -.125em; height: 1em; background-color: #B33642; color: #FFFF00; font-size: .5em;}
+.colorway2 .selectedDiv {position: relative; margin-top: -.125em; height: 1em; background-color: #E8B315; color: #FFFF00; font-size: .5em;}
+.colorway3 .selectedDiv {position: relative; margin-top: -.125em; height: 1em; background-color: #70800D; color: #FFFF00; font-size: .5em;}
+.colorway4 .selectedDiv {position: relative; margin-top: -.125em; height: 1em; background-color: #4D648C; color: #FFFF00; font-size: .5em;}
+.colorway5 .selectedDiv {position: relative; margin-top: -.125em; height: 1em; background-color: #6F4D8C; color: #FFFF00; font-size: .5em;}
+
+#LocalNav {display: none;}
+#LocalNav .LocalNavLinks ul {width: 100%; margin: 1px 0; padding: .25em 0 1em 0; list-style-type: none;}
+
+#LocalNav .LocalNavLinks li {display: block; width: 100%; margin: 0 0 0 0; list-style-type: none; padding: 0 0 0 4px; line-height: 1.5; font-weight: bold; font-size: .8em;}
+* html #LocalNav .LocalNavLinks li {height: 1.5em;} /* for IE 5.0 */
+
+.colorway1 #LocalNav li {border-bottom: 1px dotted #B33642;}
+.colorway2 #LocalNav li {border-bottom: 1px dotted #E8B315;}
+.colorway3 #LocalNav li {border-bottom: 1px dotted #70800D;}
+.colorway4 #LocalNav li {border-bottom: 1px dotted #4D648C;}
+.colorway5 #LocalNav li {border-bottom: 1px dotted #6F4D8C;}
+
+#LocalNav ul li.header {background-color: #FFFFFF; color: #6F4D8C; font-size: 1em;}
+#LocalNav ul li.header2 {background-color: #FFFFFF; color: #6F4D8C; font-size: .8em; margin-top: 1em;}
+
+#LocalNav li a, #LocalNav li a:link {font-weight: normal; text-decoration: none; background-color: inherit; color: #6F5D80;}
+#LocalNav li a:visited {background-color: inherit; color: #808080;}
+#LocalNav li a:hover, #LocalNav li a:active {background-color: #EDD9FF; color: #555555;}
+#LocalNav li a.current,#LocalNav li a:visited.current {font-weight: bold; text-decoration: none; background-color: inherit; color: #555555;}
+
+
+#Inset {margin-left: .5em; font-size: 10pt;}
+* html #Inset {}
+
+#Inset .InsetSection p {margin: 0; padding: 0;}
+#Inset a {font-weight: normal; text-decoration: underline; background-color: inherit; color: #6F5D80;}
+#Inset a:visited {background-color: inherit; color: #6F5D80;}
+#Inset a:hover, #LocalNav a:active {background-color: #EDD9FF; color: #555555;}
+#Inset a img {border: none;}
+
+#Inset .InsetSection h2 {display: block; font-weight: bold; font-size: 12pt; }
+
+
+.colorway1 #Inset .InsetSection {}
+.colorway1 #Inset .InsetSection h2 {}
+
+
+.colorway2 #Inset .InsetSection {}
+.colorway2 #Inset .InsetSection h2 {}
+
+
+.colorway3 #Inset .InsetSection {}
+.colorway3 #Inset .InsetSection h2 {}
+
+.colorway4 #Inset .InsetSection {}
+.colorway4 #Inset .InsetSection h2 {}
+
+.colorway5 #Inset .InsetSection {}
+.colorway5 #Inset .InsetSection h2 {}
+
+iframe {display: none;}
+
+#Main {margin-left: .5em; font-size: .8em; height: 100%; padding: 0 0 2em 0;}
+* html #Main {}
+
+#Main h1, #Main h1 a, #Main h1 a:visited, #Main h1 a:hover {font-size: 1.25em; margin: .5em 0 .5em 0; background-color: inherit; color: #555555; text-decoration: none;}
+
+#Main h2 {position: relative; font-size: 1.25em; margin: .5em 0 .5em 0; background-color: inherit; color: #555555; text-decoration: none; width: 100%;}
+
+#Main h2, #Main h2 a, #Main h2 a:visited {font-size: 1em; margin: .5em 0 .5em 0; background-color: inherit; color: #654680; text-decoration: none;}
+#Main h2 a:hover {font-size: 1em; margin: .5em 0 .5em 0; background-color: #DDD3E5; color: #654680; text-decoration: underline;}
+
+#Main h3 {position: relative; font-size: 1em; margin: .5em 0 .5em 0; background-color: inherit; color: #555555; text-decoration: none; width: 100%;}
+
+#Main h5 {position: relative; font-size: 1em; margin: 0; padding: 0; background-color: inherit; color: #333333; text-decoration: none; width: 100%;}
+
+
+p {margin: 0 0 1em 0; width: auto;}
+* html p {margin: 0 0 1em 0;}
+
+p.bookReview {display: block; float: left; width: 100%;}
+p.bookReview span {margin: -1em 10px 0 0; display: block; float: left; width: 47%;}
+
+#Main p span a, #Main p a.bookReview, #Inset a.bookReview {background-color: #FFFFFF; text-decoration: none;}
+#Main p span a:link, #Main p a:link.bookReview, #Inset a:link.bookReview {background-color: #FFFFFF; text-decoration: none;}
+#Main p span a:visited, #Main p a:visited.bookReview, #Inset a:visited.bookReview {background-color: #FFFFFF; text-decoration: none;}
+#Main p span a:hover, #Main p a:hover.bookReview, #Inset a:hover.bookReview {background-color: #FFFFFF; text-decoration: none;}
+
+.afterimage {padding: 20em;}
+ 
+#Main p a img {padding: 0 0 1em 0;}
+
+#Main p.swatch {margin: 0; width: 100%; border: none;}
+#Main p.swatch img {padding-right: .5em;}
+#Main p.nextLink {margin: 0; width: 100%; padding-top: 2em;}
+
+.mulitimage {float: left; padding: 0 .5em 2em 0;}
+.mulitimage img {padding: 0 4px;}
+
+#Main p.annotatedimage {display: block; float: left; width: 100%;}
+#Main p.annotatedimage span {display: block; float: left; width: 45%; padding: 0 1em 0 0;}
+#Main p.annotatedimage img {float: left; padding: 0 1em 1em 0;}
+
+#Main p.annotatedimage2 {display: block; float: left; width: 100%;}
+#Main p.annotatedimage2 span {display: block; float: left; width: 45%; padding: 0 1em 0 0;}
+
+#Main p.annotatedimage2 img.inline {float: none; padding: 0px 3px 0px 0px; margin: 0px 0px 0px 0px; border: none;}
+
+#Main p.annotatedimage3 {display: block; float: left; width: 100%;}
+#Main p.annotatedimage3 span {display: block; float: left; width: 30%; padding: 0 1em 0 0;}
+
+
+#Main a, #Main a:link {background-color: inherit; color: #215670; text-decoration: underline;}
+#Main a:visited {background-color: inherit; color: #002E3F; text-decoration: underline;}
+#Main a:hover, #Main a:active {background-color: #F1FF99; color: #555555; text-decoration: none;}
+
+#Main ul {width: auto; list-style-type: square;}
+#Main ul li {padding: 0 0 1em 0;}
+#Main li a {}
+
+#Main dt {font-size: 1.0em; font-weight: bold;}
+#Main dd {font-size: 1.0em; font-weight: normal;}
+
+.clear {clear: both;}
+
+.GoogleAd {display: none;}
+
+#Footer {display: block; font-size: 8pt;}
+.colorway1 #Footer {border-top: 1px solid #B33642;}
+.colorway2 #Footer {border-top: 1px solid #E8B315;}
+.colorway3 #Footer {border-top: 1px solid #70800D;}
+.colorway4 #Footer {border-top: 1px solid #4D648C;}
+.colorway5 #Footer {border-top: 1px solid #6F4D8C;}
+#Footer1 {display: block; float: left;}
+#Footer2 {display: block; float: left; padding: 0 0 1em 0}
+#copyright {display: block; float: left;}  
+
+th label, label {display: none;}

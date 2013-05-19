@@ -1,0 +1,222 @@
+
+    menuItem
+        -label "NURBS Circle" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "CreateNURBSCircle" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "N" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "circle.xpm" 
+        -echoCommand 0
+        -annotation "NURBS Circle" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem2;
+
+    menuItem
+        -label "CVCurveTool" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "CVCurveTool;\rcurveCVToolScript 4;\r// Result: curveContextCV // \rchangeToolIcon;\rautoUpdateAttrEd;\rupdateAnimLayerEditor(\"AnimLayerTab\");\rstatusLineUpdateInputField;\r" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "NE" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "commandButton.xpm" 
+        -echoCommand 0
+        -annotation "CVCurveTool" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem3;
+
+    menuItem
+        -label "EPCurveTool" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "EPCurveTool;\rcurveEPToolScript 4;\r// Result: curveContextEP // \rchangeToolIcon;\rautoUpdateAttrEd;\rupdateAnimLayerEditor(\"AnimLayerTab\");\rstatusLineUpdateInputField;\r" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "E" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "commandButton.xpm" 
+        -echoCommand 0
+        -annotation "EPCurveTool" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem4;
+
+    menuItem
+        -label "EPCurveOpt" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "EPCurveToolOptions;\rcurveEPToolScript 3;\rtoolPropertyWindow1 (\"\");\r// Result: curveContextEP // \rcurveEPProperties;\rcurveEPValues curveContextEP;\rtoolPropertyShow;\rchangeToolIcon;\rautoUpdateAttrEd;\rupdateAnimLayerEditor(\"AnimLayerTab\");\rstatusLineUpdateInputField;" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "SE" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "commandButton.xpm" 
+        -echoCommand 0
+        -annotation "EPCurveOpt" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem7;
+
+    menuItem
+        -label "CVCurveOpt" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "CVCurveToolOptions;\rcurveCVToolScript 3;\rtoolPropertyWindow1 (\"\");\r// Result: curveContextCV // \rcurveCVProperties;\rcurveCVValues curveContextCV;\rtoolPropertyShow;\rfindNewCurrentModelView;\r// Result: 1 // \rchangeToolIcon;\rautoUpdateAttrEd;\rupdateAnimLayerEditor(\"AnimLayerTab\");\rstatusLineUpdateInputField;\rrestoreLastPanelWithFocus(); updatePrefsMenu();\rrestoreLastPanelWithFocus(); updatePrefsMenu();\rupdateChannelsLayers();" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "S" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "commandButton.xpm" 
+        -echoCommand 0
+        -annotation "CVCurveOpt" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem6;
+
+    menuItem
+        -label "OpenCloseCurve" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "OpenCloseCurve;\rcloseCurveToolScript 4;\r// Error: Nothing was selected to close.  Select curves or curves on surface. // \r" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "W" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "commandButton.xpm" 
+        -echoCommand 0
+        -annotation "OpenCloseCurve" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem5;
+
+    menuItem
+        -label "NURBS Square" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "CreateNURBSSquare" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "NW" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "square.xpm" 
+        -echoCommand 0
+        -annotation "NURBS Square" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem1;
+
+    menuItem
+        -label "Cluster" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "CreateCluster" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "SW" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "cluster.png" 
+        -echoCommand 0
+        -annotation "Cluster" 
+        -italicized 0
+        -boldFont 0
+        menuEditorMenuItem8;
+
+    menuItem
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 1
+        -enable 1
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 0
+        -italicized 0
+        -boldFont 0
+        menuEditorMenuItem9;
+
+setParent -m ..;
+

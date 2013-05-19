@@ -1,0 +1,501 @@
+global proc shelf_Dynamics () {
+    global string $gBuffStr;
+    global string $gBuffStr0;
+    global string $gBuffStr1;
+
+
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Emitter: Create an emitter on the grid or live object" 
+        -enableBackground 0
+        -align "center" 
+        -label "Emitter" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "posEmitter.xpm" 
+        -image1 "posEmitter.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "CreateEmitter" 
+        -sourceType "mel" 
+        -doubleClickCommand "CreateEmitterOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Add Emitter: Select the object(s) to emit particles" 
+        -enableBackground 0
+        -align "center" 
+        -label "Add Emitter" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "emitter.xpm" 
+        -image1 "emitter.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "EmitFromObject" 
+        -sourceType "mel" 
+        -doubleClickCommand "EmitFromObjectOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Drag: Create a drag field.  Select objects to be affected by the field" 
+        -enableBackground 0
+        -align "center" 
+        -label "Drag" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "posDrag.xpm" 
+        -image1 "posDrag.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "Drag" 
+        -sourceType "mel" 
+        -doubleClickCommand "DragOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Newton: Create a newton field.  Select objects to be affected by the field" 
+        -enableBackground 0
+        -align "center" 
+        -label "Newton" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "posNewton.xpm" 
+        -image1 "posNewton.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "Newton" 
+        -sourceType "mel" 
+        -doubleClickCommand "NewtonOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Radial: Create a radial field.  Select objects to be affected by the field" 
+        -enableBackground 0
+        -align "center" 
+        -label "Radial" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "posRadial.xpm" 
+        -image1 "posRadial.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "Radial" 
+        -sourceType "mel" 
+        -doubleClickCommand "RadialOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Turbulence: Create a turbulence field.  Select objects to be affected by the field" 
+        -enableBackground 0
+        -align "center" 
+        -label "Turbulence" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "posTurbulence.xpm" 
+        -image1 "posTurbulence.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "Turbulence" 
+        -sourceType "mel" 
+        -doubleClickCommand "TurbulenceOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Uniform: Create a unform field.  Select objects to be affected by the field" 
+        -enableBackground 0
+        -align "center" 
+        -label "Uniform" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "posUniform.xpm" 
+        -image1 "posUniform.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "Uniform" 
+        -sourceType "mel" 
+        -doubleClickCommand "UniformOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Vortex: Create a vortex field.  Select objects to be affected by the field" 
+        -enableBackground 0
+        -align "center" 
+        -label "Vortex" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "posVortex.xpm" 
+        -image1 "posVortex.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "Vortex" 
+        -sourceType "mel" 
+        -doubleClickCommand "VortexOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Volume Axis: Create a volume axis field.  Select objects to be affected by the field" 
+        -enableBackground 0
+        -align "center" 
+        -label "Volume Axis" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "posVolumeAxis.xpm" 
+        -image1 "posVolumeAxis.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "VolumeAxis" 
+        -sourceType "mel" 
+        -doubleClickCommand "VolumeAxisOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Use Selected Object as Source of Field: Select field, then select object to be its source" 
+        -enableBackground 0
+        -align "center" 
+        -label "Use Selected Object as Source of Field" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "menuIconFields.xpm" 
+        -image1 "menuIconFields.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "AttachSelectedAsSourceField" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Constraint: Select rigid bodies to be constrained" 
+        -enableBackground 0
+        -align "center" 
+        -label "Constraint" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "constraint.xpm" 
+        -image1 "constraint.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "CreateConstraint" 
+        -sourceType "mel" 
+        -doubleClickCommand "CreateConstraintOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Fire: Create fire effect" 
+        -enableBackground 0
+        -align "center" 
+        -label "Fire" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "fire.xpm" 
+        -image1 "fire.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "Fire" 
+        -sourceType "mel" 
+        -doubleClickCommand "FireOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Smoke: Create smoke effect" 
+        -enableBackground 0
+        -align "center" 
+        -label "Smoke" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "smoke.xpm" 
+        -image1 "smoke.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "Smoke" 
+        -sourceType "mel" 
+        -doubleClickCommand "SmokeOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Fireworks: Create fireworks effect" 
+        -enableBackground 0
+        -align "center" 
+        -label "Fireworks" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "fireworks.xpm" 
+        -image1 "fireworks.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "Fireworks" 
+        -sourceType "mel" 
+        -doubleClickCommand "FireworksOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Lightning: Create lightning effect" 
+        -enableBackground 0
+        -align "center" 
+        -label "Lightning" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "lightning.xpm" 
+        -image1 "lightning.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "Lightning" 
+        -sourceType "mel" 
+        -doubleClickCommand "LightningOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Shatter: Create shatter effects" 
+        -enableBackground 0
+        -align "center" 
+        -label "Shatter" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "shatter.xpm" 
+        -image1 "shatter.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "Shatter" 
+        -sourceType "mel" 
+        -doubleClickCommand "ShatterOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Curve Flow: Create flow along curves" 
+        -enableBackground 0
+        -align "center" 
+        -label "Curve Flow" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "flow.xpm" 
+        -image1 "flow.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "CurveFlow" 
+        -sourceType "mel" 
+        -doubleClickCommand "CurveFlowOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Surface Flow: Create flow along surfaces" 
+        -enableBackground 0
+        -align "center" 
+        -label "Surface Flow" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "flowSurface.xpm" 
+        -image1 "flowSurface.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "SurfaceFlow" 
+        -sourceType "mel" 
+        -doubleClickCommand "SurfaceFlowOptions" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Delete Surface Flow: Delete flow along surfaces" 
+        -enableBackground 0
+        -align "center" 
+        -label "Delete Surface Flow" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "flowSurfaceDelete.xpm" 
+        -image1 "flowSurfaceDelete.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "DeleteSurfaceFlow" 
+        -sourceType "mel" 
+        -doubleClickCommand "DeleteSurfaceFlowOptions" 
+        -commandRepeatable 1
+    ;
+
+} 

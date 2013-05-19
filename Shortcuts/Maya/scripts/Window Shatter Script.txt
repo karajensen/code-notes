@@ -1,0 +1,31 @@
+
+string $sel[] = `ls -sl`;
+int $selSize = size($sel);
+select -cl;
+for($i = 0; $i < $selSize; $i++)
+{
+    select -hierarchy -add $sel[$i];
+    select -d $sel[$i];
+}
+
+string $window[] = `ls -tr -sl`;
+int $vNo;
+for($c = 0; $c < size($window); $c++)
+{    
+   
+    //SHATTER
+    select -cl;
+    hilite $window[$c];
+    select -r ($window[$c] + ".vtx[0]");
+    crackShatter($window[$c], 1, 200, 0, 1, 0, 0, 3, "shapes", 0, 1);
+    
+    string $newShardgrp[] = `ls -sl`;
+    select -hi $newShardgrp[0];
+    select -d $newShardgrp[0];
+    string $newShards[] = `ls -sl -tr`;
+    select -r $newShards;
+    string $shardNames = $window[$c] + "s";
+    renameSelectionList($shardNames);
+}
+
+print(">>> COMPLETE! <<<");

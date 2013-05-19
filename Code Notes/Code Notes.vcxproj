@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3E7F704D-A4DF-4F8D-8DBD-97336E6D88C7}</ProjectGuid>
+    <RootNamespace>CodeNotes</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Algorithms.cpp" />
+    <ClCompile Include="Bit Manipulation.cpp" />
+    <ClCompile Include="Boost.cpp" />
+    <ClCompile Include="C# Notes.cpp" />
+    <ClCompile Include="C++CLI.cpp" />
+    <ClCompile Include="Callbacks.cpp" />
+    <ClCompile Include="Class Notes.cpp" />
+    <ClCompile Include="Class.cpp" />
+    <ClCompile Include="Classes\assimpmesh.cpp" />
+    <ClCompile Include="Classes\bulletphysics.cpp" />
+    <ClCompile Include="Classes\camera.cpp" />
+    <ClCompile Include="Classes\collision.cpp" />
+    <ClCompile Include="Classes\diagnostic.cpp" />
+    <ClCompile Include="Classes\event_receiver.cpp" />
+    <ClCompile Include="Classes\logger.cpp" />
+    <ClCompile Include="Classes\singleton.cpp" />
+    <ClCompile Include="Classes\timer.cpp" />
+    <ClCompile Include="Code Notes.cpp" />
+    <ClCompile Include="Code.cpp" />
+    <ClCompile Include="Design and Theory\Code Examples\Example - DFS with Minimax.cpp" />
+    <ClCompile Include="Design and Theory\Code Examples\Example - Managing Events.cpp" />
+    <ClCompile Include="Design and Theory\Code Examples\Example - Merge Sort.cpp" />
+    <ClCompile Include="Design and Theory\Data Algorithms.cpp" />
+    <ClCompile Include="Design and Theory\Data Structures.cpp" />
+    <ClCompile Include="Design and Theory\Design Patterns Overview.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Abstract Factory.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Bridge.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Builder.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Chain of Responsibility.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Command.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Composite.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Decorator.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Facade-Adapter.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Flyweight.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Interpreter.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Iterator.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Memento.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Obsever-Mediator.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Pimpl.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Prototype.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Proxy.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Singleton.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - State.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Strategy.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Template.cpp" />
+    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Visitor.cpp" />
+    <ClCompile Include="Design and Theory\Software Development.cpp" />
+    <ClCompile Include="Exceptions.cpp" />
+    <ClCompile Include="Game Programming\AI and pathfinding.cpp" />
+    <ClCompile Include="Game Programming\Collisions.cpp" />
+    <ClCompile Include="Game Programming\Integration.cpp" />
+    <ClCompile Include="Game Programming\Maths.cpp" />
+    <ClCompile Include="Game Programming\Model-driven Systems.cpp" />
+    <ClCompile Include="Game Programming\Physics.cpp" />
+    <ClCompile Include="Game Programming\Soft Body Simulation.cpp" />
+    <ClCompile Include="Graphics Programming\Directx.cpp" />
+    <ClCompile Include="Graphics Programming\Lighting.cpp" />
+    <ClCompile Include="Graphics Programming\Mental Ray Nodes.cpp" />
+    <ClCompile Include="Graphics Programming\Mental Ray.cpp" />
+    <ClCompile Include="Graphics Programming\OpenGL.cpp" />
+    <ClCompile Include="Graphics Programming\Post Effects.cpp" />
+    <ClCompile Include="Graphics Programming\Rendering.cpp" />
+    <ClCompile Include="Graphics Programming\Shaders.cpp" />
+    <ClCompile Include="Graphics Programming\Shadows.cpp" />
+    <ClCompile Include="Graphics Programming\Terrain.cpp" />
+    <ClCompile Include="Graphics Programming\Texturing.cpp" />
+    <ClCompile Include="Inheritance.cpp" />
+    <ClCompile Include="Languages\Assembly.cpp" />
+    <ClCompile Include="Languages\Code Examples\MEL - Special Shatter.cpp" />
+    <ClCompile Include="Languages\Maxscript forms.cpp" />
+    <ClCompile Include="Languages\Maxscript objects.cpp" />
+    <ClCompile Include="Languages\Maxscript.cpp" />
+    <ClCompile Include="Languages\Maya API Command Class.cpp" />
+    <ClCompile Include="Languages\Maya API Locator Class.cpp" />
+    <ClCompile Include="Languages\Maya API Node Class.cpp" />
+    <ClCompile Include="Languages\Maya API.cpp" />
+    <ClCompile Include="Languages\Maya Expressions.cpp" />
+    <ClCompile Include="Languages\MEL algorithms.cpp" />
+    <ClCompile Include="Languages\MEL animation.cpp" />
+    <ClCompile Include="Languages\MEL forms.cpp" />
+    <ClCompile Include="Languages\MEL objects.cpp" />
+    <ClCompile Include="Languages\MEL.cpp" />
+    <ClCompile Include="Languages\Python containers.cpp" />
+    <ClCompile Include="Languages\Python for Maya.cpp" />
+    <ClCompile Include="Languages\Python for RealFlow.cpp" />
+    <ClCompile Include="Languages\Python modules.cpp" />
+    <ClCompile Include="Languages\Python notes.cpp" />
+    <ClCompile Include="Memory.cpp" />
+    <ClCompile Include="STL Containers.cpp" />
+    <ClCompile Include="STL Notes.cpp" />
+    <ClCompile Include="STL.cpp" />
+    <ClCompile Include="Templates.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.gitignore" />
+    <None Include="C# .NET Framework.cs" />
+    <None Include="C# Callbacks.cs" />
+    <None Include="C# Class.cs" />
+    <None Include="C# Code.cs" />
+    <None Include="C# Containers.cs" />
+    <None Include="Cheatsheet.txt" />
+    <None Include="Graphics Programming\GLSL Shaders\ps.glsl" />
+    <None Include="Graphics Programming\GLSL Shaders\psShadow.glsl" />
+    <None Include="Graphics Programming\GLSL Shaders\psTexture.glsl" />
+    <None Include="Graphics Programming\GLSL Shaders\psToon.glsl" />
+    <None Include="Graphics Programming\GLSL Shaders\psToonLine.glsl" />
+    <None Include="Graphics Programming\GLSL Shaders\psToonPost.glsl" />
+    <None Include="Graphics Programming\GLSL Shaders\vs.glsl" />
+    <None Include="Graphics Programming\GLSL Shaders\vsShadow.glsl" />
+    <None Include="Graphics Programming\GLSL Shaders\vsTexture.glsl" />
+    <None Include="Graphics Programming\GLSL Shaders\vsToon.glsl" />
+    <None Include="Graphics Programming\GLSL Shaders\vsToonLine.glsl" />
+    <None Include="Graphics Programming\GLSL Shaders\vsToonPost.glsl" />
+    <None Include="Graphics Programming\HLSL Shaders\blur-sharpen.hlsl" />
+    <None Include="Graphics Programming\HLSL Shaders\bounds.fx" />
+    <None Include="Graphics Programming\HLSL Shaders\bump.fx" />
+    <None Include="Graphics Programming\HLSL Shaders\depthRender.fx" />
+    <None Include="Graphics Programming\HLSL Shaders\fairytaleGlowDepth.hlsl" />
+    <None Include="Graphics Programming\HLSL Shaders\fairytalePost.hlsl" />
+    <None Include="Graphics Programming\HLSL Shaders\liquid.fx" />
+    <None Include="Graphics Programming\HLSL Shaders\luminance.fx" />
+    <None Include="Graphics Programming\HLSL Shaders\main.fx" />
+    <None Include="Graphics Programming\HLSL Shaders\normal.fx" />
+    <None Include="Graphics Programming\HLSL Shaders\reflect.fx" />
+    <None Include="Graphics Programming\HLSL Shaders\shadow.fx" />
+    <None Include="Graphics Programming\HLSL Shaders\skybox.fx" />
+    <None Include="Graphics Programming\HLSL Shaders\static.fx" />
+    <None Include="Graphics Programming\HLSL Shaders\texture.fx" />
+    <None Include="Graphics Programming\HLSL Shaders\toon.fx" />
+    <None Include="Graphics Programming\HLSL Shaders\water.fx" />
+    <None Include="Hotkeys.txt" />
+    <None Include="IMAGES\Bits - HexConverting.png" />
+    <None Include="IMAGES\Buffer - Depth Buffer Testing.png" />
+    <None Include="IMAGES\Collision - Box Algorithms.png" />
+    <None Include="IMAGES\Collision - Sphere Algorithms.png" />
+    <None Include="IMAGES\Data - Binary Search.png" />
+    <None Include="IMAGES\Data - Merged Sort.PNG" />
+    <None Include="IMAGES\DirectX - Surfaces.png" />
+    <None Include="IMAGES\DirectX - Vertex declaractions &amp; shader vars.PNG" />
+    <None Include="IMAGES\Integration - Explicit &amp; Implicit.png" />
+    <None Include="IMAGES\Light - Bump Mapping Normals.png" />
+    <None Include="IMAGES\Light - Inverse Square Attenuation.png" />
+    <None Include="IMAGES\Light - Lighting Models Diagram.jpg" />
+    <None Include="IMAGES\Light - Material Effects.png" />
+    <None Include="IMAGES\Light - Material Types.png" />
+    <None Include="IMAGES\Light - PerVertex and PerPixel lighting.png" />
+    <None Include="IMAGES\Light - Specular Models.png" />
+    <None Include="IMAGES\Light - Spot.png" />
+    <None Include="IMAGES\Light - Vector relationships.png" />
+    <None Include="IMAGES\Mapping - Bump Mapping Normals.png" />
+    <None Include="IMAGES\Maths - barycentric coordinates.png" />
+    <None Include="IMAGES\Maths - expressing in basis diagram.png" />
+    <None Include="IMAGES\Maths - expressing in basis.png" />
+    <None Include="IMAGES\Maths - plane equation.png" />
+    <None Include="IMAGES\Maths - polar coordinates.png" />
+    <None Include="IMAGES\Maths - rotation around arbitrary axis.png" />
+    <None Include="IMAGES\Model - Primitives.jpg" />
+    <None Include="IMAGES\Model - Skybox.bmp" />
+    <None Include="IMAGES\Optimising - Backface Culling.png" />
+    <None Include="IMAGES\Optimising - BSP trees.png" />
+    <None Include="IMAGES\Optimising - BSP.png" />
+    <None Include="IMAGES\Optimising - Occulsion Culling.png" />
+    <None Include="IMAGES\Optimising - Octree Example.png" />
+    <None Include="IMAGES\Optimising - Portals.png" />
+    <None Include="IMAGES\Optimising - View Frustum.gif" />
+    <None Include="IMAGES\Pattern - observer.png" />
+    <None Include="IMAGES\Physics - kinematics.png" />
+    <None Include="IMAGES\Render - Projection Matrix.PNG" />
+    <None Include="IMAGES\Render - Projection Matrix2.PNG" />
+    <None Include="IMAGES\Render - Rendering Pipeline.jpg" />
+    <None Include="IMAGES\Render - Shader Pipeline.png" />
+    <None Include="IMAGES\Render - ShaderModel 5.0 Pipeline.jpg" />
+    <None Include="IMAGES\Shadow - Shadow Volume Stencil Testing.png" />
+    <None Include="IMAGES\MR - DOF theory and 3 Point Lighting.png" />
+    <None Include="IMAGES\MR - Final Gathering.png" />
+    <None Include="IMAGES\MR - Global Illumination.png" />
+    <None Include="IMAGES\MR - Importons.png" />
+    <None Include="IMAGES\MR - Irradiance Particles.png" />
+    <None Include="IMAGES\MR - Subsurface Scattering.png" />
+    <None Include="IMAGES\Render - RayTracing.png" />
+    <None Include="IMAGES\Terrain - Clipmapping.png" />
+    <None Include="IMAGES\Texture - Filter types.png" />
+    <None Include="IMAGES\Texture - Mapping.png" />
+    <None Include="IMAGES\Texture - Tints,Shades,Tones.png" />
+    <None Include="IMAGES\Texture - Wrapping.png" />
+    <None Include="Languages\Code Examples\Max - ConvexHull.ms" />
+    <None Include="Languages\Code Examples\PyQt - CodingWindowInMaya.py" />
+    <None Include="Languages\Code Examples\PyQt - CreatingWindowInDesigner.py" />
+    <None Include="Languages\Code Examples\PyQt - FileReader.pyw" />
+    <None Include="Languages\Code Examples\Python - RealFlow MultiBody Loader.rfs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Classes\assimpmesh.h" />
+    <ClInclude Include="Classes\bulletphysics.h" />
+    <ClInclude Include="Classes\camera.h" />
+    <ClInclude Include="Classes\collision.h" />
+    <ClInclude Include="Classes\color.h" />
+    <ClInclude Include="Classes\diagnostic.h" />
+    <ClInclude Include="Classes\dynamicarray.h" />
+    <ClInclude Include="Classes\event_receiver.h" />
+    <ClInclude Include="Classes\float3.h" />
+    <ClInclude Include="Classes\logger.h" />
+    <ClInclude Include="Classes\matrix.h" />
+    <ClInclude Include="Classes\singleton.h" />
+    <ClInclude Include="Classes\timer.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

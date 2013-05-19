@@ -1,0 +1,728 @@
+
+    menuItem
+        -label "Plane" 
+        -divider 0
+        -subMenu 1
+        -tearOff 0
+        -enable 1
+        -data 0
+        -radialPosition "N" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -italicized 0
+        -boldFont 0
+        menuEditorMenuItem13;
+
+        menuItem
+            -label "Subdiv Plane" 
+            -divider 0
+            -subMenu 0
+            -command "CreateSubdivPlane" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "SW" 
+            -enableCommandRepeat 1
+            -image "subdivPlane.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 0
+            menuEditorMenuItem16;
+
+        menuItem
+            -label "Poly Plane Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreatePolygonPlaneOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "W" 
+            -enableCommandRepeat 1
+            -image "polyMesh.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem39;
+
+        menuItem
+            -label "NURBS Plane Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreateNURBSPlaneOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "NW" 
+            -enableCommandRepeat 1
+            -image "plane.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem38;
+
+    setParent -m ..;
+
+    menuItem
+        -label "Torus" 
+        -divider 0
+        -subMenu 1
+        -tearOff 0
+        -enable 1
+        -data 0
+        -radialPosition "NE" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -italicized 0
+        -boldFont 0
+        menuEditorMenuItem17;
+
+        menuItem
+            -label "Subdiv Torus" 
+            -divider 0
+            -subMenu 0
+            -command "CreateSubdivTorus" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "SW" 
+            -enableCommandRepeat 1
+            -image "subdivTorus.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 0
+            menuEditorMenuItem20;
+
+        menuItem
+            -label "Poly Torus Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreatePolygonTorusOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "W" 
+            -enableCommandRepeat 1
+            -image "polyTorus.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem37;
+
+        menuItem
+            -label "NURBS Torus Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreateNURBSTorusOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "NW" 
+            -enableCommandRepeat 1
+            -image "torus.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem36;
+
+    setParent -m ..;
+
+    menuItem
+        -label "Shapes" 
+        -divider 0
+        -subMenu 1
+        -tearOff 0
+        -enable 1
+        -data 0
+        -radialPosition "E" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -italicized 0
+        -boldFont 0
+        menuEditorMenuItem21;
+
+        menuItem
+            -label "NURBS Square" 
+            -divider 0
+            -subMenu 0
+            -command "CreateNURBSSquare" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "W" 
+            -enableCommandRepeat 1
+            -image "square.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 0
+            menuEditorMenuItem22;
+
+        menuItem
+            -label "NURBS Circle" 
+            -divider 0
+            -subMenu 0
+            -command "CreateNURBSCircle" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "NW" 
+            -enableCommandRepeat 1
+            -image "circle.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 0
+            menuEditorMenuItem23;
+
+    setParent -m ..;
+
+    menuItem
+        -label "Curves" 
+        -divider 0
+        -subMenu 1
+        -tearOff 0
+        -enable 1
+        -data 0
+        -radialPosition "SE" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -italicized 0
+        -boldFont 0
+        menuEditorMenuItem24;
+
+        menuItem
+            -label "EPCurveTool" 
+            -divider 0
+            -subMenu 0
+            -command "EPCurveTool;\rcurveEPToolScript 4;\r// Result: curveContextEP // \rchangeToolIcon;\rautoUpdateAttrEd;\rupdateAnimLayerEditor(\"AnimLayerTab\");\rstatusLineUpdateInputField;\r" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "N" 
+            -enableCommandRepeat 1
+            -image "commandButton.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem26;
+
+        menuItem
+            -label "CVCurveTool" 
+            -divider 0
+            -subMenu 0
+            -command "CVCurveTool;\rcurveCVToolScript 4;\r// Result: curveContextCV // \rchangeToolIcon;\rautoUpdateAttrEd;\rupdateAnimLayerEditor(\"AnimLayerTab\");\rstatusLineUpdateInputField;\r" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "NW" 
+            -enableCommandRepeat 1
+            -image "commandButton.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem25;
+
+    setParent -m ..;
+
+    menuItem
+        -label "Cone" 
+        -divider 0
+        -subMenu 1
+        -tearOff 0
+        -enable 1
+        -data 0
+        -radialPosition "S" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem40;
+
+        menuItem
+            -label "Subdiv Cone" 
+            -divider 0
+            -subMenu 0
+            -command "CreateSubdivCone" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "SW" 
+            -enableCommandRepeat 1
+            -image "subdivCone.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem41;
+
+        menuItem
+            -label "Poly Cone Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreatePolygonConeOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "W" 
+            -enableCommandRepeat 1
+            -image "polyCone.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem43;
+
+        menuItem
+            -label "NURBS Cone Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreateNURBSConeOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "NW" 
+            -enableCommandRepeat 1
+            -image "cone.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem42;
+
+    setParent -m ..;
+
+    menuItem
+        -label "Cylinder" 
+        -divider 0
+        -subMenu 1
+        -tearOff 0
+        -enable 1
+        -data 0
+        -radialPosition "SW" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -italicized 0
+        -boldFont 0
+        menuEditorMenuItem9;
+
+        menuItem
+            -label "Subdiv Cylinder" 
+            -divider 0
+            -subMenu 0
+            -command "CreateSubdivCylinder" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "SW" 
+            -enableCommandRepeat 1
+            -image "subdivCylinder.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 0
+            menuEditorMenuItem11;
+
+        menuItem
+            -label "Poly Cylinder Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreatePolygonCylinderOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "W" 
+            -enableCommandRepeat 1
+            -image "polyCylinder.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem34;
+
+        menuItem
+            -label "NURBS Cylinder Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreateNURBSCylinderOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "NW" 
+            -enableCommandRepeat 1
+            -image "cylinder.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem33;
+
+    setParent -m ..;
+
+    menuItem
+        -label "Cube" 
+        -divider 0
+        -subMenu 1
+        -tearOff 0
+        -enable 1
+        -data 0
+        -radialPosition "W" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -italicized 0
+        -boldFont 0
+        menuEditorMenuItem5;
+
+        menuItem
+            -label "Subdiv Cube" 
+            -divider 0
+            -subMenu 0
+            -command "CreateSubdivCube" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "SW" 
+            -enableCommandRepeat 1
+            -image "subdivCube.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 0
+            menuEditorMenuItem8;
+
+        menuItem
+            -label "Poly Cube Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreatePolygonCubeOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "W" 
+            -enableCommandRepeat 1
+            -image "polyCube.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem31;
+
+        menuItem
+            -label "NURBS Cube Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreateNURBSCubeOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "NW" 
+            -enableCommandRepeat 1
+            -image "cube.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem30;
+
+    setParent -m ..;
+
+    menuItem
+        -label "Sphere" 
+        -divider 0
+        -subMenu 1
+        -tearOff 0
+        -enable 1
+        -data 0
+        -radialPosition "NW" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -italicized 0
+        -boldFont 0
+        menuEditorMenuItem1;
+
+        menuItem
+            -label "Subdiv Sphere" 
+            -divider 0
+            -subMenu 0
+            -command "CreateSubdivSphere" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "SW" 
+            -enableCommandRepeat 1
+            -image "subdivSphere.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 0
+            menuEditorMenuItem4;
+
+        menuItem
+            -label "Poly Sphere Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreatePolygonSphereOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "W" 
+            -enableCommandRepeat 1
+            -image "polySphere.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem28;
+
+        menuItem
+            -label "NURBS Sphere Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreateNURBSSphereOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "NW" 
+            -enableCommandRepeat 1
+            -image "sphere.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem27;
+
+    setParent -m ..;
+
+    menuItem
+        -label "Extra Poly" 
+        -divider 0
+        -subMenu 1
+        -tearOff 0
+        -enable 1
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem44;
+
+        menuItem
+            -label "Poly Tube Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreatePolygonPipeOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -enableCommandRepeat 1
+            -image "polyPipe.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem45;
+
+        menuItem
+            -label "Poly Soccer Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreatePolygonSoccerBallOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -enableCommandRepeat 1
+            -image "polySoccerBall.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem46;
+
+        menuItem
+            -label "Poly Pyramid Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreatePolygonPyramidOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -enableCommandRepeat 1
+            -image "polyPyramid.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem47;
+
+        menuItem
+            -label "Poly Prism Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreatePolygonPrismOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -enableCommandRepeat 1
+            -image "polyPrism.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem48;
+
+        menuItem
+            -label "Poly Platonic Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreatePlatonicSolidOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -enableCommandRepeat 1
+            -image "polyPlatonic.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem49;
+
+        menuItem
+            -label "Poly Helix Opt" 
+            -divider 0
+            -subMenu 0
+            -command "CreatePolygonHelixOptions" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -enableCommandRepeat 1
+            -image "polyHelix.xpm" 
+            -echoCommand 0
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem50;
+
+    setParent -m ..;
+
+setParent -m ..;
+

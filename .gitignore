@@ -1,0 +1,13 @@
+*.opensdf
+*.sdf
+*.suo
+*.db
+*.vcxproj.user
+*.exe
+*.ilk
+*.pdb
+Code Notes/Debug/
+Code Notes/Release/
+Debug/
+Release/
+ipch/

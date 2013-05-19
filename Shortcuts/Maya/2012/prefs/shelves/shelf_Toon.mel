@@ -1,0 +1,459 @@
+global proc shelf_Toon () {
+    global string $gBuffStr;
+    global string $gBuffStr0;
+    global string $gBuffStr1;
+
+
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Solid Color: Fill the surface with a constant, non-shaded color" 
+        -enableBackground 0
+        -align "center" 
+        -label "Solid Color" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonSolid.xpm" 
+        -image1 "toonSolid.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "assignToonShader \"solid\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Light Angle Two Tone: Index a ramp color based on the light angle, brightness based on light brightness" 
+        -enableBackground 0
+        -align "center" 
+        -label "Light Angle Two Tone" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonLightAngle2.xpm" 
+        -image1 "toonLightAngle2.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "assignToonShader \"lightAngle\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Shaded Brightness Two Tone: Index a ramp color based on the diffuse shaded brightness" 
+        -enableBackground 0
+        -align "center" 
+        -label "Shaded Brightness Two Tone" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonBrightness2.xpm" 
+        -image1 "toonBrightness2.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "assignToonShader \"shadedBrightness\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Shaded Brightness Three Tone: Index three colors based on the diffuse shaded brightness" 
+        -enableBackground 0
+        -align "center" 
+        -label "Shaded Brightness Three Tone" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonBrightness3.xpm" 
+        -image1 "toonBrightness3.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "assignToonShader \"threeToneBrightness\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Dark Profile: Threshold the color based on the view angle with the edges" 
+        -enableBackground 0
+        -align "center" 
+        -label "Dark Profile" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonDarkProfile.xpm" 
+        -image1 "toonDarkProfile.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "assignToonShader \"darkProfile\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Rim Light: Edges have a white highlight" 
+        -enableBackground 0
+        -align "center" 
+        -label "Rim Light" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonRimLight.xpm" 
+        -image1 "toonRimLight.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "assignToonShader \"rimLight\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Circle Highlight: A light angle shader with a round hard edged specular highlight" 
+        -enableBackground 0
+        -align "center" 
+        -label "Circle Highlight" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonCircleHigh.xpm" 
+        -image1 "toonCircleHigh.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "assignToonShader \"circleHighlight\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Create Modifier: Create a line modifier object and attach to selected toon lines" 
+        -enableBackground 0
+        -align "center" 
+        -label "Create Modifier" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonLineModifier.xpm" 
+        -image1 "toonLineModifier.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "createLineModifier" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Edit persp.backgroundColor" 
+        -enableBackground 0
+        -align "center" 
+        -label "Persp" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -imageOverlayLabel "per" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "menuIconCartoon.xpm" 
+        -image1 "menuIconCartoon.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "editAttributeColor persp.backgroundColor" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Get Toon Example...: Browse toon examples to import..." 
+        -enableBackground 0
+        -align "center" 
+        -label "Get Toon Example..." 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonGetExample.xpm" 
+        -image1 "toonGetExample.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GetToonExample" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Assign a Paint Effects brush to selected pfxToon nodes" 
+        -enableBackground 0
+        -align "center" 
+        -label "Assign Paint Effects Brush to Toon Lines" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonAssignPfxBrush.xpm" 
+        -image1 "toonAssignPfxBrush.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "assignBrushToPfxToon" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Convert Toon to Polygons: Paint Effects to polygons" 
+        -enableBackground 0
+        -align "center" 
+        -label "Convert Toon to Polygons" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonToPolygons.xpm" 
+        -image1 "toonToPolygons.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "PaintEffectsToPoly" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Line Width: Paint a line width map for the selected toon node" 
+        -enableBackground 0
+        -align "center" 
+        -label "Line Width" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonPaintWidth.xpm" 
+        -image1 "toonPaintWidth.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "paintToonAttribute \"lineWidthMap\" \"Line Width\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Line Offset: Paint a line offset map for the selected toon node" 
+        -enableBackground 0
+        -align "center" 
+        -label "Line Offset" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonPaintOffset.xpm" 
+        -image1 "toonPaintOffset.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "paintToonAttribute \"lineOffsetMap\" \"Line Offset\" " 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Line Opacity: Paint a line opacity map for the selected toon node" 
+        -enableBackground 0
+        -align "center" 
+        -label "Line Opacity" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonPaintOpacity.xpm" 
+        -image1 "toonPaintOpacity.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "paintToonAttribute \"lineOpacityMap\" \"Line Opacity\" " 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Profile Color: Paint a profile line color map for the selected toon node" 
+        -enableBackground 0
+        -align "center" 
+        -label "Profile Color" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonPaintProfileColor.xpm" 
+        -image1 "toonPaintProfileColor.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "paintToonAttribute \"profileColor\" \"Profile Color\" " 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Crease Color: Paint a crease line color map for the selected toon node" 
+        -enableBackground 0
+        -align "center" 
+        -label "Crease Color" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonPaintCreaseColor.xpm" 
+        -image1 "toonPaintCreaseColor.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "paintToonAttribute \"creaseColor\" \"Crease Color\" " 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Border Color: Paint a border line color map for the selected toon node" 
+        -enableBackground 0
+        -align "center" 
+        -label "Border Color" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "toonPaintBorderColor.xpm" 
+        -image1 "toonPaintBorderColor.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "paintToonAttribute \"borderColor\" \"Border Color\" " 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+
+} 

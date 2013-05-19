@@ -1,0 +1,437 @@
+
+    menuItem
+        -label "Split Polygon Tool" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "SplitPolygonTool" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "NE" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "polySplitFacet.xpm" 
+        -echoCommand 0
+        -annotation "Split Polygon Tool" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem5;
+
+    menuItem
+        -label "Delete Edge/Vertex" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "performPolyDeleteElements" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "S" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "polyDelEdgeVertex.png" 
+        -echoCommand 0
+        -annotation "Delete Edge/Vertex" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem10;
+
+    menuItem
+        -label "menuEditorMenuItem11" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 1
+        -enable 1
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 0
+        -annotation "menuEditorMenuItem11" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem11;
+
+    menuItem
+        -label "Cut Faces Tool" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "CutPolygon" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "N" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "polyCut.xpm" 
+        -echoCommand 0
+        -annotation "Cut Faces Tool" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem12;
+
+    menuItem
+        -label "Select" 
+        -divider 0
+        -subMenu 1
+        -tearOff 0
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "E" 
+        -allowOptionBoxes 1
+        -enableCommandRepeat 1
+        -annotation "Select" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem7;
+
+        menuItem
+            -label "Select Border Edge" 
+            -divider 0
+            -subMenu 0
+            -tearOff 0
+            -command "SelectBorderEdgeTool" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "NW" 
+            -allowOptionBoxes 1
+            -postMenuCommandOnce 0
+            -enableCommandRepeat 1
+            -image "polySelectEdgeBorder.xpm" 
+            -echoCommand 0
+            -annotation "Select Border Edge" 
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem1;
+
+        menuItem
+            -label "Select Edge Ring" 
+            -divider 0
+            -subMenu 0
+            -tearOff 0
+            -command "SelectEdgeRingTool" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "W" 
+            -allowOptionBoxes 1
+            -postMenuCommandOnce 0
+            -enableCommandRepeat 1
+            -image "polySelectEdgeRing.xpm" 
+            -echoCommand 0
+            -annotation "Select Edge Ring" 
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem2;
+
+        menuItem
+            -label "Select Edge Loop" 
+            -divider 0
+            -subMenu 0
+            -tearOff 0
+            -command "SelectEdgeLoopTool" 
+            -altModifier 0
+            -optionModifier 0
+            -commandModifier 0
+            -ctrlModifier 0
+            -shiftModifier 0
+            -optionBox 0
+            -enable 1
+            -data 0
+            -radialPosition "SW" 
+            -allowOptionBoxes 1
+            -postMenuCommandOnce 0
+            -enableCommandRepeat 1
+            -image "polySelectEdgeLoop.xpm" 
+            -echoCommand 0
+            -annotation "Select Edge Loop" 
+            -italicized 0
+            -boldFont 1
+            menuEditorMenuItem3;
+
+    setParent -m ..;
+
+    menuItem
+        -label "Slide Edge Tool" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "SlideEdgeTool" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "SE" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "slideEdgeTool.png" 
+        -echoCommand 0
+        -annotation "Slide Edge Tool" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem9;
+
+    menuItem
+        -label "menuEditorMenuItem16" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "SlideEdgeToolOptions" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 1
+        -enable 1
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 0
+        -echoCommand 0
+        -annotation "menuEditorMenuItem16" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem16;
+
+    menuItem
+        -label "Merge Vertex Tool" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "MergeVertexTool" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "W" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "polyMergeVertex.png" 
+        -echoCommand 0
+        -annotation "Merge Vertex Tool" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem1;
+
+    menuItem
+        -label "menuEditorMenuItem2" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "MergeVertexToolOptions" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 1
+        -enable 1
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 0
+        -echoCommand 0
+        -annotation "menuEditorMenuItem2" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem2;
+
+    menuItem
+        -label "Insert Edge Loop" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "SplitEdgeRingTool" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "SW" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "polySplitEdgeRing.xpm" 
+        -echoCommand 0
+        -annotation "Insert Edge Loop" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem15;
+
+    menuItem
+        -label "Merge" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "performPolyMerge 0" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "NW" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "polyMerge.png" 
+        -echoCommand 0
+        -annotation "Merge" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem8;
+
+    menuItem
+        -label "menuEditorMenuItem14" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "PolyMergeOptions" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 1
+        -enable 1
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 0
+        -echoCommand 0
+        -annotation "menuEditorMenuItem14" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem14;
+
+    menuItem
+        -label "Offset Edge Loop" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "performPolyDuplicateEdge 0" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "polyDuplicateEdgeLoop.xpm" 
+        -echoCommand 0
+        -annotation "Offset Edge Loop" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem13;
+
+    menuItem
+        -label "menuEditorMenuItem14" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "DuplicateEdgesOptions" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 1
+        -enable 1
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 0
+        -echoCommand 0
+        -annotation "menuEditorMenuItem14" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem6;
+
+    menuItem
+        -label "Crease Tool" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "PolyCreaseTool" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "polyCrease.png" 
+        -echoCommand 0
+        -annotation "Crease Tool" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem17;
+
+setParent -m ..;
+

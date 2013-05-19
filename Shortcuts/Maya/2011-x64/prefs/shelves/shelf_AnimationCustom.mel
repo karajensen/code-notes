@@ -1,0 +1,107 @@
+global proc shelf_AnimationCustom () {
+    global string $gBuffStr;
+    global string $gBuffStr0;
+    global string $gBuffStr1;
+
+
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "Ghosting" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "ghost.xpm" 
+        -image1 "ghost.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "int $toggle;\rif ($toggle == 0)\r{\r\tCreateGhost;\r\t$toggle = 0;\r}\relse\r{\r\tDoUnghost;\r\t$toggle = 1;\r}\r" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "GraphEditor" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -imageOverlayLabel "GraphEditor" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "commandButton.xpm" 
+        -image1 "commandButton.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GraphEditor;\rtearOffPanel \"Graph Editor\" \"graphEditor\" true;\raddGraphEditor graphEditor1;\rOutlinerEdMenu graphEditor1OutlineEd;\rOutlinerEdMenu graphEditor1OutlineEdSlave;\rcreateModelPanelMenu modelPanel1;\rcreateModelPanelMenu modelPanel2;\rcreateModelPanelMenu modelPanel3;\rcreateModelPanelMenu modelPanel4;\rcreateOutlinerPanelMenu outlinerPanel1;\rbuildPanelPopupMenu hyperShadePanel1;\rbuildPanelPopupMenu scriptEditorPanel1;\rbuildPanelPopupMenu graphEditor1;\r// Result: graphEditor1Window // \rremoveGraphEditor graphEditor1;\r" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "DopeSheet" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -imageOverlayLabel "DopeSheet" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "commandButton.xpm" 
+        -image1 "commandButton.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "DopeSheetEditor;\rtearOffPanel \"Dope Sheet\" \"dopeSheetPanel\" true;\raddDopeSheetPanel dopeSheetPanel1;\rOutlinerEdMenu dopeSheetPanel1OutlineEd;\rDopeSheetEdMenu dopeSheetPanel1DopeSheetEd;\rcreateModelPanelMenu modelPanel1;\rcreateModelPanelMenu modelPanel2;\rcreateModelPanelMenu modelPanel3;\rcreateModelPanelMenu modelPanel4;\rcreateOutlinerPanelMenu outlinerPanel1;\rbuildPanelPopupMenu hyperShadePanel1;\rbuildPanelPopupMenu scriptEditorPanel1;\rbuildPanelPopupMenu dopeSheetPanel1;\r// Result: dopeSheetPanel1Window // \rremoveDopeSheetPanel dopeSheetPanel1;\r" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "LatticeOpt" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -imageOverlayLabel "LatticeOpt" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "commandButton.xpm" 
+        -image1 "commandButton.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "CreateLatticeOptions;\rperformLattice true;\r" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+
+} 

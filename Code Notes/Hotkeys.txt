@@ -1,0 +1,149 @@
+﻿///////////////////////////////////////////////////////////////////////////////////////////////////////
+//MATHS
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+X▪			derivative					∏			pi
+ʃ0-t{}		integral from 0 to t		'			prime
+µ			friction					̂	   	    unit vector
+Ɵ			theta angle					∆			change in
+ɸ			phi angle					ᵀ			transpose
+√()			square root					τ			torque
+∞			infinite					α			alpha
+∑			sum of						ᶜ			centripetal
+‖ ‖			magnitude					⊗			tensor product
+⊥			perpendicular				⁂			therefore
+¹/₂			half						≤≥			less/greater
+tan¯¹()	    trigonmetry					▲►▼◄		arrows
+̅			conjugate					̿			double conjugate
+•			dot point
+
+ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻᶿᵝᶲᴬᴮᴰᴱᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾᴿᵀᵁᵂ¯⁴⁵²³¹°⁶⁷⁸⁹⁺⁻⁼⁽⁾ 
+ₐₑᵢₒᵣᵤᵥₓᵦ₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎
+
+
+//////////////////////////////////////////////////////////////////////////////
+//3DS MAX
+//////////////////////////////////////////////////////////////////////////////
+
+MAX HOTKEYS:
+Top View                    t
+Bottom View                 b
+Left View                   l
+Front View                  f
+Camera View                 c
+Perspective View            p
+Maximize Viewport Toggle    ALT+w
+Wireframe / Smooth Toggle   F3
+Material Editor             m
+Hide Camera Toggle          SHIFT+C
+Hide Lights Toggle          SHIFT+L
+Start Frame                 HOME
+End Frame                   END
+Select                      q
+Move                        w
+Rotate                      e
+Scale                       r
+Zoom viewports              [ or ]
+
+//////////////////////////////////////////////////////////////////////////////
+//MAYA
+//////////////////////////////////////////////////////////////////////////////
+
+1,2,3 = smoothness for NURBS, Proxy for Polys
+4,5,6 = Wireframe, solid, textured
+9 = Toggle view backface
+F8 = toggle object/component mode
+z = undo
+w = move
+e = rotate
+r = scale
+g = last tool used
+f = focus
+a = frame
+SPACE = zoom
+CTRL D = Duplicate
+
+c = snap to curve
+v = snap to point
+x = snap to grid
+
+SPACE LMC [TOP] = various layouts
+SPACE LMC [BOT] = various editors
+SPACE LMC [MID] = orthographic
+
+SHIFT RMC = Polygon editing
+RMC = components
+g = last tool used
+b = soft select
+alt b = toggle dark/light background
+! = invert selection
+CTRL e = extrude
+
+ALT a LMC = Animation Custom
+ALT f LMC = Dynamics selection mask
+ALT d LMC = Dynamics Custom
+ALT x LMC = General Tools
+ALT g LMC = Normal Selection mask
+ALT v LMC = Polymodelling
+ALT n LMC = NURBSmodelling
+ALT m LMC = Meshmodelling
+ALT c LMC = CurvesModelling
+ALT o LMC = Create Objects
+ALT j LMC = Render views
+ALT r LMC = Rigging
+
+//////////////////////////////////////////////////////////////////////////////
+//BLENDER
+//////////////////////////////////////////////////////////////////////////////
+
+SELECT WITH: LMB
+VIEW ZOOM: dolly
+MIDDLE MOUSE BUTTON: rotate view
+VIEW ROTATION: Turntable
+
+n = transform window
+b = box select
+e = extrude
+i = insert keyframe menu
+c = center view on cursor
+g = hide
+f = change brush size
+
+TAB = component mode
+CTRL TAB = component selection type
+
+CTRL ALT g = move
+CTRL ALT s = scale
+CTRL ALT r = rotate
+
+CTRL i = select inverse
+CTRL g = group/add selected objs to group
+ALT g = ungroup
+
+CTRL l = browse through keyframes of pose model (scroll wheel to browse)
+
+ALT m  = merge verts
+CTRL r = insert edgeloop
+ALT LMB = select edge loop
+CTRL ALT LMB = select edge ring
+
+SHIFT s = snap menu
+
+NUMPAD:
+. = zoom to object
+1-0 = veiws
+
+VIEWS:
+CTRL UP = toggle view out of full screen
+CTRL DOWN = make view full screen 
+
+
+//////////////////////////////////////////////////////////////////////////////
+//MUDBOX
+//////////////////////////////////////////////////////////////////////////////
+
+Camera 2D PAN: Shift, Alt, LMB
+Camera 2D Rotate: Crtl, Alt, LMB
+Camera 2D Scale: Nothing
+Zoom: Z, LMB
+Rotate Around: Alt, LMB

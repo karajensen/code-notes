@@ -1,0 +1,353 @@
+global proc shelf_Rigging () {
+    global string $gBuffStr;
+    global string $gBuffStr0;
+    global string $gBuffStr1;
+
+
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "Mirror Joint" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "kinMirrorJoint_S.xpm" 
+        -image1 "kinMirrorJoint_S.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "MirrorJoint" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "Connect Joint" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "kinConnect.xpm" 
+        -image1 "kinConnect.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "ConnectJoint" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "Disconnect Joint" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "kinDisconnect.xpm" 
+        -image1 "kinDisconnect.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "DisconnectJoint" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "IK Handle Tool" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "kinHandle.xpm" 
+        -image1 "kinHandle.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "IKHandleTool" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "Joint Tool" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "kinJoint.xpm" 
+        -image1 "kinJoint.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "JointTool" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "BlendShapeEditor" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -imageOverlayLabel "BlendShapeEditor" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "commandButton.xpm" 
+        -image1 "commandButton.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "BlendShapeEditor;\rtearOffPanel \"Blend Shape\" \"blendShapePanel\" false;\rcreateModelPanelMenu modelPanel1;\rcreateModelPanelMenu modelPanel2;\rcreateModelPanelMenu modelPanel3;\rcreateModelPanelMenu modelPanel4;\rcreateOutlinerPanelMenu outlinerPanel1;\rbuildPanelPopupMenu hyperShadePanel1;\rbuildPanelPopupMenu scriptEditorPanel1;\rcreateBlendShapePanelMenu blendShapePanel1;\r// Result: blendShapePanel1Window // \r" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "BlendShape" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -imageOverlayLabel "BlendShape" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "commandButton.xpm" 
+        -image1 "commandButton.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "CreateBlendShape;\rperformBlendShape 0;\rblendShape -frontOfChain;\r// Result: blendShape5 // \r// Result: blendShape -frontOfChain // \rsetFilterScript \"initialShadingGroup\";\r// Result: 0 // \rsetFilterScript \"initialParticleSE\";\r// Result: 0 // \rsetFilterScript \"defaultLightSet\";\r// Result: 1 // \rsetFilterScript \"defaultObjectSet\";\r// Result: 1 // \rsetFilterScript \"blendShape1Set\";\r// Result: 0 // \rsetFilterScript \"tweakSet1\";\r// Result: 0 // \rsetFilterScript \"blendShape2Set\";\r// Result: 0 // \rsetFilterScript \"blendShape3Set\";\r// Result: 0 // \rsetFilterScript \"blendShape4Set\";\r// Result: 0 // \rsetFilterScript \"blendShape5Set\";\r// Result: 0 // \rsetUITemplate -pst attributeEditorTemplate;\r// Result: attributeEditorTemplate // \rsetParent MayaWindow|mayaMainWindowForm|formLayout3|formLayout9|formLayout28|formLayout29|formLayout34|AEmenuBarLayout|AErootLayout|AErootLayoutPane|AEbaseFormLayout|AEcontrolFormLayout|AttrEdmeshFormLayout|scrollLayout1|columnLayout2|columnLayout21;\r// Result: MayaWindow|mayaMainWindowForm|formLayout3|formLayout9|formLayout28|formLayout29|formLayout34|AEmenuBarLayout|AErootLayout|AErootLayoutPane|AEbaseFormLayout|AEcontrolFormLayout|AttrEdmeshFormLayout|scrollLayout1|columnLayout2|columnLayout21 // \rAEmakeDynRampClothCollisionInteractiveReplace( \"pSphereShape1.collisionOffsetVelocityMultiplier\" );\rsetParent MayaWindow|mayaMainWindowForm|formLayout3|formLayout9|formLayout28|formLayout29|formLayout34|AEmenuBarLayout|AErootLayout|AErootLayoutPane|AEbaseFormLayout|AEcontrolFormLayout|AttrEdmeshFormLayout|scrollLayout1|columnLayout2|columnLayout22;\r// Result: MayaWindow|mayaMainWindowForm|formLayout3|formLayout9|formLayout28|formLayout29|formLayout34|AEmenuBarLayout|AErootLayout|AErootLayoutPane|AEbaseFormLayout|AEcontrolFormLayout|AttrEdmeshFormLayout|scrollLayout1|columnLayout2|columnLayout22 // \rAEmakeDynRampClothCollisionInteractiveReplace( \"pSphereShape1.collisionDepthVelocityMultiplier\" );\rsetUITemplate -ppt;\r// Result: NONE // \rrefreshAE;\rlistHistory -pdo true -lf false -il 2 \"|pSphere1\";\rlistHistory -pdo true -lf false -il 2 -f true \"|pSphere1\";\rlistHistory -pdo true -lf false -il 2 \"|pSphere1|pSphereShape1\";\r// Result: blendShape1 blendShape2 blendShape3 blendShape4 blendShape5 tweak1 polySphere1 // \rlistHistory -pdo true -lf false -il 2 -f true \"|pSphere1|pSphereShape1\";\r// Result: initialShadingGroup // \rlistHistory -pdo true -lf false -il 2 \"|pSphere1|pSphereShape1Orig\";\r// Result: polySphere1 // \rlistHistory -pdo true -lf false -il 2 -f true \"|pSphere1|pSphereShape1Orig\";\r// Result: tweak1 blendShape5 blendShape4 blendShape3 blendShape2 blendShape1 // \rif (`objExists \"pSphereShape1\"`) checkMeshUseMaxSubd \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshUseMinScreen \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshUseMaxUv \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshUseMinEdgeLength \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshUseMaxEdgeLength \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayVertices \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayBorder \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayUVs \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayNormals \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayNormals \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayNormals \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshAllowTopologyMod \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshReuseTrianglesAE \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) SMPcheckUsePreviewForRender \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkDoubleSided \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkGeomAntialiasingOverride \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkGeomShadingSamplesOverride \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkGeomMaxVisSamplesOverride \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) AEmentalrayOverrideObjectSamplesFlagsActive \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) AEmentalrayOverrideFinalGatherFlagsActive \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) AEmentalrayOverrideGlobalIlluminationFlagsActive \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) AEmentalrayOverrideCausticsFlagsActive \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) AEcheckGhostControl \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkDrawEnabled overrideEnabled overrideDisplayType overrideLevelOfDetail overrideShading overrideTexturing overridePlayback overrideVisibility overrideColor \"pSphereShape1\";\r" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "JiggleDeformer" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -imageOverlayLabel "JiggleDeformer" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "commandButton.xpm" 
+        -image1 "commandButton.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "CreateJiggleDeformer;\rperformJiggle false;\rdoJiggle 1 { \"0.5\", \"0.5\", \"1\", \"0\", \"0\", \"default\", \"\" };\r// Result: doJiggle 1 { \"0.5\", \"0.5\", \"1\", \"0\", \"0\", \"default\", \"\" }; // \rsetFilterScript \"initialShadingGroup\";\r// Result: 0 // \rsetFilterScript \"initialParticleSE\";\r// Result: 0 // \rsetFilterScript \"defaultLightSet\";\r// Result: 1 // \rsetFilterScript \"defaultObjectSet\";\r// Result: 1 // \rsetFilterScript \"blendShape1Set\";\r// Result: 0 // \rsetFilterScript \"tweakSet1\";\r// Result: 0 // \rsetFilterScript \"blendShape2Set\";\r// Result: 0 // \rsetFilterScript \"blendShape3Set\";\r// Result: 0 // \rsetFilterScript \"blendShape4Set\";\r// Result: 0 // \rsetFilterScript \"blendShape5Set\";\r// Result: 0 // \rsetFilterScript \"jiggle1Set\";\r// Result: 0 // \rsetFilterScript \"jiggle2Set\";\r// Result: 0 // \rsetUITemplate -pst attributeEditorTemplate;\r// Result: attributeEditorTemplate // \rsetParent MayaWindow|mayaMainWindowForm|formLayout3|formLayout9|formLayout28|formLayout29|formLayout34|AEmenuBarLayout|AErootLayout|AErootLayoutPane|AEbaseFormLayout|AEcontrolFormLayout|AttrEdmeshFormLayout|scrollLayout1|columnLayout2|columnLayout21;\r// Result: MayaWindow|mayaMainWindowForm|formLayout3|formLayout9|formLayout28|formLayout29|formLayout34|AEmenuBarLayout|AErootLayout|AErootLayoutPane|AEbaseFormLayout|AEcontrolFormLayout|AttrEdmeshFormLayout|scrollLayout1|columnLayout2|columnLayout21 // \rAEmakeDynRampClothCollisionInteractiveReplace( \"pSphereShape1.collisionOffsetVelocityMultiplier\" );\rsetParent MayaWindow|mayaMainWindowForm|formLayout3|formLayout9|formLayout28|formLayout29|formLayout34|AEmenuBarLayout|AErootLayout|AErootLayoutPane|AEbaseFormLayout|AEcontrolFormLayout|AttrEdmeshFormLayout|scrollLayout1|columnLayout2|columnLayout22;\r// Result: MayaWindow|mayaMainWindowForm|formLayout3|formLayout9|formLayout28|formLayout29|formLayout34|AEmenuBarLayout|AErootLayout|AErootLayoutPane|AEbaseFormLayout|AEcontrolFormLayout|AttrEdmeshFormLayout|scrollLayout1|columnLayout2|columnLayout22 // \rAEmakeDynRampClothCollisionInteractiveReplace( \"pSphereShape1.collisionDepthVelocityMultiplier\" );\rsetUITemplate -ppt;\r// Result: NONE // \rrefreshAE;\rlistHistory -pdo true -lf false -il 2 \"|pSphere1\";\rlistHistory -pdo true -lf false -il 2 -f true \"|pSphere1\";\rlistHistory -pdo true -lf false -il 2 \"|pSphere1|pSphereShape1\";\r// Result: jiggle2 jiggle1 blendShape1 blendShape2 blendShape3 blendShape4 blendShape5 tweak1 polySphere1 time1 jiggle1Cache jiggle2Cache // \rlistHistory -pdo true -lf false -il 2 -f true \"|pSphere1|pSphereShape1\";\r// Result: initialShadingGroup // \rlistHistory -pdo true -lf false -il 2 \"|pSphere1|pSphereShape1Orig\";\r// Result: polySphere1 // \rlistHistory -pdo true -lf false -il 2 -f true \"|pSphere1|pSphereShape1Orig\";\r// Result: tweak1 blendShape5 blendShape4 blendShape3 blendShape2 blendShape1 jiggle1 jiggle2 // \rautoUpdateAttrEd;\rlistHistory -pdo true -lf false -il 2 \"|pSphere1\";\rlistHistory -pdo true -lf false -il 2 -f true \"|pSphere1\";\rlistHistory -pdo true -lf false -il 2 \"|pSphere1|pSphereShape1\";\r// Result: jiggle2 jiggle1 blendShape1 blendShape2 blendShape3 blendShape4 blendShape5 tweak1 polySphere1 time1 jiggle1Cache jiggle2Cache // \rlistHistory -pdo true -lf false -il 2 -f true \"|pSphere1|pSphereShape1\";\r// Result: initialShadingGroup // \rlistHistory -pdo true -lf false -il 2 \"|pSphere1|pSphereShape1Orig\";\r// Result: polySphere1 // \rlistHistory -pdo true -lf false -il 2 -f true \"|pSphere1|pSphereShape1Orig\";\r// Result: tweak1 blendShape5 blendShape4 blendShape3 blendShape2 blendShape1 jiggle1 jiggle2 // \rsetUITemplate -pst attributeEditorTemplate;\r// Result: attributeEditorTemplate // \rsetParent MayaWindow|mayaMainWindowForm|formLayout3|formLayout9|formLayout28|formLayout29|formLayout34|AEmenuBarLayout|AErootLayout|AErootLayoutPane|AEbaseFormLayout|AEcontrolFormLayout|AttrEdmeshFormLayout|scrollLayout1|columnLayout2|columnLayout21;\r// Result: MayaWindow|mayaMainWindowForm|formLayout3|formLayout9|formLayout28|formLayout29|formLayout34|AEmenuBarLayout|AErootLayout|AErootLayoutPane|AEbaseFormLayout|AEcontrolFormLayout|AttrEdmeshFormLayout|scrollLayout1|columnLayout2|columnLayout21 // \rAEmakeDynRampClothCollisionInteractiveReplace( \"pSphereShape1.collisionOffsetVelocityMultiplier\" );\rsetParent MayaWindow|mayaMainWindowForm|formLayout3|formLayout9|formLayout28|formLayout29|formLayout34|AEmenuBarLayout|AErootLayout|AErootLayoutPane|AEbaseFormLayout|AEcontrolFormLayout|AttrEdmeshFormLayout|scrollLayout1|columnLayout2|columnLayout22;\r// Result: MayaWindow|mayaMainWindowForm|formLayout3|formLayout9|formLayout28|formLayout29|formLayout34|AEmenuBarLayout|AErootLayout|AErootLayoutPane|AEbaseFormLayout|AEcontrolFormLayout|AttrEdmeshFormLayout|scrollLayout1|columnLayout2|columnLayout22 // \rAEmakeDynRampClothCollisionInteractiveReplace( \"pSphereShape1.collisionDepthVelocityMultiplier\" );\rsetUITemplate -ppt;\r// Result: NONE // \rupdateAnimLayerEditor(\"AnimLayerTab\");\rstatusLineUpdateInputField;\rikSelectionChanged(\"MayaWindow|mainKeysMenu|menuItem3951|ikFKStateItem\");\rif (`objExists \"pSphereShape1\"`) checkMeshUseMaxSubd \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshUseMinScreen \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshUseMaxUv \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshUseMinEdgeLength \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshUseMaxEdgeLength \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayVertices \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayBorder \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayUVs \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayNormals \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayNormals \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayNormals \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshAllowTopologyMod \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshReuseTrianglesAE \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) SMPcheckUsePreviewForRender \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkDoubleSided \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkGeomAntialiasingOverride \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkGeomShadingSamplesOverride \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkGeomMaxVisSamplesOverride \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) AEmentalrayOverrideObjectSamplesFlagsActive \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) AEmentalrayOverrideFinalGatherFlagsActive \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) AEmentalrayOverrideGlobalIlluminationFlagsActive \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) AEmentalrayOverrideCausticsFlagsActive \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) AEcheckGhostControl \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkDrawEnabled overrideEnabled overrideDisplayType overrideLevelOfDetail overrideShading overrideTexturing overridePlayback overrideVisibility overrideColor \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshUseMaxSubd \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshUseMinScreen \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshUseMaxUv \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshUseMinEdgeLength \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshUseMaxEdgeLength \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayVertices \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayBorder \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayUVs \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayNormals \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayNormals \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshDisplayNormals \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshAllowTopologyMod \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkMeshReuseTrianglesAE \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) SMPcheckUsePreviewForRender \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkDoubleSided \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkGeomAntialiasingOverride \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkGeomShadingSamplesOverride \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkGeomMaxVisSamplesOverride \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) AEmentalrayOverrideObjectSamplesFlagsActive \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) AEmentalrayOverrideFinalGatherFlagsActive \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) AEmentalrayOverrideGlobalIlluminationFlagsActive \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) AEmentalrayOverrideCausticsFlagsActive \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) AEcheckGhostControl \"pSphereShape1\";\rif (`objExists \"pSphereShape1\"`) checkDrawEnabled overrideEnabled overrideDisplayType overrideLevelOfDetail overrideShading overrideTexturing overridePlayback overrideVisibility overrideColor \"pSphereShape1\";\r" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "JointSize" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -imageOverlayLabel "JointSize" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "commandButton.xpm" 
+        -image1 "commandButton.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "jdsWin;\r" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "IKFKJointSize" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -imageOverlayLabel "IKFKJointSize" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "commandButton.xpm" 
+        -image1 "commandButton.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "ikfkjdsWin;\r" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "IKhandleSize" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -imageOverlayLabel "IKhandleSize" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "commandButton.xpm" 
+        -image1 "commandButton.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "ikHdsWin;\r" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "ChannelControl" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -imageOverlayLabel "ChannelControl" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "commandButton.xpm" 
+        -image1 "commandButton.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "ChannelControlEditor;\rlockingKeyableWnd;\rPScreateKeyableUI Keyable pSphere1;\r" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "AddAttribute" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -imageOverlayLabel "AddAttribute" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "commandButton.xpm" 
+        -image1 "commandButton.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "showAddAttrWin;\r" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "CreateCluster" 
+        -labelOffset 0
+        -font "tinyBoldLabelFont" 
+        -imageOverlayLabel "CreateCluster" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "commandButton.xpm" 
+        -image1 "commandButton.xpm" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "CreateCluster;\r" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+
+} 

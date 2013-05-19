@@ -1,0 +1,245 @@
+
+    menuItem
+        -label "Script Editor" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "ScriptEditor" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "N" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "menuIconWindow.xpm" 
+        -echoCommand 0
+        -annotation "Script Editor" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem9;
+
+    menuItem
+        -label "Passive Rigid Body" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "CreatePassiveRigidBody" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "NE" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "rigidPassive.xpm" 
+        -echoCommand 0
+        -annotation "Passive Rigid Body" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem6;
+
+    menuItem
+        -label "Active Rigid Body" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "CreateActiveRigidBody" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "E" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "rigid.xpm" 
+        -echoCommand 0
+        -annotation "Active Rigid Body" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem7;
+
+    menuItem
+        -label "Make Collide" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "MakeCollide" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "SE" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "collision.xpm" 
+        -echoCommand 0
+        -annotation "Make Collide" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem3;
+
+    menuItem
+        -label "PlayblastOpt" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "PlayblastOptions;\rperformPlayblast true;\r" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "S" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "commandButton.xpm" 
+        -echoCommand 0
+        -annotation "PlayblastOpt" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem8;
+
+    menuItem
+        -label "Affect Selected Object(s)" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "AffectSelectedObject" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "SW" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "connectField.xpm" 
+        -echoCommand 0
+        -annotation "Affect Selected Object(s)" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem5;
+
+    menuItem
+        -label "Air" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "Air" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "posAir.xpm" 
+        -echoCommand 0
+        -annotation "Air" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem4;
+
+    menuItem
+        -label "Gravity" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "Gravity" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "posGravity.xpm" 
+        -echoCommand 0
+        -annotation "Gravity" 
+        -italicized 0
+        -boldFont 1
+        menuEditorMenuItem2;
+
+    menuItem
+        -label "B_driver multi" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "\n\n\tpickWalk -d \"right\";\n\thyperShade -smn; //select shader attached to geometry\n    string $sel[] = `ls -sl`;\n    select -cl;\n    string $sel2[] = `hyperShade -lun $sel[0]`; //select connected nodes to shader\n    select $sel2;\n    string $rR[] = `ls -sl \"*:*:Ramp_Driver_R\"`;\n    string $rY[] = `ls -sl \"*:*:Ramp_Driver_Y\"`;\n    string $rP[] = `ls -sl \"*:*:Ramp_Driver_P\"`;\n    string $rO[] = `ls -sl \"*:*:Ramp_Driver_O\"`;\n    select -cl;\n\n//CREATE WINDOW\nif(`window -exists Ramp_Driver`){deleteUI -window Ramp_Driver;}\nstring $myUI = `window -title \"Ramp_Driver\" -wh 80 80 Ramp_Driver`;\t\t\t\nrowColumnLayout -numberOfColumns 1\n\t\t\t\t-cw 1 80; //1st column is 16 pixels wide\n\n\t\t //Column 1\t\t\t\t\t\t\t\t//Column2\n/*Row1*/ button\t-label \"Red\" -c \"select $rR[0]\";\n/*Row2*/ button -label \"Orange\" -c \"select $rO[0]\";\n/*Row2*/ button -label \"Yellow\" -c \"select $rY[0]\";\n/*Row2*/ button -label \"Purple\" -c \"select $rP[0]\";\n\nshowWindow $myUI;\n" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "NW" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "commandButton.png" 
+        -echoCommand 0
+        -annotation "B_driver multi" 
+        -italicized 0
+        -boldFont 0
+        menuEditorMenuItem1;
+
+    menuItem
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 1
+        -enable 1
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 0
+        -italicized 0
+        -boldFont 0
+        menuEditorMenuItem10;
+
+setParent -m ..;
+

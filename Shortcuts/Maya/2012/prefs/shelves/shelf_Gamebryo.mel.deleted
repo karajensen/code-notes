@@ -1,0 +1,583 @@
+global proc shelf_Gamebryo () {
+    global string $gBuffStr;
+    global string $gBuffStr0;
+    global string $gBuffStr1;
+
+
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Export Options" 
+        -enableBackground 0
+        -align "center" 
+        -label "Export Options" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseExportOptionsIcon.bmp" 
+        -image1 "MyImmerseExportOptionsIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"GamebryoExportOptions\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Export Scene" 
+        -enableBackground 0
+        -align "center" 
+        -label "Export Scene" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseExportIcon.bmp" 
+        -image1 "MyImmerseExportIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"GamebryoExportWithCurrentOptions\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Export Selected" 
+        -enableBackground 0
+        -align "center" 
+        -label "Export Selected" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseExportSelectedIcon.bmp" 
+        -image1 "MyImmerseExportSelectedIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"GamebryoExportSelectedWithCurrentOptions\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "View Scene with Gamebryo Maya Viewer" 
+        -enableBackground 0
+        -align "center" 
+        -label "View Scene with Gamebryo Maya Viewer" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseIcon1.bmp" 
+        -image1 "MyImmerseIcon1.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseQuickView 0\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "View Selected in Scene with Gamebryo Maya Viewer" 
+        -enableBackground 0
+        -align "center" 
+        -label "View Selected in Scene with Gamebryo Maya Viewer" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseViewSelectedIcon.bmp" 
+        -image1 "MyImmerseViewSelectedIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseQuickView 1\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Create Light Attenuation Dialog" 
+        -enableBackground 0
+        -align "center" 
+        -label "Create Light Attenuation Dialog" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseLightAttenuationIcon.bmp" 
+        -image1 "MyImmerseLightAttenuationIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseCreateNiLightAttenuationDialog(\\\"\\\")\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Create Switch Node" 
+        -enableBackground 0
+        -align "center" 
+        -label "Create Switch Node" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseSwitchNodeIcon.bmp" 
+        -image1 "MyImmerseSwitchNodeIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseCreateSwitchNode(\\\"\\\")\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Create Billboard Node" 
+        -enableBackground 0
+        -align "center" 
+        -label "Create Billboard Node" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseBillboardIcon.bmp" 
+        -image1 "MyImmerseBillboardIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseCreateBillboardNode(\\\"\\\")\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Create Dynamic Texture Light" 
+        -enableBackground 0
+        -align "center" 
+        -label "Create Dynamic Texture Light" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseDynamicTextureIcon.bmp" 
+        -image1 "MyImmerseDynamicTextureIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseCreateDynamicTextureMap()\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Create Character Sequence" 
+        -enableBackground 0
+        -align "center" 
+        -label "Create Character Sequence" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseSequenceIcon.bmp" 
+        -image1 "MyImmerseSequenceIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseSequenceEditor()\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Key Frame Reduction" 
+        -enableBackground 0
+        -align "center" 
+        -label "Key Frame Reduction" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseKeyFrameReductionIcon.bmp" 
+        -image1 "MyImmerseKeyFrameReductionIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseCreateKeyFrameReductionDialog()\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Character Animation Compression" 
+        -enableBackground 0
+        -align "center" 
+        -label "Character Animation Compression" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseCreateCharacterKeyReductionIcon.bmp" 
+        -image1 "MyImmerseCreateCharacterKeyReductionIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseCreateCharacterAnimationCompressionDialog()\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Create Centered LOD Group" 
+        -enableBackground 0
+        -align "center" 
+        -label "Create Centered LOD Group" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseCreateCenteredLODGroupIcon.bmp" 
+        -image1 "MyImmerseCreateCenteredLODGroupIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseCreateCenteredLODGroup\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Create ABV Bounding Box" 
+        -enableBackground 0
+        -align "center" 
+        -label "Create ABV Bounding Box" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseCreateABVBoundingBoxIcon.bmp" 
+        -image1 "MyImmerseCreateABVBoundingBoxIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseCreateABVAxisAlignedBoundingBox(\\\"\\\")\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Setup / Edit Bone LOD" 
+        -enableBackground 0
+        -align "center" 
+        -label "Setup / Edit Bone LOD" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseBoneLODDialogIcon.bmp" 
+        -image1 "MyImmerseBoneLODDialogIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseBoneLODDialog(\\\"\\\")\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Setup / Edit Skins with Bone LOD" 
+        -enableBackground 0
+        -align "center" 
+        -label "Setup / Edit Skins with Bone LOD" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseSkinLODDialogIcon.bmp" 
+        -image1 "MyImmerseSkinLODDialogIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseSkinLODDialog(\\\"\\\")\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Create Portal Room Group" 
+        -enableBackground 0
+        -align "center" 
+        -label "Create Portal Room Group" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseCreatePortalRoomGroupIcon.bmp" 
+        -image1 "MyImmerseCreatePortalRoomGroupIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseCreatePortalSystemRoomGroup\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Create Portal Room" 
+        -enableBackground 0
+        -align "center" 
+        -label "Create Portal Room" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseCreatePortalRoomIcon.bmp" 
+        -image1 "MyImmerseCreatePortalRoomIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseCreatePortalSystemRoom\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Create Portal Room Walls" 
+        -enableBackground 0
+        -align "center" 
+        -label "Create Portal Room Walls" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseCreatePortalWallsIcon.bmp" 
+        -image1 "MyImmerseCreatePortalWallsIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseCreateAxisAlignedPortalWalls\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Create Portal" 
+        -enableBackground 0
+        -align "center" 
+        -label "Create Portal" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseCreatePortalIcon.bmp" 
+        -image1 "MyImmerseCreatePortalIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseCreateAxisAlignedPortal\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Toggle Portal Walls And Portals" 
+        -enableBackground 0
+        -align "center" 
+        -label "Toggle Portal Walls And Portals" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmersePortalShowWallsAndPortalsIcon.bmp" 
+        -image1 "MyImmersePortalShowWallsAndPortalsIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"GamebryoTogglePortals()\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Multi-NIF Export" 
+        -enableBackground 0
+        -align "center" 
+        -label "Multi-NIF Export" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseMultiNifExportIcon.bmp" 
+        -image1 "MyImmerseMultiNifExportIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"MyImmerseCreateMultiNIFExportAttributesDialog\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Recursively Export From Selected Diectory" 
+        -enableBackground 0
+        -align "center" 
+        -label "Recursively Export From Selected Diectory" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.25 
+        -image "MyImmerseRecursiveExportIcon.bmp" 
+        -image1 "MyImmerseRecursiveExportIcon.bmp" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "GamebryoLoadPlugins; eval \"fileBrowserDialog -m 4 -fc \\\"MyImmerseRecursiveExport\\\" -an \\\"Export All Maya files as NIF\\\"\"" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+
+} 

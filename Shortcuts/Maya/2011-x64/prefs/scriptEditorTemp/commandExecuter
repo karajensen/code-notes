@@ -1,0 +1,28 @@
+
+proc string LoadPlugin(string $path)
+{
+    return `loadPlugin $path`;
+}
+proc RemovePlugin(string $path)
+{
+    unloadPlugin $path;
+}
+{
+    if(`window -exists "PluginTester"`)
+    { 
+        windowPref -remove "PluginTester";    
+        deleteUI -wnd "PluginTester"; 
+    }
+    window -title "PluginTester" -resizeToFitChildren false PluginTester;
+    string $pluginNode;
+    columnLayout -adjustableColumn true;
+    string $pluginPath = `textField -editable true`;
+    string $testing = `textField -query -text $pluginPath`;
+        rowLayout -numberOfColumns 2;
+        string $loadBut = `button -label "Load" -width 200 -c ("LoadPlugin(`textField -query -text $pluginPath`)")`;
+        string $removeBut = `button -label "Remove" -width 200  -c ("RemovePlugin($pluginNode)")`; 
+    showWindow PluginTester;
+    window -edit -width 400 -height 100 PluginTester;
+}    
+
+//C:/Users/Tani/Desktop/Maya plugin Base/Debug/mayaplugin.mll

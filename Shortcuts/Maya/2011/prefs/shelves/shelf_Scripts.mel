@@ -1,0 +1,343 @@
+global proc shelf_Scripts () {
+    global string $gBuffStr;
+    global string $gBuffStr0;
+    global string $gBuffStr1;
+
+
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 23
+        -height 23
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "LoadPlugin" 
+        -enableBackground 0
+        -align "center" 
+        -label "LoadPlugin" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "timeplaySequencer.png" 
+        -image1 "timeplaySequencer.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "{\n\tloadPlugin \"C:\\\\Users\\\\Tani\\\\Desktop\\\\MayaPluginBase\\\\Debug\\\\mayaplugin.mll\";\n\tprint(\"LOADED!\");\n}" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 23
+        -height 23
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "UnloadPlugin" 
+        -enableBackground 0
+        -align "center" 
+        -label "UnloadPlugin" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "rvPauseIprTuning.png" 
+        -image1 "rvPauseIprTuning.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "{\n\tunloadPlugin mayaplugin.mll;\n\tprint(\"UNLOADED!\");\n}" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Fracture" 
+        -enableBackground 0
+        -align "center" 
+        -label "Fracture" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Fracture" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "Fracture;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Kludge City" 
+        -enableBackground 0
+        -align "center" 
+        -label "Kludge City" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Kludge City" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "EdW_KludgeCity; \n" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Import Multi" 
+        -enableBackground 0
+        -align "center" 
+        -label "Import Multi" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Import Multi" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "string $myFiles[] = `fileDialog2 -fileMode 4`;\nint $fileno = size($myFiles);\n\nfor($i = 0; $i < $fileno; $i++)\n{\n    print($myFiles[$i] + \" imported\\n\");\n    file -import $myFiles[$i];\n}" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -align "center" 
+        -label "CAS unwrap" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -imageOverlayLabel "CAS unwrap" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "Cas_APU;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "DuplicateAlongCurve" 
+        -enableBackground 0
+        -align "center" 
+        -label "DuplicateAlongCurve" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -imageOverlayLabel "DuplicateAlongCurve" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "//\tv1.4.4\n//\tScript written by Peter Chapman.\n//\tEmail: pchapman86@gmail.com\n//\n//\tYou are welcome to use and distribute this script, however,\n//\tif you do so, send me a quick e-mail with your name and what\n//\tyou used it for.\n//\n//\tAlso feel free to give me feedback / request changes.\n//\n//\tIf you end up using the script for a commercial project,\n//\tfeel free to contribute via PayPal using the email address\n//\tabove!\n\nsource generateChannelMenu.mel;\n// source Progress Window\nsource \"progWindow.mel\";\n// Delete Pillars\nglobal proc deletePillars(){\n    string $sel[] = `ls -sl`;\n\tint $i;\n\t\n\tif (size($sel) != 1){\n\t    print \"More than 1 object selected \\n\";\n    }\n\t\n    else{\n        string $cNode = $sel[0];\n\t\t\n        if (`attributeQuery -node $cNode -exists \"pillarsNode\"`){\n\t\t\n\t\t\tif (`attributeQuery -node $cNode -exists \"referencePillars\"`){\n\t\t\t\tstring $pillarsNode = `getAttr ($cNode + \".pillarsNode\")`;\n\t\t\t\tstring $pillars[] = `listRelatives -type \"transform\" $pillarsNode`;\n\t\t\t\tstring $split[];\n\t\t\t\t\n\t\t\t\tfor ($each in $pillars){\n\t\t\t\t\t++$i;\n\t\t\t\t\tint $interrupt = progWindow($i, size($pillars));\n\t\t\t\t\tif ($interrupt == 1){\n\t\t\t\t\t\tbreak;\n\t\t\t\t\t}\n\t\t\t\t\ttokenize $each \":\" $split;\n\t\t\t\t\tstring $pillar = ($split[0] + \"RN\");\n\t\t\t\t\tfile -removeReference -referenceNode $pillar;\n                }\n\t\t\t\t\n\t\t\t\tdeleteAttr ($cNode + \".referencePillars\");\n            }\n\t\t\t\n            deleteAttr ($cNode + \".pillarControls\");\n            deleteAttr ($cNode + \".pillarScale\");\n            deleteAttr ($cNode + \".pillarHeight\");\n            string $pillarNode =  `getAttr ($cNode + \".pillarsNode\")`;\n            delete $pillarNode;\n            deleteAttr ($cNode + \".pillarsNode\");\n        }\n\t\t\n        else{\n            print \"No pillars to delete\";\n        }\n    }\n}\n// Build Pillars (Basic)\nglobal proc buildPillarsBasic(int $n){\n\n    //Get Data\n    string $sel[] = `ls -sl`;\n\t\n\tif (size($sel) != 1){\n\t    print \"More than 1 object selected \\n\";\n    }\n    \n    else {\n    \n    \tstring $cNode = $sel[0];\n    \n    \tif (`attributeQuery -node $cNode -exists \"rogControls\"`){\n\t\t\t\n\t\t\tfloat $pillarScale = 1;\n\t\t\tfloat $pillarHeight = 1;\n\t\t\t\n\t\t\tif (`attributeQuery -node $cNode -exists \"pillarControls\"`){\n\t\t\t\t$pillarScale = `getAttr ($cNode + \".pillarScale\")`;\n\t\t\t\t$pillarHeight = `getAttr ($cNode + \".pillarHeight\")`;\n\t\t\t\tdeletePillars();\n            }\n\t\t\t\n    \t\tstring $targetCurve = `getAttr ($cNode + \".targetCurve\")`;\n    \t\tstring $piecesNode = `getAttr ($cNode + \".piecesNode\")`;\n    \t\tstring $pieces[] = `listRelatives -children $piecesNode`;\n\t\n\t    \t//Add Pillar Control to Control Node\n\t    \taddAttr -ln \"pillarControls\"  -at bool  $cNode;\n\t    \tsetAttr -e-channelBox true ($cNode + \".pillarControls\") 1;\n\t    \taddAttr -ln \"pillarScale\" -at double $cNode;\n\t\t\tsetAttr -e-keyable true ($cNode + \".pillarScale\") $pillarScale;\n\t\t\taddAttr -ln \"pillarHeight\" -at double $cNode;\n\t\t\tsetAttr -e-keyable true ($cNode + \".pillarHeight\") $pillarHeight;\n\t\n\t    \tstring $pillarsNode = `createNode -n pillarsNode transform`;\n\t    \tstring $new[] = `parent $pillarsNode $cNode`;\n\t    \tstring $pillarsNode = $new[0];\n\t    \taddAttr -ln \"pillarsNode\"  -dt \"string\"  $cNode;\n\t    \tsetAttr -e -channelBox true -type \"string\" ($cNode + \".pillarsNode\") $pillarsNode;\n\t\n\t    \t//Build Pillars\n\t\t    \n   \t \t\tfor ($i = 0; $i < size($pieces); $i = ($i + $n)){\n\t\t\t\n   \t     \t\tint $interrupt = progWindow($i, size($pieces));\n\t\t\t\tif ($interrupt == 1){\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\t\n\t\t\t\tpillarBasic($i);\n\t\t\t\t\n    \t\t    string $sel[] = `ls - sl`;\n    \t    \tstring $pillar[];\n    \t    \tstring $new[] = `parent $sel[0] $pillarsNode`;\n    \t    \t$pillar[$i] = $new[0];\n    \t    \n    \t    \t//Get Pillar Data\n    \t    \tstring $pillarBaseCC = `getAttr ($pillar[$i] + \".baseCCName\")`;\n    \t    \tstring $pillarTopCtrl = `getAttr ($pillar[$i] + \".topCtrlName\")`;\n    \t    \tstring $pillarTopCluster = `getAttr ($pillar[$i] + \".topClusterName\")`;\n    \t\t    \t\n       \t \t\t//Connect To Control Node\n       \t \t\tconnectAttr -f ($cNode + \".pillarScale\") ($pillarBaseCC + \".sx\");\n        \t\tconnectAttr -f ($cNode + \".pillarScale\") ($pillarBaseCC + \".sy\");\n        \t\tconnectAttr -f ($cNode + \".pillarScale\") ($pillarBaseCC + \".sz\");\n        \t\tconnectAttr -f ($cNode + \".pillarHeight\") ($pillarTopCluster + \".ty\");\n        \t\t\n        \t\t//Connect To Track\n        \t\tconnectAttr -f ($pieces[$i] + \".tx\") ($pillarBaseCC + \".tx\");\n        \t\tconnectAttr -f ($pieces[$i] + \".tz\") ($pillarBaseCC + \".tz\");\n        \t\tconnectAttr -f ($pieces[$i] + \".ty\") ($pillarTopCtrl + \".ty\");\n        \t\t\n        \t\t//HideUnrequiredNodes\n        \t\tsetAttr -keyable false -channelBox false ($pillarBaseCC + \".tx\");\n        \t\tsetAttr -keyable false -channelBox false ($pillarBaseCC + \".tz\");\n        \t\tsetAttr -keyable false -channelBox false ($pillarBaseCC + \".rx\");\n        \t\tsetAttr -keyable false -channelBox false ($pillarBaseCC + \".ry\");\n        \t\tsetAttr -keyable false -channelBox false ($pillarBaseCC + \".rz\");\n        \t\tsetAttr -keyable false -channelBox false ($pillarBaseCC + \".sx\");\n        \t\tsetAttr -keyable false -channelBox false ($pillarBaseCC + \".sy\");\n        \t\tsetAttr -keyable false -channelBox false ($pillarBaseCC + \".sz\");\n        \t\tsetAttr -keyable false -channelBox false ($pillarBaseCC + \".ry\");\n        \t\tsetAttr -keyable false -channelBox false ($pillarBaseCC + \".rz\");\n        \t\tsetAttr -keyable false -channelBox false ($pillarBaseCC + \".v\");\n    \t\t}\n    \t\t\n    \t\tselect $cNode;\n\t\t\n        }\n\n\t\telse{\n\t        print \"This is not a valid control Node\";\n    \t}\n    }\n}\n// Build Pillars (Cross)\nglobal proc buildPillarsCross(int $n){\n\t//Get Data\n    string $sel[] = `ls -sl`;\n\t\n\tif (size($sel) != 1){\n\t    print \"More than 1 object selected \\n\";\n    }\n    \n    else {\n    \n    \tstring $cNode = $sel[0];\n    \n    \tif (`attributeQuery -node $cNode -exists \"rogControls\"`){\n\t\t\n\t\t\tif (`attributeQuery -node $cNode -exists \"pillarControls\"`){\n\t\t\t\tdeletePillars();\n            }\n\t\t\t\n\t\t\tstring $targetCurve = `getAttr ($cNode + \".targetCurve\")`;\n    \t\tstring $piecesNode = `getAttr ($cNode + \".piecesNode\")`;\n    \t\tstring $pieces[] = `listRelatives -children $piecesNode`;\n\t\n\t    \t//Add Pillar Control to Control Node\n\t    \taddAttr -ln \"pillarControls\"  -at bool  $cNode;\n\t    \tsetAttr -e-channelBox true ($cNode + \".pillarControls\") 1;\n\t    \taddAttr -ln \"pillarScale\" -at double $cNode;\n\t\t\tsetAttr -e-keyable true ($cNode + \".pillarScale\") 1;\n\t\t\taddAttr -ln \"pillarHeight\" -at double $cNode;\n\t\t\tsetAttr -e-keyable true ($cNode + \".pillarHeight\") 0;\n\t\t\t\n\t\t\taddAttr -ln \"referencePillars\"  -at bool  $cNode;\n\t    \tsetAttr -e-channelBox true ($cNode + \".referencePillars\") 1;\n\t\t\t\n\t\t\t//Create Pillars Node\n\t\t\tstring $pillarsNode = `createNode -n pillarsNode transform`;\n\t\t\tstring $pillars[];\n\t\t\t\n\t\t\t//Build Cross Pillars\n\t\t\t\n\t\t\tfor ($i = 0; $i < size($pieces); $i = ($i + $n)){\n\t\t\t\n\t\t\t\tint $interrupt = progWindow($i, size($pieces));\n\t\t\t\tif ($interrupt == 1){\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\n\t\t\t\t//Reference New Pillar\n\t\t\t\t\n\t\t\t\tfile\n\t\t\t\t\t-r\n\t\t\t\t\t-type \"mayaBinary\" \n\t\t\t\t\t-ignoreVersion\n\t\t\t\t\t-gl\n\t\t\t\t\t-loadReferenceDepth \"all\"\n\t\t\t\t\t-namespace ($cNode + \"Strut\" + $i)\n\t\t\t\t\t-options \"v=0\" \"Z:/roller/production/enviroments/rollerCoaster/scenes/strut2.mb\";\n\t\t\t\t\t\n\t\t\t\tstring $nameSpace = ($cNode + \"Strut\" + $i);\n\t\t\t\t$pillar = (\"|\" + $nameSpace + \":strut\");\n\t\t\t\t\n\t\t\t\t//Connect To Control Node\n       \t \t\tconnectAttr -f ($cNode + \".pillarScale\") ($nameSpace + \":cc_strutCtrl.sx\");\n        \t\tconnectAttr -f ($cNode + \".pillarScale\") ($nameSpace + \":cc_strutCtrl.sy\");\n        \t\tconnectAttr -f ($cNode + \".pillarScale\") ($nameSpace + \":cc_strutCtrl.sz\");\n        \t\tconnectAttr -f ($cNode + \".pillarHeight\") ($nameSpace + \":autoHeight.ty\");\n        \t\t\n        \t\t//Connect To Track\n        \t\tconnectAttr -f ($pieces[$i] + \".tx\") ($nameSpace + \":autoBase.tx\");\n        \t\tconnectAttr -f ($pieces[$i] + \".tz\") ($nameSpace + \":autoBase.tz\");\n\t\t\t\tconnectAttr -f ($pieces[$i] + \".ry\") ($nameSpace + \":cc_strutCtrl.ry\");\n        \t\tconnectAttr -f ($pieces[$i] + \".ty\") ($nameSpace + \":cc_strutTop.ty\");\n\t\t\t\tconnectAttr -f ($pieces[$i] + \".rx\") ($nameSpace + \":cc_strutTop.rx\");\n\t\t\t\t\n\t\t\t\tparent $pillar $pillarsNode;\n            }\n\t\t\t\n\t\t\t//CleanUp Scene\n\t\t\tstring $t[] = `parent $pillarsNode $cNode`;\n\t\t\tstring $pillarsNode = $t[0];\n\t\t\taddAttr -ln \"pillarsNode\"  -dt \"string\"  $cNode;\n\t    \tsetAttr -e -channelBox true -type \"string\" ($cNode + \".pillarsNode\") $pillarsNode;\n\t\t}\n\t\t\n\t\telse{\n\t\t\tprint \"Not a valid Control Node\";\n        }\n    }\n}\n// Build Single Pillar\nglobal proc pillarBasic(int $i){\n\n    //build Pillar\n    string $new[] = `polyCylinder -ch off -o on -r 3 -h 0 -sa 14 -sc 1 -cuv 3 -n (\"meshPillar\" + $i)`;\n    string $pillarMesh = $new[0];\n        \n    //Create Pillar Clusters\n    select -r ($pillarMesh + \".vtx[14:27]\") ($pillarMesh + \".vtx[29]\");\n        string $new[] = `newCluster \" -envelope 1 -n cl_pillarTop\"`;\n        string $topCluster = $new[1];\n        setAttr ($topCluster + \".v\") 0;\n    select -r ($pillarMesh + \".vtx[0:13]\") ($pillarMesh + \".vtx[28]\");\n        string $new[] = `newCluster \" -envelope 1 -n cl_pillarBase\"`;\n        string $baseCluster = $new[1];\n        setAttr ($baseCluster + \".v\") 0;\n    \n    //build Pillar Base\n    string $new[] = `polyCylinder -ch off -o on -r 5 -h 4 -sa 20 -sc 1 -cuv 3 -n (\"meshPillarBase\" + $i)`;\n        string $pillarBaseMesh = $new[0];\n        move -r 0 2 0 ($pillarBaseMesh + \".vtx[0:41]\");\n        move 0 0 0 ($pillarBaseMesh + \".scalePivot\") ($pillarBaseMesh + \".rotatePivot\");\n        \n    //build Pillar Control\n    string $new[] = `circle -ch off -o on -nr 0 1 0 -r 9 -n (\"cc_pillarBase\" + $i)`;\n        string $pillarBaseCC = $new[0];\n        move -r 0 15 0 ($pillarBaseCC + \".cv[0]\") ($pillarBaseCC + \".cv[2]\") ($pillarBaseCC + \".cv[4]\") ($pillarBaseCC + \".cv[6]\");\n        move -r 0 -5 0 ($pillarBaseCC + \".cv[0:7]\");\n        \n    //Create Structure\n    string $pillarMeshGrp = `group -n (\"pillarMeshGrp\" + $i) $pillarMesh`;\n    string $pillarBaseMeshGrp = `group -n (\"pillarBaseMeshGrp\" + $i) $pillarBaseMesh`;\n        move 0 0 0 ($pillarBaseMeshGrp + \".scalePivot\") ($pillarBaseMeshGrp + \".rotatePivot\");\n    string $pillarTopCtrlGrp = `group -n (\"pillarTopCtrlGrp\" + $i) $topCluster`;\n        move 0 0 0 ($pillarTopCtrlGrp + \".scalePivot\") ($pillarTopCtrlGrp + \".rotatePivot\");\n    parent $baseCluster $pillarBaseCC;\n    string $pillarCtrlGrp = `group -n (\"pillarCtrl\" + $i) $pillarBaseCC $pillarTopCtrlGrp`;\n    string $pillar = `group -n (\"pillar\" + $i) $pillarMeshGrp $pillarBaseMeshGrp $pillarCtrlGrp`;\n\n    //Connections\n    \n    connectAttr -f ($pillarBaseCC + \".t\") ($pillarBaseMeshGrp + \".t\");\n    connectAttr -f ($pillarBaseCC + \".r\") ($pillarBaseMeshGrp + \".r\");\n    connectAttr -f ($pillarBaseCC + \".s\") ($pillarBaseMeshGrp + \".s\");\n    connectAttr -f ($pillarBaseCC + \".tx\") ($pillarTopCtrlGrp + \".tx\");\n    connectAttr -f ($pillarBaseCC + \".tz\") ($pillarTopCtrlGrp + \".tz\");\n    connectAttr -f ($pillarBaseCC + \".s\") ($pillarTopCtrlGrp + \".s\");\n    \n    //Store Data\n    addAttr -ln \"baseCCName\"  -dt \"string\"  $pillar;\n        setAttr -e -channelBox true -type \"string\" ($pillar + \".baseCCName\") $pillarBaseCC;\n    addAttr -ln \"topCtrlName\"  -dt \"string\"  $pillar;\n        setAttr -e -channelBox true -type \"string\" ($pillar + \".topCtrlName\") $pillarTopCtrlGrp;\n    addAttr -ln \"topClusterName\" -dt \"string\" $pillar;\n        setAttr -e -channelBox true -type \"string\" ($pillar + \".topClusterName\") $topCluster;\n}\n// Reset the ROG\nglobal proc resetRog(int $n){\n\n    string $sel[] = `ls -sl`;\n    string $cNode = $sel[0];\n\t\n\tif (`attributeQuery -node $cNode -exists \"pillarControls\"`){\n\t\tdeletePillars();\n    }\n\t\n    if (`attributeQuery -node $cNode -exists \"rogControls\"`){\n    \tstring $tCurve = `getAttr ($cNode + \".targetCurve\")`;\n        string $t[] = `parent -world $tCurve`;\n        string $tCurve = $t[0];\n    \tstring $piece = `getAttr ($cNode + \".piece\")`;\n    \tdelete $cNode;\n        select -r $tCurve $piece;\n        dupAlongCurve($n);\n    }\n\t\n    else {\n        print \"Not enough objects selected, or object not a controlNode \\n\";\n    }\n}\n// Make Beams\nglobal proc makeBeams(){\n\n\t// Get Selection (select the controlNode)\n\n\tstring $sel[] = `ls -sl`;\n\t\n\tif (size($sel) != 1){\n\t    print \"More than 1 object selected, or no objects selected. \\n\";\n    }\n    \n\telse{\n\t\t\n\t\tstring $cNode = $sel[0];\n\t\t\n\t\tif (`attributeQuery -node $cNode -exists \"rogControls\"`){\n\t\t\n\t\t\t// Get Data\n\t\t\n\t\t\tstring $piecesNode = `getAttr ($cNode + \".piecesNode\")`;\n\t\t\tstring $pieces[] = `listRelatives -type \"transform\" $piecesNode`;\n\t\t\tstring $nurbs[] = `ls -dag -type \"nurbsCurve\" $pieces[0]`;\n\t\t\tstring $nurbsTransform[] = `listRelatives -parent $nurbs`;\n\t\t\tstring $loft[];\n\t\t\tstring $lofts[];\n\t\t\n\t\t    // For each piece, create a list of each nurbs object\n\t\t\tfor ($i = 0; $i < (size($nurbs)); ++$i){\n\t\t\t    \n\t\t\t\tint $interrupt = progWindow($i, size($nurbs));\n\t\t\t\tif ($interrupt == 1){\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\n\t\t\t    for ($x = 0; $x < (size($pieces)); ++$x){\n\t\t\t        $loft[$x] = ($pieces[$x] + \"|\" + $nurbsTransform[$i]);\n\t\t\t    }\n\t\t\t    \n\t\t        // Create a loft for each nurbs list\n\t\t        string $t[] = `loft $loft`;\n\t\t\t    $lofts[$i] = $t[0];\n\t\t\t}\n\t\t\t\n\t\t\t// Cleanup lofts into a group + Parent lofts group to Control Node\n\t\t\tstring $loftsNode = `group -n loftsNode $lofts`;\n\t\t\tstring $t[] = `parent (\"|\" + $loftsNode) $cNode`;\n\t\t\tstring $loftsNode = $t[0];\n\t\t\t\n\t\t\tselect $cNode;\n\t\t\tprint \"Complete \\n\";\n\t\t}\n\t\t\n\t\telse{\n\t\t\tprint \"Not a valid Control Node\";\n        }\n    }\n\t\n}\n// Align Fences together\nglobal proc alignFences(){\n\n\t// Get Selection (select the controlNode)\n\n\tstring $sel[] = `ls -sl`;\n\t\n\tif (size($sel) != 1){\n\t    print \"More than 1 object selected \\n\";\n    }\n\t\n\telse{\n\t\tstring $cNode = $sel[0];\n\t\t\n\t\tif (`attributeQuery -node $cNode -exists \"rogControls\"`){\n\t\t\t\t\n\t\t\t// Get Data\n\n\t\t\tstring $piecesNode = `getAttr ($cNode + \".piecesNode\")`;\n\t\t\tstring $pieces[] = `listRelatives -type \"transform\" $piecesNode`;\n\t\t\tstring $locNode = `getAttr ($cNode + \".locNode\")`;  \n\t\t\tstring $loc[] = `listRelatives -type \"transform\" $locNode`;\n\n\t\t\t// Use the next object in line's pivot as an aim constraint\n    \t\t// break previous connection\n    \n\t\t\tfor ($i = 0; $i < (size($pieces)-1); ++$i){\n\t\t\t    \n\t\t\t\tint $interrupt = progWindow($i, (size($pieces)-1));\n\t\t\t\tif ($interrupt == 1){\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\n\t\t\t\tstring $motionPath = `getAttr ($pieces[$i] + \".motionPath\")`;\n\t\n    \t\t    CBdeleteConnection ($pieces[$i] + \".rx\");\n    \t\t    CBdeleteConnection ($pieces[$i] + \".ry\");\n    \t\t    CBdeleteConnection ($pieces[$i] + \".rz\");\n       \n        \t\taimConstraint\n        \t\t    -offset 0 0 0\n        \t\t    -weight 1\n        \t\t    -aimVector 0 0 -1\n        \t\t    -upVector 0 1 0\n        \t\t    -worldUpType \"object\"\n        \t\t    -worldUpObject $loc[($i + 1)]\n        \t\t    $pieces[($i+1)] $pieces[$i];\n\t\t\t}\n\t\t\t\n\t\t\tselect $cNode;\n\t\t\tprint \"Complete \\n\";\n        }\n\t\t\n\t\telse{\n\t\t\tprint \"Not a valid Control Node\";\n        }\n    }\n}\n//Duplicate Along Curve\nglobal proc dupAlongCurve(int $n){\n\n    cycleCheck -e off;\n    \n    //get data\n\n    string $sel[] = `ls -sl`;\n    \n    if (size($sel) == 1){\n        resetRog($n);\n    }\n\t\n    else {\n    \tstring $targetCurve = `rename $sel[0] targetCurve0`;\n    \tstring $piece = `rename $sel[1] piece0`;\n\t\n\t    //create Curve Control Node and Heirarchy\n\t\n\t    string $cNode = `createNode -n controlNode transform`;\n\t    string $curvesNode = `createNode -n curvesNode transform`;\n\t    string $piecesNode = `createNode -n piecesNode transform`;\n\t    string $locNode = `createNode -n locatorNode transform`;\n\t    \n\t    setAttr ($locNode + \".v\") 0;\n\t\n\t    //SetUpControlNode\n\t    addAttr -ln \"rogControls\"  -at bool  $cNode;\n\t    setAttr -e-channelBox true ($cNode + \".rogControls\") 1;\n\t    addAttr -ln \"bank\"  -at double $cNode;\n\t    setAttr -e-keyable true ($cNode + \".bank\");\n\t    addAttr -ln \"objScale\" -at double $cNode;\n\t\tsetAttr -e-keyable true ($cNode + \".objScale\") 1;\n\t    \n\t    setAttr -lock true -keyable false -channelBox false ($cNode + \".tx\");\n\t    setAttr -lock true -keyable false -channelBox false ($cNode + \".ty\");\n\t    setAttr -lock true -keyable false -channelBox false ($cNode + \".tz\");\n\t    setAttr -lock true -keyable false -channelBox false ($cNode + \".rx\");\n\t    setAttr -lock true -keyable false -channelBox false ($cNode + \".ry\");\n\t    setAttr -lock true -keyable false -channelBox false ($cNode + \".rz\");\n\t    setAttr -lock true -keyable false -channelBox false ($cNode + \".sx\");\n\t    setAttr -lock true -keyable false -channelBox false ($cNode + \".sy\");\n\t    setAttr -lock true -keyable false -channelBox false ($cNode + \".sz\");\n\t    setAttr -lock true -keyable false -channelBox false ($cNode + \".v\");\n\t    \n\t    //Create Offset Curve for loops\n\t\n\t    string $t[] = `offsetCurve\n\t        -ch on\n\t        -rn false\n\t        -cb 2\n\t        -st true\n\t        -cl false\n\t        -cr 0\n\t        -d 0\n\t        -tol 0.01\n\t        -sd 0\n\t        -ugn false \n\t        $targetCurve`;\n\t\t\t\n\t    string $objUpCurve = $t[0];\n\t    setAttr ($objUpCurve + \".ty\") 1;\n\t\n\t    //duplicate pieces\n\t    float $pieceLoc = 0;\n\t\t\n\t    for ($i = 0; $i < $n; ++$i){\n\t        \n\t        float $oneHundred = 100;\n\t\t\t\n\t\t\tif ($i != 0){\n\t\t\t    float $one = 1.000;\n\t\t\t    $pieceLoc = ($i * ($one / $n));\n\t\t\t}\n\t\t\t\n\t\t\tint $interrupt = progWindow($i, $n);\n\t\t\tif ($interrupt == 1){\n\t\t\t\tbreak;\n\t\t\t}\n\t\n\t        string $t[] = `spaceLocator -p 0 0 0`;\n\t        $cLoc = `parent $t[0] $locNode`;\n\t\n\t        select $cLoc $objUpCurve;\n\t        string $motionPath = `pathAnimation\n\t            -fractionMode true\n\t            -follow true\n\t            -followAxis z\n\t            -upAxis y\n\t            -worldUpType \"object\"\n\t            -worldUpObject $cLoc\n\t            -inverseUp false\n\t            -inverseFront false\n\t            -bank true`;\n\t        disconnectAttr ($motionPath +\"_uValue.output\") ($motionPath + \".uValue\");\n\t        setAttr ($motionPath + \".uValue\") $pieceLoc;\n\t\n\t        string $t[] = `instance $piece`;\n\t        string $t[] = `parent $t[0] $piecesNode`;\n\t        string $cPiece = $t[0];\n\t        \n\t        select $cPiece $targetCurve;\n\t        string $motionPath = `pathAnimation\n\t            -fractionMode true\n\t            -follow true\n\t            -followAxis z\n\t            -upAxis y\n\t            -worldUpType \"object\"\n\t            -worldUpObject $cLoc\n\t            -inverseUp false\n\t            -inverseFront false\n\t            -bank true`;\n\t        disconnectAttr ($motionPath +\"_uValue.output\") ($motionPath + \".uValue\");\n\t        setAttr ($motionPath + \".uValue\") $pieceLoc;\n\t        connectAttr -f ($cNode + \".bank\") ($motionPath + \".bankScale\");\n\t        connectAttr -f ($cNode + \".objScale\") ($cPiece + \".sx\");\n\t\t\tconnectAttr -f ($cNode + \".objScale\") ($cPiece + \".sy\");\n\t\t\tconnectAttr -f ($cNode + \".objScale\") ($cPiece + \".sz\");\n\t\t\t\n\t\t\t//Store motionPath name for each duplicate\n\t\t\taddAttr -ln \"motionPath\" -dt \"string\" $cPiece;\n\t    \tsetAttr -e -channelBox true -type \"string\" ($cPiece + \".motionPath\") $motionPath;\n\t   }\n    \n    //CleanUp\n    parent $targetCurve $objUpCurve $curvesNode;\n    parent $curvesNode $cNode;\n    string $t[] = `parent $locNode $cNode`;\n    string $locNode = $t[0];\n    string $t[] = `parent $piecesNode $cNode`;\n    string $piecesNode = $t[0];\n    \n    //Store Data\n\n    addAttr -ln \"piece\" -dt \"string\" $cNode;\n    setAttr -e -channelBox true -type \"string\" ($cNode + \".piece\") $piece;\n    addAttr -ln \"targetCurve\" -dt \"string\" $cNode;\n    setAttr -e -channelBox true -type \"string\" ($cNode + \".targetCurve\") ($cNode + \"|\" + $curvesNode + \"|\" + $targetCurve);\n    addAttr -ln \"offsetCurve\" -dt \"string\" $cNode;\n    setAttr -e -channelBox true -type \"string\" ($cNode + \".offsetCurve\") $objUpCurve;\n    addAttr -ln \"locNode\" -dt \"string\" $cNode;\n    setAttr -e -channelBox true -type \"string\" ($cNode + \".locNode\") $locNode;\n    addAttr -ln \"piecesNode\" -dt \"string\" $cNode;\n    setAttr -e -channelBox true -type \"string\" ($cNode + \".piecesNode\") $piecesNode;\n    \n    select $cNode;\n    print \"Complete \\n\";\n    }\n}\n// Select Objects, Target and Offset Curve\nglobal proc selectObj(int $n){\n    \n    string $sel[] = `ls -sl`;\n\t\n\tif (size($sel) != 1){\n\t    print \"More than 1 object selected, or no objects selected. \\n\";\n\t    stop;\n    }\n\t\n    string $cNode = $sel[0];\n    \n\tif (`attributeQuery -node $cNode -exists \"rogControls\"`){\n    \tstring $target = \"\";\n    \tif ($n == 1){\n    \t    $target = \"targetCurve\";\n    \t}\n\t\t\n    \telse if ($n == 2){\n    \t    $target = \"offsetCurve\";\n    \t}\n    \tselect `getAttr ($cNode + \".\" + $target)`;\n    }\n\t\n\telse{\n\t\tprint \"Not a valid Control Node\";\n    }\n}\n// Complete Circle\nglobal proc completeCircle(){\n\n    string $sel[] = `ls -sl`;\n\t\n\tif (size($sel) != 1){\n\t    print \"More than 1 object selected, or no objects selected. \\n\";\n\t    stop;\n    }\n    \n    string $cNode = $sel[0];\n\t\n\tif (`attributeQuery -node $cNode -exists \"rogControls\"`){\n    \tstring $piecesNode = `getAttr ($cNode + \".piecesNode\")`;\n    \tstring $pieces[] = `listRelatives -type \"transform\" $piecesNode`;\n    \tstring $new[] = `instance $pieces[0]`;\n    \tsetAttr ($new[0] + \".v\") 0;\n    \tparentConstraint $pieces[0] $new[0];\n    \tconnectAttr -f ($cNode + \".objScale\") ($new[0] + \".sx\");\n\t\tconnectAttr -f ($cNode + \".objScale\") ($new[0] + \".sy\");\n\t\tconnectAttr -f ($cNode + \".objScale\") ($new[0] + \".sz\");\n    }\n\t\n\telse{\n\t\tprint \"Not a valid Control Node\";\n    }\n}\n// Launch Pillar Menu\nglobal proc pillarMenu(){\n\n    source generateChannelMenu.mel;\n\t\n    if(`window -q -ex pillarMenu`){\n      deleteUI pillarMenu;\n    }\n\n    window  -w 160 -h 200 -title \"Pillar Menu\" pillarMenu;\n    columnLayout ColumnLayout;\n    \n\ttext -l \"\";\n    text -w 150 -l \"Select Control Node\";\n    text -l \"\";\n    text -l \"\";\n    \n    button\n\t\t-w 150\n        -label \"Delete Pillars\"\n        -ann \"Select: Control Node\"\n        -c \"deletePillars()\";\n    \n    text -l \"\";\n    text -w 150 -l \"Build a Pillar per X tracks\";\n    \n\tintField \n\t\t-w 150\n\t\t-v 5\n\t\tpillarIntField;\n\t\n\ttext -l \"\";\n    text -l \"Choose Pillar Style Below\";\n\t\n\tbutton\n\t\t-w 150\n        -label \"Basic Pillars\"\n        -ann \"Select: Control Node\"\n        -c \"buildPillarsBasic(`intField -q -v pillarIntField`)\";\n   \n    showWindow pillarMenu;\n\twindow -e -w 160 -h 300 pillarMenu;\n\t\n}\n// Launch ROG Help Menu\nglobal proc rogHelpMenu(){\n\n\tsource generateChannelMenu.mel;\n\t\n    if(`window -q -ex rogHelpMenu`){\n      deleteUI rogHelpMenu;\n    }\n\n    window  -w 400 -h 500 -title \"Help / About\" rogHelpMenu;\n    columnLayout ColumnLayout;\n\n\tscrollField\n\t\t-w 390\n\t\t-h 470\n\t\t-wordWrap true\n\t\t-editable false\n\t\t-text (\"This script will take a Group of objects and duplicate them along a specified curve.\"\n\t\t\t+ \"If the group contains curves, these\"\n\t\t\t+ \"can be lofted after creation using the 'Make Beams' command.\"\n\t\t\t+ \"You can edit the shape, angle and scale of the track and\"\n\t\t\t+ \"pillars dynamically after creation. You can also change the\"\n\t\t\t+ \"pillar rate and number of duplicates at anytime by selecting\"\n\t\t\t+ \"the control node and entering a new value.\"\n\t\t\t+ \"\\n\\n\\n\\n\\n\\n\\n\"\n\t\t\t+ \"Script written by Peter Chapman.\\n\"\n\t\t\t+ \"Email:  pchapman86@gmail.com\"\n\t\t\t+ \"\\n\\n\\n\\n\\n\\n\\n\"\n\t\t\t+ \"You are welcome to use and distribute this script, however,\"\n\t\t\t+ \"if you do so, send me a quick e-mail with your name and what\"\n\t\t\t+ \"you used it for.\"\n\t\t\t+ \"\\n\\n\"\n\t\t\t+ \"Also feel free to give me feedback / request changes.\"\n\t\t\t+ \"\\n\\n\"\n\t\t\t+ \"If you end up using the script for a commercial project,\"\n\t\t\t+ \"feel free to contribute via PayPal using the email address\"\n\t\t\t+ \"above!\");\n\t\n\tshowWindow rogHelpMenu;\n\twindow -e -w 400 -h 500 rogHelpMenu;\n}\n//Launch ROG Menu\nglobal proc rogMenu(){\n\n    source generateChannelMenu.mel;\n\t\n     if(`window -q -ex ROGMenu`){\n      deleteUI ROGMenu;\n    }\n\n    window  -w 160 -h 500 -title \"ROG\" ROGMenu;\n    columnLayout ColumnLayout;\n    \n\tbutton\n\t\t-w 150\n        -l \"Help/About\"\n        -ann \"Help/About\"\n        -c \"rogHelpMenu()\";\n\t\n\ttext -l \"Select the curve\";\n\ttext -l \"Ctrl/Shift Select the\";\n    text -l \"Grp you wish to\";\n    text -l \"Duplicate.\";\n    text -l \"\";\n\n\ttext -w 150 -l \"no. of duplicates:\";\n\tfloatField\n\t\t-w 150\n\t\t-v 10\n\t\tnFloatField;\n\t\n\tbutton\n\t\t-w 150\n        -label \"Duplicate Along Curve\"\n        -ann \"Select: curve, then piece grp\"\n        -c \"dupAlongCurve(`floatField -q -v nFloatField`)\";\n\n    text -l \"\";\n    text -w 150 -l \"PRESETS:\";\n    text -l \"\";\n    text -l \"Select the Control Node\";\n    text -l \"you wish to apply a      \";\n    text -l \"preset too.                   \";\n\n    button\n\t\t-w 150\n        -l \"Complete Circle\"\n        -ann \"Select the ControlNode\"\n        -c \"completeCircle()\";\n    \n    button\n\t\t-w 150\n        -l \"Fence\"\n        -ann \"Select the ControlNode\"\n        -c \"alignFences()\";\n    \n    button\n\t\t-w 150\n        -l \"Make Beams\"\n        -ann \"Select the ControlNode\"\n        -c \"makeBeams()\";\n    \n    text -l \"\";\n    button\n\t\t-w 150\n        -l \"Pilar Menu\"\n        -ann \"Select the ControlNode\"\n        -c \"pillarMenu()\";\n    \n    text -l \"\";\n    text -l \"SELECT CONTROL:\";\n    text -l \"\";\n    \n    button\n\t\t-w 150\n        -l \"Target Curve\"\n        -ann \"Select the ControlNode\"\n        -c \"selectObj(1)\";\n    \n    button\n\t\t-w 150\n        -l \"Offset Curve\"\n        -ann \"Select the ControlNode\"\n        -c \"selectObj(2)\";\n    \n    showWindow ROGMenu;\n\twindow -e -w 160 -h 400 ROGMenu;\n}\n//Run Procedure\nrogMenu();" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "SpecialShatter" 
+        -enableBackground 0
+        -align "center" 
+        -label "SpecialShatter" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -imageOverlayLabel "SpecialShatter" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "\nproc SurfaceShatterSpecial(int $shardNo)\n{\n    string $myNewList[] = `ls -sl -tr`;\n    string $shatName = $myNewList[0] + \"s\";\n    surfaceShatter($shatName, $shardNo, 1, 1, 0, -0.1, 0, 0, 3, \"shapes\", 0, 1);\n    \n    //rename\n    string $tempsel[] = `ls -sl -tr`;\n    select -hi $tempsel[0];\n    select -d $tempsel[0];\n    string $shardSel[] = `ls -sl -tr`;    \n    select -cl;\n    string $shardName = $shatName + \"s\";\n    for($t = 0; $t < size($shardSel); $t++)\n    {\n        select -r $shardSel[$t];\n        polySoftEdge -a 0 -ch 0 $shardSel[$t];\n    }\n    select -cl;\n    select $shardSel;   \n    DeleteHistory;\n    renameSelectionList($shardName);\n    select -cl;\n}\nproc SolidShatterSpecial(int $shardNo)\n{\n\n    string $myNewList[] = `ls -sl -tr`;\n    string $shatName = $myNewList[0] + \"s\";\n    solidShatter($shatName, $shardNo, 0, 1, 0, 2, 1, 0, 3, \"shapes\", 0, 1);\n    \n    //rename\n    string $tempsel[] = `ls -sl -tr`;\n    select -hi $tempsel[0];\n    select -d $tempsel[0];\n    string $shardSel[] = `ls -sl -tr`;    \n    select -cl;\n    string $shardName = $shatName + \"s\";\n    for($t = 0; $t < size($shardSel); $t++)\n    {\n        select -r $shardSel[$t];\n        polySoftEdge -a 0 -ch 0 $shardSel[$t];\n    }\n    select -cl;\n    select $shardSel;   \n    DeleteHistory;\n    renameSelectionList($shardName);\n    select -cl;\n}\nproc SolidShatterSpecialGroup()\n{\n    string $sel[] = `ls -sl`;\n    select -hi $sel[0];\n    select -d $sel[0];\n    string $myNewList[] = `ls -sl -tr`;\n    select -cl;\n    int $RandNo;\n    \n    for($i = 0; $i < size($myNewList); $i++)\n    {\n        select $myNewList[$i];\n        string $shatName = $myNewList[$i] + \"s\";\n        $RandNo = rand(2,4);\n        solidShatter( $shatName, $RandNo, 0, 1, 0, 2, 1, 0, 3, \"shapes\", 0, 1);\n        \n        //rename\n        string $tempsel[] = `ls -sl -tr`;\n        select -hi $tempsel[0];\n        select -d $tempsel[0];\n        string $shardSel[] = `ls -sl -tr`;    \n        select -cl;\n        string $shardName = $shatName + \"s\";\n        for($t = 0; $t < size($shardSel); $t++)\n        {\n            select -r $shardSel[$t];\n            polySoftEdge -a 0 -ch 0 $shardSel[$t];\n        }\n        select -cl;\n        select $shardSel;   \n        DeleteHistory;\n        renameSelectionList($shardName);\n        select -cl;\n    }\n}\n\n//CHECK WINDOW EXISTS\nif(`window -exists SpecialShatter`)\n{\n\tdeleteUI -window SpecialShatter;\t//deletes window if already exists in scene\n}\n\n//CREATE WINDOW\nstring $myUI = `window\t-title \"SpecialShatter\"\n\t\t\t\t\t\t-wh\t128 256\t\t\t//width/height\n\t\t\t\t\t\tSpecialShatter`;\t\t\t//name of window element\n\n//CREATE WINDOW LAYOUT\nrowColumnLayout -numberOfColumns 1\n\t\t\t\t-cw 1 60;\t\t\t//1st column is 16 pixels wide\n\n/*Row1*/ intField -v 3 \"myIntField\";\n/*Row1*/ button\t-label \"Surface\" -c (\"SurfaceShatterSpecial(\" + `intField -query -v \"myIntField\"` +\")\");\t\n/*Row2*/ button -label \"Solid\" -c (\"SolidShatterSpecial(\" + `intField -query -v \"myIntField\"` +\")\");\t\n/*Row2*/ button -label \"Solid Group\" -c \"SolidShatterSpecialGroup()\";\n\n//SHOW THE WINDOW\nshowWindow $myUI;\n\n\n\n\n\n\n\n" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Rename" 
+        -enableBackground 0
+        -align "center" 
+        -label "Rename" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Rename" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "string $sel[] = `ls -sl -tr`;\nselect -cl;\nselect $sel;\nstring $newName = $sel[0];\nrenameSelectionList($newName);" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "HeirarchySel" 
+        -enableBackground 0
+        -align "center" 
+        -label "HeirarchySel" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -imageOverlayLabel "HeirarchySel" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "string $sel[] = `ls -sl`;\nint $size = `size($sel)`;\nfor($i = 0; $i < $size; $i++)\n{\n\tselect -add -hi $sel[$i];\n\tselect -d $sel[$i];\n}\nstring $selection[] = `ls -sl -tr`;\nselect -cl;\nselect $selection;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Center Pivot" 
+        -enableBackground 0
+        -align "center" 
+        -label "Center Pivot" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Center Pivot" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "string $sel[] = `ls -sl`;\nselect -hi $sel[0];\nselect -d $sel[0];\nstring $selection[] = `ls -sl -tr`;\nfor($i = 0; $i < size($selection); $i++)\n{\n\tselect -cl;\n\tselect $selection[$i];\n\tCenterPivot;\n}" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "GroupSelectionUnderWorld" 
+        -enableBackground 0
+        -align "center" 
+        -label "GroupSelectionUnderWorld" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -imageOverlayLabel "GroupSelectionUnderWorld" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "\nstring $sel[] = `ls -sl`;\nselect -hi $sel[0];\nselect -d $sel[0];\nstring $toMove[] = `ls -sl -tr`;\nselect -cl;\nselect $toMove;\n\nfor($i = 0; $i < size($toMove); $i++)\n{\n    string $gName = $toMove[$i] + \"g\";\n    group -em -name $gName -parent $sel[0]; //create an empty(-em) group, parent under parentName\n    parent $toMove[$i] $gName;\t//parent obj1 to obj2\t\n}\n" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -enable 1
+        -width 35
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Delete children" 
+        -enableBackground 0
+        -align "center" 
+        -label "Delete children" 
+        -labelOffset 0
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Delete children" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.2 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "\nstring $sel[] = `ls -sl`;\nselect -hi $sel[0];\nselect -d $sel[0];\n\nstring $newSel[] = `ls -sl -tr`;\ndelete $newSel;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+    ;
+
+} 

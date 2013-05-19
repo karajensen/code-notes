@@ -1,0 +1,6 @@
+1	import sip
+2	sip.setapi('QString', 2)
+3	sip.setapi('QVariant', 2)
+4	from PyQt4 import QtGui, QtCore
+5	btn = QtGui.QPushButton(QtGui.__file__)
+6	btn.show()

@@ -1,0 +1,175 @@
+Begin section: 65619
+Camera 2D Pan: 196864
+Camera 2D Rotate: 327936
+Camera 2D Scale: 0
+Capture screen: 65616
+Change brush size: 322
+Change brush strength: 333
+Close curve: 0
+Color pick: 73
+Create NURBS curve: 262211
+Create selection set: 262213
+Curve move: 579
+Curve rotate: 323
+Curve scale: 1091
+Curve scale 2: 835
+Delete faces: 16777223
+Delete highest level: 0
+Deselect all: 262212
+Draw: 256
+Draw inverse: 262400
+Draw on curve: 131139
+Duplicate curve: 0
+Expert mode: 84
+Export faces: 0
+Export for texture baking: 0
+Falloff slot 1: 262193
+Falloff slot 2: 262194
+Falloff slot 3: 262195
+Falloff slot 4: 262196
+Falloff slot 5: 262197
+Falloff slot 6: 262198
+Falloff slot 7: 262199
+Falloff slot 8: 262200
+Falloff slot 9: 262201
+Finish curve: 16777220
+Flat lighting: 131148
+Focus on mouse: 70
+Focus on selection: 65
+Freeze selected: 131149
+Full screen: 262228
+Grow selection: 262237
+Hide all: 0
+Hide curves: 262216
+Hide selected: 72
+Hide unselected: 0
+Higher brush strength: 39
+Image plane move: 581
+Image plane rotate: 325
+Image plane scale: 837
+Image plane zoom: 1093
+Import: 0
+Import UV: 0
+Import as layer: 0
+Invert freeze: 131145
+Invert locked: 0
+Last falloff: 262236
+Level down faces: 16777239
+Level up faces: 16777238
+Light direction: 1100
+Light rotation: 332
+Lock selected: 131142
+Lower brush strength: 59
+Manipulate pivot: 131672
+Manipulate position: 600
+Manipulate rotation: 344
+Manipulate scale: 1112
+Mirror X: 196696
+Mirror Y: 196697
+Mirror Z: 196698
+Mirror off: 196687
+Mirror tangent: 196692
+Move Levels Data: 0
+New scene: 262222
+Object To Layer: 393292
+Open: 262223
+Paint layer mask: 0
+Pan: 0
+Performance: 262224
+Plugin tool: 48
+Quit: 262225
+Rebuild octree: 393308
+Recreate UVs: 0
+Rectangular select: 768
+Rectangular toggle: 393984
+Rectangular unselect: 262912
+Redo: 131162
+Repair MUD: 393264
+Roll: 131584
+Rotate around: 65792
+Runing benchmark animation: 327746
+Save scene: 262227
+Save scene as: 393299
+Save textures: 393300
+Scale brush down: 91
+Scale brush up: 93
+Schedule screenshot: 65618
+Select all: 262209
+Select all on tile: 131137
+Select border edge: 0
+Select faces brush: 86
+Select invert: 393289
+Select object brush: 0
+Select picked: 131155
+Set symmetry: 262230
+Show brush indicator: 66
+Show brush indicator 2: 77
+Stencil move: 595
+Stencil rotate: 339
+Stencil scale: 1107
+Stencil scale 2: 851
+Subdivide faces: 131140
+Temporary smooth: 131328
+Toggle cube display: 0
+Toggle culling: 131138
+Toggle curve display: 0
+Toggle gradient background: 0
+Toggle grid display: 0
+Toggle light: 262220
+Toggle object display: 0
+Toggle orient to surface: 131151
+Toggle project through: 131152
+Toggle selection highlight: 0
+Toggle shading: 0
+Toggle show textures: 131156
+Toggle stamp: 131153
+Toggle stencil visibility: 81
+Toggle texture tile: 19
+Toggle wireframe: 87
+Tool slot 1: 49
+Tool slot 2: 50
+Tool slot 3: 51
+Tool slot 4: 52
+Tool slot 5: 53
+Tool slot 6: 54
+Tool slot 7: 55
+Tool slot 8: 56
+Tool slot 9: 57
+Tools - Airbrush: 0
+Tools - Bulge: 0
+Tools - Color Picker: 0
+Tools - Contrast: 0
+Tools - Erase: 0
+Tools - Fill: 0
+Tools - Flatten: 0
+Tools - Foamy: 0
+Tools - Freeze: 0
+Tools - Grab: 0
+Tools - Imprint: 0
+Tools - Knife: 0
+Tools - Mask: 0
+Tools - Paint Brush: 0
+Tools - Paint Erase: 0
+Tools - Pencil: 0
+Tools - Pinch: 0
+Tools - Projection: 0
+Tools - Repeat: 0
+Tools - Rotate: 0
+Tools - Scale: 0
+Tools - Scrape: 0
+Tools - Sculpt: 0
+Tools - Select Faces: 0
+Tools - Select Objects: 0
+Tools - Smear: 0
+Tools - Smooth: 0
+Tools - Spray: 0
+Tools - Translate: 0
+Tools - Wax: 0
+Undo: 262234
+Unfreeze all: 131157
+Unhide all: 85
+Unhide selected: 262229
+Unlock all: 393286
+Zoom: 346
+Zoom 2: 0
+Zoom 3: 0

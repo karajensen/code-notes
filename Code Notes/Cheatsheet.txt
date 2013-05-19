@@ -1,0 +1,234 @@
+////////////////////////////////////////////////////////////////////////////////////
+//C++ CHEATSHEET
+////////////////////////////////////////////////////////////////////////////////////
+
+[1] Always use ++a as a++ returns a copy of the object; ++a returns a reference.
+
+[2] If you only need a pointer or reference to an object, forward declare
+    the object to keep the namepsace clean. Use the #include in the .cpp
+
+[3] Move Constructor/Assignment operator are only created when none of the
+    implicit five methods are defined and they are needed.
+
+[4] All single argument constructors must be declared with 'explicit' to
+    prevent unwanted casting to the single argument's type.
+
+[5] If multiple inheritance and both classes inherited share a base,
+    inherit each virtually and call the shared base class in the 
+    initialization list alongside them both. Both will not call their
+    base class.
+
+[6] Constructor body called base->derived. Destructor body called derived->base
+
+[7] Member variables initialized in order they appear in class declaration,
+    not in intialization list. Always keep list in same order as class .h.
+    Always initialise members in constructor initialisation list as it's
+    must quicker than assigning in the body
+
+[8] sizeof on an int gives the size of the int. sizeof on an array gives the
+    size of the whole array.
+
+[9] String literals are not constant but changing individual characters is.
+    char * one = "one"; one = "two" can be done.
+    char * lit = "literal"; lit[0] = 'h' cannot be done.
+
+[10] Order that function parameters are evaluated is up to the complier.
+     myFunction(getA(),getB()) can be called getA()->getB()->myFunction() or
+     getB()->getA()->myFunction(). With int z = x++ + y++; 
+     x++ or y++ can be evaluated in any order
+
+[11] Calling a virtual/pure virtual function in constructor is undefined 
+     behaviour. Base version will be called but dangerous
+
+[12] Assigning/Copying by-val from Derived to Base causes slicing where 
+     the derived information is lost
+
+[13] Virtual methods can't be templates as at run-time; when it finds out
+     what type is needed for the call, it can't generate the template
+     class instance anymore.
+
+[14] Don't store an array of derived class objects in a base class pointer.
+     Pointer arithmatic uses sizeof(Baseclass), not sizeof(Derivedclass)
+     delete [] myArray and myArray[x] also uses pointer arithmatic
+
+[15] Base class determines the access rights of the method for base class
+     pointer holding derived object.
+     - If base method is public, derived will be called even if not public.
+     - If base method is protected, only derived can call it.
+     - If base method is private, can't be called.
+
+[16] Never redefine default variables from the base class; base class 
+     pointers will always use base class default values.
+
+[17] Throw by value; catch by reference to allow polymorphism.
+     Never throw pointers as memory may not exist when unwinding the stack.
+
+[18] With #define f(x) make sure to include brackets around the x inside the
+     defined body: ((x)+=2) in case x is an expression
+
+[19] Compiler sees these as function declarations
+	 MyClass obj(MyClass2(value)); Fixed by MyClass obj((MyClass2(value)));
+	 MyClass obj(); Fixed by MyClass obj;
+
+[20] Between two sequence points a variable must not be modified more than 
+     once. Eg. i = ++i is bad. 
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//STL CHEATSHEET
+////////////////////////////////////////////////////////////////////////////////////
+
+[1] Always use Empty() instead of Size() == 0 as some lists Size() is linear
+    time lookup. Empty() is always constant time.
+
+[2] Inserting/Removing causes most cached iterators/pointers/references to be 
+    invalidated depending on the container type. This includes iterators in a loop.
+
+[3] Deque/Stack/Queue are not safe with pointer maths as memory not all in 
+    one piece. Stores data in various chucks with pointers to keep track of 
+    next lot. Use iterators to traverse.
+
+[4] myMap[key] = "something" will add an entry if the key doesn't exist
+
+[5] Use std::bitset/boost::dynamicbitset. vector<bool> is not a container and 
+    vector<bool>::iterator is not random-access, forward or bi-directional.
+    The bitset containers also have more flexibility in methods.
+    
+[6] Never use auto_ptr with a container. Containers often copy and assign
+    and create temporary copies of data in their methods. Copying the auto_ptr 
+    passes ownership of memory and sets original auto_ptr to null. 
+
+[7] Inserting into a deque invalidates all iterators/references unless   
+    inserted member is at the front or back in which iterators are invalidated 
+    and references are not. 
+
+[8] Erasing from a deque invalidates all iterators/references unless the 
+    erased member is from the front or back in which only the erased member 
+    is invalidated.
+    
+[9] Queue and Stack are built on top of Deque; Priority Queue is build on top
+    of a combined Vector/Heap.
+
+[10] STL Containers/Strings lack a virtual destructor. You shouldn't inherit from them.
+
+[11] std::remove doesn't actually remove any elements, only moves the wanted items
+     to the front of the container and returns an iterator to the end of this range.
+	 Use the erase-remove idiom for vector/deque and member methods for list/maps.
+
+[12] remove, remove_if, unique don't work with associative containers. Use member methods
+     or for loop to remove members.
+
+[13] Use member insert to fill in a container with default constructors.
+
+[14] Data for strings not guaranteed to be stored in continuous memory
+	 Internal representation of string not guaranteed to end with null character
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//C# CHEATSHEET
+////////////////////////////////////////////////////////////////////////////////////
+
+[1] struct Derived : IBase1, IBase2 {} Inherit no classes, multiple interfaces
+    class Derived : Base, IBase {} Inherit one class, multiple interfaces
+    interface Derived : Base1, Base2, IBase {} Inherit multiple classes/interfaces
+
+[2] Classes cannot be more visible than their base classes- base interfaces can have
+    any visibility. Interfaces cannot be more visible than their base interfaces.
+
+[3] Calling a virtual/abstract function in constructor is undefined behaviour.
+    Derived version will be called but dangerous.
+
+[4] Constructor body called base->derived. Destructor body called derived->base
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//C#-C++ DIFFERENCES
+////////////////////////////////////////////////////////////////////////////////////
+
+C# CLASS OBJECT CREATION
+1) Derived member Field Initialisaters called
+2) Base member Field Initialisaters called
+3) Base Constructor Body called
+4) Derived Constructor Body called
+5) Derived Destructor called
+6) Base Desctructor called
+
+C++ CLASS OBJECT CREATION
+1) Base Initialisation List called
+2) Base Constructor Body called
+3) Derived Initialisation List called
+4) Derived Constructor Body called
+5) Derived Destructor called
+6) Base Desctructor called
+
+[01 ] int myInt = 2; { int myInt = 1; }
+[C# ] If variable is in parent scope it cannot be redeclared in child scope
+[C++] As long as scope seperates variables, it can be redeclared
+
+[02 ] 2+4;
+[C# ] Floating expressions not allowed, must be assigned to something
+[C++] Floating expressions allowed
+
+[03 ] string str = "one"+1;
+[C# ] Will auto convert the number to a string during concatonation
+[C++] Won't auto convert number to string
+
+[04 ] namespace {}
+[C# ] Cannot be anon, cannot contain variables/methods
+[C++] Can be anon, can contain variables/methods
+
+[05 ] #define DEFINE
+[C# ] Must be before any code, cannot define variables/expressions, uses #if
+[C++] Can be anywhere, can define variables/expressions, uses #ifdef
+
+[06 ] int myInt = 1.0/2.0;
+[C# ] No downcasting, Compile error, only implicitly converts if range can fit in new variable
+[C++] Downcasting okay, Compile warning, implicitly converts no matter what
+
+[07 ] bool myBool = true; if(myNumber){}
+[C# ] Cannot accept a number into a bool; cannot use number as bool in if-statements
+[C++] Can accept a number; can use number as bool in if-statements
+
+[08 ] switch(myString)
+[C# ] Can use strings in a switch statement, cannot fall through to next case
+[C++] Cannot use strings in a switch statement, can fall through to next case
+
+[09 ] int& GetRef();
+[C# ] Cannot return a reference to a variable
+[C++] Can return a reference to a variable
+
+[10 ] public class MyDerived : MyBase {}
+[C# ] Structs cannot inherit; classes only inherit once; interfaces inherit multiple
+[C++] Structs, classes and ABClasses can inherit as much as they want
+
+[11 ] myBaseObj = myDerivedObj;
+[C# ] Slicing cannot occur as inheritance only occurs on reference types
+[C++] Slicing can occur as inheritance occurs on reference and value types
+
+[12 ] CPPClass&,CPPClass,CPPClass&,CPPClass / C#Class,C#Struct
+[C# ] Structs auto value-types, Classes auto reference-types
+[C++] Structs/Classes can be both; Reference-types use &, Auto default to value-type
+
+[13 ] public class Derived : Base / class Derived : public Base
+[C# ] Auto inherits publically, class has overall visibility modifier
+[C++] Class overall visibility is public, can inherit public/private/protected
+
+[14 ] virtual, abstract, pure virtual
+[C# ] Methods cannot be private; visibility must be the same between base/derived
+[C++] Methods can have any visibility; base/derived visibility doesn't have to match
+
+[15 ] virtual void MyMethod() = 0 / public abstract void MyMethod()
+[C# ] Requires abstract keyword for class, auto makes method virtual
+[C++] Requires virtual keyword on method, auto makes class abstract
+
+[16 ] static int MyStaticMemberVar;
+[C# ] Initialised through Static constructor or when first used through field initialisation
+[C++] Initialised before main() called in cpp file
+
+[17 ] MyClass(){ MyVirtualMethod(); }
+[C# ] Dangerous to call virtual method in constructor; calls Derived version
+[C++] Dangerous to call virtual method in constructor; calls Base version
+
+[18 ] :: / .
+[C# ] Uses MyClass.MyStaticMethod();
+[C++] Uses MyClass::MyStaticMethod();

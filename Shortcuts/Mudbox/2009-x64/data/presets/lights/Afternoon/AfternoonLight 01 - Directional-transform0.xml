@@ -1,0 +1,68 @@
+<node>
+	<attribute
+		id = "Center Pivot"
+		name = "Center Pivot"
+		value = "0"
+		category = ""
+		separator = "false"
+		tooltip = ""
+		labelwidth = "0.500000"
+		const = "false"
+		index = "5"
+		visible = "true"/>
+	<attribute
+		id = "Pivot"
+		name = "Pivot"
+		value = "0.00 0.00 0.00"
+		category = ""
+		separator = "false"
+		tooltip = ""
+		labelwidth = "0.500000"
+		const = "false"
+		index = "4"
+		visible = "true"/>
+	<attribute
+		id = "Scale"
+		name = "Scale"
+		value = "1.00 1.00 1.00"
+		category = ""
+		separator = "false"
+		tooltip = ""
+		labelwidth = "0.500000"
+		const = "false"
+		index = "3"
+		visible = "true"/>
+	<attribute
+		id = "Rotate"
+		name = "Rotate"
+		value = "60.88 342.96 315.65"
+		category = ""
+		separator = "false"
+		tooltip = ""
+		labelwidth = "0.500000"
+		const = "false"
+		index = "2"
+		visible = "true"/>
+	<attribute
+		id = "Translate"
+		name = "Translate"
+		value = "0.00 0.00 0.00"
+		category = ""
+		separator = "false"
+		tooltip = ""
+		labelwidth = "0.500000"
+		const = "false"
+		index = "1"
+		visible = "true"/>
+	<attribute
+		id = ""
+		name = "THIS"
+		value = "Light 01 - Directional"
+		category = ""
+		separator = "false"
+		tooltip = ""
+		labelwidth = "0.500000"
+		const = "true"
+		index = "0"
+		visible = "true"/>
+</node>

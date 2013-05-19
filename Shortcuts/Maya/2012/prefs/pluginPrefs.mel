@@ -1,0 +1,10 @@
+//Maya Preference 2012 (Release 1)
+//
+//
+evalDeferred("autoLoadPlugin(\"\", \"OpenEXRLoader\", \"OpenEXRLoader\")");
+evalDeferred("autoLoadPlugin(\"\", \"mayaHIK\", \"mayaHIK\")");
+evalDeferred("autoLoadPlugin(\"\", \"mayaCharacterization\", \"mayaCharacterization\")");
+evalDeferred("autoLoadPlugin(\"\", \"Substance\", \"Substance\")");
+evalDeferred("autoLoadPlugin(\"\", \"tiffFloatReader\", \"tiffFloatReader\")");
+evalDeferred("autoLoadPlugin(\"\", \"OneClick\", \"OneClick\")");
+evalDeferred("autoLoadPlugin(\"\", \"objExport\", \"objExport\")");

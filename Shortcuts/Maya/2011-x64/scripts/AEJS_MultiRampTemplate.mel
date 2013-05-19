@@ -1,0 +1,191 @@
+/* 	Attribute Editor template for JS_MultiRamp MentalRay shader 
+	by Jan Sandstrom (Pixero) pixero@yahoo.se
+	10 january 2005	
+*/
+
+global proc AEJS_MultiRamp_Mode( string $attrName )
+{
+
+	setUITemplate -pst attributeEditorTemplate;
+
+	rowColumnLayout 
+		-nc 1
+    	-columnWidth 1 350;
+
+	attrEnumOptionMenuGrp 
+		-l "Mode" 
+		-at $attrName 
+			-ei 1 "V Ramp"
+			-ei 2 "U Ramp"
+			-ei 3 "Circular Ramp"
+			-ei 4 "Radial Ramp"
+			-ei 5 "Diagonal Up Ramp"
+			-ei 6 "Diagonal Down Ramp"
+			-ei 7 "Square Ramp"
+			
+			
+			bcdirectionGrp;
+
+	setUITemplate -ppt;
+
+	AEJS_MultiRamp_replace_Mode( $attrName );
+}
+
+global proc AEJS_MultiRamp_replace_Mode( string $attrName )
+{
+
+	attrEnumOptionMenuGrp -e -at $attrName bcdirectionGrp;
+}
+
+
+global proc AEJS_MultiRamp_Interpolation( string $attrName )
+{
+
+	setUITemplate -pst attributeEditorTemplate;
+
+	rowColumnLayout 
+		-nc 1
+    	-columnWidth 1 350;
+
+	attrEnumOptionMenuGrp 
+		-l "Interpolation" 
+		-at $attrName 
+			-ei 0 "None"
+			-ei 1 "Linear"
+			-ei 2 "Cubic S-curve"
+			-ei 3 "Quintic S-curve"
+			-ei 4 "Exponential"
+			
+			bcInterpolationGrp;
+
+	setUITemplate -ppt;
+
+	AEJS_MultiRamp_replace_Interpolation( $attrName );
+}
+
+global proc AEJS_MultiRamp_replace_Interpolation( string $attrName )
+{
+
+	attrEnumOptionMenuGrp -e -at $attrName bcInterpolationGrp;
+}
+
+
+global proc AEJS_MultiRampTemplate( string $nodeName )
+{
+	AEswatchDisplay( $nodeName );
+	editorTemplate -beginScrollLayout;
+		editorTemplate -beginLayout "JS Multi Ramp" -collapse 0;
+			editorTemplate -addSeparator;
+			editorTemplate -addSeparator;
+			editorTemplate -s ("Mode");
+			editorTemplate -callCustom "AEJS_MultiRamp_Mode"
+					   "AEJS_MultiRamp_replace_Mode" ("Mode");
+			editorTemplate -addSeparator;
+			editorTemplate -s ("Interpolation");
+			editorTemplate -callCustom "AEJS_MultiRamp_Interpolation"
+					   "AEJS_MultiRamp_replace_Interpolation" ("Interpolation");
+			editorTemplate -addSeparator;
+			editorTemplate -l "Use U input" -addControl "useU";
+			editorTemplate -l "Use V input" -addControl "useV";
+			editorTemplate -l "U Coordinate input" -addControl "incoordU";
+			editorTemplate -l "V Coordinate input" -addControl "incoordV";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Frequency" -addControl "freq";
+			editorTemplate -addSeparator;
+			
+			editorTemplate -beginLayout "Color 1 - 10" -collapse 0;
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_1";
+			editorTemplate -l "Color 1" -addControl "Color_1";
+			editorTemplate -l "Position" -addControl "Pos_1";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_2";
+			editorTemplate -l "Color 2" -addControl "Color_2";
+			editorTemplate -l "Position" -addControl "Pos_2";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_3";
+			editorTemplate -l "Color 3" -addControl "Color_3";
+			editorTemplate -l "Position" -addControl "Pos_3";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_4";
+			editorTemplate -l "Color 4" -addControl "Color_4";
+			editorTemplate -l "Position" -addControl "Pos_4";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_5";
+			editorTemplate -l "Color 5" -addControl "Color_5";
+			editorTemplate -l "Position" -addControl "Pos_5";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_6";
+			editorTemplate -l "Color 6" -addControl "Color_6";
+			editorTemplate -l "Position" -addControl "Pos_6";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_7";
+			editorTemplate -l "Color 7" -addControl "Color_7";
+			editorTemplate -l "Position" -addControl "Pos_7";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_8";
+			editorTemplate -l "Color 8" -addControl "Color_8";
+			editorTemplate -l "Position" -addControl "Pos_8";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_9";
+			editorTemplate -l "Color 9" -addControl "Color_9";
+			editorTemplate -l "Position" -addControl "Pos_9";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_10";
+			editorTemplate -l "Color 10" -addControl "Color_10";
+			editorTemplate -l "Position" -addControl "Pos_10";			
+			editorTemplate -addSeparator;
+			editorTemplate -endLayout;
+			
+			editorTemplate -beginLayout "Color 11 - 20" -collapse 1;
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_11";
+			editorTemplate -l "Color 11" -addControl "Color_11";
+			editorTemplate -l "Position" -addControl "Pos_11";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_12";
+			editorTemplate -l "Color 12" -addControl "Color_12";
+			editorTemplate -l "Position" -addControl "Pos_12";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_13";
+			editorTemplate -l "Color 13" -addControl "Color_13";
+			editorTemplate -l "Position" -addControl "Pos_13";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_14";
+			editorTemplate -l "Color 14" -addControl "Color_14";
+			editorTemplate -l "Position" -addControl "Pos_14";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_15";
+			editorTemplate -l "Color 15" -addControl "Color_15";
+			editorTemplate -l "Position" -addControl "Pos_15";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_16";
+			editorTemplate -l "Color 16" -addControl "Color_16";
+			editorTemplate -l "Position" -addControl "Pos_16";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_17";
+			editorTemplate -l "Color 17" -addControl "Color_17";
+			editorTemplate -l "Position" -addControl "Pos_17";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_18";
+			editorTemplate -l "Color 18" -addControl "Color_18";
+			editorTemplate -l "Position" -addControl "Pos_18";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_19";
+			editorTemplate -l "Color 19" -addControl "Color_19";
+			editorTemplate -l "Position" -addControl "Pos_19";
+			editorTemplate -addSeparator;
+			editorTemplate -l "Enable" -addControl "enableColor_20";
+			editorTemplate -l "Color 20" -addControl "Color_20";
+			editorTemplate -l "Position" -addControl "Pos_20";			
+			editorTemplate -addSeparator;
+			editorTemplate -endLayout;
+			
+			editorTemplate -endLayout;	
+		editorTemplate -endLayout;
+
+AEdependNodeTemplate $nodeName;
+
+editorTemplate -addExtraControls;
+editorTemplate -endScrollLayout;
+}

@@ -1,0 +1,2494 @@
+//=================================
+// KludgeCity Free (04/2010)
+// by Edward Whetstone (www.WhetstoneVFX.com)
+// 
+// All Rights Reserved.
+// 
+// The script is freeware. Non-commercial redistribution is permitted as long as this header remains included and unmodified.
+// Your feedback is always appreciated - if you find the script useful or if you have questions, comments, suggestions, requests, 
+// bug-reports, if you created an updated version, or to check for updates please contact me at:
+//
+// Ed.Whetstone@gmail.com
+// 
+//==================================
+// INSTALLATION: Copy the script into your Maya script-directory and start it with the EdW_KludgeCity; command.
+//
+//
+// COMPATIBILITY NOTE: Requires Maya 2009 +
+//
+// PLEASE ENJOY KLUDGECITY RESPONSIBLY
+
+/*****************************************************************************************************************/
+//																			GUI //
+/*****************************************************************************************************************/
+
+
+global proc EdW_KludgeCity() {
+kludgeCity;
+};
+
+global proc kludgeCity(){
+if ( `window -exists KludgeCityMain` ) {
+ deleteUI KludgeCityMain;
+};
+
+window -rtf 1 -t "Ed Whetstone's KludgeCity Free" -mnb 1 -mxb 1 -w 460 -h 850 KludgeCityMain;
+	tabLayout KCityTabs;
+	scrollLayout -w 460 -h 850 KAScrollLayout;
+	columnLayout -adjustableColumn 1 -rowSpacing 0 CColumnLayout;
+		button -l "Set Camera Clips" -command "kc_setCameraClips" globalSetCameraClips;
+	frameLayout -cll true -w 425 -cl false -l "Kludge Architect" -bs etchedIn KAFrame;
+			columnLayout -rowSpacing 0 -adjustableColumn 1;
+			frameLayout -cll false -cl false -l "Global Variables" -bs etchedIn KA_Global_Frame;
+					columnLayout -rowSpacing 5 -adjustableColumn 1;
+						textFieldGrp -l "Building Name:" -tx "KA_BLDG" KA_BldgNameInput;
+						checkBoxGrp -numberOfCheckBoxes 1 -cw 2 30 -v1 1 -l "Increment" KA_IncrementToggle;
+						text -l " ";
+						text -l "Select a footprint in the viewport, and press the load button on the right";
+						textFieldButtonGrp -l "Footprint:" -cw 3 40 -tx "AUTO" -bl "<" -bc "getBldgFootPrintFromSelection" KA_BldgFootPrintInput;
+						text -l " ";
+						checkBoxGrp -numberOfCheckBoxes 1 -cw 2 30 -v1 1 -l "Use Generic Shaders" KA_GenericShaderToggle;
+						textFieldGrp -l "Generic Shader Name:" -tx "KCity" KA_GenShaderNameInput;
+						checkBoxGrp -visible false -numberOfCheckBoxes 1 -on1 "checkBoxGrp -e -v1 1 -en 0 KA_UVToggle" -of1 "checkBoxGrp -e -v1 1 -en 1 KA_UVToggle" -cw 2 30 -v1 0 -en 1 -l "Nightscape" KA_NightscapeToggle;
+						checkBoxGrp -numberOfCheckBoxes 1 -cw 2 30 -v1 1 -l "Generate UVs" KA_UVToggle;
+						setParent ..;
+					setParent ..;
+			frameLayout -cll true -cl true -l "Floors" -bs etchedIn KA_Floors_Frame;
+					columnLayout -rowSpacing 5 -adjustableColumn 1;
+						intFieldGrp -l "Number of Floors:" -v1 15 KA_NumOfFloors;
+						floatFieldGrp -l "Floor Height:" -v1 4.00 KA_FloorHeight;
+						floatFieldGrp -l "Buffer Height:" -en 1 -v1 3.00 KA_BufferHeight;
+						checkBoxGrp -numberOfCheckBoxes 1 -cw 2 30 -v1 1 -l "Divider Ledge" KA_LedgeToggle;
+						floatFieldGrp -l "Ledge Height:" -en 1 -v1 .200 KA_LedgeHeightInput;
+						floatFieldGrp -l "Ledge Depth:" -en 1 -v1 .700 KA_LedgeDepthInput;
+						setParent ..;
+					setParent ..;
+			frameLayout -cll true -cl true -l "Additional Tiers" -bs etchedIn KA_Tiers_Frame;
+					columnLayout -rowSpacing 5 -adjustableColumn 1;
+						checkBoxGrp -numberOfCheckBoxes 1 -cw 2 30 -v1 1 -l "Second Tier" KA_TTwoToggle;
+						intFieldGrp -l "Number of Floors:" -v1 4 KA_TTwo_NumOfFloors;
+						radioButtonGrp -numberOfRadioButtons 4 -cw 2 40 -cw 3 40 -cw 3 40 -cw 4 40 -l "Alignment" -l1 "N" -l2 "S" -l3 "E" -l4 "W" KA_AlignTierTwoNSEW;
+						radioButtonGrp -numberOfRadioButtons 4 -cw 2 40 -cw 3 40 -cw 3 40 -cw 4 40  -l "|" -l1 "NE" -l2 "SE" -l3 "NW" -l4 "SW" -scl KA_AlignTierTwoNSEW KA_AlignTierTwoCorners;
+						radioButtonGrp -numberOfRadioButtons 1 -cw 2 80 -l "|" -l1 " Center" -scl KA_AlignTierTwoNSEW -sl 1 KA_AlignTierTwoCenter;
+						checkBoxGrp -numberOfCheckBoxes 1 -cw 2 30 -v1 1 -l "Triangulate Corners" KA_doTriangulateTierTwoCorners;
+						textField -visible 0 KA_StoreTierTwoFloor;
+						text -l " ";
+						checkBoxGrp -numberOfCheckBoxes 1 -cw 2 30 -v1 1 -l "Third Tier" KA_TThreeToggle;
+						intFieldGrp -l "Number of Floors:" -v1 6 KA_TThree_NumOfFloors;
+						radioButtonGrp -numberOfRadioButtons 4 -cw 2 40 -cw 3 40 -cw 3 40 -cw 4 40 -l "Alignment" -l1 "N" -l2 "S" -l3 "E" -l4 "W" KA_AlignTierThreeNSEW;
+						radioButtonGrp -numberOfRadioButtons 4 -cw 2 40 -cw 3 40 -cw 3 40 -cw 4 40  -l "|" -l1 "NE" -l2 "SE" -l3 "NW" -l4 "SW" -scl KA_AlignTierThreeNSEW KA_AlignTierThreeCorners;
+						radioButtonGrp -numberOfRadioButtons 1 -cw 2 80 -l "|" -l1 " Center" -scl KA_AlignTierThreeNSEW -sl 1 KA_AlignTierThreeCenter;
+						checkBoxGrp -numberOfCheckBoxes 1 -cw 2 30 -v1 1 -l "Triangulate Corners" KA_doTriangulateTierThreeCorners;
+						textField -visible 0 KA_StoreTierThreeFloor;
+						text -l " ";
+						checkBoxGrp -numberOfCheckBoxes 1 -cw 2 30 -v1 1 -l "Fourth Tier" KA_TFourToggle;
+						intFieldGrp -l "Number of Floors:" -v1 10 KA_TFour_NumOfFloors;
+						radioButtonGrp -numberOfRadioButtons 4 -cw 2 40 -cw 3 40 -cw 3 40 -cw 4 40 -l "Alignment" -l1 "N" -l2 "S" -l3 "E" -l4 "W" KA_AlignTierFourNSEW;
+						radioButtonGrp -numberOfRadioButtons 4 -cw 2 40 -cw 3 40 -cw 3 40 -cw 4 40  -l "|" -l1 "NE" -l2 "SE" -l3 "NW" -l4 "SW" -scl KA_AlignTierFourNSEW KA_AlignTierFourCorners;
+						radioButtonGrp -numberOfRadioButtons 1 -cw 2 80 -l "|" -l1 " Center" -scl KA_AlignTierFourNSEW -sl 1 KA_AlignTierFourCenter;
+						checkBoxGrp -numberOfCheckBoxes 1 -cw 2 30 -v1 1 -l "Triangulate Corners" KA_doTriangulateTierFourCorners;
+						setParent ..;
+					setParent ..;
+			frameLayout -cll true -cl true -l "Windows" -bs etchedIn KA_Window_Frame;
+					columnLayout -rowSpacing 5 -adjustableColumn 1;
+						checkBoxGrp -numberOfCheckBoxes 4 -cw 2 40 -cw 3 40 -cw 3 40 -cw 4 40 -l "Inset Windows" -l1 "N" -l2 "S" -l3 "E" -l4 "W" -v1 1 -v2 1 -v3 1 -v4 1 KA_ExtrudedWindowsNSEWInput;
+						checkBoxGrp -numberOfCheckBoxes 1 -cw 2 100 -l " " -l1 "Oblique" -v1 1 KA_ExtrudedWindowsObliqueInput;
+						checkBoxGrp -numberOfCheckBoxes 1 -cw 2 100 -l " " -l1 "Exclude Corners" -v1 1 KA_ExtrudedWindowsCornersInput;
+						radioButtonGrp -numberOfRadioButtons 3 -cw 2 40 -cw 3 40 -cw 3 40 -l "Windows Per Cell" -l1 " 1" -l2 " 2" -l3 " 4" -sl 1 KA_WindowsPerCellInput;
+						floatFieldGrp -l "Height Ratio:" -v1 0.90 KA_WindowHeightRatioInput;
+						floatFieldGrp -l "Width Ratio:" -v1 0.90 KA_WindowWidthRatioInput;
+						floatFieldGrp -l "Inset Amount:" -v1 0.05 KA_WindowInsetAmtInput;
+						floatFieldGrp -l "Inset Height Ratio:" -v1 1.00 KA_InsetHeightRatioInput;
+						floatFieldGrp -l "Inset Width Ratio:" -v1 1.00 KA_InsetWidthRatioInput;
+						setParent ..;
+					setParent ..;
+				frameLayout -cll true -cl true -visible false -l "Nightscape" -bs etchedIn KA_Nightscape_Frame;
+					columnLayout -rowSpacing 5 -adjustableColumn 1;
+						intSliderGrp -l "Lit Floor Percentage" -f 1 -minValue 0 -maxValue 100 -v 35 KA_Nightscape_LitFloors;
+						intSliderGrp -l "Lit/Unlit Window Ratio" -f 1 -minValue 0 -maxValue 8 -v 5 KA_Nightscape_LitWindows;
+						colorSliderGrp -l "Window Tint" -rgb .81 .89 .93 KA_Nightscape_WindowTint;
+						intSliderGrp -l "Tint Variation" -f 1 -minValue 0 -maxValue 100 -v 40 KA_Nightscape_LitWindowVariation;
+						setParent ..;
+					setParent ..;
+			frameLayout -cll true -cl true -l "Base" -bs etchedIn KA_Base_Frame;
+					columnLayout -rowSpacing 5 -adjustableColumn 1;
+						checkBoxGrp -numberOfCheckBoxes 1 -v1 1 -cw 2 30 -en 1 -l "Building Base" KA_BaseToggleInput;
+						checkBoxGrp -numberOfCheckBoxes 1 -v1 1 -cw 2 30 -en 1 -l "Base Inset" KA_BaseInsetToggleInput;
+						checkBoxGrp -numberOfCheckBoxes 1 -v1 1 -cw 2 30 -en 1 -l "Base Columns" KA_BaseColumnsToggleInput;
+						//intFieldGrp -l "Number of Columns:" -v1 20 -en 1 KA_BaseNumOfColumnsInput;
+						textFieldButtonGrp -l "Column Geometry:" -cw 3 40 -en 1 -tx "AUTO" -bl "<" -bc "getBaseColumnFromSelection" KA_BaseColumnPoolInput;
+						floatFieldGrp -l "Base Height:" -v1 6.00 -en 1 KA_BaseHeightAmtInput;
+						//checkBoxGrp -numberOfCheckBoxes 1 -v1 1 -cw 2 30 -en 0 -l "Doors" KA_BaseDoorsToggleInput;
+						//radioButtonGrp -numberOfRadioButtons 4 -cw 2 40 -cw 3 40 -cw 3 40 -cw 4 40 -en 0 -l "Doors Per Side" -l1 " 1" -l2 " 2" -l3 " 3" -l4 " 4" -sl 2 KA_Base_DoorsPerSideInput;
+						checkBoxGrp -numberOfCheckBoxes 1 -v1 1 -cw 2 30 -en 1 -l "Base Inset Windows" KA_BaseWindowsToggleInput;
+						floatFieldGrp -l "Window Incidence:" -v1 0.5 -en 1 KA_WindowIncidenceRatioInput;
+						floatFieldGrp -l "Height Ratio:" -v1 0.90 -en 1 KA_BaseWindowHeightRatioInput;
+						floatFieldGrp -l "Width Ratio:" -v1 0.90 -en 1 KA_BaseWindowWidthRatioInput;
+						floatFieldGrp -l "Inset Amount:" -v1 0.05 -en 1 KA_BaseWindowInsetAmtInput;
+						floatFieldGrp -l "Inset Height Ratio:" -v1 1.00 -en 1 KA_BaseInsetHeightRatioInput;
+						floatFieldGrp -l "Inset Width Ratio:" -v1 1.00 -en 1 KA_BaseInsetWidthRatioInput;
+						setParent ..;
+					setParent ..;
+			frameLayout -cll true -visible false -cl true -l "Exterior Details" -bs etchedIn KA_Exterior_Frame;
+					columnLayout -rowSpacing 5 -adjustableColumn 1;
+					checkBoxGrp -numberOfCheckBoxes 1 -en 0 -l "Exterior Columns" KA_ExteriorColumnsToggleInput;
+					//intFieldGrp -l "Number of Columns:" -v1 20 -en 1 KA_ExteriorNumOfColumnsInput;
+					textFieldButtonGrp -l "Column Geometry:" -en 0 -cw 3 40 -tx "AUTO" -bl "<" -bc "getExteriorColumnFromSelection" KA_ExteriorColumnPoolInput;
+					//checkBoxGrp -numberOfCheckBoxes 4 -cw 2 40 -cw 3 40 -cw 3 40 -cw 4 40 -l "Cladding" -l1 "N" -l2 "S" -l3 "E" -l4 "W" KA_ExteriorCladdingNSEWInput;
+					//intFieldGrp -l "Cladding Height Floor-units:" -v1 2 -en 1 KA_CladdingHeightInput;
+					//textFieldButtonGrp -l "Cladding Geometry:" -cw 3 40 -en 1 -tx "AUTO" -bl "<" -bc "getCladdingFromSelection" KA_CladdingPoolInput;
+					//checkBoxGrp -numberOfCheckBoxes 1 -cw 2 30 -en 1 -l "Piping (Coming Soon)" KA_PipingToggleInput;
+							setParent ..;
+						setParent ..;
+			frameLayout -cll true -visible false -cl true -l "Interior Details" -bs etchedIn KA_Interior_Frame;
+					columnLayout -rowSpacing 5 -adjustableColumn 1;
+					floatFieldGrp -l "Wall Incidence:" -en 0 -v1 0.60 KA_InteriorWallRatioInput;
+							setParent ..;
+						setParent ..;
+
+			frameLayout -cll true -cl true -l "Roof" -bs etchedIn KA_Roof_Frame;
+					columnLayout -rowSpacing 5 -adjustableColumn 1;	
+						checkBoxGrp -numberOfCheckBoxes 1 -v1 1 -cw 2 30 -en 1 -l "Cornice" KA_CorniceToggleInput;
+						floatFieldGrp -l "Cornice Height:" -v1 1 -en 1 KA_CorniceHeightInput;
+						floatFieldGrp -l "Cornice Depth:" -v1 1 -en 1 KA_CorniceDepthInput;
+						checkBoxGrp -numberOfCheckBoxes 1 -v1 1 -cw 2 30 -en 1 -l "Inset Ledge" KA_InsetLedgeToggleInput;
+						floatFieldGrp -l "Ledge Height:" -v1 .6 -en 1 KA_InsetLedgeHeightInput;
+						floatFieldGrp -l "Ledge Depth:" -v1 .6 -en 1 KA_InsetLedgeDepthInput;
+						//checkBoxGrp -numberOfCheckBoxes 1 -cw 2 30 -en 1 -l "Spire" KA_SpireToggleInput;
+						//intFieldGrp -l "Spire Levels:" -v1 0 -en 1 KA_SpireHeightInput;
+						//checkBoxGrp -numberOfCheckBoxes 1 -cw 2 30 -en 1 -l "Rooftoppers" KA_RoofToppersToggleInput;
+						//textFieldButtonGrp -l "Rooftoppers Geometry:" -cw 3 40 -en 1 -tx "AUTO" -bl "<" -bc "getRoofToppersFromSelection" KA_RoofToppersPoolInput;
+							setParent ..;
+						setParent ..;
+			button -l "Execute" -command "kludgeArchitectExecute";
+			button -l "Randomize" -command "ka_Randomizer";
+			button -l "Reset" -command "progressWindow -endProgress; source EdW_KludgeCity; EdW_KludgeCity";
+			setParent KCityTabs;
+			scrollLayout -w 460 -h 850 KSTScrollLayout;
+			columnLayout -adjustableColumn 1 -rowSpacing 0 STCColumnLayout;
+			button -l "Set Camera Clips" -command "kc_setCameraClips" globalSetCameraClips;
+			frameLayout -w 425 -cll true -cl false -l "Selection Tools" -bs etchedIn KA_SelTools_Frame;
+				columnLayout -adjustableColumn 1 -rowSpacing 0 STColumnLayout;
+					text -l " ";
+					text -l "Select a building or individual floor and choose a selection type";
+					gridLayout -cr 1 -w 425 -nrc 2 3 -cw 100;
+						button -l "Select Windows" -command "kc_selectTools windows";
+						button -l "Select Ceiling" -command "kc_selectTools ceiling";
+						button -l "Select Walls" -command "kc_selectTools walls";
+						button -l "Select Floors" -command "kc_selectTools floors";
+						button -l "Select Exterior" -command "kc_selectTools exterior";
+						button -l "Select Buffer" -command "kc_selectTools buffer";
+						button -l "Select Ledge" -command "kc_selectTools ledge";
+						setParent ..;
+						setParent ..;
+						setParent KCityTabs;
+						scrollLayout -w 460 -h 850 KFPScrollLayout;
+		columnLayout -adjustableColumn 1 -rowSpacing 0 FPTCColumnLayout;
+		button -l "Set Camera Clips" -command "kc_setCameraClips" globalSetCameraClips;
+		frameLayout -cll true -w 425 -cl false -l "Footprint Tools" -bs etchedIn FPTFrame;
+			columnLayout -adjustableColumn 1 -rowSpacing 0 FPTColumnLayout;
+			frameLayout -w 425 -cll true -cl true -l "Square Footprint" -bs etchedIn KA_RFP_Frame;
+					columnLayout -rowSpacing 5 -adjustableColumn 1;	
+						intFieldGrp -l "Divisions" -v1 25 KA_PFDivisionsInput;
+						intFieldGrp -l "Size" -v1 25 KA_PFSizeInput;
+						button -l "Create Plane" -command "kc_createPlane";
+						setParent ..;
+						setParent ..;
+			frameLayout -w 425 -cll true -cl true -l "Radial Footprint" -bs etchedIn KA_PF_Frame;
+					columnLayout -rowSpacing 5 -adjustableColumn 1;	
+						intFieldGrp -l "Radial Divisions" -v1 40 KA_RadialDivisionsInput;
+						intFieldGrp -l "Depth Divisions" -v1 8 KA_DepthDivisionsInput;
+						intFieldGrp -l "Radius" -v1 25 KA_FPRadiusInput;
+						button -l "Create Radial Plane" -command "kc_createRadialPlane";
+						setParent ..;
+						setParent ..;
+			frameLayout -w 425 -cll true -cl true -l "N-Sided Footprint" -bs etchedIn KA_NSFP_Frame;
+					columnLayout -rowSpacing 5 -adjustableColumn 1;	
+						intFieldGrp -l "Sides" -v1 8 KA_NFSSidesInput;
+						intFieldGrp -l "Depth Divisions" -v1 4 KA_NSFDepthDivisionsInput;
+						intFieldGrp -l "Divisions Per side" -v1 4 KA_NSFDivisionsPerSideInput;
+						intFieldGrp -l "Radius" -v1 25 KA_NSFRadiusInput;
+						button -l "Create N-Sided Footprint" -command "kc_createNSFP";
+						setParent ..;
+						setParent ..;
+			frameLayout -w 425 -cll true -cl true -l "Footprint From Curve" -bs etchedIn KA_FPFC_Frame;
+					columnLayout -rowSpacing 5 -adjustableColumn 1;	
+					text -l " ";
+					text -l "Select a curve in the viewport and press Create";
+						floatFieldGrp -l "Profile Depth" -v1 4 KA_CurveProfileDepthInput;
+						intFieldGrp -l "Resample Rate" -v1 400 KA_CurveProfileResampleInput;
+						intFieldGrp -l "Divisions" -v1 3 KA_CurveProfileDivisionsInput;
+						button -l "Create Footprint" -command "kc_createPrintFromCurve";
+						setParent ..;
+						setParent ..;
+			frameLayout -w 425 -cll true -cl true -l "Notch Corners" -bs etchedIn KA_FPDC_Frame;
+					columnLayout -rowSpacing 5 -adjustableColumn 1;	
+						intFieldGrp -l "Notch Size" -v1 4 KA_DCSize;
+						checkBoxGrp -numberOfCheckBoxes 1 -v1 1 -cw 2 30 -en 1 -l "Iterate" KA_DCIterateInput;
+						checkBoxGrp -numberOfCheckBoxes 1 -v1 1 -cw 2 30 -en 1 -l "Triangulate Corners" KA_DCTriangulateCornerInput;
+						checkBoxGrp -numberOfCheckBoxes 1 -v1 0 -cw 2 30 -en 1 -l "Border Faces Only" KA_DCBorderOnlyInput;
+						button -l "Notch" -command "kc_deCornerizeFootprint";
+						button -l "Triangulate" -command "kc_triangulateCorners";
+						setParent ..;
+						setParent ..;
+						button -l "Reset" -command "progressWindow -endProgress; source EdW_KludgeCity; EdW_KludgeCity";
+						setParent KCityTabs;
+	scrollLayout -w 460 -h 850 KOTScrollLayout;
+		columnLayout -adjustableColumn 1 -rowSpacing 0 KOTCColumnLayout;
+			button -l "Set Camera Clips" -command "kc_setCameraClips" globalSetCameraClips;
+			frameLayout -w 425 -cll true -cl false -l "Pivots" -bs etchedIn kc_PivotsFrame;
+			gridLayout -cwh 60 24 -nrc 2 5 -ag 1;
+				button -l "Center" -command "kc_centerPivotsSelected" kc_PvCenterPivot;
+				button -l "Y Min" -command "kc_dropPivotsSelected" kc_PvDropPivot;
+				button -l "Y Max" -command "kc_topPivotsSelected" kc_PvTopPivot;
+				button -l "Origin" -command "kc_originPivotsSelected" kc_PvOriginPivot;
+				button -l "Selected" -command "kc_selPivotsSelected" -enable true kc_PvSelPivot;
+				button -l "X Min" -command "kc_xMinPivotsSelected" kc_PvxMinPivot;
+				button -l "X Max" -command "kc_xMaxPivotsSelected" kc_PvxMaxPivot;
+				button -l "Z Min" -command "kc_zMinPivotsSelected" kc_PvzMinPivot;
+				button -l "Z Max" -command "kc_zMaxPivotsSelected" kc_PvzMaxPivot;
+				setParent ..;
+			setParent ..;
+			frameLayout -cll true -cl true -l "Move Objects" -bs etchedIn kc_ObjControlFrame;
+			columnLayout -rowSpacing 5 -adjustableColumn 1;
+				gridLayout -cwh 80 24 -nrc 1 4 -ag 1;
+					button -l "To Origin" -command "kc_moveToOrigin" kc_MtOriginButton;
+					button -l "To Selected" -command "kc_moveToSelected" kc_MtSelectedButton;
+					//button -l "Average" -enable 0 -command "kc_moveToAverage" kc_MtAverageButton;
+					button -l "Stack" -enable 1 -command "kc_moveToStack" kc_MtStackButton;
+					setParent ..;
+				setParent ..;
+				setParent ..;
+				frameLayout -cll true -cl true -l "Parenting Controls" -bs etchedIn kc_PcFrame;
+			columnLayout -rowSpacing 5 -adjustableColumn 1;
+				gridLayout -cwh 80 24 -nrc 1 4 -ag 1 kc_PcGLayout;
+					button -l "Create Chain" -command "kc_parentChain";
+					button -l "Un-Parent" -command "parent -w";
+					setParent ..;
+				setParent ..;	
+			setParent ..;
+		frameLayout -cll true -cl true -l "Normals" -bs etchedIn kc_NFrame;
+			columnLayout -rowSpacing 5 -adjustableColumn 1;
+				gridLayout -cwh 80 24 -nrc 1 4 -ag 1 kc_NGLayout;
+					button -l "Soften Norm." -command "polySoftEdge -a 180 -ch 1" kc_NSetSoftButton;
+					button -l "Harden Norm." -command "polySoftEdge -a 0 -ch 1" kc_NSetHardenButton;
+					button -l "Set N. Angle" -command "kc_setNormalAngle" kc_NSetSetAngleButton;
+					intField -value 70 NSetAngleIntField;
+					setParent ..;
+				setParent ..;
+			setParent ..;
+						button -l "Reset" -command "progressWindow -endProgress; source EdW_KludgeCity; EdW_KludgeCity";
+						setParent KCityTabs;
+	tabLayout -e -tl KAScrollLayout "Architect" -tl KSTScrollLayout "Building Selections" -tl KFPScrollLayout "Footprint Tools" -tl KOTScrollLayout "General Tools" KCityTabs;
+showWindow KludgeCityMain;
+};
+
+/*****************************************************************************************************************/
+//																			MAJOR CONSTRUCTION	//
+/*****************************************************************************************************************/
+
+//							KLUDGE ARCHITECT
+global proc kludgeArchitectExecute(){
+delete -all -ch;
+cycleCheck -e off;
+global string $gSelect; setToolTo $gSelect;
+undoInfo -state off;
+int $mrLoaded = `pluginInfo -q -l Mayatomr`;
+	if ($mrLoaded == 0){
+	loadPlugin Mayatomr;
+	}
+string $bldg_Name = `textFieldGrp -q -tx KA_BldgNameInput`;
+		//CHECK FOR EXISTING BUILDING NAME
+	if (objExists(($bldg_Name + "_floor_1")) == 1){
+	error "A building with this name already exists.  KludgeCity will now self-destruct.  Goodbye cruel world.";
+	};
+string $bldg_NameSel = $bldg_Name;
+int $isGeneric = `checkBoxGrp -q -v1 KA_GenericShaderToggle`;
+	if ($isGeneric == 1){
+	$bldg_NameSel = `textFieldGrp -q -tx KA_GenShaderNameInput`;
+	};
+string $initregisteredFootPrint = `textFieldButtonGrp -q -tx KA_BldgFootPrintInput`;
+string $initregisteredBaseColumn = `textFieldButtonGrp -q -tx KA_BaseColumnPoolInput`;
+string $initregisteredExColumn = `textFieldButtonGrp -q -tx KA_ExteriorColumnPoolInput`;
+		//CREATE SHADERS
+	if (objExists ($bldg_NameSel + "_glass") == 0){
+	string $glassShaderX = `mrCreateCustomNode -asShader "" mia_material_x`;
+	string $glassShader = `rename $glassShaderX ($bldg_NameSel + "_glass")`;
+	string $glassShaderSG = `sets -renderable true -noSurfaceShader true -empty -name ($glassShader + "SG")`;
+	connectAttr ($glassShader + ".message") ($glassShaderSG + ".miMaterialShader");
+	connectAttr ($glassShader + ".message") ($glassShaderSG + ".miPhotonShader");
+	connectAttr ($glassShader + ".message") ($glassShaderSG + ".miShadowShader");
+	setAttr ($glassShader + ".reflectivity") 1;
+	setAttr ($glassShader + ".transparency") 1;
+	setAttr ($glassShader + ".diffuseR") 0;
+	setAttr ($glassShader + ".diffuseG") 0;
+	setAttr ($glassShader + ".diffuseB") 0;
+	setAttr ($glassShader + ".refr_ior") 1.5;
+	setAttr ($glassShader + ".brdf_fresnel") 1;
+	setAttr ($glassShader + ".refl_falloff_colorR") .2;
+	setAttr ($glassShader + ".refl_falloff_colorG") .2;
+	setAttr ($glassShader + ".refl_falloff_colorB") .2;
+	setAttr ($glassShader + ".brdf_0_degree_refl") .8;
+	setAttr ($glassShader + ".thin_walled") 1;
+	};
+$glassShader = ($bldg_NameSel + "_glass");
+	if (objExists ($bldg_NameSel + "_floors") == 0){
+	string $floorsShaderX = `mrCreateCustomNode -asShader "" mia_material_x`;
+	string $floorsShader = `rename $floorsShaderX ($bldg_NameSel + "_floors")`;
+	string $floorsShaderSG = `sets -renderable true -noSurfaceShader true -empty -name ($floorsShader + "SG")`;
+	connectAttr ($floorsShader + ".message") ($floorsShaderSG + ".miMaterialShader");
+	connectAttr ($floorsShader + ".message") ($floorsShaderSG + ".miPhotonShader");
+	connectAttr ($floorsShader + ".message") ($floorsShaderSG + ".miShadowShader");
+	setAttr ($floorsShader + ".reflectivity") 0;
+	setAttr ($floorsShader + ".diffuse_roughness") .2;
+	};
+int $nightScapeToggle = `checkBoxGrp -q -v1 KA_NightscapeToggle`;
+	if ($nightScapeToggle == 1) {
+		if (objExists ($bldg_NameSel + "_nS_Lit") == 0){
+		string $nS_LitShaderX = `mrCreateCustomNode -asShader "" mia_material_x`;
+		string $nS_LitShader = `rename $nS_LitShaderX ($bldg_NameSel + "_nS_Lit")`;
+		string $nS_LitShaderSG = `sets -renderable true -noSurfaceShader true -empty -name ($nS_LitShader + "SG")`;
+		connectAttr ($nS_LitShader + ".message") ($nS_LitShaderSG + ".miMaterialShader");
+		connectAttr ($nS_LitShader + ".message") ($nS_LitShaderSG + ".miPhotonShader");
+		connectAttr ($nS_LitShader + ".message") ($nS_LitShaderSG + ".miShadowShader");
+		int $variationAmt = `intSliderGrp -q -v KA_Nightscape_LitWindowVariation`;
+		int $litRatio = `intSliderGrp -q -v KA_Nightscape_LitWindows`;
+		float $litTint[] = `colorSliderGrp -q -rgb KA_Nightscape_WindowTint`;
+		setAttr ($nS_LitShader + ".reflectivity") 1;
+		setAttr ($nS_LitShader + ".transparency") 1;
+		setAttr ($nS_LitShader + ".diffuseR") 0;
+		setAttr ($nS_LitShader + ".diffuseG") 0;
+		setAttr ($nS_LitShader + ".diffuseB") 0;
+		setAttr ($nS_LitShader + ".refr_ior") 1.5;
+		setAttr ($nS_LitShader + ".brdf_fresnel") 0;
+		setAttr ($nS_LitShader + ".refl_falloff_colorR") .2;
+		setAttr ($nS_LitShader + ".refl_falloff_colorG") .2;
+		setAttr ($nS_LitShader + ".refl_falloff_colorB") .2;
+		setAttr ($nS_LitShader + ".brdf_0_degree_refl") .8;
+		setAttr ($nS_LitShader + ".thin_walled") 1;
+		string $variationControl = `kc_createVariationGrid $variationAmt`;
+		string $litUnlitControl = `kc_createLitUnlitRamp $litRatio`;
+		string $variationMultiplier = `shadingNode -asUtility multiplyDivide -n "variationMultiplier"`;
+		connectAttr -force ($variationControl + ".outColor") ($variationMultiplier + ".input1");
+		setAttr ($variationMultiplier + ".input2X") $litTint[0];
+		setAttr ($variationMultiplier + ".input2Y") $litTint[1];
+		setAttr ($variationMultiplier + ".input2Z") $litTint[2];
+		string $litUnlitMultiplier = `shadingNode -asUtility multiplyDivide -n "litUnlitMultiplier"`;
+		connectAttr -force ($variationMultiplier + ".output") ($litUnlitMultiplier + ".input1");
+		connectAttr -force ($litUnlitControl + ".outColor") ($litUnlitMultiplier + ".input2");
+		connectAttr -force ($litUnlitMultiplier + ".output") ($nS_LitShader + ".refr_color");
+		
+		
+		};
+		if (objExists ($bldg_NameSel + "_nS_Unlit") == 0){
+		string $nS_UnlitShaderX = `mrCreateCustomNode -asShader "" mia_material_x`;
+		string $nS_UnlitShader = `rename $nS_UnlitShaderX ($bldg_NameSel + "_nS_Unlit")`;
+		string $nS_UnlitShaderSG = `sets -renderable true -noSurfaceShader true -empty -name ($nS_UnlitShader + "SG")`;
+		connectAttr ($nS_UnlitShader + ".message") ($nS_UnlitShaderSG + ".miMaterialShader");
+		connectAttr ($nS_UnlitShader + ".message") ($nS_UnlitShaderSG + ".miPhotonShader");
+		connectAttr ($nS_UnlitShader + ".message") ($nS_UnlitShaderSG + ".miShadowShader");
+		setAttr ($nS_UnlitShader + ".reflectivity") 1;
+		setAttr ($nS_UnlitShader + ".transparency") 1;
+		setAttr ($nS_UnlitShader + ".diffuseR") 0;
+		setAttr ($nS_UnlitShader + ".diffuseG") 0;
+		setAttr ($nS_UnlitShader + ".diffuseB") 0;
+		setAttr ($nS_UnlitShader + ".refr_ior") 1.5;
+		setAttr ($nS_UnlitShader + ".brdf_fresnel") 0;
+		setAttr ($nS_UnlitShader + ".refl_falloff_colorR") .2;
+		setAttr ($nS_UnlitShader + ".refl_falloff_colorG") .2;
+		setAttr ($nS_UnlitShader + ".refl_falloff_colorB") .2;
+		setAttr ($nS_UnlitShader + ".brdf_0_degree_refl") .8;
+		setAttr ($nS_UnlitShader + ".thin_walled") 1;
+		setAttr ($nS_UnlitShader + ".refr_color") -type double3 0 0 0;
+		};
+	};
+	$nS_LitShader = ($bldg_NameSel + "_nS_Lit");
+	$nS_UnlitShader = ($bldg_NameSel + "_nS_Unlit");
+	$floorsShader = ($bldg_NameSel + "_floors");
+	
+	if (objExists ($bldg_NameSel + "_ext") == 0){
+	string $extShaderX = `mrCreateCustomNode -asShader "" mia_material_x`;
+	string $extShader = `rename $extShaderX ($bldg_NameSel + "_ext")`;
+	string $extShaderSG = `sets -renderable true -noSurfaceShader true -empty -name ($extShader + "SG")`;
+	connectAttr ($extShader + ".message") ($extShaderSG + ".miMaterialShader");
+	connectAttr ($extShader + ".message") ($extShaderSG + ".miPhotonShader");
+	connectAttr ($extShader + ".message") ($extShaderSG + ".miShadowShader");
+	setAttr ($extShader + ".reflectivity") 0;
+	setAttr ($extShader + ".diffuse_roughness") .2;
+	};
+$extShader = ($bldg_NameSel + "_ext");
+
+	if (objExists ($bldg_NameSel + "_ledge") == 0){
+	string $ledgeShaderX = `mrCreateCustomNode -asShader "" mia_material_x`;
+	string $ledgeShader = `rename $ledgeShaderX ($bldg_NameSel + "_ledge")`;
+	string $ledgeShaderSG = `sets -renderable true -noSurfaceShader true -empty -name ($ledgeShader + "SG")`;
+	connectAttr ($ledgeShader + ".message") ($ledgeShaderSG + ".miMaterialShader");
+	connectAttr ($ledgeShader + ".message") ($ledgeShaderSG + ".miPhotonShader");
+	connectAttr ($ledgeShader + ".message") ($ledgeShaderSG + ".miShadowShader");
+	setAttr ($ledgeShader + ".reflectivity") 0;
+	setAttr ($ledgeShader + ".diffuse_roughness") .2;
+	setAttr ($ledgeShader + ".diffuseR") .65;
+	setAttr ($ledgeShader + ".diffuseG") .65;
+	setAttr ($ledgeShader + ".diffuseB") .65;
+	};
+$ledgeShader = ($bldg_NameSel + "_ledge");
+
+	if (objExists ($bldg_NameSel + "_buffer") == 0){
+	string $bufferShaderX = `mrCreateCustomNode -asShader "" mia_material_x`;
+	string $bufferShader = `rename $bufferShaderX ($bldg_NameSel + "_buffer")`;
+	string $bufferShaderSG = `sets -renderable true -noSurfaceShader true -empty -name ($bufferShader + "SG")`;
+	connectAttr ($bufferShader + ".message") ($bufferShaderSG + ".miMaterialShader");
+	connectAttr ($bufferShader + ".message") ($bufferShaderSG + ".miPhotonShader");
+	connectAttr ($bufferShader + ".message") ($bufferShaderSG + ".miShadowShader");
+	setAttr ($bufferShader + ".reflectivity") 0;
+	setAttr ($bufferShader + ".diffuse_roughness") .2;
+	setAttr ($bufferShader + ".diffuseR") .35;
+	setAttr ($bufferShader + ".diffuseG") .35;
+	setAttr ($bufferShader + ".diffuseB") .35;
+	};
+$bufferShader = ($bldg_NameSel + "_buffer");
+
+	if (objExists ($bldg_NameSel + "_ceil") == 0){
+	string $ceilShaderX = `mrCreateCustomNode -asShader "" mia_material_x`;
+	string $ceilShader = `rename $ceilShaderX ($bldg_NameSel + "_ceil")`;
+	string $ceilShaderSG = `sets -renderable true -noSurfaceShader true -empty -name ($ceilShader + "SG")`;
+	connectAttr ($ceilShader + ".message") ($ceilShaderSG + ".miMaterialShader");
+	connectAttr ($ceilShader + ".message") ($ceilShaderSG + ".miPhotonShader");
+	connectAttr ($ceilShader + ".message") ($ceilShaderSG + ".miShadowShader");
+	setAttr ($ceilShader + ".reflectivity") 0;
+	setAttr ($ceilShader + ".diffuse_roughness") .2;
+	};
+$ceilShader = ($bldg_NameSel + "_ceil");
+
+	if (objExists ($bldg_NameSel + "_walls") == 0){
+	string $wallsShaderX = `mrCreateCustomNode -asShader "" mia_material_x`;
+	string $wallsShader = `rename $wallsShaderX ($bldg_NameSel + "_walls")`;
+	string $wallsShaderSG = `sets -renderable true -noSurfaceShader true -empty -name ($wallsShader + "SG")`;
+	connectAttr ($wallsShader + ".message") ($wallsShaderSG + ".miMaterialShader");
+	connectAttr ($wallsShader + ".message") ($wallsShaderSG + ".miPhotonShader");
+	connectAttr ($wallsShader + ".message") ($wallsShaderSG + ".miShadowShader");
+	setAttr ($wallsShader + ".reflectivity") 0;
+	setAttr ($wallsShader + ".diffuse_roughness") .2;
+	};
+	
+$wallsShader = ($bldg_NameSel + "_walls");
+group -em -name ($bldg_Name + "_grp");
+int $numFloors = `intFieldGrp -q -v1 KA_NumOfFloors`;
+progressWindow -title "Kludge Architect Is Working" -progress 0 -status "Working..." -isInterruptable true -min 0 -max $numFloors;
+progressWindow -e -status ("Creating Shaders");
+ka_establishFootPrint $bldg_Name;
+string $registeredFootPrint = `textFieldButtonGrp -q -tx KA_BldgFootPrintInput`;
+int $baseInsetEnabled = `checkBoxGrp -q -v1 KA_BaseInsetToggleInput`;
+int $baseColumnsEnabled = `checkBoxGrp -q -v1 KA_BaseToggleInput`;
+int $baseEnabled = `checkBoxGrp -q -v1 KA_BaseToggleInput`;
+float $floorHeight = `floatFieldGrp -q -v1 KA_FloorHeight`;
+float $bufferHeight = `floatFieldGrp -q -v1 KA_BufferHeight`;
+float $baseHeight = `floatFieldGrp -q -v1 KA_BaseHeightAmtInput`;
+
+	//CREATE BASE
+	if ($baseEnabled == 1){
+	ka_CreateBaseFloor $glassShader $extShader $baseHeight $registeredFootPrint $bldg_Name;
+	refresh;
+	};
+	if ($baseEnabled == 1 && $baseInsetEnabled == 1 && $baseColumnsEnabled){
+	ka_EstablishBaseColumnGeometry $bldg_Name $baseHeight;
+	string $registeredBaseColumn = `textFieldButtonGrp -q -tx KA_BaseColumnPoolInput`;
+	ka_CreateBaseColumns $registeredBaseColumn $registeredFootPrint $bldg_Name;
+	};
+int $numFloors = `intFieldGrp -q -v1 KA_NumOfFloors`;
+float $topHeight = `ka_CreateAllFloors $bldg_Name $baseEnabled $baseHeight $registeredFootPrint $numFloors $glassShader $wallsShader $ceilShader $floorsShader $extShader $ledgeShader $bufferShader`;
+int $exteriorColumnsEnabled = `checkBoxGrp -q -v1 KA_ExteriorColumnsToggleInput`;
+	if ($exteriorColumnsEnabled == 1){
+	ka_EstablishExteriorColumnGeometry $bldg_Name $bufferHeight $numFloors $floorHeight $baseEnabled;
+	};
+string $registeredExteriorColumn = `textFieldButtonGrp -q -tx KA_ExteriorColumnPoolInput`;
+ka_CreateExterior $exteriorColumnsEnabled $registeredExteriorColumn $baseEnabled $baseHeight $registeredFootPrint;
+progressWindow -e -status ("Creating Additional Tiers");
+ka_CreateTiers $bldg_Name $topHeight $registeredFootPrint $glassShader $wallsShader $ceilShader $floorsShader $extShader $ledgeShader $bufferShader;
+string $floorName = ($bldg_Name + "_floor_");
+string $wallsShaderSG = ($wallsShader + "SG");
+int $totalNumFloors = $numFloors;
+int $uvToggle = `checkBoxGrp -q -v1 KA_UVToggle`;
+int $tierTwoToggle = `checkBoxGrp -q -v1 KA_TTwoToggle`;
+int $tTwo_NumFloors = `intFieldGrp -q -v1 KA_TTwo_NumOfFloors`;
+int $tierThreeToggle = `checkBoxGrp -q -v1 KA_TThreeToggle`;
+int $tThree_NumFloors = `intFieldGrp -q -v1 KA_TThree_NumOfFloors`;
+int $tierFourToggle = `checkBoxGrp -q -v1 KA_TFourToggle`;
+int $tFour_NumFloors = `intFieldGrp -q -v1 KA_TFour_NumOfFloors`;
+if ($tierTwoToggle == 1){$totalNumFloors = $totalNumFloors + $tTwo_NumFloors;};
+if ($tierThreeToggle == 1){$totalNumFloors = $totalNumFloors + $tThree_NumFloors;};
+if ($tierFourToggle == 1){$totalNumFloors = $totalNumFloors + $tFour_NumFloors;};
+progressWindow -e -status ("Establishing UVs");
+delete -all -ch;
+	if ($uvToggle == 1){
+	select -r ($floorName + "1");
+		for ($i = 1; $i <= $totalNumFloors; $i++){
+		string $thisFloor = ($floorName + $i);
+		select -add $thisFloor;
+		};
+	string $selSet[] = `ls -sl`;
+	kc_selectTools windows;
+	ka_unitizeAndPlace;
+	select -r $selSet;
+	kc_selectTools walls;
+	ka_unitizeAndPlace;
+	select -r $selSet;
+	kc_selectTools ceiling;
+	ka_unitizeAndPlace;
+		for ($i = 1; $i <= $totalNumFloors; $i++){
+		string $thisFloor = ($floorName + $i);
+		select -r $thisFloor;
+		kc_selectTools exterior;
+		ConvertSelectionToUVs;
+		polyEditUV -v (.05 * $i);
+		select -r $thisFloor;
+		kc_selectTools buffer;
+		ConvertSelectionToUVs;
+		polyEditUV -v (.05 * $i);
+		select -r $thisFloor;
+		kc_selectTools ledge;
+		ConvertSelectionToUVs;
+		polyEditUV -v (.05 * $i);
+		};
+	};
+
+	select -clear;
+	if ($nightScapeToggle == 1) {
+		int $floorPercentage = `intSliderGrp -q -v KA_Nightscape_LitFloors`;
+		float $floorPercentFloat = ((float) $floorPercentage / 100);
+		for ($i = 1; $i <= $totalNumFloors; $i++){
+		string $thisFloor = ($floorName + $i);
+		select -add $thisFloor;
+		};
+		string $selSet[] = `ls -sl`;
+		ka_selectRandomFaces $floorPercentFloat;
+		string $deSelSet[] = `ls -sl`;
+		kc_selectTools windows;
+		hyperShade -assign $nS_LitShader;
+		select -r $selSet;
+		select -deselect $deSelSet;
+		kc_selectTools windows;
+		hyperShade -assign $nS_UnlitShader;
+	};
+
+	delete -all -ch;
+	//CREATE ARCHITECT NODE
+	select $registeredFootPrint;
+	float $getBoundArray[] = `xform -q -ws -bb`;
+	float $bbXMin = $getBoundArray[0];
+	float $bbZmin = $getBoundArray[2];
+	float $bbXMax = $getBoundArray[3];
+	float $bbZmax = $getBoundArray[5];
+	float $bbY = $getBoundArray[1];
+
+	float $bbYTop = ($bbY + ($totalNumFloors * $floorHeight) + ($totalNumFloors * $bufferHeight));
+	string $kArchitect = `curve -degree 1 -p $bbXMin $bbY $bbZmin -p $bbXMin $bbY $bbZmax -p $bbXMax $bbY $bbZmax -p $bbXMax $bbY $bbZmin -p $bbXMin $bbY $bbZmin -p $bbXMin $bbYTop $bbZmin -p $bbXMin $bbYTop $bbZmax -p $bbXMax $bbYTop $bbZmax -p $bbXMax $bbYTop $bbZmin -p $bbXMin $bbYTop $bbZmin -n ($bldg_Name + "_Architect")`;
+	kc_dropPivotsSelected;
+	scale 1.2 1 1.2;
+
+	progressWindow -e -status ("Assigning Attributes");
+	addAttr -dt "string" -ln windowShader;
+	addAttr -dt "string" -ln ceilingShader;
+	addAttr -dt "string" -ln wallsShader;
+	addAttr -dt "string" -ln floorShader;
+	addAttr -dt "string" -ln exteriorShader;
+	addAttr -dt "string" -ln ledgeShader;
+	addAttr -dt "string" -ln bufferShader;
+	addAttr -dt "string" -ln buildingName;
+	setAttr ($kArchitect + ".windowShader") -type "string" $glassShader;
+	setAttr ($kArchitect + ".ceilingShader") -type "string" $ceilShader;
+	setAttr ($kArchitect + ".wallsShader") -type "string" $wallsShader;
+	setAttr ($kArchitect + ".floorShader") -type "string" $floorsShader;
+	setAttr ($kArchitect + ".exteriorShader") -type "string" $extShader;
+	setAttr ($kArchitect + ".bufferShader") -type "string" $bufferShader;
+	setAttr ($kArchitect + ".ledgeShader") -type "string" $ledgeShader;
+	setAttr ($kArchitect + ".buildingName") -type "string" $bldg_Name;
+	parent ($bldg_Name + "_grp") ($bldg_Name + "_Architect");
+	parent $registeredFootPrint ($bldg_Name + "_Architect");
+	select -r ($bldg_Name + "_Architect");
+int $incToggle = `checkBoxGrp -q -v1 KA_IncrementToggle`;
+	if ($incToggle == 1) {
+	string $matchedNumber = `match "[0-9]+$" $bldg_Name`;
+		if ($matchedNumber == ""){
+		$matchedNumber = "1";
+		};
+	int $newNumber = (int) $matchedNumber + 1;
+	string $matchedName = `match ".*[^0-9]" $bldg_Name`;
+	string $newBldgName = ($matchedName + $newNumber);
+	textFieldGrp -e -tx $newBldgName KA_BldgNameInput;
+	};
+textFieldButtonGrp -e -tx $initregisteredFootPrint KA_BldgFootPrintInput;
+textFieldButtonGrp -e -tx $initregisteredBaseColumn KA_BaseColumnPoolInput;
+textFieldButtonGrp -e -tx $initregisteredExColumn KA_ExteriorColumnPoolInput;
+cycleCheck -e on;
+undoInfo -state on;
+progressWindow -endProgress;
+delete -all -ch;
+
+};
+
+//							ESTABLISH FOOTPRINT GEOMETRY
+global proc ka_establishFootPrint(string $bldg_Name){
+string $registeredFootPrint = `textFieldButtonGrp -q -tx KA_BldgFootPrintInput`;
+	if ($registeredFootPrint == "AUTO"){
+	string $createdFootPrint[] = `polyPlane -w 60 -h 60 -sx 20 -sy 20 -n ($bldg_Name + "_Footprint")`;
+	select -r ($createdFootPrint[0] + ".f[0]") ($createdFootPrint[0] + ".f[19]") ($createdFootPrint[0] + ".f[380]") ($createdFootPrint[0] + ".f[399]");
+	delete;
+	select -r $createdFootPrint[0];
+	getBldgFootPrintFromSelection;
+	progressWindow -e -status ("Establishing Footprint Geometry");
+	return;
+	};
+};
+
+//							ESTABLISH BASE COLUMN GEOMETRY
+global proc ka_EstablishBaseColumnGeometry(string $bldg_Name, float $baseHeight){
+string $registeredBaseColumn = `textFieldButtonGrp -q -tx KA_BaseColumnPoolInput`;
+	if ($registeredBaseColumn == "AUTO"){
+	string $createdColumn[] = `polyPlane -w .5 -h .5 -sx 1 -sy 1 -n ($bldg_Name + "_BaseColumn")`;
+	polyExtrudeFacet -ty $baseHeight;
+	getBaseColumnFromSelection;
+	progressWindow -e -status ("Establishing Base Column Geometry");
+	return;
+	};
+};
+
+//							ESTABLISH EXTERIOR COLUMN GEOMETRY
+global proc ka_EstablishExteriorColumnGeometry(string $bldg_Name, float $bufferHeight, int $numFloors, float $floorHeight, int $baseEnabled){
+string $registeredBaseColumn = `textFieldButtonGrp -q -tx KA_ExteriorColumnPoolInput`;
+	if ($registeredBaseColumn == "AUTO"){
+	float $totalHeight = ($numFloors * ($bufferHeight + $floorHeight));
+	string $createdColumn[] = `polyCylinder -r .6 -h $totalHeight -sx 12 -sz 0 -n ($bldg_Name + "_ExteriorColumn")`;
+	select $createdColumn[0];
+	kc_dropPivotsSelected;
+	move -rpr 0 0 0;
+	polySoftEdge -a 70;
+	getExteriorColumnFromSelection;
+	progressWindow -e -status ("Establishing Exterior Column Geometry");
+	return;
+	};
+};
+
+//							CREATE BASE FLOOR
+global proc ka_CreateBaseFloor(string $glassShader, string $extShader, float $baseHeight, string $registeredFootPrint, string $bldgName){
+progressWindow -e -status ("Generating Base Floor");
+select -r $registeredFootPrint;
+duplicate $registeredFootPrint;
+string $baseFootPrintGeo[] = `ls -sl`;
+ConvertSelectionToFaces;
+int $baseInsetEnabled = `checkBoxGrp -q -v1 KA_BaseInsetToggleInput`;
+	if ($baseInsetEnabled == 1){
+	string $allFaces[] = `ls -sl`;
+	ShrinkPolygonSelectionRegion;
+	ShrinkPolygonSelectionRegion;
+	string $interiorFaces[] = `ls -sl`;
+	select -r $allFaces;
+	select -deselect $interiorFaces;
+	delete;
+	};
+select $baseFootPrintGeo[0];
+ConvertSelectionToEdges;
+polySelectConstraint -t 0x8000 -m 3 -w 1;
+resetPolySelectConstraint;
+polyExtrudeEdge -ty ($baseHeight * .15);
+polyExtrudeEdge -ty ($baseHeight * .75);
+polyExtrudeEdge -ty ($baseHeight * .1);
+select $baseFootPrintGeo[0];
+ConvertSelectionToFaces;
+//Define selection sets
+	string $allFaces[] = `ls -sl`;
+	ShrinkPolygonSelectionRegion;
+	string $sansL[] = `ls -sl`;
+	ShrinkPolygonSelectionRegion;
+	string $sansLW[] = `ls -sl`;
+	ShrinkPolygonSelectionRegion;
+	string $sansLWK[] = `ls -sl`;
+	select -r $allFaces;
+	select -d $sansL;
+	string $ledgeFaces[] = `ls -sl`;
+	select -r $sansL;
+	select -d $sansLW;
+	string $windowFaces[] = `ls -sl`;
+	select -r $sansLW;
+	select -d $sansLWK;
+	string $kickBoardFaces[] = `ls -sl`;
+//fix normals
+select $baseFootPrintGeo[0];
+string $ledgeGeo = ($baseFootPrintGeo[0] + "_ledge");
+string $kbGeo = ($baseFootPrintGeo[0] + "_kb");
+string $base_WindowGeo = ($baseFootPrintGeo[0] + "_windows");
+ReversePolygonNormals;
+//create windows
+select $windowFaces;
+	float $windowIncidence = `floatFieldGrp -q -v1 KA_WindowIncidenceRatioInput`;
+	float $whr = `floatFieldGrp -q -v1 KA_BaseWindowHeightRatioInput`;
+	float $wwr = `floatFieldGrp -q -v1 KA_BaseWindowWidthRatioInput`;
+	float $wia = `floatFieldGrp -q -v1 KA_BaseWindowInsetAmtInput`;
+	float $wih = `floatFieldGrp -q -v1 KA_BaseInsetHeightRatioInput`;
+	float $wiw = `floatFieldGrp -q -v1 KA_BaseInsetWidthRatioInput`;
+	ka_selectRandomFaces $windowIncidence;
+createWindowsFromSelection $whr $wwr $wia 1 1 $glassShader $extShader;
+refresh;
+if ( `progressWindow -query -isCancelled` ){ kc_terminate(); };
+//create top ledge
+select $ledgeFaces;
+polyChipOff -dup 0;
+select -r $baseFootPrintGeo[0];
+string $createdObjs[] = `polySeparate`;
+string $deleteMe = `rename $baseFootPrintGeo[0] "topLevelDeleteMe"`;
+rename $createdObjs[0] $baseFootPrintGeo[0];
+rename $createdObjs[1] $ledgeGeo;
+select $ledgeGeo;
+ka_StripPlanarEdges $ledgeGeo;
+ConvertSelectionToFaces;
+polyExtrudeFacet -ltz ($baseHeight * .2);
+select $deleteMe;
+ungroup;
+delete $deleteMe;
+select -r $baseFootPrintGeo[0];
+//create kickboard ledge
+select -r $kickBoardFaces;
+polyChipOff -dup 0;
+select -r $baseFootPrintGeo[0];
+string $createdObjsKB[] = `polySeparate`;
+$deleteMe = `rename $baseFootPrintGeo[0] "topLevelDeleteMeToo"`;
+delete $createdObjsKB[0];
+rename $createdObjsKB[1] $kbGeo;
+rename $createdObjsKB[2] $baseFootPrintGeo[0];
+select $kbGeo;
+ka_StripPlanarEdges $kbGeo;
+select -r $kbGeo;
+ConvertSelectionToFaces;
+polyExtrudeFacet -ltz ($baseHeight * .07);
+select $deleteMe;
+ungroup;
+select -r $registeredFootPrint;
+string $baseFiller[] = `duplicate`;
+move -r 0 $baseHeight 0;
+ConvertSelectionToFaces;
+polyExtrudeFacet -ty (-0.05);
+select $baseFiller[0];
+ReversePolygonNormals;
+//ka_StripPlanarEdges $baseFiller[0];
+select $baseFiller[0] $ledgeGeo $kbGeo $baseFootPrintGeo[0];
+string $allBase[] = `polyUnite`;
+select -r $allBase[0];
+string $bldgGrp = ($bldgName + "_grp");
+parent $allBase[0] $bldgGrp;
+rename $allBase[0] ($bldgName + "_Base");
+delete -all -ch;
+refresh;
+if ( `progressWindow -query -isCancelled` ){ kc_terminate(); };
+return;
+};
+
+//							CREATE BASE COLUMNS
+global proc string ka_CreateBaseColumns(string $registeredBaseColumn, string $registeredFootPrint, string $bldg_Name){
+progressWindow -e -status ("Generating Base Columns");
+select -r $registeredFootPrint;
+string $baseColumnsRefGeo[] = `duplicate $registeredFootPrint`;
+ConvertSelectionToFaces;
+string $allFaces[] = `ls -sl`;
+ShrinkPolygonSelectionRegion;
+string $interiorFaces[] = `ls -sl`;
+select -r $allFaces;
+select -deselect $interiorFaces;
+delete;
+select -r $baseColumnsRefGeo;
+ConvertSelectionToVertices;
+polySelectConstraint -m 2 -t 0x0001 -w 1;
+resetPolySelectConstraint;
+ka_selectRandomFaces .5;
+string $columnLocationSet[] = `ls -sl -fl`;
+string $columnSet[];
+	for ($vertLoc in $columnLocationSet){
+	float $selectedXform[] = `xform -q -ws -t $vertLoc`;
+	select $registeredBaseColumn;
+	string $columnSetInit[] = `duplicate`;
+	$columnSet[size($columnSet)] = $columnSetInit[0];
+	move -a $selectedXform[0] $selectedXform[1] $selectedXform[2] -rpr;
+	};
+	select -r $columnSet;
+	string $allCols[] = `polyUnite`;
+	string $bldgGrp = ($bldg_Name + "_grp");
+	parent $allCols[0] $bldgGrp;
+	rename $allCols[0] ($bldg_Name + "_baseColumns");
+delete $baseColumnsRefGeo[0];
+delete $registeredBaseColumn;
+//print "Base Columns Created \n";
+refresh;
+if ( `progressWindow -query -isCancelled` ){ kc_terminate(); };
+return $allCols[0];
+};
+
+//							CREATE ALL FLOORS
+global proc float ka_CreateAllFloors(string $bldgName, int $baseEnabled, float $baseHeight, string $registeredFootPrint, int $numFloors, string $glassShader, string $wallsShader, string $ceilShader, string $floorsShader, string $extShader, string $ledgeShader, string $bufferShader){
+float $floorHeight = `floatFieldGrp -q -v1 KA_FloorHeight`;
+float $bufferHeight = `floatFieldGrp -q -v1 KA_BufferHeight`;
+float $currentHeight = 0;
+	if($baseEnabled == 1){
+	$currentHeight += $baseHeight;
+	};
+progressWindow -e -status "Generating Per-Floor Template" -progress 0;
+select -r $registeredFootPrint;
+string $footPrint[] = `duplicate $registeredFootPrint`;
+move -r 0 $currentHeight 0;
+int $currentFloor = 0;
+string $floorTemp = `ka_createFloor $footPrint[0] $floorHeight $bufferHeight $currentFloor $glassShader $wallsShader $ceilShader $floorsShader $extShader $ledgeShader $bufferShader`;
+string $bldgGrp = ($bldgName + "_grp");
+parent $floorTemp $bldgGrp;
+setAttr ($floorTemp + ".buildingName") -type "string" $bldgName;
+delete $footPrint[0];
+$currentHeight += ($floorHeight + $bufferHeight);
+	for($currentFloor = 0; $currentFloor < $numFloors; $currentFloor ++){
+	progressWindow -e -status ("Creating Floor " + $currentFloor + " of " + $numFloors) -progress $currentFloor;
+	select -r $floorTemp;
+	string $thisFloor[] = `duplicate`;
+	rename $thisFloor[0] ($bldgName + "_floor_" + ($currentFloor +1));
+	move -r 0 (($floorHeight + $bufferHeight) * $currentFloor) 0;
+	refresh;
+	if ( `progressWindow -query -isCancelled` ){ kc_terminate(); };
+	$currentHeight += ($floorHeight + $bufferHeight);
+	};
+delete $floorTemp;
+float $topHeight = ($currentHeight - ($floorHeight + $bufferHeight));
+ka_createRoof $registeredFootPrint $topHeight $bldgName;
+//print "Other Floors Created \n";
+refresh;
+if ( `progressWindow -query -isCancelled` ){ kc_terminate(); };
+return $topHeight;
+};
+
+					//CREATE TIERS
+global proc ka_CreateTiers(string $bldg_Name, float $topHeight, string $registeredFootPrint, string $glassShader, string $wallsShader, string $ceilShader, string $floorsShader, string $extShader, string $ledgeShader, string $bufferShader){
+int $tierTwoToggle = `checkBoxGrp -q -v1 KA_TTwoToggle`;
+int $tTwo_NumFloors = `intFieldGrp -q -v1 KA_TTwo_NumOfFloors`;
+int $tierThreeToggle = `checkBoxGrp -q -v1 KA_TThreeToggle`;
+int $tThree_NumFloors = `intFieldGrp -q -v1 KA_TThree_NumOfFloors`;
+int $tierFourToggle = `checkBoxGrp -q -v1 KA_TFourToggle`;
+int $tFour_NumFloors = `intFieldGrp -q -v1 KA_TFour_NumOfFloors`;
+string $tierWorkingFloors[];
+	if ($tierTwoToggle == 1){
+	select -r $registeredFootPrint;
+	duplicate $registeredFootPrint;
+	move -rpr -relative 0 $topHeight 0;
+	string $workingFloor[] = `ls -sl`;
+	select -r $workingFloor[0];
+	ConvertSelectionToFaces;
+	string $totalSelection[] = `ls -sl`;
+	select $totalSelection;
+	ShrinkPolygonSelectionRegion;
+	string $smallerSelection[] = `ls -sl`;
+	select $totalSelection;
+	select -deselect $smallerSelection;
+	delete;
+	
+	select -r $workingFloor[0];
+	int $doTriangulate = `checkBoxGrp -q -v1 KA_doTriangulateTierTwoCorners`;
+	if ($doTriangulate == 1) {kc_triangulateCorners;};
+	
+	select -r $workingFloor[0];
+	select -add $registeredFootPrint;
+	int $selectedAlignment = `radioButtonGrp -q -sl KA_AlignTierTwoNSEW`;
+	if ($selectedAlignment == 0){
+	$selectedAlignment = `radioButtonGrp -q -sl KA_AlignTierTwoCorners`;
+	if ($selectedAlignment == 0){
+	$selectedAlignment = 5;
+	};
+	$selectedAlignment += 4;
+	};
+	$alignPrevious = $selectedAlignment;
+	switch ($selectedAlignment) {
+	case 1:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -z max -atl;
+	break;
+	case 2:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -z min -atl;
+	break;
+	case 3:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -x max -atl;
+	break;
+	case 4:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -x min -atl;
+	break;
+	case 5:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -z max -atl;
+	align -x max -atl;
+	break;
+	case 6:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -z min -atl;
+	align -x max -atl;
+	break;
+	case 7:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -z max -atl;
+	align -x min -atl;
+	break;
+	case 8:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -x min -atl;
+	align -x min -atl;
+	break;
+	case 9:
+	align -x mid -atl;
+	align -z mid -atl;
+	break;
+	};
+	float $newHeight =`ka_CreateAllFloors $bldg_Name 0 0 $workingFloor[0] $tTwo_NumFloors $glassShader $wallsShader $ceilShader $floorsShader $extShader $ledgeShader $bufferShader`;
+	$topHeight += $newHeight;
+	select -r $workingFloor[0];
+	$tierWorkingFloors[size($tierWorkingFloors)] = $workingFloor[0];
+	};
+	if ($tierThreeToggle == 1){
+	select -r $registeredFootPrint;
+	duplicate $registeredFootPrint;
+	move -rpr -relative 0 $topHeight 0;
+	string $workingFloor[] = `ls -sl`;
+	select -r $workingFloor[0];
+	ConvertSelectionToFaces;
+	string $totalSelection[] = `ls -sl`;
+	select $totalSelection;
+	ShrinkPolygonSelectionRegion;
+	ShrinkPolygonSelectionRegion;
+	string $smallerSelection[] = `ls -sl`;
+	select $totalSelection;
+	select -deselect $smallerSelection;
+	delete;
+		select -r $workingFloor[0];
+	int $doTriangulate = `checkBoxGrp -q -v1 KA_doTriangulateTierTwoCorners`;
+	if ($doTriangulate == 1) {kc_triangulateCorners;};
+	select -r $workingFloor[0];
+	if(size($tierWorkingFloors) > 0){
+	select -add $tierWorkingFloors[(size($tierWorkingFloors) - 1)];
+	}
+	if(size($tierWorkingFloors) == 0){
+	select -add $registeredFootPrint;
+	}
+	int $selectedAlignment = `radioButtonGrp -q -sl KA_AlignTierThreeNSEW`;
+	if ($selectedAlignment == 0){
+	$selectedAlignment = `radioButtonGrp -q -sl KA_AlignTierThreeCorners`;
+	if ($selectedAlignment == 0){
+	$selectedAlignment = 5;
+	};
+	$selectedAlignment += 4;
+	};
+	switch ($selectedAlignment) {
+	case 1:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -z max -atl;
+	break;
+	case 2:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -z min -atl;
+	break;
+	case 3:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -x max -atl;
+	break;
+	case 4:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -x min -atl;
+	break;
+	case 5:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -z max -atl;
+	align -x max -atl;
+	break;
+	case 6:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -z min -atl;
+	align -x max -atl;
+	break;
+	case 7:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -z max -atl;
+	align -x min -atl;
+	break;
+	case 8:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -x min -atl;
+	align -x min -atl;
+	break;
+	case 9:
+	align -x mid -atl;
+	align -z mid -atl;
+	break;
+	};
+	float $newHeight =`ka_CreateAllFloors $bldg_Name 0 0 $workingFloor[0] $tThree_NumFloors $glassShader $wallsShader $ceilShader $floorsShader $extShader $ledgeShader $bufferShader`;
+	$topHeight += $newHeight;
+	select -r $workingFloor[0];
+	textField -e -tx $workingFloor[0] KA_StoreTierThreeFloor;
+	$tierWorkingFloors[size($tierWorkingFloors)] = $workingFloor[0];
+	};
+	if ($tierFourToggle == 1){
+	select -r $registeredFootPrint;
+	duplicate $registeredFootPrint;
+	move -rpr -relative 0 $topHeight 0;
+	string $workingFloor[] = `ls -sl`;
+	select -r $workingFloor[0];
+	ConvertSelectionToFaces;
+	string $totalSelection[] = `ls -sl`;
+	select $totalSelection;
+	ShrinkPolygonSelectionRegion;
+	ShrinkPolygonSelectionRegion;
+	ShrinkPolygonSelectionRegion;
+	string $smallerSelection[] = `ls -sl`;
+	select $totalSelection;
+	select -deselect $smallerSelection;
+	delete;
+		select -r $workingFloor[0];
+	int $doTriangulate = `checkBoxGrp -q -v1 KA_doTriangulateTierThreeCorners`;
+	if ($doTriangulate == 1) {kc_triangulateCorners;};
+	select -r $workingFloor[0];
+	if(size($tierWorkingFloors) > 0){
+	select -add $tierWorkingFloors[(size($tierWorkingFloors) - 1)];
+	}
+	if(size($tierWorkingFloors) == 0){
+	select -add $registeredFootPrint;
+	}
+	int $selectedAlignment = `radioButtonGrp -q -sl KA_AlignTierFourNSEW`;
+	if ($selectedAlignment == 0){
+	$selectedAlignment = `radioButtonGrp -q -sl KA_AlignTierFourCorners`;
+	if ($selectedAlignment == 0){
+	$selectedAlignment = 5;
+	};
+	$selectedAlignment += 4;
+	};
+	switch ($selectedAlignment) {
+	case 1:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -z max -atl;
+	break;
+	case 2:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -z min -atl;
+	break;
+	case 3:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -x max -atl;
+	break;
+	case 4:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -x min -atl;
+	break;
+	case 5:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -z max -atl;
+	align -x max -atl;
+	break;
+	case 6:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -z min -atl;
+	align -x max -atl;
+	break;
+	case 7:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -z max -atl;
+	align -x min -atl;
+	break;
+	case 8:
+	align -x mid -atl;
+	align -z mid -atl;
+	align -x min -atl;
+	align -x min -atl;
+	break;
+	case 9:
+	align -x mid -atl;
+	align -z mid -atl;
+	break;
+	};
+	float $newHeight =`ka_CreateAllFloors $bldg_Name 0 0 $workingFloor[0] $tFour_NumFloors $glassShader $wallsShader $ceilShader $floorsShader $extShader $ledgeShader $bufferShader`;
+	$topHeight += $newHeight;
+	select -r $workingFloor[0];
+	textField -e -tx $workingFloor[0] KA_StoreTierThreeFloor;
+	$tierWorkingFloors[size($tierWorkingFloors)] = $workingFloor[0];
+	};
+	if (size($tierWorkingFloors) > 0){
+	select $tierWorkingFloors;
+	delete;
+	};
+};
+
+//							CREATE EACH FLOOR
+global proc string ka_createFloor(string $footPrint, float $floorHeight, float $bufferHeight, int $currentFloor, string $glassShader, string $wallsShader, string $ceilShader, string $floorsShader, string $extShader, string $ledgeShader, string $bufferShader){
+select $footPrint;
+progressWindow -e -status ("Creating Interior");
+string $floorInt = `ka_createFloorInterior $floorHeight $footPrint $wallsShader`;
+select $footPrint;
+progressWindow -e -status ("Creating Offices");
+string $floorOffices = `ka_createFloorOffices $floorHeight $footPrint $wallsShader`;
+select $footPrint;
+progressWindow -e -status ("Creating Ceiling");
+string $floorCeil = `ka_createFloorCeiling $floorHeight $footPrint $ceilShader`; 
+select $footPrint;
+progressWindow -e -status ("Creating Floor");
+string $floorFloor = `ka_createFloorFloor $footPrint $floorsShader`;
+select $footPrint;
+progressWindow -e -status ("Creating Windows");
+string $floorWindows = `ka_createFloorWindows $floorHeight $footPrint $glassShader $extShader`;
+select $floorWindows;
+select $footPrint;
+progressWindow -e -status ("Creating Buffer");
+string $floorBuffer = `ka_createFloorBuffer $floorHeight $bufferHeight $footPrint $bufferShader $ledgeShader`;
+delete -all -ch;
+select -r $floorOffices $floorInt $floorCeil $floorWindows $floorFloor $floorBuffer;
+string $floorTemplate[] = `polyUnite`;
+progressWindow -e -status ("Assigning Attributes");
+addAttr -dt "string" -ln windowShader;
+addAttr -dt "string" -ln ceilingShader;
+addAttr -dt "string" -ln wallsShader;
+addAttr -dt "string" -ln floorShader;
+addAttr -dt "string" -ln exteriorShader;
+addAttr -dt "string" -ln ledgeShader;
+addAttr -dt "string" -ln bufferShader;
+addAttr -dt "string" -ln buildingName;
+setAttr ($floorTemplate[0] + ".windowShader") -type "string" $glassShader;
+setAttr ($floorTemplate[0] + ".ceilingShader") -type "string" $ceilShader;
+setAttr ($floorTemplate[0] + ".wallsShader") -type "string" $wallsShader;
+setAttr ($floorTemplate[0] + ".floorShader") -type "string" $floorsShader;
+setAttr ($floorTemplate[0] + ".exteriorShader") -type "string" $extShader;
+setAttr ($floorTemplate[0] + ".bufferShader") -type "string" $bufferShader;
+setAttr ($floorTemplate[0] + ".ledgeShader") -type "string" $ledgeShader;
+kc_dropPivotsSelected;
+delete -all -ch;
+refresh;
+if ( `progressWindow -query -isCancelled` ){ kc_terminate(); };
+return $floorTemplate[0];
+};
+
+//							CREATE FLOOR OFFICES
+global proc string ka_createFloorOffices(float $floorHeight, string $footPrint, string $wallsShader){
+float $wallIncidence = `floatFieldGrp -q -v1 KA_InteriorWallRatioInput`;
+string $workingFloor[] = `duplicate $footPrint`;
+select $workingFloor[0];
+ConvertSelectionToFaces;
+ShrinkPolygonSelectionRegion;
+delete;
+select $workingFloor[0];
+ConvertSelectionToEdges;
+polySelectConstraint -m 2 -w 2 -t 0x8000;
+resetPolySelectConstraint;
+polyExtrudeEdge -ty $floorHeight;
+select $workingFloor[0];
+ka_deleteBottomMostFaces;
+select $workingFloor[0];
+hyperShade -assign $wallsShader;
+refresh;
+if ( `progressWindow -query -isCancelled` ){ kc_terminate(); };
+return $workingFloor[0];
+};
+//							CREATE FLOOR INTERIOR
+global proc string ka_createFloorInterior(float $floorHeight, string $footPrint, string $wallsShader){
+string $workingFloor[] = `duplicate $footPrint`;
+select $workingFloor[0];
+ReversePolygonNormals;
+select -r $workingFloor[0];
+ConvertSelectionToFaces;
+string $allFaces[] = `ls -sl`;
+ShrinkPolygonSelectionRegion;
+string $interiorFaces[] = `ls -sl`;
+select -r $allFaces;
+select -deselect $interiorFaces;
+delete;
+select -r $workingFloor[0];
+ConvertSelectionToEdges;
+polySelectConstraint -m 2 -t 0x8000 -w 1;
+resetPolySelectConstraint;
+polyExtrudeEdge -ty $floorHeight;
+select -r $workingFloor[0];
+ka_deleteBottomMostFaces;
+select -r $workingFloor[0];
+hyperShade -assign $wallsShader;
+refresh;
+if ( `progressWindow -query -isCancelled` ){ kc_terminate(); };
+return $workingFloor[0];
+};
+
+//							CREATE FLOOR CEILING
+global proc string ka_createFloorCeiling(float $floorHeight, string $footPrint, string $ceilShader){
+string $workingFloor[] = `duplicate $footPrint`;
+select $workingFloor[0];
+ConvertSelectionToFaces;
+ShrinkPolygonSelectionRegion;
+delete;
+select $workingFloor[0];
+ReversePolygonNormals;
+select $workingFloor[0];
+move -r 0 $floorHeight 0;
+select $workingFloor[0];
+hyperShade -assign $ceilShader;
+refresh;
+if ( `progressWindow -query -isCancelled` ){ kc_terminate(); };
+return $workingFloor[0];
+};
+
+//							CREATE FLOOR FLOOR
+global proc string ka_createFloorFloor(string $footPrint, string $floorsShader){
+string $workingFloor[] = `duplicate $footPrint`;
+select $workingFloor[0];
+ConvertSelectionToFaces;
+ShrinkPolygonSelectionRegion;
+delete;
+select $workingFloor[0];
+hyperShade -assign $floorsShader;
+refresh;
+if ( `progressWindow -query -isCancelled` ){ kc_terminate(); };
+return $workingFloor[0];
+};
+
+//							CREATE FLOOR WINDOWS
+global proc string ka_createFloorWindows(float $floorHeight, string $footPrint, string $glassShader, string $extShader){
+string $workingFloor[] = `duplicate $footPrint`;
+int $doWindowDivide = `radioButtonGrp -q -sl KA_WindowsPerCellInput`;
+	if ($doWindowDivide != 1){
+	select $workingFloor[0];
+	polySubdivideFacet -dv 1 -m 0;
+		if ($doWindowDivide == 3){
+		select $workingFloor[0];
+		polySubdivideFacet -dv 1 -m 0;
+		};
+	};
+select $workingFloor[0];
+ReversePolygonNormals;
+select $workingFloor[0];
+ConvertSelectionToEdges;
+polySelectConstraint -m 2 -t 0x8000 -w 1;
+polyExtrudeEdge -ty $floorHeight;
+resetPolySelectConstraint;
+select $workingFloor[0];
+ka_deleteBottomMostFaces;
+int $wtN = `checkBoxGrp -q -v1 KA_ExtrudedWindowsNSEWInput`;
+int $wtS = `checkBoxGrp -q -v2 KA_ExtrudedWindowsNSEWInput`;
+int $wtE = `checkBoxGrp -q -v3 KA_ExtrudedWindowsNSEWInput`;
+int $wtW = `checkBoxGrp -q -v4 KA_ExtrudedWindowsNSEWInput`;
+int $wtO = `checkBoxGrp -q -v1 KA_ExtrudedWindowsObliqueInput`;
+int $wtEC = `checkBoxGrp -q -v1 KA_ExtrudedWindowsCornersInput`;
+int $bypassToggle = 0;
+	if ($wtN == 1 && $wtS == 1 && $wtE == 1 && $wtW == 1 && $wtO == 1){
+	$bypassToggle = 1;
+	};
+float $whr = `floatFieldGrp -q -v1 KA_WindowHeightRatioInput`;
+float $wwr = `floatFieldGrp -q -v1 KA_WindowWidthRatioInput`;
+float $wia = `floatFieldGrp -q -v1 KA_WindowInsetAmtInput`;
+float $wih = `floatFieldGrp -q -v1 KA_InsetHeightRatioInput`;
+float $wiw = `floatFieldGrp -q -v1 KA_InsetWidthRatioInput`;
+string $wsN[];
+string $wsS[];
+string $wsE[];
+string $wsW[];
+string $wsO[];
+string $wsEC[];
+select $workingFloor[0];
+ConvertSelectionToFaces;
+string $selFaces[] = `ls -sl -fl`;
+	if ($wtW == 1 && $bypassToggle != 1){
+	select -r $selFaces;
+	polySelectConstraint -t 0x0008 -m 3 -o 1 -oa 1 0 0 -ob 0 .001;
+	$wsW = `ls -sl`;
+	resetPolySelectConstraint; };
+	
+	if ($wtE == 1 && $bypassToggle != 1){
+	select -r $selFaces;
+	polySelectConstraint -t 0x0008 -m 3 -o 1 -oa -1 0 0 -ob 0 .001;
+	$wsE = `ls -sl`;
+	resetPolySelectConstraint; };
+	
+	if ($wtN == 1 && $bypassToggle != 1){
+	select -r $selFaces;
+	polySelectConstraint -t 0x0008 -m 3 -o 1 -oa 0 0 1 -ob 0 .001;
+	$wsN = `ls -sl`;
+	resetPolySelectConstraint; };
+	
+	if ($wtS == 1 && $bypassToggle != 1){
+	select -r $selFaces;
+	polySelectConstraint -t 0x0008 -m 3 -o 1 -oa 0 0 -1 -ob 0 .001;
+	$wsS = `ls -sl`;
+	resetPolySelectConstraint; };
+	
+	if ($wtO == 1 && $bypassToggle != 1){
+	select -r $selFaces;
+	polySelectConstraint -t 0x0008 -m 3 -o 1 -oa 1 0 0 -ob 0 .001;
+	string $wWest[] = `ls -sl`;
+	polySelectConstraint -t 0x0008 -m 3 -o 1 -oa -1 0 0 -ob 0 .001;
+	string $wEast[] = `ls -sl`;
+	polySelectConstraint -t 0x0008 -m 3 -o 1 -oa 0 0 1 -ob 0 .001;
+	string $wNorth[] = `ls -sl`;
+	polySelectConstraint -t 0x0008 -m 3 -o 1 -oa 0 0 -1 -ob 0 .001;
+	string $wSouth[] = `ls -sl`;
+	resetPolySelectConstraint; 
+	select -r $selFaces;
+	select -d $wWest $wEast $wNorth $wSouth;
+	string $obliqueSet[] = `ls -sl -fl`;
+		if (size($obliqueSet) > 0){
+		$wsO = $obliqueSet;
+		};
+	};
+	if ($wtEC == 1) {
+	select $workingFloor[0];
+	//polySoftEdge -a 70;
+	select -r $selFaces;
+	ConvertSelectionToEdges;
+	polySelectConstraint -m 2 -t 0x8000 -w 2 -sm 1;
+	resetPolySelectConstraint;
+	ConvertSelectionToFaces;
+	$wsEC = `ls -sl`;
+	};
+	if ($bypassToggle == 0){
+	select -r $wsN $wsS $wsE $wsW $wsO;
+	select -deselect $wsEC;
+	string $isSelectedFaces[] = `ls -sl -fl`;
+			if ((size($isSelectedFaces)) > 0){
+		createWindowsFromSelection $whr $wwr $wia 1 1 $glassShader $extShader;
+		};
+	};
+	if ($bypassToggle == 1){
+	select -r $selFaces;
+	print "\n \n \n";
+	select -deselect $wsEC;
+	string $isSelectedFaces[] = `ls -sl`;
+		if ((size($isSelectedFaces)) > 0){
+		createWindowsFromSelection $whr $wwr $wia 1 1 $glassShader $extShader;
+		};
+	};
+select -r $workingFloor[0];
+int $uvToggle = `checkBoxGrp -q -v1 KA_UVToggle`;
+	if ($wtN == 1 || $wtS == 1 || $wtE == 1 || $wtW == 1 || $wtO == 1){
+		if ($uvToggle == 1){
+		ConvertSelectionToFaces;
+		string $tempSet = `sets -fc 1`;
+			string $tempGrps[] = `listConnections -type shadingEngine $glassShader`;
+			select `sets -int $tempSet $tempGrps[4]`;
+			string $windowSelSet[] = `ls -sl`;
+			if ((size($windowSelSet)) > 0){
+			ka_createUVSetWithWindows $workingFloor[0] $windowSelSet;
+			};
+		delete $tempSet;
+		};
+	};
+	refresh;
+	if ( `progressWindow -query -isCancelled` ){ kc_terminate(); };
+return $workingFloor[0];
+};
+
+
+//							CREATE FLOOR BUFFER
+global proc string ka_createFloorBuffer(float $floorHeight, float $bufferHeight, string $footPrint, string $bufferShader, string $ledgeShader){
+string $workingFloor[] = `duplicate $footPrint`;
+select $workingFloor[0];
+ReversePolygonNormals;
+select $workingFloor[0];
+ConvertSelectionToEdges;
+polySelectConstraint -m 2 -t 0x8000 -w 1;
+polyExtrudeEdge -ty $bufferHeight;
+resetPolySelectConstraint;
+select $workingFloor[0];
+ka_deleteBottomMostFaces;
+select $workingFloor[0];
+move -r 0 $floorHeight 0;
+ka_StripPlanarEdges $workingFloor[0];
+select $workingFloor[0];
+hyperShade -assign $bufferShader;
+int $uvToggle = `checkBoxGrp -q -v1 KA_UVToggle`;
+	if ($uvToggle == 1){
+	ka_createUVSetForBuffer $workingFloor[0];
+	};
+select $workingFloor[0];
+string $workingFloorLedge[];
+int $ledgeToggle = `checkBoxGrp -q -v1 KA_LedgeToggle`;
+	if ($ledgeToggle == 1){
+	float $ledgeHeight[] = `floatFieldGrp -q -v KA_LedgeHeightInput`;
+	float $ledgeDepth[] = `floatFieldGrp -q -v KA_LedgeDepthInput`;
+	$workingFloorLedge = `duplicate $workingFloor[0]`;
+	select -r $workingFloorLedge;
+	float $getBoundArray[] = `xform -q -ws -bb`;
+	float $bbXAv = (($getBoundArray[3] + $getBoundArray[0])/2);
+	float $bbZAv = (($getBoundArray[5] + $getBoundArray[2])/2);
+	float $bbYMin = $getBoundArray[1];
+	ConvertSelectionToFaces;
+	string $deleteMe[] = `ls -sl`;
+	ConvertSelectionToEdges;
+	polySelectConstraint -t 0x8000 -m 3 -oa 0 1 0 -d 3 -dp $bbXAv $bbYMin $bbZAv -db 0 .001 -da 0 1 0;
+	resetPolySelectConstraint;
+	polyExtrudeEdge -ltz $ledgeDepth[0];
+	delete $deleteMe;
+	select -r $workingFloorLedge;
+	ConvertSelectionToFaces;
+	polyExtrudeFacet -ty $ledgeHeight[0];
+	pickWalk -d left -type faceloop;
+	pickWalk -d left -type faceloop;
+	delete;
+		if ($uvToggle == 1){
+		string $workingFloorLedgeInit = $workingFloorLedge[0];
+		ka_createUVSetForLedge $workingFloorLedgeInit;
+		};
+	select -r $workingFloorLedge;
+	hyperShade -assign $ledgeShader;
+	};
+select -r $workingFloor[0];
+	if ($ledgeToggle == 1){
+	select -add $workingFloorLedge[0];
+	string $plusLedge[] = `polyUnite`;
+	$workingFloor[0] = $plusLedge[0];
+	};
+	return $workingFloor[0];
+	refresh;
+	if ( `progressWindow -query -isCancelled` ){ kc_terminate(); };
+};
+
+//							CREATE ROOF
+global proc ka_createRoof(string $footPrint, float $currentHeight, string $bldg_Name){
+int $corniceEnabled = `checkBoxGrp -q -v1 KA_CorniceToggleInput`;
+int $insetLedgeEnabled =  `checkBoxGrp -q -v1 KA_InsetLedgeToggleInput`;
+string $workingRoof[] = `duplicate $footPrint`;
+select $workingRoof[0];
+string $allRoofObjs[];
+$allRoofObjs[size($allRoofObjs)] = $workingRoof[0];
+move -r 0 $currentHeight 0;
+	if($corniceEnabled == 1){
+	float $cHeight = `floatFieldGrp -q -v1 KA_CorniceHeightInput`;
+	float $cDepth = `floatFieldGrp -q -v1 KA_CorniceDepthInput`;
+	string $workingRoofCornice[] = `duplicate $workingRoof[0]`;
+	select -r $workingRoofCornice[0];
+	ConvertSelectionToEdges;
+	polySelectConstraint -m 2 -t 0x8000 -w 1;
+	polyExtrudeEdge -ty $cHeight;
+	resetPolySelectConstraint;
+	select -r $workingRoofCornice[0];
+	ka_deleteBottomMostFaces;
+	select -r $workingRoofCornice[0];
+	ka_StripPlanarEdges $workingRoofCornice[0];
+	select -r $workingRoofCornice[0];
+	ReversePolygonNormals;
+	select -r $workingRoofCornice[0];
+	polyExtrudeFacet -ltz $cDepth;
+	$allRoofObjs[size($allRoofObjs)] = $workingRoofCornice[0];
+	};
+	if($insetLedgeEnabled == 1){
+	float $iHeight = `floatFieldGrp -q -v1 KA_InsetLedgeHeightInput`;
+	float $iDepth = `floatFieldGrp -q -v1 KA_InsetLedgeDepthInput`;
+	string $workingRoofInsetLedge[] = `duplicate $workingRoof[0]`;
+	select -r $workingRoofInsetLedge[0];
+	ConvertSelectionToFaces;
+	string $allFaces[] = `ls -sl`;
+	ShrinkPolygonSelectionRegion;
+	string $interiorFaces[] = `ls -sl`;
+	select -r $allFaces;
+	select -deselect $interiorFaces;
+	delete;
+	select -r $workingRoofInsetLedge[0];
+	ConvertSelectionToEdges;
+	polySelectConstraint -m 2 -t 0x8000 -w 1;
+	polyExtrudeEdge -ty $iHeight;
+	resetPolySelectConstraint;
+	select -r $workingRoofInsetLedge[0];
+	ka_deleteBottomMostFaces;
+	select -r $workingRoofInsetLedge[0];
+	ka_StripPlanarEdges $workingRoofInsetLedge[0];
+	select -r $workingRoofInsetLedge[0];
+	ReversePolygonNormals;
+	select -r $workingRoofInsetLedge[0];
+	polyExtrudeFacet -ltz $iDepth;
+	$allRoofObjs[size($allRoofObjs)] = $workingRoofInsetLedge[0];
+	};
+	select -r $allRoofObjs;
+	string $bldgGrp = ($bldg_Name + "_grp");
+	if (size($allRoofObjs) > 1){
+	string $roofObj[] = `polyUnite`;
+	parent $roofObj[0] $bldgGrp;
+	rename $roofObj[0] ($bldg_Name + "_Roof");
+	};
+	if (size($allRoofObjs) == 1){
+	parent $allRoofObjs[0] $bldgGrp;
+	rename $allRoofObjs[0] ($bldg_Name + "_Roof");
+	};
+//print "Roof Created \n";
+delete -all -ch;
+refresh;
+if ( `progressWindow -query -isCancelled` ){ kc_terminate(); };
+};
+
+//							CREATE EXTERIOR
+global proc ka_CreateExterior(int $exteriorColumnsEnabled, string $registeredExteriorColumn, int $baseEnabled, float $baseHeight, string $registeredFootPrint){
+progressWindow -e -status ("Generating Exterior");
+	if ($exteriorColumnsEnabled == 1){
+	select -r $registeredFootPrint;
+	duplicate $registeredFootPrint;
+	string $workingFloor[] = `ls -sl`;
+		if ($baseEnabled == 1){
+		select -r $workingFloor[0];
+		move -r 0 $baseHeight 0;
+		ConvertSelectionToVertices;
+		polySelectConstraint -m 2 -t 0x0001 -w 1;
+		resetPolySelectConstraint;
+		string $columnLocationSet[] = `ls -sl -fl`;
+			for ($vertLoc in $columnLocationSet){
+			float $selectedXform[] = `xform -q -ws -t $vertLoc`;
+			select $registeredExteriorColumn;
+			duplicate;
+			move -a $selectedXform[0] $selectedXform[1] $selectedXform[2] -rpr;
+			};
+		};
+	};
+};
+
+//							GET GEOMETRY
+
+global proc getBldgFootPrintFromSelection(){
+string $currentlySelected[] = `ls -sl`;
+textFieldButtonGrp -e -tx $currentlySelected[0] KA_BldgFootPrintInput;
+};
+
+global proc getWindowDetailFromSelection(){
+string $currentlySelected[] = `ls -sl`;
+textFieldButtonGrp -e -tx $currentlySelected[0] KA_WindowDetailPoolInput;
+};
+global proc getBaseColumnFromSelection(){
+string $currentlySelected[] = `ls -sl`;
+textFieldButtonGrp -e -tx $currentlySelected[0] KA_BaseColumnPoolInput;
+};
+global proc getBaseWindowDetailFromSelection(){
+string $currentlySelected[] = `ls -sl`;
+textFieldButtonGrp -e -tx $currentlySelected[0] KA_BaseWindowDetailPoolInput;
+};
+global proc getExteriorColumnFromSelection(){
+string $currentlySelected[] = `ls -sl`;
+textFieldButtonGrp -e -tx $currentlySelected[0] KA_ExteriorColumnPoolInput;
+};
+global proc getCladdingFromSelection(){
+string $currentlySelected[] = `ls -sl`;
+textFieldButtonGrp -e -tx $currentlySelected[0] KA_CladdingPoolInput;
+};
+global proc getRoofToppersFromSelection(){
+string $currentlySelected[] = `ls -sl`;
+textFieldButtonGrp -e -tx $currentlySelected[0] KA_RoofToppersPoolInput;
+};
+
+//							CREATE WINDOWS FROM SELECTION
+global proc createWindowsFromSelection(float $whr, float $wwr, float $wia, float $wih, float $wiw, string $glassShader, string $extShader){
+string $verifySelection[] = `ls -sl`;
+	if (size($verifySelection) > 0){
+	polyExtrudeFacet -kft 0 -d 1 -ls $wwr $whr $wwr;
+	polyExtrudeFacet -kft 0 -lt 0 0 ($wia * -1) -ls $wiw $wih $wiw;
+	hyperShade -assign $glassShader;
+	invertSelection;
+	hyperShade -assign $extShader;
+	};
+return;
+};
+
+
+/*****************************************************************************************************************/
+//																			UV MAPPING TOOLS	//
+/*****************************************************************************************************************/
+
+//							UNITIZE AND PLACE UVS
+
+global proc ka_unitizeAndPlace(){
+
+string $selObj[] = `ls -sl -fl`;
+polyForceUV -unitize;
+select -r $selObj;
+refresh;
+if ( `progressWindow -query -isCancelled` ){ kc_terminate(); };
+ConvertSelectionToUVs;
+polyEditUV -pu 0 -pv 0 -su .125 -sv .125;
+select -r $selObj;
+ConvertSelectionToFaces;
+string $selFaces[] = `ls -sl -fl`;
+int $selSize = size($selFaces);
+progressWindow -e -progress 0 -status "Generating UVs" -min 0 -max $selSize;
+int $index = 0;
+	for($thisFace in $selFaces){
+	int $moveByUIndex = rand(0,8);
+	int $moveByVIndex = rand(0,8);
+	select -r $thisFace;
+	ConvertSelectionToUVs;
+	float $moveByU = $moveByUIndex * 0.125;
+	float $moveByV = $moveByVIndex * 0.125;
+	polyEditUV -pu 0 -pv 0 -u $moveByU -v $moveByV;
+		if($selSize < 10000){
+		progressWindow -e -progress $index -status ("Generating UVs for face " + $index + " of " + $selSize);
+		$index++;
+		if ( `progressWindow -query -isCancelled` ){ kc_terminate(); };
+		};
+	};
+	select -r $selObj;
+	delete -all -ch;
+};
+
+//						CREATE UV SET FOR BUFFER GEOMETRY
+global proc string ka_createUVSetForBuffer(string $workingFloor){
+select $workingFloor;
+polySoftEdge -a 1;
+select $workingFloor;
+polyAutoProjection -sc 1;
+select $workingFloor;
+ConvertSelectionToEdges;
+polyMapCut;
+polySelectConstraint -m 2 -t 0x8000 -w 2 -sm 1;
+resetPolySelectConstraint;
+string $deSelList[] = `ls -sl -fl`;
+polyMapCut;
+select -deselect $deSelList[1];
+polyMapSewMove;
+select -r $workingFloor;
+ConvertSelectionToUVs;
+//unfold -i 3000 -oa 1;
+polySelectBorderShell 0;
+polyLayoutUV -lm 1 -sc 1 -se 0 -rbf 2 -fr 1 -ps 0 -l 2;
+polyEditUV -pu .5 -pv .5 -a 90;
+select $workingFloor;
+polySoftEdge -a 15;
+return $workingFloor;
+};
+
+//						CREATE UV SET FOR LEDGE GEOMETRY
+global proc string ka_createUVSetForLedge(string $workingFloor){
+/*
+select $workingFloor;
+polySoftEdge -a 1;
+select $workingFloor;
+polyAutoProjection -sc 1;
+select $workingFloor;
+ConvertSelectionToEdges;
+polyMapCut;
+polySelectConstraint -m 3 -t 0x8000 -w 1;
+resetPolySelectConstraint;
+string $borderSet[] = `ls -sl`;
+float $getBoundArray[] = `xform -q -ws -bb`;
+	float $bbXAv = (($getBoundArray[3] + $getBoundArray[0])/2);
+	float $bbZAv = (($getBoundArray[5] + $getBoundArray[2])/2);
+	float $bbYMax = $getBoundArray[4];
+	polySelectConstraint -t 0x8000 -m 2 -oa 0 1 0 -d 3 -dp $bbXAv $bbYMax $bbZAv -db 0 .001 -da 0 -1 0;
+	resetPolySelectConstraint;
+	string $firstLoop[] = `ls -sl`;
+	pickWalk -d right -type edgeloop;
+	pickWalk -d right -type edgeloop;
+	string $secondLoop[] = `ls -sl`;
+	pickWalk -d right -type edgeloop;
+	string $thirdLoop[] = `ls -sl`;
+	pickWalk -d right -type edgeloop;
+	string $fourthLoop[] = `ls -sl`;
+select $workingFloor;
+ConvertSelectionToEdges;
+select -deselect $firstLoop $secondLoop $thirdLoop $fourthLoop;
+string $initDesel[] = `ls -sl -fl`;
+select -r $initDesel[1];
+SelectEdgeLoop;
+string $deSelMe[] = `ls -sl -fl`;
+select $workingFloor;
+ConvertSelectionToFaces;
+ShrinkPolygonSelectionRegion;
+ConvertSelectionToEdges;
+select -deselect $secondLoop $thirdLoop $deSelMe;
+polyMapSewMove;
+select $secondLoop;
+ConvertSelectionToUVs;
+polyStraightenUVBorder -c 0;
+select $thirdLoop;
+ConvertSelectionToUVs;
+polyStraightenUVBorder -c 0;
+select -r $secondLoop $thirdLoop;
+polyMapSewMove;
+select $initDesel;
+select -deselect $deSelMe;
+polyMapSewMove;
+select $workingFloor;
+ConvertSelectionToUVs;
+//unfold -i 5000 -oa 1;
+select $workingFloor;
+polyLayoutUV -lm 1 -sc 1 -se 0 -rbf 2 -fr 1 -ps 0 -l 2;
+polyEditUV -pu .5 -pv .5 -a 90;
+polySoftEdge -a 15;
+*/
+return $workingFloor;
+};
+
+//						CREATE UV SET FOR WINDOWED GEOMETRY
+global proc string ka_createUVSetWithWindows(string $workingFloor, string $windowSelSet[]){
+	if (size($windowSelSet) > 0){
+		//CUT ALL EDGES
+	select $workingFloor;
+	polySoftEdge -a 1;
+	select $workingFloor;
+	polyAutoProjection -sc 1;
+	select $workingFloor;
+	ConvertSelectionToEdges;
+	polyMapCut;
+		//GET TOP AND BOTTOM BORDER
+	select $workingFloor;
+	ConvertSelectionToEdges;
+	polySelectConstraint -m 3 -t 0x8000 -w 1;
+	resetPolySelectConstraint;
+	string $borderSet[] = `ls -sl`;
+		//GET NON BORDER EDGES
+	invertSelection;
+	string $nonBorderSet[] = `ls -sl`;
+		//GET SET OF NON-VERTICAL EDGES
+	select -r $windowSelSet;
+	ConvertSelectionToEdges;
+	GrowPolygonSelectionRegion;
+	GrowPolygonSelectionRegion;
+	string $nonVerticalList[] = `ls -sl`;
+		//CREATE SET OF VERTICAL EDGES
+	select -r $nonBorderSet;
+	select -deselect $nonVerticalList;
+	string $verticalList[] = `ls -sl -fl`;
+	select -r $verticalList[0];
+	SelectEdgeRing;
+	select -deselect $verticalList[0];
+	polyMapSewMove;
+	select -r $borderSet;
+	GrowPolygonSelectionRegion;
+	GrowPolygonSelectionRegion;
+	select -deselect $verticalList[0];
+	polyMapSewMove;
+		//unfold -i 3000 -oa 1;
+	polySelectBorderShell 0;
+	polyLayoutUV -lm 1 -sc 1 -se 0 -rbf 2 -fr 1 -ps 0 -l 2;
+	polyEditUV -pu .5 -pv .5 -a 90;
+	select $windowSelSet;
+	ConvertSelectionToEdges;
+	polyMapCut;
+	select $workingFloor;
+	polySoftEdge -a 15;
+	return $workingFloor;
+	};
+};
+
+/*****************************************************************************************************************/
+//																			FOOTPRINT TOOLS	//
+/*****************************************************************************************************************/
+
+global proc kc_createPlane(){
+int $divisions = `intFieldGrp -q -v1 KA_PFDivisionsInput`;
+int $size = `intFieldGrp -q -v1 KA_PFSizeInput`;
+polyPlane -sx $divisions -sy $divisions -w $size -h $size;
+};
+
+//							CREATE RADIAL PLANE
+global proc kc_createRadialPlane(){
+int $radDivs = `intFieldGrp -q -v1 KA_RadialDivisionsInput`;
+int $depthDivs = `intFieldGrp -q -v1 KA_DepthDivisionsInput`;
+int $radRadius = `intFieldGrp -q -v1 KA_FPRadiusInput`;
+string $rp_Plane[] = `polyCylinder -sx $radDivs -sz $depthDivs -r $radRadius`;
+kc_preserveBottomMostFaces;
+select -r $rp_Plane[0];
+ReversePolygonNormals;
+select -r $rp_Plane[0];
+kc_dropPivotsSelected;
+kc_moveToOrigin;
+select -r $rp_Plane[0];
+};
+
+
+//								CREATE N-SIDED FOOTPRINT
+
+global proc kc_createNSFP() {
+int $nSides = `intFieldGrp -q -v1 KA_NFSSidesInput`;
+int $nDepthDivisions = `intFieldGrp -q -v1 KA_NSFDepthDivisionsInput`;
+int $nDivisionsPerSide = `intFieldGrp -q -v1 KA_NSFDivisionsPerSideInput`;
+int $nRadius = `intFieldGrp -q -v1 KA_NSFRadiusInput`;
+string $createdFPDivisor[] = `polyCylinder -sx ($nSides * $nDivisionsPerSide) -sz 1 -r ($nRadius + 1)`;
+move -r 0 1 0;
+string $createdFPIntegrand[] = `polyCylinder -sx $nSides -sz $nDepthDivisions -r ($nRadius)`;
+string $createdFPBool[] = `polyBoolOp -op 3 $createdFPIntegrand[0] $createdFPDivisor[0]`;
+kc_preserveBottomMostFaces;
+select -r $createdFPBool[0];
+ReversePolygonNormals;
+select -r $createdFPBool[0];
+kc_dropPivotsSelected;
+kc_moveToOrigin;
+select -r $createdFPBool[0];
+ConvertSelectionToEdges;
+polySelectConstraint -t 0x8000 -m 3 -w 2;
+polySplitRing -stp 2 -div $nDepthDivisions;
+select -r $createdFPBool[0];
+delete -ch;
+};
+
+//								CREATE FOOTPRINT FROM CURVE
+
+global proc string kc_createPrintFromCurve() {
+float $extrudeAmt = `floatFieldGrp -q -v1 KA_CurveProfileDepthInput`;
+int $profileResample = `intFieldGrp -q -v1 KA_CurveProfileResampleInput`;
+int $profileDivisions = `intFieldGrp -q -v1 KA_CurveProfileDivisionsInput`;
+string $selSet[] = `ls -sl -tl 1`;
+string $footPrintCurve = $selSet[0];
+select -r $footPrintCurve;
+	float $getBoundArray[] = `xform -q -ws -bb`;
+string $footPrintNurbs[] = `extrude -et 0 -l 5`;
+string $footPrintPolys[] = `nurbsToPoly -pt 1 -f 0 -pc $profileResample`;
+ConvertSelectionToEdges;
+	float $bbXAv = (($getBoundArray[3] + $getBoundArray[0])/2);
+	float $bbZAv = (($getBoundArray[5] + $getBoundArray[2])/2);
+	float $bbYMin = $getBoundArray[1];
+	polySelectConstraint -t 0x8000 -m 2 -oa 0 1 0 -d 3 -dp $bbXAv $bbYMin $bbZAv -db 0 .001 -da 0 1 0;
+	resetPolySelectConstraint;
+	polyExtrudeEdge -d $profileDivisions -ltz ($extrudeAmt * -1);
+	polyCloseBorder;
+	select -r $footPrintPolys;
+	kc_preserveBottomMostFaces;
+select -r $footPrintNurbs;
+delete;
+return "curveCreated";
+};
+
+//													NOTCH CORNERS
+global proc string kc_deCornerizeFootprint(){
+int $notchSize = `intFieldGrp -q -v1 KA_DCSize`;
+int $isIterated = `checkBoxGrp -q -v1 KA_DCIterateInput`;
+int $isTriangulateCorners = `checkBoxGrp -q -v1 KA_DCTriangulateCornerInput`;
+int $isBorderOnly = `checkBoxGrp -q -v1 KA_DCBorderOnlyInput`;
+string $selObj[] = `ls -sl`;
+ConvertSelectionToVertices;
+polySelectConstraint -m 3 -w 1 -t 0x0001 -or 1 -orb 2 2;
+	if($isBorderOnly == 0){
+	resetPolySelectConstraint;
+	};
+ConvertSelectionToFaces;
+	for($i = 0; $i < $notchSize; $i++){
+	GrowPolygonSelectionRegion;
+	};
+delete;
+resetPolySelectConstraint;
+	if($isIterated == 1){
+	select $selObj[0];
+	polySelectConstraint -m 3 -w 1 -t 0x0001 -or 1 -orb 2 2;
+	ConvertSelectionToFaces;
+	delete;
+	resetPolySelectConstraint;
+	};
+	if($isTriangulateCorners == 1){
+	select $selObj[0];
+	polySelectConstraint -m 3 -w 1 -t 0x0001 -or 1 -orb 2 2;
+	delete;
+	resetPolySelectConstraint;
+	};
+	select $selObj[0];
+return "successfully notched";
+};
+
+
+//										TRIANGULATE CORNERS
+global proc kc_triangulateCorners(){
+polySelectConstraint -m 3 -w 1 -t 0x0001 -or 1 -orb 2 2;
+delete;
+resetPolySelectConstraint;
+};
+
+/*****************************************************************************************************************/
+//																			SHADER / SELECTION TOOLS	//
+/*****************************************************************************************************************/
+
+//								SELECTION TOOLS
+global proc kc_selectTools(string $type){
+string $selSet[] = `ls -sl -fl`;
+if (`attributeExists windowShader $selSet[0]`){
+	string $windowShader = `getAttr ($selSet[0] + ".windowShader")`;
+	string $floorsShader = `getAttr ($selSet[0] + ".floorShader")`;
+	string $wallsShader = `getAttr ($selSet[0] + ".wallsShader")`;
+	string $ceilingShader = `getAttr ($selSet[0] + ".ceilingShader")`;
+	string $bufferShader = `getAttr ($selSet[0] + ".bufferShader")`;
+	string $extShader = `getAttr ($selSet[0] + ".exteriorShader")`;
+	string $ledgeShader = `getAttr ($selSet[0] + ".ledgeShader")`;
+	ConvertSelectionToFaces;
+	string $tempSet = `sets -fc 1`;
+		if ($type == "windows"){
+		string $tempGrps[] = `listConnections -type shadingEngine $windowShader`;
+		select `sets -int $tempSet $tempGrps[4]`;
+		}
+		if ($type == "ceiling"){
+		string $tempGrps[] = `listConnections -type shadingEngine $ceilingShader`;
+		select `sets -int $tempSet $tempGrps[4]`;
+		}
+		if ($type == "walls"){
+		string $tempGrps[] = `listConnections -type shadingEngine $wallsShader`;
+		select `sets -int $tempSet $tempGrps[4]`;
+		}
+		if ($type == "floors"){
+		string $tempGrps[] = `listConnections -type shadingEngine $floorsShader`;
+		select `sets -int $tempSet $tempGrps[4]`;
+		}
+		if ($type == "exterior"){
+		string $tempGrps[] = `listConnections -type shadingEngine $extShader`;
+		select `sets -int $tempSet $tempGrps[4]`;
+		}
+		if ($type == "buffer"){
+		string $tempGrps[] = `listConnections -type shadingEngine $bufferShader`;
+		select `sets -int $tempSet $tempGrps[4]`;
+		}
+		if ($type == "ledge"){
+		string $tempGrps[] = `listConnections -type shadingEngine $ledgeShader`;
+		select `sets -int $tempSet $tempGrps[4]`;
+		}
+	delete $tempSet;
+	};
+};
+
+
+/*****************************************************************************************************************/
+//																			NIGHTSCAPE TOOLS	//
+/*****************************************************************************************************************/
+
+
+//															CREATE VARIATION GRID
+global proc string kc_createVariationGrid(int $variation){
+$variation = (100 - $variation);
+string $masterNode = `shadingNode -asTexture ramp -n "variationControl"`;
+setAttr ($masterNode + ".interpolation") 0;
+setAttr ($masterNode + ".type") 1;
+	for ($i = 0; $i < 9; $i++){
+	setAttr ($masterNode + ".colorEntryList[" + $i + "].color") -type double3 0 0 0;
+	setAttr ($masterNode + ".colorEntryList[" + $i + "].position") ($i * .125);
+	};
+	for ($i = 0; $i < 8; $i++){
+	string $currentNode[];
+	$currentNode[size($currentNode)] = `shadingNode -asTexture ramp`;
+	setAttr ($currentNode[$i] + ".interpolation") 0;
+		for ($j = 0; $j < 9; $j++){
+		float $variationGrid = (((float)$variation / 100));
+		float $onOff = rand($variationGrid,1);
+		setAttr ($currentNode[$i] + ".colorEntryList[" + $j + "].color") -type double3 $onOff $onOff $onOff;
+		setAttr ($currentNode[$i] + ".colorEntryList[" + $j + "].position") ($j * .125);
+		};
+	connectAttr -force ($currentNode[$i] + ".outColor") ($masterNode + ".colorEntryList[" + $i + "].color");
+	};
+	string $masterNodeReturn = `rename $masterNode "variationControl"`;
+	return (string) $masterNodeReturn;
+};
+
+//															CREATE LIT \ UNLIT RAMP CONTROL
+global proc string kc_createLitUnlitRamp(int $litUnlitControl){
+string $masterNode = `shadingNode -asTexture ramp -n "litUnlitControl"`;
+setAttr ($masterNode + ".interpolation") 0;
+setAttr ($masterNode + ".type") 1;
+	for ($i = 0; $i <= $litUnlitControl; $i++){
+	setAttr ($masterNode + ".colorEntryList[" + $i + "].color") -type double3 0 0 0;
+	setAttr ($masterNode + ".colorEntryList[" + $i + "].position") ($i * .125);
+	};
+	for ($i = $litUnlitControl; $i < 9; $i++){
+	setAttr ($masterNode + ".colorEntryList[" + $i + "].color") -type double3 1 1 1;
+	setAttr ($masterNode + ".colorEntryList[" + $i + "].position") ($i * .125);
+	};
+	return (string) $masterNode;
+};
+
+/*****************************************************************************************************************/
+//																			RANDOM CITY TOOLS	//
+/*****************************************************************************************************************/
+
+//														RANDOMIZER
+
+global proc ka_Randomizer(){
+
+int $rNumFloors = rand(2,20);
+intFieldGrp -e -v1 $rNumFloors KA_NumOfFloors;
+
+int $rTierTwoTogglePercent = rand(0,100);
+int $rTierTwoToggle = 1;
+	if($rTierTwoTogglePercent > 50){
+	$rTierTwoToggle = 0;};
+checkBoxGrp -e -v1 $rTierTwoToggle KA_TTwoToggle;
+
+int $rTierTwoFloors = rand(2,20);
+intFieldGrp -e -v1 $rTierTwoFloors KA_TTwo_NumOfFloors;
+
+int $rTierThreeTogglePercent = rand(0,100);
+int $rTierThreeToggle = 1;
+	if($rTierThreeTogglePercent > 50){
+	$rTierThreeToggle = 0;};
+checkBoxGrp -e -v1 $rTierThreeToggle KA_TThreeToggle;
+
+int $rTierThreeFloors = rand(2,20);
+intFieldGrp -e -v1 $rTierThreeFloors KA_TThree_NumOfFloors;
+
+int $rTierFourTogglePercent = rand(0,100);
+int $rTierFourToggle = 1;
+	if($rTierFourTogglePercent > 25){
+	$rTierFourToggle = 0;};
+checkBoxGrp -e -v1 $rTierFourToggle KA_TFourToggle;
+
+int $rTierFourFloors = rand(2,20);
+intFieldGrp -e -v1 $rTierFourFloors KA_TFour_NumOfFloors;
+
+float $rFloorHeight = rand(3,7);
+floatFieldGrp -e -v1 $rFloorHeight KA_FloorHeight;
+
+float $rBufferHeight = rand(.05,6);
+floatFieldGrp -e -v1 $rBufferHeight KA_BufferHeight;
+
+int $rLedgeTogglePercent = rand(0,100);
+int $rLedgeToggle = 1;
+	if($rLedgeTogglePercent > 50){
+	$rLedgeToggle = 0;};
+checkBoxGrp -e -v1 $rLedgeToggle KA_LedgeToggle;
+
+float $rLedgeHeight = rand(($rBufferHeight * .1),$rBufferHeight);
+float $rLedgeDepth = rand(.1,3);
+floatFieldGrp -e -v1 $rLedgeHeight KA_LedgeHeightInput;
+floatFieldGrp -e -v1 $rLedgeDepth KA_LedgeDepthInput;
+
+int $rNWindowTogglePercent = rand(0,101);
+int $rNWindowToggle = 1;
+	if($rNWindowTogglePercent > 90){
+	$rNWindowToggle = 0;};
+int $rSWindowTogglePercent = rand(0,101);
+int $rSWindowToggle = 1;
+	if($rSWindowTogglePercent > 90){
+	$rSWindowToggle = 0;};
+int $rEWindowTogglePercent = rand(0,101);
+int $rEWindowToggle = 1;
+	if($rEWindowTogglePercent > 90){
+	$rEWindowToggle = 0;};
+int $rWWindowTogglePercent = rand(0,101);
+int $rWWindowToggle = 1;
+	if($rWWindowTogglePercent > 90){
+	$rWWindowToggle = 0;};
+int $rOWindowTogglePercent = rand(0,101);
+int $rOWindowToggle = 1;
+	if($rOWindowTogglePercent > 90){
+	$rOWindowToggle = 0;};
+checkBoxGrp -e -v1 $rNWindowToggle -v2 $rSWindowToggle -v3 $rEWindowToggle -v4 $rWWindowToggle KA_ExtrudedWindowsNSEWInput;
+checkBoxGrp -e -v1 $rOWindowToggle KA_ExtrudedWindowsObliqueInput;
+
+int $rExWindowCornerTogglePercent = rand(0,101);
+int $rExWindowCornerToggle = 1;
+	if($rExWindowCornerTogglePercent > 80){
+	$rExWindowCornerToggle = 0;};
+checkBoxGrp -e -v1 $rExWindowCornerToggle KA_ExtrudedWindowsCornersInput;
+
+int $rWPCPercent = rand(0,101);
+int $rWPC = 0;
+	if($rWPCPercent > 80){
+	$rWPC = 1;};
+radioButtonGrp -e -sl $rWPC KA_WindowsPerCellInput;
+
+float $rWindowHeightRatio = rand(.6,.95);
+floatFieldGrp -e -v1 $rWindowHeightRatio KA_WindowHeightRatioInput;
+floatFieldGrp -e -v1 $rWindowHeightRatio KA_WindowWidthRatioInput;
+
+float $rWindowInsetAmt = rand(.05,.2);
+floatFieldGrp -e -v1 $rWindowInsetAmt KA_WindowInsetAmtInput;
+
+int $rBTIPercent = rand(0,101);
+int $rBTI = 1;
+	if($rBTIPercent > 80){
+	$rBTI = 0;};
+checkBoxGrp -e -v1 $rBTI KA_BaseToggleInput;
+
+int $rBITPercent = rand(0,101);
+int $rBIT = 1;
+	if($rBITPercent > 80){
+	$rBIT = 0;};
+checkBoxGrp -e -v1 $rBIT KA_BaseInsetToggleInput;
+
+int $rBCTPercent = rand(0,101);
+int $rBCT = 1;
+	if($rBITPercent > 95){
+	$rBCT = 0;};
+checkBoxGrp -e -v1 $rBCT KA_BaseColumnsToggleInput;
+
+float $rBHAPlus = rand(1,2);
+float $rBHA = ($rFloorHeight + $rBHAPlus);
+floatFieldGrp -e -v1 $rBHA KA_BaseHeightAmtInput;
+
+float $rBWHI = rand(.6,.95);
+floatFieldGrp -e -v1 $rBWHI KA_BaseWindowHeightRatioInput;
+floatFieldGrp -e -v1 $rBWHI KA_BaseWindowWidthRatioInput;
+
+float $rBWIA = rand(.05,.2);
+floatFieldGrp -e -v1 $rBWIA KA_BaseWindowInsetAmtInput;
+
+int $rTierOrient = rand(1,10);
+switch ($rTierOrient) {
+case 1:
+radioButtonGrp -e -sl 1 KA_AlignTierTwoNSEW;
+radioButtonGrp -e -sl 1 KA_AlignTierThreeNSEW;
+radioButtonGrp -e -sl 1 KA_AlignTierFourNSEW;
+break;
+case 2:
+radioButtonGrp -e -sl 2 KA_AlignTierTwoNSEW;
+radioButtonGrp -e -sl 2 KA_AlignTierThreeNSEW;
+radioButtonGrp -e -sl 2 KA_AlignTierFourNSEW;
+break;
+case 3:
+radioButtonGrp -e -sl 3 KA_AlignTierTwoNSEW;
+radioButtonGrp -e -sl 3 KA_AlignTierThreeNSEW;
+radioButtonGrp -e -sl 3 KA_AlignTierFourNSEW;
+break;
+case 4:
+radioButtonGrp -e -sl 4 KA_AlignTierTwoNSEW;
+radioButtonGrp -e -sl 4 KA_AlignTierThreeNSEW;
+radioButtonGrp -e -sl 4 KA_AlignTierFourNSEW;
+break;
+case 5:
+radioButtonGrp -e -sl 1 KA_AlignTierTwoCorners;
+radioButtonGrp -e -sl 1 KA_AlignTierThreeCorners;
+radioButtonGrp -e -sl 1 KA_AlignTierFourCorners;
+break;
+case 6:
+radioButtonGrp -e -sl 2 KA_AlignTierTwoCorners;
+radioButtonGrp -e -sl 2 KA_AlignTierThreeCorners;
+radioButtonGrp -e -sl 2 KA_AlignTierFourCorners;
+break;
+case 7:
+radioButtonGrp -e -sl 3 KA_AlignTierTwoCorners;
+radioButtonGrp -e -sl 3 KA_AlignTierThreeCorners;
+radioButtonGrp -e -sl 3 KA_AlignTierFourCorners;
+break;
+case 8:
+radioButtonGrp -e -sl 4 KA_AlignTierTwoCorners;
+radioButtonGrp -e -sl 4 KA_AlignTierThreeCorners;
+radioButtonGrp -e -sl 4 KA_AlignTierFourCorners;
+break;
+case 9:
+radioButtonGrp -e -sl 1 KA_AlignTierTwoCenter;
+radioButtonGrp -e -sl 1 KA_AlignTierThreeCenter;
+radioButtonGrp -e -sl 1 KA_AlignTierFourCenter;
+break;
+};
+
+/*
+checkBoxGrp -e -v1 KA_CorniceToggleInput;
+floatFieldGrp -e -v1 KA_CorniceHeightInput;
+floatFieldGrp -e -v1 KA_CorniceDepthInput;
+checkBoxGrp -e -v1 KA_InsetLedgeToggleInput;
+floatFieldGrp -e -v1 KA_InsetLedgeHeightInput;
+floatFieldGrp -e -v1 KA_InsetLedgeDepthInput;
+*/
+};
+
+
+//                                 GENERATE RANDOM CITY
+global proc randCity(){
+
+string $allSelectedFP[] = `ls -sl -fl`;
+	for ($thisFootprint in $allSelectedFP){
+	select -r $thisFootprint;
+	getBldgFootPrintFromSelection;
+	ka_Randomizer;
+	kludgeArchitectExecute;
+	refresh;
+	};
+
+};
+//                                 GENERATE RANDOM CITY (ONLY CENTRAL TIERS)
+global proc randCityRad(){
+
+string $allSelectedFP[] = `ls -sl -fl`;
+	for ($thisFootprint in $allSelectedFP){
+	select -r $thisFootprint;
+	getBldgFootPrintFromSelection;
+	ka_Randomizer;
+	checkBoxGrp -e -v1 1 KA_ExtrudedWindowsObliqueInput;
+	radioButtonGrp -e -sl 1 KA_AlignTierTwoCenter;
+	radioButtonGrp -e -sl 1 KA_AlignTierThreeCenter;
+	radioButtonGrp -e -sl 1 KA_AlignTierFourCenter;
+	kludgeArchitectExecute;
+	refresh;
+	};
+};
+
+/*****************************************************************************************************************/
+//																			GENERAL UTILITIES	//
+/*****************************************************************************************************************/
+//							DELETE TOPMOST FACES
+global proc ka_deleteTopMostFaces(){
+float $getBoundArray[] = `xform -q -ws -bb`;
+float $bbXAv = (($getBoundArray[3] + $getBoundArray[0])/2);
+float $bbZAv = (($getBoundArray[5] + $getBoundArray[2])/2);
+float $bbYMax = $getBoundArray[4];
+ConvertSelectionToFaces;
+polySelectConstraint -t 0x0008 -m 3 -oa 0 1 0 -d 3 -dp $bbXAv $bbYMax $bbZAv -db 0 .001 -da 0 -1 0 ;
+resetPolySelectConstraint;
+delete;
+};
+
+//							DELETE BOTTOMMOST FACES
+global proc ka_deleteBottomMostFaces(){
+float $getBoundArray[] = `xform -q -ws -bb`;
+float $bbXAv = (($getBoundArray[3] + $getBoundArray[0])/2);
+float $bbZAv = (($getBoundArray[5] + $getBoundArray[2])/2);
+float $bbYMin = $getBoundArray[1];
+ConvertSelectionToFaces;
+polySelectConstraint -t 0x0008 -m 3 -oa 0 1 0 -d 3 -dp $bbXAv $bbYMin $bbZAv -db 0 .001 -da 0 1 0 ;
+resetPolySelectConstraint;
+delete;
+};
+
+//							PRESERVE BOTTOMMOST FACES
+global proc kc_preserveBottomMostFaces(){
+float $getBoundArray[] = `xform -q -ws -bb`;
+float $bbXAv = (($getBoundArray[3] + $getBoundArray[0])/2);
+float $bbZAv = (($getBoundArray[5] + $getBoundArray[2])/2);
+float $bbYMin = $getBoundArray[1];
+ConvertSelectionToFaces;
+string $totalSet[] = `ls -sl`;
+polySelectConstraint -t 0x0008 -m 3 -oa 0 1 0 -d 3 -dp $bbXAv $bbYMin $bbZAv -db 0 .001 -da 0 1 0 ;
+resetPolySelectConstraint;
+string $selectSet[] = `ls -sl`;
+select -r $totalSet;
+select -deselect $selectSet;
+delete;
+};
+
+//							SELECT RANDOM
+
+global proc ka_selectRandomFaces(float $passedValue){
+
+string $selFaces[] = `ls -sl -fl`;
+
+	for($thisFace in $selFaces){
+	float $randValue = rand(0,1);
+		if ($passedValue < $randValue){
+		select -deselect $thisFace;
+		};
+	};
+
+};
+
+//							GET TRANSFORMATIONS
+
+global proc float[] kc_getXforms(string $thisObj){
+float $getBoundArray[] = `xform -q -ws -bb $thisObj`;
+float $getPivotArray[] = `xform -q -ws -bb $thisObj`;
+		float $bbXAv = (($getBoundArray[3] + $getBoundArray[0])/2);
+		float $bbYAv = (($getBoundArray[4] + $getBoundArray[1])/2);
+		float $bbZAv = (($getBoundArray[5] + $getBoundArray[2])/2);
+		float $pivotX = $getPivotArray[0];
+		float $pivotY = $getPivotArray[1];
+		float $pivotZ = $getPivotArray[2];
+		float $bbXMin = $getBoundArray[0];
+		float $bbYMin = $getBoundArray[1];
+		float $bbZMin = $getBoundArray[2];
+		float $bbXMax = $getBoundArray[3];
+		float $bbYMax = $getBoundArray[4];
+		float $bbZMax = $getBoundArray[5];
+		float $allXForms[] = {$bbXAv,$bbYAv,$bbZAv,$pivotX,$pivotY,$pivotZ,$bbXMin,$bbYMin,$bbZMin,$bbXMax,$bbYMax,$bbZMax};
+		return $allXForms;
+		
+};
+
+//							STRIP PLANAR EDGES
+
+global proc ka_StripPlanarEdges(string $ledgeGeo) {
+polySoftEdge -a 1;
+select -r $ledgeGeo;
+ConvertSelectionToEdges;
+polySelectConstraint -m 2 -sm 2 -t 0x8000;
+string $selList[] = `ls -sl -fl`;
+int $sizeSelList = size($selList);
+	if ($sizeSelList != 0){
+polyDelEdge -cv true;
+	};
+resetPolySelectConstraint;
+select -r $ledgeGeo;
+polySoftEdge -a 30.00;
+select -r $ledgeGeo;
+return;
+};
+
+//							CENTER PIVOTS
+global proc kc_centerPivotsSelected() {
+string $sel[] = `ls -sl`;
+	for ($each in $sel) {
+	CenterPivot $each;
+	};
+};
+
+//							DROP PIVOTS
+global proc kc_dropPivotsSelected() {
+string $sel[] = `ls -sl`;
+	for ($each in $sel){
+	float $bounds[] = `xform -q -bb $each`;
+	move -a (($bounds[3] + $bounds[0])/2) $bounds[1] (($bounds[5] + $bounds[2])/2) ($each + ".rotatePivot") ($each + ".scalePivot");
+	};
+};
+
+//							TOP PIVOTS
+global proc kc_topPivotsSelected() {
+string $sel[] = `ls -sl`;
+	for ($each in $sel){
+	float $bounds[] = `xform -q -bb $each`;
+	move -a (($bounds[3] + $bounds[0])/2) $bounds[4] (($bounds[5] + $bounds[2])/2) ($each + ".rotatePivot") ($each + ".scalePivot");
+	};
+};
+
+//							ORIGIN PIVOTS
+global proc kc_originPivotsSelected() {
+string $sel[] = `ls -sl`;
+	for ($each in $sel){
+	move -a 0 0 0 ($each + ".rotatePivot") ($each + ".scalePivot");
+	};
+};
+
+//							X MIN PIVOTS
+global proc kc_xMinPivotsSelected() {
+string $sel[] = `ls -sl`;
+	for ($each in $sel){
+	float $bounds[] = `xform -q -bb $each`;
+	move -a $bounds[0] (($bounds[1] + $bounds[4])/2) (($bounds[5] + $bounds[2])/2) ($each + ".rotatePivot") ($each + ".scalePivot");
+	};
+};
+
+//							X MAX PIVOTS
+global proc kc_xMaxPivotsSelected() {
+string $sel[] = `ls -sl`;
+	for ($each in $sel){
+	float $bounds[] = `xform -q -bb $each`;
+	move -a $bounds[3] (($bounds[1] + $bounds[4])/2) (($bounds[5] + $bounds[2])/2) ($each + ".rotatePivot") ($each + ".scalePivot");
+	};
+};
+
+//							Z MIN PIVOTS
+global proc kc_zMinPivotsSelected() {
+string $sel[] = `ls -sl`;
+	for ($each in $sel){
+	float $bounds[] = `xform -q -bb $each`;
+	move -a (($bounds[3] + $bounds[0])/2) (($bounds[1] + $bounds[4])/2) $bounds[2] ($each + ".rotatePivot") ($each + ".scalePivot");
+	};
+};
+
+//							Z MAX PIVOTS
+global proc kc_zMaxPivotsSelected() {
+string $sel[] = `ls -sl`;
+	for ($each in $sel){
+	float $bounds[] = `xform -q -bb $each`;
+	move -a (($bounds[3] + $bounds[0])/2) (($bounds[1] + $bounds[4])/2) $bounds[5] ($each + ".rotatePivot") ($each + ".scalePivot");
+	};
+};
+
+//							PIVOT TO SELECTED
+global proc kc_selPivotsSelected() {
+string $selLast[] = `ls -sl -tail 1`;
+string $copyToObj = $selLast[0];
+select -deselect $copyToObj;
+string $selSet[] = `ls -sl`;
+float $pivotSel[] = `xform -q -piv -ws $copyToObj`;
+print $pivotSel;
+	for ($each in $selSet){
+	move -a $pivotSel[0] $pivotSel[1] $pivotSel[2] ($each + ".rotatePivot") ($each + ".scalePivot");
+	};
+};
+
+//							MOVE SELECTED TO ORIGIN
+global proc kc_moveToOrigin() {
+string $sel[] = `ls -sl`;
+	for ($each in $sel){
+	move -a 0 0 0 -rpr $each;
+	};
+};
+
+//							MOVE SELECTED TO SELECTED 
+global proc kc_moveToSelected() {
+string $selLast[] = `ls -sl -tail 1`;
+select -deselect $selLast[0];
+float $selectedXform[] = `xform -q -ws -piv $selLast[0]`;
+float $moveToX = $selectedXform[0];
+float $moveToY = $selectedXform[1];
+float $moveToZ = $selectedXform[2];
+string $sel[] = `ls -sl`;
+	for ($each in $sel){
+	move -a $moveToX $moveToY $moveToZ -rpr $each;
+	};
+};
+
+//							STACK SELECTED
+global proc kc_moveToStack() {
+string $selList[] = `ls -sl`;
+	for ($each in $selList){
+	string $currentSelList[] = `ls -sl`;
+		if (`size($currentSelList)` > 1){
+		string $selLast[] = `ls -sl -tail 1`;
+		select -deselect $selLast[0];
+		string $moveThisObj[]  = `ls -sl -tail 1`;
+		float $selectedXform[] = `xform -q -ws -piv $selLast[0]`;
+		float $getBoundArray[] = `xform -q -ws -bb $selLast[0]`;
+		float $bbXAv = (($getBoundArray[3] + $getBoundArray[0])/2);
+		float $bbZAv = (($getBoundArray[5] + $getBoundArray[2])/2);
+		float $bbYMax = $getBoundArray[4];
+		float $moveToX = $selectedXform[0];
+		float $moveToY = $selectedXform[1];
+		float $moveToZ = $selectedXform[2];
+		move -a $bbXAv $bbYMax $bbZAv -rpr $moveThisObj[0];
+		};
+	};
+};
+
+//							SET NORMAL ANGLE
+
+global proc kc_setNormalAngle() {
+int $normAngle = `intField -q -value NSetAngleIntField`;
+polySoftEdge -a $normAngle;
+};
+
+
+//							CREATE PARENT CHAIN
+
+global proc kc_parentChain() {
+string $selList[] = `ls -sl`;
+	if (`size($selList)` > 1){
+		for ($i = 1; $i < (`size($selList)`); $i++){
+		parent $selList[($i - 1)] $selList[$i];
+		};
+	};
+select $selList;
+};
+
+//							SET CAMERA CLIPPING PLANES
+global proc kc_setCameraClips() {
+string $panelSet[] = {"modelPanel1", "modelPanel2", "modelPanel3", "modelPanel4"};
+	for($thisPanel in $panelSet){
+	string $camera = `modelEditor -q -camera $thisPanel`; 
+	eval select `getCameraNode view $camera` `getCameraNode up $camera` $camera;
+	setAttr ($camera + ".nearClipPlane") 0.1;
+	setAttr ($camera + ".farClipPlane") 10000;
+	};
+};
+
+//							PARSE STRING ARRAY TO STRING
+
+global proc string kc_parseStringArrayToString(string $selElements[]){
+string $createdString = " ";
+	for ($thisElement in $selElements){
+	string $createdString = ($createdString + $thisElement + " ");
+	};
+	return $createdString;
+};
+
+//							TERMINATE EXECUTION
+
+global proc kc_terminate(){
+progressWindow -endProgress;
+error "User cancellation.  User should learn to be patient.";
+};
