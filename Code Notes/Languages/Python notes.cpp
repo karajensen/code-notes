@@ -542,11 +542,11 @@ assert x < 0, "My Assertion String message if false (x >= 0)"
 //////////////////////////////////////////////////////////////////////////////
 
 //ACCESS MODES
-r	//Reading: File pointer at beginning
-w	//Writing: Overwrites the file if file exists otherwise creates new
-w+	//Writing/Reading: Overwrites the file if file exists otherwise creates new
-a	//Writing(Appending): File pointer at end of file if file exists otherwise creates new
-a+	//Writing(Appending)/Reading: File pointer at end of file if file exists otherwise creates new
+r    //Reading: File pointer at beginning
+w    //Writing: Overwrites the file if file exists otherwise creates new
+w+    //Writing/Reading: Overwrites the file if file exists otherwise creates new
+a    //Writing(Appending): File pointer at end of file if file exists otherwise creates new
+a+    //Writing(Appending)/Reading: File pointer at end of file if file exists otherwise creates new
     
 //OPENING FILE
 openfile = open('filename', 'r')

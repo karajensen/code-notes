@@ -311,8 +311,8 @@ class Game
 private:
 
     //use declarations only
-	Game(const Game); 
-	Game& operator=(const Game);
+    Game(const Game); 
+    Game& operator=(const Game);
 };
 
 //USING BOOST: gives compile error due to using base class

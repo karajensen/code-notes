@@ -10,19 +10,19 @@ varying vec4 DiffuseColor;
 void main()
 {
 
-	//TRANSFORM VERTEX
-	gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-	vec4 WorldViewPos = gl_ModelViewMatrix * gl_Vertex;
+    //TRANSFORM VERTEX
+    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+    vec4 WorldViewPos = gl_ModelViewMatrix * gl_Vertex;
 
-	//TRANSFORM NORMAL
-	VertexNormal = gl_NormalMatrix * gl_Normal;
+    //TRANSFORM NORMAL
+    VertexNormal = gl_NormalMatrix * gl_Normal;
 
-	//TRANSFORM LIGHT POSITION
-	LightVector = normalize(LightPos - vec3(WorldViewPos));
+    //TRANSFORM LIGHT POSITION
+    LightVector = normalize(LightPos - vec3(WorldViewPos));
 
-	//PASS LIGHT
-	DiffuseColor = LightColor;
+    //PASS LIGHT
+    DiffuseColor = LightColor;
 
-	//PASS UVS
-	UV = gl_MultiTexCoord0;
+    //PASS UVS
+    UV = gl_MultiTexCoord0;
 }

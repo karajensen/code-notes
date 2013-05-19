@@ -23,9 +23,9 @@ for i in myCollection do
 
 //TESTING OBJECTS SELECTED
 if (selectedObj == undefined) then
-	messagebox "Please select a valid object"
+    messagebox "Please select a valid object"
 else if (isDeleted selectedObj) then
-	messagebox "Please select a valid object"
+    messagebox "Please select a valid object"
 else
 ( /*do stuff*/ )
 

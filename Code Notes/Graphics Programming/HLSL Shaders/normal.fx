@@ -1,10 +1,10 @@
 //===============================================================================
-//								= NORMAL SHADER =
+//                                = NORMAL SHADER =
 //===============================================================================
 //===============================================================================
 //FEATURES:
-//		- Renders sprite normally
-//		- Intended for post processing
+//        - Renders sprite normally
+//        - Intended for post processing
 //
 //===============================================================================
 
@@ -21,8 +21,8 @@ sampler ColorSampler = sampler_state
 
 struct VS_OUTPUT
 {
-	float4 Pos		: POSITION;	
-    float2 UV		: TEXCOORD0;
+    float4 Pos        : POSITION;    
+    float2 UV        : TEXCOORD0;
 
 };
 
@@ -30,14 +30,14 @@ struct VS_OUTPUT
 //VERTEX SHADER
 //===============================================================================
 
-VS_OUTPUT VShader(	float4 inPos : POSITION, 
-					float2 inUV : TEXCOORD0 )
+VS_OUTPUT VShader(    float4 inPos : POSITION, 
+                    float2 inUV : TEXCOORD0 )
 {
     VS_OUTPUT output = (VS_OUTPUT)0;
-	
-	output.Pos = mul(inPos, WorldViewProjection);
-	output.UV = inUV;
-	
+    
+    output.Pos = mul(inPos, WorldViewProjection);
+    output.UV = inUV;
+    
     return output;
 }
 
@@ -47,7 +47,7 @@ VS_OUTPUT VShader(	float4 inPos : POSITION,
 
 float4 PShader(VS_OUTPUT input) : COLOR
 {
-	return tex2D(ColorSampler, input.UV);
+    return tex2D(ColorSampler, input.UV);
 }
 
 //===============================================================================

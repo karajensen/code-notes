@@ -1,10 +1,10 @@
 //===============================================================================
-//								= LUMINANCE SHADER =
+//                                = LUMINANCE SHADER =
 //===============================================================================
 //===============================================================================
 //FEATURES:
-//		- Converts textured sprite/mesh to grayscale
-//		- Intended for post processing
+//        - Converts textured sprite/mesh to grayscale
+//        - Intended for post processing
 //
 //===============================================================================
 
@@ -21,22 +21,22 @@ sampler ColorSampler = sampler_state
 
 struct VS_OUTPUT
 {
-	float4 Pos		: POSITION;	
-    float2 UV		: TEXCOORD0;
+    float4 Pos        : POSITION;    
+    float2 UV        : TEXCOORD0;
 };
 
 //===============================================================================
 //VERTEX SHADER
 //===============================================================================
 
-VS_OUTPUT VShader(	float4 inPos : POSITION, 
-					float2 inUV : TEXCOORD0 )
+VS_OUTPUT VShader(    float4 inPos : POSITION, 
+                    float2 inUV : TEXCOORD0 )
 {
     VS_OUTPUT output = (VS_OUTPUT)0; //initialise struct
-	
-	output.Pos = mul(inPos, WorldViewProjection);
-	output.UV = inUV;
-	
+    
+    output.Pos = mul(inPos, WorldViewProjection);
+    output.UV = inUV;
+    
     return output;
 }
 
@@ -45,13 +45,13 @@ VS_OUTPUT VShader(	float4 inPos : POSITION,
 //===============================================================================
 
 float4 PShader(VS_OUTPUT input) : COLOR0
-{	
-	float3 lumConst = float3(0.30, 0.59, 0.11);
-	float3 Texture = tex2D(ColorSampler, input.UV);
-	float Gray = dot(Texture,lumConst);
-	
-	//FINAL COLOR
-	return float4(Gray,Gray,Gray,1.0);
+{    
+    float3 lumConst = float3(0.30, 0.59, 0.11);
+    float3 Texture = tex2D(ColorSampler, input.UV);
+    float Gray = dot(Texture,lumConst);
+    
+    //FINAL COLOR
+    return float4(Gray,Gray,Gray,1.0);
 
 }
 

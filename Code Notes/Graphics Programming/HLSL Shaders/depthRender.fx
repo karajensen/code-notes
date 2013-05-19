@@ -1,13 +1,13 @@
 //===============================================================================
-//								= DEPTH SHADER =
+//                                = DEPTH SHADER =
 //===============================================================================
 //===============================================================================
 //FEATURES:
-//		- For rendering depth information used in shadow mapping
+//        - For rendering depth information used in shadow mapping
 //===============================================================================
 
 
-float4x4 WorldViewProjection 	: WorldViewProjection;
+float4x4 WorldViewProjection     : WorldViewProjection;
 
 
 //===============================================================================
@@ -16,15 +16,15 @@ float4x4 WorldViewProjection 	: WorldViewProjection;
 
 struct VS_OUTPUT
 {
-    float4 Pos 			: POSITION;
-    float2  Depth		: TEXCOORD0;
+    float4 Pos             : POSITION;
+    float2  Depth        : TEXCOORD0;
 };
 
 //===============================================================================
 //VERTEX SHADER
 //===============================================================================
 
-VS_OUTPUT VShader(	float4 inPos : POSITION )
+VS_OUTPUT VShader(    float4 inPos : POSITION )
 {
     VS_OUTPUT output = (VS_OUTPUT)0;
     
@@ -43,7 +43,7 @@ VS_OUTPUT VShader(	float4 inPos : POSITION )
 
 float4 PShader(VS_OUTPUT input) : COLOR0
 {
-	float d = input.Depth.x / input.Depth.y;
+    float d = input.Depth.x / input.Depth.y;
     return float4(d,d,d,1.0f);
 }
 

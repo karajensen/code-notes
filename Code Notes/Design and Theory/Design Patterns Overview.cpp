@@ -88,3 +88,5 @@ Sends an event message when an object changes state to any observers
 
 MEDIATOR:    
 Talks between two classes without either having to know about the other
+
+*//////////////////////////////////////////////////////////////////////////////

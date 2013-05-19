@@ -8,19 +8,19 @@ class Color
 {
 public:
 
-	union
-	{
-		unsigned int color;
-		struct
-		{
-			unsigned char r, g, b, a;
-		};
-	};
+    union
+    {
+        unsigned int color;
+        struct
+        {
+            unsigned char r, g, b, a;
+        };
+    };
 
     /**
     * Default Constructor sets as white
     */
-	Color()
+    Color()
     { 
         Set(255,255,255,255); 
     }
@@ -29,7 +29,7 @@ public:
     * Constructor 
     * @param color coponents as integers from 0->255
     */
-	Color(int R, int G, int B, int A)
+    Color(int R, int G, int B, int A)
     { 
         Set(R,G,B,A); 
     }
@@ -38,7 +38,7 @@ public:
     * Constructor 
     * @param color as an unsigned integer in the form of 0xRRGGBBAA
     */
-	Color(unsigned int c)
+    Color(unsigned int c)
     { 
         Set(c); 
     }
@@ -47,7 +47,7 @@ public:
     * Sets the colour as a whole
     * @param color coponents as integers from 0->255
     */
-	void Set(int R, int G, int B, int A) 
+    void Set(int R, int G, int B, int A) 
     {
         r = R; 
         g = G; 
@@ -59,7 +59,7 @@ public:
     * Sets the colour as a whole
     * @param color as an unsigned integer in the form of 0xRRGGBBAA
     */
-	void Set(unsigned int c)
+    void Set(unsigned int c)
     { 
         color = c; 
     }
@@ -68,23 +68,23 @@ public:
     * Sets the colour as a whole
     * @param another color object
     */
-	void Set(const Color& c){ color = c.color; }
+    void Set(const Color& c){ color = c.color; }
 
     /**
     * Get the color component as a float 
     */
-	float rFloat() const { return static_cast<float>(r)/255.0f; }
-	float gFloat() const { return static_cast<float>(g)/255.0f; }
-	float bFloat() const { return static_cast<float>(b)/255.0f; }
-	float aFloat() const { return static_cast<float>(a)/255.0f; }
+    float rFloat() const { return static_cast<float>(r)/255.0f; }
+    float gFloat() const { return static_cast<float>(g)/255.0f; }
+    float bFloat() const { return static_cast<float>(b)/255.0f; }
+    float aFloat() const { return static_cast<float>(a)/255.0f; }
 
     /**
     * Set the color component as a float 
     */
     float rFloat(float R){ r = ClampColor(R)*255; }
-	float gFloat(float G){ g = ClampColor(G)*255; }
-	float bFloat(float B){ b = ClampColor(B)*255; }
-	float aFloat(float A){ a = ClampColor(A)*255; }
+    float gFloat(float G){ g = ClampColor(G)*255; }
+    float bFloat(float B){ b = ClampColor(B)*255; }
+    float aFloat(float A){ a = ClampColor(A)*255; }
 
     /**
     * Clips the bounds of the color to 0.0->1.0
@@ -126,89 +126,89 @@ public:
         AddToComponent(amount,&a);
     }
 
-	/**
+    /**
     * Adds an amount and prevents going beyond the bounds of 0->255 and 0.0->1.0
     * @param component the color component to add to
     * @param amount the amount to add to the component
     */
-	void AddToComponent(float amount, unsigned char* component)
-	{
-		float newamount = static_cast<float>(*component)+amount;
-		if(newamount < 0)
+    void AddToComponent(float amount, unsigned char* component)
+    {
+        float newamount = static_cast<float>(*component)+amount;
+        if(newamount < 0)
         { 
             *component = 0; 
         }
-		else if(newamount > 255)
+        else if(newamount > 255)
         { 
             *component = 255; 
         }
-		else
+        else
         { 
             *component = char(newamount); 
         }
-	}
+    }
 
     /**
     * Tests whether the alpha component is less than a specific amount
     * @param amount an amount to test between 0.0->1.0
     * @param whether or not the alpha is less than the amount
     */
-	bool IsAlphaLessThan(float amount) const
-	{
-		if(aFloat() < amount)
+    bool IsAlphaLessThan(float amount) const
+    {
+        if(aFloat() < amount)
         {
-			return true;
+            return true;
         }
-		return false;
-	}
+        return false;
+    }
 
     /**
     * Tests whether the alpha component is less than a specific amount
     * @param amount an amount to test between 0->255
     * @param whether or not the alpha is less than the amount
     */
-	bool IsAlphaLessThan(char amount) const
-	{
-		if(a < amount)
+    bool IsAlphaLessThan(char amount) const
+    {
+        if(a < amount)
         {
-			return true;
+            return true;
         }
-		return false;
-	}
+        return false;
+    }
 
     /**
     * Tests equality between colors
     */
-	bool operator==(Color & c) const
-	{
-		if(c.color == color)
+    bool operator==(Color & c) const
+    {
+        if(c.color == color)
         {
-			return true;
+            return true;
         }
-		return false;
-	}
+        return false;
+    }
 
     /**
     * Tests inequality between colors
     */
-	bool operator!=(Color & c) const
-	{
-		if(c.color != color)
+    bool operator!=(Color & c) const
+    {
+        if(c.color != color)
         {
-			return true;
+            return true;
         }
-		return false;
-	}
+        return false;
+    }
 
     /**
     * Tests equality between colors
     */
-	void ChangeBrightness(float amount)
-	{
+    void ChangeBrightness(float amount)
+    {
         r = ClampColor(r*amount)*255;
         g = ClampColor(g*amount)*255;
         b = ClampColor(b*amount)*255;
         a = ClampColor(a*amount)*255;
-	}
+    }
 
 };

@@ -315,9 +315,9 @@ void MyFunction(char* text, ...)
 {
     char buffer[256];
     va_list arguments;
-	va_start(arguments, text);  //Parse the string for variables
-	vsprintf_s(buffer, text, arguments); //Convert argument symbols to text
-	va_end(arguments); //Store results in text
+    va_start(arguments, text);  //Parse the string for variables
+    vsprintf_s(buffer, text, arguments); //Convert argument symbols to text
+    va_end(arguments); //Store results in text
     cout << buffer;
 }
 

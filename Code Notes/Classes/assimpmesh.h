@@ -16,9 +16,9 @@ public:
     */
     struct Vertex
     {
-	    float x,y,z;     ///< Vertex position
-	    float nx,ny,nz;  ///< Vertex normal
-	    float u,v;       ///< Vertex uvs
+        float x,y,z;     ///< Vertex position
+        float nx,ny,nz;  ///< Vertex normal
+        float u,v;       ///< Vertex uvs
         Vertex();
     };
 

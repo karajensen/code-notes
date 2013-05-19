@@ -404,3 +404,5 @@ change in angular velocity for A and B
 | wᵇ(f) = wᵇ(i) - (¹/iᵇ)(r X Jn) |
  --------------------------------
  Use these values to find equation for impulse(J)
+
+ *///////////////////////////////////////////////////////////////////////////////

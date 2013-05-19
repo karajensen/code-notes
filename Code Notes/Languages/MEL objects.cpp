@@ -3,15 +3,15 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //CREATE NODES
-createNode file;	//create a texture file node
-createNode checker;	//create a checker node
-createNode script;	//create a custom script node
+createNode file;    //create a texture file node
+createNode checker;    //create a checker node
+createNode script;    //create a custom script node
 
 //OBJECTS
-sphere;						//NURBS sphere
-polySphere;					//poly sphere
-polyCube -n "mycube";		//poly cube
-textCurves - t "mytext";	//text as curves
+sphere;                        //NURBS sphere
+polySphere;                    //poly sphere
+polyCube -n "mycube";        //poly cube
+textCurves - t "mytext";    //text as curves
 
 delete "objName";
 delete; //currently selected
@@ -29,37 +29,37 @@ duplicate -rr;
 float $worldMat[] = `xform -query -matrix "objName"`;
 
 //GETTING TRANSFORMATIONS
-xform -query -matrix;					//local matrix 
-xform -query -worldSpace -matrix;		//world matrix 
-xform -query -translate;				//translation in object space
+xform -query -matrix;                    //local matrix 
+xform -query -worldSpace -matrix;        //world matrix 
+xform -query -translate;                //translation in object space
 xform -query -worldSpace -translation;  //translation in world space
-xform -query -relative -scale;			//scale in object space
-xform -query -rotation;					//rotation in object space
-xform -query -rotateAxis;				//rotation orientation
+xform -query -relative -scale;            //scale in object space
+xform -query -rotation;                    //rotation in object space
+xform -query -rotateAxis;                //rotation orientation
 
 //SETTING TRANSFORMATIONS
-xform -translation 2 3 4;				//set position in local space
-xform -worldSpace -translation 2 3 4;	//set position in world space
-xform -rotation 45 0 0					//rotation
-xform -scale 1.2 0.3 0					//scaling
+xform -translation 2 3 4;                //set position in local space
+xform -worldSpace -translation 2 3 4;    //set position in world space
+xform -rotation 45 0 0                    //rotation
+xform -scale 1.2 0.3 0                    //scaling
 
 //RESETTING
-makeIdentity -apply false;				//reset transformation/move object back to default
-makeIdentity -apply true;				//reset/freeze transformations
+makeIdentity -apply false;                //reset transformation/move object back to default
+makeIdentity -apply true;                //reset/freeze transformations
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //RELATIONSHIPS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-parent "obj1" "ob2";	//parent obj1 to obj2	
-parent -world "ob1";	//unparent obj1 (ie. parent to world)	
+parent "obj1" "ob2";    //parent obj1 to obj2    
+parent -world "ob1";    //unparent obj1 (ie. parent to world)    
 
 group -em -n "groupName" -p"parentName"; //create an empty(-em) group, parent under parentName
-group -n "groupName" $childList;		 //create a group, add children to it
-ungroup -world "myObj";					 //remove myObj from the group
+group -n "groupName" $childList;         //create a group, add children to it
+ungroup -world "myObj";                     //remove myObj from the group
 
-reorder -front "myObj";	//move myObj up to front/back of list of siblings
+reorder -front "myObj";    //move myObj up to front/back of list of siblings
 
 renameSelectionList("NewName"); //renames selection list to NewName incrementing
 rename $objName $objNewName;    //note; renaming transform node auto renames shape node
@@ -73,16 +73,16 @@ inheritTransform -off "childObject"; //parent's transform doesn't effect specifi
 //GET ATTRIBUTE
 getAttr sphere1.rotateZ;
 getAttr -time 10 sphere1.rotateZ;
-getAttr transforml.matrix;	//returns array of 16 floats, not matrix
+getAttr transforml.matrix;    //returns array of 16 floats, not matrix
 
 //SET ATTRIBUTE
 setAttr sphere1.rotateZ 15;
 
 //LIST ATTRIBUTES
-listAttr "MyObj";				 //returns array of strings with attribute names
-listAttr -userDefined "MyObj";	//list custom attributes only
-listAttr -keyable "MyObj";		//list keyable/attributes in channel box only
-listAnimatable "myObj";			//lists all attributes that can be animated
+listAttr "MyObj";                 //returns array of strings with attribute names
+listAttr -userDefined "MyObj";    //list custom attributes only
+listAttr -keyable "MyObj";        //list keyable/attributes in channel box only
+listAnimatable "myObj";            //lists all attributes that can be animated
 
 //ADD ATTRIBUTES
 addAttr -longName "attr" -attributeType long int $obj;
@@ -102,7 +102,7 @@ deleteAttr ($myObj + ".attr"); //only avaliable for custom attributes
 renameAttr ($myObj + ".oldName") "newName"; //only avaliable for custom attributes
 
 //CONNECT ATTRIBUTES
-connectAttr -force sphere1.attributeName sphere2.attributeName	//connect sphere2 attribute to sphere1, force breaks prior connections
+connectAttr -force sphere1.attributeName sphere2.attributeName    //connect sphere2 attribute to sphere1, force breaks prior connections
 CBdeleteConnection ($myObj + ".attr"); //delete the key connection
 listConnections -plug on -destination off "MyObject.tx" //lists outgoing attributes (destination/source automatically true)
 listConnections -plug off -source off "MyObject.tx" //lists incoming objects
@@ -160,8 +160,8 @@ string $piParts[];
 tokenize $pi[0] $piParts;
 for($k=2; $k < size($piParts); $k++)
 {
-	int $vIndex = $piParts[$k];
-	$pos = `pointPosition -world ($node + ".vtx["+$vIndex+"]")`;
+    int $vIndex = $piParts[$k];
+    $pos = `pointPosition -world ($node + ".vtx["+$vIndex+"]")`;
 }
 
 //GET VERTICES FROM AN EDGE
@@ -181,8 +181,8 @@ $pos1 = `pointPosition -world ($node + ".vtx["+$v1+"]")`;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 select -cl;
-select "*Base*";	//select all objects with string
-select "*:Base";	//namespaces
+select "*Base*";    //select all objects with string
+select "*:Base";    //namespaces
 select "*:*:Base";  //double namespaces
 
 
@@ -209,5 +209,5 @@ pickWalk -d "down"; //go down to first child node
 pickWalk -d "right"; //right/left through children nodes
 
 //SELECTING COMPONENTS
-hilite "objName";	//allow component selection for obj
+hilite "objName";    //allow component selection for obj
 hilite -u "objName"; //remove from hilite list

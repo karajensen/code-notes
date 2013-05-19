@@ -40,12 +40,12 @@ bool EventReceiver::IsKeyDown(unsigned int& state)
         state |= KEY_QUERIED;
         return true;
     }
-	else if((state & KEY_DOWN) != KEY_DOWN)
+    else if((state & KEY_DOWN) != KEY_DOWN)
     {
         // Key is lifted, allow user to query again
-		state &= ~KEY_QUERIED;
+        state &= ~KEY_QUERIED;
     }
-	return false;
+    return false;
 }
 
 void EventReceiver::Update()

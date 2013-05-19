@@ -1,13 +1,13 @@
 //===============================================================================
-//								= BOUNDS SHADER =
+//                                = BOUNDS SHADER =
 //===============================================================================
 //===============================================================================
 //FEATURES:
-//		- No lighting/texturing
-//		- Creates red transparent
+//        - No lighting/texturing
+//        - Creates red transparent
 //===============================================================================
 
-float4x4 WorldViewProjection 	: WorldViewProjection;
+float4x4 WorldViewProjection     : WorldViewProjection;
 
 
 //===============================================================================
@@ -16,7 +16,7 @@ float4x4 WorldViewProjection 	: WorldViewProjection;
 
 struct VS_OUTPUT
 {
-    float4 Pos 			: POSITION;
+    float4 Pos             : POSITION;
 };
 
 //===============================================================================
@@ -38,8 +38,8 @@ VS_OUTPUT VShader(float4 inPos : POSITION)
 //===============================================================================
 
 float4 PShader(VS_OUTPUT input) : COLOR0
-{	
-	return float4(1.0,0,0,0.2);
+{    
+    return float4(1.0,0,0,0.2);
 }
 
 
@@ -57,9 +57,9 @@ technique MAIN
         CULLMODE = CCW;
         
         AlphaBlendEnable = true; 
-		SrcBlend = SrcAlpha; 
-		DestBlend = InvSrcAlpha;
-		FillMode = Solid;
+        SrcBlend = SrcAlpha; 
+        DestBlend = InvSrcAlpha;
+        FillMode = Solid;
 
         VertexShader = compile vs_3_0 VShader();
         PixelShader = compile ps_3_0 PShader();

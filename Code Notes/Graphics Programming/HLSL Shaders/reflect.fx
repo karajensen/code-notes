@@ -1,20 +1,20 @@
 //===============================================================================
-//								= PURE REFLECTION SHADER =
+//                                = PURE REFLECTION SHADER =
 //===============================================================================
 //===============================================================================
 //FEATURES:
-//		- Reflection from surrounding scene only
+//        - Reflection from surrounding scene only
 //
 //===============================================================================
 
-float4x4 World					: World;
-float4x4 WorldViewProjection	: WorldViewProjection;
-float4x4 WorldInvTrans			: WorldInverseTranspose;
+float4x4 World                    : World;
+float4x4 WorldViewProjection    : WorldViewProjection;
+float4x4 WorldInvTrans            : WorldInverseTranspose;
 
-float3 LightPos;			float LightOn;
-float AmbientIntensity;		float4 AmbientColor;
-float DiffuseIntensity;		float4 DiffuseColor;
-float SpecularIntensity;	float4 SpecularColor;	float SpecularSize;
+float3 LightPos;            float LightOn;
+float AmbientIntensity;        float4 AmbientColor;
+float DiffuseIntensity;        float4 DiffuseColor;
+float SpecularIntensity;    float4 SpecularColor;    float SpecularSize;
 float att0,att1,att2;
 
 float3 CameraPos;
@@ -34,24 +34,24 @@ sampler EnvironSampler = sampler_state
 
 struct VS_OUTPUT_REFLECT
 {
-    float4 Pos 				: POSITION;
-    float3 ReflectionVector	: TEXCOORD0;
+    float4 Pos                 : POSITION;
+    float3 ReflectionVector    : TEXCOORD0;
 };
 
 struct VS_OUTPUT_REFLECTSHADE
 {
-    float4 Pos						: POSITION;
-    float3 Normal					: TEXCOORD0;
-    float3 LightVector				: TEXCOORD1;
-    float3 CameraVector				: TEXCOORD2;
+    float4 Pos                        : POSITION;
+    float3 Normal                    : TEXCOORD0;
+    float3 LightVector                : TEXCOORD1;
+    float3 CameraVector                : TEXCOORD2;
 };
 
 //===============================================================================
 //VERTEX SHADER [REFLECT]
 //===============================================================================
 
-VS_OUTPUT_REFLECT VShaderReflect(float4 inPos		: POSITION, 
-								 float3 inNormal	: NORMAL )
+VS_OUTPUT_REFLECT VShaderReflect(float4 inPos        : POSITION, 
+                                 float3 inNormal    : NORMAL )
 {
     VS_OUTPUT_REFLECT output = (VS_OUTPUT_REFLECT)0; 
     
@@ -59,12 +59,12 @@ VS_OUTPUT_REFLECT VShaderReflect(float4 inPos		: POSITION,
     output.Pos = mul(inPos, WorldViewProjection); 
     float3 PosWorld = mul(inPos, World); 
    
-	//NORMAL
-	inNormal = normalize(mul(inNormal,WorldInvTrans)); 
-	
-	//CREATE REFLECTION VECTOR
-	float3 CameraVector = CameraPos-PosWorld;
-	output.ReflectionVector = reflect(-CameraVector, inNormal);
+    //NORMAL
+    inNormal = normalize(mul(inNormal,WorldInvTrans)); 
+    
+    //CREATE REFLECTION VECTOR
+    float3 CameraVector = CameraPos-PosWorld;
+    output.ReflectionVector = reflect(-CameraVector, inNormal);
 
     return output;
 }
@@ -74,14 +74,14 @@ VS_OUTPUT_REFLECT VShaderReflect(float4 inPos		: POSITION,
 //===============================================================================
 
 float4 PShaderReflect(VS_OUTPUT_REFLECT input) : COLOR0
-{	
-	//REFLECTION
-	float4 Reflection = texCUBE(EnvironSampler, input.ReflectionVector);
-	
-	//FINAL COLOR
-	float4 Color = Reflection;
-	Color.a = 1.0f;
-	return Color;
+{    
+    //REFLECTION
+    float4 Reflection = texCUBE(EnvironSampler, input.ReflectionVector);
+    
+    //FINAL COLOR
+    float4 Color = Reflection;
+    Color.a = 1.0f;
+    return Color;
 }
 
 
@@ -90,24 +90,24 @@ float4 PShaderReflect(VS_OUTPUT_REFLECT input) : COLOR0
 //===============================================================================
 
 VS_OUTPUT_REFLECTSHADE VShaderReflectShaded( float4 InPos  : POSITION,
-											 float3 InNormal : NORMAL )
+                                             float3 InNormal : NORMAL )
 { 
     VS_OUTPUT_REFLECTSHADE output = (VS_OUTPUT_REFLECTSHADE)0;
 
-	//TRANSFORMATIONS
-	output.Pos  = mul(InPos, WorldViewProjection);
+    //TRANSFORMATIONS
+    output.Pos  = mul(InPos, WorldViewProjection);
     float3 PosWorld = mul(InPos, World);
   
-	//NORMAL
+    //NORMAL
     output.Normal = mul(InNormal, WorldInvTrans);
 
-	//CREATE Camera VECTOR
-	output.CameraVector = normalize(CameraPos-PosWorld);
-	
-	//CREATE LIGHT VECTOR
-	output.LightVector = normalize(LightPos-PosWorld);
-	
-	return output;
+    //CREATE Camera VECTOR
+    output.CameraVector = normalize(CameraPos-PosWorld);
+    
+    //CREATE LIGHT VECTOR
+    output.LightVector = normalize(LightPos-PosWorld);
+    
+    return output;
 }
 
 //===============================================================================
@@ -117,24 +117,24 @@ VS_OUTPUT_REFLECTSHADE VShaderReflectShaded( float4 InPos  : POSITION,
 float4 PShaderReflectShaded(VS_OUTPUT_REFLECTSHADE input) : COLOR0
 {
     
-	input.Normal = normalize(input.Normal);
-	
-	//CREATE REFLECTION VECTORS
-	float3 LightReflectionVector = normalize(-reflect(input.LightVector, input.Normal)); 
-	float3 CamReflectionVector = -reflect(input.CameraVector, input.Normal);
+    input.Normal = normalize(input.Normal);
+    
+    //CREATE REFLECTION VECTORS
+    float3 LightReflectionVector = normalize(-reflect(input.LightVector, input.Normal)); 
+    float3 CamReflectionVector = -reflect(input.CameraVector, input.Normal);
     
     //SPECULAR 
     float4 Specular = SpecularIntensity * SpecularColor * pow(saturate(dot(LightReflectionVector, input.CameraVector)), SpecularSize);
     
     //DIFFUSE
     float4 Diffuse = DiffuseColor*(((dot(input.LightVector, input.Normal)*0.5)+ Specular + 0.4)*1.7);
-	
+    
     //REFLECTION
     float4 Reflection = texCUBE(EnvironSampler, CamReflectionVector); 
    
-	//FINALISE COLOR
-	float4 Color = saturate((Reflection*Diffuse) + (Specular/2));
-	Color.a = 1.0f;
+    //FINALISE COLOR
+    float4 Color = saturate((Reflection*Diffuse) + (Specular/2));
+    Color.a = 1.0f;
     return Color;
 }
 

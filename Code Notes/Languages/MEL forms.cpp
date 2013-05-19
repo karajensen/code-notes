@@ -6,18 +6,18 @@
 headsUpMessage "This is the message";
 
 //CONFIRM DIALOG BOX
-confirmDialog	-title "The Title"
-				-message "This is the message"
-				-button "Title for button"
-				-defaultButton "Title for button";	//sets button as default button
+confirmDialog    -title "The Title"
+                -message "This is the message"
+                -button "Title for button"
+                -defaultButton "Title for button";    //sets button as default button
 
 //PROMPT DIALOG BOX
 string $myResult = `promptDialog -message "message here" -button "OK" -button "CANCEL" 
-					-defaultButton "OK" -cancelButton "CANCEL" -dismissString "Cancel"`;
+                    -defaultButton "OK" -cancelButton "CANCEL" -dismissString "Cancel"`;
 if($myResult == "OK"){ use string stored }
 
 //SELECTION DIALOG BOX
-string $myFiles[] = `fileDialog2 -fileMode 4`;	//returns a list of paths to files selected
+string $myFiles[] = `fileDialog2 -fileMode 4`;    //returns a list of paths to files selected
 
 
 
@@ -38,25 +38,25 @@ window -edit -width 200 -height 100 PluginTester; //resize to fix sizing issues
 //Newest window becomes default and recieves the layout until another is created
 //Newest Layout becomes default and recieves any addons until moved back in the heirarchy
 
-setParent ..;				//move back one parent
-setParent -menu $myLayout	//set as current layout
+setParent ..;                //move back one parent
+setParent -menu $myLayout    //set as current layout
 
 //-------------------------------------------------------------------------------------
 //ROW/COL LAYOUTS
 //-------------------------------------------------------------------------------------
-columnLayout -adjustableColumn true;	//set the default layout
-button -label "One" ;			
-	rowLayout -numberOfColumns 2;		//create new layout; rows must specify number of cols
-	button -label "Two";
-	button -label "Three";
-setParent ..;							//move the default layout back one
+columnLayout -adjustableColumn true;    //set the default layout
+button -label "One" ;            
+    rowLayout -numberOfColumns 2;        //create new layout; rows must specify number of cols
+    button -label "Two";
+    button -label "Three";
+setParent ..;                            //move the default layout back one
 button -label "Four" ;
 
 //-------------------------------------------------------------------------------------
 //GRID LAYOUTS
 //-------------------------------------------------------------------------------------
 gridLayout -numberOfRowsColumns 2 2 -cellWidthHeight 60 50; //creates grid of 2x2
-gridLayout -position $myButton 2	//places button in slot 2 (slots counted from base 1, across row, next row then across)
+gridLayout -position $myButton 2    //places button in slot 2 (slots counted from base 1, across row, next row then across)
 
 
 //-------------------------------------------------------------------------------------
@@ -66,19 +66,19 @@ gridLayout -position $myButton 2	//places button in slot 2 (slots counted from b
 string $form = `formLayout -numberOfDivisions 100`; 
 string $myButton1 = `button`;
 formLayout -edit 
-		   -attachForm $myButton1 "top" 0			//alliged with top of form
-		   -attachForm $myButton1 "left" 0			//alliged with left of form
-		   -attachForm $myButton1 "bottom" 0		//alliged with bottom of form
-		   -attachPosition $myButton1 "right" 0 50  //right edge placed 50% of width of form
-		   $form;
+           -attachForm $myButton1 "top" 0            //alliged with top of form
+           -attachForm $myButton1 "left" 0            //alliged with left of form
+           -attachForm $myButton1 "bottom" 0        //alliged with bottom of form
+           -attachPosition $myButton1 "right" 0 50  //right edge placed 50% of width of form
+           $form;
 
 //-------------------------------------------------------------------------------------
 //FRAME LAYOUT
 //-------------------------------------------------------------------------------------
 //consists of a label and collapse/expand button for children (can only have one child layout)
 frameLayout -label "Settings" -borderStyle "etchedIn" -font "obliqueLabelFont"-collapsable true;
-	columnLayout ;
-		button;
+    columnLayout ;
+        button;
 
 //-------------------------------------------------------------------------------------
 //TAB LAYOUT
@@ -87,26 +87,26 @@ frameLayout -label "Settings" -borderStyle "etchedIn" -font "obliqueLabelFont"-c
 //All children must be layouts
 
 string $tabLay = `tabLayout`;
-	string $colLay = `columnLayout`;
-		button;
+    string $colLay = `columnLayout`;
+        button;
 setParent ..; //move to working with tablayout again
-	string $colLay2 = `columnLayout`;
-		button;
+    string $colLay2 = `columnLayout`;
+        button;
 setParent ..;
 
 tabLayout -edit
-		  -tabLabel $colLay "Tab1 name"
-		  -tabLabel $colLay2 "Tab2 name"
-		  $tabLay;
+          -tabLabel $colLay "Tab1 name"
+          -tabLabel $colLay2 "Tab2 name"
+          $tabLay;
 
 //-------------------------------------------------------------------------------------
 //SCROLL LAYOUT
 //-------------------------------------------------------------------------------------
 //displays scroll bars for a child layout
 scrollLayout;
-	columnLayout;
-		button;
-		button;
+    columnLayout;
+        button;
+        button;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -115,35 +115,35 @@ scrollLayout;
 
 //MENU BAR LAYOUT (FOR MAIN FORM)
 menuBarLayout;
-	menu -label "File";
-		menuItem -label "Exit";
-	menu -label "Help" -helpMenu true;
-		menuItem -label "About";
+    menu -label "File";
+        menuItem -label "Exit";
+    menu -label "Help" -helpMenu true;
+        menuItem -label "About";
 
 //MENU BAR LAYOUT (INSIDE ANOTHER LAYOUT)
 string $TabLay = `tabLayout`;
 string $MenuLay = `menuBarLayout`;
-	menu -label "Colors";
-		menuItem -label "Red";
-		menuItem -label "Green";
+    menu -label "Colors";
+        menuItem -label "Red";
+        menuItem -label "Green";
 tabLayout -edit- -tabLabel $TabLay "Tabname" $MenuLay;
 
 //MENU BAR (FOR MAIN FORM ALTERNATIVE)
 window -menuBar true;
-	menu -label "File" -tearOff true;
-		menuItem -label "New";
-		menuItem -divider true;	//divider
-		menuItem -label "Exit";
-	menu -label "Help" -helpMenu true;
-		menuItem -label "About";
-		menultem -label "Save Changes" -checkBox on;	//check box
-	menu -label "Options" -allowOptionBoxes true;		//option tick boxes
-		radioMenultemCollection ;
-		menuItem -label "One" -radioButton off;
-		menuItem -label "Two" -radioButton on;
-		menultem -subMenu true -label "More Options";	//submenus
-			menuItem -label "Three";					//Option box created for label Three
-			menuItem -optionBox true -command "ThreeOptionFunction()";
+    menu -label "File" -tearOff true;
+        menuItem -label "New";
+        menuItem -divider true;    //divider
+        menuItem -label "Exit";
+    menu -label "Help" -helpMenu true;
+        menuItem -label "About";
+        menultem -label "Save Changes" -checkBox on;    //check box
+    menu -label "Options" -allowOptionBoxes true;        //option tick boxes
+        radioMenultemCollection ;
+        menuItem -label "One" -radioButton off;
+        menuItem -label "Two" -radioButton on;
+        menultem -subMenu true -label "More Options";    //submenus
+            menuItem -label "Three";                    //Option box created for label Three
+            menuItem -optionBox true -command "ThreeOptionFunction()";
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,7 +162,7 @@ connectControl $myControl ($myObject + ".translateX");
 connectControl -index 2 $myControlGroup ($myObject + ".scaleX");
 
 //SEPERATOR
-separator;	//creates a line between rows
+separator;    //creates a line between rows
 
 //BUTTONS (executes a MEL command)
 button -label "but1" -c "myProc1()";
@@ -183,7 +183,7 @@ iconTextCheckBox -style "iconAndTextVertical" -imagel "cube.xpm" -label "cube";
 radioCollection ;
 radioButton -label "One";
 radioButton -label "Two";
-radioCollection -query -select $radioCollectionName;	//finds out which one is selected
+radioCollection -query -select $radioCollectionName;    //finds out which one is selected
 
 iconTextRadioCollection ;
 iconTextRadioButton -image1 "sphere.xpm" -label "Sphere";
@@ -191,23 +191,23 @@ iconTextRadioButton -image1 "cone.xpm" -label "Cone";
 
 //LISTS
 //Lists are base-1 indexed
-textScrollList -numberOfRows 3	-allowMultiSelection true
-				-append "One"
-				-append "Two"
-				-append "Three"
-				-selectedItem "One"
-				-showIndexedItem 3;
-textScrollList -query -selectIndexedItem &myList //array of selected indices	
+textScrollList -numberOfRows 3    -allowMultiSelection true
+                -append "One"
+                -append "Two"
+                -append "Three"
+                -selectedItem "One"
+                -showIndexedItem 3;
+textScrollList -query -selectIndexedItem &myList //array of selected indices    
 
 
 //TEXT
 text -label "Some text" -align "center";
 textField -editable true;
-scrollField -wordWrap true -text "Some editable text" -font boldLabelFont	-editable true;
-scrollField -query -text $myScrollField;	//gets text
+scrollField -wordWrap true -text "Some editable text" -font boldLabelFont    -editable true;
+scrollField -query -text $myScrollField;    //gets text
 
 //INT FIELD
-intField -v 12 "myIntField";	
+intField -v 12 "myIntField";    
 $intFieldValue = `intField -query -v "myIntField"`;
 
 //FLOAT FIELD
@@ -220,13 +220,13 @@ floatField -v 12.0;
 //FLOAT3/INT3 GROUPS
 floatFieldGrp -label "Vertex 01: " -numberOfFields 3 "ff00"; 
 floatSliderGrp -label "Temperature" -value 76 -field true 
-			   -minValue -10.0 -maxValue 100.0				//slider box min/max
-			   -fieldMinValue -100.0 -fieldMaxValue 100.0;	//actual min/max values
+               -minValue -10.0 -maxValue 100.0                //slider box min/max
+               -fieldMinValue -100.0 -fieldMaxValue 100.0;    //actual min/max values
 
 
 //ATTRIBUTE GROUPS
 attrFieldSliderGrp -min 0 -max 10 -at "mySphere.sx";
-attrFieldGrp -attribute ($myObject+".scale") -label "Scale"	//holds attributes children (x,y,z)
+attrFieldGrp -attribute ($myObject+".scale") -label "Scale"    //holds attributes children (x,y,z)
 attrColorSliderGrp -attribute ($objName+".color") -label ($objName+"'s color");
 attrNavigationControlGrp -attribute ($obj + ".scale") -label "Scale"; //allows connection of attribute
 
@@ -236,11 +236,11 @@ colorIndexSliderGrp;
 
 //TEXT FIELD BUTTON GROUP
 textFieldButtonGrp -label "Word" -text "some text"
-				   -buttonLabel "Check Spelling"
-				   -buttonCommand "DoSomething()";
+                   -buttonLabel "Check Spelling"
+                   -buttonCommand "DoSomething()";
 
 //NAME GROUP
-nameField -object $myObject	//allows changing of object's name	
+nameField -object $myObject    //allows changing of object's name    
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -257,10 +257,10 @@ int $amount = 0;
 progressWindow -title "Progress" -progress $amount -status "Completed: 0%" -isInterruptable true;
 while(true)
 {
-	//do part of the operation
-	if(`progressWindow -query -isCancelled`){ break; }
-	$amount += 1;
-	progressWindow -edit -progress $amount -status ("Completed: " +$amount+"%");
+    //do part of the operation
+    if(`progressWindow -query -isCancelled`){ break; }
+    $amount += 1;
+    progressWindow -edit -progress $amount -status ("Completed: " +$amount+"%");
 }
 progressWindow -endProgress;
 
@@ -290,13 +290,13 @@ global string $imgExt[];
 
 //CURRENT VIEWPORT
 panelLayout;
-	modelPanel;	
+    modelPanel;    
 
 //CURRENT VIEWPORT/OUTLINER
 panelLayout -configuration "vertical2";
-	outlinerPanel;
+    outlinerPanel;
 setParent ..;
-	modelPanel;
+    modelPanel;
 
 //LIST OF PANELS
 modelPanel;
@@ -310,7 +310,7 @@ hyperPanel;
 getPanel -all //get list of all panels
 getPanel -underPointer //get name of panel under mouse
 panel -edit -menuBarVisible true $panelName //display the menu bar
-panel -copy $paneIName	//create a copy of the panel
+panel -copy $paneIName    //create a copy of the panel
 
 
 
@@ -319,18 +319,18 @@ panel -copy $paneIName	//create a copy of the panel
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //ABOUT
-about -version;	 //gives version of Maya as a float
-about -operatingSystem;	
+about -version;     //gives version of Maya as a float
+about -operatingSystem;    
 
 //FILE
 file -rename ("name" + $counter + ".ma");
-file -save -type ("mayaAscii");	//mayaAscii or mayaBinary
+file -save -type ("mayaAscii");    //mayaAscii or mayaBinary
 file -import "filepath"
-file -force -options "" -typ "RealFlowSD" -es "filepath";	//export as specific type
+file -force -options "" -typ "RealFlowSD" -es "filepath";    //export as specific type
 
-string $filepath = `file -q -sceneName`;				//query the scene path and name
-string $filename = `file -q -sceneName -shortName`;		//query the scene name
-string $defaultSceneFolder = `workspace -rd -q`;		//query set project scene folder location
+string $filepath = `file -q -sceneName`;                //query the scene path and name
+string $filename = `file -q -sceneName -shortName`;        //query the scene name
+string $defaultSceneFolder = `workspace -rd -q`;        //query set project scene folder location
 
 //PLUGINS
 catch(`loadPlugin "C:/Program Files/Autodesk/Maya2011/bin/plug-ins/realflow.mll"`);

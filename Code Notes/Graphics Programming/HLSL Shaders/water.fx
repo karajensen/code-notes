@@ -1,21 +1,21 @@
 //===============================================================================
-//								= WATER SHADER =
+//                                = WATER SHADER =
 //===============================================================================
 //===============================================================================
 //FEATURES:
-//		- NVIDIA's Ocean shader
+//        - NVIDIA's Ocean shader
 //===============================================================================
 
-float4x4 World					: World;
-float4x4 WorldInvTrans 			: WorldInverseTranspose;
-float4x4 WorldViewProjection	: WorldViewProjection;
+float4x4 World                    : World;
+float4x4 WorldInvTrans             : WorldInverseTranspose;
+float4x4 WorldViewProjection    : WorldViewProjection;
 
 float Timer : TIME;
 float3 CameraPos;
 
-float3 LightPos;			float LightOn;
-float AmbientIntensity;		float4 AmbientColor;
-float DiffuseIntensity;		float4 DiffuseColor;
+float3 LightPos;            float LightOn;
+float AmbientIntensity;        float4 AmbientColor;
+float DiffuseIntensity;        float4 DiffuseColor;
 float att0,att1,att2;
 
 Texture texColor; //COLOR
@@ -68,9 +68,9 @@ struct OceanVertOut {
 
 struct VS_OUTPUT
 {
-    float4 Pos 			: POSITION;
-    float3 Normal		: TEXCOORD0;
-    float3 LightVector	: TEXCOORD1;
+    float4 Pos             : POSITION;
+    float3 Normal        : TEXCOORD0;
+    float3 LightVector    : TEXCOORD1;
 };
 
 
@@ -87,8 +87,8 @@ struct Wave {
 
 #define NWAVES 2
 Wave wave[NWAVES] = {
-	{ 1.0, 1.0, 0.5, float2(-1, 0) },
-	{ 2.0, 0.5, 1.3, float2(-0.7, 0.7) }	
+    { 1.0, 1.0, 0.5, float2(-1, 0) },
+    { 2.0, 0.5, 1.3, float2(-0.7, 0.7) }    
 };
 
 float evaluateWave(Wave w, float2 pos, float t)
@@ -118,37 +118,37 @@ float evaluateWaveDerivSharp(Wave w, float2 pos, float t, float k)
 //===============================================================================
 
 OceanVertOut OceanVS(float4 inPos : POSITION,
-    				float2 inUV : TEXCOORD0,
-    				float3 inTangent  : TEXCOORD1,
-    				float3 inBinormal : TEXCOORD2,
-    				float3 inNormal   : NORMAL) 
+                    float2 inUV : TEXCOORD0,
+                    float3 inTangent  : TEXCOORD1,
+                    float3 inBinormal : TEXCOORD2,
+                    float3 inNormal   : NORMAL) 
 {
     OceanVertOut OUT = (OceanVertOut)0;
-	
+    
     wave[0].freq = WaveFreq;
     wave[0].amp = WaveAmp;
     wave[1].freq = WaveFreq*2.0;
     wave[1].amp = WaveAmp*0.5;
     
-	float4 Po = float4(inPos.xyz,1.0);
+    float4 Po = float4(inPos.xyz,1.0);
     
-	// sum waves	
+    // sum waves    
     Po.y = 0.0;
     float ddx = 0.0, ddy = 0.0;
     for(int i=0; i<NWAVES; i++) 
-	{
-	Po.y += evaluateWave(wave[i], Po.xz, Timer);
-	float deriv = evaluateWaveDeriv(wave[i], Po.xz, Timer);
-	ddx += deriv * wave[i].dir.x;
-	ddy += deriv * wave[i].dir.y;
+    {
+    Po.y += evaluateWave(wave[i], Po.xz, Timer);
+    float deriv = evaluateWaveDeriv(wave[i], Po.xz, Timer);
+    ddx += deriv * wave[i].dir.x;
+    ddy += deriv * wave[i].dir.y;
     }
-	
+    
     // compute tangent basis
     float3 B = float3(1, ddx, 0);
     float3 T = float3(0, ddy, 1);
     float3 N = float3(-ddx, 1, -ddy);
     OUT.HPosition = mul(Po,WorldViewProjection);
-	
+    
     // pass texture coordinates for fetching the normal map
     float2 TextureScale = float2(TexReptX,TexReptY);
     float2 BumpSpeed = float2(BumpSpeedX,BumpSpeedY);
@@ -160,7 +160,7 @@ OceanVertOut OceanVS(float4 inPos : POSITION,
 
     // compute the 3x3 tranform from tangent space to object space
     float3x3 objToTangentSpace;
-	
+    
     // first rows are the tangent and binormal scaled by the bump scale
     objToTangentSpace[0] = BumpDepth * normalize(T);
     objToTangentSpace[1] = BumpDepth * normalize(B);
@@ -196,7 +196,7 @@ float4 OceanPS(OceanVertOut IN) : COLOR
     float3 Nw = mul(m,Nt);
     float3 Nn = normalize(Nw);
 
-	// reflection
+    // reflection
     float3 Vn = normalize(IN.WorldView);
     float3 R = reflect(-Vn, Nn);
 
@@ -224,13 +224,13 @@ technique MAIN
         ZENABLE = TRUE;
         ZWRITEENABLE = TRUE;
         CULLMODE = NONE;
-		ZFunc = LessEqual;
-		
-		AlphaBlendEnable = true; 
-		SrcBlend = SrcAlpha; 
-		DestBlend = InvSrcAlpha;	
-		
-		VertexShader = compile vs_3_0 OceanVS();
+        ZFunc = LessEqual;
+        
+        AlphaBlendEnable = true; 
+        SrcBlend = SrcAlpha; 
+        DestBlend = InvSrcAlpha;    
+        
+        VertexShader = compile vs_3_0 OceanVS();
         PixelShader = compile ps_3_0 OceanPS();
     }
 }

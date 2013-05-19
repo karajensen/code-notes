@@ -216,3 +216,5 @@ HUFFMAN ENCODING:
 8) Traverse through the graph (left gives 0, right gives 1) and store the 
    path taken to get to the correct letter
 9) Create a Huffman table (array) to store the path information
+
+*/////////////////////////////////////////////////////////////////////////////

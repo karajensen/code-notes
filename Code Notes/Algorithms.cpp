@@ -5,13 +5,13 @@
 template<typename T>
 T ChangeRange(T value, T currentRangeInner, T currentRangeOuter, T newRangeInner, T newRangeOuter)
 {
-	return ((value-currentRangeInner)*((newRangeOuter-newRangeInner)/
+    return ((value-currentRangeInner)*((newRangeOuter-newRangeInner)/
         (currentRangeOuter-currentRangeInner)))+newRangeInner;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //CONVERT NUMBER TO STRING
-///////////////////////////////////////////////////////////////////////////////////////////////////////	
+/////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 template<typename T>
 std::string StringCast(const T& value)
@@ -34,9 +34,9 @@ char saved;
 int l = strlen(test);
 for(int i = 0; i < l/2; ++i)
 {
-	saved = test[i];
-	test[i] = test[l-i-1];
-	test[l-i-1] = saved;
+    saved = test[i];
+    test[i] = test[l-i-1];
+    test[l-i-1] = saved;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,17 +56,17 @@ for(int c = 0; c < MaxCols; ++c)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //CREATE 2D GRID
-///////////////////////////////////////////////////////////////////////////////////////////////////////	
+/////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 for(int r = 0; r < Rows; r++)
 {
-	for(int c = 0; c < Cols; c++)
-	{
-		FLOAT3 position;
-		position.x = x + (r*w);
-		position.z = z + (c*h);
-		postions.push_back(position);
-	}
+    for(int c = 0; c < Cols; c++)
+    {
+        FLOAT3 position;
+        position.x = x + (r*w);
+        position.z = z + (c*h);
+        postions.push_back(position);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,10 +87,10 @@ float CartesianZ(float length, float phi){ return (length*sin(phi)); }
 
 while(!(cin >> x))
 {
-	cout << "Bad input. Please enter a number: ";
-	cin.clear();
-	while (cin.get() != '\n')
-		continue;
+    cout << "Bad input. Please enter a number: ";
+    cin.clear();
+    while (cin.get() != '\n')
+        continue;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,7 +100,7 @@ while(!(cin >> x))
 clock_t delay = NoOfSeconds * CLOCKS_PER_SEC; 
 clock_t start = clock(); //set the start of the time
 while ((clock() - start) < delay ) // calculate the difference
-	continue;
+    continue;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //GETTING COLOR COMPONENTS VIA BIT SHIFTING

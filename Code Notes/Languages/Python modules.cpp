@@ -111,8 +111,8 @@ MyTime[2]   Day
 MyTime[3]   Hour
 MyTime[4]   Minute
 MyTime[5]   Second
-MyTime[6]   Day of Week	0 to 6 (0 is Monday)
-MyTime[7]   Day of year	1 to 366
+MyTime[6]   Day of Week    0 to 6 (0 is Monday)
+MyTime[7]   Day of year    1 to 366
 MyTime[8]   Daylight savings
 
 //Get time as formatted Weekday Month Day Time Year

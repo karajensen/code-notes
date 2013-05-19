@@ -1,11 +1,11 @@
 //===============================================================================
-//								= SKYBOX SHADER =
+//                                = SKYBOX SHADER =
 //===============================================================================
 //===============================================================================
 //FEATURES:
-//		- No lighting
-//		- No Z-buffering
-//		- Texturing
+//        - No lighting
+//        - No Z-buffering
+//        - Texturing
 //===============================================================================
 
 float4x4 WorldViewProjection;
@@ -21,16 +21,16 @@ sampler ColorSampler = sampler_state
 
 struct VS_OUTPUT
 {
-    float4 Pos 		: POSITION;
-    float2 UV		: TEXCOORD0;
+    float4 Pos         : POSITION;
+    float2 UV        : TEXCOORD0;
 };
 
 //===============================================================================
 //VERTEX SHADER
 //===============================================================================
 
-VS_OUTPUT VShader(	float4 inPos : POSITION,
-					float2 inUV : TEXCOORD0 )
+VS_OUTPUT VShader(    float4 inPos : POSITION,
+                    float2 inUV : TEXCOORD0 )
 {
     VS_OUTPUT output = (VS_OUTPUT)0;
     
@@ -48,14 +48,14 @@ VS_OUTPUT VShader(	float4 inPos : POSITION,
 //===============================================================================
 
 float4 PShader(VS_OUTPUT input) : COLOR0
-{	
-	//TEXTURE
-	float4 Texture = tex2D(ColorSampler, input.UV);
-	
-	//FINAL COLOR
-	float4 Color = Texture;
-	Color.a = Texture.a; //alpha
-	return Color;
+{    
+    //TEXTURE
+    float4 Texture = tex2D(ColorSampler, input.UV);
+    
+    //FINAL COLOR
+    float4 Color = Texture;
+    Color.a = Texture.a; //alpha
+    return Color;
 }
 
 //===============================================================================

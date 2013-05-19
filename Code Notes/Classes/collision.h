@@ -36,7 +36,7 @@ public:
     * Sets the colour the collision mesh appears
     * @param the colour to set in rgb from 0->1.0
     */
-	void SetColor(const D3DXVECTOR3& color){ m_colour = color; }
+    void SetColor(const D3DXVECTOR3& color){ m_colour = color; }
 
     /**
     * @return the center in world coordinates of the collision geometry
@@ -60,7 +60,7 @@ public:
     * @param the projection matrix
     * @param the view matrix
     */
-	void Draw(const Transform& projection, const Transform& view);
+    void Draw(const Transform& projection, const Transform& view);
 
     /**
     * Updates the collision geometry upon scale/rotate/translate
@@ -93,8 +93,8 @@ protected:
 
     bool m_draw;                ///< Whether to draw the geometry
     CollisionShape m_shape;     ///< Shape of the mesh
-	LPD3DXMESH m_mesh;          ///< Collision geometry mesh
-	D3DXVECTOR3 m_colour;       ///< Colour to render
+    LPD3DXMESH m_mesh;          ///< Collision geometry mesh
+    D3DXVECTOR3 m_colour;       ///< Colour to render
     const Transform& m_parent;  ///< Parent transform of the collision geometry
     Transform m_world;          ///< World transform of the collision geometry
     Transform m_localWorld;     ///< Local transform before any calculations of the geometry
@@ -142,9 +142,9 @@ public:
 
 private:
 
-	D3DXVECTOR3 m_localMinBounds;   ///< Untransformed min bounds of the cube
+    D3DXVECTOR3 m_localMinBounds;   ///< Untransformed min bounds of the cube
     D3DXVECTOR3 m_localMaxBounds;   ///< Untransformed max bounds of the cube
-	D3DXVECTOR3 m_minBounds;        ///< Transformed world min bounds of the cube
+    D3DXVECTOR3 m_minBounds;        ///< Transformed world min bounds of the cube
     D3DXVECTOR3 m_maxBounds;        ///< Transformed world ma bounds of the cube
 };
 
@@ -189,11 +189,11 @@ public:
     * @param the view matrix
     * @param the radius to override
     */
-	void DrawWithRadius(const Transform& projection, const Transform& view, float radius);
+    void DrawWithRadius(const Transform& projection, const Transform& view, float radius);
 
 private:
 
-	float m_radius;      ///< sphere radius with scaling applied
+    float m_radius;      ///< sphere radius with scaling applied
     float m_localRadius; ///< initial sphere radius
 };
 

@@ -576,9 +576,6 @@
     <None Include="Graphics Programming\HLSL Shaders\toon.fx">
       <Filter>Graphics Programming\HLSL Shaders</Filter>
     </None>
-    <None Include="Graphics Programming\HLSL Shaders\water.fx">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
     <None Include="Languages\Code Examples\Max - ConvexHull.ms">
       <Filter>Languages\Code Examples</Filter>
     </None>
@@ -612,6 +609,9 @@
     <None Include="Cheatsheet.txt" />
     <None Include="Hotkeys.txt" />
     <None Include="..\.gitignore" />
+    <None Include="Graphics Programming\HLSL Shaders\water.fx">
+      <Filter>Graphics Programming\HLSL Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\assimpmesh.h">

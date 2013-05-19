@@ -179,9 +179,9 @@ changes the world scene basis so the camera is at the origin
 ==============================================================================
 
 (Method only works with camera matrices do to orthogonality)
-matView._11 = right.x;	matView._12 = up.x;	  matView._13 = forward.x;
-matView._21 = right.y;	matView._22 = up.y;   matView._23 = forward.y;
-matView._31 = right.z;	matView._32 = up.z;   matView._33 = forward.z; 
+matView._11 = right.x;    matView._12 = up.x;      matView._13 = forward.x;
+matView._21 = right.y;    matView._22 = up.y;   matView._23 = forward.y;
+matView._31 = right.z;    matView._32 = up.z;   matView._33 = forward.z; 
 matView._41 = -D3DXVec3Dot(&pos,&right); 
 matView._42 = -D3DXVec3Dot(&pos,&up);
 matView._43 = -D3DXVec3Dot(&pos,&forward);
@@ -472,11 +472,11 @@ LINEAR INTERPOLATION: Line between two points used to approximate the curve
 SPHERICAL INTERPOLATION: Smoothly interplates between two values 
 BRUTE FORCE RENDERING: Rendering out entire mesh without any optimization
 
-1)	FAR PLANE CULLING
+1)    FAR PLANE CULLING
 2)  FRUSTUM CULLING
-3)	FRONT/BACKFACE CULLING
+3)    FRONT/BACKFACE CULLING
 4)  CLIPPING
-5)	OCCULSION CULLING
+5)    OCCULSION CULLING
 
 FARPLANE CULLING
 • Any objects past the farplane are culled
@@ -490,8 +490,8 @@ FRUSTUM CULLING
 
 FRONT/BACKFACE CULLING
 • Winding order of vertices indicates which way polygon is facing
-	- Clockwise (DirectX)
-	- Counter clockwise (OpenGL)
+    - Clockwise (DirectX)
+    - Counter clockwise (OpenGL)
 
 CLIPPING
 • Any screen space coordinates outside [–1,–1,0] to [1,1,1] culled
@@ -514,12 +514,12 @@ OCCLUSION CULLING
     - Well suited for recursive functions.
 
     PVS PIPELINE:
-	1) Subdivide scene into convex regions called sectors
-	2) Calculate what other sectors can be seen by each one
-	3) Render scene from viewer's position with a viewing frustum
-	4) If a portal is seen into another sector clip the frustum using 
+    1) Subdivide scene into convex regions called sectors
+    2) Calculate what other sectors can be seen by each one
+    3) Render scene from viewer's position with a viewing frustum
+    4) If a portal is seen into another sector clip the frustum using 
        the portal as a guide for dimensions
-	5) Connecting sector is rendered but using the new frustum
+    5) Connecting sector is rendered but using the new frustum
 
 //////////////////////////////////////////////////////////////////////////////  
 //PRIMITIVES
@@ -530,21 +530,23 @@ LINE LIST: ._________________.
 LINE STRIP: ._______._______.___._______._____.
 
 TRIANGLE LISTS:
-	 __
-	|\ | Triangle1 {1,2,3} Limitation is no sharing of vertices
-	|_\| Triangle2 {3,4,1} which increases vertex count
+     __
+    |\ | Triangle1 {1,2,3} Limitation is no sharing of vertices
+    |_\| Triangle2 {3,4,1} which increases vertex count
 
 TRIANGLE STRIPS: 
-	 ___
-	|\ |\  Specify first four points then one
-	|_\|_\ point for every new triangle in strip
+     ___
+    |\ |\  Specify first four points then one
+    |_\|_\ point for every new triangle in strip
 
 TRIANGLE FANS:
-	 ____
-	|\  /| All triangles connect
-	| \/ | to a common point
-	| /\ |
-	|/__\|
+     ____
+    |\  /| All triangles connect
+    | \/ | to a common point
+    | /\ |
+    |/__\|
 
 CONVEX POLYGONS: line between two points in polygon never crosses border 
 CONCAVE POLYGONS: line between two points in polygon can cross border
+
+*/////////////////////////////////////////////////////////////////////////////

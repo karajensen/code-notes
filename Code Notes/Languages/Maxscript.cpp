@@ -157,12 +157,12 @@ myArray = copy myArray2 #nomap
 qsort myArray mySortFunction
 fn mySortFunction &v1 &v2 =
 (
-	case of
-	(
-		(v1.z < v2.z) : -1
-		(v1.z > v2.z) : 1
-		default: 0
-	)
+    case of
+    (
+        (v1.z < v2.z) : -1
+        (v1.z > v2.z) : 1
+        default: 0
+    )
 )
 
 //DELETING ARRAYS

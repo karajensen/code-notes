@@ -14,8 +14,8 @@ string $sel[] = `ls -sl`;
 int $size = `size($sel)`;
 for($i = 0; $i < $size; $i++)
 {
-	select -add -hi $sel[$i];
-	select -d $sel[$i];
+    select -add -hi $sel[$i];
+    select -d $sel[$i];
 }
 string $selection[] = `ls -sl -tr`;
 select -cl;
@@ -35,7 +35,7 @@ for($i = 0; $i < size($toMove); $i++)
 {
     string $gName = $toMove[$i] + "g";
     group -em -name $gName -parent $sel[0]; //create an empty(-em) group, parent under parentName
-    parent $toMove[$i] $gName;	//parent obj1 to obj2	
+    parent $toMove[$i] $gName;    //parent obj1 to obj2    
 }
 
 //==========================================================================================
@@ -79,17 +79,17 @@ print(">>> " + $loc + " <<<");
 //==========================================================================================
 proc matrix ArrayToMatrix (float $values[])
 {
-	matrix $mat[4][4];
-	int $index = 0;
-	for(int $r = 0; $r < 4; $r++)
-	{
-		for(int $c = 0; $c < 4; $c++)
-		{
-			$mat[$r][$c] = $values[$index];
-			$index++;
-		}
-	}
-	return $mat;
+    matrix $mat[4][4];
+    int $index = 0;
+    for(int $r = 0; $r < 4; $r++)
+    {
+        for(int $c = 0; $c < 4; $c++)
+        {
+            $mat[$r][$c] = $values[$index];
+            $index++;
+        }
+    }
+    return $mat;
 }
 
 //==========================================================================================

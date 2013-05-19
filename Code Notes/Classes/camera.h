@@ -54,9 +54,9 @@ public:
 private:
 
     bool m_cameraNeedsUpdate;  ///< Whether the camera requires updating or not
-	D3DXVECTOR3 m_initialPos;  ///< Camera initial position in world space
-	D3DXVECTOR3 m_pos;         ///< Camera position in world space
-	D3DXVECTOR3 m_up;          ///< Camera up axis
+    D3DXVECTOR3 m_initialPos;  ///< Camera initial position in world space
+    D3DXVECTOR3 m_pos;         ///< Camera position in world space
+    D3DXVECTOR3 m_up;          ///< Camera up axis
     D3DXVECTOR3 m_forward;     ///< Camera forward axis
     D3DXVECTOR3 m_right;       ///< Camera right axis
     float m_yaw;               ///< Radian amount of yaw

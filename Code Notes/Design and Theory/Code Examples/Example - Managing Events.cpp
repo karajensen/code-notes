@@ -5,12 +5,12 @@
 
 struct message
 {
-	long type; //event type
-	long time; //dispatch time
-	long delay; //how long to keep message before sending
-	OBJHANDLE sender; //if observer needs to know what sent message
-	OBJHANDLE receiver; //if sender wants a particular observer to recieve
-	void * data;
+    long type; //event type
+    long time; //dispatch time
+    long delay; //how long to keep message before sending
+    OBJHANDLE sender; //if observer needs to know what sent message
+    OBJHANDLE receiver; //if sender wants a particular observer to recieve
+    void * data;
 };
 
 OBJHANDLE
@@ -25,33 +25,33 @@ void * data
 //UNION MESSAGE EXAMPLE
 struct InputEvent
 {
-	enum EType
-	{
-		MOUSE, KEYBOARD, JOYSTICK
-	} Type;
-	
-	union UEvent
-	{
-		struct SMouse
-		{
-			bool buttonDown[3];
-			bool buttonUp[3];
+    enum EType
+    {
+        MOUSE, KEYBOARD, JOYSTICK
+    } Type;
+    
+    union UEvent
+    {
+        struct SMouse
+        {
+            bool buttonDown[3];
+            bool buttonUp[3];
 
-		} Mouse;
+        } Mouse;
 
-		struct SJoystick
-		{
-			float Axis[8];
-			bool Buttons[32];
-			char Hats[4];
-		} JoyStick;
+        struct SJoystick
+        {
+            float Axis[8];
+            bool Buttons[32];
+            char Hats[4];
+        } JoyStick;
 
-		struct SKeyboard
-		{
-			bool Keys[255];
-		} Keyboard;
+        struct SKeyboard
+        {
+            bool Keys[255];
+        } Keyboard;
 
-	} Event;
+    } Event;
 };
 
 InputEvent msg;
@@ -65,7 +65,7 @@ msg.Event.Mouse.buttonDown[0] = true; //change values depending on type
 //DESIGN PATTERN: MEDIATOR
 
 std::map<Message type, Observers subscribed to Message type>
-std::map<unsigned long, std::list<GameEntity*>>	  //observers are list of pointers
+std::map<unsigned long, std::list<GameEntity*>>   //observers are list of pointers
 std::map<unsigned long, std::list<unsigned long>> //observers are list of object IDS
 
 //A Simple pointer can be dangerous if object is deleted; use smart pointer or object int ID
@@ -83,7 +83,7 @@ std::map<unsigned long, std::list<unsigned long>> //observers are list of object
 template <typename E>
 class GameEntity
 {
-	public:
-		virtual bool OnMessage(E & msg) = 0;
-		//Other methods game entities may need to share
+    public:
+        virtual bool OnMessage(E & msg) = 0;
+        //Other methods game entities may need to share
 };

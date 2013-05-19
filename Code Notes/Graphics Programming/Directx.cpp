@@ -132,7 +132,7 @@ if(!SUCCEEDED(hr){ /*failed*/ }
 
 //Create the texture
 hr = D3DXCreateTexture(d3ddev, 1024, 1024, 1, D3DUSAGE_RENDERTARGET, 
-					   D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &RenTarTexture)
+                       D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &RenTarTexture)
 if(!SUCCEEDED(hr){ /*failed*/ }
 
 //Get the default surface created for the texture
@@ -173,9 +173,9 @@ ID3DXBuffer* errorlog = NULL; //error buffer
 if(FAILED(D3DXCreateEffectFromFile(d3ddev,filename,0,0,
    D3DXSHADER_ENABLE_BACKWARDS_COMPATIBILITY,0, &Shader, &errorlog)))
 {
-	if (errorlog)//if there is an error
-		MessageBox(NULL, (char*)errorlog->GetBufferPointer(), "ERROR", MB_OK);
-	else
+    if (errorlog)//if there is an error
+        MessageBox(NULL, (char*)errorlog->GetBufferPointer(), "ERROR", MB_OK);
+    else
         MessageBox(NULL, "failed", "ERROR", MB_OK);
 }
 
@@ -183,7 +183,7 @@ if(FAILED(D3DXCreateEffectFromFile(d3ddev,filename,0,0,
 //DIRECTX SEND INFO TO A SHADER
 ////////////////////////////////////////////////////////////////////////////// 
 
-LPD3DXEFFECT pEffect;	
+LPD3DXEFFECT pEffect;   
 pEffect->SetTechnique("MAIN");
 pEffect->SetFloatArray("CameraPos", &(Camera->GetPos().x), 3);
 pEffect->SetMatrix("WorldInvTrans", &wit);
@@ -195,9 +195,9 @@ UINT nPasses = 0;
 pEffect->Begin(&nPasses, 0);
 for(UINT iPass = 0; iPass<nPasses; iPass++)
 {
-	pEffect->BeginPass(iPass);
-		m_pMesh->DrawSubset(0);
-	pEffect->EndPass();
+    pEffect->BeginPass(iPass);
+        m_pMesh->DrawSubset(0);
+    pEffect->EndPass();
 }
 pEffect->End();
 

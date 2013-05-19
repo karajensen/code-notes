@@ -87,21 +87,21 @@ proc SolidShatterSpecialGroup()
 //CHECK WINDOW EXISTS
 if(`window -exists SpecialShatter`)
 {
-	deleteUI -window SpecialShatter;	//deletes window if already exists in scene
+    deleteUI -window SpecialShatter;    //deletes window if already exists in scene
 }
 
 //CREATE WINDOW
-string $myUI = `window	-title "SpecialShatter"
-						-wh	128 256			//width/height
-						SpecialShatter`;			//name of window element
+string $myUI = `window    -title "SpecialShatter"
+                        -wh    128 256            //width/height
+                        SpecialShatter`;            //name of window element
 
 //CREATE WINDOW LAYOUT
 rowColumnLayout -numberOfColumns 1
-				-cw 1 60;			//1st column is 16 pixels wide
+                -cw 1 60;            //1st column is 16 pixels wide
 
 /*Row1*/ intField -v 3 "myIntField";
-/*Row1*/ button	-label "Surface" -c ("SurfaceShatterSpecial(" + `intField -query -v "myIntField"` +")");	
-/*Row2*/ button -label "Solid" -c ("SolidShatterSpecial(" + `intField -query -v "myIntField"` +")");	
+/*Row1*/ button    -label "Surface" -c ("SurfaceShatterSpecial(" + `intField -query -v "myIntField"` +")");    
+/*Row2*/ button -label "Solid" -c ("SolidShatterSpecial(" + `intField -query -v "myIntField"` +")");    
 /*Row2*/ button -label "Solid Group" -c "SolidShatterSpecialGroup()";
 
 //SHOW THE WINDOW

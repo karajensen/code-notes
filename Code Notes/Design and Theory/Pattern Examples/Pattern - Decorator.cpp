@@ -4,7 +4,7 @@
 /*-------------------------------------------------------------------------------------------
 TYPE: Structural
 USE: Given a set of classes, allows them to be mixed and matched without each combination
-	 having been written in advance as a subclass
+     having been written in advance as a subclass
 -------------------------------------------------------------------------------------------*/
 
 #include <iostream>
@@ -28,7 +28,7 @@ class DerivedObject: public BaseObject
 {
 public:
     virtual ~DerivedObject() { cout << "DerivedObject Destructor" << endl; }
-    virtual void Draw()		 { cout << "D"; }
+    virtual void Draw()         { cout << "D"; }
 };
 
 class DecoraterObject: public BaseObject
@@ -37,8 +37,8 @@ private:
     BaseObject* p_inner;
 public:
     DecoraterObject(BaseObject* inner) { p_inner = inner; }
-    virtual ~DecoraterObject()		   { delete p_inner; }
-    virtual void Draw()				   { p_inner->Draw(); }
+    virtual ~DecoraterObject()           { delete p_inner; }
+    virtual void Draw()                   { p_inner->Draw(); }
 };
 //----------------------------------------------------------------
 //DERIVED OBJECT ADD-ONS
@@ -72,31 +72,31 @@ public:
 //----------------------------------------------------------------
 int main() 
 { 
-	//CREATING COMBINATIONS OF OBJECTS
-	//Memory is allocated for each pointer before any constructors are called
-	//Contructors are called from right to left, returning a pointer to the new object
-	//Each contructor takes the next pointer returned and stores it in it's own decorator object as a base class pointer
-	//Creation order can be variable
-	BaseObject* x = new X(new DerivedObject);
-	BaseObject* xy = new Y(new X(new DerivedObject));
-	BaseObject* xyz = new X(new Z(new Y(new DerivedObject)));
+    //CREATING COMBINATIONS OF OBJECTS
+    //Memory is allocated for each pointer before any constructors are called
+    //Contructors are called from right to left, returning a pointer to the new object
+    //Each contructor takes the next pointer returned and stores it in it's own decorator object as a base class pointer
+    //Creation order can be variable
+    BaseObject* x = new X(new DerivedObject);
+    BaseObject* xy = new Y(new X(new DerivedObject));
+    BaseObject* xyz = new X(new Z(new Y(new DerivedObject)));
 
-	//CALL OBJECT METHODS
-	//Will call in a chain all the draw methods for all object add-ons in order of right->left creation
-	x->Draw();
-	cout << endl;
-	xy->Draw();
-	cout << endl;
-	xyz->Draw(); 
-	cout << endl << endl;
+    //CALL OBJECT METHODS
+    //Will call in a chain all the draw methods for all object add-ons in order of right->left creation
+    x->Draw();
+    cout << endl;
+    xy->Draw();
+    cout << endl;
+    xyz->Draw(); 
+    cout << endl << endl;
 
-	//DELETE OBJECTS
-	delete x;
-	cout << endl;
-	delete xy;
-	cout << endl;
-	delete xyz;
-	cout << endl;
+    //DELETE OBJECTS
+    delete x;
+    cout << endl;
+    delete xy;
+    cout << endl;
+    delete xyz;
+    cout << endl;
 
   cin.get();
 }

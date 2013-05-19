@@ -10,21 +10,21 @@ Melscript      script executed      all data/scene-series of connected nodes
 //EXPRESSION EDITOR: Code run at particluar events
 //**********************************************************************
 //NOTE: All proc/vars made in script editor become automatically global
-//		To fix, enclose body in {}, procs can't be helped
-//		Pathnames can't have spaces in them
+//        To fix, enclose body in {}, procs can't be helped
+//        Pathnames can't have spaces in them
 //**********************************************************************
 
-\n		//newline
-\\		//slash
-\t		//tab
-\r		//return
-$		//variable
-%		//modulus
+\n        //newline
+\\        //slash
+\t        //tab
+\r        //return
+$        //variable
+%        //modulus
 
 
 //EXECUTING
-currentTime -query;			//command executed but nothing returned
-`currentTime -query`;		//command executed and results returned
+currentTime -query;            //command executed but nothing returned
+`currentTime -query`;        //command executed and results returned
 eval("currentTime -query"); //command as string executed and results returned
 
 //LOADING SCRIPTS
@@ -34,8 +34,8 @@ source myscript.mel;
 help sphere;  //prints flags avaliable to command
 
 //GENERAL FLAGS
--ch		  //construction history on/off
--query	  //query mode
+-ch          //construction history on/off
+-query      //query mode
 -fullPath //name of node with namespaces
 
 //PRINT/TRACE
@@ -43,11 +43,11 @@ print("Hello world\n" + $myInt);
 print($myInt);
 print($myString);
 print($myStringArray);
-trace($myInt);	//prints filename/line number of script issued the call
+trace($myInt);    //prints filename/line number of script issued the call
 
 //ERROR CONTROL
 warning -showLineNumber true "warning message";
-error -showLineNumber true "error message";	//execute of script stops and exception is called
+error -showLineNumber true "error message";    //execute of script stops and exception is called
 
 //EXISTS
 if(`exists myscript`){...} //for myscript.mel;
@@ -56,7 +56,7 @@ if(attributeExists("attrName","ObjName")){...}
 
 //DETERMINING TYPES
 whatIs "$myInt"; //returns string "int variable"
-whatIs sphere;	 //returns string "command"
+whatIs sphere;     //returns string "command"
 whatIs myProc;
 whatIs myscript;
 objType "$mynode";
@@ -65,7 +65,7 @@ objType "$mynode";
 playbackOptions -view "all"; //view all viewports
 playbackOptions -view "active"; //view active viewport
 upAxis -q -axis;  //returns current up axis
-setUpAxis "z";	  //set the current up axis
+setUpAxis "z";      //set the current up axis
 
 //START EXTERNAL PROGRAM
 system("start pathname.exe");
@@ -91,10 +91,10 @@ $score = ($a > 1) ? 10 : 20;
 //SWITCH
 switch($a)
 {
-	case 1 :
-		break;
-	default:
-		break;
+    case 1 :
+        break;
+    default:
+        break;
 }
 
 //-------------------------------------------------------------------------------
@@ -129,8 +129,8 @@ proc int[] myProc(float $myfloatArray[]) { return $myIntArray; }
 
 
 //PREDEFINED VARIABLES
-frame	//integer storing current frame number
-time	//no of seconds (default settings) past since playback
+frame    //integer storing current frame number
+time    //no of seconds (default settings) past since playback
 deg/rad //used after number only
 
 //CONVERSIONS
@@ -147,9 +147,9 @@ int $myInt = $myFloat;
 
 global int $myInt; //Initialise at top of code
 {
-	global int $myInt;	  //Reinitialize to use in any blocks of code; once reinitialised code is skipped
-	global int $myInt=0;  //Assignment during reinitialising only occurs when proc is compiled/changed
-	$myInt = 0;		      //If not reinitialized Maya creates new local variable of type int
+    global int $myInt;      //Reinitialize to use in any blocks of code; once reinitialised code is skipped
+    global int $myInt=0;  //Assignment during reinitialising only occurs when proc is compiled/changed
+    $myInt = 0;              //If not reinitialized Maya creates new local variable of type int
 }
 
 string $envVars[] = `env`; //gives list of all current global variables
@@ -185,10 +185,10 @@ $myIntArray[2] = 10;  //if index used doesn't exist, resizes adds 0s up until ne
 int $tempArray[];
 for($i = 0; $i < size($myIntArray); $i++)
 {
-	if($i == 2) //copy all but a particular value
-		continue;
-	else
-		$tempArray[size($tempArray)] = $myIntArray[$i];
+    if($i == 2) //copy all but a particular value
+        continue;
+    else
+        $tempArray[size($tempArray)] = $myIntArray[$i];
 }
 clear($myIntArray); //removes all values from array
 $myIntArray = $tempArray;
@@ -199,11 +199,11 @@ $myIntArray = $tempArray;
 //not dynamic: needs values to initialise and can't be resized
 //only hold float values and needs dimensions to be set
 //To get object's matrices, see Xform
-matrix $myMatrix[$rows][$cols] = <<	0.0, 1.0, 0.0 ;    
-									1.0, 1.0, 1.0 ;
-									0.0, 0.0, 1.0 >>;
-$m + $n		//matrix addition
-$m * $n		//matrix multiplication (make sure they conform!)
+matrix $myMatrix[$rows][$cols] = <<    0.0, 1.0, 0.0 ;    
+                                    1.0, 1.0, 1.0 ;
+                                    0.0, 0.0, 1.0 >>;
+$m + $n        //matrix addition
+$m * $n        //matrix multiplication (make sure they conform!)
 
 
 //-----------------------------------------------------------------
@@ -227,8 +227,8 @@ angle($vec1,$vec2);
 angleBetween -v1 1 0 0 -v2 0 1 0;
 
 //MAGNITUDE OF VECTOR
-float $myfloat = $myVec	//gives magniture of vector
-mag(vector)				//gives magniture of vector
+float $myfloat = $myVec    //gives magniture of vector
+mag(vector)                //gives magniture of vector
 
 //DOT PRODUCT
 $dot = $myVec1 * $myVec2;
@@ -244,12 +244,12 @@ cross($myVec1,$myVec2);
 //STRINGS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-string $myString;	//assigned default value of ""
+string $myString;    //assigned default value of ""
 string $myStringArray[];
 int $NoOfCharas = size($myString);
 
-substituteAllString($myString,"a","b");	//in myString replace all a with b, returns string
-match "[0-9]+" $myString;	//finds all numbers in myString and returns them as a string (if none returns "")
+substituteAllString($myString,"a","b");    //in myString replace all a with b, returns string
+match "[0-9]+" $myString;    //finds all numbers in myString and returns them as a string (if none returns "")
 
 //----------------------------------------------------------------------
 //SPLITTING A STRING
@@ -285,9 +285,9 @@ match "(abc)+" "123abcabc456"; //returns abcabc
 
 //SETTING/GETTING RENDERER
 //Types: "mayaSoftware" "mayaHardware" "mentalRay"
-defaultRenderGlobals.currentRenderer;								
-string &renderer = `getAttr defaultRenderGlobals.currentRenderer`;			  //store current renderer
-setAttr defaultRenderGlobals.currentRenderer -type "string" "mayaHardware";	  //change renderer
+defaultRenderGlobals.currentRenderer;                                
+string &renderer = `getAttr defaultRenderGlobals.currentRenderer`;              //store current renderer
+setAttr defaultRenderGlobals.currentRenderer -type "string" "mayaHardware";      //change renderer
 
 //HYPERSHADE
 hyperShade -assign initialShadingGroup; //assign default lambert shader to selected

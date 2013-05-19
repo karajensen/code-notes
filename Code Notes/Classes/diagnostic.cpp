@@ -152,9 +152,9 @@ void Diagnostic::UpdateText(const std::string& id, Diagnostic::Colour color, cha
 
     char buffer[VARIADIC_BUFFER_SIZE];
     va_list arguments;
-	va_start(arguments, text); //Parse the string for variables
-	vsprintf_s(buffer, text, arguments); //Convert argument symbols to text
-	va_end(arguments); //Store results in text
+    va_start(arguments, text); //Parse the string for variables
+    vsprintf_s(buffer, text, arguments); //Convert argument symbols to text
+    va_end(arguments); //Store results in text
     GenerateText(id, buffer);
 }
 

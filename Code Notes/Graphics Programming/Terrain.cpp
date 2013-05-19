@@ -57,3 +57,5 @@ PIXEL SHADER:
 ON UPDATE:
 • Regions of each level/ring is updated as the camera moves
 • Elevation/Normal textures written to using a pixel shader
+
+*/////////////////////////////////////////////////////////////////////////////
