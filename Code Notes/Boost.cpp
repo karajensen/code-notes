@@ -80,6 +80,9 @@ boost::filesystem::copy_file("CopyFromPath.txt","CopyToPath.txt")
 // Removing files
 filesystem::remove(prevPath);
 
+// Create directory
+filesystem::create_directory(dir)
+
 // Renaming files
 filesystem::rename(filePath,prevPath);
 
