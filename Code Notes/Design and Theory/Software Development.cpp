@@ -57,6 +57,9 @@ build/
 # ignore doc/notes.txt, but not doc/server/arch.txt
 doc/*.txt
 
+IGNORING FILES ONCE PUSHED
+git rm -r --cached file.txt
+
 LIST ALL BRANCHES
 git branch
 
