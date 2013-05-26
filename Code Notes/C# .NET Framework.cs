@@ -121,7 +121,7 @@ Object.ReferenceEquals(Object o1, Object o2)
 obj.GetHashCode() [virtual]
 
 //returns type of the object called on
-obj.GetType()
+System.Type type = obj.GetType()
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //WINDOWS FORMS
@@ -158,3 +158,17 @@ foreach (int num in numQuery)
 {
     /*use the number*/
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//REFLECTION
+////////////////////////////////////////////////////////////////////////////////////////////
+
+//USEFUL FOR:
+//• Accessing attributes of a class/method
+//• Examining and instantiating types in an assembly
+//• Building new types at runtime (Reflection.Emit)
+//• Creating compilers
+
+//DLL INFORMATION
+System.Reflection.Assembly assem = System.Reflection.Assembly.Load("myDLL.dll");
+assem.GetName() //get name, version information for dll

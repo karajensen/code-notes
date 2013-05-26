@@ -2,6 +2,7 @@
 //LAMBDAS
 //////////////////////////////////////////////////////////////////////////////
 //• Can't be templated
+//• Can't use auto with binding, must use std::function type
 
 //LAMBDA SYNTAX
 auto myLamda = [](int x) { return 3*2; } //if only one line, can omit trailing return
@@ -18,12 +19,6 @@ auto myLambda = [myVar](int x){ myVar += 10; } //by value
 auto myLambda = [&](int x){ myVar += 10; } //use all vars in scope by ref
 auto myLambda = [=](int x){ myVar += 10; } //use all vars in scope by val
 auto myLambda = [&](int x){ MyClassFunction(x); m_myMember += 1; }
-
-//CAPTURING CLASS OBJECT
-typedef std::function<void(void)> MyFn;
-MyFn fn = std::bind(&MyClass::MyMethod, this);
-MyFn fn = std::bind(&MyClass::MyMethod, myObjPointer);
-fn() // object is bound with method, can also bind any other arugments in MyMethod
 
 //////////////////////////////////////////////////////////////////////////////
 //BINDING FUNCTIONS
@@ -49,10 +44,16 @@ partialFn(1,2.0); //only requires two arguments, middle is auto given
 auto orderChangedFn = std::bind(&MyFunction, _3, _1, _2); //rearranges order of arguments
 orderChangedFn(1,10.0,2.0); //becomes MyFunction(2.0,1,10.0)
 
-//BINDING MEMBER FUNCTIONS
-MyClass obj; //where void MyClass::MyMethod(int x);
-auto memberFn = std::bind(&MyClass::MyMethod, _1, _2); //_1 is always object to work on
-memberFn(&obj, 1);
+//BINDING CLASS FUNCTIONS
+typedef std::function<void(int)> MyFn;
+auto memberFn = std::bind(&MyClass::MyMethod, _1, _2); //_1 is always object
+memberFn(&myObject, 2);
+
+//BINDING CLASS OBJECT TO CLASS FUNCTION
+typedef std::function<void(int)> MyFn;
+auto memberFn = std::bind(&MyClass::MyMethod, this, _1);
+auto memberFn = std::bind(&MyClass::MyMethod, &myObject, _1);
+memberFn(2) // object is bound with method
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -81,7 +82,6 @@ public:
 
 m_action = &Test::Draw;
 m_actionconst = &Test::DrawConst;
-
 
 //////////////////////////////////////////////////////////////////////////////
 //FUNCTORS

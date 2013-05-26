@@ -3,6 +3,32 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 /*
 
+.NET LANGUAGES: C#, VB.NET, C++/CLI
+
+CLI: COMMON LANGUAGE INFRASTUCTURE
+.NET Framework is a version of this; contains CLR and BCL
+
+CLR: COMMON LANGUAGE RUNTIME
+Includes Virtual Execution System (VES), Just in Time Compiler (JIT), Garbage Collector
+
+BCL: BASE CLASS LIBRARY
+Set of .NET classes used by .NET Languages
+
+JIT: JUST-IN-TIME COMPILER
+Source code is compiled into an intermediate language (MSIL), 
+at runtime this is compiled into native code
+
+ASSEMBLY/MODULES
+• Exe/dll that contain metadata that describe internal version number/data details
+• Only loaded if required. Can use two versions of same assembly in single application
+• Share assemblies between applications using Global Assembly Cache
+• Assemblies must be strong named; guaranteed uniqueness
+• Assemblies contain modules. Modules contain classes.
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//VARIABLES
+////////////////////////////////////////////////////////////////////////////////////////////
+
 VALUE-TYPE VARIABLES
 • Doesn't use new to create new objects
 • may exist on the stack, register or heap
@@ -67,6 +93,11 @@ CLASS VISIBILITY
 • Interface cannot be more visible than its base interface
 • Virtual/Abstract methods cannot be private
 • Virtual/Abstract methods must have same visibility between Base/Derived classes
+
+INDEXER/PROPERTY DIFFERENCES
+• Indexer accessed through index and [], Properties accessed as though member variable
+• Indexer cannot be static, Properties can be static
+• Indexer passes in index value, Properties don't pass in anything, both have 'value' keyword
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //INHERITANCE
@@ -207,5 +238,23 @@ WEAK REFERENCES
 • Short Weak Reference: Tells when object is unreachable or fully removed by GC
 • Long Weak Reference: Tells when object is fully removed by GC
 
+////////////////////////////////////////////////////////////////////////////////////////////
+//UNSAFE CODE/POINTERS
+////////////////////////////////////////////////////////////////////////////////////////////
+
+POINTERS
+• Works on sbyte, byte, short, ushort, int, uint, long, ulong, char, float, double, decimal, bool
+• Works on void, enum and structs with value-types only
+• Cannot point to reference as garbage collector doesn't keep track of pointers
+• Do not inherit from System.Object- No conversions exist between pointers/object
+• Boxing/Unboxing not supported
+
+UNSAFE CODE
+• Methods, types, and code blocks can be defined as unsafe
+• Can increase performance by removing bounds/runtime checks
+• Required when calling native functions that require pointers
+• /unsafe must be set to compile
+
 
 *///////////////////////////////////////////////////////////////////////////////////////////
+

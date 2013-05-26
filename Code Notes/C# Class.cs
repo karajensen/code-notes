@@ -1,22 +1,4 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
-//C# CLASS/INHERITANCE
-////////////////////////////////////////////////////////////////////////////////////////////
-
-//VARIABLE MODIFIERS
-public readonly int myConst; ///< Const, initialised once at runtime. Can be bypassed
-public const int myConst = 1; ///< Const, initialised at compile time
-public static int myStaticInt; ///< static class/struct variable
-public int myInt; ///< Accessible everywhere
-protected int myInt; ///< Accessible only to derived classes
-protected internal in myint; ///< Accessible to derived classes/classes inside assembly(exe/dll)
-private int myInt; ///< Accessible only inside the class/struct
-internal int myInt; ///< Accessible only inside the assembly(exe/dll)
-
-//NAMESPACES
-namespace {} //BAD: Namespaces can't be anonymous
-namespace ns { myInt = 2; } //BAD: Namespaces can't contain vars/functions
-
-////////////////////////////////////////////////////////////////////////////////////////////
 //METHODS
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -33,12 +15,6 @@ public void MyMethod(string myString = "hello");
 //SPECIFYING ARGUMENT NAME
 obj.MyMethod(myFloat: 2.0f);
 public void MyMethod(float myFloat);
-
-//CONDITIONAL CLASS METHOD
-//only used if DEFINED is defined; compiler will remove any method
-//calls if not defined. Useful for doing diagnostics only in debug
-[System.Diagnostics.Conditional("DEFINED")]
-public void myConditionalMethod(){}
         
 //OPERATOR OVERLOAD ++
 public static MyClass operator++(MyClass c)
@@ -64,6 +40,7 @@ public void MyMethod(string format, params object[] arg);
 //PROPERTIES
 ////////////////////////////////////////////////////////////////////////////////////////////
 //Method that doesn't use () when called
+//No set method auto makes it readonly
 
 //GETTER/SETTER PROPERTIES
 public int MyInt
@@ -72,10 +49,19 @@ public int MyInt
     set { myInt = value; }
 }
 
+//INTERFACE PROPERTIES
+//no body; indicates whether read/write only
+int MyInt
+{
+    get;
+    set;
+}
+
 //INDEXER PROPERTY (OVERLOADING [])
 public string this[int index]
 {
     get { return myStringArray[index]; }
+    set { myStringArray[index] = value; }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -286,3 +272,109 @@ public sealed class Derived : Base
     //Can seal individual methods to prevent them from being further overridden
     public sealed override void MyVirtualMethod(){}
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//ATTRIBUTES
+////////////////////////////////////////////////////////////////////////////////////////////
+
+//CREATING CUSTOM ATTRIBUTES
+[System.AttributeUsage(System.AttributeTargets.Class|System.AttributeTargets.Struct, AllowMultiple = true)]
+public class MyAttribute : System.Attribute
+{
+    private string type; //positional parameter
+    public double version; //named parameter, can be explicitly set
+
+    public MyAttribute(string type)
+    {
+        this.type = type;
+        version = 1.0;
+    }
+    public MyAttrMethod(){}
+}
+[MyAttribute("One", version = 1.1)] //explicitly state a named parameter
+[MyAttribute("Two")] //allowMultiple usage
+class MyClass {}
+
+//ACCESSING ATTRIBUTES THROUGH REFLECTION
+[MyAttribute("Three")]
+public class MyClass {}
+
+System.Attribute[] attributes = System.Attribute.GetCustomAttributes(typeof(MyClass));
+foreach (System.Attribute attr in attributes)
+{
+    if (attr is MyClass)
+    {
+        MyClass myClassAttr = (MyClass)attr;
+        myClassAttr.MyAttrMethod();
+    }
+}
+
+//SERIALIZABLE ATTRIBUTE
+[System.Serializable]
+public class SampleClass {}
+
+//CONDITIONAL ATTRIBUTE
+//only used if DEFINED is defined; compiler will remove any method
+//calls if not defined. Useful for doing diagnostics only in debug
+[System.Diagnostics.Conditional("DEFINED1"), System.Diagnostics.Conditional("DEFINED2")]
+public void myConditionalMethod(){}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//GENERICS
+////////////////////////////////////////////////////////////////////////////////////////////
+
+//TEMPLATED CLASS
+public class MyTemplateClass<T>
+{
+    private T myObj;
+    public MyTemplateClass(T obj)
+    {
+        myObj = obj;
+    }
+
+    //TEMPLATED METHODS
+    public void MyTemplateMethod<S>()
+        where S : MyBaseClass
+    { 
+        var Def = default(S); 
+    }
+}
+
+//CONSTRAIN CONSTRUCTOR
+//can only create instances of class with no arguments in contructor
+public class MyTemplateClass<T> where T : new() {}
+
+//CONSTRAIN INHERITANCE
+//T must have base or be of type MyBaseClass/IMyBaseClass
+public class MyTemplateClass<T> where T : MyBaseClass {}
+public class MyTemplateClass<T> where T : IMyBaseClass {}
+
+//CONSTRAIN REFERENCE
+//T must be a reference-type variable
+//allows T to be tested against null as value-types don't have null
+public class MyTemplateClass<T> where T : class {}
+
+//CONSTRAIN VALUE
+//T must be a value-type variable
+public class MyTemplateClass<T> where T : struct {}
+
+//MULTIPLE CONSTRAINTS
+//new() must be last, class/struct must be first
+public class MyTemplateClass<T> where T : class, MyBaseClass, MyOtherBaseClass, new() {}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//GENERICS INHERITANCE
+////////////////////////////////////////////////////////////////////////////////////////////
+
+//BASE CLASS
+public class Base<T>
+{
+    public Base(){}
+};
+
+//DERIVED CLASS
+class D<T> : Base<T> //Type T is passed into Base
+{
+    public D() : base() {}
+};
+

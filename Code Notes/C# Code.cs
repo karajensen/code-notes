@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
-//C#
+//VARIABLESs
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 //VALUE-TYPE VARIABLES
@@ -44,7 +44,37 @@ int myInt2 = (int)myint; //requires cast to convert
 int myInt = 2;  { int myInt = 1; } //if in parent scope cannot be redeclared (okay in C++)
 { int myInt = 2; }{ int myInt = 1; } //okay
 
+//OVERFLOW CHECKING
+checked(a+b) //checks expression for overflow and throws System.OverflowException
+checked{ /*do some calculations*/ }
+unchecked(a+b) //don't check expression
+
+//NOTATION
+uint = 0xFF00FF00; //hex notation
+var myVar = 1.0E-20f; //scientific notation
+
+//NAMESPACES
+namespace {} //BAD: Namespaces can't be anonymous
+namespace ns { myInt = 2; } //BAD: Namespaces can't contain vars/functions
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//VARIABLE MODIFIERS
+////////////////////////////////////////////////////////////////////////////////////////////
+
+public readonly int myConst; // Const, initialised once at runtime. Can be bypassed
+public const int myConst = 1; // Const, initialised at compile time
+public static int myStaticInt; // static class/struct variable
+public int myInt; // Accessible everywhere
+protected int myInt; // Accessible only to derived classes
+protected internal in myint; // Accessible to derived classes/classes inside assembly(exe/dll)
+private int myInt; // Accessible only inside the class/struct
+internal int myInt; // Accessible only inside the assembly(exe/dll)
+
+////////////////////////////////////////////////////////////////////////////////////////////
 //CONVERSIONS
+////////////////////////////////////////////////////////////////////////////////////////////
+
+//CONVERTING
 int myInt = 2.0/4.0; //Downcasting: does not implicitly convert due to range not fitting into int
 int myDouble = 1/2;  //Upcasting: implicitly converts due to range fitting into double
 int myInt = int(myDouble);
@@ -55,14 +85,10 @@ int x = Convert.ToInt32("10")
 double myDouble = double.Parse("10.0"); //throws FormatException if failed
 double.TryParse("10.0", out value) //converts string to doubles, returns false if failed
 
-//OVERFLOW CHECKING
-checked(a+b) //checks expression for overflow and throws System.OverflowException
-checked{ /*do some calculations*/ }
-unchecked(a+b) //don't check expression
-
-//NOTATION
-uint = 0xFF00FF00; //hex notation
-var myVar = 1.0E-20f; //scientific notation
+//GETTING TYPES
+typeof(myInt) //return int
+typeof(myObject) //return class
+System.Type type = obj.GetType()
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //WEAK REFERENCES
@@ -152,69 +178,45 @@ foreach (str in myStringArray)
 foreach (int value in array)
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-//GENERICS
+//UNSAFE CODE/POINTERS
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-//TEMPLATED CLASS
-public class MyTemplateClass<T>
-{
-    private T myObj;
-    public MyTemplateClass(T obj)
-    {
-        myObj = obj;
-    }
+int* myPointer 
+int** myPointer
+int*[] myPointer //array of pointers to ints
+char* myPointer //pointer to a char
+void* myPointer
 
-    //TEMPLATED METHODS
-    public void MyTemplateMethod<S>()
-        where S : MyBaseClass
-    { 
-        var Def = default(S); 
-    }
+//POINTER TO STRUCTS
+MyStruct* myPointer;
+myPointer->member;
+
+//UNSAFE CODE
+//Pointers can only be used in this
+unsafe static void MyUnsafeFn(int* p)
+{
+    *p = 2; //dereferencing
+
+    //FIXING VARIABLES
+    //prevents garbage collector from changing address of a variable
+    //can only use in unsafe context
+    MyClass obj = new MyClass();
+    fixed (int* x = &obj.x)
+    {
+        *x = 1;
+    }  
 }
 
-//CONSTRAIN CONSTRUCTOR
-//can only create instances of class with no arguments in contructor
-public class MyTemplateClass<T> where T : new() {}
-
-//CONSTRAIN INHERITANCE
-//T must have base or be of type MyBaseClass/IMyBaseClass
-public class MyTemplateClass<T> where T : MyBaseClass {}
-public class MyTemplateClass<T> where T : IMyBaseClass {}
-
-//CONSTRAIN REFERENCE
-//T must be a reference-type variable
-//allows T to be tested against null as value-types don't have null
-public class MyTemplateClass<T> where T : class {}
-
-//CONSTRAIN VALUE
-//T must be a value-type variable
-public class MyTemplateClass<T> where T : struct {}
-
-//MULTIPLE CONSTRAINTS
-//new() must be last, class/struct must be first
-public class MyTemplateClass<T> where T : class, MyBaseClass, MyOtherBaseClass, new() {}
-
-////////////////////////////////////////////////////////////////////////////////////////////
-//GENERICS INHERITANCE
-////////////////////////////////////////////////////////////////////////////////////////////
-
-//BASE CLASS
-public class Base<T>
-{
-    public Base(){}
-};
-
-//DERIVED CLASS
-class D<T> : Base<T> //Type T is passed into Base
-{
-    public D() : base() {}
-};
+int myInt = 1;
+MyUnsafeFn(&myInt); //obtain address
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //PREPROCESSOR
 ////////////////////////////////////////////////////////////////////////////////////////////
+
 //must be defined before any other code
 //can't be used to define a variable/expression
+
 #define DEFINED
 #undef DEFINED
 #if DEBUG

@@ -2,26 +2,7 @@
 //C++/CLI
 //////////////////////////////////////////////////////////////////////////////
 
-/*****************************************************************************
-.NET LANGUAGES: C#, VB.NET, C++/CLI
-
-CLI: COMMON LANGUAGE INFRASTUCTURE
-.NET Framework is a version of this; contains CLR and BCL
-
-CLR: COMMON LANGUAGE RUNTIME
-Includes Virtual Execution System (VES), Just in Time Compiler (JIT) and
-Garbage Collector
-
-BCL: BASE CLASS LIBRARY
-Set of .NET classes used by .NET Languages
-
-JIT: JUST-IN-TIME COMPILER
-Source code is compiled into an intermediate language (MSIL), at runtime this
-is compiled into native code
-*****************************************************************************/
-
 int main(array<System::String^> ^args){} //main entry point
-
 
 
 //////////////////////////////////////////////////////////////////////////////
