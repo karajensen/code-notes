@@ -473,9 +473,10 @@ std::advance(myIt, n) //advance iterator by n; Random access iterators use +=/-=
 std::distance(myIt1, myIt2) //returns int distance between 2 iterators, it2 must be after it1
 
 //ITERATING OVER CONTAINER
-vector<int>::iterator it;
-for (it = scores.begin(); it != scores.end(); it++)
-    cout << *it << endl;
+for (vector<int>::iterator it = scores.begin(); it != scores.end(); ++it)
+    it->myMethod();
+for (auto& item : myVector) //doesn't work with vs2010
+    int x = item;
 
 //REVERSE ITERATING
 vector<int>::reverse_iterator rit;

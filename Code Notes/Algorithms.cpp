@@ -25,6 +25,9 @@ char buffer[256];
 sprintf_s(buffer,"%i hello",5);
 string str = buffer;
 
+// Inline conversion
+static_cast<std::stringstream&>(std::stringstream() << myInt).str()
+
 // convert wide/strings
 std::string str(wstr.begin(),  wstr.end());
 std::wstring wstr(nstr.begin(), nstr.end());
