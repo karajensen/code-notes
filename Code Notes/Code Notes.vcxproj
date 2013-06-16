@@ -273,6 +273,7 @@
     <None Include="Languages\Code Examples\PyQt - CreatingWindowInDesigner.py" />
     <None Include="Languages\Code Examples\PyQt - FileReader.pyw" />
     <None Include="Languages\Code Examples\Python - RealFlow MultiBody Loader.rfs" />
+    <None Include="Symbols.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\assimpmesh.h" />

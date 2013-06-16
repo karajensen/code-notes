@@ -2,11 +2,17 @@
 //LAMBDA FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+//Left: arguments passed in
+//Right: expression and return value
+//=>: seperates, has same precedence as =
+//Outside variables are auto captured if used
+x => x*x 
 
-
-
-
-
+(int x) => x*x //explicitly specifying argument type
+(x,y) => x*y //multiple arguments
+(double x, int y) => x < y
+() => { i += 2.0; Console.WriteLine(x); } //no auto return
+() => { return i+j; }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //DELEGATES
@@ -38,6 +44,14 @@ MyDelegate myDelStatic = new MyDelegate(MyClass.MyStatic()); //can also be creat
 myDelMethod("Send Message"); //calling fn
 
 //============================================================================
+//DELEGATES FROM LAMBDAS
+//============================================================================
+
+delegate int MyDelegate(int x); 
+MyDelegate myLamDel = x => x * x; //takes in int, returns int
+int myNumber = myLamDel(4);
+
+//============================================================================
 //DELEGATES FROM ANONYMOUS FUNCTIONS
 //============================================================================
 
@@ -47,7 +61,6 @@ MyDelegate myAnonFn = delegate(string message) { System.Console.WriteLine(messag
 // Create a handler for a click event
 myButton.Click += delegate(System.Object o, System.EventArgs e)
     { System.Windows.Forms.MessageBox.Show("Click!"); };
-
 
 //============================================================================
 //TEMPLATED DELEGATES

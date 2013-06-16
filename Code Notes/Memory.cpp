@@ -101,7 +101,6 @@ sp.reset()     //decrements ref count to 0, deletes object
 //observing a shared pointer
 std::weak_ptr<MyClass> sp1(new MyClass);
 
-wp.get()        //get a raw pointer or null
 wp.use_count()  //get the current count
 wp.lock()       //returns a shared_ptr of same type, use instead of .get()
 wp.expired()    //returns true if object has been deleted, false if okay
@@ -134,43 +133,30 @@ public:
     std::weak_ptr<SharedClass> wp;
 };
 
+//CREATING CUSTOM DELETERS
+//Without a deleter, plain 'delete' is implicitely called
+auto release = [](MyClass* obj)
+{
+    if(obj)
+    {
+        obj->release();
+    }
+};
+std::shared_ptr<MyClass> ptr(&myObject, release);
+std::unique_ptr<MyClass, decltype(release)> ptr(&myObject, release);
 
-//////////////////////////////////////////////////////////////////////////////
-//SMART POINTER DELETERS
-//////////////////////////////////////////////////////////////////////////////
-
-//Creating a Deleter; without one 'delete' is implicitely called
-std::shared_ptr<foo> ptr(new MyClass, &MyClass::free);
-std::shared_ptr<foo> ptr(new MyClass, &free);
-
-//Getting a Deleter object; returns 0 if none set
-typedef void (*MyClass::deleter)(MyClass*);
-deleter* del = std::get_deleter<deleter>(ptr);
-typedef void (*deleter)(MyClass*);
-deleter* del = std::get_deleter<deleter>(ptr);
-
-//Preventing explicit delete, set deleter as private
-class X
+//CALLING PRIVATE DESTRUCTOR
+class MyClass
 {
 private:
+    ~MyClass(){}
 
-    ~X();
-    class deleter;
-    friend class deleter;
-
-    class deleter
+    class MyClassDeleter
     {
     public:
-        void operator()(X * p) { delete p; }
+        void Release();
     };
-
-public:
-
-    static shared_ptr<X> create()
-    {
-        shared_ptr<X> px(new X, X::deleter());
-        return px;
-    }
+    friend class MyClassDeleter;
 };
 
 //////////////////////////////////////////////////////////////////////////////

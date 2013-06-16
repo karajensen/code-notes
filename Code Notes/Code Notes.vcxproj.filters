@@ -612,6 +612,7 @@
     <None Include="Graphics Programming\HLSL Shaders\water.fx">
       <Filter>Graphics Programming\HLSL Shaders</Filter>
     </None>
+    <None Include="Symbols.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\assimpmesh.h">

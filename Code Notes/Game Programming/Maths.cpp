@@ -27,6 +27,44 @@ COORDINATES
 X                   Y
 
 //////////////////////////////////////////////////////////////////////////////
+//TRIGONOMETRY
+//////////////////////////////////////////////////////////////////////////////
+
+       /|                /|       sinƟ = O/C = y/‖r‖
+    r / |             C / |       cosƟ = A/C = x/‖r‖  
+     /  | ‖r‖sinƟ      /  | O     tanƟ = O/A = x/y
+    /Ɵ  |             /Ɵ  |
+    ----              ----
+   ‖r‖cosƟ              A
+
+
+IDENTITIES:
+sin(2Ɵ) = 2sinƟcosƟ
+cos(2Ɵ) = cos²Ɵ-sin²Ɵ = 2cos²Ɵ-1 = 1-2sin²Ɵ
+tan(2Ɵ) = (2tanƟ)/(1-tan²Ɵ)
+
+sin(-Ɵ) = -sinƟ
+cos(-Ɵ) = sinƟ
+tan(-Ɵ) = -tanƟ
+
+sin²Ɵ = ¹/₂(1-cos(2Ɵ))
+cos²Ɵ = ¹/₂(1+cos(2Ɵ))
+tan²Ɵ = (1-cos(2Ɵ)) / (1+cos(2Ɵ))
+sin²Ɵ + cos²Ɵ = 1
+
+SINE WAVES:
+To combine waves, just add each equation to each other
+To get circular waves, use radius r as x
+ -------------------
+| y = asin(kx-wt+ɸ) |
+ -------------------
+ a = amplitude; height of sine wave
+ k = angular wave number; number of wavelengths to reach 2∏
+ t = time
+ w = speed
+ ɸ = initial shift of the wave
+
+//////////////////////////////////////////////////////////////////////////////
 //VECTORS
 //////////////////////////////////////////////////////////////////////////////
 
@@ -37,8 +75,8 @@ VECTOR BASIS:
 Set of linerly independent vectors which spans/creates a vector space
 
 VECTOR SPACE: 
-Set of all vectors created by linera combinations of the vector basis
-Continas: Zero vector
+Set of all vectors created by linear combinations of the vector basis
+Contains: Zero vector
           Sum of any two vectors (closure)
           Additive inverse of any vector
           Scalar multiplication of any vector (multiplicative closure)
@@ -73,6 +111,11 @@ DOT/INNER PRODUCT
 a.b > 0     Ɵ < 90 between both vectors
 a.b < 0     Ɵ > 90 between both vectors
 a.b = 0     Ɵ = 90 vectors are ⊥ to each other
+
+ ▲           ▲▲          ▲
+ | â.b̂=0     ||  â.b̂=1   |   â.b̂=-1
+ |           ||          |
+  -----►                 ▼
 
 DOT PRODUCT RULES:
   a.b = b.a
@@ -257,7 +300,7 @@ LINE PARAMETRIC EQUATION
 | P(t) = P₀ + td |
  ----------------
  t = Barycentric coordinate
- d = vector along line (p1-po)
+ d = vector along line (P₁-P₀)
  P(t) = coordinate on line
  P₀ = Point on line
 
@@ -294,8 +337,8 @@ PLANE PARAMETRIC EQUATION
 | P(t) = P₀ + su₁ + tu₂ |
  -----------------------
  s,t = Barycentric coordinate
- d = vectors along line stemming from Po
- P(t) = coordinate on plane
+ u = vectors along line stemming from P₀
+ P(t) = coordinate on plane (P(x,y,z))
  P₀ = Point on plane
 
  Can be split into 3 equations:
@@ -328,8 +371,6 @@ PLANE LINEAR EQUATION
 (x-center.x)² + (y-center.y)² + (z-center.z)² = r²  [on circle]
 (x-center.x)² + (y-center.y)² < (z-center.z)² = r²  [inside]
 (x-center.x)² + (y-center.y)² > (z-center.z)² = r²  [outside]
-
-
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -584,6 +625,17 @@ ROTATION
 |   0     0    0  1 |   |  0   0     0    1 |    |  0    0   0    1 |
 
 ==============================================================================
+2D ROTATION
+==============================================================================
+     
+| cosƟ -sinƟ  0 || x |   | x' |
+| sinƟ  cosƟ  0 || y | = | y' |
+|  0     0    1 || 0 |   | 0  |
+
+x' = xcosƟ - ysinƟ
+y' = xsinƟ + ycosƟ
+
+==============================================================================
 ROTATION AROUND ARBITARY AXIS
 ==============================================================================
 
@@ -701,32 +753,6 @@ Vˡᵒᶜ = A¯¹Vᵉˣᵗ
 
 Where A is the transformation matrix that transforms the object's basis 
 vectors from their initial starting position of aligned with world basis
-
-
-//////////////////////////////////////////////////////////////////////////////
-//TRIGONOMETRY
-//////////////////////////////////////////////////////////////////////////////
-
-       /|                /|         sinƟ = O/C
-    a / |             C / |         cosƟ = A/C  
-     /  | ‖a‖sinƟ      /  | O       tanƟ = O/A
-    /Ɵ  |             /Ɵ  |
-    ----              ----
-   ‖a‖cosƟ              A
-
-
-SIN WAVE: 
-To combine waves, just add each equation to each other
-To get circular waves, use radius r as x
- -------------------
-| y = asin(kx-wt+ɸ) |
- -------------------
- a = amplitude; height of sine wave
- k = angular wave number; number of wavelengths to reach 2∏
- t = time
- w = speed
- ɸ = initial shift of the wave
-
 
 //////////////////////////////////////////////////////////////////////////////
 //SYSTEMS OF LINEAR EQUATIONS
@@ -872,9 +898,6 @@ COMPLEX RULES:
   =  ---------  +  --------- i  (use conjugate to divide)
      (c² + d²)      (c² + d²)
   
-
-
-
 ====================================================================
 POLAR FORM [r(cosƟ + isinƟ)]
 ====================================================================

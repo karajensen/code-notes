@@ -1,0 +1,21 @@
+﻿///////////////////////////////////////////////////////////////////////////////////////////////////////
+//SYMBOLS
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+X▪          derivative                  ∏           pi
+ʃ0-t{}      integral from 0 to t        '           prime
+µ           friction                    ̂            unit vector
+Ɵ           theta angle                 ∆           change in
+ɸ           phi angle                   ᵀ           transpose
+√()         square root                 τ           torque
+∞           infinite                    α           alpha
+∑           sum of                      ᶜ           centripetal
+‖ ‖         magnitude                   ⊗           tensor product
+⊥           perpendicular               ⁂          therefore
+¹/₂         half                        ≤≥           less/greater
+tan¯¹()     trigonmetry                 ▲►▼◄         arrows
+̅            conjugate                   ̿             double conjugate
+•           dot point
+
+ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻᶿᵝᶲᴬᴮᴰᴱᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾᴿᵀᵁᵂ¯⁴⁵²³¹°⁶⁷⁸⁹⁺⁻⁼⁽⁾ 
+ₐₑᵢₒᵣᵤᵥₓᵦ₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎

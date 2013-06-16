@@ -1,4 +1,18 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
+//IENUMERABLE
+////////////////////////////////////////////////////////////////////////////////////////////
+//Most containers inherit from IEnumerable
+
+// Getting subset of container
+IEnumerable<string> subset = myContainer.Where(item => item.IsActive());
+
+// Using in foreach loop
+foreach (string item in subset)
+{
+    Console.WriteLine(item);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
 //STRINGS
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -74,6 +88,7 @@ myArray[0] //normal arrays
 myArray[0][1] //jaggered array
 myArray[0,2] //rectangle array
 myArray.Length // number of elements
+myArray.Min(x => x.GetValue())
 
 Array.IndexOf(myArray, 2) //returns index of first element found from start or -1 if not found
 Array.LastIndexOf(myArray, 2) //returns index of first element found from end or -1 if not found

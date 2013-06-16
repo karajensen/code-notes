@@ -1,6 +1,6 @@
 /****************************************************************
-* Kara Jensen (KaraPeaceJensen@gmail.com) 2012
-* Color class
+* Kara Jensen (KaraPeaceJensen@gmail.com) 
+* Basic color class
 *****************************************************************/
 #pragma once
 
@@ -81,10 +81,10 @@ public:
     /**
     * Set the color component as a float 
     */
-    float rFloat(float R){ r = ClampColor(R)*255; }
-    float gFloat(float G){ g = ClampColor(G)*255; }
-    float bFloat(float B){ b = ClampColor(B)*255; }
-    float aFloat(float A){ a = ClampColor(A)*255; }
+    float rFloat(float R){ r = static_cast<unsigned char>(ClampColor(R)*255.0f); }
+    float gFloat(float G){ g = static_cast<unsigned char>(ClampColor(G)*255.0f); }
+    float bFloat(float B){ b = static_cast<unsigned char>(ClampColor(B)*255.0f); }
+    float aFloat(float A){ a = static_cast<unsigned char>(ClampColor(A)*255.0f); }
 
     /**
     * Clips the bounds of the color to 0.0->1.0
@@ -205,10 +205,10 @@ public:
     */
     void ChangeBrightness(float amount)
     {
-        r = ClampColor(r*amount)*255;
-        g = ClampColor(g*amount)*255;
-        b = ClampColor(b*amount)*255;
-        a = ClampColor(a*amount)*255;
+        r = static_cast<unsigned char>(ClampColor(r*amount)*255.0f);
+        g = static_cast<unsigned char>(ClampColor(g*amount)*255.0f);
+        b = static_cast<unsigned char>(ClampColor(b*amount)*255.0f);
+        a = static_cast<unsigned char>(ClampColor(a*amount)*255.0f);
     }
 
 };

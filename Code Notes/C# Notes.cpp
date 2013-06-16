@@ -48,6 +48,7 @@ STRUCTS [VALUE-TYPE]
 • Default constructor/destructor auto generated and required
 • Auto creates: default constructor/destructor
 
+AGGREGATE METHODS: Applies a function to each successive element
 COVARIANCE: Allows assinging MyClass or derived from it to MyClass object [polymorphism basis]
 CONTRAVARIANCE: Allows assigning MyClass or what MyClass derived from to MyClass object 
 INVARIANCE: Allows neither
@@ -153,12 +154,12 @@ CAN'T BE OVERLOADED
 [] can't be overloaded but can use indexer property
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-//DELEGATES/EVENTS
+//DELEGATES/EVENTS/LAMBDAS
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 DELEGATES
 • Derives from System.Delegate
-• Reference to a method
+• Reference to a method or lambda
 • Sealed; cannot be derived from
 
 ANONYMOUS DELEGATES
@@ -173,6 +174,13 @@ EVENTS
 • Subscriber: class that recieves/handles the event
 • Events that have no subscribers are never called.
 • Events are based on the EventHandler delegate and the EventArgs base class
+
+LAMBDAS
+• A captured variable will not be garbage-collected until the lamda goes out of scope
+• Variables inside lambda are not visible outside
+• Lambda cannot directly capture a ref/out parameter from the parent method
+• Cannot contain goto, break, containue that moves to outside lambda
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //BOXING

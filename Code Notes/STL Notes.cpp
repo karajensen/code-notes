@@ -1,7 +1,24 @@
 //////////////////////////////////////////////////////////////////////////////
-//STL CONTAINERS
+//STL NOTES
 //////////////////////////////////////////////////////////////////////////////
 /*
+
+ATAN-ATAN2 DIFFERENCES:
+ATAN2: Looks at 4 quadrants
+ATAN: Looks at 2 quadrants
+                                   +y
+    atan(-x/+y) = +angle [0,-90]   |   atan(+x/+y) = +angle [0,90]
+   atan2(-x,+y) = +angle [0,-90]   |   atan2(+x,+y) = +angle [0,90]
+                                   |
+                       -x----------|----------+x
+                                   |
+    atan(-x/-y) = +angle [0,-90]   |   atan(+x/-y) = -angle [0,90)
+atan2(-x,-y) = +angle [-90,-180)   |   atan2(+x,-y) = +angle [90,180]
+                                   -y
+
+//////////////////////////////////////////////////////////////////////////////
+//STL CONTAINERS
+//////////////////////////////////////////////////////////////////////////////
 
 ALLOCATORS
 • Handle requests for allocation and deallocation of memory for a container

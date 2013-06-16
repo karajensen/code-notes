@@ -33,6 +33,17 @@ std::string str(wstr.begin(),  wstr.end());
 std::wstring wstr(nstr.begin(), nstr.end());
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+//CAPS A VALUE BETWEEN MIN/MAX
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template<typename T>T CapValue(T value, T minValue, T maxValue)
+{
+    value = std::min(value, maxValue);
+    value = std::max(value, minValue);
+    return value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 //REVERSE LETTERS IN A STRING
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -80,13 +91,29 @@ for(int r = 0; r < Rows; r++)
 //ANGLES CONVERSION
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-float DEGTORAD(float deg){ return (3.14159265f/180.0f)*(deg); }
-float RADTODEG(float rad){ return (180.0f/3.14159265f)*(rad); }
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 float PolarPHI(float z, float length){ return (asin(z/length)); }
 float PolarTHETA(float x, float y){ return (atan(y/x)); }
 float CartesianX(float length, float phi, float theta){ return (length*cos(phi)*cos(theta)); }
 float CartesianY(float length, float phi, float theta){ return (length*cos(phi)*sin(theta)); }
 float CartesianZ(float length, float phi){ return (length*sin(phi)); }
+
+/**
+* Converts degrees to radians
+*/
+template<typename T> T DegToRad(T degrees)
+{
+    return static_cast<T>(M_PI/180.0)*degrees;
+}
+/**
+* Converts radians to degrees
+*/
+template<typename T> T RadToDeg(T radians)
+{
+    return static_cast<T>(180.0/M_PI)*radians;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //RESETTING BAD CONSOLE INPUT

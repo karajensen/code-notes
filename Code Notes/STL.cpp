@@ -9,12 +9,34 @@ int r = rand() % MAX_RANGE + 1; //for 1 to MAX_RANGE (not including maxrange)
 int r = rand() % MAX_RANGE; //for 0 to MAX_RANGE (not including maxrange)
 
 //USING DISTRIBUTION
+//create one generator per application
 std::default_random_engine generator;
 std::uniform_int_distribution<int> dist(lower, upper); //integer distribution
 std::uniform_real_distribution<float> dist(lower, upper); //real distribution
 
 auto getRand = [&]() ->int { return dist(generator); } //Generates number in the range [lower,upper]
 auto getRand = std::bind(dist, generator); //Bind and use as function object
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <cmath>
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+abs(-1); //Gets absolute value for double
+fabs(-1); //Gets absolute value for float
+pow(2, 8); //finding 2⁸
+sqrt(4); //finding square root of 4
+ceil(4.3) //returns closest integer rounding up (5)
+floor(4.7) //returns closest integer rounding down (4)
+round(4.5) //math round- to closest integer up/down with 0.5 going up (not in VS yet)
+copysign(x, y) //returns double with magnitude of x and sign of y (not in VS yet)
+cos(angle) //angle in radians
+sin(angle) //angle in radians
+tan(angle) //angle in radians
+acos(x/r) //cosƟ = A/C, returns radians
+asin(y/r) //sinƟ = O/C, returns radians
+atan(x/y) //tanƟ = O/A, returns radians
+atan2(x, y) //calculates tan(x/y), returns radians
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <sstream>
@@ -28,7 +50,6 @@ string temp = s.str();
 //clearing stream
 s.seekp(0);
 s.str("");
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <iostream>
@@ -198,18 +219,6 @@ cout.setf(initialState); //restore original settings
 //RESETTING SETTINGS
 cout.unsetf(ios_base::boolalpha); //sets bit back to 0 for boolalpha
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <cmath>
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-abs(-1); //Gets absolute value
-pow(2, 8); //finding 2⁸
-sqrt(4); //finding square root of 4
-atan2(o, a) //calculates tan(o/a)
-cos(1);
-sin(1);
-tan(1);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <ctime>
