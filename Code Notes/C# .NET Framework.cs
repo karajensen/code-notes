@@ -7,18 +7,6 @@ rand.Next(max) //returns value from 0 to max
 rand.Next() % max //returns value from 0 to max
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-//TIMERS
-////////////////////////////////////////////////////////////////////////////////////////////
-
-using System.Diagnostics
-var stopWatch = new Stopwatch()
-stopWatch.Start() //begin counting
-stopWatch.Stop() //stop counting
-stopWatch.Elapsed() //returns time passed
-stopWatch.Elapsed().ToString("s\\.f") //returns time passed as string
-stopWatch.Reset() //resets timer
-
-////////////////////////////////////////////////////////////////////////////////////////////
 //EXCEPTIONS
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -104,26 +92,6 @@ file.WriteEndDocument();
 file.Close();
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-//SYSTEM.OBJECT
-////////////////////////////////////////////////////////////////////////////////////////////
-
-//returns string of the object's type by default
-obj.ToString() [virtual]
-
-//If o/obj are reference-type, calls ReferenceEquals()
-//If o/obj are value-type, checks the values they hold against each other
-obj.Equals(Object o) [virtual]
-
-//Static: Tests if both objects refer to the same internal object by comparing hash codes
-Object.ReferenceEquals(Object o1, Object o2)
-
-//returns hash int value for equality testing/indexing in a collection
-obj.GetHashCode() [virtual]
-
-//returns type of the object called on
-System.Type type = obj.GetType()
-
-////////////////////////////////////////////////////////////////////////////////////////////
 //LINQ
 ////////////////////////////////////////////////////////////////////////////////////////////
 using System.Linq;
@@ -152,6 +120,7 @@ myQuery.ToList(); // returns list of elements that pass condition
 myQuery.ToArray(); // returns array of elements that pass condition
 myQuery.Min(); // returns the minimum value in query
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 //WINDOWS FORMS
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,12 +141,31 @@ if (result == System.Windows.Forms.DialogResult.OK)
 //REFLECTION
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-//USEFUL FOR:
-//• Accessing attributes of a class/method
-//• Examining and instantiating types in an assembly
-//• Building new types at runtime (Reflection.Emit)
-//• Creating compilers
-
-//DLL INFORMATION
+//Get DLL Information
 System.Reflection.Assembly assem = System.Reflection.Assembly.Load("myDLL.dll");
 assem.GetName() //get name, version information for dll
+
+//Get Calling Method Name
+string methodName = new StackTrace().GetFrame(1).GetMethod().Name;
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//DIAGNOSTICS
+////////////////////////////////////////////////////////////////////////////////////////////
+using System.Diagnostics.Debug
+using System.Diagnostics.Trace
+
+Trace.WriteLine("Writing a line to the debug console");
+Debug.Assert(myObject != null, methodName, "myObject cannot be null");
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//TIMERS
+////////////////////////////////////////////////////////////////////////////////////////////
+
+using System.Diagnostics
+var stopWatch = new Stopwatch()
+stopWatch.Start() //begin counting
+stopWatch.Stop() //stop counting
+stopWatch.Elapsed() //returns time passed
+stopWatch.Elapsed().ToString("s\\.f") //returns time passed as string
+stopWatch.Reset() //resets timer

@@ -1,123 +1,114 @@
 //////////////////////////////////////////////////////////////////////////////
-//WRITING CLASSES
+//CLASSES
 //////////////////////////////////////////////////////////////////////////////
 
-class Test
+class MyClass
 {
-private:
-
-    static const int m_testint = 20;
-    static int teststatic; 
-    const int testconstint; //initialise through initialisation list
-    int testint;
-
-    enum{ AMOUNT=3 };
-    int myArray[AMOUNT];
-
 public:
 
-    virtual ~Test();
-    Test(int n, int x, double y = 0); 
-    Test(const Test & c);               //copy constructor
-    Test(Test && c);                    //move constructor
-    Test& operator=(const Test & x);    //assignnment operator
-    Test& operator=(Test && x);         //move assignment operator
-    operator double();                  //cast operator
-    static int TestFunction(int x); 
-    void TestFunction() const;
-    explicit Test(float f);  //single argument constructor
+    virtual ~MyClass(){}                        //virtual destructor
+    MyClass(){}                                 //default constructor
+    MyClass(int x, double y = 0);               //constructor
+    explicit MyClass(float myFloat);            //single argument constructor
+    MyClass(const MyClass& obj);                //copy constructor
+    MyClass(MyClass && obj);                    //move constructor
+    MyClass& operator=(const MyClass& obj);     //assignnment operator
+    MyClass& operator=(MyClass && obj);         //move assignment operator
+    static int StaticFunction(int x);           //static function
+    operator double();                          //cast operator
+    
+private:
+
+    //Prevent copying, no declaration required
+    //Important if dynamic allocation occurs in class
+    MyClass(const MyClass); 
+    MyClass& operator=(const MyClass);
+
+    int m_member;
+    const int m_constMember; 
+    static const int STATIC = 20; //Only const in can be defined in class header
+    static std::unique_ptr<MyClass> sm_singleton; //static pointer to class
 };
 
-//============================================================================
+//IMPLICIT MEMBERS
+MyClass() //default constructor
+~MyClass() //default destructor
+MyClass(const MyClass& obj); //copy constructor
+MyClass& operator=(const MyClass& obj); //assignnment operator
+unsigned int MyClass::operator&(); //address operator
+
 //STATIC MEMBERS
-//============================================================================
-int Test::teststatic = 0;
-int Test::TestFunction(int x) //static method
+std::unique_ptr<MyClass> MyClass::sm_singleton; 
+int MyClass::StaticFunction(int x)
 {
-    return Test::teststatic; //can only return static private members, 
+    //Static functions can only access static members
+    //Static pointer to class can access private members in static function
+    return sm_singleton->m_member; 
 }
-//============================================================================
+
 //CONSTRUCTOR
-//============================================================================
-Test::Test(int n, int x, double y = 0): 
-    testconst1(x), 
-    testconst2(y)
+//const members can only be initialised in initialisation list
+//make initialisation list in same order members are defined
+MyClass::MyClass(int x, double y): 
+    m_member(x), 
+    m_constMember(y)
 {}
 
-//============================================================================
 //DESTRUCTOR 
-//============================================================================
-Test::~Test(){}
+//make virtual if class is to be inherited from
+virtual ~MyClass();
+MyClass::~MyClass(){}
 
-//============================================================================
 //COPY CONSTRUCTOR
-//============================================================================
-Test::Test(const Test & c)
+MyClass::MyClass(const MyClass& obj)
 {
-    this.somevariable = c.somevariable; //copy over values
+    this.m_member = obj.m_member;
 }
 
-//============================================================================
 //ASSIGNMENT OPERATOR
-//============================================================================
-Test & Test::operator=(const Test & x)
+MyClass& MyClass::operator=(const MyClass& obj)
 {
-    if(&x == this){ return *this; }     //check not copying self
-    this.somevariable = x.somevariable; //copy over values
+    if(&obj == this) //check not copying self
+    { 
+        return *this;
+    } 
+    this->m_member = obj.m_member; //copy over values
     return *this;
 }
 
-//============================================================================
 //SINGLE ARGUMENT CONSTRUCTOR
-//============================================================================
-//using explicit stop implicit conversions from taking place
+//use explicit stop implicit conversions from taking place
 //otherwise works similar to a cast operator
-explicit Test(double x); 
-Test::Test(double x) {} 
+explicit MyClass(double x); 
+MyClass::MyClass(double x) :
+    m_member(x)
+{}
+MyClass myObj(4.3) // With/without explicit okay  
+myObj = 4.3        // Without explicit okay, with explicit prevented
 
-object.TestClass(4.3) /*or*/ TestClass object(4.3)
-object = 4.3 /*or*/ object = TestClass(4.3)
 
-//with explicit
-object.TestClass(4.3) /*okay*/      
-object = 4.3          /*okay but converts object to a double implicitly*/
-
-//without explicit
-object.TestClass(4.3) /*okay*/      
-object = 4.3          /*prevented*/
-
-//============================================================================
 //MOVE CONSTRUCTOR
-//============================================================================
 //Uses Move Semantics; allows resources to transfer between objects
-//Requires overloaded operators to allow temp objects
-//Doesn't take const as it modifies rvalue passed in
-Test::Test(Test && x):
-    myPointer(std::move(x.myPointer),
-    myInt(std::move(x.myInt)
+//Doesn't take const objects as it modifies rvalue passed in
+MyClass::MyClass(MyClass && obj):
+    m_pointer(std::move(obj.myPointer),
+    m_member(std::move(obj.m_member)
 {}
 
-Test object(obj1 + obj2); //obj1+obj2 creates a temp r-value
-Test object(std::move(obj1)); //converts obj1 to a r-value
-
-//============================================================================
 //MOVE ASSIGNMENT OPERATOR
-//============================================================================
-//Doesn't take const as it modifies rvalue passed in
-Test & Test::operator=(Test && x)
+//Doesn't take const objects as it modifies rvalue passed in
+MyClass& MyClass::operator=(MyClass && obj)
 {
-    if(this == &x)
+    if(this == &obj)
+    {
         return *this;
-    delete [] myPointer; //delete any dynamic allocation for object
-    myInt = x.myInt;
-    x.myInt = 0;
-    myPointer = x.myPointer; //steal the address
-    x.myPointer = nullptr; //set to null
+    }
+    delete [] m_pointer; //delete any dynamic allocation for object
+    m_member = obj.m_member;
+    m_pointer = obj.m_pointer; //steal the address
+    obj.myPointer = nullptr; //set to null
     return *this;
 }
-obj1 = obj2+obj3; //obj2+obj3 creates a temp r-value
-obj1 = std::move(obj2); //converts obj2 to a r-value
-
 
 //////////////////////////////////////////////////////////////////////////////
 //CREATING OBJECTS 
@@ -140,27 +131,20 @@ ONE one(two); //where two = TWO(x) can be done
 //=========================================================================
 //STRUCTURES
 //=========================================================================
-struct mystructure
+//Clas with members public by default
+struct MyStruct
 {
-    int x = 5;
+    float x;
     float y;
-    mutable char charstruct[20];
 }; 
 
 //creating a new object from mystructure
-mystructure test = {32, 23.1, "hello"}; 
-
-//creating array of structures
-mystructure arraytest[2] = 
-{
-    {32, 23.1, "hello"}, //initialise arraytest[0]
-    {23, 34.1, "goodbye"} //initialise arraytest[1]
-};
+MyStruct obj = {32, 23.1}; 
 
 //=========================================================================
 //AGGREGATES
 //=========================================================================
-//NO: Constructors, virtual, private/protected members
+//NO: Constructors, virtual methods, private/protected non-static data members
 class Aggregate 
 {
 public:
@@ -174,12 +158,12 @@ private:
     void privateFunction();
     static int privStaticMember;
 };
-Aggregate a = {3}; //can be initialized with {}
+Aggregate obj = {3}; //can be initialized with {}
 
 //=========================================================================
 //PLAIN OLD DATA (POD)
 //=========================================================================
-//NO: Constructors, virtual, private/protected members
+//NO: Constructors, virtual methods, private/protected non-static data members
 //NO: Destructors, assignment operators
 class POD 
 {
@@ -192,134 +176,102 @@ private:
     void privateFunction();
     static int privStaticMember;
 };
-Aggregate a = {3}; //can be initialized with {}
-
+POD obj = {3}; //can be initialized with {}
 
 //////////////////////////////////////////////////////////////////////////////
-//OVERLOADING/OPERATORS
+//OPERATOR OVERLOADING
 //////////////////////////////////////////////////////////////////////////////
 
 //USING OVERLOADS
-class1*class2 /*->*/ class1.operator*(class2);
-class1+class2 /*->*/ class1.operator+(class2);
-class1[4]     /*->*/ class1.operator[](4) 
-class1[0][1]  /*->*/ (class1[0].operator[](1)).operator[0];
-
+obj1*obj2  /*->*/  obj1.operator*(obj2);
+obj1+obj2  /*->*/  obj1.operator+(obj2);
+obj1[4]    /*->*/  obj1.operator[](4) 
+obj1[0][1] /*->*/  (class1[0].operator[](1)).operator[0];
 
 //OVERLOAD DECLARATIONS
-Date& operator++(); //prefix
-Date& operator--(); //prefix
-Date operator++(int unused); //postfix
-Date operator--(int unused); //postfix
-const TestClass operator+(const Testclass & x) const;
-const TestClass operator*(const Testclass & x) const;
-TestClass& operator[](const int i);
-const TestClass& operator[](const int i) const;
+MyClass& operator++(); //prefix
+MyClass& operator--(); //prefix
+MyClass operator++(int unused); //postfix
+MyClass operator--(int unused); //postfix
+const MyClass operator+(const MyClass& x) const;
+const MyClass operator*(const MyClass& x) const;
+MyClass& operator[](const int i);
+const MyClass& operator[](const int i) const;
 
-void* operator new(std::size_t);                            //plain new
-void* operator new(std::size_t, std::nothrow_t) throw();    //nothrow new
-void* operator new(std::size_t, void*);                     //in-place new
-
-//--------------------------------------------------------------------------
-//OVERLOADS WITH DIFFERENT TYPES AS ARGUMENTS
-//--------------------------------------------------------------------------
+void* operator new(std::size_t);                         //plain new
+void* operator new(std::size_t, std::nothrow_t) throw(); //nothrow new
+void* operator new(std::size_t, void*);                  //in-place new
 
 //USING FRIENDS COUPLED WITH OVERLOADED OPERATOR
-A = B * 2.75 /*->*/ A = B.operator*(2.75);
-const Testclass operator*(const double x) const;
+A = B * 2.0 /*->*/ A = B.operator*(2.0);
+const MyClass operator*(const double val) const;
 
-A = 2.75 * B /*->*/ A = operator*(2.75, B); 
-friend const Testclass operator*(const double x, const Testclass & t) const;
+A = 2.0 * B /*->*/ A = operator*(2.0, B); 
+friend const MyClass operator*(const double val, const MyClass& obj) const;
 
-//--------------------------------------------------------------------------
-//OVERLOADS COUT 
-//--------------------------------------------------------------------------
-friend std::ostream & operator<<(std::ostream & os, const Testclass & t); 
-std::ostream & TestClass::operator<<(std::ostream & os, const Testclass & t)
+
+//OVERLFOADING STD::COUT 
+friend std::ostream & operator<<(std::ostream& os, const MyClass& obj); 
+std::ostream & TestClass::operator<<(std::ostream & os, const MyClass& obj)
 {
-    os << t.testint;
+    os << obj.m_member;
     return os;
 }
-cout << A << B;
+std::cout << obj;
 
-//--------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
 //CAST OPERATOR
-//--------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
 operator double(); //typecast prototype (must be method)
-Testclass::operator double()
+MyClass::operator double()
 {
-    return mydouble; //returns double even without return type
+    return m_member; //returns double even without return type in signature
 }
-double x = class1; //implicitly
-double x = double(class1); //explicitly
+double myDouble = obj; //implicitly
+double myDouble = double(obj); //explicitly
 
 //CAST OPERATOR FOR CUSTOM TYPES
-operator FLOAT3();
-MATRIX::operator FLOAT3()
+operator Float3();
+Matrix::operator Float3()
 {
-    return FLOAT3(1,2,4);
+    return Float3(1,2,4);
 }
-FLOAT3 vec = FLOAT3(mat);
+Float3 myVector = Float3(myMatrix);
 
 
 //////////////////////////////////////////////////////////////////////////////
 //FRIENDS
 //////////////////////////////////////////////////////////////////////////////
 
-//--------------------------------------------------------------------------
 //FRIEND FUNCTIONS
-//--------------------------------------------------------------------------
-class B; //forward declaraction, lets compiler understand the B::amethod()
-
 class A
 {
-private:
 public:
-    friend void B::amethod(); 
+    class B; //forward declaraction
+    friend void B::MyMethod(); 
 };
 
 class B
 {
-private:
 public:
-    void B::amethod();
+    void B::MyMethod(); //method can access privates of A
 };
-//--------------------------------------------------------------------------
+
+
 //FRIEND CLASSES
-//--------------------------------------------------------------------------
 class A
 {
-private:
 public:
-    friend class B; //doesn't matter where defined- public/private/protected
+    //auto forward declares
+    //doesn't matter where defined- public/private/protected
+    friend class B; 
 };
 
 class B
 {
-private:
-public:
+public: //class can access privates of A
 };
-
-//////////////////////////////////////////////////////////////////////////////
-//PREVENTING COPYING
-//////////////////////////////////////////////////////////////////////////////
-
-//MANUALLY: gives linker error if copying
-class Game
-{
-
-private:
-
-    //use declarations only
-    Game(const Game); 
-    Game& operator=(const Game);
-};
-
-//USING BOOST: gives compile error due to using base class
-#include <boost/noncopyable.hpp>
-class Game : boost::noncopyable //inherits privately
-{ ... }
-
 
 //////////////////////////////////////////////////////////////////////////////
 //CLASS DYNAMIC MEMORY

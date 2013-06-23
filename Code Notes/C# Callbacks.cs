@@ -2,11 +2,10 @@
 //LAMBDA FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-//Left: arguments passed in
-//Right: expression and return value
-//=>: seperates, has same precedence as =
 //Outside variables are auto captured if used
-x => x*x 
+int myOutsideInt = 2;
+Func<int, double> myFunct = x => (double)x * myOutsideInt; //Takes in int, returns double
+Action<int> myFunct = x => myOutsideInt += x; //Takes in int, no return value
 
 (int x) => x*x //explicitly specifying argument type
 (x,y) => x*y //multiple arguments

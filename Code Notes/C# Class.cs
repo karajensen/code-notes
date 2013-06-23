@@ -26,21 +26,25 @@ public static MyClass operator++(MyClass c)
 //CONVERSION FUNCTIONS
 //explicit makes it require cast (int)myObj
 //implicit makes it not require cast
+public static implicit operator int(MyClass value)
 public static explicit operator int(MyClass value)
 {
     return value.myint;
 }
 
 //PARAMS VARIADIC FUNCTION
-//creates array from extra arguments and substities int {}
-MyMethod("{0} This is {1} a test {2}{3}", 2,3,4,4);
-public void MyMethod(string format, params object[] arg);
+ShowParams(typeof(int), "hello", 123);
+public void ShowParams(params object[] objects)
+{
+    for (int i = 0; i < objects.Length; ++i)
+    {
+        Console.WriteLine(objects[i]);
+    }
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //PROPERTIES
 ////////////////////////////////////////////////////////////////////////////////////////////
-//Method that doesn't use () when called
-//No set method auto makes it readonly
 
 //GETTER/SETTER PROPERTIES
 public int MyInt
@@ -64,6 +68,12 @@ public string this[int index]
     set { myStringArray[index] = value; }
 }
 
+//2D INDEXER PROPERTY
+public string this[int x, int y]
+{
+    get { return myStringArray[y*(columns)+x]; }
+}   
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 //STRUCTS [VALUE-TYPE]
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,34 +83,6 @@ public struct MyStruct
     //CONSTRUCTOR
     //Can only declare contructor with arguments. Default constructor auto generated
     MyStruct(int x){} 
-
-    //OPERATOR OVERLOAD ==
-    //Structs don't auto create == 
-    public static bool operator==(MyStruct a, MyStruct b)
-    {
-        return a.myVar == b.myVar;
-    }
-
-    //OPERATOR OVERLOAD !=
-    //Must create matching != or error
-    public static bool operator!=(MyStruct a, MyStruct b)
-    {
-        return a.myVar != b.myVar;
-    }
-
-    //OVERRIDE EQUALS
-    //Required if overloading ==/!= otherwise compiler warning
-    public override bool Equals(object obj)
-    {
-        return (obj is MyStruct ? this.myVar == ((MyStruct)obj).myVar : false);
-    }
-
-    //OVERRIDE GETHASHCODE
-    //Required if redefining Equals, a unique index for the object
-    public override int GetHashCode()
-    {
-        return myVar;
-    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -147,6 +129,12 @@ namespace MyNamespace
         internal class MyPrivateClass
         {
         };
+
+        //TO-STRING OVERRIDE
+        public override string ToString()
+        {
+            return "A readable representation of myObject";
+        }
     };
 }
 
@@ -202,6 +190,73 @@ public abstract class MyClass : IMyInt
     //any method don't want to implement from interface can declare as abstract
     public abstract void MyIntMethod();
 }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//EQUALITY OVERLOADS
+////////////////////////////////////////////////////////////////////////////////////////////
+
+//Always Overload equality for Value-types as default uses reflection
+//If overloading: must also overload
+operator==(): operator!=(), Equals()
+Equals():     GetHashCode(), IEquatable<T>
+
+public class MyClass : IEquatable<MyClass>
+{
+    //NON-STATIC EQUALS 
+    //Value-types: default compares object type/values using reflection
+    //Reference-types: default compares hash codes
+    public override bool Equals(object obj)
+    {
+        if (object.ReferenceEquals(obj, null))
+            return false;
+        if (object.ReferenceEquals(this, obj))
+            return true;
+        if (this.GetType() != obj.GetType())
+            return false;
+        return this.Equals(obj as MyClass);
+    }
+
+    //HASH CODE
+    //returns hash int value for equality testing/indexing in a collection
+    public override int GetHashCode()
+    {
+        return m_index;
+    }
+
+    //OPERATOR ==/!=
+    //Default version only in classes
+    public static bool operator==(MyClass obj1, MyClass obj2)
+    {
+        if(obj1 == null || obj2 == null)
+            return false;
+        return obj1.Equals(obj2);
+    }
+    public static bool operator!=(MyClass obj1, MyClass obj2)
+    {
+        return !(obj1 == obj2);
+    }
+
+    //IEQUATABLE<T>
+    //Used by containers
+    public bool Equals(MyClass obj)
+    {
+        //For reference types:
+        return obj.GetHashCode() == this.GetHashCode();
+
+        //for value types:
+        return (m_int == obj.m_int && m_float == obj.m_float);
+    }
+}
+
+//STATIC REFERENCE EQUALITY TESTING [NEVER REDEFINE]
+//Tests if both objects refer to the same internal object by comparing hash codes
+//Always returns false for value-types due to boxing
+public static bool ReferenceEquals(object left, object right)
+
+//STATIC REFERENCE/VALUE-TYPE EQUALITY TESTING [NEVER REDEFINE]
+//Calls ReferenceEquals() and if returns false, calls non-static Equals()
+public static bool Equals(object left, object right)
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //INHERITANCE
@@ -314,10 +369,14 @@ foreach (System.Attribute attr in attributes)
 public class SampleClass {}
 
 //CONDITIONAL ATTRIBUTE
-//only used if DEFINED is defined; compiler will remove any method
-//calls if not defined. Useful for doing diagnostics only in debug
+//only used if DEFINED is defined; compiler will remove any calls if not defined
+//must have return type void, can't be used in interfaces/abstract classes
 [System.Diagnostics.Conditional("DEFINED1"), System.Diagnostics.Conditional("DEFINED2")]
 public void myConditionalMethod(){}
+
+//CONDITIONAL DEBUG ATTRIBUTE
+[Conditional("DEBUG")]
+private void CheckState(){}
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //GENERICS

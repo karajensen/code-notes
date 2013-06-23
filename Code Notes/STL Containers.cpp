@@ -414,6 +414,10 @@ it->second //returns object
 M.insert(MyMap::value_type("Key","Object")); //value_type is typedef for maps pair
 M["MyKey"] = "MyObject"; // Adds entry if key doesn't exist otherwise overwrites
 
+//ITERATING
+std::for_each(M.begin(), M.end(), 
+    [&](const MyMap::value_type& item){ item.second->DoSomething(); });
+
 //MULTIMAP
 std::multi_map<KeyType, ObjType> //can have multiple entries for the one key
 

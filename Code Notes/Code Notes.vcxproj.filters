@@ -613,6 +613,7 @@
       <Filter>Graphics Programming\HLSL Shaders</Filter>
     </None>
     <None Include="Symbols.txt" />
+    <None Include="Differences.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\assimpmesh.h">

@@ -1,0 +1,158 @@
+////////////////////////////////////////////////////////////////////////////////////
+//C#, C++, C++/CLI DIFFERENCES
+////////////////////////////////////////////////////////////////////////////////////
+
+====================================================================================
+VARIABLE DIFFERENCES
+====================================================================================
+
+VALUE VARIABLE TYPES:
+[C# ] Structs, basic data types created on stack
+[CLI] Classes, structs, basic data types created on stack
+[C++] Classes, structs, basic data types created on stack
+
+REFERENCE VARIABLE TYPES:
+[C# ] Classes created on heap
+[CLI] Classes, structs, basic data types created on heap
+[C++] Classes, structs, basic data types created on heap
+
+CREATING REFERENCE TYPES:
+[C# ] Uses new, garbage collected
+[CLI] 
+[C++] Uses new, manual deletion
+
+PARENT-CHILD SCOPE: int myInt = 2; { int myInt = 1; }
+[C# ] If variable is in parent scope it cannot be redeclared in child scope
+[CLI] 
+[C++] As long as scope seperates variables, it can be redeclared
+
+FLOATING EXPRESSIONS: 2+4;
+[C# ] Floating expressions not allowed, must be assigned to something
+[CLI] 
+[C++] Floating expressions allowed
+
+STRING CONCATONATION: string str = "one"+1;
+[C# ] Will auto convert the number to a string during concatonation
+[CLI] 
+[C++] Won't auto convert number to string
+
+NAMESPACES:
+[C# ] Cannot be anon, cannot contain variables/methods
+[CLI] 
+[C++] Can be anon, can contain variables/methods
+
+#DEFINE:
+[C# ] Must be before any code, cannot define variables/expressions, uses #if
+[CLI] 
+[C++] Can be anywhere, can define variables/expressions, uses #ifdef
+
+DOWNCASTING: int myInt = 1.0/2.0;
+[C# ] No downcasting, Compile error, only implicitly converts if range can fit in new variable
+[CLI] 
+[C++] Downcasting okay, Compile warning, implicitly converts no matter what
+
+VALUE TO BOOL CONVERSION: bool myBool = true; if(myNumber){}
+[C# ] Cannot accept a number into a bool; cannot use number as bool in if-statements
+[CLI] 
+[C++] Can accept a number; can use number as bool in if-statements
+
+SWITCH STATEMENTS:
+[C# ] Can use strings in a switch statement, cannot fall through to next case
+[CLI] 
+[C++] Cannot use strings in a switch statement, can fall through to next case
+
+RETURNING REFERENCE:
+[C# ] Cannot return a reference to a variable, uses out/ref in function parameters
+[CLI] 
+[C++] Can return a reference to a variable
+
+====================================================================================
+CLASS/STRUCT DIFFERENCES
+====================================================================================
+
+C# CLASS OBJECT CREATION:
+1) Derived member Field Initialisaters called
+2) Base member Field Initialisaters called
+3) Base Constructor Body called
+4) Derived Constructor Body called
+5) Derived Destructor called
+6) Base Desctructor called
+
+C++ CLASS OBJECT CREATION:
+1) Base Initialisation List called
+2) Base Constructor Body called
+3) Derived Initialisation List called
+4) Derived Constructor Body called
+5) Derived Destructor called
+6) Base Desctructor called
+
+C++/CLI CLASS OBJECT CREATION:
+1)
+2)
+3)
+
+STRUCT/CLASS TYPES:
+[C# ] Structs value only, Class reference only
+[CLI] Both allow value/reference types
+[C++] Both allow value/reference types
+
+USER-DEFINED CONSTRUCTOR/DESTRUCTOR:
+[C# ] Value-type can't have, Reference type can
+[CLI] Value-type can't have, Reference type can
+[C++] Reference/Value-types both have
+
+IMPLICIT MEMBERS:
+[C# ] Struct/Class: default constructor/destrutor, copy constructor, operator=, operator&
+[CLI] 
+[C++] Struct/Class: default constructor/destrutor, System.Object members, operator==(Class Only)
+
+DEFAULT VISIBILITY:
+[C# ] Struct is public, Class is internal, All members private
+[CLI] 
+[C++] Struct/Struct members is public, Class/Class members is private
+
+INITIALISING STATIC MEMBERS:
+[C# ] Initialised through Static constructor or when first used through field initialisation
+[CLI] 
+[C++] Initialised before main() called in cpp file
+
+ACCESSING STATIC MEMBERS:
+[C# ] Uses MyClass.MyStaticMethod();
+[CLI] 
+[C++] Uses MyClass::MyStaticMethod();
+
+====================================================================================
+INHERITANCE DIFFERENCES
+====================================================================================
+
+INHERITANCE
+[C# ] Struct only inherits interfaces, Class only inherits one base and multiple interfaces
+[CLI] 
+[C++] Struct inherits anything publically by default, Class inherits anything privately by default
+
+INHERITANCE SUPPORT
+[C# ] No MI (uses interfaces for MI), only public inheritance
+[CLI] No MI (uses interfaces for MI), only public inheritance
+[C++] Multiple Inheritance, private/protected inheritance support
+
+SLICING:
+[C# ] Slicing cannot occur as inheritance only occurs on reference types
+[CLI] 
+[C++] Slicing can occur as inheritance occurs on reference and value types
+
+INHERITED METHOD VISIBILITY:
+[C# ] Inherited methods cannot be private; visibility must be the same between base/derived
+[CLI] 
+[C++] Inherited Methods can have any visibility; base/derived visibility doesn't have to match
+
+PURE VIRTUAL METHODS/CLASS:
+[C# ] Requires abstract keyword for class, makes all methods automatically virtual
+[CLI] 
+[C++] Requires virtual keyword on method, makes class automatically abstract
+
+CALLING VIRTUAL METHOD IN CONSTRUCTOR:
+[C# ] Dangerous to call virtual method in constructor; calls Derived version
+[CLI] 
+[C++] Dangerous to call virtual method in constructor; calls Base version
+
+

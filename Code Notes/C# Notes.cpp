@@ -3,16 +3,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 /*
 
-.NET LANGUAGES: C#, VB.NET, C++/CLI
-
 CLI: COMMON LANGUAGE INFRASTUCTURE
 .NET Framework is a version of this; contains CLR and BCL
 
 CLR: COMMON LANGUAGE RUNTIME
-Includes Virtual Execution System (VES), Just in Time Compiler (JIT), Garbage Collector
+Core of the .NET Framework. Includes Virtual Execution System (VES), 
+Just in Time Compiler (JIT), Garbage Collector
 
 BCL: BASE CLASS LIBRARY
-Set of .NET classes used by .NET Languages
+Set of .NET classes used by .NET Languages (C#, VB.NET, C++/CLI)
 
 JIT: JUST-IN-TIME COMPILER
 Source code is compiled into an intermediate language (MSIL), 
@@ -30,38 +29,45 @@ ASSEMBLY/MODULES
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 VALUE-TYPE VARIABLES
-• Doesn't use new to create new objects
+• Structs and basic data types, doesn't use new to create new objects
 • may exist on the stack, register or heap
 • values are copied deeply
 • Passed by-val
+• Equality: If both are same type and have same contents
 
 REFERENCE-TYPE VARIABLES
-• Uses new to create new objects
+• Classes, uses new to create new objects
 • object it refers to exists in seperate memory on heap
 • memory auto deleted once no other references for the object exist
 • values are copied shallow
 • Reference itself passed by-val, object it points to stays the same
+• Equality: If both refer to the same interal object
 
 STRUCTS [VALUE-TYPE]
 • All variables not explicitly initialised are set to default
-• class auto defaults to public, methods default to private
-• Default constructor/destructor auto generated and required
-• Auto creates: default constructor/destructor
-
-AGGREGATE METHODS: Applies a function to each successive element
-COVARIANCE: Allows assinging MyClass or derived from it to MyClass object [polymorphism basis]
-CONTRAVARIANCE: Allows assigning MyClass or what MyClass derived from to MyClass object 
-INVARIANCE: Allows neither
-
-////////////////////////////////////////////////////////////////////////////////////////////
-//CLASS
-////////////////////////////////////////////////////////////////////////////////////////////
+• struct auto defaults to public, methods default to private
+• Can't create user-defined constructor/destructors
+• Auto creates default constructor/destructor, System.Object methods
 
 CLASSES [REF-TYPE]
 • All variables not explicitly initialised are set to default
 • class auto defaults to internal, methods default to private
 • Default constructor/destructor only generated if none provided
-• Auto creates: default constructor/destructor, operator==
+• Auto creates default constructor/destructor, System.Object methods, operator==
+
+CONST/READONLY VARIABLE DIFFERENCES:
+• Const compile time and faster; Readonly runtime and slower
+• Const can be declared inside methods; Readonly only as static member variable
+• Const replaces value during compilation; Readonly becomes const after contructor called
+• Const only used with numbers and strings; Readonly used with everything
+• Const can't be initialised with 'new'; Readonly can be initialised with 'new'
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//CLASS
+////////////////////////////////////////////////////////////////////////////////////////////
+
+AGGREGATE METHODS: 
+Applies a function to each successive element
 
 INTERFACES
 • No contructors/destructors allowed
@@ -95,6 +101,11 @@ CLASS VISIBILITY
 • Virtual/Abstract methods cannot be private
 • Virtual/Abstract methods must have same visibility between Base/Derived classes
 
+PROPERTIES
+• Method that doesn't use () when called
+• No 'set' entry automatically makes the property readonly
+• Accessed syntactically the same as member variable but involve different instructions
+
 INDEXER/PROPERTY DIFFERENCES
 • Indexer accessed through index and [], Properties accessed as though member variable
 • Indexer cannot be static, Properties can be static
@@ -104,21 +115,37 @@ INDEXER/PROPERTY DIFFERENCES
 //INHERITANCE
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-• Inheriting classes: Structs: none, Classes: one, Interfaces: Multiple
-• Inheriting interfaces: Structs, classes, interfaces: Multiple
-• If no base class specified, class/struct auto inherits System.Object
-• Interfaces don't auto inherit but an interface object can be converted to 
-  System.Object as all interface objects must be created from a class/struct
+STRUCTS: Inherit no classes, multiple interfaces, auto inherits System.ValueType
+CLASSES: Inherit one class, multiple interfaces, auto inherits System.Object if none specified
+INTERFACES: Inherit no classes, multiple interfaces
+
+COVARIANCE: Allows assinging MyClass or derived from it to MyClass object [polymorphism basis]
+CONTRAVARIANCE: Allows assigning MyClass or what MyClass derived from to MyClass object 
+INVARIANCE: Allows neither
 
 SYSTEM.OBJECT
 • All reference/value types ultimately derive from System.Object
 • Classes auto inherit System.Object if no base class specified
+• Has Static Members ReferenceEquals()/Equals()
+• Includes methods: 
+    Equals()
+    Finalize()
+    GetHashCode()
+    GetType()
+    MemberwiseClone()
+    ToString()
 
 SYSTEM.VALUETYPE
 • All value types (struct,enum,bool,int etc.) ultimately derive from System.ValueType
 • System.ValueType itself derives from System.Object
 • Can't directly derive from it; must derive from struct
+• Overrides methods:
+    Equals()
+    GetHashCode()
+    ToString()
 
+IENUMERABLE<T>
+• All containers derive from it, allows iteration with foreach
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //OPERATOR OVERLOADING
@@ -262,6 +289,16 @@ UNSAFE CODE
 • Can increase performance by removing bounds/runtime checks
 • Required when calling native functions that require pointers
 • /unsafe must be set to compile
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//REFLECTION
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Used For:
+• Accessing attributes of a class/method
+• Examining and instantiating types in an assembly
+• Building new types at runtime (Reflection.Emit)
+• Creating compilers
 
 
 *///////////////////////////////////////////////////////////////////////////////////////////

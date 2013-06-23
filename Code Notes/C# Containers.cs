@@ -1,15 +1,19 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 //IENUMERABLE
 ////////////////////////////////////////////////////////////////////////////////////////////
-//Most containers inherit from IEnumerable
 
-// Getting subset of container
-IEnumerable<string> subset = myContainer.Where(item => item.IsActive());
+IEnumerable<int> enumerable = new List<int>(){1,2,3};
+
+// Getting IEnumerable subset of container (requires LINQ for .Where)
+IEnumerable<int> enumerable = myContainer.Where(item => item.IsActive());
+
+enumerable.ToArray() // Converting to array
+enumerable.ToList() // Converting to list
+enumerable.Cast<int>() // Cast back to original container type
 
 // Using in foreach loop
-foreach (string item in subset)
+foreach (string item in enumerable)
 {
-    Console.WriteLine(item);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -117,6 +121,7 @@ List<int> myList = new List<int>(20); //reserve space for 20 elements
 List<int> myList = new List<int>{ 1, 2, 3 };
 
 myList[0]
+myList.ForEach(x => x.DoSomething()) // iterate over all elements and call action
 myList.Count //return number of elements
 myList.Capacity //amount of items that can be added in the reserved space 
 myList.Add(myItem) //add item of type T to end of list

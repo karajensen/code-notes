@@ -53,15 +53,11 @@ unchecked(a+b) //don't check expression
 uint = 0xFF00FF00; //hex notation
 var myVar = 1.0E-20f; //scientific notation
 
-//NAMESPACES
-namespace {} //BAD: Namespaces can't be anonymous
-namespace ns { myInt = 2; } //BAD: Namespaces can't contain vars/functions
-
 ////////////////////////////////////////////////////////////////////////////////////////////
 //VARIABLE MODIFIERS
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-public readonly int myConst; // Const, initialised once at runtime. Can be bypassed
+public readonly int myConst; // Const, initialised once at runtime.
 public const int myConst = 1; // Const, initialised at compile time
 public static int myStaticInt; // static class/struct variable
 public int myInt; // Accessible everywhere
@@ -69,26 +65,49 @@ protected int myInt; // Accessible only to derived classes
 protected internal in myint; // Accessible to derived classes/classes inside assembly(exe/dll)
 private int myInt; // Accessible only inside the class/struct
 internal int myInt; // Accessible only inside the assembly(exe/dll)
+public volatile int myInt; // Not optimized for accessing regularly in multiple threads
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//NAMESPACES
+////////////////////////////////////////////////////////////////////////////////////////////
+
+namespace {} //BAD: Namespaces can't be anonymous
+namespace ns { myInt = 2; } //BAD: Namespaces can't contain vars/functions
+
+// Creating a typedef
+using MyTypedef = System.Drawing.Graphics;
+MyTypedef obj = CreateGraphics();
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //CONVERSIONS
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-//CONVERTING
-int myInt = 2.0/4.0; //Downcasting: does not implicitly convert due to range not fitting into int
-int myDouble = 1/2;  //Upcasting: implicitly converts due to range fitting into double
-int myInt = int(myDouble);
-int myInt = (int)myDouble;
+//Downcasting: does not implicitly convert due to range not fitting into int
+int myInt = (int)2.0/4.0; 
+
+ //Upcasting: implicitly converts due to range fitting into double
+int myDouble = 1/2; 
+
+//Reference type conversions
+//doesn't work with value types as returns null if conversion unsuccessful
+Object obj = myClass as Object
+
+//Converting to string
 string myString = myDouble.ToString(); //returns number as string
 string myString = myBool.ToString(); //returns "True" or "False"
+
+//Converting from string
 int x = Convert.ToInt32("10")
 double myDouble = double.Parse("10.0"); //throws FormatException if failed
 double.TryParse("10.0", out value) //converts string to doubles, returns false if failed
 
-//GETTING TYPES
+//Getting type of object
 typeof(myInt) //return int
 typeof(myObject) //return class
 System.Type type = obj.GetType()
+bool isObject = myClass is Object; 
+bool isInt = myint is int;
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //WEAK REFERENCES
@@ -174,6 +193,7 @@ for (int i = 0; i < count; ++i){}
 
 //FOR-EACH LOOPS
 //cannot modify collection
+//uses explicit cast for each item
 foreach (str in myStringArray)
 foreach (int value in array)
 

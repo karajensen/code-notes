@@ -8,6 +8,15 @@ BOOST_FOREACH(Shader_Ptr shader, m_shaders)
 #include <boost/assign/list_of.hpp>
 boost::assign::list_of<T>("one")("two"); //returns std::vector<T>
 
+#include <boost/noncopyable.hpp>
+class Game : boost::noncopyable //inherits privately, gives compiler error if copying occurs
+
+#include <boost/optional.hpp>
+boost::optional<double> myOptional;
+myOptional.is_initialized(); //check if has a value assigned
+myOptional = 2.0; //assign a value
+myOptional = boost::none; //assign no value
+
 
 ///////////////////////////////////////////////////////////////////////////
 //BOOST STRING
