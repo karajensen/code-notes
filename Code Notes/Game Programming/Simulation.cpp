@@ -1,18 +1,103 @@
 ﻿//////////////////////////////////////////////////////////////////////////////
-//STATE SPACE MODELS
+//INTEGRATION METHODS
 //////////////////////////////////////////////////////////////////////////////
 /*
 
+EULER'S METHOD: 
+ ----------------------------
+| X(t + ∆t) = X(t) + X▪(t)∆t |
+ ---------------------------------------------
+| X(t + ∆t) = X(t) + X▪(t)∆t + (∆t²/2) X▪▪(t) |
+ ---------------------------------------------
+ 
+- a truncated version of Taylor's series
+- Step size determines the size of the steps taken to reduce error towards 0
+
+INCREASING ACCURACY
+- Euler's method is accurate to ∆t
+- next largest term in Taylor's series is (∆t²/2) X▪▪(t)
+- ⁂ precision error is to the order of ∆t²; if step size is halfed, 
+  error is reduced by four
+- To increase accuracy, get estimate of X▪▪(t) using Midpoint Method
+
+MIDPOINT METHOD
+- Get X▪(t) at ∆t and t + ∆t and average them to find X▪▪(t)
+- increases accuracy to (∆t²/2) but increases amount of computations
+
+===========================================================================
+EXPLICIT METHODS
+===========================================================================
+Use calculations from current time to estimate for the future
+Underestimate curve: Curve will slowly expand and gain energy over time
+Inexpensive per step but with limited accuracy
+
+FORWARD EULER INTEGRATOR
+X(t + ∆t) = X(t) + X▪(t)∆t 
+
+4th ORDER RUNGE KUTTA
+Bad for high impulses with high change of velocity
+High accuracy but more computation
+X(t + ∆t) = X(t) + ¹/₆k₁ + ¹/₃k₂ + ¹/₃k₃ + ¹/₆k₄
+
+===========================================================================
+IMPLICIT METHODS
+===========================================================================
+Use calculations from future with current time to estimate for the future
+Overestimate curve: Curve will slowly collapse and lose energy over time
+Higher accuracy but expensive per step
+
+BACKWARD EULER INTEGRATOR
+Uses a estimate of the velocity at the next timestep 
+via an analytical function
+X(t + ∆t) = X(t) + ∆tX▪(t + ∆t)
+
+===========================================================================
+SEMI-IMPLICIT METHODS
+===========================================================================
+No net energy loss/gain; curve won't collapse or expand
+
+X(t + ∆t) = X(t) + ∆tX▪(t + ∆t)         IMPLICIT EULER METHOD
+where X▪(t + ∆t) = X▪(t) + ∆tX▪▪(t)     EXPLICIT EULER METHOD
+
+===========================================================================
+VERLET INTEGRATION
+===========================================================================
+Good for position dependent forces (springs)
+X(t + ∆t) = X(t) + X▪(t)∆t + (∆t²/2) X▪▪(t)
+X(t - ∆t) = X(t) - X▪(t)∆t + (∆t²/2) X▪▪(t)
+X(t + ∆t) + X(t - ∆t) = 2X(t) + ∆t²X▪▪(t)
+
+⁂ X(t + ∆t) = 2X(t) - X(t - ∆t) + ∆t²X▪▪(t)
+
+===========================================================================
+STIFF EQUATIONS
+===========================================================================
+▪ Differential equation for which explicit integration is unstable unless 
+  using extremely small timesteps
+▪ Faster/more stable/more accurate to use implicit methods with larget 
+  timestep than explicit with small timestep
+
+Eg(1): FOR EQUATION: dx/dt = -kx
+
+ USING EXPLICIT EULER                 USING IMPLICIT EULER
+ as k∆t --> ∞ position becomes        as k∆t --> ∞ position gets
+ unstable                             closer to zero which is accurate
+ x(t+∆t) = x(t) + ∆tv(t)              x(t+∆t) = x(t) + ∆tv(t+∆t)
+         = x(t) + ∆t(-kx(t))                  = x(t) + ∆t(-kx(t+∆t))
+         = (1-k∆t)x(t)                        = x(t)/(1+k∆t)
+
+//////////////////////////////////////////////////////////////////////////////
+//STATE SPACE MODELS
+//////////////////////////////////////////////////////////////////////////////
+
 LINEAR SYSTEM:      X▪(t) = AX(t) + Bu(t)  Use matrix A/B every timestep
-NON-LINEAR SYSTEM:  X▪(t) = f(X(t),u(t))   Use integration methods every 
-                                           timestep
+NON-LINEAR SYSTEM:  X▪(t) = f(X(t),u(t))   Use integration methods every timestep
 
 USER INPUT: u(t) = g(Y(t))      
     u(t): inputs into system
     Y(t): user observations about surroundings
     g:    function mapping observations into inputs
     
-
 STATE SPACE MODEL
 Orientation of body doesn't change:
 
@@ -57,7 +142,6 @@ Orientation of body does change; Using basis of object:
     B(t) =  | rx  fx  ux |
             | ry  fy  uy |
             | rz  fz  uz |
-
 
 -----------------------------------------------------------
 eg(1) OBTAINING VALUES FOR LINEAR STATE SPACE MODELS
@@ -109,7 +193,6 @@ RELATING X and X▪:
     If Other Forces Involved:
     a(t) = Ωv(t) + g + (1/m)Fᵤ                                              
 
-
 //////////////////////////////////////////////////////////////////////////////
 //ERROR FEEDBACK CONTROL
 //////////////////////////////////////////////////////////////////////////////
@@ -147,7 +230,6 @@ Increase in K:
     - decrease time taken to get error to 0 by reducing error by larger values
     - can overshoot/undershoot 0 however and create oscillations
     - fix by using 2 of 3 values of K
-
 
 /////////////////////////////////////////////////////////////////////////////////
 //STEERING BEHAVIOURS
@@ -217,7 +299,6 @@ Look at future position of target and seek/flee from this position
 MOVE TOWARDS TARGET         MOVE AWAY FROM TARGET
 v'(t) = (vᵐᵃˣ)R̂(t)          v'(t) = -(vᵐᵃˣ)R̂(t)
 
-
 -----------------------------------------------------------------------
 COMPLEX STEERING BEHAVIOURS
 -----------------------------------------------------------------------
@@ -242,4 +323,55 @@ Problems include management as behaviours increase
 | behaviour1 < behaviour2 < behaviour3... |
  -----------------------------------------
 
- */////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+//CLOTH SIMULATION
+//////////////////////////////////////////////////////////////////////////////
+
+    |     |
+  --▪-----▪--
+    |\   /|     Stretch/Compression: Horizontal/Vertical springs
+    | \▪/ |     Shear: Diagonal springs
+    | / \ |     Bending: Structural contraints or link every second horizontal
+    |/   \|              and vertical vertex
+  --▪-----▪--
+    |     |
+
+ SINGLE SPRING MODEL:
+ --------------------------------------------------------------------
+    r        Fˢ(t) = -kˢx(t)     
+ ▪ᵃ~~~▪ᵇ     Fᵈ(t) = -kᵈv(t)
+             F(t) = Fˢ(t) + Fᵈ(t) + mg
+             a(t) = (¹/m)F(t)
+ --------------------------------------------------------------------
+ Fˢ(t) = Force due to spring compression/extension
+ Fᵈ(t) = Force used to dampen the spring and stop is oscillating
+ x(t) = (∆length of spring)̂x = (‖r‖ - l₀)x̂ = (‖r‖ - l₀)x̂ = (‖x(t)-x(0)‖ - l₀)x̂
+ v(t) = vᵇ(t) - vᵃ(t)
+
+ F(t) = Fˢ(t) + Fᵈ(t) + mg
+ a(t) = (1/m)(Fˢ(t) + Fᵈ(t) + mg)
+
+
+//////////////////////////////////////////////////////////////////////////////
+//PARTICLES/FLUID SIMULATION
+//////////////////////////////////////////////////////////////////////////////
+
+VISCOSITY = Thickness, internal friction and resistance to flow
+SURFACE TENSION = Resistance of external objects/forces
+BUOYANCY = Upward acting force by water on objects
+WAVE DAMPENING = Wave aging
+INTERNAL PRESSURE = Pressure each particle exerts on the others to deform
+EXTERNAL PRESSURE = Pressure daemons/emitters exert on particles to deform
+WATER DENSITY = 1000
+
+BUOYANCY EFFECT:
+SINK: Object Density > Liquid Density
+FLOAT: Object Density < Liquid Density
+
+--------------------------------
+| DENSITY = MASS / VOLUME(m³) |
+--------------------------------
+Increasing Mass increases Density
+
+
+*/////////////////////////////////////////////////////////////////////////////

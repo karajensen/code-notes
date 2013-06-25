@@ -3,10 +3,8 @@
 //////////////////////////////////////////////////////////////////////////////
 /*
 
-KINEMATICS: 
-the study of the motion of objects without regard to the causes of this motion
-DYNAMICS: 
-the study of the affect of forces and torques applied to objects having mass
+KINEMATICS: the study of the motion of objects without regard to the causes of this motion
+DYNAMICS: the study of the affect of forces and torques applied to objects having mass
 
 KE  KINEMATIC ENERGY: energy due to motion
 GPE GRAVITATIONAL POTENTIAL ENERGY: Energy stored due to height of object
@@ -25,8 +23,7 @@ d  DISTANCE
 v  LINEAR VELOCITY: Time rate of change of displacement
 w  ANGULAR VELOCITY: Speed at which object is rotating
 vᵀ TANGENTIAL VELOCITY: velocity tangent to the path taken due to rotation
-vᵗ TRANSLATIONAL VELOCITY: velocity in direction of movement of whole body due 
-                           to translation
+vᵗ TRANSLATIONAL VELOCITY: velocity in direction of movement of whole body due to translation
 
 a  LINEAR ACCELERATION: Time rate of change of velocity
 aᶜ CENTRIPETAL ACCELERATION: Linear acceleration directed towards origon
@@ -40,8 +37,7 @@ p  MOMENTUM: change in inertia; amount an object will resist changes to vel
 J  IMPULSE: Force applied over a set time
 L  ANGULAR MOMENTUM
 τ  TORQUE: Rotational Force 
-i  MOMENT OF INERTIA: measure of an object's resistance to changes to its 
-                      rotation (given 3x3 matrix)
+i  MOMENT OF INERTIA: measure of an object's resistance to changes to its rotation (given 3x3 matrix)
 
 B(t)  ORIENTATION MATRIX
 X(t)  STATE SPACE MODEL
@@ -312,7 +308,6 @@ POINT/BODY ROTATING AROUND AN AXIS: no change in body's orientation
      Point P rotates around an axis with center Or
      x(t) is the radius vector from Or to point P
      w(t) = sŵ where s = Speed (radians per sec)
-
 
 POINT FIXED TO A ROTATING BODY: change in body's orientation
     A force F is applied to Point P on an object which results in a torque

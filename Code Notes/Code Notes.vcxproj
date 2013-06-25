@@ -132,15 +132,12 @@
     <ClCompile Include="Design and Theory\Software Development.cpp" />
     <ClCompile Include="Exceptions.cpp" />
     <ClCompile Include="Game Programming\AI and pathfinding.cpp" />
+    <ClCompile Include="Game Programming\Bullet.cpp" />
     <ClCompile Include="Game Programming\Collisions.cpp" />
-    <ClCompile Include="Game Programming\Integration.cpp" />
     <ClCompile Include="Game Programming\Maths.cpp" />
-    <ClCompile Include="Game Programming\Model-driven Systems.cpp" />
+    <ClCompile Include="Game Programming\Simulation.cpp" />
     <ClCompile Include="Game Programming\Physics.cpp" />
-    <ClCompile Include="Game Programming\Soft Body Simulation.cpp" />
     <ClCompile Include="Graphics Programming\Directx.cpp" />
-    <ClCompile Include="Graphics Programming\Lighting.cpp" />
-    <ClCompile Include="Graphics Programming\Mental Ray Nodes.cpp" />
     <ClCompile Include="Graphics Programming\Mental Ray.cpp" />
     <ClCompile Include="Graphics Programming\OpenGL.cpp" />
     <ClCompile Include="Graphics Programming\Post Effects.cpp" />
@@ -159,7 +156,7 @@
     <ClCompile Include="Languages\Maya API Locator Class.cpp" />
     <ClCompile Include="Languages\Maya API Node Class.cpp" />
     <ClCompile Include="Languages\Maya API.cpp" />
-    <ClCompile Include="Languages\Maya Expressions.cpp" />
+    <ClCompile Include="Languages\Scene.cpp" />
     <ClCompile Include="Languages\MEL algorithms.cpp" />
     <ClCompile Include="Languages\MEL animation.cpp" />
     <ClCompile Include="Languages\MEL forms.cpp" />
@@ -250,6 +247,7 @@
     <None Include="IMAGES\Optimising - Portals.png" />
     <None Include="IMAGES\Optimising - View Frustum.gif" />
     <None Include="IMAGES\Pattern - observer.png" />
+    <None Include="Images\Physics - constraints.png" />
     <None Include="IMAGES\Physics - kinematics.png" />
     <None Include="IMAGES\Render - Projection Matrix.PNG" />
     <None Include="IMAGES\Render - Projection Matrix2.PNG" />

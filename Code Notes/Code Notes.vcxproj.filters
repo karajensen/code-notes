@@ -50,6 +50,9 @@
     <Filter Include="Languages\Code Examples">
       <UniqueIdentifier>{c5a5c66f-251b-4981-b12d-cc93dac934dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Languages\Maya Plugin Templates">
+      <UniqueIdentifier>{f4b28f55-3d6d-44e6-9f44-0420248e5765}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Design and Theory\Code Examples\Example - DFS with Minimax.cpp">
@@ -142,28 +145,13 @@
     <ClCompile Include="Game Programming\Collisions.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Integration.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
     <ClCompile Include="Game Programming\Maths.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Programming\Model-driven Systems.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
     <ClCompile Include="Game Programming\Physics.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Soft Body Simulation.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics Programming\Directx.cpp">
-      <Filter>Graphics Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics Programming\Lighting.cpp">
-      <Filter>Graphics Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics Programming\Mental Ray Nodes.cpp">
       <Filter>Graphics Programming</Filter>
     </ClCompile>
     <ClCompile Include="Graphics Programming\Mental Ray.cpp">
@@ -202,19 +190,7 @@
     <ClCompile Include="Languages\Maxscript.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
-    <ClCompile Include="Languages\Maya API Command Class.cpp">
-      <Filter>Languages</Filter>
-    </ClCompile>
-    <ClCompile Include="Languages\Maya API Locator Class.cpp">
-      <Filter>Languages</Filter>
-    </ClCompile>
-    <ClCompile Include="Languages\Maya API Node Class.cpp">
-      <Filter>Languages</Filter>
-    </ClCompile>
     <ClCompile Include="Languages\Maya API.cpp">
-      <Filter>Languages</Filter>
-    </ClCompile>
-    <ClCompile Include="Languages\Maya Expressions.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
     <ClCompile Include="Languages\MEL algorithms.cpp">
@@ -327,6 +303,24 @@
     </ClCompile>
     <ClCompile Include="Templates.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Bullet.cpp">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Simulation.cpp">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\Maya API Command Class.cpp">
+      <Filter>Languages\Maya Plugin Templates</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\Maya API Node Class.cpp">
+      <Filter>Languages\Maya Plugin Templates</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\Maya API Locator Class.cpp">
+      <Filter>Languages\Maya Plugin Templates</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\Scene.cpp">
+      <Filter>Graphics Programming</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -614,6 +608,9 @@
     </None>
     <None Include="Symbols.txt" />
     <None Include="Differences.txt" />
+    <None Include="Images\Physics - constraints.png">
+      <Filter>Game Programming\Images</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\assimpmesh.h">

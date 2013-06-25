@@ -221,7 +221,7 @@ public class MyClass : IEquatable<MyClass>
     //returns hash int value for equality testing/indexing in a collection
     public override int GetHashCode()
     {
-        return m_index;
+        return base.GetHashCode();
     }
 
     //OPERATOR ==/!=

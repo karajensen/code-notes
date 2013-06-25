@@ -40,7 +40,6 @@ Extends rays tracing where new rays are created and traced for any points of
 intersection of objects. Takes into account indirect lighting/global 
 illumination 
 
-
 //////////////////////////////////////////////////////////////////////////////  
 //REAL-TIME RENDERING / RASTERIZATION RENDER PIPELINES
 //////////////////////////////////////////////////////////////////////////////  
@@ -144,33 +143,8 @@ DEFERRED SHADING
 
 
 ////////////////////////////////////////////////////////////////////////////// 
-//TRANSFORMATIONS
+//RENDERING TRANSFORMATIONS
 ////////////////////////////////////////////////////////////////////////////// 
-
-------------------------------------------------------------------
-OPENGL: Column Major Matrix / Right Handed Coordinate System
-------------------------------------------------------------------
-Trans * Rot * Scale = LocalWorld
-ParentWorld * LocalWorld = World
-Proj * Veiw * World * Vertex = FinalVertex in screenspace
-
-| Right.x  Up.x  For.x  Pos.x |    UP: +Y
-| Right.y  Up.y  For.y  Pos.y |    RIGHT: +X
-| Right.z  Up.z  For.z  Pos.z |    FORWARD: -Z
-|   0       0       0     1   |
-
-------------------------------------------------------------------
-DIRECTX: Row Major Matrix / Left Handed Coordinate System
-------------------------------------------------------------------
-Scale * Rot * Trans = LocalWorld
-LocalWorld * ParentWorld = World
-Vertex * World * View * Proj = FinalVertex in screenspace
-
-| Right.x  Right.y   Right.z  0 |   UP: +Y
-| Up.x     Up.y      Up.z     0 |   RIGHT: +X
-| For.x    For.y     For.z    0 |   FORWARD: +Z
-| Pos.x    Pos.y     Pos.z    1 |
-
 
 ==============================================================================
 VIEW MATRIX
@@ -428,125 +402,5 @@ D3DSTENCILOP_DECR: Decrement the buffer entry, wraps to max if goes under 0
 //Stencil write mask
 gd3dDevice->SetRenderState(D3DRS_STENCILWRITEMASK, 0x0000ffff);
 NewValue = Value & WriteMask
-
-
-//////////////////////////////////////////////////////////////////////////////  
-//CAMERAS
-//////////////////////////////////////////////////////////////////////////////  
-
-----------------
-|  YAW:    Y   |
-|  PITCH:  X   |
-|  ROLL:   Z   |
-----------------
-
-FIXED POSITION: No movement of camera
-FIRST PERSON: Player is camera
-THIRD PERSON: Camera floats above player
-LOOK-AT POSITION: Position of target object
-DESIRED POSITION: Position where camera intends to move to
-ORIENTATION: Current direction in world space; Yaw, pitch, roll
-
-=============================================================================
-GIMBAL LOCK
-=============================================================================
-A set of three gimbals mounted together to allow three degrees of freedom
-If the middle gimbal is rotated greater than 90, the top and bottle gimbals 
-are aligned and in gimbal lock losing a degree of freedom. 
-
-MATRICES: 
-- Suffer from gimbal lock
-- More storage space needed (12 values)
-
-QUATERNIONS: 
-- Fix gimbal lock
-- Less storage space needed (4 values, 1 scale, 3 translation = 8)
-- Have to compute a final matrix from them anyway
-
-            
-////////////////////////////////////////////////////////////////////////////// 
-//CULLING/SCENE OPTIMISATION
-////////////////////////////////////////////////////////////////////////////// 
-
-LINEAR INTERPOLATION: Line between two points used to approximate the curve 
-SPHERICAL INTERPOLATION: Smoothly interplates between two values 
-BRUTE FORCE RENDERING: Rendering out entire mesh without any optimization
-
-1)    FAR PLANE CULLING
-2)  FRUSTUM CULLING
-3)    FRONT/BACKFACE CULLING
-4)  CLIPPING
-5)    OCCULSION CULLING
-
-FARPLANE CULLING
-• Any objects past the farplane are culled
-• Limitation is if plane is too close objects seen disappearing
-• This can be fixed by using fog to hide far distances
-
-FRUSTUM CULLING
-• Only objects in frustum are drawn. 
-• If Polygon outside it's not visible and hence discarded
-• If partially inside its clipped so outside parts are removed
-
-FRONT/BACKFACE CULLING
-• Winding order of vertices indicates which way polygon is facing
-    - Clockwise (DirectX)
-    - Counter clockwise (OpenGL)
-
-CLIPPING
-• Any screen space coordinates outside [–1,–1,0] to [1,1,1] culled
-
-OCCLUSION CULLING
-• Identifies parts of the scene visible/not visible to the viewer
-• Objects behind other objects are discarded
-• Can use a plane to represent occluder *similar to frustum culling)
-• Can use potential visible sets
-
-    POTENTIAL VISIBLE SETS
-    - The list a node keeps of which other nodes it can potentially see
-    - Pre-computed data which is then indexed at run time to quickly 
-      obtain an estimate of the visible geometry. 
-    - The camera view-space is subdivided into convex regions
-    - PVS is computed for each region.
-    - Convex areas are called SECTORS. 
-    - Adjacent sectors are linked to one another via PORTALS
-    - Best for indoor games with doors/windows for portals
-    - Well suited for recursive functions.
-
-    PVS PIPELINE:
-    1) Subdivide scene into convex regions called sectors
-    2) Calculate what other sectors can be seen by each one
-    3) Render scene from viewer's position with a viewing frustum
-    4) If a portal is seen into another sector clip the frustum using 
-       the portal as a guide for dimensions
-    5) Connecting sector is rendered but using the new frustum
-
-//////////////////////////////////////////////////////////////////////////////  
-//PRIMITIVES
-//////////////////////////////////////////////////////////////////////////////  
-
-POINT LISTS:  .    .    . .   .
-LINE LIST: ._________________. 
-LINE STRIP: ._______._______.___._______._____.
-
-TRIANGLE LISTS:
-     __
-    |\ | Triangle1 {1,2,3} Limitation is no sharing of vertices
-    |_\| Triangle2 {3,4,1} which increases vertex count
-
-TRIANGLE STRIPS: 
-     ___
-    |\ |\  Specify first four points then one
-    |_\|_\ point for every new triangle in strip
-
-TRIANGLE FANS:
-     ____
-    |\  /| All triangles connect
-    | \/ | to a common point
-    | /\ |
-    |/__\|
-
-CONVEX POLYGONS: line between two points in polygon never crosses border 
-CONCAVE POLYGONS: line between two points in polygon can cross border
 
 */////////////////////////////////////////////////////////////////////////////
