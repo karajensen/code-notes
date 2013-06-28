@@ -92,36 +92,6 @@ file.WriteEndDocument();
 file.Close();
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-//LINQ
-////////////////////////////////////////////////////////////////////////////////////////////
-using System.Linq;
-
-//LINQ data source is any object that supports the generic IEnumerable<T> interface
-int[] numbers = new int[7]{ 0, 1, 2, 3, 4, 5, 6 };
-List<int> numbers = new List<int>{ 0, 1, 2, 3, 4, 5, 6 };
-
-//Creating a query
-var myQuery = from num in numbers   //for each number
-              where (num % 2) == 0  //if number is even (optional line)
-              select num;           //use the number
-
-var myQuery = from item in myArray  
-              select item.GetValue();           
-
-//Executing query
-foreach (int item in myQuery)
-{
-    /*use the item*/
-}
-
-//Aggregate Methods; apply function to each successive element
-myQuery.Count(); // returns number of elements that pass condition
-myQuery.ToList(); // returns list of elements that pass condition
-myQuery.ToArray(); // returns array of elements that pass condition
-myQuery.Min(); // returns the minimum value in query
-
-
-////////////////////////////////////////////////////////////////////////////////////////////
 //WINDOWS FORMS
 ////////////////////////////////////////////////////////////////////////////////////////////
 using System.Windows.Forms;

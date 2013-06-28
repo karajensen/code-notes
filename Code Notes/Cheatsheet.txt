@@ -139,3 +139,6 @@
 [4] Constructor body called base->derived. Destructor body called derived->base
 
 [5] Always override ToString() as all user definded objects inherit System.Object
+
+[6] Always initialise with the declaration unless the variable is to have the 
+    default value that's auto-assigned

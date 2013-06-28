@@ -1,20 +1,45 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 //IENUMERABLE
 ////////////////////////////////////////////////////////////////////////////////////////////
+//LINQ queries can be used on containers that supports IEnumerable<T> interface
+//Most containers inherit from IEnumerable<T>
 
-IEnumerable<int> enumerable = new List<int>(){1,2,3};
+IEnumerable<int> myIEnum = myContainer.Where(item => item.IsActive()); // from subset of container
+IEnumerable<int> myIEnum = new List<int>(){1,2,3}; // from whole container
+IEnumerable<int> myIEnum = myContainer;
 
-// Getting IEnumerable subset of container (requires LINQ for .Where)
-IEnumerable<int> enumerable = myContainer.Where(item => item.IsActive());
+myIEnum.ToArray()   // Converting to array
+myIEnum.ToList()    // Converting to list
+myIEnum.Cast<int>() // Cast back to original container type
 
-enumerable.ToArray() // Converting to array
-enumerable.ToList() // Converting to list
-enumerable.Cast<int>() // Cast back to original container type
+// Query subset of container
+var myQuery = from item in myContainer //for each number
+              where (item % 2) == 0    //if number is even (optional line)
+              select item;             //use the number
 
-// Using in foreach loop
-foreach (string item in enumerable)
-{
-}
+// Call item method 
+var myQuery = from item in myArray  
+              orderby item.GetValue() descending
+              select item.GetValue();     
+
+// Array generation of 100 items
+var myQuery = from item in Enumerable.Range(0, 100)
+              select item * 2.0;
+
+// Nested queries, second from is nested inside first from
+var myQuery = from x in Enumerable.Range(0, 100)
+              from y in Enumerable.Range(0, 100)
+              select Tuple.Create(x, y);
+
+//Query Aggregate Methods; apply function to each successive element
+myQuery.Count(); // returns number of elements that pass condition
+myQuery.ToList(); // returns list of elements that pass condition
+myQuery.ToArray(); // returns array of elements that pass condition
+myQuery.Min(); // returns the minimum value in query
+
+//Using in loops
+foreach (int item in myIEnum)
+foreach (int item in myQuery)
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //STRINGS
@@ -28,6 +53,8 @@ string myString = 1; //doesn't auto convert
 
 str.ToUpper(); //returns upper case version
 str.ToLower(); //returns lower case version
+
+string.Empty //returns empty string
 
 //STRING BUILDER
 //string that can be modified directly

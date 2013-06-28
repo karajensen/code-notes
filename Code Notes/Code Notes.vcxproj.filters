@@ -393,9 +393,6 @@
     <None Include="IMAGES\Pattern - observer.png">
       <Filter>Design and Theory\Images</Filter>
     </None>
-    <None Include="IMAGES\Bits - HexConverting.png">
-      <Filter>Source Files\Images</Filter>
-    </None>
     <None Include="IMAGES\Buffer - Depth Buffer Testing.png">
       <Filter>Graphics Programming\Images</Filter>
     </None>
@@ -610,6 +607,12 @@
     <None Include="Differences.txt" />
     <None Include="Images\Physics - constraints.png">
       <Filter>Game Programming\Images</Filter>
+    </None>
+    <None Include="Images\Code - Iterators.png">
+      <Filter>Source Files\Images</Filter>
+    </None>
+    <None Include="IMAGES\Code - HexConverting.png">
+      <Filter>Source Files\Images</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

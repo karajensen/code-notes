@@ -1,18 +1,20 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <algorithm> 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-//• Equality lambda can be omitted as operator== can be used
-//• Preferable to use container's equivalent method for stability except for Begin(O)/End(O)
+//• Preferable to use container's equivalent method for stability
 //• All ranges are [Start, End) with End non-inclusive
+//• Sort function should always return false for equal values
+//• Algorithms that copy over a range can be changed to insert with back/front insert iterators
+//• Call reserve in advance before any copy/insert algorithms
 
 auto doCopyLam = [](MyClass o) -> MyClass { o.SomeMethod(); return o; };
 auto doLam = [](const MyClass& o) { o.SomeMethod(); };
 auto boolLam = [](const MyClass& o) ->bool { return o.Exists(); };
-auto equalLam = [](const MyClass& o1, const MyClass& o2) ->bool { return !(o1 == o2); }; //equal values should always return false
-auto sortLam = [](const MyClass& o1, const MyClass& o2) -> bool { return o1.myInt < o2.myInt; }; //equal values should always return false
+auto equalLam = [](const MyClass& o1, const MyClass& o2) ->bool { return o1 == o2; };
+auto sortLam = [](const MyClass& o1, const MyClass& o2) -> bool { return o1.myInt < o2.myInt; };
 auto createLam = []() -> int { return rand()%10; }
 struct DelFunctor { template<typename T> void operator()(const T* ptr) const { delete ptr; ptr = nullptr; } };
-
+                           
 //STATE
 all_of(S, E, boolLam) //If all objs return true then returns true, else false; If no objs in range returns true
 any_of(S, E, boolLam) //If any obj is true returns true, else false; If no objs in range returns false
@@ -473,41 +475,88 @@ myContainer.front() //get highest value on the heap
 
 std::end(O) //iterator pointing at one past end of container object
 std::begin(O) //iterator pointing at beginning of container object
-std::advance(myIt, n) //advance iterator by n; Random access iterators use +=/-= else ++/-- 
-std::distance(myIt1, myIt2) //returns int distance between 2 iterators, it2 must be after it1
+std::advance(itr, n) //advance iterator by n; Random access iterators use +=/-= else ++/-- 
+std::distance(itr1, itr2) //returns int distance between 2 iterators, it2 must be after it1
 
-//ITERATING OVER CONTAINER
-for (vector<int>::iterator it = scores.begin(); it != scores.end(); ++it)
-    it->myMethod();
+//Iterating over container
+for (vector<int>::iterator itr = scores.begin(); itr != scores.end(); ++itr)
+    itr->myMethod();
+
 for (auto& item : myVector) //doesn't work with vs2010
     int x = item;
 
-//REVERSE ITERATING
-vector<int>::reverse_iterator rit;
-for (rit = scores.rbegin(); rit = scores.rend(); rit++)
-    cout << *rit << endl;
+for (vector<int>::reverse_iterator rItr = scores.rbegin(); rItr = scores.rend(); ++rItr)
+    rItr->myMethod();
+
+//==================================================================================================
+//CONTAINER ITERATORS
+//==================================================================================================
+
+//ITERATOR
+vector<int>::iterator itr;
+*itr //dereferencing gives the value of an element pointed to
+
+//REVERSE ITERATOR
+vector<int>::reverse_iterator rItr;
+rItr.base() //returns normal iterator pointing to element one after rIt
+*rItr //dereferencing gives the value of an element one before the pointed to element
+O.erase(++rItr).base()); //erase element rIt holds
+
+//CONST ITERATOR
+vector<int>::const_iterator cItr;
+
+//converting between given cItr to itr
+vector<int>::iterator itr(myVec.begin());
+std::advance(itr, std::distance<vector<int>::const_iterator>(itr, cItr)); //move itr to where const itr is
+
+//==================================================================================================
+//INSERT ITERATORS
+//==================================================================================================
+
+//Algorithms that require a range to copy can insert instead
+transform(S, E, back_inserter(myCon), doCopyLam); //insert at end rather than copying
+transform(S, E, front_inserter(myCon), doCopyLam); //insert at front rather than copying
+transform(S, E, inserter(myCon, myCon.begin()+myCon.size()/2), doCopyLam); //insert in middle
+
+//BACK INSERT ITERATOR
+//inserts items at the end of the container. 
+//calls .push_back(), only used with containers that have it (vector, deque, string, list)
+back_insert_iterator<vector<int>> backIter; 
+back_inserter(myContainer) //creates back_insert_iterator
+
+//FRONT INSERT ITERATOR
+//inserts items at the front of the container.
+//calls .push_front(), only used with containers that have it (deque, list)
+front_insert_iterator<vector<int>> frontIter; 
+front_inserter(myContainer) //creates front_insert_iterator
+
+//INSERT ITERATOR
+//inserts items in front of the location specified as an argument
+insert_iterator<vector<int>> insertIter;
+inserter(myContainer, myContainer.begin()) //creates insert_iterator, inserts at given position
+
+//==================================================================================================
+//STREAM ITERATORS
+//==================================================================================================
 
 //OSTREAM ITERATOR
+//ineffecient due to lots of error checking/formatting
 ostream_iterator<int,char>out(cout, " "); //iterator<data type, char> name (stream, seperator between each item)
 *out_iter++ = 15;   // works like cout << 15 << " ";
 copy(object.begin(), object.end(), out); // copy vector to output stream, out is a function pointer
 
+//OSTREAMBUF ITERATOR
+//Faster than ostream_iterator
+ostreambuf_iterator
+
 //ISTREAM ITERATOR
-istream_iterator<int, char>(cin)
+//ineffecient due to lots of error checking/formatting
+ifstream myFile("myFile.txt");
+myFile.unset(ios::skipws); //disable skipping of whitespace (uses operator<< which skips by default)
+std::string myString((istream_iterator<char>(myFile)), istream_iterator<char>());
 
-//REVERSE ITERATOR
-vector<int>::reverse_iterator ri;
-*ri //dereferencing gives the value of an element one before the pointed to element
-
-//BACK INSERT ITERATOR
-// inserts items at the end of the container. can be used only with container types that 
-allow rapid insertion at the end
-back_insert_iterator<vector<int> > back_iter(v_array); 
-
-//FRONT INSERT ITERATOR
-// inserts items at the front. only with container types that allow constant time insertion at the beginning
-front_insert_iterator<vector<int> > front_iter(v_array); 
-
-//INSERT ITERATOR
-// inserts items in front of the location specified as an argument
-insert_iterator<vector<int> > insert_iter(v_array, v_array.begin())
+//ISTREAMBUF ITERATOR
+//Faster than istream_iterator, doesn't skip over any character
+//directly grabs what's next in stream buffer, no extra checking/formatting
+ifstream myFile("myFile.txt");
+std::string myString((istreambuf_iterator<char>(myFile)), istreambuf_iterator<char>());
