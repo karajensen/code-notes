@@ -2,7 +2,7 @@
 //CLASSES
 //////////////////////////////////////////////////////////////////////////////
 
-class MyClass
+class MyClass /*doesn't require name*/
 {
 public:
 
@@ -16,6 +16,7 @@ public:
     MyClass& operator=(MyClass && obj);         //move assignment operator
     static int StaticFunction(int x);           //static function
     operator double();                          //cast operator
+    int MyMethod(){ return 0; }                 //implicitely inline for a class
     
 private:
 
@@ -76,6 +77,14 @@ MyClass& MyClass::operator=(const MyClass& obj)
     return *this;
 }
 
+//CLASS METHOD
+//'this' pointer a hidden parameter passed
+//const method makes 'this' pointer const
+void MyClass::MyMethod()
+{
+    this->m_member = 10;
+}
+
 //SINGLE ARGUMENT CONSTRUCTOR
 //use explicit stop implicit conversions from taking place
 //otherwise works similar to a cast operator
@@ -123,16 +132,12 @@ ONE one(TWO(3)); //can be done; realises it's object creation
 ONE one((TWO(x))); //can be done; realises it's object creation
 ONE one(two); //where two = TWO(x) can be done
 
-
 //////////////////////////////////////////////////////////////////////////////
-//TYPES OF CLASSES
-//////////////////////////////////////////////////////////////////////////////
-
-//=========================================================================
 //STRUCTURES
-//=========================================================================
+//////////////////////////////////////////////////////////////////////////////
+
 //Clas with members public by default
-struct MyStruct
+struct MyStruct /*doesn't require name*/
 {
     float x;
     float y;
@@ -141,9 +146,10 @@ struct MyStruct
 //creating a new object from mystructure
 MyStruct obj = {32, 23.1}; 
 
-//=========================================================================
+//////////////////////////////////////////////////////////////////////////////
 //AGGREGATES
-//=========================================================================
+//////////////////////////////////////////////////////////////////////////////
+
 //NO: Constructors, virtual methods, private/protected non-static data members
 class Aggregate 
 {
@@ -160,9 +166,10 @@ private:
 };
 Aggregate obj = {3}; //can be initialized with {}
 
-//=========================================================================
+//////////////////////////////////////////////////////////////////////////////
 //PLAIN OLD DATA (POD)
-//=========================================================================
+//////////////////////////////////////////////////////////////////////////////
+
 //NO: Constructors, virtual methods, private/protected non-static data members
 //NO: Destructors, assignment operators
 class POD 
@@ -209,7 +216,6 @@ const MyClass operator*(const double val) const;
 A = 2.0 * B /*->*/ A = operator*(2.0, B); 
 friend const MyClass operator*(const double val, const MyClass& obj) const;
 
-
 //OVERLFOADING STD::COUT 
 friend std::ostream & operator<<(std::ostream& os, const MyClass& obj); 
 std::ostream & TestClass::operator<<(std::ostream & os, const MyClass& obj)
@@ -239,7 +245,6 @@ Matrix::operator Float3()
 }
 Float3 myVector = Float3(myMatrix);
 
-
 //////////////////////////////////////////////////////////////////////////////
 //FRIENDS
 //////////////////////////////////////////////////////////////////////////////
@@ -257,7 +262,6 @@ class B
 public:
     void B::MyMethod(); //method can access privates of A
 };
-
 
 //FRIEND CLASSES
 class A

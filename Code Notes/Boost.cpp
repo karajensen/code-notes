@@ -2,32 +2,40 @@
 //BOOST LIBRARIES
 ///////////////////////////////////////////////////////////////////////////
 
-#include <boost/foreach.hpp>
-BOOST_FOREACH(Shader_Ptr shader, m_shaders)
+//PREVENT COPYING OF CLASSES
+//inherits privately, gives compiler error if copying occurs
+class MyClass : boost::noncopyable 
 
-#include <boost/assign/list_of.hpp>
-boost::assign::list_of<T>("one")("two"); //returns std::vector<T>
-
-#include <boost/noncopyable.hpp>
-class Game : boost::noncopyable //inherits privately, gives compiler error if copying occurs
-
-#include <boost/optional.hpp>
+//OBJECT WITH OPTIONAL NONE
 boost::optional<double> myOptional;
 myOptional.is_initialized(); //check if has a value assigned
 myOptional = 2.0; //assign a value
 myOptional = boost::none; //assign no value
 
+//BOOST DATE/TIME
+boost::gregorian::date today = boost::gregorian::day_clock::universal_day();
+std::string today = boost::gregorian::to_iso_string(today);
 
 ///////////////////////////////////////////////////////////////////////////
-//BOOST STRING
+//CONTAINERS
+///////////////////////////////////////////////////////////////////////////
+
+//ITERATE OVER CONTAINERS
+BOOST_FOREACH(Shader_Ptr shader, m_shaders)
+
+//FILL A STD::VECTOR
+boost::assign::list_of<T>("one")("two"); //returns std::vector<T>
+
+///////////////////////////////////////////////////////////////////////////
+//STRINGS
 ///////////////////////////////////////////////////////////////////////////
 
 #include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
 
-boost::algorithm::to_lower(str); //all lower case
-boost::algorithm::to_upper(str); //all upper case
-boost::algorithm::trim(str);     //removes spaces at start/end of string
-
+boost::algorithm::to_lower(str);                     //all lower case
+boost::algorithm::to_upper(str);                     //all upper case
+boost::algorithm::trim(str);                         //removes spaces at start/end of string
 boost::algorithm::iequals(str1,str2);                //case-sensitive comparison
 boost::algorithm::istarts_with(str,"text");          //returns true or false
 boost::algorithm::iends_with(str, ".exe");           //returns true or false
@@ -39,12 +47,7 @@ boost::algorithm::replace_all(str,"one","three");    //replaces all one with thr
 boost::algorithm::erase_all(str, " ");               //erase all spaces      
 boost::algorithm::erase_head(str, 6);                //erase first 6 characters
 
-//////////////////////////////////////////////////////////////////////////////
 //BOOST LEXICAL CAST
-//////////////////////////////////////////////////////////////////////////////
-
-#include <boost/lexical_cast.hpp>
-
 str = boost::lexical_cast<string>(number);   //number->string
 number = boost::lexical_cast<int>(str);      //string->number
 number = boost::lexical_cast<unsigned int>("-1") //returns a large number!!
@@ -55,7 +58,7 @@ catch(const boost::bad_lexical_cast& e)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//BOOST NUMBERS
+//NUMBERS
 //////////////////////////////////////////////////////////////////////////////
 
 #include <boost/numeric/conversion/converter.hpp>
@@ -77,8 +80,31 @@ catch (boost::numeric::positive_overflow const &)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//FILES
+//SMART POINTERS
 //////////////////////////////////////////////////////////////////////////////
+
+#include "boost/smart_ptr.hpp"
+
+// SCOPED POINTER
+// Single ownership, no transfer
+boost::scoped_ptr<MyClass> scopedPtr(new MyClass());
+scopedPtr.reset(new MyClass());
+
+// SHARED POINTER
+// Shared ownership, destroys when reference = 0
+boost::shared_ptr<MyClass> sharedPtr(new MyClass());
+sharedPtr.reset(new MyClass());
+
+// WEAK POINTER
+// observer of shared pointer; goes null when shared_ptr reference = 0
+boost::weak_ptr<MyClass> weakPtr(sharedPtr);
+
+
+//////////////////////////////////////////////////////////////////////////////
+//FILESYSTEM
+//////////////////////////////////////////////////////////////////////////////
+
+#include <boost/filesystem.hpp>
 
 filesystem::path filePath("MyFile.txt");
 filesystem::exists(filePath)
@@ -99,7 +125,6 @@ filesystem::rename(filePath,prevPath);
 //INPUT/OUTPUT
 //////////////////////////////////////////////////////////////////////////////
 
-#include <boost/filesystem.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
@@ -108,6 +133,10 @@ filesystem::rename(filePath,prevPath);
         <three>5</three>
     </two>
 </one>
+
+//=======================================================================
+//READING XML
+//=======================================================================
 
 filesystem::path filePath("Meshes.xml");
 if(filesystem::exists(filePath))
@@ -143,9 +172,28 @@ else
     return false;
 }
 
+// Gets the correct value depending on if it exists in the tree
+template<typename T> 
+T GetValue(boost::property_tree::ptree::iterator& it, T defaultValue, char* node)
+{
+    int count = it->second.count(node);
+    if(count > 0)
+    {
+        if(count > 1)
+        {
+            Logger::LogInfo(std::string("Warning: node ") + node + " is duplicated");
+        }
+        return boost::lexical_cast<T>(it->second.get_child(node).data());
+    }
+    return defaultValue;
+}
 
 tree.size(); // Size of direction children for a property tree
 tree.count("X"); // NUmber of direct children called X
+
+//=======================================================================
+//WRITING XML
+//=======================================================================
 
 // Adding nodes: Nodes added inside to outside
 ptree root;
@@ -158,32 +206,3 @@ root.add_child("one",one);
 // Writing property tree to xml
 property_tree::xml_parser::xml_writer_settings<char> settings('\t', 1);
 property_tree::write_xml(filePath.generic_string(), root, std::locale(), settings);
-
-//////////////////////////////////////////////////////////////////////////////
-//BOOST SMART POINTERS
-//////////////////////////////////////////////////////////////////////////////
-
-#include "boost/smart_ptr.hpp"
-
-// SCOPED POINTER
-// Single ownership, no transfer
-boost::scoped_ptr<MyClass> scopedPtr(new MyClass());
-scopedPtr.reset(new MyClass());
-
-// SHARED POINTER
-// Shared ownership, destroys when reference = 0
-boost::shared_ptr<MyClass> sharedPtr(new MyClass());
-sharedPtr.reset(new MyClass());
-
-// WEAK POINTER
-// observer of shared pointer; goes null when shared_ptr reference = 0
-boost::weak_ptr<MyClass> weakPtr(sharedPtr);
-
-//////////////////////////////////////////////////////////////////////////////
-//BOOST DATE/TIME
-//////////////////////////////////////////////////////////////////////////////
-
-// Opens/Appends if exists a logfile of the current date
-boost::gregorian::date currentdate = boost::gregorian::day_clock::universal_day();
-std::string filename = "Logfile_" + boost::gregorian::to_iso_string(currentdate) + ".txt";
-m_logfile.open(filename,std::ios_base::out|std::ios_base::app);

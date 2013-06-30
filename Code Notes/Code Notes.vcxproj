@@ -88,7 +88,6 @@
     <ClCompile Include="Boost.cpp" />
     <ClCompile Include="C# Notes.cpp" />
     <ClCompile Include="C++CLI.cpp" />
-    <ClCompile Include="Callbacks.cpp" />
     <ClCompile Include="Class Notes.cpp" />
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Classes\assimpmesh.cpp" />
@@ -130,7 +129,6 @@
     <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Template.cpp" />
     <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Visitor.cpp" />
     <ClCompile Include="Design and Theory\Software Development.cpp" />
-    <ClCompile Include="Exceptions.cpp" />
     <ClCompile Include="Game Programming\AI and pathfinding.cpp" />
     <ClCompile Include="Game Programming\Bullet.cpp" />
     <ClCompile Include="Game Programming\Collisions.cpp" />

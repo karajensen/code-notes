@@ -3,16 +3,6 @@
 //////////////////////////////////////////////////////////////////////////////
 /*
 
-BIG-O NOTATION:
-- Used to describe the performance of algorithm based on item amount
-- O(1) = doesn't depend on number of items
-- O(N) = depends on nummber of items using a power-of curve
-- O(logN) = depends on the number of items using a log curve
-
-COMPILE TIME: action performed during compilation; uses no execution time.
-CONSTANT TIME: time taken doesn't increase with number of elements
-LINEAR TIME: time taken increases with number of elements
-
 ALGORITHM LIST:
  •  Linear Search
  •  Binary Search
@@ -27,6 +17,7 @@ ALGORITHM LIST:
 //////////////////////////////////////////////////////////////////////////////
 //PARTITIONING ALGORITHM
 //////////////////////////////////////////////////////////////////////////////
+
 USED: Split data into two sections
 PIVOT: Condition to partition data into sections
 SPEED: O(N)

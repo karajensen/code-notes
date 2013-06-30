@@ -10,13 +10,6 @@ STRUCTURE LIST
  • Heaps             • Minimax trees        • Sectors
  • Graphs            • kd trees
 
-STRUCTURE STATS
- Insertion to start/end of array  O(1)
- Insertion into ordered array     O(N)
-
- Ordered Arrays: Fast to search, slow to organise
- Un-ordered Arrays: Slow to search, fast to organise
-
 //////////////////////////////////////////////////////////////////////////////
 //HASH TABLES
 //////////////////////////////////////////////////////////////////////////////

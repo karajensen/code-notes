@@ -2,226 +2,99 @@
 //TEMPLATE FUNCTIONS
 //////////////////////////////////////////////////////////////////////////////
 
-//-------------------------------------------------------------------
-//TRAILING RETURN TYPE
-//-------------------------------------------------------------------
-//shifts the return type to after the function arguments
-double myFunction(int x, int y) {} /*or*/
-auto myFunction(int x, int y) -> double {}
-auto myFunction(int x, int y) -> decltype(x) {} //make return type same as x
+//IMPLICIT INSTANTIATION
+//Compiler substitutes T for the variable needed
+//only types that require it will create a version of the template
+//class/typename interchangable
+template <class T> void MyFunction(T x);
+template <typename T> void MyFunction(T x);
 
+//EXPLICIT SPECIALISATION
+//don't use template; use a specialised function coded instead
+template <> void MyFunction(char x, char y); 
+
+//EXPLICIT INSTANTIATION
+//use template to create function for type int
+template void MyFunction<int>(int x, int y); 
+
+//TRAILING RETURN TYPE
 //useful for template functions when return type isn't known
-template<class T, class C>
+template<typename T, typename C>
 auto myFunction(T x, C y) -> decltype(x+y){ return x+y; }
 
-//-------------------------------------------------------------------
-//TEMPLATES WITH CALLBACKS
-//-------------------------------------------------------------------
+//TEMPLATES FOR CALLBACKS
 template <typename T, typename F>
-T use_f(T v, F f){ return f(v); }
+T UseObjectWithFuntion(T obj, F fn){ return fn(obj); }
 
-//-------------------------------------------------------------------
-//EXPLICIT SPECIALISATION
-//-------------------------------------------------------------------
-//don't use template; use a specialised function coded instead
-template <> void testspec(char x, char y); 
-
-//-------------------------------------------------------------------
-//EXPLICIT INSTANTIATION
-//-------------------------------------------------------------------
-//use template to create function for type int
-template void Swap<int>(int x, int y); 
-
-//-------------------------------------------------------------------
-//IMPLICIT INSTANTIATION (normal)
-//-------------------------------------------------------------------
-//Compiler substitutes 'any' for the variable needed (int, double etc.)
-template <class Any> 
-void Swap(Any &a, Any &b) 
-{
-    Any temp; //declare new Any variable
-    temp = a;
-    a = b;
-    b = temp;
-}
-//-------------------------------------------------------------------
 //EXPLICITLY CALLING A VERSION OF A TEMPLATE
-//-------------------------------------------------------------------
-Swap<int>(var1, var2);
-Swap<float>(var1, var2);
+MyFunction<int>(x, y);
+MyFunction<float>(x, y);
 
 //////////////////////////////////////////////////////////////////////////////
 //CLASS TEMPLATES
 //////////////////////////////////////////////////////////////////////////////
 
 template <typename T, typename S = int> //int = default type, only allowed on class templates
-class Tclass
+class MyClass
 {
-private:
-    T * item;
 public:
 
-    //CONSTRUCTOR
-    Tclass(){ item = new T; }
+    MyClass<T>(); //constructor, <T> not required
+    ~MyClass<T>(); //destructor, <T> not required
+    MyClass<T>& operator=(const MyClass<T> & o); //assignment operator
+    MyClass(const MyClass<T> & c); //copy constructor
 
-    //DESTRUCTOR
-    ~Tclass(){ delete item; }
+private:
 
-    //METHODS
-    void TestFunction(const T & item){}
-
-    //ASSIGNMENT OPERATOR
-    Tclass<T> & operator=(const Tclass<T> & o)
-    {
-        if (this == &o)
-            return *this;
-        delete item;
-        item = new T;
-        *item =*o.item;
-        return *this;
-    }
-
-    //COPY CONSTRUCTOR
-    Tclass(const Tclass<T> & c)
-    {
-        item = new T;
-        *item = *c.item; 
-    }
-
-    //GENERALISED COPY CONSTRUCTOR
-    template<typename U>
-    Tclass(const Tclass<U>* other) : item(other) {}
-
-    //FRIEND CLASS WITH OPERATOR OVERLOAD
-    //use a non-member function (friend) to allow implicit conversion
-    friend const Tclass<T> operator*(const Tclass<T>& lhs, const Tclass<T>& rhs)
-    { return doMultiply(lhs, rhs); }
+    S m_member; //member of type S
 };
 
-//main.cpp
-Tclass<int> intobj; //create instantiation of class using template
-Tclass<int,double> pairObj; //for paired templates
+MyClass<int> intobj;
+MyClass<int,double> pairObj;
 
 //////////////////////////////////////////////////////////////////////////////
 //TEMPLATE INHERITANCE
 //////////////////////////////////////////////////////////////////////////////
 
 //BASE CLASS
-template <typename T> class BaseClass
+template <typename T> class Base
 {
 public:
-    BaseClass<T>(){}
-
-    void SomeFunction()
-    { 
-        /*do something*/ 
-    }
+    Base<T>;
+    void MyMethod();
 };
 
 //DERIVED CLASS
-template <typename T> class DerivedClass : public BaseClass<T> 
+template <typename T> class Derived : public Base<T> 
 {
-    //CONSTRUCTOR
-    DerivedClass():BaseClass<T>{}
+    Derived():Base<T>
+    {}
 
-    //CALLING BASE CLASS METHODS
-    void SomeFunction()
+    void MyMethod()
     {
-        //Need accesser as base class template methods cannot be found when using inheritance
-        BaseClass<T>::SomeFunction();
+        //Need accesser as base class template methods 
+        //cannot be found when using inheritance
+        Base<T>::MyMethod();
     }
 };
 
-
 //////////////////////////////////////////////////////////////////////////////
-//TEMPLATE SPECIALIZATIONS
+//PARTIAL SPECIALIZATIONS
 //////////////////////////////////////////////////////////////////////////////
 
-//-------------------------------------------------------------------
-//IMPLICIT INSTANTIATION (Normal use)
-//-------------------------------------------------------------------
-//compiler will create a class from the template for the object
-Tclass<int,double> Tobj;
-
-//-------------------------------------------------------------------
-//EXPLICIT INSTANTIATION
-//-------------------------------------------------------------------
-//the compiler uses the general template to generate an int instantiation 
-//even though no objects have yet been requested of that class.
-template class Tclass<int, 100>; //in main.cpp
-
-//-------------------------------------------------------------------
-//EXPLICIT SPECIALIZATION
-//-------------------------------------------------------------------
-//Uses this template instead of normal one for the specific type
-template <> 
-class Tclass<char *> //in Tclass.h
-{
-private:
-public:
-};
-
-//-------------------------------------------------------------------
 //PARTIAL SPECIALIZATION
-//-------------------------------------------------------------------
-//For specialising when there's more than one value passed in
-template <class T, class S> //original template
-class Pair 
-{
-};
-//specialising original template partially;
-//what's not specialised is in first <>
-template <class T> 
-class Pair<T, int> //S is specialised to int
-{
-};
+template <class T, class S> class Pair {}; //original template
+template <class T> class Pair<T, int> {}; //S is specialised to int
 
-//-------------------------------------------------------------------
 //POINTER PARTIAL SPECIALIZATION
-//-------------------------------------------------------------------
-template <class T>
-class Pair
-{
-};
-template <class T *>
-class Pair
-{
-};
+template <class T> class Pair {};
+template <class T*> class Pair {};
 
-//-------------------------------------------------------------------
 //RESTRICTING WITH PARTIAL SPECIALIZATION
-//-------------------------------------------------------------------
 //Alternative way to do default values
-template <class T, class S, class R>
-class Pair
-{
-};
-template <class T, class S> //what's not specialised goes here
-class Pair<T,S,S> //R is set to S
-{
-};
-
-Pair<int, float> pairObj; //makes R same type as S
-
-
-//////////////////////////////////////////////////////////////////////////////
-//TEMPLATES AS PARAMETERS
-//////////////////////////////////////////////////////////////////////////////
-
-//pass float into class two which is used as type for class one
-one < two <float> >;
-
-template <typename T>
-class two
-{
-};
-
-template < template<typename T> typename S>
-class one
-{
-private:
-    S oneobj; //make S using the type of T
-}
+template <class T, class S, class R> class Pair {}; //original template
+template <class T, class S> class Pair<T,S,S> {}; //R is specialised to S
+Pair<int, float> obj; //makes R same type as S
 
 //////////////////////////////////////////////////////////////////////////////
 //TEMPLATE CLASS FRIENDS
@@ -241,6 +114,7 @@ public:
 void Tclass::counts(Tclass<T> &)
 {
 };
+
 //---------------------------------------------------------------
 //BOUND TEMPLATE FRIEND FUNCTIONS
 //---------------------------------------------------------------
@@ -265,6 +139,7 @@ template <typename T>
 void testTwo(T & hf)
 {
 }
+
 //---------------------------------------------------------------
 //UNBOUND TEMPLATE FRIEND FUNCTIONS
 //---------------------------------------------------------------
@@ -274,7 +149,6 @@ class ManyFriend
 public:
     template <typename C, typename D> friend void testOne(C &, D &);
 };
-
 
 //////////////////////////////////////////////////////////////////////////////
 //TEMPLATE NESTED TYPES

@@ -66,9 +66,6 @@ CONST/READONLY VARIABLE DIFFERENCES:
 //CLASS
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-AGGREGATE METHODS: 
-Applies a function to each successive element
-
 INTERFACES
 • No contructors/destructors allowed
 • No Definitions or visibility accessors allowed
@@ -118,10 +115,6 @@ INDEXER/PROPERTY DIFFERENCES
 STRUCTS: Inherit no classes, multiple interfaces, auto inherits System.ValueType
 CLASSES: Inherit one class, multiple interfaces, auto inherits System.Object if none specified
 INTERFACES: Inherit no classes, multiple interfaces
-
-COVARIANCE: Allows assinging MyClass or derived from it to MyClass object [polymorphism basis]
-CONTRAVARIANCE: Allows assigning MyClass or what MyClass derived from to MyClass object 
-INVARIANCE: Allows neither
 
 SYSTEM.OBJECT
 • All reference/value types ultimately derive from System.Object

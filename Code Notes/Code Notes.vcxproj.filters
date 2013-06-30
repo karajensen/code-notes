@@ -127,12 +127,6 @@
     <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Visitor.cpp">
       <Filter>Design and Theory\Pattern Examples</Filter>
     </ClCompile>
-    <ClCompile Include="Design and Theory\Data Algorithms.cpp">
-      <Filter>Design and Theory</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Data Structures.cpp">
-      <Filter>Design and Theory</Filter>
-    </ClCompile>
     <ClCompile Include="Design and Theory\Design Patterns Overview.cpp">
       <Filter>Design and Theory</Filter>
     </ClCompile>
@@ -268,9 +262,6 @@
     <ClCompile Include="Boost.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Callbacks.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Class Notes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -281,9 +272,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Code.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Exceptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Inheritance.cpp">
@@ -321,6 +309,12 @@
     </ClCompile>
     <ClCompile Include="Languages\Scene.cpp">
       <Filter>Graphics Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Design and Theory\Data Structures.cpp">
+      <Filter>Design and Theory</Filter>
+    </ClCompile>
+    <ClCompile Include="Design and Theory\Data Algorithms.cpp">
+      <Filter>Design and Theory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

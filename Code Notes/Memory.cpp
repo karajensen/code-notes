@@ -1,90 +1,137 @@
 //////////////////////////////////////////////////////////////////////////////
-//MEMORY MANAGEMENT
+//POINTERS
 //////////////////////////////////////////////////////////////////////////////
 
-//ARRAY NAME: 
-// • Array name is address of first element
+int* myPointer = nullptr; //store null
+int* myPointer = &myInt;  //store address of variable
+int* myPointer = new int; //finds empty memory location on heap and allocates
+int* myPointer = (int*)0xB8000000; //explicitly store memory address
 
-//CSTRING/POINTER-TO-CHAR ARRAY/STRING LITERAL:
-// • name gives string
-// • &pointer gives address of pointer
-// • &chararray gives address of first character
-// • (void*)pointer gives address of string
+*myPointer = 4; //dereferencing accesses variable
+&myPointer; //gives address of pointer
+myPointer->member; //access member if object
+delete myPointer; //frees the block of memory
 
-//===========================================================================
-//POINTERS
-//===========================================================================
+//CONST POINTERS
+const int* ptr = &value; //Pointer to a constant int (can't change value)
+int* const ptr = &value; //Constant int pointer (can't change what ptr points to)
+const int* const ptr = &value //can't change value or what pointer points to
 
-// p_updates = address
-// *p_updates = value of updates
-// & gives the address of the variable in hex
-int updates = 6; 
-int * p_updates = &updates;
-                           
-//converts the number into a memory location
-p_updates =  (int*)0xB8000000 
-
-//DYNAMIC POINTERS
-int* p_new = new int //finds empty memory location for an int and allocates
-*p_new = 5 //stores value 5
-delete p_new //frees the block of memory
-
-&(*p_new) //gives address of int
-&p_new //gives address of pointer
-
-//===========================================================================
 //POINTER TO ARRAYS
-//===========================================================================
-int size;
-int * p_darray = new int [size]
-delete [] psome; //delete dynamic array
-*(p_darray + 1)  /*or*/  p_darray[1] //to access array
+int* myArray = new int[SIZE]; 
+int** myArrayPointer = &myArray;
 
-double dblarray[3];
-double * p_dbl = &dblarray[0];
+*(myArray+3) /*or*/ myArray[3] //to access elements
+delete [] myArray; //free array
 
-//size of arrays
-int * a = arr+size;
-int * b = arr;
-int size = a - b;
+//////////////////////////////////////////////////////////////////////////////
+//LAMBDAS
+//////////////////////////////////////////////////////////////////////////////
+//• Can't be templated
+//• Can't use auto with binding, must use std::function type
 
-//===========================================================================
-//POINTER TO ARRAY OF POINTERS
-//===========================================================================
-char ** p_charpointer = new char * [size];
+//LAMBDA SYNTAX
+auto myLamda = [](int x) { return 3*2; } //if only one line, can omit trailing return
+auto myLamda = [](int x)->double { return 3*2; }
+auto myLamda = &MyFunction; //storing pointer to function
+auto myLamda = MyFunctor; //storing functor object
+std::function<double(int)> myLamda = [](int x){ return x+2.0; }
 
-//must point each pointer in array to char block of memory before use
-for (int i = 0; i < size; i++)
-    p_charpointer[i] = new char [];
+//CAPTURING OUTSIDE VARIABLES
+//Can also capture member vars, functions etc.
+int myVar = 0;
+auto myLambda = [&myVar](int x){ myVar += 10; } //by reference
+auto myLambda = [myVar](int x){ myVar += 10; } //by value
+auto myLambda = [&](int x){ myVar += 10; } //use all vars in scope by ref
+auto myLambda = [=](int x){ myVar += 10; } //use all vars in scope by val
+auto myLambda = [&](int x){ MyClassFunction(x); m_myMember += 1; }
 
-//must delete array members
-for (int i = 0; i < size; i++)
-    delete [] p_charpointer[i];
-delete [] p_charpointer;
-    
-//===========================================================================
-//POINTER TO STRUCTURES
-//===========================================================================
-struct teststruct //structure
+//////////////////////////////////////////////////////////////////////////////
+//BINDING FUNCTIONS
+//////////////////////////////////////////////////////////////////////////////
+
+using namespace std::placeholders; //for _1, _2...
+void MyFunction(int x, double y, float z);
+
+//SETTING ALL ARGUMENTS
+auto fullFn = std::bind(&MyFunction, 1, 10.0, 2.0);
+fullFn();
+
+//FULL BINDING
+auto fullFn = std::bind(&MyFunction, _1, _2, _3); //_n maps to argument given
+fullFn(1,10.0,2.0); //use same as MyFunction, passes by-val default
+fullFn(1,10.0,std::cref(myFloat)); //pass in argument by-ref
+
+//PARTIALLY BINDING
+auto partialFn = std::bind(&MyFunction, _1, 10.0, _2); //map only two arguments
+partialFn(1,2.0); //only requires two arguments, middle is auto given
+
+//CHANGING ARGUMENT ORDER
+auto orderChangedFn = std::bind(&MyFunction, _3, _1, _2); //rearranges order of arguments
+orderChangedFn(1,10.0,2.0); //becomes MyFunction(2.0,1,10.0)
+
+//BINDING CLASS FUNCTIONS
+typedef std::function<void(int)> MyFn;
+auto memberFn = std::bind(&MyClass::MyMethod, _1, _2); //_1 is always object
+memberFn(&myObject, 2);
+
+//BINDING CLASS OBJECT TO CLASS FUNCTION
+typedef std::function<void(int)> MyFn;
+auto memberFn = std::bind(&MyClass::MyMethod, this, _1);
+auto memberFn = std::bind(&MyClass::MyMethod, &myObject, _1);
+memberFn(2) // object is bound with method
+
+//////////////////////////////////////////////////////////////////////////////
+//FUNCTORS
+//////////////////////////////////////////////////////////////////////////////
+
+std::plus<double> add; //create a plus<double> object
+std::plus<double>() //using as function
+double y = add(2.2, 3.4); //using plus<double>::operator()()
+
+template <class T> struct plus { T operator() (const T& x, const T& y) const {return x + y;} };
+template <class T> struct minus { T operator() (const T& x, const T& y) const {return x - y;} };
+template <class T> struct multiplies { T operator() (const T& x, const T& y) const {return x * y;} };
+template <class T> struct negate { T operator() (const T& x) const {return -x;} };
+template <class T> struct not_equal_to { bool operator() (const T& x, const T& y) const {return x != y;} };
+template <class T> struct less_equal { bool operator() (const T& x, const T& y) const {return x<=y;} };
+template <class T> struct less { bool operator() (const T& x, const T& y) const {return x<y;} };
+template <class T> struct greater { bool operator() (const T& x, const T& y) const {return x > y;} };
+template <class T> struct greater_equal { bool operator() (const T& x, const T& y) const {return x>=y;} };
+
+//////////////////////////////////////////////////////////////////////////////
+//FUNCTION POINTERS 
+//////////////////////////////////////////////////////////////////////////////
+
+//POINTER-TO-FUNCTION
+typedef bool (*p_function)(int x);
+p_function pf = &AddName; 
+pf(5);
+
+//POINTER-TO-MEMBER FUNCTIONS
+class Test
 {
-    int good;
-    int bad;
-};
-teststruct me = {3, 453}; //create a new instance of structure
-teststruct * p_me = &me; //assign its address to p_me
-teststruct * p_me = new teststruct;
+public:
+    
+    typedef void(Test::*Action)();
+    typedef void(Test::*ActionConst)() const;
 
-//to access members:
-&p_me->good //gives address of member
-p_me->good //gives value of member
-(*p_me).good  /*or*/ p_me[0].good //for struct arrays
+    void DrawConst(){} const;
+    void Draw(){}
+
+    Action m_action;
+    ActionConst m_actionconst;
+};
+
+m_action = &Test::Draw;
+m_actionconst = &Test::DrawConst;
 
 //////////////////////////////////////////////////////////////////////////////
 //SMART POINTERS
 //////////////////////////////////////////////////////////////////////////////
 
-if(ptr) //true if valid, false if null
-*ptr    //dereference pointer
+if(SmartPtr) //true if valid, false if null
+*SmartPtr    //dereference pointer
 
 //SHARED POINTER
 //multiple objects have references
@@ -111,8 +158,6 @@ std::unique_ptr<MyClass> up(new MyClass);
 
 //USING WITH POLYMORPHISM
 std::shared_ptr<Base> ptr(new Derived);
-
-//CASTING BASE TO DERIVED
 std::shared_ptr<Derived> dptr = std::dynamic_pointer_cast<Base>(ptr) //returns null if unsuccessful
 
 //CYCLIC DEPENDENCIES
@@ -176,7 +221,6 @@ auto_ptr<int> pr(&rigue); //can’t point to memory on the stack
 
 auto_ptr<int> p1(p2); //ownership is passed to p1 and p2 is set to nullptr
 
-
 //////////////////////////////////////////////////////////////////////////////
 //DEBUGGING MEMORY
 //////////////////////////////////////////////////////////////////////////////
@@ -230,13 +274,13 @@ int* pDestination = (int*)memmove(pDestination,pSource,SizeInBytes);
 //Reallocating memory
 int* pPointer = (int*)realloc(allocationSizeInBytes);
 
-
 //////////////////////////////////////////////////////////////////////////////
 //PLACEMENT NEW
 //////////////////////////////////////////////////////////////////////////////
 #include <new>
 
 //PLACEMENT NEW
+//places memory on stack rather than heap
 char buffer[512];
 int * p_buffer = new (buffer) int[SIZE]; 
                                                                  
@@ -244,7 +288,6 @@ int * p_buffer = new (buffer) int[SIZE];
 char* buffer = new char[512]; // get a block of memory
 Testclass* p_class = new (buffer) Testclass("hello") //place object in buffer
 p_class->~Testclass() //delete placement new 
-
 
 //////////////////////////////////////////////////////////////////////////////
 //SMART POINTERS CLASS EXAMPLE

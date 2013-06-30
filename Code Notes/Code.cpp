@@ -4,43 +4,33 @@
 
 Edit.ConvertTabsToSpaces
 
-//GLOBAL VARIABLES
-int pub; //static duration, external linkage
-static int priv; //static duration, internal linkage
-const int constint; //static duration
-extern int externalVar; //accesses public variables from another file
+int localVariable;
+static int localStatic; //Local static: keeps variable in memory even when function exits
+register int regInt; //may store variable in register not on stack: NO address, can't be global
+volatile int volInt; //don't cache value, check actual value each time its asked for
+mutable int mutInt; //value changes ignored for bitwise const checking, allows changes for const objects/methods
 
-//OTHER VARIABLES
-static int staticint; //keeps a local variable in memory even when func. exits
-register int regint; //may store variable in register not on stack: NO address
-::pub; //accesses global variables when shadowed by local variables
+//GLOBAL VARIABLES
+int myGlobalInt; //external linkage  (can be accessed via extern)
+static int myGlobalInt; //Global static: internal linkage (can't be accessed via extern)
+extern int myExternInt; //accesses global variables from another file
+::myGlobalInt; //accesses global variables when shadowed by local variables
 
 //AUTO VARIABLES
 auto x = 0  //automatically chooses 'int' for x
-auto iterator = myVectorArray.begin() //auto chooses correct iterator 
-auto ptr = &someRandomVar  //auto chooses correct pointer type
-auto ptr = &someFunction  //auto chooses correct function pointer
-decltype(y) val; //make val the same type as y
-decltype(x + y) val = x + y; //choose the type of combined x+y
-decltype(myFnt(y)) val; //make val same type as return of myFnt(y)
+decltype(y) myValue; //make myValue the same type as y
+decltype(myFnt(y)) myValue; //make myValue same type as return of myFnt(y)
 
 //TYPEDEF
 typedef decltype(x) myType; //can use decltype with typedef
 typedef int Item; //creates a new type of variable object of type int 
 typedef bool Item; //bool will use 4 bytes if typedefined to something else
 
-//SIMPLE VARIABLES
-long double testldbl = 22.2;
-unsigned short testshort = 34; //can never be negative- increases range
-long testlong = 0x16; //0x at beginning means hexadecimal
-char testchar = 'M' //testchar stores value for M and can be put into an int
-2+4; //okay without assignment
-
 //VARIABLE SIZES
-sizeof(testint) //gives size of testint in bytes
-sizeof(testarray) //gives size of whole array rather than first element
-sizeof(chararray) //size of whole char array
-sizeof(p_updates) //Gives the size of the pointer
+sizeof(myInt) //gives size of myInt in bytes
+sizeof(myArray) //gives size of whole array rather than first element
+sizeof(myCString) //size of whole char array
+sizeof(myPointer) //Gives the size of the pointer
 
 //VARIABLE INCREMENTING
 b = ++a //increment a and then use it in expression; b = new value of a
@@ -49,7 +39,6 @@ b = a++ //use a in expression then increment it after; b = old value of a
 i++ * ++i; // BAD: i is modified more than once
 i = ++i    // BAD: i is modified more than once
 ++i = 2;   // BAD: i is modified more than once
-i = ++i +1 // BAD: i is modified more than once
 
 //////////////////////////////////////////////////////////////////////////////
 //REFERENCES
@@ -57,14 +46,12 @@ i = ++i +1 // BAD: i is modified more than once
 
 int x //L-VALUES: Persisting variable on left side of assignment expression    
 3+1   //R-VALUES: Temporary variable on right side of assignment expression
+3+1   //Temporary value on left side allowable but doesn't do anything
 
 //STORING R-VALUES INTO L-VALUES
-//3+1 creates temp value, temp is assigned to x, temp is deleted
-int x = 3+1; int & x = 3+1;
-//3+1 creates temp value, x references temp
-int && x = 3+1; 
-//t is initialised with r-value but is l-value itself
-void foo(int&& t);
+int x = 3+1; int & x = 3+1; //3+1 creates temp value, temp is assigned to x, temp is deleted
+int && x = 3+1; //3+1 creates temp value, x references temp
+void foo(int&& t); //t is initialised with r-value but is l-value itself
 
 //FUNCTION RETURNS
 int   prvalue();
@@ -72,130 +59,81 @@ int&  lvalue();
 int&& xvalue();
 
 //////////////////////////////////////////////////////////////////////////////
-//CONSTNESS
+//C-STYLE ARRAYS/STRINGS
 //////////////////////////////////////////////////////////////////////////////
 
-const int* pv = &v; //Pointer to a constant int (can't change value)
-int* const pv = &v; //Constant int pointer (can't change what ptr points to)
-const int * const pv = &value //can't change value or what pointer points to
-
-//lets compiler know not to cache the value; to check actual value each 
-//time its asked for IE. time modified by the hardware
-volatile int volint; 
-
-//ignores var changes when checking for bitwise const
-//allows var changes when object is const and var is public
-mutable int m_myVar; 
-
-//const version for normal and const objects, makes 'this' pointer constant
-const int & testclass::function() const;
-
-//normal version for only normal objects
-int & testclass::function();        
-            
-//////////////////////////////////////////////////////////////////////////////
 //CSTRINGS
-//////////////////////////////////////////////////////////////////////////////
+char cstring = 'C'; //single character; can read/write
+char cstring[256]; //character buffer, can read/write
+char* cstring = "mystring" //Constant string literal, read only, \0 automatic
+char cstring[] = "mystring" //the \0 is done automatically
+char cstring[] = {'v','a','t','a','n','i','\0'};
 
-char C; //single character; can read/write
-char C[256]; //character buffer, can read/write
-char* C; //Constant string literal, read only (use strcpy to write)
-
-//CONSTANT STRING LITERALS
-//Think of char * not as char* but as a unique data typ
-char * testchar = "An array";
-char * temp = testchar;
-testchar //gives string
-testchar[0] //gives 'A', can't write to it
-(void*)testchar //gives address of char array (char*)
-&testchar //gives address of pointer to the char array (char**)
-
-//////////////////////////////////////////////////////////////////////////////
 //ARRAYS
-//////////////////////////////////////////////////////////////////////////////
-
-const int i = 4; //must use const when using for arrays
-int intarray[i] = {1} //0-based array with elements 0 to 3; 
-                      //sets first value to 1, rest to 0
-
-char chararray2 [] = "vatani" //the \0 is done automatically
-char chararray1 [] = {'v','a','t','a','n','i','\0'};
+//must be constant size input
+//initialises first two values, sets rest to 0
+int intarray[9] = { 1, 2 }; 
 
 //2D ARRAYS
-int intarray[2][4] // creates an arrow with 2 rows, 4 columns
-int maxtemps[4][5] = // Initializing
+//creates an arrow with 2 rows, 4 columns
+int intarray[2][4] 
 {
-    {94, 98, 87, 103, 101}, // values for maxtemps[0]
-    {98, 99, 91, 107, 105}, // values for maxtemps[1]
-    {93, 91, 90, 101, 104}, // values for maxtemps[2]
-    {95, 100, 88, 105, 103} // values for maxtemps[3]
+    {94, 98, 87, 103}, // values for intarray[0]
+    {98, 99, 91, 107}, // values for intarray[1]
 };
-
-//////////////////////////////////////////////////////////////////////////////
-//UNIONS
-//////////////////////////////////////////////////////////////////////////////
-
-union myunion 
-{
-    long unionlong;
-    int unionint;
-};
-//==> One var at a time; shares same memory location
-//==> the size of that spot is determined by the largest variable (ie. long)
-//==> using another var from the union kills the first one  
-    
-myunion test;
-test.unionint = 15;
-
-//////////////////////////////////////////////////////////////////////////////
-//ENUMERATIONS
-//////////////////////////////////////////////////////////////////////////////
-
-//compiler replaces name with value when encountering it
-//Can't dereference it to get the intial word
-//Only use ints
-    
-//red = 0, orange = 100, yellow = 101, green = 0
-enum myenum {red, orange = 100, yellow, green = 0}; 
-
-//redifining despite new name not possible
-enum myenum2 {red, orange, yellow, green}; 
-
-//used as a constant
-int myInt = red;
-
-//declaring an enmun instance
-myenum e;
-e = red;
-e = myenum(2);
-myenum nextEnum = static_cast<myenum>(e+1);
-
 
 //////////////////////////////////////////////////////////////////////////////
 //CASTING
 //////////////////////////////////////////////////////////////////////////////
 
 //C-style casting
-long(testint)
-(int)22.3 
+long(myInt)
+(int)myInt 
+
+//C++ Style casting
+float myFloat = static_cast<float>(myDouble)
 
 //converts explicitly safely; only pointers of classes with virtual functions
 //returns 0 if the conversion failed; slowest
-testfloat = dynamic_cast<float>(testint) 
-if(pClass1 = dynamic_cast<Class1>(pClass2){ pClass1->DoClass2Method(); }
+MyClass1* ptr1 = dynamic_cast<MyClass2>(ptr2) 
 
 //converts explicitly unsafely [only pointers]
-testfloat = reinterpret_cast<float>(testint) 
-
-//converts implicitly (standard casting)
-double d;
-float f = static_cast<float>(d)
+MyClass1* ptr1 = reinterpret_cast<MyClass2>(ptr2) 
 
 //converts const to non-const [only pointers]
 //bad if var is stored in read-only memory
 //use only if know underlying type is non-const
-int * p_int2= const_cast<int*>(p_int1);
+MyClass1* ptr1 = const_cast<MyClass2>(ptr2);
 
+//////////////////////////////////////////////////////////////////////////////
+//UNIONS
+//////////////////////////////////////////////////////////////////////////////
+
+//Only hold one var at a time; shares same memory location
+//the size of that spot is determined by the largest variable (ie. long)
+//can be used to access a variable in multiple ways (ie. for colors)
+union MyColor
+{
+    unsigned int color;
+    struct
+    {
+        unsigned char r, g, b, a;
+    };
+};
+
+//////////////////////////////////////////////////////////////////////////////
+//ENUMERATIONS
+//////////////////////////////////////////////////////////////////////////////
+//compiler replaces name with integer value when encountering it
+
+enum myenum {red, orange = 100, yellow, green = 0}; //red = 0, orange = 100, yellow = 101, green = 0
+enum myenum2 {red, orange, yellow, green}; //redifining despite new name not possible in VS
+
+//declaring an enmun instance
+myenum e;
+e = red;
+e = myenum(2);
+myenum nextEnum = static_cast<myenum>(e+1);
 
 //////////////////////////////////////////////////////////////////////////////
 //LOOPING
@@ -211,11 +149,9 @@ for (auto x : myVectorArray){ DoSomething(x); } //with stl containers
 for (int x : {0,4,3,5,2,0}){ cout << x; } //using initialisation list
 
 //DOUBLE FOR LOOP
-int i, j;
 for (int i = 0, int j = 2; i < j; i = i + 15, j-- ){}
 
 //WHILE LOOP
-int i = 0;
 while (name[i] != '\0') { i++; }
 
 //DO WHILE LOOP
@@ -238,12 +174,8 @@ else if (testint == 3) {}
 else {}
 
 //TERNARY OPERATOR
-int c = a > b ? a : b; //produces the same result as the following statements:
-int c;
-if (a > b)
-    c = a;
-else
-    c = b;
+int value = (a < b) ? a : b;
+obj->Exists() ? obj->DoSomething() : obj->DoSomethingElse();
 
 //SWITCH STATEMENTS
 //can have nothing inside the switch statement or just default
@@ -265,7 +197,6 @@ default :
 goto label;
 label:  //do something
 
-
 //////////////////////////////////////////////////////////////////////////////
 //FUNCTIONS
 //////////////////////////////////////////////////////////////////////////////
@@ -285,22 +216,14 @@ MyFunction(my2DArray, rows)
 
 //INLINE FUNCTIONS
 //function body replaced by function call in body
-inline double testinline(double x) { return x*x } 
-class MyClass
-{
-public:
-    int MyMethod(){ return 0; } //implicitely declares as inline for a class
-};
+inline void MyFunction(int x){ x += 2; }
                                                   
 //DEFAULT VALUES 
 //must provide default values for parameters right to left
-int MyMethod(int a, int b = 2);
+int MyFunction(int a, int b = 2);
 int MyClass::MyMethod(int a, int b){} //don't need default for definition
-                                         
-//TEMPLATE FUNCTION PROTOTYPE
-template <class MyClass> void Swap(MyClass &a, MyClass &b);
 
-//PRIVATE (internal linkage) FUNCTIONS
+//PRIVATE (INTERNAL LINKAGE) FUNCTIONS
 //Functions have external linkage by default. Use static to change
 static int MyFunction(int& arg);
 
@@ -309,7 +232,13 @@ void MyFunction(int & x, double y)
 void MyFunction(const int & x, double y)
 void MyFunction(int & x, short y)
 
-//VARIADIC FUNCTION
+//TRAILING RETURN TYPE
+//shifts the return type to after the function arguments
+double MyFunction(int x, int y) {} /*or*/
+auto MyFunction(int x, int y) -> double {}
+auto MyFunction(int x, int y) -> decltype(x) {} //make return type same as x
+
+//C-VARIADIC FUNCTION
 MyFunction("This is a %i %f test",2,3.0f);
 void MyFunction(char* text, ...)
 {
