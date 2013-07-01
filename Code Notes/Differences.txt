@@ -7,9 +7,9 @@ VARIABLE DIFFERENCES
 ====================================================================================
 
 VALUE VARIABLE TYPES:
-[C# ] Structs, basic data types created on stack
-[CLI] Classes, structs, basic data types created on stack
-[C++] Classes, structs, basic data types created on stack
+[C# ] Structs, basic data types created on stack/register
+[CLI] Classes, structs, basic data types created on stack/register
+[C++] Classes, structs, basic data types created on stack/register
 
 REFERENCE VARIABLE TYPES:
 [C# ] Classes created on heap
@@ -17,9 +17,9 @@ REFERENCE VARIABLE TYPES:
 [C++] Classes, structs, basic data types created on heap
 
 CREATING REFERENCE TYPES:
-[C# ] Uses new, garbage collected
-[CLI] Uses gcnew, garbage collected
-[C++] Uses new, manual deletion
+[C# ] Uses new, garbage collected, can't be overloaded, array form, no placement form
+[CLI] Uses gcnew, garbage collected, can't be overloaded, no array form, no placement form
+[C++] Uses new, manual deletion, can be overloaded, array form, placement form
 
 PARENT-CHILD SCOPE: int myInt = 2; { int myInt = 1; }
 [C# ] If variable is in parent scope it cannot be redeclared in child scope
@@ -66,10 +66,10 @@ SWITCH STATEMENTS:
 [CLI] Cannot use strings in a switch statement, can fall through to next case
 [C++] Cannot use strings in a switch statement, can fall through to next case
 
-RETURNING REFERENCE:
-[C# ] Cannot return a reference to a variable, uses out/ref in function parameters
-[CLI] 
-[C++] Can return a reference to a variable
+PASSING BY-REF:
+[C# ] Cannot return a reference, passes in reference with out/ref, tracks changes to objects address
+[CLI] Can return a reference and passes in reference with %, tracks changes to objects address
+[C++] Can return a reference and passes in reference with &, doesn't track changes objects address
 
 ====================================================================================
 CLASS/STRUCT DIFFERENCES
@@ -126,7 +126,7 @@ INITIALISING STATIC MEMBERS:
 [CLI] 
 [C++] Initialised before main() called in cpp file
 
-ACCESSING STATIC MEMBERS:
+ACCESSING NAMESPACE/STATIC MEMBERS:
 [C# ] Uses MyClass.MyStaticMethod();
 [CLI] Uses MyClass::MyStaticMethod();
 [C++] Uses MyClass::MyStaticMethod();

@@ -11,7 +11,7 @@ volatile int volInt; //don't cache value, check actual value each time its asked
 mutable int mutInt; //value changes ignored for bitwise const checking, allows changes for const objects/methods
 
 //GLOBAL VARIABLES
-int myGlobalInt; //external linkage  (can be accessed via extern)
+int myGlobalInt; //Global static: external linkage  (can be accessed via extern)
 static int myGlobalInt; //Global static: internal linkage (can't be accessed via extern)
 extern int myExternInt; //accesses global variables from another file
 ::myGlobalInt; //accesses global variables when shadowed by local variables

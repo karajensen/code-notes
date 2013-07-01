@@ -30,14 +30,14 @@ ASSEMBLY/MODULES
 
 VALUE-TYPE VARIABLES
 • Structs and basic data types, doesn't use new to create new objects
-• may exist on the stack, register or heap
+• variable exists on stack or register
 • values are copied deeply
 • Passed by-val
 • Equality: If both are same type and have same contents
 
 REFERENCE-TYPE VARIABLES
 • Classes, uses new to create new objects
-• object it refers to exists in seperate memory on heap
+• object it refers to exists on the heap
 • memory auto deleted once no other references for the object exist
 • values are copied shallow
 • Reference itself passed by-val, object it points to stays the same

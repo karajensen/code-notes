@@ -605,7 +605,10 @@
     <None Include="Images\Code - Iterators.png">
       <Filter>Source Files\Images</Filter>
     </None>
-    <None Include="IMAGES\Code - HexConverting.png">
+    <None Include="IMAGES\Code - Hex Converting.png">
+      <Filter>Source Files\Images</Filter>
+    </None>
+    <None Include="Images\Code - Execution Environment.png">
       <Filter>Source Files\Images</Filter>
     </None>
   </ItemGroup>

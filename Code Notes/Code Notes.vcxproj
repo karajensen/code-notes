@@ -210,7 +210,8 @@
     <None Include="Graphics Programming\HLSL Shaders\toon.fx" />
     <None Include="Graphics Programming\HLSL Shaders\water.fx" />
     <None Include="Hotkeys.txt" />
-    <None Include="IMAGES\Code - HexConverting.png" />
+    <None Include="Images\Code - Execution Environment.png" />
+    <None Include="IMAGES\Code - Hex Converting.png" />
     <None Include="IMAGES\Buffer - Depth Buffer Testing.png" />
     <None Include="Images\Code - Iterators.png" />
     <None Include="IMAGES\Collision - Box Algorithms.png" />
