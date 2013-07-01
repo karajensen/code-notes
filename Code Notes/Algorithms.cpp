@@ -15,6 +15,7 @@ for_each(S, E, doLam) //Non-modifying; Sends const dereferenced object into lamb
 for_each(S, E, DelFunctor); //Non-modifying; fast memory deletion in array
 transform(S, E, S2, doCopyLam) //Modifying; each element calls lambda then is copied to second container
 transform(myString.begin(), myString.end(), myString.begin(), toupper); //Modifying; can be copied in place
+transform(S, E, back_inserter(myCon), doCopyLam); //insert at end rather than copying
 
 //=======================================================================================================
 //SEARCHING ALGORITHMS

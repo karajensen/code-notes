@@ -201,7 +201,6 @@ LAMBDAS
 • Lambda cannot directly capture a ref/out parameter from the parent method
 • Cannot contain goto, break, containue that moves to outside lambda
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////
 //BOXING
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -209,17 +208,15 @@ LAMBDAS
 object boxed = 10;
 int unBoxed = boxed as int;
 
-• Value-types ultimately derive from System.ValueType which derives from System.Object
-• System.Object only capable of holding reference on heap; value-types may be on stack/register
-• Boxing allows variable of type System.Object to refer to a value type
-• Not effecient as GC has to clean up all new objects; new objects copy value from original
+object boxed = myStruct;
+MyStruct unBoxed = boxed as MyStruct;
 
-CREATING BOXES
-• Auto happens when converting value-type to object; Creates new boxed object on heap with a copy of the value
-• New boxed object remembers what type it was created from
-• Requires explicity casting back to object. If casted to correct type, returns copy of value back
-
-BOXING NULLABLE VALUE-TYPES
+• Boxing allows variable of type System.Object to refer to a System.ValueType
+• System.Object only capable of holding reference on heap; System.ValueType may be on stack/register
+• Boxing auto happens when converting value-type to object- Copies value into a new object on the heap
+• New boxed object remembers what type it was created from and will only unbox if cast to correct type
+• Boxing is implicit, Unboxing is reverse and explicit
+• Ineffecient as Garbage Collected needs to remove new boxed object
 • If nullable value-type is null, returns null before doing any boxing
 
 ////////////////////////////////////////////////////////////////////////////////////////////

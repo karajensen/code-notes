@@ -307,14 +307,14 @@
     <ClCompile Include="Languages\Maya API Locator Class.cpp">
       <Filter>Languages\Maya Plugin Templates</Filter>
     </ClCompile>
-    <ClCompile Include="Languages\Scene.cpp">
-      <Filter>Graphics Programming</Filter>
-    </ClCompile>
     <ClCompile Include="Design and Theory\Data Structures.cpp">
       <Filter>Design and Theory</Filter>
     </ClCompile>
     <ClCompile Include="Design and Theory\Data Algorithms.cpp">
       <Filter>Design and Theory</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics Programming\Scene.cpp">
+      <Filter>Graphics Programming</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -7,19 +7,15 @@ VALUE-TYPE VARIABLES
 • Can be both class/struct
 • Can't have user-defined destructors, constructors, ass.operators
 • Can't define default constructor- values zero-ed automatically
-• Can only derive from interfaces as it inherits rom System::valutype
+• Auto inherits System::ValueType and cannot inherit any other base, can derive multiple interfaces
 
 REFERENCE-TYPE VARIABLES
 • Can be both class/struct
 • Support all contructors including static constructors
-• Only uses public inheritance
-
-INHERITANCE
-• No support for Multiple Inheritance/Base Classes, use multiple interfaces instead
-• If no base class derived from, auto assumes System::Object is base
+• Auto derives from System::object if no other base given, can derive multiple interfaces
 
 HANDLES
-• Uses ^ to references objects on CLI heap
+• Uses ^ to references managed objects on CLI heap
 • Uses gcnew(), doesn't need delete as garbage collection takes care of it
 • Track objects; if object moves due to garbage collection, address referred to is changed to stay with object
 • Can't convert to or from void^
@@ -32,22 +28,23 @@ GCNEW
 • Can't be overloaded
 • Throws System::OutOfMemoryException if can't allocate
 • Creates two objects; one on managed stack and one on managed heap
-• Managed stack object is boxed to a reference object
+• If storing a value-type, will go through C# Boxing
 
-BOXING/UNBOXING HANDLES
-• Conversion of a value (MyClass, int, float etc.) to an Object^ on the CLR heap
-• Involves a bitwise copy of the original object
-• Boxing is implicit, Unboxing is reverse and explicit
-• Boxed copy is seperated entity from original value (copy of original)
-• UnBoxed is also copied from the boxed entity
-• Boxed object remembers original value, unboxing to wrong type throws exception
 
 */
 //////////////////////////////////////////////////////////////////////////////
 //CLASSES
 //////////////////////////////////////////////////////////////////////////////
 
-int main(array<System::String^> ^args){} //main entry point
+ref class MyClass //implicitly inherits System.Object
+{
+public:
+
+    void MyFunction();
+
+private:
+    int m_myInt;
+};
 
 //REFERENCE TYPES
 ref class MyClass {};   //Methods default to private
@@ -58,10 +55,11 @@ value class MyClass {};   //Methods default to private
 value struct MyStruct {}; //Methods default to public
 
 //INTERFACE TYPES
-interface class MyClass {};  //Methods default public
-interface class MyStruct {}; //Methods default public
+interface class MyClass {};   //Methods default public
+interface struct MyStruct {}; //Methods default public
 
 //ABSTRACT CLASS
+//Doesn't require abstract functions to be abstract
 //Must mark class as abstract if has any abstract methods
 ref class MyClass abstract
 {
@@ -76,8 +74,7 @@ ref class MyClass sealed
 {
 };
 
-//ABSTRACT SEALED CLASS
-//Can only have static functions
+//STATIC CLASS
 ref class MyClass abstract sealed
 {
 public:
@@ -87,6 +84,9 @@ public:
 //////////////////////////////////////////////////////////////////////////////
 //FUNCTIONS
 //////////////////////////////////////////////////////////////////////////////
+
+//MAIN ENTRY POINT
+int main(array<System::String^> ^args){}
 
 //DEFAULT CONSTRUCTOR
 //Implicitly created for ref/value types
@@ -124,49 +124,36 @@ MyClass% operator=(const MyClass% o)
 //////////////////////////////////////////////////////////////////////////////
 //INHERITANCE
 //////////////////////////////////////////////////////////////////////////////
+//• No support for Multiple Inheritance; use multiple interfaces instead
 
 //REF TYPES
-ref class Derived : Base {};
+//can inherit one base or System::Object by default
+ref class Derived : Base {}; //defaults to public
 ref class Derived : public Base {};
+ref class Derived : public IBase {};
 
 //VALUE TYPES
-value class Derived : MyInterface {};
+//inherits from System::ValueType
+value class Derived : IBase {};
 
 //////////////////////////////////////////////////////////////////////////////
 //HANDLES
 //////////////////////////////////////////////////////////////////////////////
 
 System::String^ str = "hello";   //Handle to string object on CLI heap
-MyClass^ obj = nullptr;          //Set to null
+MyClass^ obj = nullptr;          //Set to null, don't use 0 as it implicitly boxes to int^ 
 MyClass^ obj = gcnew MyClass();  //Create new object (don't need delete)
 obj->MyFunction();               //Calling function
 
-//TRACKING REFERENCES (%)
-//• Reference to a handler; *& in C++
-MyClass^ obj = gcnew MyClass();
-MyClass% obj2 = *obj; //Dereferencing gives tracking reference
-MyClass^ obj3 = %obj2; //???
 
-//PASSING HANDLES BY-REF
-//without the % it would be by-val
-void ChangeString(System::String^% str); 
 
-//GCNEW
-MyClass^ obj = gcnew MyClass(); 
 
-//BOXING/UNBOXING HANDLES
-Object^ boxed = 100; //int 100 implicity boxed into Object^
-int i = *safe_cast<int^>(boxed) //explictly unboxed, safe_cast throws System Invalid Cast Excption if not valid
 
-//ASSIGNING NULL
-Object^ = nullptr; //must use nullptr
-Object^ = 0; //doesn't set to null, implicitly boxes to int^
 
-//BOXED PREFERENCES
-[1] void MyFunction(int x);
-[2] void MyFunction(double x); //and any other implicit conversions
-[3] void MyFunction(int^ x); //boxing is given last preference
-MyFunction(static_cast<int^>(100)); //if want boxing version, must use cast
+
+
+
+
 
 //////////////////////////////////////////////////////////////////////////////
 //EXCEPTIONS

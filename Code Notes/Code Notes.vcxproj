@@ -140,6 +140,7 @@
     <ClCompile Include="Graphics Programming\OpenGL.cpp" />
     <ClCompile Include="Graphics Programming\Post Effects.cpp" />
     <ClCompile Include="Graphics Programming\Rendering.cpp" />
+    <ClCompile Include="Graphics Programming\Scene.cpp" />
     <ClCompile Include="Graphics Programming\Shaders.cpp" />
     <ClCompile Include="Graphics Programming\Shadows.cpp" />
     <ClCompile Include="Graphics Programming\Terrain.cpp" />
@@ -154,7 +155,6 @@
     <ClCompile Include="Languages\Maya API Locator Class.cpp" />
     <ClCompile Include="Languages\Maya API Node Class.cpp" />
     <ClCompile Include="Languages\Maya API.cpp" />
-    <ClCompile Include="Languages\Scene.cpp" />
     <ClCompile Include="Languages\MEL algorithms.cpp" />
     <ClCompile Include="Languages\MEL animation.cpp" />
     <ClCompile Include="Languages\MEL forms.cpp" />

@@ -91,7 +91,7 @@ public struct MyStruct
 
 namespace MyNamespace
 {
-    public class MyClass : Control
+    public class MyClass
     {
         //Member variables can be initialised only with static 
         //methods as object is not complete when initialised
@@ -146,13 +146,7 @@ namespace MyNamespace
 public static class MyStaticClass
 {
     public static int myInt;
-}   
-//Used for main entry point
-public static class Program
-{
-    static void Main(){}
-}
-
+} 
 MyStaticClass.myInt; //using static members
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,6 +185,121 @@ public abstract class MyClass : IMyInt
     public abstract void MyIntMethod();
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////
+//SEALED CLASS
+////////////////////////////////////////////////////////////////////////////////////////////
+
+//SEALING CLASSES
+//Statically resolves any virtual methods as no derived classes
+//Can seal whole class to prevent it being inherited from
+public sealed class Derived : Base
+{
+    //SEALING METHODS
+    //All methods are sealed by default except those with virtual/override
+    //Can seal individual methods to prevent them from being further overridden
+    public sealed override void MyVirtualMethod(){}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//INHERITANCE
+////////////////////////////////////////////////////////////////////////////////////////////
+
+public class Base
+{
+    protected int myInt;
+    public virtual void MyVirtualMethod(){} //virtual members can't be private
+}
+
+//STRUCT: Can inherit multiple interfaces, no classes/structs
+public struct Derived : IBase {}
+
+//INTERFACE: Can inherit multiple classes/interfaces
+public interface Derived : Base, IBase {}
+
+//CLASS: Can inherit only one class, multiple interfaces; class must be first in list
+public class Derived : Base, IBase
+{   
+    //call base constructor, interfaces don't have constructors
+    public Derived() : base() {}
+
+    //override virtual method; must have same visibility as base class
+    public override void MyVirtualMethod(){ base.myInt = 3; } //can access using base
+
+    //DATA HIDING
+    //If base version exists; base hidden, derived version is used in place
+    //All methods that don't use 'override' have newslot flag turned on by default
+    public void MyVirtualMethod(){} //gives warning
+    public new void MyVirtualMethod(){ base.MyVirtualMethod(); } //explicitly hide; no warning
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//POLYMORPHISM
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Base baseObj = new Derived(); //stores derived object in base class reference
+baseObj.MyVirtualMethod(); //calls Derived::MyVirtualMethod()
+
+//DOWNCAST TO DERIVED
+//cast back to derived object; if conversion fails throws InvalidCastException
+Derived derivedObj = (Derived)baseObj; 
+
+//SAFE DOWNCAST TO DERIVED
+//convert baseObj to Derived, returns null if conversion fails
+Derived derivedObj = baseObj as Derived; 
+
+//CHECKING TYPE OF OBJECT
+if(baseObj is Derived) //if baseObj can be implicitly converted to (is a type of) Derived
+object.ReferenceEquals(baseObj, derivedObj) //return true if two objs have the same address
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//ATTRIBUTES
+////////////////////////////////////////////////////////////////////////////////////////////
+
+//CREATING CUSTOM ATTRIBUTES
+[System.AttributeUsage(System.AttributeTargets.Class|System.AttributeTargets.Struct, AllowMultiple = true)]
+public class MyAttribute : System.Attribute
+{
+    private string type; //positional parameter
+    public double version; //named parameter, can be explicitly set
+
+    public MyAttribute(string type)
+    {
+        this.type = type;
+        version = 1.0;
+    }
+    public MyAttrMethod(){}
+}
+[MyAttribute("One", version = 1.1)] //explicitly state a named parameter
+[MyAttribute("Two")] //allowMultiple usage
+class MyClass {}
+
+//ACCESSING ATTRIBUTES THROUGH REFLECTION
+[MyAttribute("Three")]
+public class MyClass {}
+
+System.Attribute[] attributes = System.Attribute.GetCustomAttributes(typeof(MyClass));
+foreach (System.Attribute attr in attributes)
+{
+    if (attr is MyClass)
+    {
+        MyClass myClassAttr = (MyClass)attr;
+        myClassAttr.MyAttrMethod();
+    }
+}
+
+//SERIALIZABLE ATTRIBUTE
+[System.Serializable]
+public class SampleClass {}
+
+//CONDITIONAL ATTRIBUTE
+//only used if DEFINED is defined; compiler will remove any calls if not defined
+//must have return type void, can't be used in interfaces/abstract classes
+[System.Diagnostics.Conditional("DEFINED1"), System.Diagnostics.Conditional("DEFINED2")]
+public void myConditionalMethod(){}
+
+//CONDITIONAL DEBUG ATTRIBUTE
+[Conditional("DEBUG")]
+private void CheckState(){}
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //EQUALITY OVERLOADS
@@ -257,126 +366,6 @@ public static bool ReferenceEquals(object left, object right)
 //STATIC REFERENCE/VALUE-TYPE EQUALITY TESTING [NEVER REDEFINE]
 //Calls ReferenceEquals() and if returns false, calls non-static Equals()
 public static bool Equals(object left, object right)
-
-////////////////////////////////////////////////////////////////////////////////////////////
-//INHERITANCE
-////////////////////////////////////////////////////////////////////////////////////////////
-
-public class Base
-{
-    protected int myInt;
-    public virtual void MyVirtualMethod(){} //virtual members can't be private
-}
-
-//STRUCT: Can inherit multiple interfaces, no classes/structs
-public struct Derived : IBase {}
-
-//INTERFACE: Can inherit multiple classes/interfaces
-public interface Derived : Base, IBase {}
-
-//CLASS: Can inherit only one class, multiple interfaces; class must be first in list
-public class Derived : Base, IBase
-{   
-    //call base constructor, interfaces don't have constructors
-    public Derived() : base() {}
-
-    //override virtual method; must have same visibility as base class
-    public override void MyVirtualMethod(){ base.myInt = 3; } //can access using base
-
-    //DATA HIDING
-    //If base version exists; base hidden, derived version is used in place
-    //All methods that don't use 'override' have newslot flag turned on by default
-    public void MyVirtualMethod(){} //gives warning
-    public new void MyVirtualMethod(){ base.MyVirtualMethod(); } //explicitly hide; no warning
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////
-//POLYMORPHISM
-////////////////////////////////////////////////////////////////////////////////////////////
-
-Base baseObj = new Derived(); //stores derived object in base class reference
-baseObj.MyVirtualMethod(); //calls Derived::MyVirtualMethod()
-
-//DOWNCAST TO DERIVED
-//cast back to derived object; if conversion fails throws InvalidCastException
-Derived derivedObj = (Derived)baseObj; 
-
-//SAFE DOWNCAST TO DERIVED
-//convert baseObj to Derived, returns null if conversion fails
-Derived derivedObj = baseObj as Derived; 
-
-//CHECKING TYPE OF OBJECT
-if(baseObj is Derived) //if baseObj can be implicitly converted to (is a type of) Derived
-object.ReferenceEquals(baseObj, derivedObj) //return true if two objs have the same address
-
-////////////////////////////////////////////////////////////////////////////////////////////
-//SEALING
-////////////////////////////////////////////////////////////////////////////////////////////
-
-public class Base
-{
-    public virtual void MyVirtualMethod(){}
-}
-
-//SEALING CLASSES
-//Can seal whole class to prevent it being inherited from
-public sealed class Derived : Base
-{
-    //SEALING METHODS
-    //All methods are sealed by default except those with virtual/override
-    //Can seal individual methods to prevent them from being further overridden
-    public sealed override void MyVirtualMethod(){}
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////
-//ATTRIBUTES
-////////////////////////////////////////////////////////////////////////////////////////////
-
-//CREATING CUSTOM ATTRIBUTES
-[System.AttributeUsage(System.AttributeTargets.Class|System.AttributeTargets.Struct, AllowMultiple = true)]
-public class MyAttribute : System.Attribute
-{
-    private string type; //positional parameter
-    public double version; //named parameter, can be explicitly set
-
-    public MyAttribute(string type)
-    {
-        this.type = type;
-        version = 1.0;
-    }
-    public MyAttrMethod(){}
-}
-[MyAttribute("One", version = 1.1)] //explicitly state a named parameter
-[MyAttribute("Two")] //allowMultiple usage
-class MyClass {}
-
-//ACCESSING ATTRIBUTES THROUGH REFLECTION
-[MyAttribute("Three")]
-public class MyClass {}
-
-System.Attribute[] attributes = System.Attribute.GetCustomAttributes(typeof(MyClass));
-foreach (System.Attribute attr in attributes)
-{
-    if (attr is MyClass)
-    {
-        MyClass myClassAttr = (MyClass)attr;
-        myClassAttr.MyAttrMethod();
-    }
-}
-
-//SERIALIZABLE ATTRIBUTE
-[System.Serializable]
-public class SampleClass {}
-
-//CONDITIONAL ATTRIBUTE
-//only used if DEFINED is defined; compiler will remove any calls if not defined
-//must have return type void, can't be used in interfaces/abstract classes
-[System.Diagnostics.Conditional("DEFINED1"), System.Diagnostics.Conditional("DEFINED2")]
-public void myConditionalMethod(){}
-
-//CONDITIONAL DEBUG ATTRIBUTE
-[Conditional("DEBUG")]
-private void CheckState(){}
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //GENERICS
