@@ -46,6 +46,11 @@ NAMESPACES:
 [CLI] Can be anon, can contain variables/methods
 [C++] Can be anon, can contain variables/methods
 
+INCLUDING LIBRARIES:
+[C# ] using MyLibrary
+[CLI] using namespace MyLibrary and #include MyLibrary.h
+[C++] #include MyLibrary.h
+
 #DEFINE:
 [C# ] Must be before any code, cannot define variables/expressions, uses #if
 [CLI] Can be anywhere, can define variables/expressions, uses #ifdef
@@ -101,35 +106,35 @@ STRUCT/CLASS TYPES:
 [CLI] Both allow value/reference types
 [C++] Both allow value/reference types
 
-USER-DEFINED CONSTRUCTOR/DESTRUCTOR:
-[C# ] Value-type can't have, Reference type can
-[CLI] Value-type can't have, Reference type can
-[C++] Reference/Value-types both have
+PREVENTED MEMBERS:
+[C# ] Value-types can't have user defined default constructor, destructor
+[CLI] Value-types can't have user defined default constructor, destructor, copy constructor, operator=
+[C++] Static constructor
 
 IMPLICIT MEMBERS:
-[C# ] Struct/Class: default constructor/destrutor, System.Object members, operator==(Class Only)
-[CLI] Struct/Class: default constructor/destructor, System.Object members, operator==(Class Only)
-[C++] Struct/Class: default constructor/destrutor, copy constructor, operator=, operator&
+[C# ] Struct/Class: default/static constructor, destructor, System.Object members, operator==(Class Only)
+[CLI] Struct/Class: default/static constructor, destructor, System.Object members, operator==(Class Only)
+[C++] Struct/Class: default constructor, destrutor, copy/move constructor, operator=, operator&
 
 DEFAULT VISIBILITY:
 [C# ] Struct is public, Class is internal, All members private
 [CLI] Struct/Struct members is public, Class/Class members is private
 [C++] Struct/Struct members is public, Class/Class members is private
 
+VARIABLE AUTO-INITIALISATION
+[C# ] Class members, local variables at start of method and not within block scope call default()
+[CLI] Value-type members, Local variables at start of method and not within block scope initialised to 0
+[C++] Static variables auto-initialised to 0
+
 STATIC CLASSES:
-[C# ] static keyword used (can't have abstract sealed together) only holds static members/methods
-[CLI] abstract sealed keywords used, only holds static members/methods
-[C++] no keywords
+[C# ] Static keyword used (can't have abstract sealed together) only holds static members/methods
+[CLI] Abstract sealed keywords used, only holds static members/methods
+[C++] No keywords
 
 INITIALISING STATIC MEMBERS:
 [C# ] Initialised through Static constructor or when first used through field initialisation
-[CLI] 
+[CLI] Initialised through Static constructor, no field/cpp initialisation
 [C++] Initialised before main() called in cpp file
-
-ACCESSING NAMESPACE/STATIC MEMBERS:
-[C# ] Uses MyClass.MyStaticMethod();
-[CLI] Uses MyClass::MyStaticMethod();
-[C++] Uses MyClass::MyStaticMethod();
 
 ====================================================================================
 INHERITANCE DIFFERENCES

@@ -29,6 +29,7 @@ delete [] myArray; //free array
 //////////////////////////////////////////////////////////////////////////////
 //• Can't be templated
 //• Can't use auto with binding, must use std::function type
+//• If inside a class, may become friends
 
 //LAMBDA SYNTAX
 auto myLamda = [](int x) { return 3*2; } //if only one line, can omit trailing return
@@ -39,11 +40,10 @@ std::function<double(int)> myLamda = [](int x){ return x+2.0; }
 
 //CAPTURING OUTSIDE VARIABLES
 //Can also capture member vars, functions etc.
-int myVar = 0;
 auto myLambda = [&myVar](int x){ myVar += 10; } //by reference
-auto myLambda = [myVar](int x){ myVar += 10; } //by value
-auto myLambda = [&](int x){ myVar += 10; } //use all vars in scope by ref
-auto myLambda = [=](int x){ myVar += 10; } //use all vars in scope by val
+auto myLambda = [myVar](int x){ myVar += 10; }  //by value
+auto myLambda = [&](int x){ myVar += 10; }      //use all vars in scope by ref
+auto myLambda = [=](int x){ myVar += 10; }      //use all vars in scope by val
 auto myLambda = [&](int x){ MyClassFunction(x); m_myMember += 1; }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -85,6 +85,12 @@ memberFn(2) // object is bound with method
 //FUNCTORS
 //////////////////////////////////////////////////////////////////////////////
 
+//Function with operator()
+struct MyFunctor
+{
+    bool operator()(int x) { return x > 0; }
+}
+
 std::plus<double> add; //create a plus<double> object
 std::plus<double>() //using as function
 double y = add(2.2, 3.4); //using plus<double>::operator()()
@@ -104,9 +110,9 @@ template <class T> struct greater_equal { bool operator() (const T& x, const T& 
 //////////////////////////////////////////////////////////////////////////////
 
 //POINTER-TO-FUNCTION
-typedef bool (*p_function)(int x);
-p_function pf = &AddName; 
-pf(5);
+typedef bool (*pFunction)(int x);
+pFunction myFunction = &MyFunction; 
+myFunction(5);
 
 //POINTER-TO-MEMBER FUNCTIONS
 class Test

@@ -254,19 +254,22 @@ void MyFunction(char* text, ...)
 //NAMESPACES
 //////////////////////////////////////////////////////////////////////////////
 
-//Defining in Header
+namespace /*anon*/
+{
+}
+
 namespace testspace
 {
     int testint; //variables, structs, other namespaces
     double testfunct(void); //function declaration
     using std::cout; //namespace definitions
-};
+}
 
 //Adding to namespace
 namespace testspace
 {
     //more stuff
-};
+}
 
 //Using namespace
 testspace::testint = 4; //name with a namespace = qualified name

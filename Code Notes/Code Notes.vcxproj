@@ -174,10 +174,10 @@
   <ItemGroup>
     <None Include="..\.gitignore" />
     <None Include="C# .NET Framework.cs" />
-    <None Include="C# Callbacks.cs" />
     <None Include="C# Class.cs" />
     <None Include="C# Code.cs" />
     <None Include="C# Containers.cs" />
+    <None Include="C# Memory.cs" />
     <None Include="Cheatsheet.txt" />
     <None Include="Differences.txt" />
     <None Include="Graphics Programming\GLSL Shaders\ps.glsl" />

@@ -53,6 +53,7 @@ unchecked(a+b) //don't check expression
 uint = 0xFF00FF00; //hex notation
 var myVar = 1.0E-20f; //scientific notation
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 //VARIABLE MODIFIERS
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -196,39 +197,6 @@ for (int i = 0; i < count; ++i){}
 //uses explicit cast for each item
 foreach (str in myStringArray)
 foreach (int value in array)
-
-////////////////////////////////////////////////////////////////////////////////////////////
-//UNSAFE CODE/POINTERS
-////////////////////////////////////////////////////////////////////////////////////////////
-
-int* myPointer 
-int** myPointer
-int*[] myPointer //array of pointers to ints
-char* myPointer //pointer to a char
-void* myPointer
-
-//POINTER TO STRUCTS
-MyStruct* myPointer;
-myPointer->member;
-
-//UNSAFE CODE
-//Pointers can only be used in this
-unsafe static void MyUnsafeFn(int* p)
-{
-    *p = 2; //dereferencing
-
-    //FIXING VARIABLES
-    //prevents garbage collector from changing address of a variable
-    //can only use in unsafe context
-    MyClass obj = new MyClass();
-    fixed (int* x = &obj.x)
-    {
-        *x = 1;
-    }  
-}
-
-int myInt = 1;
-MyUnsafeFn(&myInt); //obtain address
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //PREPROCESSOR

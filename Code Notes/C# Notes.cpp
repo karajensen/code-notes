@@ -62,6 +62,10 @@ CONST/READONLY VARIABLE DIFFERENCES:
 • Const only used with numbers and strings; Readonly used with everything
 • Const can't be initialised with 'new'; Readonly can be initialised with 'new'
 
+VARIABLE INITIALISATION
+• Class members and local variables at start of method and not within block scope auto-initialised
+• Must explicitly initialise variables in block scope or error
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 //CLASS
 ////////////////////////////////////////////////////////////////////////////////////////////
