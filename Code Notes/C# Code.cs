@@ -40,10 +40,6 @@ objects = null
 int? myint = null; //allows null to be assigned to value-type
 int myInt2 = (int)myint; //requires cast to convert
 
-//SCOPE
-int myInt = 2;  { int myInt = 1; } //if in parent scope cannot be redeclared (okay in C++)
-{ int myInt = 2; }{ int myInt = 1; } //okay
-
 //OVERFLOW CHECKING
 checked(a+b) //checks expression for overflow and throws System.OverflowException
 checked{ /*do some calculations*/ }
@@ -53,6 +49,9 @@ unchecked(a+b) //don't check expression
 uint = 0xFF00FF00; //hex notation
 var myVar = 1.0E-20f; //scientific notation
 
+//BOXING
+object boxed = 10; //occurs implicitly for value-types
+int unBoxed = boxed as int; //occurs explicitly for value-types
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //VARIABLE MODIFIERS
@@ -69,16 +68,19 @@ internal int myInt; // Accessible only inside the assembly(exe/dll)
 public volatile int myInt; // Not optimized for accessing regularly in multiple threads
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-//NAMESPACES
+//NAMESPACE/SCOPE
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 namespace {} //BAD: Namespaces can't be anonymous
 namespace ns { myInt = 2; } //BAD: Namespaces can't contain vars/functions
 
-// Creating a typedef
+//TYPEDEFINE
 using MyTypedef = System.Drawing.Graphics;
 MyTypedef obj = CreateGraphics();
 
+//SCOPE
+int myInt = 2;  { int myInt = 1; } //if in parent scope cannot be redeclared (okay in C++)
+{ int myInt = 2; }{ int myInt = 1; } //okay
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //CONVERSIONS

@@ -209,12 +209,6 @@ LAMBDAS
 //BOXING
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-object boxed = 10;
-int unBoxed = boxed as int;
-
-object boxed = myStruct;
-MyStruct unBoxed = boxed as MyStruct;
-
 • Boxing allows variable of type System.Object to refer to a System.ValueType
 • System.Object only capable of holding reference on heap; System.ValueType may be on stack/register
 • Boxing auto happens when converting value-type to object- Copies value into a new object on the heap

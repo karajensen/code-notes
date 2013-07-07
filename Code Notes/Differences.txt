@@ -81,25 +81,28 @@ CLASS/STRUCT DIFFERENCES
 ====================================================================================
 
 C# CLASS OBJECT CREATION:
-1) Derived member Field Initialisaters called
-2) Base member Field Initialisaters called
-3) Base Constructor Body called
-4) Derived Constructor Body called
-5) Derived Destructor called
-6) Base Desctructor called
+1) Derived member Field Initialisaters
+2) Base member Field Initialisaters
+3) Base Constructor Body
+4) Derived Constructor Body
+5) Derived Destructor
+6) Base Desctructor
 
 C++ CLASS OBJECT CREATION:
-1) Base Initialisation List called
-2) Base Constructor Body called
-3) Derived Initialisation List called
-4) Derived Constructor Body called
-5) Derived Destructor called
-6) Base Desctructor called
+1) Base Initialisation List
+2) Base Constructor Body
+3) Derived Initialisation List
+4) Derived Constructor Body
+5) Derived Destructor
+6) Base Desctructor
 
 C++/CLI CLASS OBJECT CREATION:
-1)
-2)
-3)
+1) Derived Initialisation List
+2) Base Initialisation List
+3) Base Constructor Body
+4) Derived Constructor Body
+5) Derived Destructor
+6) Base Desctructor
 
 STRUCT/CLASS TYPES:
 [C# ] Structs value only, Class reference only
@@ -156,18 +159,23 @@ SLICING:
 [C++] Slicing can occur as inheritance occurs on reference and value types
 
 INHERITED METHOD VISIBILITY:
-[C# ] Inherited methods cannot be private; visibility must be the same between base/derived
-[CLI] 
-[C++] Inherited Methods can have any visibility; base/derived visibility doesn't have to match
+[C# ] Virtual methods cannot be private, visibility must be the same between base/derived
+[CLI] Virtual Methods can have any visibility, Private virtual must be sealed. Derived must have same or higher visibility than base.
+[C++] Virtual Methods can have any visibility, base/derived visibility doesn't have to match
 
 PURE VIRTUAL METHODS/CLASS:
-[C# ] Requires abstract keyword for class, makes all methods automatically virtual
-[CLI] 
-[C++] Requires virtual keyword on method, makes class automatically abstract
+[C# ] Abstract methods require keyword for class, abstract methods are automatically virtual
+[CLI] Abstract methods require keyword for class, abstract methods require virtual keyword
+[C++] Creating a pure virtual function with virtual and = 0 makes class auto-abstract
 
 CALLING VIRTUAL METHOD IN CONSTRUCTOR:
 [C# ] Dangerous to call virtual method in constructor; calls Derived version
-[CLI] 
+[CLI] Dangerous to call virtual method in constructor; calls Derived version
 [C++] Dangerous to call virtual method in constructor; calls Base version
+
+DESTRUCTOR INHERITANCE
+[C# ] Always virtual (from auto-inheriting System::Object)
+[CLI] Always virtual (from auto-inheriting System::Object)
+[C++] Only virtual if inheriting from base class with virtual destructor
 
 

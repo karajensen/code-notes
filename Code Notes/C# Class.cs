@@ -42,24 +42,50 @@ public void ShowParams(params object[] objects)
     }
 }
 
+//CONSTRUCTOR
+//Structs: can only declare contructor with arguments. Default constructor auto generated
+public MyClass() : this(10) //invoke another constructor
+{}
+public MyClass(int myInt)
+{
+    self.myInt = myInt; //access via self or without
+}
+
+//STATIC CONSTRUCTOR
+//called once sometime before class is used
+//initialises static members, cannot take arguments
+static MyClass()
+{}
+
+//DESCTRUCTOR
+~MyClass(){} //no visibility allowed, always virtual
+
+//STATIC METHOD
+//only deals with static variables
+static public void MyStaticMethod(){}
+
+//TO-STRING OVERRIDE
+public override string ToString()
+{
+    return "A readable representation of myObject";
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 //PROPERTIES
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-//GETTER/SETTER PROPERTIES
+//SCALAR PROPERTY
 public int MyInt
 {
     get { return myInt; }
     set { myInt = value; }
 }
 
+//TRIVIAL PROPERTY
+public int MyInt { get; set; } //auto creates private variable with public setter/getters
+
 //INTERFACE PROPERTIES
-//no body; indicates whether read/write only
-int MyInt
-{
-    get;
-    set;
-}
+int MyInt { get; set; } //indicates whether read/write only, not allowed bodies
 
 //INDEXER PROPERTY (OVERLOADING [])
 public string this[int index]
@@ -75,20 +101,15 @@ public string this[int x, int y]
 }   
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-//STRUCTS [VALUE-TYPE]
+//CLASSES
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+//STRUCTS [VALUE-TYPE]
 public struct MyStruct
 {
-    //CONSTRUCTOR
-    //Can only declare contructor with arguments. Default constructor auto generated
-    MyStruct(int x){} 
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////
 //CLASSES [REFERENCE-TYPE]
-////////////////////////////////////////////////////////////////////////////////////////////
-
 namespace MyNamespace
 {
     public class MyClass
@@ -104,44 +125,14 @@ namespace MyNamespace
         /// <param> a value the method takes in </param>
         /// <returns> a value the method takes in </returns>
 
-        //CONSTRUCTOR
-        public MyClass() : this(10) //invoke another constructor
-        {}
-        public MyClass(int myInt)
-        {
-            self.myInt = myInt; //access via self or without
-        }
-
-        //STATIC CONSTRUCTOR
-        //called once sometime before class is used
-        //initialises static members, cannot take arguments
-        static MyClass()
-        {}
-
-        //DESCTRUCTOR
-        ~MyClass(){} //no visibility allowed
-
-        //STATIC METHOD
-        //only deals with static variables
-        static public void MyStaticMethod(){}
-
         //PRIVATE SUB-CLASS
         internal class MyPrivateClass
         {
         };
-
-        //TO-STRING OVERRIDE
-        public override string ToString()
-        {
-            return "A readable representation of myObject";
-        }
     };
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////
 //STATIC CLASS
-////////////////////////////////////////////////////////////////////////////////////////////
-
 //Used for global vars; vars cannot be declared without class
 public static class MyStaticClass
 {
@@ -149,10 +140,8 @@ public static class MyStaticClass
 } 
 MyStaticClass.myInt; //using static members
 
-////////////////////////////////////////////////////////////////////////////////////////////
 //INTERFACE CLASS
-////////////////////////////////////////////////////////////////////////////////////////////
-
+//No implementation for methods/properties
 public interface IMyClass()
 {
     int MyMethod1(); //accessor determine by derived class
@@ -165,29 +154,18 @@ public class MyClass() : IMyClass
     float IMyClass.MyMethod2() {} //non-implemented method, cannot be used by object itself
 };
 
-////////////////////////////////////////////////////////////////////////////////////////////
 //ABSTRACT CLASS
-////////////////////////////////////////////////////////////////////////////////////////////
-
+//class keyword is required for any abstract methods or compiler warning
+//abstract methods are auto made virtual (can't be private)
 public abstract class MyABC
 {
-    public void MyMethod(){} //normal method with definition
-    public abstract void MyAbstractMethod(); //abstract methods can't be private
+    public void MyMethod(){} //normal method with definition still allowed
+    public abstract void MyAbstractMethod();
 }
 public class MyClass : MyABC
 {
-    //override and provide a definition
-    public override void MyAbstractMethod(){} 
+    public override void MyAbstractMethod(){} //override and provide a definition
 }
-public abstract class MyClass : IMyInt
-{
-    //any method don't want to implement from interface can declare as abstract
-    public abstract void MyIntMethod();
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////
-//SEALED CLASS
-////////////////////////////////////////////////////////////////////////////////////////////
 
 //SEALING CLASSES
 //Statically resolves any virtual methods as no derived classes
