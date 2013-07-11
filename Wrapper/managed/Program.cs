@@ -28,7 +28,7 @@ namespace managed
 
         public static void DisplayMethodInfo(string visibility, MethodInfo[] myArrayMethodInfo)
         {
-            for (int i = 0; i < myArrayMethodInfo.Length; i++)
+            for (int i = 0; i < myArrayMethodInfo.Length; ++i)
             {
                 MethodInfo myMethodInfo = (MethodInfo)myArrayMethodInfo[i];
                 Console.WriteLine("\n" + visibility + ": {0}.", myMethodInfo.Name);

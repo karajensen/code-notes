@@ -118,6 +118,15 @@ assem.GetName() //get name, version information for dll
 //Get Calling Method Name
 string methodName = new StackTrace().GetFrame(1).GetMethod().Name;
 
+//Get methods avaliable in a class
+Type myType = typeof(MyClass);
+MethodInfo[] myArrayMethodInfo = myType.GetMethods(BindingFlags.FlattenHierarchy | BindingFlags.Public | BindingFlags.Instance);
+for (int i = 0; i < myArrayMethodInfo.Length; ++i)
+{
+    MethodInfo myMethodInfo = (MethodInfo)myArrayMethodInfo[i];
+    Console.WriteLine("\n{0}.", myMethodInfo.Name);
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 //DIAGNOSTICS
 ////////////////////////////////////////////////////////////////////////////////////////////
