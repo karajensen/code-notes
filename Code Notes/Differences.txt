@@ -48,7 +48,7 @@ NAMESPACES:
 
 INCLUDING LIBRARIES:
 [C# ] using MyLibrary
-[CLI] using namespace MyLibrary and #include MyLibrary.h
+[CLI] using MyLibrary and #include MyLibrary.h
 [C++] #include MyLibrary.h
 
 #DEFINE:
@@ -85,8 +85,8 @@ C# CLASS OBJECT CREATION:
 2) Base member Field Initialisaters
 3) Base Constructor Body
 4) Derived Constructor Body
-5) Derived Destructor
-6) Base Desctructor
+5) Derived Dispose or Derived Finaliser
+6) Base Dispose or Base Finaliser
 
 C++ CLASS OBJECT CREATION:
 1) Base Initialisation List
@@ -101,8 +101,8 @@ C++/CLI CLASS OBJECT CREATION:
 2) Base Initialisation List
 3) Base Constructor Body
 4) Derived Constructor Body
-5) Derived Destructor
-6) Base Desctructor
+5) Derived Destructor or Derived Finaliser
+6) Base Desctructor or Base Finaliser
 
 STRUCT/CLASS TYPES:
 [C# ] Structs value only, Class reference only
@@ -115,13 +115,13 @@ PREVENTED MEMBERS:
 [C++] Static constructor
 
 IMPLICIT MEMBERS:
-[C# ] Struct/Class: default/static constructor, destructor, System.Object members, operator==(Class Only)
-[CLI] Struct/Class: default/static constructor, destructor, System.Object members, operator==(Class Only)
+[C# ] Struct/Class: default/static constructor, finaliser, System.Object members, operator==(Class Only)
+[CLI] Struct/Class: default/static constructor, finaliser, System.Object members, operator==(Class Only)
 [C++] Struct/Class: default constructor, destrutor, copy/move constructor, operator=, operator&
 
 DEFAULT VISIBILITY:
 [C# ] Struct is public, Class is internal, All members private
-[CLI] Struct/Struct members is public, Class/Class members is private
+[CLI] Struct members is public, Class members is private, Overall struct/class is internal
 [C++] Struct/Struct members is public, Class/Class members is private
 
 VARIABLE AUTO-INITIALISATION
@@ -138,6 +138,16 @@ INITIALISING STATIC MEMBERS:
 [C# ] Initialised through Static constructor or when first used through field initialisation
 [CLI] Initialised through Static constructor, no field/cpp initialisation
 [C++] Initialised before main() called in cpp file
+
+OBJECT DELETION
+[C# ] Destructor inherited as Dispose() and explicitly called or Finaliser called by GC.
+[CLI] Destructor called when object on stack out of scope/delete used or Finaliser called by GC.
+[C++] Destructor called when object on stack out of scope/delete used. No Finaliser.
+
+CLASS ;
+[C# ] Doesn't require ; at end of closing bracket
+[CLI] Requires ; at end of closing bracket
+[C++] Requires ; at end of closing bracket
 
 ====================================================================================
 INHERITANCE DIFFERENCES

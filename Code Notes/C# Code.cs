@@ -32,9 +32,20 @@ myInt++;
 
 //DEFAULT VARIABLE VALUES
 default(int) //returns default value for that type
-bool = false
-numbers = 0
-objects = null
+default(bool) //false
+default(number) //0
+default(objects) //null
+default(String) //null
+
+//VARIABLE CONSTANTS
+float.PositiveInfinity
+float.NegativeInfinity
+int.MaxValue
+int.MinValue
+double.PositiveInfinity
+double.NegativeInfinity
+bool.FalseString
+bool.TrueString
 
 //NULLABLE VALUE-TYPES
 int? myint = null; //allows null to be assigned to value-type
@@ -48,10 +59,6 @@ unchecked(a+b) //don't check expression
 //NOTATION
 uint = 0xFF00FF00; //hex notation
 var myVar = 1.0E-20f; //scientific notation
-
-//BOXING
-object boxed = 10; //occurs implicitly for value-types
-int unBoxed = boxed as int; //occurs explicitly for value-types
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //VARIABLE MODIFIERS
@@ -113,24 +120,14 @@ bool isObject = myClass is Object;
 bool isInt = myint is int;
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-//WEAK REFERENCES
-////////////////////////////////////////////////////////////////////////////////////////////
-
-//allows reference to object but doesn't count as a strong reference for the gc
-var myWeakRef = new WeakReference<MyClass>(myObj1)
-
-//returns false if myObj1 has been collected else true
-//stores strong reference into myObj2 if returns true
-MyClass myObj2;
-bool isAlive = myWeakRef.TryGetTarget(out myObj2) 
-
-////////////////////////////////////////////////////////////////////////////////////////////
 //ENUMS
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 //ENUM
+//always have zero entry and default(enum) is zero
 public enum MyEnum
 {
+    ZERO = 0,
     ONE = 1,
     TWO = 5,
     THREE //will equal 6

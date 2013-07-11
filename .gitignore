@@ -6,8 +6,16 @@
 *.exe
 *.ilk
 *.pdb
+*.dll.metagen
 Code Notes/Debug/
 Code Notes/Release/
 Debug/
 Release/
 ipch/
+wrapper/ipch/
+Wrapper/Build/
+Wrapper/wrapper/Debug/
+Wrapper/wrapper/Release/
+Wrapper/native/Debug/
+Wrapper/native/Release/
+Wrapper/managed/obj/

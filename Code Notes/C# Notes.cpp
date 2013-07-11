@@ -57,7 +57,7 @@ CLASSES [REF-TYPE]
 
 CONST/READONLY VARIABLE DIFFERENCES:
 • Const compile time and faster; Readonly runtime and slower
-• Const can be declared inside methods; Readonly only as static member variable
+• Const can be declared inside methods; Readonly only as member variable
 • Const replaces value during compilation; Readonly becomes const after contructor called
 • Const only used with numbers and strings; Readonly used with everything
 • Const can't be initialised with 'new'; Readonly can be initialised with 'new'
@@ -87,12 +87,16 @@ CLASS CONSTRUCTION
 • If no static constructor: static members initialised anytime before first instance created
   If static constructor: called just before first instance created or static method called
 
-1) Derived member Field Initialisaters called
-2) Base member Field Initialisaters called
-3) Base Constructor Body called
-4) Derived Constructor Body called
-5) Derived Destructor called
-6) Base Desctructor called
+1) Derived member Field Initialisaters
+2) Base member Field Initialisaters
+3) Base Constructor Body
+4) Derived Constructor Body
+5) Derived Dispose or Derived Finaliser
+6) Base Dispose or Base Finaliser
+
+OBJECT DESTRUCTION:
+Destructor: obtained through inheriting IDisposable, called explicitly to clean up unmanaged objects
+Finaliser: called when object is garbage collected, implement for cleaning managed objects (c++ destructor syntax)
 
 CLASS VISIBILITY
 • Visibility levels: Public -> Internal -> Protected Internal -> Protected -> Private
@@ -206,18 +210,6 @@ LAMBDAS
 • Cannot contain goto, break, containue that moves to outside lambda
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-//BOXING
-////////////////////////////////////////////////////////////////////////////////////////////
-
-• Boxing allows variable of type System.Object to refer to a System.ValueType
-• System.Object only capable of holding reference on heap; System.ValueType may be on stack/register
-• Boxing auto happens when converting value-type to object- Copies value into a new object on the heap
-• New boxed object remembers what type it was created from and will only unbox if cast to correct type
-• Boxing is implicit, Unboxing is reverse and explicit
-• Ineffecient as Garbage Collected needs to remove new boxed object
-• If nullable value-type is null, returns null before doing any boxing
-
-////////////////////////////////////////////////////////////////////////////////////////////
 //OBJECT LIFETIME
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -261,8 +253,17 @@ WEAK REFERENCES
 • Short Weak Reference: Tells when object is unreachable or fully removed by GC
 • Long Weak Reference: Tells when object is fully removed by GC
 
+BOXING
+• Boxing allows variable of type System.Object to refer to a System.ValueType
+• System.Object only capable of holding reference on heap; System.ValueType may be on stack/register
+• Boxing auto happens when converting value-type to object- Copies value into a new object on the heap
+• New boxed object remembers what type it was created from and will only unbox if cast to correct type
+• Boxing is implicit, Unboxing is reverse and explicit
+• Ineffecient as Garbage Collected needs to remove new boxed object
+• If nullable value-type is null, returns null before doing any boxing
+
 ////////////////////////////////////////////////////////////////////////////////////////////
-//UNSAFE CODE/POINTERS
+//UNSAFE CODE
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 POINTERS

@@ -3,6 +3,10 @@
 //////////////////////////////////////////////////////////////////////////////
 /*
 
+NATIVE/MANAGED
+• C# can see C++/CLI code, Pure C++ cannot and needs a native interface
+• C# include as reference, Pure C++ include native header and ensure dll is in exe directory
+
 VALUE-TYPES
 • Can be both class/struct, stored on stack/registers
 • Can't have user-defined destructors, constructors, ass.operators
@@ -16,18 +20,18 @@ REFERENCE-TYPES
 
 CLASSES/STRUCTS
 • Can be both value-type and reference-type
-• Implicit members: default/static constructor, destructor, System.Object members, operator==(Class Only)
-• Struct/Struct members is public, Class/Class members is private
+• Implicit members: default/static constructor, finaliser, System.Object members, operator==(Class Only)
+• Struct members default is public, Class members default is private, overall default visibility is internal
 • No friend functions allowed (includes c++ lambdas)
 • No support for Multiple Inheritance; use multiple interfaces instead
 
 CLASS OBJECT CREATION:
-1) Derived Initialisation List called
-2) Base Initialisation List called
-3) Base Constructor Body called
-4) Derived Constructor Body called
-5) Derived Destructor called
-6) Base Desctructor called
+1) Derived Initialisation List
+2) Base Initialisation List
+3) Base Constructor Body
+4) Derived Constructor Body
+5) Derived Destructor or Derived Finaliser
+6) Base Desctructor or Base Finaliser
 
 HANDLES
 • Can be used by native/managed code
@@ -82,11 +86,15 @@ int* myPointer; //native pointer
 void (*pFunction)(void) //native function pointer
 delegate void MyDelegate(void) //managed delegate
 
-//CASTING
-//will throw System::InvalidCastException if conversion fails
-safe_cast<double>(myFloat); //used as static_cast
-safe_cast<Derived*>(myBase); //use as dynamic_cast
-int myInt = *safe_cast<int^>(boxedInt); //used for unboxing
+//CONSTANTS
+literal int myInt; //Compile-time constant (c# const)
+initonly int myInt; //Runtime constant (c# readonly)
+
+//OBJECTS
+MyClass^ myObj; //C++/CLI or managed object on heap
+MyClass myObj; //C++/CLI or native object on stack
+MyClass* myObj; //Native object on heap
+MyStruct myObj; //Managed/Native value type on stack
 
 //LOOPS
 for(int i = 0; i < myInt; ++i){}
@@ -102,6 +110,36 @@ case 2:
 default:
 }
 
+//ENUMS
+enum MyNativeEnum
+{
+    ONE,
+    TWO
+};
+private enum class MyManagedEnum
+{
+    ONE,
+    TWO
+};
+
+//////////////////////////////////////////////////////////////////////////////
+//CASTING
+//////////////////////////////////////////////////////////////////////////////
+
+//SAFE CAST
+//will throw System::InvalidCastException if conversion fails
+safe_cast<Derived^>(myBase);
+safe_cast<double>(myFloat);
+int myInt = *safe_cast<int^>(boxedInt); //use for unboxing
+
+//DYNAMIC CAST
+//returns nullptr if conversion fails, for pointers/handles only
+dynamic_cast<Derived^>(myBase)
+
+//SAFE CAST
+//no checking is done
+static_cast<double>(myFloat);
+
 //////////////////////////////////////////////////////////////////////////////
 //C++/CLI ARRAY
 //////////////////////////////////////////////////////////////////////////////
@@ -110,6 +148,7 @@ default:
 //can only store managed types/native pointers (doesn't call delete)
 cli::array<int>^ myArray = gcnew cli::array<int>(4) //value-type array
 cli::array<MyClass^>^ myArray = gcnew cli::array<MyClass^>(4) //reference-type array
+cli::array<String^> myArray; //sits on the stack
 
 myArray[0];
 myArray->Length //number of elements
@@ -152,14 +191,15 @@ int* lastElement = native + myArray->Length
 //////////////////////////////////////////////////////////////////////////////
 //CLASSES
 //////////////////////////////////////////////////////////////////////////////
+//overall class/struct visibility defaults to internal
 
 //REFERENCE TYPES
-ref class MyClass {};   //Methods default to private
-ref struct MyStruct {}; //Methods default to public
+public ref class MyClass {};   //Methods default to private
+public ref struct MyStruct {}; //Methods default to public
 
 //VALUE TYPES
-value class MyClass {};   //Methods default to private
-value struct MyStruct {}; //Methods default to public
+public value class MyClass {};   //Methods default to private
+public value struct MyStruct {}; //Methods default to public
 
 //INTERFACE TYPES
 interface class MyClass {};   //Methods default public
@@ -235,14 +275,14 @@ static MyClass::MyClass()
 
 //COPY CONSTRUCTOR
 //Not implicitly created
-MyClass(const MyClass^ o); //visible to native/managed
+MyClass(const MyClass^ o);
 MyClass^ obj1 = gcnew MyClass(%obj2); 
 
-MyClass(const MyClass% o);  //only visible to native
+MyClass(const MyClass% o);
 MyClass^ obj1 = gcnew MyClass(obj2);
 
 //ASSIGNMENT OPERATOR
-//Not implicitly created, only visible to native
+//Not implicitly created
 MyClass% operator=(const MyClass% o)
 {
     if(%o == this)
@@ -361,60 +401,35 @@ if(delegateHandle.IsAllocated)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-//WRAPPER
+//DESTRUCTION
 //////////////////////////////////////////////////////////////////////////////
 
-//MyClass.h
-using namespace System;
-class MyNativeClass;
-class MyManagedClass;
-
-ref class MyClass
+//DESTRUCTOR
+//Destructor called by Dispose()/delete or object on stack going out of scope
+//if implemented, class inherits IDisposable and overrides Dispose() which calls ~MyClass()
+~MyClass()
 {
-public:
-
-    MyClass(Action^ callback);
-    ~MyClass();
-    void CallNativeFunction();
-
-private:
-
-    static MyClass();
-    static int sm_int;
-
-    MyNativeClass* m_native;
-    MyManagedClass^ m_managed;
-    Action^ m_managedCallback;
-};
-
-//MyClass.cpp
-class MyNativeClass { /*Pure Native code goes here*/ };
-ref class MyManagedClass { /*Pure Managed code goes here*/ };
-
-MyClass::MyClass(Action^ callback) :
-    m_native(nullptr),
-    m_managed(nullptr)
-{
-    m_native = new MyNativeClass();
-    m_managed = gcnew MyManagedClass();
-    m_managedCallback = callback;
+    //will suppress GC call of finalisation implicitly (GC.SuppressFinalize(this))
+    //'this' important otherwise seen as ! operator
+    this->!MyClass(); 
 }
 
-MyClass::~MyClass()
+//FINALISER
+//Finaliser called by GC if on the heap and destructor hasn't been called
+//implicit finaliser inherited from System.Object
+//will always be non-public even if under public section
+//warning given if implementing without creating a destructor
+!MyClass()
 {
-    if(m_native != nullptr)
+    if(myNativeObj)
     {
-        delete m_native;
+        delete myNativeObj;
+        myNativeObj = nullptr;
     }
 }
 
-MyClass::CallNativeFunction()
-{
-    m_native->MyNativeFunction();
-}
-
-static MyClass::MyClass()
-{
-    //no initialisation list/cpp initialisation for static members
-    sm_int = 10; 
-}
+MyClass^ obj = gcnew MyClass; //C++/CLI: calls finaliser
+MyClass obj = new MyClass; //C#: calls finaliser
+MyClass^ obj = gcnew MyClass; delete obj; //C++/CLI: calls destructor
+MyClass obj = new MyClass; obj.Dispose(); //C#: calls destructor
+MyClass obj; //C++/CLI: calls destructor

@@ -44,7 +44,7 @@ public void ShowParams(params object[] objects)
 
 //CONSTRUCTOR
 //Structs: can only declare contructor with arguments. Default constructor auto generated
-public MyClass() : this(10) //invoke another constructor
+public MyClass() : this(10) //invoke another constructor (constructor chaining)
 {}
 public MyClass(int myInt)
 {
@@ -57,8 +57,9 @@ public MyClass(int myInt)
 static MyClass()
 {}
 
-//DESCTRUCTOR
-~MyClass(){} //no visibility allowed, always virtual
+//FINALISER
+//no visibility allowed, always virtual, can't be called expliclitly
+~MyClass(){} 
 
 //STATIC METHOD
 //only deals with static variables
@@ -78,7 +79,7 @@ public override string ToString()
 public int MyInt
 {
     get { return myInt; }
-    set { myInt = value; }
+    private set { myInt = value; } //can change internal visibility
 }
 
 //TRIVIAL PROPERTY

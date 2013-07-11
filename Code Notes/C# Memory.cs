@@ -67,26 +67,39 @@ public static void MyFunction(Base b);
 MyDelegate myDel = MyFunction; //Accepts despite requiring derived as a parameter
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-//UNSAFE CODE/POINTERS
+//OBJECT LIFETIME
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-int* myPointer 
+//BOXING
+object boxed = 10; //occurs implicitly for value-types
+int unBoxed = boxed as int; //occurs explicitly for value-types
+
+//WEAK REFERENCES
+//allows reference to object but doesn't count as a strong reference for the gc
+var myWeakRef = new WeakReference<MyClass>(myObj1)
+
+//returns false if myObj1 has been collected else true
+//stores strong reference into myObj2 if returns true
+MyClass myObj2;
+bool isAlive = myWeakRef.TryGetTarget(out myObj2)
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//UNSAFE CODE
+////////////////////////////////////////////////////////////////////////////////////////////
+
+//POINTERS
+//Pointers can only be used in unsafe code
+int* myPointer = &myInt; 
 int** myPointer
 int*[] myPointer //array of pointers to ints
 char* myPointer //pointer to a char
 void* myPointer
+MyStruct* myPointer
+*myPointer = 2; //dereferencing
 
-//POINTER TO STRUCTS
-MyStruct* myPointer;
-myPointer->member;
-
-//UNSAFE CODE
-//Pointers can only be used in this
 unsafe static void MyUnsafeFn(int* p)
-{
-    *p = 2; //dereferencing
-
-    //FIXING VARIABLES
+{    
+    //PINNING VARIABLES
     //prevents garbage collector from changing address of a variable
     //can only use in unsafe context
     MyClass obj = new MyClass();
@@ -96,5 +109,32 @@ unsafe static void MyUnsafeFn(int* p)
     }  
 }
 
-int myInt = 1;
-MyUnsafeFn(&myInt); //obtain address
+//DISPOSING OF UNMANAGED RESOURCES
+class MyClass : public IDisposable
+{
+    bool isDisposed = false;
+
+    //Implementation of IDisposable.Dispose
+    public virtual void Dispose() override
+    {
+        if(!isDisposed)
+        {
+            //Free any unmanaged/managed resources here
+            //prevent finalise from being called as Dispose will do the destructors job
+            GC.SuppressFinalize(this);
+            isDisposed = true; 
+        }
+    }
+    public void MyFunction()
+    {   
+        //if implementing, must check if object has been disposed
+        if(isDisposed)
+        {
+            throw new ObjectDisposedException("MyClass","Called MyFunction() on disposed object");
+        }
+    }
+    ~MyClass()
+    {
+        Dispose();
+    }
+};

@@ -1,0 +1,3 @@
+inside constructor
+Hello from Native
+inside finaliser
