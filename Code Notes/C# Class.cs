@@ -186,7 +186,21 @@ public sealed class Derived : Base
 public class Base
 {
     protected int myInt;
-    public virtual void MyVirtualMethod(){} //virtual members can't be private
+    public virtual void MyMethod(){} //virtual members can't be private
+}
+public class Derived : Base, IBase
+{
+    //call base constructor, interfaces don't have constructors
+    public Derived() : base() {}
+
+    //override virtual method; must have same visibility as base class
+    public override void MyMethod(){ base.myInt = 3; } //can access using base
+
+    //DATA HIDING
+    //If base/interface version exists; base hidden, derived version is used in place
+    //All methods that don't use 'override' have new flag turned on by default
+    public void MyMethod(); //gives warning
+    public new void MyMethod(); //explicitly hide; base.MyMethod() to call base method
 }
 
 //STRUCT: Can inherit multiple interfaces, no classes/structs
@@ -196,20 +210,7 @@ public struct Derived : IBase {}
 public interface Derived : Base, IBase {}
 
 //CLASS: Can inherit only one class, multiple interfaces; class must be first in list
-public class Derived : Base, IBase
-{   
-    //call base constructor, interfaces don't have constructors
-    public Derived() : base() {}
-
-    //override virtual method; must have same visibility as base class
-    public override void MyVirtualMethod(){ base.myInt = 3; } //can access using base
-
-    //DATA HIDING
-    //If base version exists; base hidden, derived version is used in place
-    //All methods that don't use 'override' have newslot flag turned on by default
-    public void MyVirtualMethod(){} //gives warning
-    public new void MyVirtualMethod(){ base.MyVirtualMethod(); } //explicitly hide; no warning
-}
+public class Derived : Base, IBase {}
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //POLYMORPHISM

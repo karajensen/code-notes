@@ -8,7 +8,7 @@ CLI: COMMON LANGUAGE INFRASTUCTURE
 
 CLR: COMMON LANGUAGE RUNTIME
 Core of the .NET Framework. Includes Virtual Execution System (VES), 
-Just in Time Compiler (JIT), Garbage Collector
+Just in Time Compiler (JIT), Garbage Collector, Managed heap
 
 BCL: BASE CLASS LIBRARY
 Set of .NET classes used by .NET Languages (C#, VB.NET, C++/CLI)
@@ -55,6 +55,10 @@ CLASSES [REF-TYPE]
 • Default constructor/destructor only generated if none provided
 • Auto creates default constructor/destructor, System.Object methods, operator==
 
+STRINGS
+• String literals are interned so that for each occurrence of a particular
+  string only occurs once in memory and can be referenced by multiple variables
+
 CONST/READONLY VARIABLE DIFFERENCES:
 • Const compile time and faster; Readonly runtime and slower
 • Const can be declared inside methods; Readonly only as member variable
@@ -71,7 +75,7 @@ VARIABLE INITIALISATION
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 INTERFACES
-• No contructors/destructors allowed
+• No contructors/finalisers allowed
 • No Definitions or visibility accessors allowed
 • Methods cannot be virtual
 • Can't create object directly from interface
@@ -213,6 +217,8 @@ LAMBDAS
 //OBJECT LIFETIME
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+ROOT: Memory address for object on heap or null
+
 CLR HEAP
 • Reference-types live on heap; Value-types live in heap, register or stack
 • Constructing object through new adds block to the heap
@@ -227,9 +233,10 @@ GARBAGE COLLECTION
 
 LARGE OBJECT HEAP
 • Large objects greater than certain byte amount are stored on Large Object Heap
-• No heap compaction occurs due to cost of copying large objects
+• No heap relocation/compaction occurs due to cost of copying large objects
 
 HEAP GENERATIONS
+• When Generation 0 runs out of memory, does a collection and moves objects to next gen
 • The longer the object stays alive the more expensive it is to delete
     Generation 0: Hasn't survived a garbage collection yet
     Generation 1: Recently created object that's survived

@@ -142,3 +142,16 @@
 
 [6] Always initialise with the declaration unless the variable is to have the 
     default value that's auto-assigned
+
+[7] Destructor is actually the Finaliser
+
+////////////////////////////////////////////////////////////////////////////////////
+//C++/CLI CHEATSHEET
+////////////////////////////////////////////////////////////////////////////////////
+
+[1] Don't change insides of pointer to System::string as it's interned- for each
+    occurance of a particular string only occurs once in memory and can be 
+	referenced by multiple variables. 
+
+[2] Always create a finaliser/destructor pair if needing to release 
+    managed/unmanaged resources.

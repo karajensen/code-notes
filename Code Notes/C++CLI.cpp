@@ -12,6 +12,7 @@ VALUE-TYPES
 • Can't have user-defined destructors, constructors, ass.operators
 • Can't define default constructor- values zero-ed automatically
 • Auto inherits System::ValueType and cannot inherit any other base, can derive multiple interfaces
+• If using stack semantics, cannot be delegate, array or System::String
 
 REFERENCE-TYPES
 • Can be both class/struct, stored on heap
@@ -57,6 +58,12 @@ GCNEW
 • Throws System::OutOfMemoryException if can't allocate
 • If used on a value-type, will create object on stack, box it and return hangle to boxed object on heap
 
+STRINGS
+• System::String is equivalent to native wchar_t*
+• System::String is interned- for each occurrence of a particular string only occurs once
+  in memory and can be referenced by multiple variables. Dangerous to change the values of a 
+  pointer to System::string as it might change other references
+
 FUNCTION OVERLOADING
 Order of preference:
 1) Exact match to passed in type
@@ -65,19 +72,20 @@ Order of preference:
 
 */
 /////////////////////////////////////////////////////////////////////////////////////////////////
-//VARIABLES/PREPROCESSOR
+//VARIABLES
 /////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <vcclr.h>
+#include <msclr\marshal_cppstd.h>
+using System; //including managed libraries
+using namespace System; //use namespace
+class MyClass; //forward declaration
+namespace /*allows anon*/ {}
 
 #ifdef _MANAGED 
 #endif
-
-Console::Write("MyString");
-Console::Write("{0}",myNumber);
-
-using namespace System; //including managed libraries
-#include <iostream> //including native libraries
-class MyClass; //forward declaration
-namespace /*allows anon*/ {}
+#pragma unmanaged
+#pragma managed //default, needs to always be the last given if changed
 
 //VARIABLES
 //auto-initialised to zero unless in block scope
@@ -85,6 +93,7 @@ int myGlobal; //globals allowed in anon namespace
 int* myPointer; //native pointer
 void (*pFunction)(void) //native function pointer
 delegate void MyDelegate(void) //managed delegate
+System::IntPtr //managed pointer for holding native addresses
 
 //CONSTANTS
 literal int myInt; //Compile-time constant (c# const)
@@ -95,6 +104,10 @@ MyClass^ myObj; //C++/CLI or managed object on heap
 MyClass myObj; //C++/CLI or native object on stack
 MyClass* myObj; //Native object on heap
 MyStruct myObj; //Managed/Native value type on stack
+
+//CONSOLE
+Console::Write("MyString");
+Console::Write("{0}",myNumber);
 
 //LOOPS
 for(int i = 0; i < myInt; ++i){}
@@ -122,6 +135,14 @@ private enum class MyManagedEnum
     TWO
 };
 
+//EXCEPTION
+try
+{
+}
+catch(Exception^)
+{
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //CASTING
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,31 +160,6 @@ dynamic_cast<Derived^>(myBase)
 //SAFE CAST
 //no checking is done
 static_cast<double>(myFloat);
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-//ARRAYS
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-//inherits from System::Array
-//can only store managed types/native pointers (doesn't call delete)
-cli::array<int>^ myArray = gcnew cli::array<int>(4) //value-type array
-cli::array<MyClass^>^ myArray = gcnew cli::array<MyClass^>(4) //reference-type array
-cli::array<String^> myArray; //sits on the stack
-
-myArray[0];
-myArray->Length //number of elements
-
-System::Array::Sort(myArray);
-System::Array::BinarySeach(myArray, 2);
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-//STRINGS
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-//Managed to Native String
-#include <msclr\marshal_cppstd.h>
-msclr::interop::marshal_context context;
-std::string stdCaller = context.marshal_as<std::string>(myManagedString);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //HANDLE/REFERENCES
@@ -214,7 +210,8 @@ interface struct MyStruct {}; //Methods default public
 ref class MyClass abstract
 {
 public:
-    virtual void Func() abstract; //virtual required for abstract methods
+    virtual void MyMethod() abstract; //virtual required for abstract methods
+    virtual void MyMethod() = 0; //can also use c++ syntax
 };
 
 //SEALED CLASS
@@ -383,6 +380,36 @@ ref class Derived : public IBase {};
 //inherits from System::ValueType
 value class Derived : IBase {};
 
+//VIRTUAL FUNCTIONS
+ref class Base
+{
+public:
+    void MyNonVirtMethod();
+    virtual void MyMethod();
+    virtual void MyNewMethod();
+    virtual void MyBaseMethod();
+};
+ref class Derived : Base
+{
+public:
+    void MyNonVirtMethod(); //hides the base class method
+    virtual void MyMethod() sealed; //stops it from being further overriden
+    virtual void MyMethod() override; //overrides base virtual method
+    virtual void MyNewMethod() new; //hides base virtual method and treats as independent virtual method
+    virtual void MyDeriMethod() = Base::MyBaseMethod; //use a different name, but still overrides virtual method
+    virtual void MyDeriMethod() = Base::MyBaseMethod1, Base::MyBaseMethod2; //override more than one base virtual
+};
+
+Base^ myBaseHandle = gcnew Derived();
+myBaseHandle->MyOverMethod(); //calls derived version
+myBaseHandle->MyNewMethod(); //calls base version
+myBaseHandle->MyBaseMethod() //calls MyDeriMethod()
+
+Derived^ myDeriHandle = gcnew Derived();
+myDeriHandle->MyOverMethod(); //calls derived version
+myDeriHandle->MyNewMethod(); //calls derived version
+myDeriHandle->MyDeriMethod() //calls MyDeriMethod()
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //DESTRUCTION
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -417,24 +444,71 @@ MyClass^ obj = gcnew MyClass; delete obj; //C++/CLI: calls destructor
 MyClass obj = new MyClass; obj.Dispose(); //C#: calls destructor
 MyClass obj; //C++/CLI: calls destructor
 
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
-//NATIVE POINTERS
+//ARRAYS
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-//======================================================================
+//inherits from System::Array
+//can only store managed types/native pointers (though doesn't call delete)
+cli::array<int>^ myArray = gcnew cli::array<int>(4) //value-type array
+cli::array<MyClass^>^ myArray = gcnew cli::array<MyClass^>(4) //reference-type array
+
+myArray[0];
+myArray->Length //number of elements
+System::Array::Sort(myArray);
+System::Array::BinarySeach(myArray, 2);
+
+//CONVERTING ARRAYS
+array<int>^ managedArr = gcnew array<int>(10);
+int nativeArr[size];
+Marshal::Copy(managedArr,0,static_cast<IntPtr>(nativeArr),size); //managed to native array
+Marshal::Copy(static_cast<IntPtr>(nativeArr), managedArr, 0, 10); //native to managed array
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//STRINGS
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+//CHAR* TO SYSTEM::STRING
+System::String^ managedStr = gcnew System::String(nativeCharStr);
+
+//SYSTEM::STRING TO CHAR*
+System::IntPtr ptr = Marshal::StringToHGlobalAnsi(managedStr); //allocate new memory for native string
+char* nativeCharStr = static_cast<char*>(ptr.ToPointer()); //ToPointer() returns void*
+Marshal::FreeHGlobal(ptr); //free uneeded native memory
+
+//SYSTEM::STRING TO STD::STRING
+msclr::interop::marshal_context context;
+std::string stdCaller = context.marshal_as<std::string>(managedStr);
+
+//SYSTEM::STRING TO WCHAR_T*
+pin_ptr<char> pinned = const_cast<interior_ptr<char>>(PtrToStringChars(managedStr));
+wchar_t* nativeWChar = pinned;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//POINTERS
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+int* native = myPinned //get native pointer from pinned only
+myPinned = myInterior  //implicit conversion allowed
+myInterior = myPinned  //implicit conversion allowed
+*myIntPin
+myIntPin->MyMethod() 
+myIntPin[0]
+
+//INTERIOR POINTER
+//updates address as object moves
+cli::interior_ptr<MyClass> interior = &myObject;
+
 //PINNING POINTER
-//======================================================================
+//prevents gc from moving/deleting object
 //when pin_ptr goes out of scope, object is unpinned
-cli::pin_ptr<MyClass> pinned = &myObject; //prevent gc from moving/deleting object
-cli::pin_ptr<int> pinned = &myArray[0];  //prevent gc from moving/deleting array
-int* native = pinned;
-int* lastElement = native + myArray->Length
+cli::pin_ptr<MyClass> pinned = &myObject; 
+cli::pin_ptr<int> pinned = &myArray[0];
 
-//======================================================================
 //GC ROOT HANDLE
-//======================================================================
-//gcroot provides handle to address of the object on the managed heap
-//it will update as the object is moved by the GC
+//provides handle to address on managed heap; updates address as object moves
+//can be converted to native pointer but needs to be released
 MyClass^ myClass = gcnew MyClass();
 gcroot<MyClass^>* pointer = new gcroot<MyClass^>(myClass);
 void* m_myclass = (void*)pointer;
@@ -447,9 +521,11 @@ gcroot<MyClass^>* pointer = reinterpret_cast<gcroot<MyClass^>*>(m_myclass);
 m_myclass = nullptr;
 delete pointer; 
 
-//======================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////
 //CALLBACKS
-//======================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+//FUNCTION POINTER FROM DELEGATE
 //Prevent delegate from being moved/deleted by garbage collector
 Action^ myDelegate = myFunction();
 GCHandle delegateHandle = System::Runtime::InteropServices::GCHandle::Alloc(myDelegate);
@@ -465,3 +541,9 @@ if(delegateHandle.IsAllocated)
 {
     delegateHandle.Free();
 }
+
+//DELEGATE FROM FUNCTION POINTER
+typedef void (*VoidFn)(void);
+System::Action^ myAction = nullptr;
+VoidFn myVoid = nullptr;
+myAction = (System::Action^)Marshal::GetDelegateForFunctionPointer((IntPtr)myVoid, myAction::typeid);
