@@ -26,7 +26,7 @@ STL ALGORITHMS
 • In-build functors are faster than passing lambdas/function pointers due to them being inlined
 
 SORT/SEARCHING
-Sorting Fastest-slowest: Partitions, Partial sorting, Full sorting, Stable sorting
+Sorting Fastest-slowest: Partitions, partial_sort, sort, stable_sort
 Require sort ascending, Search speed O(logN): binary_search, lower_bound, upper_bound, equal_range
 Don't require sorting, Search speed O(N): count, count_if, find, find_if
                        

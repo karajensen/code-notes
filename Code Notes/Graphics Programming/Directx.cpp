@@ -51,6 +51,8 @@ D3DXVec3Dot(&vec1, &vec2); //returns dot product of two vectors
 D3DXVec3TransformCoord(&vecOut, &vecIn, &matIn); //transform in vector into matrix coordinate   
 D3DXVec3Normalize(&vecOut, &vecIn);
 D3DXVec3TransformNormal(&vecOut, &vecIn, &matIn);
+D3DXVec3Cross(&vecOut, &vecIn1, &vecIn2);
+D3DXVec3Length(&vec) //returns length of vector
 
 //////////////////////////////////////////////////////////////////////////////
 //CREATE PROJECTION MATRIX

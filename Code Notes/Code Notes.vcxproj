@@ -179,7 +179,6 @@
     <None Include="C# Containers.cs" />
     <None Include="C# Memory.cs" />
     <None Include="Cheatsheet.txt" />
-    <None Include="Differences.txt" />
     <None Include="Graphics Programming\GLSL Shaders\ps.glsl" />
     <None Include="Graphics Programming\GLSL Shaders\psShadow.glsl" />
     <None Include="Graphics Programming\GLSL Shaders\psTexture.glsl" />

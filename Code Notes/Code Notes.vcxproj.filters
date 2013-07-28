@@ -595,7 +595,6 @@
       <Filter>Graphics Programming\HLSL Shaders</Filter>
     </None>
     <None Include="Symbols.txt" />
-    <None Include="Differences.txt" />
     <None Include="Images\Physics - constraints.png">
       <Filter>Game Programming\Images</Filter>
     </None>
