@@ -1,17 +1,17 @@
 /****************************************************************
 * Kara Jensen (KaraPeaceJensen@gmail.com) 20.0f12
 * 4x4 right handed matrix class
- RH MATRIX IN FORM OF [OPENGL]:
- | 11 12 13 x |  | Right.x  Up.x  Forward.x  Pos.x |
- | 21 22 23 y |  | Right.y  Up.y  Forward.y  Pos.y |
- | 31 32 33 z |  | Right.z  Up.z  Forward.z  Pos.z |
- | 0  0  0  1 |  |   0       0       0        1    |
+* RH Matrix IN FORM OF [OPENGL]:
+* | 11 12 13 x |  | Right.x  Up.x  Forward.x  Pos.x |
+* | 21 22 23 y |  | Right.y  Up.y  Forward.y  Pos.y |
+* | 31 32 33 z |  | Right.z  Up.z  Forward.z  Pos.z |
+* | 0  0  0  1 |  |   0       0       0        1    |
 *****************************************************************/
 #pragma once
 
-#include "float3.h"
+#include "vector3.h"
 
-class MATRIX
+class Matrix
 {
 public:
 
@@ -20,47 +20,165 @@ public:
           m31, m32, m33, m34;
 
     /**
-    * Gets various vectors associated with the matrix
+    * Constructor
+    * @param the forward, up, right and position vectors
     */
-    FLOAT3 Right() const          { return FLOAT3(m11,m21,m31); }
-    FLOAT3 Up() const             { return FLOAT3(m12,m22,m32); }
-    FLOAT3 Forward() const        { return FLOAT3(m13,m23,m33); }
-    FLOAT3 Position() const       { return FLOAT3(m14,m24,m34); }
-    FLOAT3 GetRight() const       { return FLOAT3(m11,m21,m31); }
-    FLOAT3 GetUp() const          { return FLOAT3(m12,m22,m32); }
-    FLOAT3 GetForward() const     { return FLOAT3(m13,m23,m33); }
-    FLOAT3 GetPosition() const    { return FLOAT3(m14,m24,m34); }
+    Matrix(const Float3& forward, const Float3& up, const Float3& right, const Float3& position)
+    { 
+        Set(forward, up, right, position); 
+    }
 
     /**
-    * Sets the position
+    * Constructor
+    * @param each component to be set
     */
-    void SetPosition(float x, float y, float z) { m14 = x;    m24 = y;    m34 = z;   }
-    void SetPosition(const FLOAT3& v)           { m14 = v.x;  m24 = v.y;  m34 = v.z; }
+    Matrix(float M11,float M12,float M13,float M14,float M21,float M22,
+        float M23,float M24,float M31,float M32,float M33,float M34)
+    { 
+        Set(M11, M12, M13, M14, M21, M22, M23, M24, M31, M32, M33, M34); 
+    }
 
     /**
-    * Sets the forward vector
+    * @return the right axis for the matrix
     */
-    void SetForward(float x, float y, float z)  { m13 = x;    m23 = y;    m33 = z;   }
-    void SetForward(const FLOAT3& v)             { m13 = v.x;  m23 = v.y;  m33 = v.z; }
+    Float3 Right() const    
+    { 
+        return Float3(m11,m21,m31); 
+    }
 
     /**
-    * Sets the up vector
+    * @return the up axis for the matrix
     */
-    void SetUp(float x, float y, float z)       { m12 = x;    m22 = y;    m32 = z;   }
-    void SetUp(const FLOAT3& v)                 { m12 = v.x;  m22 = v.y;  m32 = v.z; }
+    Float3 Up() const       
+    { 
+        return Float3(m12,m22,m32); 
+    }
 
     /**
-    * Sets the right vector
+    * @return the forward axis for the matrix
     */
-    void SetRight(float x, float y, float z)    { m11 = x;    m21 = y;    m31 = z;   }
-    void SetRight(const FLOAT3& v)              { m11 = v.x;  m21 = v.y;  m31 = v.z; }
+    Float3 Forward() const   
+    { 
+        return Float3(m13,m23,m33);
+    }
 
     /**
-    * Sets the scale of the matrix
+    * @return the position for the matrix
     */
-    void SetScale(float x, float y, float z)    { m11 = x;    m22 = y;    m33 = z;   }
-    void SetScale(const FLOAT3& v)              { m11 = v.x;  m22 = v.y;  m33 = v.z; }
-    void SetScale(float a)                      { m11 = a;    m22 = a;    m33 = a;   }
+    Float3 Position() const  
+    { 
+        return Float3(m14,m24,m34);
+    }
+
+    /**
+    * Sets the position from components
+    */
+    void SetPosition(float x, float y, float z)
+    { 
+        m14 = x;   
+        m24 = y;   
+        m34 = z;   
+    }
+
+    /**
+    * Sets the position from a vector
+    */
+    void SetPosition(const Float3& v)           
+    { 
+        m14 = v.x;  
+        m24 = v.y; 
+        m34 = v.z; 
+    }
+
+    /**
+    * Sets the forward vector from components
+    */
+    void SetForward(float x, float y, float z) 
+    { 
+        m13 = x;  
+        m23 = y;  
+        m33 = z; 
+    }
+
+    /**
+    * Sets the forward vector from a vector
+    */
+    void SetForward(const Float3& v)     
+    { 
+        m13 = v.x; 
+        m23 = v.y;
+        m33 = v.z;
+    }
+
+    /**
+    * Sets the up vector from components
+    */
+    void SetUp(float x, float y, float z)  
+    { 
+        m12 = x;    
+        m22 = y;   
+        m32 = z;   
+    }
+
+    /**
+    * Sets the up vector from a vector
+    */
+    void SetUp(const Float3& v)                 
+    { 
+        m12 = v.x; 
+        m22 = v.y; 
+        m32 = v.z;
+    }
+
+    /**
+    * Sets the right vector from components
+    */
+    void SetRight(float x, float y, float z)   
+    { 
+        m11 = x; 
+        m21 = y;  
+        m31 = z;   
+    }
+
+    /**
+    * Sets the right vector from a vector
+    */
+    void SetRight(const Float3& v)             
+    { 
+        m11 = v.x; 
+        m21 = v.y; 
+        m31 = v.z; 
+    }
+
+    /**
+    * Sets the scale of the matrix from components
+    */
+    void SetScale(float x, float y, float z)  
+    { 
+        m11 = x; 
+        m22 = y; 
+        m33 = z; 
+    }
+
+    /**
+    * Sets the scale of the matrix from a vector
+    */
+    void SetScale(const Float3& v)              
+    { 
+        m11 = v.x;  
+        m22 = v.y; 
+        m33 = v.z; 
+    }
+
+    /**
+    * Sets the uniform scale of the matrix from a component
+    */
+    void SetScale(float a)               
+    { 
+        m11 = a;  
+        m22 = a;  
+        m33 = a;   
+    }
 
     /**
     * Sets all matrix components
@@ -68,7 +186,10 @@ public:
     */
     void Set(float a)
     {
-        m11 = m22 = m33 = m12 = m13 = m14 = m21 = m23 = m24 = m31 = m32 = m34 = a;
+        m11 = a;  m21 = a;  m31 = a;
+        m12 = a;  m22 = a;  m32 = a;
+        m13 = a;  m23 = a;  m33 = a;
+        m14 = a;  m24 = a;  m34 = a;
     }
 
     /**
@@ -76,20 +197,20 @@ public:
     * @param a pointer to a buffer of 16 floats
     * @param whether or not the buffer is right/left handed
     */
-    void Set(const float* a, bool RH)
+    void Set(const float* mat, bool rightHanded)
     {
-        if(RH)
+        if(rightHanded)
         {
-            m11 = a[0];   m21 = a[1];   m31 = a[2];   
-            m12 = a[4];   m22 = a[5];   m32 = a[6];   
-            m13 = a[8];   m23 = a[9];   m33 = a[10];  
-            m14 = a[12];  m24 = a[13];  m34 = a[14];
+            m11 = mat[0];   m21 = mat[1];   m31 = mat[2];   
+            m12 = mat[4];   m22 = mat[5];   m32 = mat[6];   
+            m13 = mat[8];   m23 = mat[9];   m33 = mat[10];  
+            m14 = mat[12];  m24 = mat[13];  m34 = mat[14];
         }
         else
         {
-            m11 = a[0];   m12 = a[1];   m13 = a[2];   m14 = a[3];
-            m21 = a[4];   m22 = a[5];   m32 = a[6];   m24 = a[7];
-            m31 = a[8];   m32 = a[9];   m33 = a[10];  m34 = a[11];
+            m11 = mat[0];   m12 = mat[1];   m13 = mat[2];   m14 = mat[3];
+            m21 = mat[4];   m22 = mat[5];   m32 = mat[6];   m24 = mat[7];
+            m31 = mat[8];   m32 = mat[9];   m33 = mat[10];  m34 = mat[11];
         }
     }
 
@@ -97,18 +218,18 @@ public:
     * Sets all the matrix components
     * @param the forward, up, right and position vectors
     */
-    void Set(const FLOAT3& Forward, const FLOAT3& Up, const FLOAT3& Right, const FLOAT3& Position)
+    void Set(const Float3& forward, const Float3& up, const Float3& right, const Float3& position)
     {
-        m11 = Right.x;  m12 = Up.x;   m13 = Forward.x;  m14 = Position.x;
-        m21 = Right.y;  m22 = Up.y;   m23 = Forward.y;  m24 = Position.y;
-        m31 = Right.z;  m32 = Up.z;   m33 = Forward.z;  m34 = Position.z;
+        m11 = right.x;  m12 = up.x;   m13 = forward.x;  m14 = position.y;
+        m31 = right.z;  m32 = up.z;   m33 = forward.z;  m34 = position.z;
     }
 
     /**
     * Sets all the matrix components
     * @param each component to be set
     */
-    void Set(float M11,float M12,float M13,float M14,float M21,float M22,float M23,float M24,float M31,float M32,float M33,float M34)
+    void Set(float M11,float M12,float M13,float M14,float M21,
+        float M22,float M23,float M24,float M31,float M32,float M33,float M34)
     {
         m11 = M11;  m12 = M12;  m13 = M13;  m14 = M14;
         m21 = M21;  m22 = M22;  m23 = M23;  m24 = M24;
@@ -131,8 +252,10 @@ public:
     */
     void MakeIdentity()
     {
-        m11 = m22 = m33 = 1.0f;
-        m12 = m13 = m14 = m21 = m23 = m24 = m31 = m32 = m34 = 0.0f;
+        m11 = 1.0f;  m21 = 0.0f;  m31 = 0.0f;
+        m12 = 0.0f;  m22 = 1.0f;  m32 = 0.0f;
+        m13 = 0.0f;  m23 = 0.0f;  m33 = 1.0f;
+        m14 = 0.0f;  m24 = 0.0f;  m34 = 0.0f;
     }
 
     /**
@@ -140,71 +263,44 @@ public:
     */
     void MakeIdentity3x3()
     {
-        m11 = m22 = m33 = 1.0f;
-        m12 = m13 = m21 = m23 = m31 = m32 = 0.0f;
+        m11 = 1.0f;  m21 = 0.0f;  m31 = 0.0f;
+        m12 = 0.0f;  m22 = 1.0f;  m32 = 0.0f;
+        m13 = 0.0f;  m23 = 0.0f;  m33 = 1.0f;
     }
 
     /**
     * Default Constructor
     */
-    MATRIX()
+    Matrix()
     { 
         MakeIdentity(); 
     }
 
     /**
-    * Constructor
-    * @param the forward, up, right and position vectors
+    * Matrix Multiplication: Float3 *= Matrix
     */
-    MATRIX(const FLOAT3& Forward, const FLOAT3& Up, const FLOAT3& Right, const FLOAT3& Position)
-    { 
-        Set(Forward,Up,Right,Position); 
-    }
-
-    /**
-    * Constructor
-    * @param each component to be set
-    */
-    MATRIX(float M11,float M12,float M13,float M14,float M21,float M22,float M23,float M24,float M31,float M32,float M33,float M34)
-    { 
-        Set(M11,M12,M13,M14,M21,M22,M23,M24,M31,M32,M33,M34); 
-    }
-
-    /**
-    * Constructor
-    * @param a pointer to a buffer of 16 floats
-    * @param whether or not the buffer is right/left handed
-    */
-    MATRIX(const float * a, bool RH)
-    { 
-        Set(a,RH); 
-    }
-
-    /**
-    * Matrix Multiplication: FLOAT3 *= MATRIX
-    */
-    friend void operator*=(FLOAT3& v, const MATRIX& M)
+    friend void operator*=(Float3& v, const Matrix& M)
     {
-        FLOAT3 t = v;
+        Float3 t = v;
         v.x = (M.m11*t.x)+(M.m12*t.y)+(M.m13*t.z)+(M.m14*1);
         v.y = (M.m21*t.x)+(M.m22*t.y)+(M.m23*t.z)+(M.m24*1);
         v.z = (M.m31*t.x)+(M.m32*t.y)+(M.m33*t.z)+(M.m34*1);
     }
 
     /**
-    * Matrix Multiplication: MATRIX * FLOAT3
+    * Matrix Multiplication: Matrix * Float3
     */
-    FLOAT3 operator*(const FLOAT3 & v) const
+    Float3 operator*(const Float3 & v) const
     {
-        return(FLOAT3((m11*v.x)+(m12*v.y)+(m13*v.z)+(m14*1),
+        return(Float3((m11*v.x)+(m12*v.y)+(m13*v.z)+(m14*1),
                       (m21*v.x)+(m22*v.y)+(m23*v.z)+(m24*1),
                       (m31*v.x)+(m32*v.y)+(m33*v.z)+(m34*1)));
     }
 
     /**
-    * Matrix Multiplication: FLOAT3 * MATRIX
+    * Matrix Multiplication: Float3 * Matrix
     */
-    friend FLOAT3 operator*(const FLOAT3 & v, const MATRIX & M)
+    friend Float3 operator*(const Float3 & v, const Matrix & M)
     {
         return(M*v);
     }
@@ -212,9 +308,9 @@ public:
     /**
     * Matrix Multiplication: [THIS][M]
     */
-    MATRIX operator*(const MATRIX& M) const
+    Matrix operator*(const Matrix& M) const
     {
-        return (MATRIX( (m11*M.m11)+(m12*M.m21)+(m13*M.m31)+(m14*0.0f),
+        return (Matrix( (m11*M.m11)+(m12*M.m21)+(m13*M.m31)+(m14*0.0f),
                         (m11*M.m12)+(m12*M.m22)+(m13*M.m32)+(m14*0.0f),
                         (m11*M.m13)+(m12*M.m23)+(m13*M.m33)+(m14*0.0f),
                         (m11*M.m14)+(m12*M.m24)+(m13*M.m34)+(m14), //*1.0f
@@ -231,9 +327,9 @@ public:
     /**
     * Matrix Multiplication: [THIS] = [THIS][M]
     */
-    void operator*=(const MATRIX& M)
+    void operator*=(const Matrix& M)
     {
-        MATRIX T = (*this);
+        Matrix T = (*this);
         m11 = (T.m11*M.m11)+(T.m12*M.m21)+(T.m13*M.m31)+(T.m14*0.0f);
         m12 = (T.m11*M.m12)+(T.m12*M.m22)+(T.m13*M.m32)+(T.m14*0.0f);
         m13 = (T.m11*M.m13)+(T.m12*M.m23)+(T.m13*M.m33)+(T.m14*0.0f);
@@ -249,17 +345,17 @@ public:
     }
 
     /**
-    * Matrix Multiplication: MATRIX * Scalar
+    * Matrix Multiplication: Matrix * Scalar
     */
-    MATRIX operator*(float a) const
+    Matrix operator*(float a) const
     {
-        return (MATRIX(m11*a, m12*a, m13*a, m14*a,
+        return (Matrix(m11*a, m12*a, m13*a, m14*a,
                        m21*a, m22*a, m23*a, m24*a,
                        m31*a, m32*a, m33*a, m34*a));
     }
 
     /**
-    * Matrix Multiplication: MATRIX *= Scalar
+    * Matrix Multiplication: Matrix *= Scalar
     */
     void operator*=(float a)
     {
@@ -269,15 +365,15 @@ public:
     }
 
     /**
-    * Matrix Multiplication: MATRIX / Scalar
+    * Matrix Multiplication: Matrix / Scalar
     */
-    MATRIX operator/(float a) const
+    Matrix operator/(float a) const
     {
         return((*this)*(1/a));
     }
 
     /**
-    * Matrix Multiplication: MATRIX /= Scalar
+    * Matrix Multiplication: Matrix /= Scalar
     */
     void operator/=(float a) 
     {
@@ -285,19 +381,19 @@ public:
     }
 
     /**
-    * Matrix Addition: MATRIX + MATRIX
+    * Matrix Addition: Matrix + Matrix
     */
-    MATRIX operator+(const MATRIX& M) const
+    Matrix operator+(const Matrix& M) const
     {
-        return (MATRIX(m11+M.m11, m12+M.m12, m13+M.m13, m14+M.m14,
+        return (Matrix(m11+M.m11, m12+M.m12, m13+M.m13, m14+M.m14,
                        m21+M.m21, m22+M.m22, m23+M.m23, m24+M.m24,
                        m31+M.m31, m32+M.m32, m33+M.m33, m34+M.m34));
     }
 
     /**
-    * Matrix Addition: MATRIX += MATRIX
+    * Matrix Addition: Matrix += Matrix
     */
-    void operator+=(const MATRIX& M)
+    void operator+=(const Matrix& M)
     {
         m11 += M.m11;   m12 += M.m12;   m13 += M.m13;   m14 += M.m14;
         m21 += M.m21;   m22 += M.m22;   m23 += M.m23;   m24 += M.m24;
@@ -305,19 +401,19 @@ public:
     }
 
     /**
-    * Matrix Subtraction: MATRIX - MATRIX
+    * Matrix Subtraction: Matrix - Matrix
     */
-    MATRIX operator-(const MATRIX& M) const
+    Matrix operator-(const Matrix& M) const
     {
-        return (MATRIX(m11-M.m11, m12-M.m12, m13-M.m13, m14-M.m14,
+        return (Matrix(m11-M.m11, m12-M.m12, m13-M.m13, m14-M.m14,
                        m21-M.m21, m22-M.m22, m23-M.m23, m24-M.m24,
                        m31-M.m31, m32-M.m32, m33-M.m33, m34-M.m34));
     }
 
     /**
-    * Matrix Subtraction: MATRIX -= MATRIX
+    * Matrix Subtraction: Matrix -= Matrix
     */
-    void operator-=(const MATRIX& M)
+    void operator-=(const Matrix& M)
     {
         m11 -= M.m11;   m12 -= M.m12;   m13 -= M.m13;   m14 -= M.m14;
         m21 -= M.m21;   m22 -= M.m22;   m23 -= M.m23;   m24 -= M.m24;
@@ -335,9 +431,9 @@ public:
     /**
     * @return the 3x3 Transpose of the matrix
     */
-    MATRIX GetTranspose3x3() const
+    Matrix GetTranspose3x3() const
     { 
-        return MATRIX(m11,m21,m31,0.0f,m12,m22,m32,0.0f,m13,m23,m33,0.0f); 
+        return Matrix(m11,m21,m31,0.0f,m12,m22,m32,0.0f,m13,m23,m33,0.0f); 
     }
 
     /**
@@ -365,7 +461,7 @@ public:
     * Translates the position
     * @param components to translate along the x/y/z axis
     */
-    void Translate(const FLOAT3& v)             
+    void Translate(const Float3& v)             
     { 
         m14 += v.x; 
         m24 += v.y; 
@@ -387,7 +483,7 @@ public:
     * Scales the matrix
     * @param components to scale along the x/y/z axis
     */
-    void Scale(const FLOAT3& v)                      
+    void Scale(const Float3& v)                      
     { 
         m11 *= v.x; 
         m22 *= v.y; 
@@ -412,7 +508,7 @@ public:
     */
     void RotateX(float radians)
     {
-        MATRIX M;
+        Matrix M;
         float c = cos(radians);
         float s = sin(radians);
         M.m22 = c;  M.m23 = s;  
@@ -427,7 +523,7 @@ public:
     */
     void RotateY(float radians)
     { 
-        MATRIX M;
+        Matrix M;
         float c = cos(radians);
         float s = sin(radians);
         M.m11 = c;  M.m13 = -s; 
@@ -442,7 +538,7 @@ public:
     */
     void RotateZ(float radians)
     { 
-        MATRIX M;
+        Matrix M;
         float c = cos(radians);
         float s = sin(radians);
         M.m11 = c;  M.m12 = s; 
@@ -456,9 +552,9 @@ public:
     * @param the angle in radians to rotate
     * @return the arbitrary rotation matrix
     */
-    void RotateArbitrary(FLOAT3 & v, float radians)
+    void RotateArbitrary(Float3 & v, float radians)
     {
-        MATRIX M;
+        Matrix M;
         float c = cos(radians);
         float s = sin(radians);
         float t = 1-(cos(radians));
@@ -480,7 +576,7 @@ public:
     */
     void TranslateLocal(float x, float y, float z)  
     { 
-        FLOAT3 p = Position();
+        Float3 p = Position();
         m14 = ((m14-p.x)+x)+p.x;   
         m24 = ((m24-p.y)+y)+p.y;   
         m34 = ((m34-p.z)+z)+p.z; 
@@ -490,7 +586,7 @@ public:
     * Translates the position from the local origin
     * @param components to translate along the x/y/z axis
     */
-    void TranslateLocal(const FLOAT3& v) 
+    void TranslateLocal(const Float3& v) 
     { 
         TranslateLocal(v.x,v.y,v.z); 
     }
@@ -501,7 +597,7 @@ public:
     */
     void ScaleLocal(float x, float y, float z)      
     {
-        FLOAT3 p = Position();
+        Float3 p = Position();
         m11 = ((m11-p.x)*x)+p.x;    
         m22 = ((m22-p.y)*y)+p.y;    
         m33 = ((m33-p.z)*z)+p.z; 
@@ -511,7 +607,7 @@ public:
     * Scales around local origin
     * @param components to scale along the x/y/z axis
     */
-    void ScaleLocal(const FLOAT3& v) 
+    void ScaleLocal(const Float3& v) 
     {
         ScaleLocal(v.x,v.y,v.z); 
     }
@@ -532,13 +628,13 @@ public:
     */
     void RotateXLocal(float radians)
     {
-        MATRIX M;
-        FLOAT3 savedPosition = Position();
+        Matrix M;
+        Float3 savedPosition = Position();
         float c = cos(radians);
         float s = sin(radians);
         M.m22 = c;  M.m23 = s;  
         M.m32 = -s; M.m33 = c; 
-        SetPosition(FLOAT3(0.0f,0.0f,0.0f));
+        SetPosition(Float3(0.0f,0.0f,0.0f));
         (*this) *= M;
         Translate(savedPosition);
     }
@@ -550,13 +646,13 @@ public:
     */
     void RotateYLocal(float radians)
     { 
-        MATRIX M;
-        FLOAT3 savedPosition = Position();
+        Matrix M;
+        Float3 savedPosition = Position();
         float c = cos(radians);
         float s = sin(radians);
         M.m11 = c;  M.m13 = -s; 
         M.m31 = s;  M.m33 = c; 
-        SetPosition(FLOAT3(0.0f,0.0f,0.0f));
+        SetPosition(Float3(0.0f,0.0f,0.0f));
         (*this) *= M;
         Translate(savedPosition);
     }
@@ -568,13 +664,13 @@ public:
     */
     void RotateZLocal(float radians)
     { 
-        MATRIX M;
-        FLOAT3 savedPosition = Position();
+        Matrix M;
+        Float3 savedPosition = Position();
         float c = cos(radians);
         float s = sin(radians);
         M.m11 = c;  M.m12 = s; 
         M.m21 = -s; M.m22 = c; 
-        SetPosition(FLOAT3(0.0f,0.0f,0.0f));
+        SetPosition(Float3(0.0f,0.0f,0.0f));
         (*this) *= M;
         Translate(savedPosition);
     }
@@ -585,10 +681,10 @@ public:
     * @param the angle in radians to rotate
     * @return the arbitrary rotation matrix
     */
-    void RotateArbitraryLocal(const FLOAT3& v, float radians)
+    void RotateArbitraryLocal(const Float3& v, float radians)
     {
-        MATRIX M;
-        FLOAT3 savedPosition = Position();
+        Matrix M;
+        Float3 savedPosition = Position();
         float c = cos(radians);
         float s = sin(radians);
         float t = 1.0f-(cos(radians));
@@ -601,52 +697,35 @@ public:
         M.m31 = (t*(v.x*v.y)) + (s*v.y);
         M.m32 = (t*(v.y*v.z)) - (s*v.x);
         M.m33 = (t*(v.z*v.z)) + c;
-        SetPosition(FLOAT3(0.0f,0.0f,0.0f));
+        SetPosition(Float3(0.0f,0.0f,0.0f));
         (*this) *= M;
         Translate(savedPosition);
     }
-
 
     /**
     * Tests whether matrix is the identity
     */
     bool IsIdentity() const
     {
-        if((m11 == 1.0f) && (m12 == 0.0f) && (m13 == 0.0f) && (m14 == 0.0f))
-        {
-            if((m21 == 0.0f) && (m22 == 1.0f) && (m23 == 0.0f) && (m24 == 0.0f))
-            {
-                if((m31 == 0.0f) && (m32 == 0.0f) && (m33 == 1.0f) && (m34 == 0.0f))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return (m11 == 1.0f) && (m12 == 0.0f) && (m13 == 0.0f) && (m14 == 0.0f) &&
+               (m21 == 0.0f) && (m22 == 1.0f) && (m23 == 0.0f) && (m24 == 0.0f) &&
+               (m31 == 0.0f) && (m32 == 0.0f) && (m33 == 1.0f) && (m34 == 0.0f);
     }
 
     /**
     * Tests equality of two matrices
     */
-    bool operator==(const MATRIX& M) const
+    bool operator==(const Matrix& M) const
     {
-        if((m11 == M.m11) && (m12 == M.m12) && (m13 == M.m13) && (m14 == M.m14))
-        {
-            if((m21 == M.m21) && (m22 == M.m22) && (m23 == M.m23) && (m24 == M.m24))
-            {
-                if((m31 == M.m31) && (m32 == M.m32) && (m33 == M.m33) && (m34 == M.m34))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return (m11 == M.m11) && (m12 == M.m12) && (m13 == M.m13) && (m14 == M.m14) &&
+               (m21 == M.m21) && (m22 == M.m22) && (m23 == M.m23) && (m24 == M.m24) &&
+               (m31 == M.m31) && (m32 == M.m32) && (m33 == M.m33) && (m34 == M.m34);
     }
 
     /**
     * Tests inequality of two matrices
     */
-    bool operator!=(const MATRIX & M) const
+    bool operator!=(const Matrix & M) const
     {
         return !((*this) == M);
     }
@@ -656,9 +735,9 @@ public:
     * @param the vector to create the matrix with
     * @return the skew symmetric matrix
     */
-    static MATRIX CreateSkewSymmetric(const FLOAT3& v)                   
+    static Matrix CreateSkewSymmetric(const Float3& v)                   
     { 
-        return(MATRIX(0.0f,-v.x,v.y,0.0f,v.x,0.0f,-v.z,0.0f,-v.y,v.z,0.0f,0.0f)); 
+        return(Matrix(0.0f,-v.x,v.y,0.0f,v.x,0.0f,-v.z,0.0f,-v.y,v.z,0.0f,0.0f)); 
     }
 
     /**
@@ -666,9 +745,9 @@ public:
     * @param the components to create the matrix with
     * @return the skew symmetric matrix
     */
-    static MATRIX CreateSkewSymmetric(float x, float y, float z)    
+    static Matrix CreateSkewSymmetric(float x, float y, float z)    
     { 
-        return(MATRIX(0.0f,-x,y,0.0f,x,0.0f,-z,0.0f,-y,z,0.0f,0.0f)); 
+        return(Matrix(0.0f,-x,y,0.0f,x,0.0f,-z,0.0f,-y,z,0.0f,0.0f)); 
     }
 
     /**
@@ -676,9 +755,9 @@ public:
     * @param the vectors to create the matrix with
     * @return the tensor product matrix
     */
-    static MATRIX CreateTensor(const FLOAT3& a, const FLOAT3& b)
+    static Matrix CreateTensor(const Float3& a, const Float3& b)
     {
-        return(MATRIX(b.x*a.x, b.x*a.y, b.x*a.z, 0.0f,
+        return(Matrix(b.x*a.x, b.x*a.y, b.x*a.z, 0.0f,
                       b.y*a.x, b.y*a.y, b.y*a.z, 0.0f,
                       b.z*a.x, b.z*a.y, b.z*a.z, 0.0f));
     }
@@ -688,9 +767,9 @@ public:
     * @param the angle in radians to rotate
     * @return the rotation matrix
     */
-    static MATRIX CreateRotateX(float radians)
+    static Matrix CreateRotateX(float radians)
     {
-        MATRIX M;
+        Matrix M;
         float c = cos(radians);
         float s = sin(radians);
         M.m22 = c;  M.m23 = s;  
@@ -703,9 +782,9 @@ public:
     * @param the angle in radians to rotate
     * @return the rotation matrix
     */
-    static MATRIX CreateRotateY(float radians)
+    static Matrix CreateRotateY(float radians)
     { 
-        MATRIX M;
+        Matrix M;
         float c = cos(radians);
         float s = sin(radians);
         M.m11 = c;  M.m13 = -s; 
@@ -718,9 +797,9 @@ public:
     * @param the angle in radians to rotate
     * @return the rotation matrix
     */
-    static MATRIX CreateRotateZ(float radians)
+    static Matrix CreateRotateZ(float radians)
     { 
-        MATRIX M;
+        Matrix M;
         float c = cos(radians);
         float s = sin(radians);
         M.m11 = c;  M.m12 = s; 
@@ -734,9 +813,9 @@ public:
     * @param the angle in radians to rotate
     * @return the arbitrary rotation matrix
     */
-    static MATRIX CreateRotateArbitrary(const FLOAT3& v, float radians)
+    static Matrix CreateRotateArbitrary(const Float3& v, float radians)
     {
-        MATRIX M;
+        Matrix M;
         float c = cos(radians);
         float s = sin(radians);
         float t = 1-(cos(radians));

@@ -282,7 +282,7 @@
     <ClInclude Include="Classes\diagnostic.h" />
     <ClInclude Include="Classes\dynamicarray.h" />
     <ClInclude Include="Classes\event_receiver.h" />
-    <ClInclude Include="Classes\float3.h" />
+    <ClInclude Include="Classes\vector3.h" />
     <ClInclude Include="Classes\logger.h" />
     <ClInclude Include="Classes\matrix.h" />
     <ClInclude Include="Classes\singleton.h" />

@@ -636,9 +636,6 @@
     <ClInclude Include="Classes\event_receiver.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Classes\float3.h">
-      <Filter>Source Files\Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Classes\logger.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
@@ -649,6 +646,9 @@
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Classes\timer.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\vector3.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
   </ItemGroup>
