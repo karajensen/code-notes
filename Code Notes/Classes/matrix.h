@@ -1,5 +1,5 @@
 /****************************************************************
-* Kara Jensen (KaraPeaceJensen@gmail.com) 20.0f12
+* Kara Jensen (mail@karajensen.com) 20.0f12
 * 4x4 right handed matrix class
 * RH Matrix IN FORM OF [OPENGL]:
 * | 11 12 13 x |  | Right.x  Up.x  Forward.x  Pos.x |

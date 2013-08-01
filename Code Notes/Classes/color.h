@@ -1,5 +1,5 @@
 /****************************************************************
-* Kara Jensen (KaraPeaceJensen@gmail.com) 
+* Kara Jensen (mail@karajensen.com) 
 * Basic color class
 *****************************************************************/
 #pragma once

@@ -1,5 +1,5 @@
 /****************************************************************
-* Kara Jensen (KaraPeaceJensen@gmail.com)
+* Kara Jensen (mail@karajensen.com)
 * Assimp mesh wrapper that is renderer API independent
 *****************************************************************/
 #pragma once

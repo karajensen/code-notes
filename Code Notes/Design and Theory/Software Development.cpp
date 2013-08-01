@@ -38,7 +38,7 @@ diagrams of all dependent modules, shows exported functions
 
 INITIALISE GIT
 git config --global user.name "Kara Jensen"
-git config --global user.email KaraPeaceJensen@gmail.com
+git config --global user.email mail@karajensen.com
 git config --global merge.tool kdiff3
 
 CLONE REPOSITORY

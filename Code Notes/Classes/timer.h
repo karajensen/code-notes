@@ -1,5 +1,5 @@
 /****************************************************************
-* Kara Jensen (KaraPeaceJensen@gmail.com)
+* Kara Jensen (mail@karajensen.com)
 * FPS class for determining frame rate and delta time
 *****************************************************************/
 #pragma once
