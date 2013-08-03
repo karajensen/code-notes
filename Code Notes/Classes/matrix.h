@@ -1,11 +1,11 @@
 /****************************************************************
-* Kara Jensen (mail@karajensen.com) 20.0f12
+* Kara Jensen (mail@karajensen.com)
 * 4x4 right handed matrix class
-* RH Matrix IN FORM OF [OPENGL]:
-* | 11 12 13 x |  | Right.x  Up.x  Forward.x  Pos.x |
-* | 21 22 23 y |  | Right.y  Up.y  Forward.y  Pos.y |
-* | 31 32 33 z |  | Right.z  Up.z  Forward.z  Pos.z |
-* | 0  0  0  1 |  |   0       0       0        1    |
+* RH Matrix in form of OpenGL:
+* | 11 12 13 x || Right.x  Up.x  Forward.x  Pos.x |
+* | 21 22 23 y || Right.y  Up.y  Forward.y  Pos.y |
+* | 31 32 33 z || Right.z  Up.z  Forward.z  Pos.z |
+* | 0  0  0  1 ||   0       0       0        1    |
 *****************************************************************/
 #pragma once
 

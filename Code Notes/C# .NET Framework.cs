@@ -111,21 +111,42 @@ if (result == System.Windows.Forms.DialogResult.OK)
 //REFLECTION
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-//Get DLL Information
+//GET DLL INFORMATION
 System.Reflection.Assembly assem = System.Reflection.Assembly.Load("myDLL.dll");
 assem.GetName() //get name, version information for dll
 
-//Get Calling Method Name
+//GET CALLING METHOD NAME
 string methodName = new StackTrace().GetFrame(1).GetMethod().Name;
 
-//Get methods avaliable in a class
+//GET METHODS AVALIABLE IN A CLASS
 Type myType = typeof(MyClass);
-MethodInfo[] myArrayMethodInfo = myType.GetMethods(BindingFlags.FlattenHierarchy | BindingFlags.Public | BindingFlags.Instance);
+MethodInfo[] myArrayMethodInfo = myType.GetMethods(BindingFlags.FlattenHierarchy 
+    | BindingFlags.Public | BindingFlags.Instance);
+
 for (int i = 0; i < myArrayMethodInfo.Length; ++i)
 {
     MethodInfo myMethodInfo = (MethodInfo)myArrayMethodInfo[i];
     Console.WriteLine("\n{0}.", myMethodInfo.Name);
 }
+
+//GET CLASS HANDLES
+IntPtr handle = myForm->Handle;
+IntPtr instance = System::Runtime::InteropServices::Marshal::GetHINSTANCE(
+    System::Reflection::Assembly::GetExecutingAssembly()->GetModules()[0]);
+
+//LOAD A DLL AT RUNTIME
+System.Reflection.Assembly assembly = System.Reflection.Assembly.LoadFile("mydll.dll");
+System.Type type = assembly.GetType("MyNamespace.MyClass");
+object instance = assembly.CreateInstance(type);
+
+//Calling a method
+object[] argstopass = new object[] { (object)"argument" };
+string ReturnValue = (string)instance.GetType().GetMethod("MyMethod").Invoke(instance, argstopass);
+
+//Calling Properties
+instance.GetType().GetProperty("MyProperty").SetValue(instance, (object)"argument", null);
+instance.GetType().GetProperty("MyProperty").GetValue(instance, null);
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //DIAGNOSTICS
@@ -135,6 +156,9 @@ using System.Diagnostics.Trace
 
 Trace.WriteLine("Writing a line to the debug console");
 Debug.Assert(myObject != null, methodName, "myObject cannot be null");
+
+//Creating custom listener
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////

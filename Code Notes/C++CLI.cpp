@@ -94,6 +94,7 @@ int* myPointer; //native pointer
 void (*pFunction)(void) //native function pointer
 delegate void MyDelegate(void) //managed delegate
 System::IntPtr //managed pointer for holding native addresses
+int* ptr = static_cast<int*>(myIntPtr) //static cast it to proper type
 
 //CONSTANTS
 literal int myInt; //Compile-time constant (c# const)

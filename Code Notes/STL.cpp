@@ -30,6 +30,9 @@ long   LONG_MIN   LONG_MAX   ULONG_MAX
 //minimum positive, maximum positive
 float  FLT_MIN  FLT_MAX 
 
+std::is_same<float, T>::value //true/false whether types are the same (including constness)
+std::remove_const<T>::type //returns the type without const
+
 numeric_limits<int>::min() //mimimum negative for int, minimum positive for float
 numeric_limits<int>::max() //maximum positive for int/float
 numeric_limits<int>::lowest() //mimimum negative for int/float
@@ -340,3 +343,20 @@ catch(std::exception & e)
 {
     cout << e.what() << endl;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <Windows.h>
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// GET THE ABSOULUTE PATH OF RUNNING .DLL
+char buffer[256];
+HMODULE hm = nullptr;
+GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | 
+    GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, (LPCSTR)"name.dll", &hm);
+GetModuleFileNameA(hm, buffer, sizeof(buffer)); //returns c:/folder/name.dll
+
+// WRITING TO OUTPUT WINDOW
+OutputDebugString((error+"\n").c_str());
+
+// WINDOWS POPUP
+MessageBox(NULL, message.c_str(), TEXT("ERROR"), MB_OK);
