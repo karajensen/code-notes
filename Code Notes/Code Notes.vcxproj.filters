@@ -35,14 +35,8 @@
     <Filter Include="Graphics Programming\Images">
       <UniqueIdentifier>{71e39718-9a33-471b-8d23-e5e44439e69d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics Programming\GLSL Shaders">
-      <UniqueIdentifier>{0bdb7c03-700c-448b-aa33-1753d80fbe88}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Images">
       <UniqueIdentifier>{64150252-014b-40e9-af40-e88cae3f7af0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics Programming\HLSL Shaders">
-      <UniqueIdentifier>{a7ea81e5-03ad-4dd4-9020-4cafba71f877}</UniqueIdentifier>
     </Filter>
     <Filter Include="Managed Source">
       <UniqueIdentifier>{4da91be5-dba0-48f2-a979-5a7d71242983}</UniqueIdentifier>
@@ -52,6 +46,9 @@
     </Filter>
     <Filter Include="Languages\Maya Plugin Templates">
       <UniqueIdentifier>{f4b28f55-3d6d-44e6-9f44-0420248e5765}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics Programming\Shaders">
+      <UniqueIdentifier>{c2c0a7dc-3971-4525-a2a3-51da664aa807}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -158,9 +155,6 @@
       <Filter>Graphics Programming</Filter>
     </ClCompile>
     <ClCompile Include="Graphics Programming\Rendering.cpp">
-      <Filter>Graphics Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics Programming\Shaders.cpp">
       <Filter>Graphics Programming</Filter>
     </ClCompile>
     <ClCompile Include="Graphics Programming\Shadows.cpp">
@@ -314,6 +308,9 @@
       <Filter>Design and Theory</Filter>
     </ClCompile>
     <ClCompile Include="Graphics Programming\Scene.cpp">
+      <Filter>Graphics Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics Programming\Shaders.fx">
       <Filter>Graphics Programming</Filter>
     </ClCompile>
   </ItemGroup>
@@ -477,90 +474,6 @@
     <None Include="IMAGES\Texture - Wrapping.png">
       <Filter>Graphics Programming\Images</Filter>
     </None>
-    <None Include="Graphics Programming\GLSL Shaders\ps.glsl">
-      <Filter>Graphics Programming\GLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\GLSL Shaders\psShadow.glsl">
-      <Filter>Graphics Programming\GLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\GLSL Shaders\psTexture.glsl">
-      <Filter>Graphics Programming\GLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\GLSL Shaders\psToon.glsl">
-      <Filter>Graphics Programming\GLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\GLSL Shaders\psToonLine.glsl">
-      <Filter>Graphics Programming\GLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\GLSL Shaders\psToonPost.glsl">
-      <Filter>Graphics Programming\GLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\GLSL Shaders\vs.glsl">
-      <Filter>Graphics Programming\GLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\GLSL Shaders\vsShadow.glsl">
-      <Filter>Graphics Programming\GLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\GLSL Shaders\vsTexture.glsl">
-      <Filter>Graphics Programming\GLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\GLSL Shaders\vsToon.glsl">
-      <Filter>Graphics Programming\GLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\GLSL Shaders\vsToonLine.glsl">
-      <Filter>Graphics Programming\GLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\GLSL Shaders\vsToonPost.glsl">
-      <Filter>Graphics Programming\GLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\HLSL Shaders\blur-sharpen.hlsl">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\HLSL Shaders\bounds.fx">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\HLSL Shaders\bump.fx">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\HLSL Shaders\depthRender.fx">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\HLSL Shaders\fairytaleGlowDepth.hlsl">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\HLSL Shaders\fairytalePost.hlsl">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\HLSL Shaders\liquid.fx">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\HLSL Shaders\luminance.fx">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\HLSL Shaders\main.fx">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\HLSL Shaders\normal.fx">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\HLSL Shaders\reflect.fx">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\HLSL Shaders\shadow.fx">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\HLSL Shaders\skybox.fx">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\HLSL Shaders\static.fx">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\HLSL Shaders\texture.fx">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\HLSL Shaders\toon.fx">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
     <None Include="Languages\Code Examples\Max - ConvexHull.ms">
       <Filter>Languages\Code Examples</Filter>
     </None>
@@ -591,9 +504,6 @@
     <None Include="Cheatsheet.txt" />
     <None Include="Hotkeys.txt" />
     <None Include="..\.gitignore" />
-    <None Include="Graphics Programming\HLSL Shaders\water.fx">
-      <Filter>Graphics Programming\HLSL Shaders</Filter>
-    </None>
     <None Include="Symbols.txt" />
     <None Include="Images\Physics - constraints.png">
       <Filter>Game Programming\Images</Filter>
@@ -609,6 +519,33 @@
     </None>
     <None Include="C# Memory.cs">
       <Filter>Managed Source</Filter>
+    </None>
+    <None Include="Graphics Programming\Shaders\blur-sharpen.hlsl">
+      <Filter>Graphics Programming\Shaders</Filter>
+    </None>
+    <None Include="Graphics Programming\Shaders\bounds.fx">
+      <Filter>Graphics Programming\Shaders</Filter>
+    </None>
+    <None Include="Graphics Programming\Shaders\glow-depth.hlsl">
+      <Filter>Graphics Programming\Shaders</Filter>
+    </None>
+    <None Include="Graphics Programming\Shaders\main.fx">
+      <Filter>Graphics Programming\Shaders</Filter>
+    </None>
+    <None Include="Graphics Programming\Shaders\main.glsl">
+      <Filter>Graphics Programming\Shaders</Filter>
+    </None>
+    <None Include="Graphics Programming\Shaders\normal-depth.glsl">
+      <Filter>Graphics Programming\Shaders</Filter>
+    </None>
+    <None Include="Graphics Programming\Shaders\post.hlsl">
+      <Filter>Graphics Programming\Shaders</Filter>
+    </None>
+    <None Include="Graphics Programming\Shaders\toon.fx">
+      <Filter>Graphics Programming\Shaders</Filter>
+    </None>
+    <None Include="Graphics Programming\Shaders\toon.glsl">
+      <Filter>Graphics Programming\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -36,7 +36,6 @@ CUBE MAPPING: UVW coordinates for 3D cube image
  • Anisotropic (Most consuming)
 
 POINT: 
-No filtering applied
 Nearest texel is chosen to the given UV coordinates
 If coordinates are on texel border, UVs are rounded
 

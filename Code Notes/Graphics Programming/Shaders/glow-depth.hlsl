@@ -1,4 +1,4 @@
-//our global transform variables
+
 float4x4 g_mWorld;
 float4x4 g_mViewProj;
 float4x4 g_mView;
