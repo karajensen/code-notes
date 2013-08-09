@@ -1,5 +1,0 @@
-Tool;Faces;Icons/Brush/Faces.png;Faces;
-Tool;Objects;Icons/Brush/Objects.png;Objects;
-Tool;Translate;Icons/Brush/Translate.png;Translate;
-Tool;Rotate;Icons/Brush/Rotate.png;Rotate;
-Tool;Scale;Icons/Brush/Scale.png;Scale;

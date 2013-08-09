@@ -1,6 +1,0 @@
-Tool;Paint Brush;Icons/Brush/PaintBrush.png;Paint Brush;
-Tool;Projection;Icons/Brush/Projection.png;Projection;
-Tool;Color Picker;Icons/Brush/ColorPicker.png;Color Picker;
-Tool;Airbrush;Icons/Brush/Airbrush.png;Airbrush;
-Tool;Pencil;Icons/Brush/Pencil.png;Pencil;
-Tool;Paint Erase;Icons/Brush/PaintErase.png;Paint Erase;

@@ -1,8 +1,0 @@
-global proc NEXShelf () {
-    global string $gBuffStr;
-    global string $gBuffStr0;
-    global string $gBuffStr1;
-
-
-
-} 

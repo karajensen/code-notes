@@ -146,33 +146,6 @@ if(magdistance < radius)
 }
 return false;
 
-==============================================================================
-BOX-SPHERE COLLISION ALGORITHM
-==============================================================================
-
-FLOAT3 maxBounds1 = p1;     FLOAT3 minBounds1 = p1;
-maxBounds1.x += w1/2;       maxBounds1.x -= w1/2;
-maxBounds1.y += h1/2;       maxBounds1.y -= h1/2;
-maxBounds1.z += d1/2;       maxBounds1.z -= d1/2;
-
-//get vector from sphere center to sphere outside pointing 
-//towards box center
-FLOAT3 SphereToBox = p1-p2;
-SphereToBox.Normalize();
-SphereToBox *= r2;
-
-//convert vector to world space
-SphereToBox = SphereToBox + p2;
-
-//check for collision
-//test if in x portion
-if((SphereToBox.x < maxBounds1.x) && (SphereToBox.x > minBounds1.x)) 
-    //test if in y portion
-    if((SphereToBox.y < maxBounds1.y) && (SphereToBox.y > minBounds1.y))
-        //test if in z portion
-        if((SphereToBox.z < maxBounds1.z) && (SphereToBox.z > minBounds1.z))
-            return true;
-return false;
 
 ==============================================================================
 BOX-BOX COLLISION ALGORITHM
@@ -333,11 +306,13 @@ GJK COLLISION ALGORITHM
 ==============================================================================
 
 MINKOWSKI DIFFERENCE: 
- - subtraction of all the points of one shape by all points of another shape
+ - subtraction of all the points of shape A by all points of shape B
+ - ends up with a shape A-B that encloses both shapes with the center point
+   equal to center of A - center of B
 
 GJK ALGORITHM
- - if any of the new points created are in all four quadrants of a basis, 
-   collision occurs
+ - if any of the new points created are in all four quadrants of a basis, collision occurs
+ - for colliding objects the minkowski difference object A-B will include the origin
  - as objects get closer, cloud of points get closer to origin
  - made more effeciant by calculating points and choosing points at the 
    extremes to do further calcs on during testing
