@@ -1,7 +1,11 @@
+////////////////////////////////////////////////////////////////////////////////////////
+// Kara Jensen - mail@karajensen.com
+////////////////////////////////////////////////////////////////////////////////////////
+
 #include "assimpmesh.h"
-#include "assimp/scene.h"
-#include "assimp/Importer.hpp"
-#include "assimp/postprocess.h"
+#include "assimp/include/scene.h"
+#include "assimp/include/Importer.hpp"
+#include "assimp/include/postprocess.h"
 
 Assimpmesh::Assimpmesh()
 {
@@ -14,11 +18,11 @@ Assimpmesh::~Assimpmesh()
 bool Assimpmesh::Initialise(const std::string& path, std::string& errorBuffer)
 {
     Assimp::Importer importer;
-    const aiScene* scene = importer.ReadFile(path, aiProcess_CalcTangentSpace|aiProcess_Triangulate|
-                                             aiProcess_JoinIdenticalVertices|aiProcess_SortByPType|
-                                             aiProcess_CalcTangentSpace|aiProcess_JoinIdenticalVertices|
-                                             aiProcess_GenSmoothNormals|aiProcess_LimitBoneWeights|
-                                             aiProcess_RemoveRedundantMaterials|aiProcess_OptimizeMeshes);
+    const aiScene* scene = importer.ReadFile(path, aiProcess_CalcTangentSpace|
+        aiProcess_Triangulate|aiProcess_JoinIdenticalVertices|aiProcess_SortByPType|
+        aiProcess_CalcTangentSpace|aiProcess_JoinIdenticalVertices|aiProcess_GenSmoothNormals|
+        aiProcess_LimitBoneWeights|aiProcess_RemoveRedundantMaterials|aiProcess_OptimizeMeshes);
+
     if(!scene)
     {
         errorBuffer = "Assimp import error for mesh " + path + ": " + importer.GetErrorString();
@@ -70,33 +74,6 @@ bool Assimpmesh::Initialise(const std::string& path, std::string& errorBuffer)
             m_subMeshes[i].indices.push_back(pFace->mIndices[0]);
             m_subMeshes[i].indices.push_back(pFace->mIndices[1]);
             m_subMeshes[i].indices.push_back(pFace->mIndices[2]);
-        }
-
-        // Load the textures
-        aiMaterial* material = scene->mMaterials[pMesh->mMaterialIndex];
-        
-        aiString textureName;
-        if(aiGetMaterialString(material, AI_MATKEY_TEXTURE_DIFFUSE(0), &textureName) == AI_SUCCESS)
-        {
-            m_subMeshes[i].textures[DIFFUSE] = textureName.data;
-        }
-
-        textureName.Clear();
-        if(aiGetMaterialString(material, AI_MATKEY_TEXTURE_NORMALS(0), &textureName) == AI_SUCCESS)
-        {
-            m_subMeshes[i].textures[NORMAL] = textureName.data;
-        }
-
-        textureName.Clear();
-        if(aiGetMaterialString(material, AI_MATKEY_TEXTURE_SPECULAR(0), &textureName) == AI_SUCCESS)
-        {
-            m_subMeshes[i].textures[SPECULAR] = textureName.data;
-        }
-
-        textureName.Clear();
-        if(aiGetMaterialString(material, AI_MATKEY_TEXTURE_REFLECTION(0), &textureName) == AI_SUCCESS)
-        {
-            m_subMeshes[i].textures[ENVIRON] = textureName.data;
         }
     }
 

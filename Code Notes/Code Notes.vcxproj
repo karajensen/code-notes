@@ -95,11 +95,8 @@
     <ClCompile Include="Classes\assimpmesh.cpp" />
     <ClCompile Include="Classes\bulletphysics.cpp" />
     <ClCompile Include="Classes\camera.cpp" />
-    <ClCompile Include="Classes\collision.cpp" />
-    <ClCompile Include="Classes\diagnostic.cpp" />
-    <ClCompile Include="Classes\event_receiver.cpp" />
+    <ClCompile Include="Classes\input.cpp" />
     <ClCompile Include="Classes\logger.cpp" />
-    <ClCompile Include="Classes\singleton.cpp" />
     <ClCompile Include="Classes\timer.cpp" />
     <ClCompile Include="Code Notes.cpp" />
     <ClCompile Include="Code.cpp" />
@@ -259,15 +256,12 @@
     <ClInclude Include="Classes\assimpmesh.h" />
     <ClInclude Include="Classes\bulletphysics.h" />
     <ClInclude Include="Classes\camera.h" />
-    <ClInclude Include="Classes\collision.h" />
     <ClInclude Include="Classes\color.h" />
-    <ClInclude Include="Classes\diagnostic.h" />
     <ClInclude Include="Classes\dynamicarray.h" />
-    <ClInclude Include="Classes\event_receiver.h" />
+    <ClInclude Include="Classes\input.h" />
     <ClInclude Include="Classes\vector3.h" />
     <ClInclude Include="Classes\logger.h" />
     <ClInclude Include="Classes\matrix.h" />
-    <ClInclude Include="Classes\singleton.h" />
     <ClInclude Include="Classes\timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

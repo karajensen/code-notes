@@ -1,12 +1,14 @@
-/****************************************************************
-* Kara Jensen (mail@karajensen.com)
-* Assimp mesh wrapper that is renderer API independent
-*****************************************************************/
-#pragma once
+////////////////////////////////////////////////////////////////////////////////////////
+// Kara Jensen - mail@karajensen.com
+////////////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
 #include <vector>
 #include <string>
 
+/**
+* Assimp mesh wrapper that is renderer API independent
+*/
 class Assimpmesh
 {
 public:
@@ -16,23 +18,14 @@ public:
     */
     struct Vertex
     {
+        /**
+        * Contructor
+        */
+        Vertex();
+
         float x,y,z;     ///< Vertex position
         float nx,ny,nz;  ///< Vertex normal
         float u,v;       ///< Vertex uvs
-        Vertex();
-    };
-
-    /**
-    * Texture index ordering for 
-    * the submeshes textures container
-    */
-    enum TextureIndex
-    {
-        DIFFUSE,
-        NORMAL,
-        SPECULAR,
-        ENVIRON,
-        TEXTURE_AMOUNT
     };
 
     /**
@@ -42,7 +35,6 @@ public:
     {
         std::vector<Vertex> vertices;          ///< Vertex buffer
         std::vector<unsigned long> indices;    ///< Index buffer
-        std::string textures[TEXTURE_AMOUNT];  ///< Textures for submesh
     };
 
     /**
@@ -57,8 +49,8 @@ public:
 
     /**
     * Initialises the mesh
-    * @param the path of the mesh
-    * @param the error buffer to fill if something fails
+    * @param path The path of the mesh
+    * @param errorBuffer The error buffer to fill if something fails
     * @return whether or not initialisation succeeded
     */
     bool Initialise(const std::string& path, std::string& errorBuffer);
@@ -71,7 +63,7 @@ public:
 private:
 
     /**
-    * Not implemented
+    * Prevent copying
     */
     Assimpmesh(const Assimpmesh&);              
     Assimpmesh& operator=(const Assimpmesh&);

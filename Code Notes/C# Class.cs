@@ -123,7 +123,7 @@ namespace MyNamespace
         #endregion
 
         /// <summary> MySummary </summary>
-        /// <param> a value the method takes in </param>
+        /// <param name="value"> a value the method takes in </param>
         /// <returns> a value the method takes in </returns>
 
         //PRIVATE SUB-CLASS

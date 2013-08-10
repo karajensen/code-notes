@@ -1,45 +1,53 @@
-/****************************************************************
-* Kara Jensen (mail@karajensen.com) 
-* Vector Class
-*****************************************************************/
-#pragma once
+////////////////////////////////////////////////////////////////////////////////////////
+// Kara Jensen - mail@karajensen.com
+////////////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
 #include <cmath>
 
-template<typename T>
-class Vector3
+/**
+* Template class for creating vectors in 2D/3D space
+*/
+template<typename T> class Vector3
 {
 public:
 
-    T x,y,z;
+    T x,y,z; ///< Vector components
 
     /**
     * Constructor
-    * @param the components of the Vector3
+    * @param x/y/z The components of the Vector3
     */
-    Vector3(T X = T(0), T Y = T(0), T Z = T(0)) : 
-        x(X), y(Y), z(Z) 
+    explicit Vector3(T X = T(0), T Y = T(0), T Z = T(0)) : 
+        x(X), 
+        y(Y),
+        z(Z) 
     {
     };
 
     /**
-    * Testing equality for Vector3
+    * Testing equality for two vectors
+    * @param vec The vector to test equality against
+    * @return Whether the two vectors are equal
     */
-    bool operator==(const Vector3<T>& v) const
+    bool operator==(const Vector3<T>& vec) const
     {
-        return (x == v.x) && (y == v.y) && (z == v.z);
+        return x == vec.x && y == vec.y && z == vec.z;
     }
 
     /**
-    * Testing inequality for Vector3
+    * Testing inequality for two vectors
+    * @param vec The vector to test inequality against
+    * @return Whether the two vectors are inequal
     */
-    bool operator!=(const Vector3& v) const
+    bool operator!=(const Vector3& vec) const
     {
-        return (x != v.x) || (y != v.y) || (z != v.z);
+        return x != vec.x || y != vec.y || z != vec.z;
     }
     
     /**
-    * Overloading negative sign to invert Vector3
+    * Inverts all components of the vector
+    * @return A new vector from the vector inverted
     */
     Vector3<T> operator-() const
     {
@@ -47,120 +55,143 @@ public:
     }
     
     /**
-    * Allows for Vector3 * Scalar
+    * Multiplication against a scalar
+    * @param value Scalar to multiply against
+    * @return A new vector from the vector multiplied by scalar
     */
-    Vector3<T> operator*(T a) const
+    Vector3<T> operator*(T value) const
     {
-        return Vector3<T>(a*x, a*y, a*z); 
+        return Vector3<T>(value*x, value*y, value*z); 
     }
 
     /**
-    * Allows for Vector3 *= Scalar
+    * Multiplication against a scalar
+    * @param value Scalar to multiply against
     */
-    void operator*=(T a)
+    void operator*=(T value)
     {
-        x = x*a;
-        y = y*a;
-        z = z*a;
+        x = x*value;
+        y = y*value;
+        z = z*value;
     }
 
     /**
-    * Allows for Vector3 / Scalar
+    * Division against a scalar
+    * @param value Scalar to divide against
+    * @return A new vector from the vector divided by scalar
     */
-    Vector3<T> operator/(T a) const
+    Vector3<T> operator/(T value) const
     {
-        return Vector3<T>(x/a, y/a, z/a); 
+        return Vector3<T>(x/value, y/value, z/value); 
     }
 
     /**
-    * Allows for Vector3 /= Scalar
+    * Division against a scalar
+    * @param value Scalar to divide against
     */
-    void operator/=(T a)
+    void operator/=(T value)
     {
-        x = x/a;
-        y = y/a;
-        z = z/a;
+        x = x/value;
+        y = y/value;
+        z = z/value;
     }
 
     /**
-    * Vector3 addition
+    * Vector3 addition with another vector
+    * @param vec The vector to add
+    * @return A new vector from the two added vectors
     */
-    Vector3<T> operator+(const Vector3<T> & v) const
+    Vector3<T> operator+(const Vector3<T> & vec) const
     {
-        return Vector3<T>(x + v.x, y + v.y, z + v.z);
+        return Vector3<T>(x + vec.x, y + vec.y, z + vec.z);
     }
-    void operator+=(const Vector3<T> & v)
+    
+    /**
+    * Vector3 addition with another vector
+    * @param vec The vector to add
+    */    
+    void operator+=(const Vector3<T> & vec)
     {
-        x = x + v.x;
-        y = y + v.y;
-        z = z + v.z;
+        x = x + vec.x;
+        y = y + vec.y;
+        z = z + vec.z;
     }
 
     /**
-    * Vector3 subtraction
+    * Vector3 subtraction with another vector
+    * @param vec The vector to subtract
+    * @return A new vector from the two subtracted vectors
     */
-    Vector3<T> operator-(const Vector3<T>& v) const
+    Vector3<T> operator-(const Vector3<T>& vec) const
     {
-        return Vector3<T>(x - v.x, y - v.y, z - v.z);
+        return Vector3<T>(x - vec.x, y - vec.y, z - vec.z);
     }
-    void operator-=(const Vector3<T>& v)
+    
+    /**
+    * Vector3 subtraction with another vector
+    * @param vec The vector to subtract
+    */    
+    void operator-=(const Vector3<T>& vec)
     {
-        x = x - v.x;
-        y = y - v.y;
-        z = z - v.z;
+        x = x - vec.x;
+        y = y - vec.y;
+        z = z - vec.z;
     }
 
     /**
-    * Vector3 Cross Product
-    * @param the Vector3 to be crossed with 
+    * Cross Product
+    * @param vec The vector to be crossed with 
+    * @return The vector perpendicular to the given vectors
     */
-    Vector3<T> Cross(const Vector3<T>& v) const
+    Vector3<T> Cross(const Vector3<T>& vec) const
     {
-        return Vector3((y*v.z)-(z*v.y),(z*v.x)-(x*v.z),(x*v.y)-(y*v.x));
+        return Vector3((y*vec.z)-(z*vec.y),(z*vec.x)-(x*vec.z),(x*vec.y)-(y*vec.x));
+    } 
+
+    /**
+    * Vector Dot Product
+    * @param vec The vector to be dotted with 
+    * @return The dot product between the vectors
+    */
+    float Dot(const Vector3<T>& vec) const
+    {
+        return static_cast<float>((vec.x*x)+(vec.y*y)+(vec.z*z));
     }
 
     /**
-    * Vector3 Dot Product
-    * @param the Vector3 to be dotted with 
+    * Tests whether two vectors are perpendicular
+    * @param vec The vector to be tested against
+    * @return Whether the vectors are perpendicular
     */
-    float Dot(const Vector3<T>& v) const
+    bool IsPerpendicular(const Vector3<T>& vec) const
     {
-        return static_cast<float>((v.x*x)+(v.y*y)+(v.z*z));
+        return Dot(vec) == T(0);
     }
 
     /**
-    * Tests whether two Vector3s are perpendicular
-    * @param the Vector3 to be tested against
-    * @return whether the Vector3s are perpendicular
+    * Tests whether two vectors are parallel
+    * @param vec The vector to be tested against
+    * @return Whether the vectors are parallel
     */
-    bool IsPerpendicular(const Vector3<T>& v) const
+    bool IsParallel(const Vector3<T>& vec) const
     {
-        return (Dot(v) == T(0));
+        float dot = Dot(vec);
+        return dot == T(1) || dot == T(-1);
     }
 
     /**
-    * Tests whether two Vector3s are parallel
-    * @param the Vector3 to be tested against
-    * @return whether the Vector3s are parallel
+    * Gets the angle between two vectors in radians
+    * @param vec The vector to get the angle between
+    * @return The angle in radians
     */
-    bool IsParallel(const Vector3<T>& v) const
+    float Angle(const Vector3<T>& vec) const
     {
-        float dot = Dot(v);
-        return (dot == T(1)) || (dot == T(-1));
+        float dot = Dot(vec);
+        return acos(dot/(vec.Length()*Length()));
     }
 
     /**
-    * Gets the angle between two Vector3 in radians
-    * @return the angle in radians
-    */
-    float Angle(const Vector3<T>& v) const
-    {
-        float dot = Dot(v);
-        return acos(dot/(v.Length()*Length()));
-    }
-
-    /**
-    * @return the squared length of the Vector3
+    * @return The squared length of the vector
     */
     float SquaredLength() const
     {
@@ -168,7 +199,7 @@ public:
     }
 
     /**
-    * @return the length of the Vector3
+    * @return The length of the vector
     */
     float Length() const
     {
@@ -177,19 +208,19 @@ public:
     }
 
     /**
-    * Sets the Vector3
-    * @param the Vector3 to set to
+    * Sets the vector from another vector
+    * @param vec The vector to use when setting
     */
-    void Set(const Vector3& v)
+    void Set(const Vector3& vec)
     {
-        x = v.x;
-        y = v.y;
-        z = v.z;
+        x = vec.x;
+        y = vec.y;
+        z = vec.z;
     }
 
     /**
-    * Sets the Vector3
-    * @param the components of the Vector3 to set
+    * Sets the vector from the given components
+    * @param x/y/z The components to use when setting
     */
     void Set(T X, T Y, T Z)
     {
@@ -199,7 +230,7 @@ public:
     }
 
     /**
-    * Normlizes the Vector3
+    * Normlizes into a unit vector
     */
     void Normalize()
     {
@@ -210,7 +241,7 @@ public:
     }
 
     /**
-    * @return the normalized Vector3 without changing the actual Vector3
+    * @return A copy of the vector normalized
     */
     Vector3<T> GetNormalized() const
     {
@@ -219,7 +250,7 @@ public:
     }
 
     /**
-    * Sets the Vector3 to the zero Vector3
+    * Sets all components to zero
     */
     void SetToZero()
     {

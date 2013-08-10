@@ -1,16 +1,18 @@
-/****************************************************************
-* Kara Jensen (mail@karajensen.com)
-* 4x4 right handed matrix class
-* RH Matrix in form of OpenGL:
+////////////////////////////////////////////////////////////////////////////////////////
+// Kara Jensen - mail@karajensen.com
+////////////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+#include "vector3.h"
+
+/**
+* 4x4 right handed matrix class. 
+* RH Matrix in form of OpenGL: 
 * | 11 12 13 x || Right.x  Up.x  Forward.x  Pos.x |
 * | 21 22 23 y || Right.y  Up.y  Forward.y  Pos.y |
 * | 31 32 33 z || Right.z  Up.z  Forward.z  Pos.z |
 * | 0  0  0  1 ||   0       0       0        1    |
-*****************************************************************/
-#pragma once
-
-#include "vector3.h"
-
+*/
 class Matrix
 {
 public:
@@ -20,17 +22,27 @@ public:
           m31, m32, m33, m34;
 
     /**
-    * Constructor
-    * @param the forward, up, right and position vectors
+    * Default Constructor
     */
-    Matrix(const Float3& forward, const Float3& up, const Float3& right, const Float3& position)
+    Matrix()
+    { 
+        MakeIdentity(); 
+    }
+
+    /**
+    * Constructor
+    * @param forward/up/right The axis for the matrix
+    * @param position The location for the matrix
+    */
+    Matrix(const Float3& forward, const Float3& up, 
+        const Float3& right, const Float3& position)
     { 
         Set(forward, up, right, position); 
     }
 
     /**
     * Constructor
-    * @param each component to be set
+    * @param MXX Each component to be set
     */
     Matrix(float M11,float M12,float M13,float M14,float M21,float M22,
         float M23,float M24,float M31,float M32,float M33,float M34)
@@ -39,7 +51,7 @@ public:
     }
 
     /**
-    * @return the right axis for the matrix
+    * @return The right axis for the matrix
     */
     Float3 Right() const    
     { 
@@ -47,7 +59,7 @@ public:
     }
 
     /**
-    * @return the up axis for the matrix
+    * @return The up axis for the matrix
     */
     Float3 Up() const       
     { 
@@ -55,7 +67,7 @@ public:
     }
 
     /**
-    * @return the forward axis for the matrix
+    * @return The forward axis for the matrix
     */
     Float3 Forward() const   
     { 
@@ -63,7 +75,7 @@ public:
     }
 
     /**
-    * @return the position for the matrix
+    * @return The position for the matrix
     */
     Float3 Position() const  
     { 
@@ -72,6 +84,7 @@ public:
 
     /**
     * Sets the position from components
+    * @param x/y/z The components to use for the position
     */
     void SetPosition(float x, float y, float z)
     { 
@@ -82,16 +95,18 @@ public:
 
     /**
     * Sets the position from a vector
+    * @param vec The vector to use for the position
     */
-    void SetPosition(const Float3& v)           
+    void SetPosition(const Float3& vec)           
     { 
-        m14 = v.x;  
-        m24 = v.y; 
-        m34 = v.z; 
+        m14 = vec.x;  
+        m24 = vec.y; 
+        m34 = vec.z; 
     }
 
     /**
     * Sets the forward vector from components
+    * @param x/y/z The components to use for the forward vector
     */
     void SetForward(float x, float y, float z) 
     { 
@@ -102,16 +117,18 @@ public:
 
     /**
     * Sets the forward vector from a vector
+    * @param vec The vector to use for the forward vector
     */
-    void SetForward(const Float3& v)     
+    void SetForward(const Float3& vec)
     { 
-        m13 = v.x; 
-        m23 = v.y;
-        m33 = v.z;
+        m13 = vec.x; 
+        m23 = vec.y;
+        m33 = vec.z;
     }
 
     /**
     * Sets the up vector from components
+    * @param x/y/z The components to use for the up vector
     */
     void SetUp(float x, float y, float z)  
     { 
@@ -122,16 +139,18 @@ public:
 
     /**
     * Sets the up vector from a vector
+    * @param vec The vector to use for the up vector
     */
-    void SetUp(const Float3& v)                 
+    void SetUp(const Float3& vec)                 
     { 
-        m12 = v.x; 
-        m22 = v.y; 
-        m32 = v.z;
+        m12 = vec.x; 
+        m22 = vec.y; 
+        m32 = vec.z;
     }
 
     /**
     * Sets the right vector from components
+    * @param x/y/z The components to use for the right vector
     */
     void SetRight(float x, float y, float z)   
     { 
@@ -142,16 +161,18 @@ public:
 
     /**
     * Sets the right vector from a vector
+    * @param vec The vector to use for the right vector
     */
-    void SetRight(const Float3& v)             
+    void SetRight(const Float3& vec)             
     { 
-        m11 = v.x; 
-        m21 = v.y; 
-        m31 = v.z; 
+        m11 = vec.x; 
+        m21 = vec.y; 
+        m31 = vec.z; 
     }
 
     /**
     * Sets the scale of the matrix from components
+    * @param x/y/z The components to use for scaling
     */
     void SetScale(float x, float y, float z)  
     { 
@@ -162,61 +183,64 @@ public:
 
     /**
     * Sets the scale of the matrix from a vector
+    * @param vec The vector to use for scaling
     */
-    void SetScale(const Float3& v)              
+    void SetScale(const Float3& vec)              
     { 
-        m11 = v.x;  
-        m22 = v.y; 
-        m33 = v.z; 
+        m11 = vec.x;  
+        m22 = vec.y; 
+        m33 = vec.z; 
     }
 
     /**
     * Sets the uniform scale of the matrix from a component
+    * @param scale The scale to set for all components
     */
-    void SetScale(float a)               
+    void SetScale(float scale)               
     { 
-        m11 = a;  
-        m22 = a;  
-        m33 = a;   
+        m11 = scale;  
+        m22 = scale;  
+        m33 = scale;   
     }
 
     /**
     * Sets all matrix components
-    * @param the value to set all components to
+    * @param value The value to set all matrix components
     */
-    void Set(float a)
+    void Set(float value)
     {
-        m11 = a;  m21 = a;  m31 = a;
-        m12 = a;  m22 = a;  m32 = a;
-        m13 = a;  m23 = a;  m33 = a;
-        m14 = a;  m24 = a;  m34 = a;
+        m11 = value;  m21 = value;  m31 = value;
+        m12 = value;  m22 = value;  m32 = value;
+        m13 = value;  m23 = value;  m33 = value;
+        m14 = value;  m24 = value;  m34 = value;
     }
 
     /**
     * Sets all the matrix components
-    * @param a pointer to a buffer of 16 floats
-    * @param whether or not the buffer is right/left handed
+    * @param matrix A pointer to a buffer of 16 floats
+    * @param rightHanded Whether or not the buffer is right/left handed
     */
-    void Set(const float* mat, bool rightHanded)
+    void Set(const float* matrix, bool rightHanded)
     {
         if(rightHanded)
         {
-            m11 = mat[0];   m21 = mat[1];   m31 = mat[2];   
-            m12 = mat[4];   m22 = mat[5];   m32 = mat[6];   
-            m13 = mat[8];   m23 = mat[9];   m33 = mat[10];  
-            m14 = mat[12];  m24 = mat[13];  m34 = mat[14];
+            m11 = matrix[0];   m21 = matrix[1];   m31 = matrix[2];   
+            m12 = matrix[4];   m22 = matrix[5];   m32 = matrix[6];   
+            m13 = matrix[8];   m23 = matrix[9];   m33 = matrix[10];  
+            m14 = matrix[12];  m24 = matrix[13];  m34 = matrix[14];
         }
         else
         {
-            m11 = mat[0];   m12 = mat[1];   m13 = mat[2];   m14 = mat[3];
-            m21 = mat[4];   m22 = mat[5];   m32 = mat[6];   m24 = mat[7];
-            m31 = mat[8];   m32 = mat[9];   m33 = mat[10];  m34 = mat[11];
+            m11 = matrix[0];   m12 = matrix[1];   m13 = matrix[2];   m14 = matrix[3];
+            m21 = matrix[4];   m22 = matrix[5];   m32 = matrix[6];   m24 = matrix[7];
+            m31 = matrix[8];   m32 = matrix[9];   m33 = matrix[10];  m34 = matrix[11];
         }
     }
 
     /**
     * Sets all the matrix components
-    * @param the forward, up, right and position vectors
+    * @param forward/up/right The axis for the matrix
+    * @param position The location for the matrix
     */
     void Set(const Float3& forward, const Float3& up, const Float3& right, const Float3& position)
     {
@@ -226,7 +250,7 @@ public:
 
     /**
     * Sets all the matrix components
-    * @param each component to be set
+    * @param MXX Each component to be set including position
     */
     void Set(float M11,float M12,float M13,float M14,float M21,
         float M22,float M23,float M24,float M31,float M32,float M33,float M34)
@@ -238,7 +262,7 @@ public:
 
     /**
     * Sets all the matrix components
-    * @param each component to be set except position
+    * @param MXX Each component to be set excluding position
     */
     void Set(float M11,float M12,float M13,float M21,float M22,float M23,float M31,float M32,float M33)
     {
@@ -248,7 +272,7 @@ public:
     }
 
     /**
-    * Makes the matrix the indentiy
+    * Makes the matrix the indentiy matrix
     */
     void MakeIdentity()
     {
@@ -259,7 +283,7 @@ public:
     }
 
     /**
-    * Makes the 3x3 matrix the indentiy; position remains the same
+    * Makes the 3x3 matrix the indentiy; position remains unchanged
     */
     void MakeIdentity3x3()
     {
@@ -269,167 +293,181 @@ public:
     }
 
     /**
-    * Default Constructor
-    */
-    Matrix()
-    { 
-        MakeIdentity(); 
-    }
-
-    /**
     * Matrix Multiplication: Float3 *= Matrix
+    * @param vec the float3 vector to multiply with
+    * @param mat The matrix to multiply with
     */
-    friend void operator*=(Float3& v, const Matrix& M)
+    friend void operator*=(Float3& vec, const Matrix& mat)
     {
-        Float3 t = v;
-        v.x = (M.m11*t.x)+(M.m12*t.y)+(M.m13*t.z)+(M.m14*1);
-        v.y = (M.m21*t.x)+(M.m22*t.y)+(M.m23*t.z)+(M.m24*1);
-        v.z = (M.m31*t.x)+(M.m32*t.y)+(M.m33*t.z)+(M.m34*1);
+        Float3 v = vec;
+        vec.x = (mat.m11*v.x)+(mat.m12*v.y)+(mat.m13*v.z)+mat.m14;
+        vec.y = (mat.m21*v.x)+(mat.m22*v.y)+(mat.m23*v.z)+mat.m24;
+        vec.z = (mat.m31*v.x)+(mat.m32*v.y)+(mat.m33*v.z)+mat.m34;
     }
 
     /**
     * Matrix Multiplication: Matrix * Float3
+    * @param vec The float3 vector to multiply with
+    * @return A vector transformed by the matrix
     */
-    Float3 operator*(const Float3 & v) const
+    Float3 operator*(const Float3& vec) const
     {
-        return(Float3((m11*v.x)+(m12*v.y)+(m13*v.z)+(m14*1),
-                      (m21*v.x)+(m22*v.y)+(m23*v.z)+(m24*1),
-                      (m31*v.x)+(m32*v.y)+(m33*v.z)+(m34*1)));
+        return Float3((m11*vec.x)+(m12*vec.y)+(m13*vec.z)+m14,
+                      (m21*vec.x)+(m22*vec.y)+(m23*vec.z)+m24,
+                      (m31*vec.x)+(m32*vec.y)+(m33*vec.z)+m34);
     }
 
     /**
     * Matrix Multiplication: Float3 * Matrix
+    * @param vec The float3 vector to multiply with
+    * @param mat The matrix to multiply with
+    * @return A vector transformed by the matrix
     */
-    friend Float3 operator*(const Float3 & v, const Matrix & M)
+    friend Float3 operator*(const Float3& vec, const Matrix& mat)
     {
-        return(M*v);
+        return mat*vec;
     }
 
     /**
-    * Matrix Multiplication: [THIS][M]
+    * Matrix Multiplication: [this][mat]
+    * @param mat the Matrix to multiply with
+    * @return The multiplied matrices
     */
-    Matrix operator*(const Matrix& M) const
+    Matrix operator*(const Matrix& mat) const
     {
-        return (Matrix( (m11*M.m11)+(m12*M.m21)+(m13*M.m31)+(m14*0.0f),
-                        (m11*M.m12)+(m12*M.m22)+(m13*M.m32)+(m14*0.0f),
-                        (m11*M.m13)+(m12*M.m23)+(m13*M.m33)+(m14*0.0f),
-                        (m11*M.m14)+(m12*M.m24)+(m13*M.m34)+(m14), //*1.0f
-                        (m21*M.m11)+(m22*M.m21)+(m23*M.m31)+(m24*0.0f),
-                        (m21*M.m12)+(m22*M.m22)+(m23*M.m32)+(m24*0.0f),
-                        (m21*M.m13)+(m22*M.m23)+(m23*M.m33)+(m24*0.0f),
-                        (m21*M.m14)+(m22*M.m24)+(m23*M.m34)+(m24), //*1.0f
-                        (m31*M.m11)+(m32*M.m21)+(m33*M.m31)+(m34*0.0f),
-                        (m31*M.m12)+(m32*M.m22)+(m33*M.m32)+(m34*0.0f),
-                        (m31*M.m13)+(m32*M.m23)+(m33*M.m33)+(m34*0.0f),
-                        (m31*M.m14)+(m32*M.m24)+(m33*M.m34)+(m34))); //*1.0f
+        return Matrix((m11*mat.m11)+(m12*mat.m21)+(m13*mat.m31),
+                      (m11*mat.m12)+(m12*mat.m22)+(m13*mat.m32),
+                      (m11*mat.m13)+(m12*mat.m23)+(m13*mat.m33),
+                      (m11*mat.m14)+(m12*mat.m24)+(m13*mat.m34)+m14,
+                      (m21*mat.m11)+(m22*mat.m21)+(m23*mat.m31),
+                      (m21*mat.m12)+(m22*mat.m22)+(m23*mat.m32),
+                      (m21*mat.m13)+(m22*mat.m23)+(m23*mat.m33),
+                      (m21*mat.m14)+(m22*mat.m24)+(m23*mat.m34)+m24,
+                      (m31*mat.m11)+(m32*mat.m21)+(m33*mat.m31),
+                      (m31*mat.m12)+(m32*mat.m22)+(m33*mat.m32),
+                      (m31*mat.m13)+(m32*mat.m23)+(m33*mat.m33),
+                      (m31*mat.m14)+(m32*mat.m24)+(m33*mat.m34)+m34);
     }
 
     /**
-    * Matrix Multiplication: [THIS] = [THIS][M]
+    * Matrix Multiplication: [this] = [this][mat]
+    * @param mat the Matrix to multiply with
     */
-    void operator*=(const Matrix& M)
+    void operator*=(const Matrix& mat)
     {
-        Matrix T = (*this);
-        m11 = (T.m11*M.m11)+(T.m12*M.m21)+(T.m13*M.m31)+(T.m14*0.0f);
-        m12 = (T.m11*M.m12)+(T.m12*M.m22)+(T.m13*M.m32)+(T.m14*0.0f);
-        m13 = (T.m11*M.m13)+(T.m12*M.m23)+(T.m13*M.m33)+(T.m14*0.0f);
-        m14 = (T.m11*M.m14)+(T.m12*M.m24)+(T.m13*M.m34)+(T.m14); //*1.0f
-        m21 = (T.m21*M.m11)+(T.m22*M.m21)+(T.m23*M.m31)+(T.m24*0.0f);
-        m22 = (T.m21*M.m12)+(T.m22*M.m22)+(T.m23*M.m32)+(T.m24*0.0f);
-        m23 = (T.m21*M.m13)+(T.m22*M.m23)+(T.m23*M.m33)+(T.m24*0.0f);
-        m24 = (T.m21*M.m14)+(T.m22*M.m24)+(T.m23*M.m34)+(T.m24); //*1.0f
-        m31 = (T.m31*M.m11)+(T.m32*M.m21)+(T.m33*M.m31)+(T.m34*0.0f);
-        m32 = (T.m31*M.m12)+(T.m32*M.m22)+(T.m33*M.m32)+(T.m34*0.0f);
-        m33 = (T.m31*M.m13)+(T.m32*M.m23)+(T.m33*M.m33)+(T.m34*0.0f);
-        m34 = (T.m31*M.m14)+(T.m32*M.m24)+(T.m33*M.m34)+(T.m34); //*1.0f
+        Matrix tmat = *this;
+        m11 = (tmat.m11*mat.m11)+(tmat.m12*mat.m21)+(tmat.m13*mat.m31);
+        m12 = (tmat.m11*mat.m12)+(tmat.m12*mat.m22)+(tmat.m13*mat.m32);
+        m13 = (tmat.m11*mat.m13)+(tmat.m12*mat.m23)+(tmat.m13*mat.m33);
+        m14 = (tmat.m11*mat.m14)+(tmat.m12*mat.m24)+(tmat.m13*mat.m34)+tmat.m14;
+        m21 = (tmat.m21*mat.m11)+(tmat.m22*mat.m21)+(tmat.m23*mat.m31);
+        m22 = (tmat.m21*mat.m12)+(tmat.m22*mat.m22)+(tmat.m23*mat.m32);
+        m23 = (tmat.m21*mat.m13)+(tmat.m22*mat.m23)+(tmat.m23*mat.m33);
+        m24 = (tmat.m21*mat.m14)+(tmat.m22*mat.m24)+(tmat.m23*mat.m34)+tmat.m24;
+        m31 = (tmat.m31*mat.m11)+(tmat.m32*mat.m21)+(tmat.m33*mat.m31);
+        m32 = (tmat.m31*mat.m12)+(tmat.m32*mat.m22)+(tmat.m33*mat.m32);
+        m33 = (tmat.m31*mat.m13)+(tmat.m32*mat.m23)+(tmat.m33*mat.m33);
+        m34 = (tmat.m31*mat.m14)+(tmat.m32*mat.m24)+(tmat.m33*mat.m34)+tmat.m34;
     }
 
     /**
     * Matrix Multiplication: Matrix * Scalar
+    * @param value The scalar to multiply the matrix by
+    * @return The matrix multiplied by the value
     */
-    Matrix operator*(float a) const
+    Matrix operator*(float value) const
     {
-        return (Matrix(m11*a, m12*a, m13*a, m14*a,
-                       m21*a, m22*a, m23*a, m24*a,
-                       m31*a, m32*a, m33*a, m34*a));
+        return Matrix(m11*value, m12*value, m13*value, m14*value,
+                      m21*value, m22*value, m23*value, m24*value,
+                      m31*value, m32*value, m33*value, m34*value);
     }
 
     /**
     * Matrix Multiplication: Matrix *= Scalar
+    * @param value The scalar to multiply the matrix by
     */
-    void operator*=(float a)
+    void operator*=(float value)
     {
-        m11 *= a;   m12 *= a;   m13 *= a;   m14 *= a;
-        m21 *= a;   m22 *= a;   m23 *= a;   m24 *= a;
-        m31 *= a;   m32 *= a;   m33 *= a;   m34 *= a;
+        m11 *= value;   m12 *= value;   m13 *= value;   m14 *= value;
+        m21 *= value;   m22 *= value;   m23 *= value;   m24 *= value;
+        m31 *= value;   m32 *= value;   m33 *= value;   m34 *= value;
     }
 
     /**
-    * Matrix Multiplication: Matrix / Scalar
+    * Matrix Division: Matrix / Scalar
+    * @param value The scalar to divide the matrix by
+    * @return The matrix divided by the value
     */
-    Matrix operator/(float a) const
+    Matrix operator/(float value) const
     {
-        return((*this)*(1/a));
+        return (*this) * (1.0f/value);
     }
 
     /**
-    * Matrix Multiplication: Matrix /= Scalar
+    * Matrix Division: Matrix /= Scalar
+    * @param value The scalar to divide the matrix by
     */
-    void operator/=(float a) 
+    void operator/=(float value) 
     {
-        (*this)*=(1/a);
+        (*this) *= 1.0f/value;
     }
 
     /**
     * Matrix Addition: Matrix + Matrix
+    * @param mat The matrix to add
+    * @return A matrix with the combined matrices
     */
-    Matrix operator+(const Matrix& M) const
+    Matrix operator+(const Matrix& mat) const
     {
-        return (Matrix(m11+M.m11, m12+M.m12, m13+M.m13, m14+M.m14,
-                       m21+M.m21, m22+M.m22, m23+M.m23, m24+M.m24,
-                       m31+M.m31, m32+M.m32, m33+M.m33, m34+M.m34));
+        return Matrix(m11+mat.m11, m12+mat.m12, m13+mat.m13, m14+mat.m14,
+                      m21+mat.m21, m22+mat.m22, m23+mat.m23, m24+mat.m24,
+                      m31+mat.m31, m32+mat.m32, m33+mat.m33, m34+mat.m34);
     }
 
     /**
     * Matrix Addition: Matrix += Matrix
+    * @param mat The matrix to add
     */
-    void operator+=(const Matrix& M)
+    void operator+=(const Matrix& mat)
     {
-        m11 += M.m11;   m12 += M.m12;   m13 += M.m13;   m14 += M.m14;
-        m21 += M.m21;   m22 += M.m22;   m23 += M.m23;   m24 += M.m24;
-        m31 += M.m31;   m32 += M.m32;   m33 += M.m33;   m34 += M.m34;
+        m11 += mat.m11;   m12 += mat.m12;   m13 += mat.m13;   m14 += mat.m14;
+        m21 += mat.m21;   m22 += mat.m22;   m23 += mat.m23;   m24 += mat.m24;
+        m31 += mat.m31;   m32 += mat.m32;   m33 += mat.m33;   m34 += mat.m34;
     }
 
     /**
     * Matrix Subtraction: Matrix - Matrix
+    * @param mat The matrix to subtract
+    * @return A matrix with the subtracted matrices
     */
-    Matrix operator-(const Matrix& M) const
+    Matrix operator-(const Matrix& mat) const
     {
-        return (Matrix(m11-M.m11, m12-M.m12, m13-M.m13, m14-M.m14,
-                       m21-M.m21, m22-M.m22, m23-M.m23, m24-M.m24,
-                       m31-M.m31, m32-M.m32, m33-M.m33, m34-M.m34));
+        return Matrix(m11-mat.m11, m12-mat.m12, m13-mat.m13, m14-mat.m14,
+                      m21-mat.m21, m22-mat.m22, m23-mat.m23, m24-mat.m24,
+                      m31-mat.m31, m32-mat.m32, m33-mat.m33, m34-mat.m34);
     }
 
     /**
     * Matrix Subtraction: Matrix -= Matrix
+    * @param mat The matrix to subtract
     */
-    void operator-=(const Matrix& M)
+    void operator-=(const Matrix& mat)
     {
-        m11 -= M.m11;   m12 -= M.m12;   m13 -= M.m13;   m14 -= M.m14;
-        m21 -= M.m21;   m22 -= M.m22;   m23 -= M.m23;   m24 -= M.m24;
-        m31 -= M.m31;   m32 -= M.m32;   m33 -= M.m33;   m34 -= M.m34;
+        m11 -= mat.m11;   m12 -= mat.m12;   m13 -= mat.m13;   m14 -= mat.m14;
+        m21 -= mat.m21;   m22 -= mat.m22;   m23 -= mat.m23;   m24 -= mat.m24;
+        m31 -= mat.m31;   m32 -= mat.m32;   m33 -= mat.m33;   m34 -= mat.m34;
     }
 
     /**
-    * @return the 3x3 Trace of the matrix
+    * @return The 3x3 Trace of the matrix
     */
     float GetTrace3x3() const
     { 
-        return (m11+m22+m33); 
+        return m11 + m22 + m33; 
     }
 
     /**
-    * @return the 3x3 Transpose of the matrix
+    * @return The 3x3 Transpose of the matrix
     */
     Matrix GetTranspose3x3() const
     { 
@@ -448,7 +486,7 @@ public:
 
     /**
     * Translates the position
-    * @param components to translate along the x/y/z axis
+    * @param x/y/z The components to translate along
     */
     void Translate(float x, float y, float z)   
     { 
@@ -459,18 +497,18 @@ public:
 
     /**
     * Translates the position
-    * @param components to translate along the x/y/z axis
+    * @param vec The vector to translate along
     */
-    void Translate(const Float3& v)             
+    void Translate(const Float3& vec)             
     { 
-        m14 += v.x; 
-        m24 += v.y; 
-        m34 += v.z; 
+        m14 += vec.x; 
+        m24 += vec.y; 
+        m34 += vec.z; 
     }
 
     /**
     * Scales the matrix
-    * @param components to scale along the x/y/z axis
+    * @param x/y/z The components to scale by
     */
     void Scale(float x, float y, float z)       
     { 
@@ -481,353 +519,333 @@ public:
 
     /**
     * Scales the matrix
-    * @param components to scale along the x/y/z axis
+    * @param vec The vector to scale by
     */
-    void Scale(const Float3& v)                      
+    void Scale(const Float3& vec)                      
     { 
-        m11 *= v.x; 
-        m22 *= v.y; 
-        m33 *= v.z; 
+        m11 *= vec.x; 
+        m22 *= vec.y; 
+        m33 *= vec.z; 
     }
 
     /**
-    * Scales the matrix
-    * @param the amount to scale it by
+    * Scales the matrix uniformly
+    * @param value The amount to scale the matrix by
     */
-    void Scale(float a)                         
+    void Scale(float value)                         
     { 
-        m11 *= a;   
-        m22 *= a;   
-        m33 *= a;  
+        m11 *= value;   
+        m22 *= value;   
+        m33 *= value;  
     }
 
     /**
-    * Rotates around X axis
-    * @param the angle in radians to rotate
-    * @return the rotation matrix
+    * Rotates around the global X axis
+    * @param radians The angle in radians to rotate
     */
     void RotateX(float radians)
     {
-        Matrix M;
+        Matrix mat;
         float c = cos(radians);
         float s = sin(radians);
-        M.m22 = c;  M.m23 = s;  
-        M.m32 = -s; M.m33 = c;  
-        (*this) *= M;
+        mat.m22 = c;  
+        mat.m23 = s;  
+        mat.m32 = -s; 
+        mat.m33 = c;  
+        (*this) *= mat;
     }
 
     /**
-    * Rotates around Y axis
-    * @param the angle in radians to rotate
-    * @return the rotation matrix
+    * Rotates around the global Y axis
+    * @param radians The angle in radians to rotate
     */
     void RotateY(float radians)
     { 
-        Matrix M;
+        Matrix mat;
         float c = cos(radians);
         float s = sin(radians);
-        M.m11 = c;  M.m13 = -s; 
-        M.m31 = s;  M.m33 = c; 
-        (*this) *= M;
+        mat.m11 = c;  
+        mat.m13 = -s; 
+        mat.m31 = s;  
+        mat.m33 = c; 
+        (*this) *= mat;
     }
 
     /**
-    * Rotates around Z axis
-    * @param the angle in radians to rotate
-    * @return the rotation matrix
+    * Rotates around the global Z axis
+    * @param radians The angle in radians to rotate
     */
     void RotateZ(float radians)
     { 
-        Matrix M;
+        Matrix mat;
         float c = cos(radians);
         float s = sin(radians);
-        M.m11 = c;  M.m12 = s; 
-        M.m21 = -s; M.m22 = c; 
-        (*this) *= M;
+        mat.m11 = c;  
+        mat.m12 = s; 
+        mat.m21 = -s; 
+        mat.m22 = c; 
+        (*this) *= mat;
     }
 
     /**
     * Creates an arbitrary rotation matrix and rotates around it
-    * @param the vector to rotate around
-    * @param the angle in radians to rotate
-    * @return the arbitrary rotation matrix
+    * @param vec The vector to rotate around
+    * @param radians The angle in radians to rotate
     */
-    void RotateArbitrary(Float3 & v, float radians)
+    void RotateArbitrary(const Float3& vec, float radians)
     {
-        Matrix M;
+        Matrix mat;
         float c = cos(radians);
         float s = sin(radians);
-        float t = 1-(cos(radians));
-        M.m11 = (t*(v.x*v.x)) + c;
-        M.m12 = (t*(v.x*v.y)) + (s*v.z);
-        M.m13 = (t*(v.x*v.z)) - (s*v.y);
-        M.m21 = (t*(v.x*v.y)) - (s*v.z);
-        M.m22 = (t*(v.y*v.y)) + c;
-        M.m23 = (t*(v.y*v.z)) + (s*v.x);
-        M.m31 = (t*(v.x*v.y)) + (s*v.y);
-        M.m32 = (t*(v.y*v.z)) - (s*v.x);
-        M.m33 = (t*(v.z*v.z)) + c;
-        (*this) *= M;
+        float cinv = 1.0f-cos(radians);
+        mat.m11 = (cinv*(vec.x*vec.x)) + c;
+        mat.m12 = (cinv*(vec.x*vec.y)) + (s*vec.z);
+        mat.m13 = (cinv*(vec.x*vec.z)) - (s*vec.y);
+        mat.m21 = (cinv*(vec.x*vec.y)) - (s*vec.z);
+        mat.m22 = (cinv*(vec.y*vec.y)) + c;
+        mat.m23 = (cinv*(vec.y*vec.z)) + (s*vec.x);
+        mat.m31 = (cinv*(vec.x*vec.y)) + (s*vec.y);
+        mat.m32 = (cinv*(vec.y*vec.z)) - (s*vec.x);
+        mat.m33 = (cinv*(vec.z*vec.z)) + c;
+        (*this) *= mat;
     }
 
     /**
     * Translates the position from the local origin
-    * @param components to translate along the x/y/z axis
+    * @param x/y/z The components to translate along
     */
     void TranslateLocal(float x, float y, float z)  
     { 
-        Float3 p = Position();
-        m14 = ((m14-p.x)+x)+p.x;   
-        m24 = ((m24-p.y)+y)+p.y;   
-        m34 = ((m34-p.z)+z)+p.z; 
+        Float3 pos = Position();
+        m14 = ((m14-pos.x)+x)+pos.x;   
+        m24 = ((m24-pos.y)+y)+pos.y;   
+        m34 = ((m34-pos.z)+z)+pos.z; 
     }
 
     /**
     * Translates the position from the local origin
-    * @param components to translate along the x/y/z axis
+    * @param vec The vector to translate along
     */
-    void TranslateLocal(const Float3& v) 
+    void TranslateLocal(const Float3& vec) 
     { 
-        TranslateLocal(v.x,v.y,v.z); 
+        TranslateLocal(vec.x, vec.y, vec.z); 
     }
 
     /**
-    * Scales around local origin
-    * @param components to scale along the x/y/z axis
+    * Scales around the local origin
+    * @param x/y/z The components to scale by
     */
     void ScaleLocal(float x, float y, float z)      
     {
-        Float3 p = Position();
-        m11 = ((m11-p.x)*x)+p.x;    
-        m22 = ((m22-p.y)*y)+p.y;    
-        m33 = ((m33-p.z)*z)+p.z; 
+        Float3 pos = Position();
+        m11 = ((m11-pos.x)*x)+pos.x;    
+        m22 = ((m22-pos.y)*y)+pos.y;    
+        m33 = ((m33-pos.z)*z)+pos.z; 
     }
 
     /**
     * Scales around local origin
-    * @param components to scale along the x/y/z axis
+    * @param vec The vector to scale by
     */
-    void ScaleLocal(const Float3& v) 
+    void ScaleLocal(const Float3& vec) 
     {
-        ScaleLocal(v.x,v.y,v.z); 
+        ScaleLocal(vec.x, vec.y, vec.z); 
     }
 
     /**
-    * Scales around local origin
-    * @param the amount to scale
+    * Scales around local origin uniformly
+    * @param value The amount to scale by
     */
-    void ScaleLocal(float a)   
+    void ScaleLocal(float value)   
     { 
-        ScaleLocal(a,a,a); 
+        ScaleLocal(value, value, value); 
     }
 
     /**
-    * Rotates around local origin in X direction
-    * @param the angle in radians to rotate
-    * @return the rotation matrix
+    * Rotates around the local X axis
+    * @param radians The angle in radians to rotate
     */
     void RotateXLocal(float radians)
     {
-        Matrix M;
+        Matrix mat;
         Float3 savedPosition = Position();
         float c = cos(radians);
         float s = sin(radians);
-        M.m22 = c;  M.m23 = s;  
-        M.m32 = -s; M.m33 = c; 
-        SetPosition(Float3(0.0f,0.0f,0.0f));
-        (*this) *= M;
+        mat.m22 = c;  
+        mat.m23 = s;  
+        mat.m32 = -s; 
+        mat.m33 = c; 
+        SetPosition(0.0f, 0.0f, 0.0f);
+        (*this) *= mat;
         Translate(savedPosition);
     }
 
     /**
-    * Rotates around local origin in Y direction
-    * @param the angle in radians to rotate
-    * @return the rotation matrix
+    * Rotates around the local Y axis
+    * @param radians The angle in radians to rotate
     */
     void RotateYLocal(float radians)
     { 
-        Matrix M;
+        Matrix mat;
         Float3 savedPosition = Position();
         float c = cos(radians);
         float s = sin(radians);
-        M.m11 = c;  M.m13 = -s; 
-        M.m31 = s;  M.m33 = c; 
-        SetPosition(Float3(0.0f,0.0f,0.0f));
-        (*this) *= M;
+        mat.m11 = c;  
+        mat.m13 = -s; 
+        mat.m31 = s;  
+        mat.m33 = c; 
+        SetPosition(0.0f, 0.0f, 0.0f);
+        (*this) *= mat;
         Translate(savedPosition);
     }
 
     /**
-    * Rotates around local origin in Z direction
-    * @param the angle in radians to rotate
-    * @return the rotation matrix
+    * Rotates around the local Z axis
+    * @param radians The angle in radians to rotate
     */
     void RotateZLocal(float radians)
     { 
-        Matrix M;
+        Matrix mat;
         Float3 savedPosition = Position();
         float c = cos(radians);
         float s = sin(radians);
-        M.m11 = c;  M.m12 = s; 
-        M.m21 = -s; M.m22 = c; 
-        SetPosition(Float3(0.0f,0.0f,0.0f));
-        (*this) *= M;
+        mat.m11 = c;  
+        mat.m12 = s; 
+        mat.m21 = -s; 
+        mat.m22 = c; 
+        SetPosition(0.0f, 0.0f, 0.0f);
+        (*this) *= mat;
         Translate(savedPosition);
     }
 
     /**
     * Creates an arbitrary rotation matrix and rotates locally around it
-    * @param the vector to rotate around
-    * @param the angle in radians to rotate
-    * @return the arbitrary rotation matrix
+    * @param vec The vector to rotate around
+    * @param radians The angle in radians to rotate
     */
-    void RotateArbitraryLocal(const Float3& v, float radians)
+    void RotateArbitraryLocal(const Float3& vec, float radians)
     {
-        Matrix M;
+        Matrix mat;
         Float3 savedPosition = Position();
         float c = cos(radians);
         float s = sin(radians);
-        float t = 1.0f-(cos(radians));
-        M.m11 = (t*(v.x*v.x)) + c;
-        M.m12 = (t*(v.x*v.y)) + (s*v.z);
-        M.m13 = (t*(v.x*v.z)) - (s*v.y);
-        M.m21 = (t*(v.x*v.y)) - (s*v.z);
-        M.m22 = (t*(v.y*v.y)) + c;
-        M.m23 = (t*(v.y*v.z)) + (s*v.x);
-        M.m31 = (t*(v.x*v.y)) + (s*v.y);
-        M.m32 = (t*(v.y*v.z)) - (s*v.x);
-        M.m33 = (t*(v.z*v.z)) + c;
-        SetPosition(Float3(0.0f,0.0f,0.0f));
-        (*this) *= M;
+        float cinv = 1.0f-(cos(radians));
+        mat.m11 = (cinv*(vec.x*vec.x)) + c;
+        mat.m12 = (cinv*(vec.x*vec.y)) + (s*vec.z);
+        mat.m13 = (cinv*(vec.x*vec.z)) - (s*vec.y);
+        mat.m21 = (cinv*(vec.x*vec.y)) - (s*vec.z);
+        mat.m22 = (cinv*(vec.y*vec.y)) + c;
+        mat.m23 = (cinv*(vec.y*vec.z)) + (s*vec.x);
+        mat.m31 = (cinv*(vec.x*vec.y)) + (s*vec.y);
+        mat.m32 = (cinv*(vec.y*vec.z)) - (s*vec.x);
+        mat.m33 = (cinv*(vec.z*vec.z)) + c;
+        SetPosition(0.0f, 0.0f, 0.0f);
+        (*this) *= mat;
         Translate(savedPosition);
     }
 
     /**
-    * Tests whether matrix is the identity
+    * @return Whether the matrix is the identity matrix
     */
     bool IsIdentity() const
     {
-        return (m11 == 1.0f) && (m12 == 0.0f) && (m13 == 0.0f) && (m14 == 0.0f) &&
-               (m21 == 0.0f) && (m22 == 1.0f) && (m23 == 0.0f) && (m24 == 0.0f) &&
-               (m31 == 0.0f) && (m32 == 0.0f) && (m33 == 1.0f) && (m34 == 0.0f);
+        return m11 == 1.0f && m12 == 0.0f && m13 == 0.0f && m14 == 0.0f &&
+               m21 == 0.0f && m22 == 1.0f && m23 == 0.0f && m24 == 0.0f &&
+               m31 == 0.0f && m32 == 0.0f && m33 == 1.0f && m34 == 0.0f;
     }
 
     /**
-    * Tests equality of two matrices
+    * @param mat The matrix to test equality with
+    * @return Whether the two matrices are equal
     */
-    bool operator==(const Matrix& M) const
+    bool operator==(const Matrix& mat) const
     {
-        return (m11 == M.m11) && (m12 == M.m12) && (m13 == M.m13) && (m14 == M.m14) &&
-               (m21 == M.m21) && (m22 == M.m22) && (m23 == M.m23) && (m24 == M.m24) &&
-               (m31 == M.m31) && (m32 == M.m32) && (m33 == M.m33) && (m34 == M.m34);
+        return m11 == mat.m11 && m12 == mat.m12 && m13 == mat.m13 && m14 == mat.m14 &&
+               m21 == mat.m21 && m22 == mat.m22 && m23 == mat.m23 && m24 == mat.m24 &&
+               m31 == mat.m31 && m32 == mat.m32 && m33 == mat.m33 && m34 == mat.m34;
     }
 
     /**
-    * Tests inequality of two matrices
+    * @param mat The matrix to test inequality with
+    * @return Whether the two matrices are inequal
     */
-    bool operator!=(const Matrix & M) const
+    bool operator!=(const Matrix & mat) const
     {
-        return !((*this) == M);
-    }
-    
-    /**
-    * Creates a Skew Symmetric Matrix
-    * @param the vector to create the matrix with
-    * @return the skew symmetric matrix
-    */
-    static Matrix CreateSkewSymmetric(const Float3& v)                   
-    { 
-        return(Matrix(0.0f,-v.x,v.y,0.0f,v.x,0.0f,-v.z,0.0f,-v.y,v.z,0.0f,0.0f)); 
+        return !((*this) == mat);
     }
 
     /**
-    * Creates a Skew Symmetric Matrix
-    * @param the components to create the matrix with
-    * @return the skew symmetric matrix
-    */
-    static Matrix CreateSkewSymmetric(float x, float y, float z)    
-    { 
-        return(Matrix(0.0f,-x,y,0.0f,x,0.0f,-z,0.0f,-y,z,0.0f,0.0f)); 
-    }
-
-    /**
-    * Creates a tensor product matrix from two vectors
-    * @param the vectors to create the matrix with
-    * @return the tensor product matrix
-    */
-    static Matrix CreateTensor(const Float3& a, const Float3& b)
-    {
-        return(Matrix(b.x*a.x, b.x*a.y, b.x*a.z, 0.0f,
-                      b.y*a.x, b.y*a.y, b.y*a.z, 0.0f,
-                      b.z*a.x, b.z*a.y, b.z*a.z, 0.0f));
-    }
-
-    /**
-    * Creates a rotation matrix around the X axis
-    * @param the angle in radians to rotate
-    * @return the rotation matrix
+    * Creates a rotation matrix around the global X axis
+    * @param radians The angle in radians to rotate
+    * @return The rotation matrix
     */
     static Matrix CreateRotateX(float radians)
     {
-        Matrix M;
+        Matrix mat;
         float c = cos(radians);
         float s = sin(radians);
-        M.m22 = c;  M.m23 = s;  
-        M.m32 = -s; M.m33 = c;  
-        return M;
+        mat.m22 = c;  
+        mat.m23 = s;  
+        mat.m32 = -s;
+        mat.m33 = c;  
+        return mat;
     }
 
     /**
-    * Creates a rotation matrix around the Y axis
-    * @param the angle in radians to rotate
-    * @return the rotation matrix
+    * Creates a rotation matrix around the global Y axis
+    * @param radians The angle in radians to rotate
+    * @return The rotation matrix
     */
     static Matrix CreateRotateY(float radians)
     { 
-        Matrix M;
+        Matrix mat;
         float c = cos(radians);
         float s = sin(radians);
-        M.m11 = c;  M.m13 = -s; 
-        M.m31 = s;  M.m33 = c; 
-        return M;
+        mat.m11 = c; 
+        mat.m13 = -s; 
+        mat.m31 = s; 
+        mat.m33 = c; 
+        return mat;
     }
 
     /**
-    * Creates a rotation matrix around the Z axis
-    * @param the angle in radians to rotate
-    * @return the rotation matrix
+    * Creates a rotation matrix around the global Z axis
+    * @param radians The angle in radians to rotate
+    * @return The rotation matrix
     */
     static Matrix CreateRotateZ(float radians)
     { 
-        Matrix M;
+        Matrix mat;
         float c = cos(radians);
         float s = sin(radians);
-        M.m11 = c;  M.m12 = s; 
-        M.m21 = -s; M.m22 = c; 
-        return M;
+        mat.m11 = c;  
+        mat.m12 = s; 
+        mat.m21 = -s; 
+        mat.m22 = c; 
+        return mat;
     }
 
     /**
     * Creates a arbitrary rotation matrix
-    * @param the vector to rotate around
-    * @param the angle in radians to rotate
-    * @return the arbitrary rotation matrix
+    * @param vec The vector to rotate around
+    * @param radians The angle in radians to rotate
+    * @return The arbitrary rotation matrix
     */
-    static Matrix CreateRotateArbitrary(const Float3& v, float radians)
+    static Matrix CreateRotateArbitrary(const Float3& vec, float radians)
     {
-        Matrix M;
+        Matrix mat;
         float c = cos(radians);
         float s = sin(radians);
-        float t = 1-(cos(radians));
-        M.m11 = (t*(v.x*v.x)) + c;
-        M.m12 = (t*(v.x*v.y)) + (s*v.z);
-        M.m13 = (t*(v.x*v.z)) - (s*v.y);
-        M.m21 = (t*(v.x*v.y)) - (s*v.z);
-        M.m22 = (t*(v.y*v.y)) + c;
-        M.m23 = (t*(v.y*v.z)) + (s*v.x);
-        M.m31 = (t*(v.x*v.y)) + (s*v.y);
-        M.m32 = (t*(v.y*v.z)) - (s*v.x);
-        M.m33 = (t*(v.z*v.z)) + c;
-        return M;
+        float cinv = 1.0f-(cos(radians));
+        mat.m11 = (cinv*(vec.x*vec.x)) + c;
+        mat.m12 = (cinv*(vec.x*vec.y)) + (s*vec.z);
+        mat.m13 = (cinv*(vec.x*vec.z)) - (s*vec.y);
+        mat.m21 = (cinv*(vec.x*vec.y)) - (s*vec.z);
+        mat.m22 = (cinv*(vec.y*vec.y)) + c;
+        mat.m23 = (cinv*(vec.y*vec.z)) + (s*vec.x);
+        mat.m31 = (cinv*(vec.x*vec.y)) + (s*vec.y);
+        mat.m32 = (cinv*(vec.y*vec.z)) - (s*vec.x);
+        mat.m33 = (cinv*(vec.z*vec.z)) + c;
+        return mat;
     }
 };

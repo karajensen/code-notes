@@ -1,15 +1,18 @@
+////////////////////////////////////////////////////////////////////////////////////////
+// Kara Jensen - mail@karajensen.com
+////////////////////////////////////////////////////////////////////////////////////////
 
 #include <Windows.h>
 #include "timer.h"
 #include "diagnostic.h"
 
 Timer::Timer() :
+    m_frequency(0.0),
+    m_previousTime(0.0),
     m_deltaTime(0.0),
     m_deltaTimeCounter(0.0),
-    m_fpsCounter(0),
     m_fps(0),
-    m_previousTime(0.0),
-    m_frequency(0.0)
+    m_fpsCounter(0)
 {
 }
 
@@ -36,6 +39,20 @@ double Timer::UpdateTimer()
         m_fps = m_fpsCounter;
         m_fpsCounter = 0;
     }
+
+    if(Diagnostic::AllowText())
+    {
+        Diagnostic::Get().UpdateText("FramePerSec", Diagnostic::WHITE, StringCast(m_fps));
+        Diagnostic::Get().UpdateText("FramesCounter", Diagnostic::WHITE, StringCast(m_fpsCounter));
+        Diagnostic::Get().UpdateText("DeltaTime", Diagnostic::WHITE, StringCast(m_deltaTime));
+        Diagnostic::Get().UpdateText("DeltaTimeCounter", Diagnostic::WHITE, StringCast(m_deltaTimeCounter));
+    }
+    
+    ++m_fpsCounter; //increment frame counter
+    m_previousTime = currentTime;
+
+    return m_deltaTime; 
+}
 
     #ifdef _DEBUG
     Diagnostic::Get().UpdateText("FramePerSec", Diagnostic::WHITE, StringCast(m_fps));

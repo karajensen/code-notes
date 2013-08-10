@@ -229,19 +229,7 @@
     <ClCompile Include="Classes\camera.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Classes\collision.cpp">
-      <Filter>Source Files\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Classes\diagnostic.cpp">
-      <Filter>Source Files\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Classes\event_receiver.cpp">
-      <Filter>Source Files\Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Classes\logger.cpp">
-      <Filter>Source Files\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Classes\singleton.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
     <ClCompile Include="Classes\timer.cpp">
@@ -312,6 +300,9 @@
     </ClCompile>
     <ClCompile Include="Graphics Programming\Shaders.cpp">
       <Filter>Graphics Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\input.cpp">
+      <Filter>Source Files\Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -558,19 +549,10 @@
     <ClInclude Include="Classes\camera.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Classes\collision.h">
-      <Filter>Source Files\Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Classes\color.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Classes\diagnostic.h">
-      <Filter>Source Files\Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Classes\dynamicarray.h">
-      <Filter>Source Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\event_receiver.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Classes\logger.h">
@@ -579,13 +561,13 @@
     <ClInclude Include="Classes\matrix.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Classes\singleton.h">
-      <Filter>Source Files\Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Classes\timer.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Classes\vector3.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\input.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
   </ItemGroup>
