@@ -310,7 +310,7 @@
     <ClCompile Include="Graphics Programming\Scene.cpp">
       <Filter>Graphics Programming</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics Programming\Shaders.fx">
+    <ClCompile Include="Graphics Programming\Shaders.cpp">
       <Filter>Graphics Programming</Filter>
     </ClCompile>
   </ItemGroup>

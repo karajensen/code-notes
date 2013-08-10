@@ -143,7 +143,7 @@
     <ClCompile Include="Graphics Programming\Post Effects.cpp" />
     <ClCompile Include="Graphics Programming\Rendering.cpp" />
     <ClCompile Include="Graphics Programming\Scene.cpp" />
-    <ClCompile Include="Graphics Programming\Shaders.fx" />
+    <ClCompile Include="Graphics Programming\Shaders.cpp" />
     <ClCompile Include="Graphics Programming\Shadows.cpp" />
     <ClCompile Include="Graphics Programming\Terrain.cpp" />
     <ClCompile Include="Graphics Programming\Texturing.cpp" />

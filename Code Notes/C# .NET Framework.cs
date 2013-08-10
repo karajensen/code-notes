@@ -158,8 +158,15 @@ Trace.WriteLine("Writing a line to the debug console");
 Debug.Assert(myObject != null, methodName, "myObject cannot be null");
 
 //Creating custom listener
-
-
+public class MyListener : DefaultTraceListener
+{
+    public override void Fail(string message); //called on failed assertion
+    public override void Fail(string message, string detailmessage); //called on failed assertion
+}
+DefaultTraceListener listener = new MyListener();
+listener.AssertUiEnabled = false;
+Debug.Listeners.Remove("Default");
+Debug.Listeners.Add(listener);
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //TIMERS

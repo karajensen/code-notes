@@ -47,6 +47,9 @@ boost::algorithm::replace_all(str,"one","three");    //replaces all one with thr
 boost::algorithm::erase_all(str, " ");               //erase all spaces      
 boost::algorithm::erase_head(str, 6);                //erase first 6 characters
 
+//BOOST REGEX
+boost::regex_replace("OneTwo", boost::regex("One"), "Three") //returns "ThreeTwo"
+
 //BOOST LEXICAL CAST
 str = boost::lexical_cast<string>(number);   //number->string
 number = boost::lexical_cast<int>(str);      //string->number
@@ -108,6 +111,18 @@ boost::weak_ptr<MyClass> weakPtr(sharedPtr);
 
 filesystem::path filePath("MyFile.txt");
 filesystem::exists(filePath)
+
+// Recurse backwards through parent directories
+filesystem::path directory("MyParentFolder/MyFolder");
+while(!directory.string().empty())
+{
+    std::string filepath = directory.string() + "/myFile.txt";
+    if(filesystem::exists(filepath))
+    {
+        return filepath;
+    }
+    directory = directory.parent_path();
+}
 
 // Copy files
 boost::filesystem::copy_file("CopyFromPath.txt","CopyToPath.txt")
