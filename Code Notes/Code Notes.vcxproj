@@ -93,7 +93,6 @@
     <ClCompile Include="Class Notes.cpp" />
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Classes\assimpmesh.cpp" />
-    <ClCompile Include="Classes\bulletphysics.cpp" />
     <ClCompile Include="Classes\camera.cpp" />
     <ClCompile Include="Classes\input.cpp" />
     <ClCompile Include="Classes\logger.cpp" />
@@ -254,7 +253,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\assimpmesh.h" />
-    <ClInclude Include="Classes\bulletphysics.h" />
     <ClInclude Include="Classes\camera.h" />
     <ClInclude Include="Classes\color.h" />
     <ClInclude Include="Classes\dynamicarray.h" />

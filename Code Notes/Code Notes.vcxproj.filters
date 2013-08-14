@@ -223,9 +223,6 @@
     <ClCompile Include="Classes\assimpmesh.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Classes\bulletphysics.cpp">
-      <Filter>Source Files\Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Classes\camera.cpp">
       <Filter>Source Files\Classes</Filter>
     </ClCompile>
@@ -541,9 +538,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\assimpmesh.h">
-      <Filter>Source Files\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\bulletphysics.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Classes\camera.h">

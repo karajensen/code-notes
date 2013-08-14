@@ -1,18 +1,22 @@
-/****************************************************************
-* Kara Jensen (mail@karajensen.com) 
-* Static class for logging
-*****************************************************************/
-#pragma once
+////////////////////////////////////////////////////////////////////////////////////////
+// Kara Jensen - mail@karajensen.com - logger.h
+////////////////////////////////////////////////////////////////////////////////////////
 
+#pragma once
 #include <fstream>
 #include <boost/scoped_ptr.hpp>
 
+/**
+* Static class for logging application issues
+*/
 class Logger
 {
 public:
 
-    Logger();
-    Logger::~Logger();
+    /**
+    * Destructor
+    */
+    ~Logger();
 
     /**
     * Initialises logging for the application
@@ -20,14 +24,24 @@ public:
     static void Initialise();
 
     /**
-    * Logs to a file and debug output window if windows
-    * Info prepends INFO to message, Error prepends ERROR
+    * Logs info to a file and debug output window if windows
+    * @param info The information to log
     */
     static void LogInfo(const std::string& info);
+
+    /**
+    * Logs an error to a file and debug output window if windows
+    * @param error The error to log
+    */
     static void LogError(const std::string& error);
 
 private:
 
-    std::fstream m_logfile;
+    /**
+    * Constructor
+    */
+    Logger();
+
+    std::fstream m_logfile; ///< filestream for the logfile
     static boost::scoped_ptr<Logger> sm_logger;
 };

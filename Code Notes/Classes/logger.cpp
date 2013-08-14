@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////////////////////////////////
+// Kara Jensen - mail@karajensen.com - logger.cpp
+////////////////////////////////////////////////////////////////////////////////////////
+
 #include "logger.h"
 #include <string>
 
@@ -30,17 +34,16 @@ void Logger::LogInfo(const std::string& info)
 {
     sm_logger->m_logfile << "INFO: \t" << info << std::endl;
 
-
-#ifdef _IRR_WINDOWS_
+    #ifdef _IRR_WINDOWS_
     OutputDebugString((info+"\n").c_str());
-#endif
+    #endif
 }
 
 void Logger::LogError(const std::string& error)
 {
     sm_logger->m_logfile << "ERROR: \t" <<  error << std::endl;
 
-#ifdef _IRR_WINDOWS_
+    #ifdef _IRR_WINDOWS_
     OutputDebugString((error+"\n").c_str());
-#endif
+    #endif
 }
