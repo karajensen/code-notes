@@ -360,3 +360,8 @@ OutputDebugString((error+"\n").c_str());
 
 // WINDOWS POPUP
 MessageBox(NULL, message.c_str(), TEXT("ERROR"), MB_OK);
+
+// PASSING COMMAND LINE ARGUMENTS
+// argc is number of arguments, including the string used to invoke the program
+// argv is array of arguments, including the string used to invoke the program
+int main(int argc, char* argv[])

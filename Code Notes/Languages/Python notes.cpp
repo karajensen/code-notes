@@ -35,6 +35,7 @@ max(a,b)
 print("str")
 print "A string" + testString
 print "The total is: ", add1 + add2 
+os.system("pause")
 
 //MULTILINE
 //containers don't need to use
