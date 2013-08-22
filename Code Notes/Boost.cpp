@@ -60,6 +60,19 @@ catch(const boost::bad_lexical_cast& e)
     LogError(e.what());
 }
 
+//BOOST SPLIT
+std::vector<std::string> components;
+boost::split(components, line, boost::is_any_of("|"));
+
+//BOOST TOKENIZER
+std::string removedSeperator;
+boost::char_separator<char> seperator("|");
+boost::tokenizer<boost::char_separator<char>> tokens(line, seperator);
+for (const auto& token : tokens) 
+{
+    removedSeperator += token;
+}
+
 //////////////////////////////////////////////////////////////////////////////
 //NUMBERS
 //////////////////////////////////////////////////////////////////////////////

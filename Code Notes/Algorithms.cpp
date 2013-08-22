@@ -30,7 +30,7 @@ binary_search(S, E, myObj, equalLam) //return true if myObj exists (equalLam ret
 //If not found, returns E
 find(S, E, myObj, equalLam) //Returns iterator to first instance of element
 find_if(S, E, boolLam) //Returns iterator to first element in range that lambda returns true
-find_if_not(S, E, boolLam) //Returns iterator to first element in range that lambda returns false+
+find_if_not(S, E, boolLam) //Returns iterator to first element in range that lambda returns false
 lower_bound(S, E, myObj, sortLam) //returns first value >= myObj (when sortLam returns false)
 upper_bound(S, E, myObj, sortLam) //returns first value > myObj (when sortLam returns false)
 

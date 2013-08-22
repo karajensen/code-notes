@@ -26,6 +26,7 @@ normalize(vector)       // Normalizes a vector
 pow(1.0f, 3.0f)         // Calculates 1³
 max(a,b)                // Chooses max of a and b
 dot(a,b)                // Dots two vectors
+abs(a)                  // magnitude of value
 
 gl_TexCoord[0]
 gl_Position
