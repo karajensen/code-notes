@@ -35,7 +35,7 @@ public:
     * @param position The location for the matrix
     */
     Matrix(const Float3& forward, const Float3& up, 
-        const Float3& right, const Float3& position)
+           const Float3& right, const Float3& position)
     { 
         Set(forward, up, right, position); 
     }
@@ -44,10 +44,12 @@ public:
     * Constructor
     * @param MXX Each component to be set
     */
-    Matrix(float M11,float M12,float M13,float M14,float M21,float M22,
-        float M23,float M24,float M31,float M32,float M33,float M34)
+    Matrix(float M11, float M12, float M13, float M14, 
+           float M21, float M22, float M23, float M24, 
+           float M31, float M32, float M33, float M34)
     { 
-        Set(M11, M12, M13, M14, M21, M22, M23, M24, M31, M32, M33, M34); 
+        Set(M11, M12, M13, M14, M21, M22,
+            M23, M24, M31, M32, M33, M34); 
     }
 
     /**
@@ -55,7 +57,7 @@ public:
     */
     Float3 Right() const    
     { 
-        return Float3(m11,m21,m31); 
+        return Float3(m11, m21, m31); 
     }
 
     /**
@@ -63,7 +65,7 @@ public:
     */
     Float3 Up() const       
     { 
-        return Float3(m12,m22,m32); 
+        return Float3(m12, m22, m32); 
     }
 
     /**
@@ -71,7 +73,7 @@ public:
     */
     Float3 Forward() const   
     { 
-        return Float3(m13,m23,m33);
+        return Float3(m13, m23, m33);
     }
 
     /**
@@ -79,7 +81,7 @@ public:
     */
     Float3 Position() const  
     { 
-        return Float3(m14,m24,m34);
+        return Float3(m14, m24, m34);
     }
 
     /**
@@ -172,6 +174,7 @@ public:
 
     /**
     * Sets the scale of the matrix from components
+    * @note should only be used on a matrix without rotation
     * @param x/y/z The components to use for scaling
     */
     void SetScale(float x, float y, float z)  
@@ -183,6 +186,7 @@ public:
 
     /**
     * Sets the scale of the matrix from a vector
+    * @note should only be used on a matrix without rotation
     * @param vec The vector to use for scaling
     */
     void SetScale(const Float3& vec)              
@@ -194,6 +198,7 @@ public:
 
     /**
     * Sets the uniform scale of the matrix from a component
+    * @note should only be used on a matrix without rotation
     * @param scale The scale to set for all components
     */
     void SetScale(float scale)               
@@ -204,37 +209,15 @@ public:
     }
 
     /**
-    * Sets all matrix components
-    * @param value The value to set all matrix components
-    */
-    void Set(float value)
-    {
-        m11 = value;  m21 = value;  m31 = value;
-        m12 = value;  m22 = value;  m32 = value;
-        m13 = value;  m23 = value;  m33 = value;
-        m14 = value;  m24 = value;  m34 = value;
-    }
-
-    /**
     * Sets all the matrix components
-    * @param matrix A pointer to a buffer of 16 floats
-    * @param rightHanded Whether or not the buffer is right/left handed
+    * @param mat A pointer to a buffer of 16 floats
     */
-    void Set(const float* matrix, bool rightHanded)
+    void Set(const float* mat)
     {
-        if(rightHanded)
-        {
-            m11 = matrix[0];   m21 = matrix[1];   m31 = matrix[2];   
-            m12 = matrix[4];   m22 = matrix[5];   m32 = matrix[6];   
-            m13 = matrix[8];   m23 = matrix[9];   m33 = matrix[10];  
-            m14 = matrix[12];  m24 = matrix[13];  m34 = matrix[14];
-        }
-        else
-        {
-            m11 = matrix[0];   m12 = matrix[1];   m13 = matrix[2];   m14 = matrix[3];
-            m21 = matrix[4];   m22 = matrix[5];   m32 = matrix[6];   m24 = matrix[7];
-            m31 = matrix[8];   m32 = matrix[9];   m33 = matrix[10];  m34 = matrix[11];
-        }
+        m11 = mat[0];   m21 = mat[1];   m31 = mat[2];   
+        m12 = mat[4];   m22 = mat[5];   m32 = mat[6];   
+        m13 = mat[8];   m23 = mat[9];   m33 = mat[10];  
+        m14 = mat[12];  m24 = mat[13];  m34 = mat[14];
     }
 
     /**
@@ -242,7 +225,8 @@ public:
     * @param forward/up/right The axis for the matrix
     * @param position The location for the matrix
     */
-    void Set(const Float3& forward, const Float3& up, const Float3& right, const Float3& position)
+    void Set(const Float3& forward, const Float3& up,
+        const Float3& right, const Float3& position)
     {
         m11 = right.x;  m12 = up.x;   m13 = forward.x;  m14 = position.y;
         m31 = right.z;  m32 = up.z;   m33 = forward.z;  m34 = position.z;
@@ -252,8 +236,9 @@ public:
     * Sets all the matrix components
     * @param MXX Each component to be set including position
     */
-    void Set(float M11,float M12,float M13,float M14,float M21,
-        float M22,float M23,float M24,float M31,float M32,float M33,float M34)
+    void Set(float M11, float M12, float M13, float M14,
+             float M21, float M22, float M23, float M24,
+             float M31, float M32, float M33, float M34)
     {
         m11 = M11;  m12 = M12;  m13 = M13;  m14 = M14;
         m21 = M21;  m22 = M22;  m23 = M23;  m24 = M24;
@@ -261,14 +246,12 @@ public:
     }
 
     /**
-    * Sets all the matrix components
-    * @param MXX Each component to be set excluding position
+    * @return The 3x3 Transpose of the matrix
     */
-    void Set(float M11,float M12,float M13,float M21,float M22,float M23,float M31,float M32,float M33)
-    {
-        m11 = M11;  m12 = M12;  m13 = M13;
-        m21 = M21;  m22 = M22;  m23 = M23;
-        m31 = M31;  m32 = M32;  m33 = M33;
+    Matrix GetTranspose3x3() const
+    { 
+        return Matrix(m11, m21, m31, 0.0f, m12, 
+            m22, m32, 0.0f, m13, m23, m33, 0.0f); 
     }
 
     /**
@@ -283,13 +266,34 @@ public:
     }
 
     /**
-    * Makes the 3x3 matrix the indentiy; position remains unchanged
+    * @return Whether the matrix is the identity matrix
     */
-    void MakeIdentity3x3()
+    bool IsIdentity() const
     {
-        m11 = 1.0f;  m21 = 0.0f;  m31 = 0.0f;
-        m12 = 0.0f;  m22 = 1.0f;  m32 = 0.0f;
-        m13 = 0.0f;  m23 = 0.0f;  m33 = 1.0f;
+        return m11 == 1.0f && m12 == 0.0f && m13 == 0.0f && m14 == 0.0f &&
+               m21 == 0.0f && m22 == 1.0f && m23 == 0.0f && m24 == 0.0f &&
+               m31 == 0.0f && m32 == 0.0f && m33 == 1.0f && m34 == 0.0f;
+    }
+
+    /**
+    * @param mat The matrix to test equality with
+    * @return Whether the two matrices are equal
+    */
+    bool operator==(const Matrix& mat) const
+    {
+        return m11 == mat.m11 && m12 == mat.m12 && m13 == mat.m13 && 
+               m14 == mat.m14 && m21 == mat.m21 && m22 == mat.m22 && 
+               m23 == mat.m23 && m24 == mat.m24 && m31 == mat.m31 && 
+               m32 == mat.m32 && m33 == mat.m33 && m34 == mat.m34;
+    }
+
+    /**
+    * @param mat The matrix to test inequality with
+    * @return Whether the two matrices are inequal
+    */
+    bool operator!=(const Matrix & mat) const
+    {
+        return !((*this) == mat);
     }
 
     /**
@@ -459,32 +463,6 @@ public:
     }
 
     /**
-    * @return The 3x3 Trace of the matrix
-    */
-    float GetTrace3x3() const
-    { 
-        return m11 + m22 + m33; 
-    }
-
-    /**
-    * @return The 3x3 Transpose of the matrix
-    */
-    Matrix GetTranspose3x3() const
-    { 
-        return Matrix(m11,m21,m31,0.0f,m12,m22,m32,0.0f,m13,m23,m33,0.0f); 
-    }
-
-    /**
-    * Normalizes the 3x3 matrix
-    */
-    void Normalize3x3()
-    {
-        SetRight(Right().GetNormalized());
-        SetForward(Forward().GetNormalized());
-        SetUp(Up().GetNormalized());
-    }
-
-    /**
     * Translates the position
     * @param x/y/z The components to translate along
     */
@@ -611,27 +589,6 @@ public:
     }
 
     /**
-    * Translates the position from the local origin
-    * @param x/y/z The components to translate along
-    */
-    void TranslateLocal(float x, float y, float z)  
-    { 
-        Float3 pos = Position();
-        m14 = ((m14-pos.x)+x)+pos.x;   
-        m24 = ((m24-pos.y)+y)+pos.y;   
-        m34 = ((m34-pos.z)+z)+pos.z; 
-    }
-
-    /**
-    * Translates the position from the local origin
-    * @param vec The vector to translate along
-    */
-    void TranslateLocal(const Float3& vec) 
-    { 
-        TranslateLocal(vec.x, vec.y, vec.z); 
-    }
-
-    /**
     * Scales around the local origin
     * @param x/y/z The components to scale by
     */
@@ -745,36 +702,6 @@ public:
     }
 
     /**
-    * @return Whether the matrix is the identity matrix
-    */
-    bool IsIdentity() const
-    {
-        return m11 == 1.0f && m12 == 0.0f && m13 == 0.0f && m14 == 0.0f &&
-               m21 == 0.0f && m22 == 1.0f && m23 == 0.0f && m24 == 0.0f &&
-               m31 == 0.0f && m32 == 0.0f && m33 == 1.0f && m34 == 0.0f;
-    }
-
-    /**
-    * @param mat The matrix to test equality with
-    * @return Whether the two matrices are equal
-    */
-    bool operator==(const Matrix& mat) const
-    {
-        return m11 == mat.m11 && m12 == mat.m12 && m13 == mat.m13 && m14 == mat.m14 &&
-               m21 == mat.m21 && m22 == mat.m22 && m23 == mat.m23 && m24 == mat.m24 &&
-               m31 == mat.m31 && m32 == mat.m32 && m33 == mat.m33 && m34 == mat.m34;
-    }
-
-    /**
-    * @param mat The matrix to test inequality with
-    * @return Whether the two matrices are inequal
-    */
-    bool operator!=(const Matrix & mat) const
-    {
-        return !((*this) == mat);
-    }
-
-    /**
     * Creates a rotation matrix around the global X axis
     * @param radians The angle in radians to rotate
     * @return The rotation matrix
@@ -847,5 +774,25 @@ public:
         mat.m32 = (cinv*(vec.y*vec.z)) - (s*vec.x);
         mat.m33 = (cinv*(vec.z*vec.z)) + c;
         return mat;
+    }
+
+    /**
+    * Allows output of the matrix to a standard stream
+    * @param stream The stream to output in
+    * @param mat The matrix to output
+    * @return the stream to allow for chaining
+    */
+    friend std::ostream& operator<<(std::ostream& stream, const Matrix& mat)
+    {
+        stream << mat.m11 << " " << mat.m12 << 
+            " " << mat.m13 << " " << mat.m14 << std::endl;
+
+        stream << mat.m21 << " " << mat.m22 << 
+            " " << mat.m23 << " " << mat.m24 << std::endl;
+
+        stream << mat.m31 << " " << mat.m32 << 
+            " " << mat.m33 << " " << mat.m34 << std::endl;
+
+        return stream;
     }
 };

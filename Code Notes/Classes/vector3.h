@@ -4,6 +4,7 @@
 
 #pragma once
 #include <cmath>
+#include <ostream>
 
 /**
 * Template class for creating vectors in 2D/3D space
@@ -169,17 +170,6 @@ public:
     }
 
     /**
-    * Tests whether two vectors are parallel
-    * @param vec The vector to be tested against
-    * @return Whether the vectors are parallel
-    */
-    bool IsParallel(const Vector3<T>& vec) const
-    {
-        float dot = Dot(vec);
-        return dot == T(1) || dot == T(-1);
-    }
-
-    /**
     * Gets the angle between two vectors in radians
     * @param vec The vector to get the angle between
     * @return The angle in radians
@@ -257,6 +247,18 @@ public:
         x = T(0);
         y = T(0);
         z = T(0);
+    }
+
+    /**
+    * Allows output of the vector to a standard stream
+    * @param stream The stream to output in
+    * @param vec The vector to output
+    * @return the stream to allow for chaining
+    */
+    friend std::ostream& operator<<(std::ostream& stream, const Vector3& vec)
+    {
+        stream << vec.x << ", " << vec.y << ", " << vec.z;
+        return stream;
     }
 };
 

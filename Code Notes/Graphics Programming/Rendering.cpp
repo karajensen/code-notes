@@ -262,7 +262,6 @@ RENDER TARGETS
 • Alpha blending: blends alpha pixel into buffer using a set formula
 • Alpha testing: tests whether alpha pixel contributes to the colour buffer
 
-
 IMPORTANT: Render non-transparent objects first
            Render transparent from back to front according to depth 
 
