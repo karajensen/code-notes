@@ -20,6 +20,15 @@ SCRUM
 • Scrum of scrums: team representitives have a 'standup' meeting
 • Retrospective to reflect on how the iteration went
 
+DEVELOPING FOR MAC
+• Code in C++/Objective-C
+• Use Xcode for IDE and Cocoa for framework
+• Graphics API is OpenGL
+
+DEVELOPING FOR ANDROID
+• Code in Java (SDK) or C++ (NDK)
+• Graphics API is OpenGL ES (embedded)
+
 //////////////////////////////////////////////////////////////////////////////
 //SOFTWARE TOOLS
 //////////////////////////////////////////////////////////////////////////////

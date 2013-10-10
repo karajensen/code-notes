@@ -16,7 +16,10 @@ ATAN: Looks at 2 quadrants
 atan2(-x,-y) = +angle [-90,-180)   |   atan2(+x,-y) = +angle [90,180]
                                    -y
 
-STL ALGORITHMS
+//////////////////////////////////////////////////////////////////////////////
+//ALGORITHMS
+//////////////////////////////////////////////////////////////////////////////
+
 • Non-modifying: on const objects; Modifying: on non-const objects
 • Preferable to use container's equivalent method for stability
 • All ranges are [Start, End) with End non-inclusive
@@ -41,11 +44,58 @@ find obj if        std::find_if  std::lower_bound    .lower_bound()  .lower_boun
 //SEQUENCE CONTAINERS
 //////////////////////////////////////////////////////////////////////////////
 
+--------------------------------------------------------------------------
+SINGLE DATA:
+--------------------------------------------------------------------------
+Push Front:      deque/list O(1)     < vector O(n)
+Push Back:       vector O(1)         < deque O(1)      < list
+Random Insert:   vector/deque        < list
+Random Remove:   vector/deque        < list
+std::sort:       vector              < deque           < list
+std::find:       vector              < deque           < list
+Iterating:       vector/deque        < list
+Destruction:     vector/deque        < list
+Random Access:   vector              < deque
+--------------------------------------------------------------------------                
+COMPLEX DATA:   
+--------------------------------------------------------------------------
+Push Front:      deque/list O(1)     < vector
+Push Back:       vector/deque O(1)   < list
+Random Insert:   list O(1)           < deque             < vector
+Random Remove:   list O(1)           < deque  O(n/2)     < vector
+std::sort:       list                < vector/deque
+std::find:       deque               < vector            < list
+Iterating:       vector/deque        < list
+Destruction:     vector              < deque/list
+Random Access:   vector              < deque
+
+PERFORMANCE ISSUES:
+• Cache Misses when searching/iterating: vector < deque < list
+• When a data is accessed, a line of data is fetched from the main memory to the cache
+• Some of this data is unneeded in lists/deque as they're not continuous
+• Bigger the data size the more cache misses as elements don't fit in cache lines
+
 VECTOR
 • random access to elements
-• fast with adding/removing end (constant time)
-• slow with adding/removing/inserting to start or middle (linear time)
 • keeps values in one chunk of continuous memory
+
+DEQUE
+• double ended queue with random access
+• stores data in various chucks with pointers to keep track of next lot
+• not safe with pointer maths as memory not all in one piece
+
+LIST/FORWARD LIST
+• List: doubly-linked list with iteration in both directions
+• Forward List: single-linked lists with iteration only forward
+• Forward list smaller and more effecient
+• not safe with pointer maths as memory not all in one piece
+• no random access, must iterate through list
+• search slow due to waiting for spread out data to be fetched into the cache
+• Handles large, complex elements well
+
+STRING
+• Data for strings not guaranteed to be stored in continuous memory
+• Internal representation of string not guaranteed to end with null character
 
 VECTOR<BOOL>
 • Not a STL container and doesn't hold bools
@@ -55,50 +105,24 @@ VECTOR<BOOL>
 • vector<bool>::iterator is not random-access, forward or bi-directional
 • deque<bool> actually contains bool; vector<bool> was an experiment
 
-DEQUE
-• double ended queue with random access
-• constant time for removing/adding/inserting at end and beginning
-• slower than lists, faster than vectors for removing/adding/inserting
-• slower than vectors with accessing individual members
-• stores data in various chucks with pointers to keep track of next lot
-• not safe with pointer maths as memory not all in one piece
-
-LIST/FORWARD LIST
-• List: doubly-linked list with iteration in both directions
-• Forward List: single-linked lists with iteration only forward
-• Forward list smaller and more effecient
-• not safe with pointer maths as memory not all in one piece
-• no random access, slow to search (must iterate through list)
-• Constant time insert and erase operations anywhere within the sequence
-• Faster than other containers for sorting, inserting, erasing
-• Larger than other containers for storing linkage information
-
-STRING
-• Data for strings not guaranteed to be stored in continuous memory
-• Internal representation of string not guaranteed to end with null character
-
 //////////////////////////////////////////////////////////////////////////////
 //CONTAINER ADAPTERS
 //////////////////////////////////////////////////////////////////////////////
-Adaptions of sequence containers
 
 QUEUE
 • first-in-first-out
-• queue without random access
-• no iteration
+• no iteration/random access
 • built on top of deque using inline functions
 
 PRIORITY-QUEUE
 • first-in-first-out
-• queue without random access
-• no iteration
+• no iteration/random access
 • sorted in terms of most important using heap search
 • built on top of vector & heap structure using inline functions 
 
 STACK
 • last-in-first-out
-• no random access
-• no iteration
+• no iteration/random access
 • built on top of deque using inline functions
 
 HEAP

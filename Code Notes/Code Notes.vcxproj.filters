@@ -292,14 +292,14 @@
     <ClCompile Include="Design and Theory\Data Algorithms.cpp">
       <Filter>Design and Theory</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics Programming\Scene.cpp">
-      <Filter>Graphics Programming</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics Programming\Shaders.cpp">
       <Filter>Graphics Programming</Filter>
     </ClCompile>
     <ClCompile Include="Classes\input.cpp">
       <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics Programming\Lighting.cpp">
+      <Filter>Graphics Programming</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -564,5 +564,16 @@
     <ClInclude Include="Classes\input.h">
       <Filter>Source Files\Classes</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\Optimising - Bottleneck chart.png">
+      <Filter>Graphics Programming\Images</Filter>
+    </Image>
+    <Image Include="Images\Optimising - View Frustum.png">
+      <Filter>Graphics Programming\Images</Filter>
+    </Image>
+    <Image Include="Images\STL - container performance.PNG">
+      <Filter>Source Files\Images</Filter>
+    </Image>
   </ItemGroup>
 </Project>

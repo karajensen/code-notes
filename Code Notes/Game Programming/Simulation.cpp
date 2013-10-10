@@ -3,6 +3,9 @@
 //////////////////////////////////////////////////////////////////////////////
 /*
 
+LINEAR INTERPOLATION: Line between two points used to approximate the curve 
+SPHERICAL INTERPOLATION: Smoothly interplates between two values 
+
 EULER'S METHOD: 
  ----------------------------
 | X(t + ∆t) = X(t) + X▪(t)∆t |

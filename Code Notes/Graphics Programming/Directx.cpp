@@ -5,15 +5,20 @@
 /*------------------------------------------------------------------
 DIRECTX: Row Major Matrix / Left Handed Coordinate System
 ------------------------------------------------------------------
-Scale * Rot * Trans = LocalWorld
-LocalWorld * ParentWorld = World
-Vertex * World * View * Proj = FinalVertex in screenspace
-
+LocalWorld = Scale * Rot * Trans
+World = LocalWorld * ParentWorld
+Vertex in screenspace = Vertex * World * View * Proj
+Vertex in worldspace = InvProj * CameraWorld
 | Right.x  Right.y   Right.z  0 |   UP: +Y
 | Up.x     Up.y      Up.z     0 |   RIGHT: +X
 | For.x    For.y     For.z    0 |   FORWARD: +Z
 | Pos.x    Pos.y     Pos.z    1 |
 ------------------------------------------------------------------*/
+
+RIGHT:    D3DXVECTOR3(m_matrix._11, m_matrix._12, m_matrix._13)
+UP:       D3DXVECTOR3(m_matrix._21, m_matrix._22, m_matrix._23)
+FORWARD:  D3DXVECTOR3(m_matrix._31, m_matrix._32, m_matrix._33)
+POSITION: D3DXVECTOR3(m_matrix._41, m_matrix._42, m_matrix._43)
 
 ////////////////////////////////////////////////////////////////////////////// 
 //PERFORMANCE INVESTIGATOR FOR XBOX (PIX)
@@ -36,8 +41,13 @@ D3DXMatrixIdentity(&matIn);
 D3DXMatrixScaling(&matIn,scale,scale,scale); //scales the matrix
 D3DXMatrixTranspose(&matOut, &matIn); //transposes the matrix
 D3DXMatrixDeterminant(&matIn); //returns determinate of matrix
-D3DXMatrixInverse(&matOut, NULL, &matIn); //creates inverse of matIn
+D3DXMatrixInverse(&matOut, nullptr, &matIn); //creates inverse of matIn
 D3DXMatrixRotationAxis(&matOut, &axis, angle); //axis to rotate around, angle in radians
+D3DXMatrixRotationX(&matRX, m_pitch); //out mat, angle in radians
+D3DXMatrixRotationY(&matRY, m_yaw); //out mat, angle in radians
+D3DXMatrixRotationZ(&matRZ, m_roll); //out mat, angle in radians
+D3DXMatrixRotationYawPitchRoll
+D3DXMatrixReflect
 
 //////////////////////////////////////////////////////////////////////////////
 //DIRECTX VECTORS
@@ -52,7 +62,20 @@ D3DXVec3TransformCoord(&vecOut, &vecIn, &matIn); //transform in vector into matr
 D3DXVec3Normalize(&vecOut, &vecIn);
 D3DXVec3TransformNormal(&vecOut, &vecIn, &matIn);
 D3DXVec3Cross(&vecOut, &vecIn1, &vecIn2);
-D3DXVec3Length(&vec) //returns length of vector
+D3DXVec3Length(&vec) //returns length of vector    
+D3DXVec3Add
+D3DXVec3BaryCentric
+D3DXVec3CatmullRom
+D3DXVec3Hermite
+D3DXVec3LengthSq
+D3DXVec3Lerp
+D3DXVec3Maximize
+D3DXVec3Minimize
+D3DXVec3Project
+D3DXVec3Scale
+D3DXVec3Subtract
+D3DXVec3Transform
+D3DXVec3Unproject
 
 //////////////////////////////////////////////////////////////////////////////
 //CREATE PROJECTION MATRIX

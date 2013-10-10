@@ -9,20 +9,20 @@ RASTERIZATION   [REALTIME-RENDER]   Projects to plane using proj matrix
 ------------------------------------------------------------------------------
 FORWARD RAY-TRACING [RAY TRACING]
 ------------------------------------------------------------------------------
- - Rays traced from light into 3D scene
- - Calculates new direction of rays when hitting surface
- - Ideal for reflections/refractions
- - Quality increases with more rays
- - DISADVANTAGE: hard to optimise, not possible in real time
- - DISADVANTAGE: lots of wasted rays that won't hit objects
+Rays traced from light into 3D scene
+Calculates new direction of rays when hitting surface
+Ideal for reflections/refractions
+Quality increases with more rays
+Disadvantage: hard to optimise, not possible in real time
+Disadvantage: lots of wasted rays that won't hit objects
 
 ------------------------------------------------------------------------------
 BACKWARD RAY-TRACING [RAY CASTING]
 ------------------------------------------------------------------------------
- - Rays traced from camera into 3D scene
- - Does not compute new direction a ray takes after reflections/refractions
- - Ray sent for each pixel; number of rays depends on screen resolution
- - Every pixel will always be shaded; less rays/faster than raytracing
+Rays traced from camera into 3D scene
+Does not compute new direction a ray takes after reflections/refractions
+Ray sent for each pixel; number of rays depends on screen resolution
+Every pixel will always be shaded; less rays/faster than raytracing
 
 ------------------------------------------------------------------------------
 SCANLINE RENDERING [RASTERIZATION]
@@ -37,8 +37,7 @@ Only vertices needed for current scanline are worked on, speeding up process
 PATH TRACING [RAY TRACING]
 ------------------------------------------------------------------------------
 Extends rays tracing where new rays are created and traced for any points of 
-intersection of objects. Takes into account indirect lighting/global 
-illumination 
+intersection of objects. Takes into account indirect lighting/global illumination 
 
 //////////////////////////////////////////////////////////////////////////////  
 //REAL-TIME RENDERING / RASTERIZATION RENDER PIPELINES
@@ -141,79 +140,6 @@ DEFERRED SHADING
    contribution of the light to the final pixel
 4) Perform any post effects with the ability to use the G-buffer
 
-
-////////////////////////////////////////////////////////////////////////////// 
-//RENDERING TRANSFORMATIONS
-////////////////////////////////////////////////////////////////////////////// 
-
-==============================================================================
-VIEW MATRIX
-Inverse of the Camera World Matrix
-changes the world scene basis so the camera is at the origin
-==============================================================================
-
-(Method only works with camera matrices do to orthogonality)
-matView._11 = right.x;    matView._12 = up.x;      matView._13 = forward.x;
-matView._21 = right.y;    matView._22 = up.y;   matView._23 = forward.y;
-matView._31 = right.z;    matView._32 = up.z;   matView._33 = forward.z; 
-matView._41 = -D3DXVec3Dot(&pos,&right); 
-matView._42 = -D3DXVec3Dot(&pos,&up);
-matView._43 = -D3DXVec3Dot(&pos,&forward);
-
-==OR==
-
-D3DXMatrixLookAtLH(&matView, &LookAtPosition, &Forward, &Up)
-
-==============================================================================
-PROJECTION MATRICES
-Projects the final scene onto the screen (Screen space)
-==============================================================================
-
-VIEW FRUSTUM:
-Pyramid volume from camera to world, has near and front clipping planes
-
-ORTHOGONAL PROJECTION MATRIX:
-objects remain same size regardless of depth
-
-PERSPECTIVE PROJECTION MATRIX:
-objects different sizes according to depth, uses horizon as vanishing point 
-
-D3DXMatrixPerspectiveFovLH(&projectionMatrix,
-                           D3DX_PI/2,    //field of view (α)
-                           Width/height  //aspect ratio (R)
-                           10.0f,        //z-value of the near view-plane (n)
-                           1000.0f);     //z-value of the far view-plane (f)
-
-PROJECTING VERTS INTO SCREEN SPACE:
-For view space coordinates x,y positions need to be between [-1,1]
-For view space coordinate z, depth needs to be between [0,-1]
-
-tan(b/2) = R*tan(α/2)
-tan(b/2)*n = W/2
-tan(α/2)*n = H/2
-
- A = 1/(R*tan(α/2))
- B = 1/(R*tan(b/2))
- C = f/(f-n)
- D = -fn/(f-n)
-
-         | A 0 0 0 |
-[x y z 1]| 0 B 0 0 | = [Ax By (Cz+D)  z]
-         | 0 0 C 1 |   HOMOGENEOUS CLIP SPACE
-         | 0 0 D 0 |
-         PROJ MATRIX
-
-In homogeneous clip space: culling/clipping
-If x,y is in range [-w,w] and z is in range [0,w] then okay
-To get final coordinate, divide by w (which is screen space z)
-
-[x' y' z' 1] = [Ax/z  By/z  C+(D/z)  1]
- --------------------------------------
-| x' = x/(zRtan(α/2))        = Ax/z    |
-| y' = y/(ztan(α/2))         = By/z    |
-| z' = (f/f-n)-(fn/(z(f-n))) = C+(D/z) |
- --------------------------------------
-
 //////////////////////////////////////////////////////////////////////////////  
 //GRAPHICS BUFFERS
 //////////////////////////////////////////////////////////////////////////////  
@@ -251,89 +177,6 @@ ATTRIBUTE BUFFER
 
 RENDER TARGETS
 • Comprised of a color buffer and a depth/stencil buffer 
-
-
-//////////////////////////////////////////////////////////////////////////////
-//TRANSPARENCY
-//////////////////////////////////////////////////////////////////////////////
-
-• Render non-transparent objects first in any order
-• Render transparent objects back to front according to depth
-• Alpha blending: blends alpha pixel into buffer using a set formula
-• Alpha testing: tests whether alpha pixel contributes to the colour buffer
-
-IMPORTANT: Render non-transparent objects first
-           Render transparent from back to front according to depth 
-
-COLOR COMPONENT BLENDING
-AlphaBlendEnable = true
-SrcBlend = SrcAlpha         (output.rgb * output.a)
-DestBlend = InvSrcAlpha     (dest.rgb * (1-output.a))
-BlendOp = Add
-
-ALPHA COMPONENT BLENDING
-SrcBlendAlpha = One         (output.a * 1)
-DestBlendAlpha = One        (dest.a * 1)
-BlendOpAlpha = Add
-
-ALPHA TESTING
-AlphaTestEnable = true;
-AlphaFunc = GreaterEqual;
-AlphaRef = 220;
-
-==============================================================================
-ALPHA BLENDING FACTORS
-==============================================================================
-
-D3DBLEND_ZERO           (0, 0, 0, 0)
-D3DBLEND_ONE            (1, 1, 1, 1)
-D3DBLEND_SRCCOLOR       (Rˢ, Gˢ, Bˢ, Aˢ)
-D3DBLEND_INVSRCCOLOR    (1-Rˢ, 1-Gˢ, 1-Bˢ, 1-Aˢ)
-D3DBLEND_SRCALPHA       (Aˢ, Aˢ, Aˢ, Aˢ)
-D3DBLEND_INVSRCALPHA    (1-Aˢ, 1-Aˢ, 1-Aˢ, 1-Aˢ)
-D3DBLEND_DESTALPHA      (Aᵈ, Aᵈ, Aᵈ, Aᵈ)
-D3DBLEND_INVDESTALPHA   (1-Aᵈ, 1-Aᵈ, 1-Aᵈ, 1-Aᵈ)
-D3DBLEND_DESTCOLOR      (Rᵈ, Gᵈ, Bᵈ, Aᵈ)
-D3DBLEND_INVDESTCOLOR   (1-Rᵈ, 1-Gᵈ, 1-Bᵈ, 1-Aᵈ)
-D3DBLEND_SRCALPHASAT    (f, f, f, 1) where f = min(Aˢ,1-Aᵈ)
-
-Default Source Blend Factor: D3DBLEND_SRCALPHA
-Default Dest Blend Factor: D3DBLEND_INVSRCALPHA
-
-==============================================================================
-ALPHA BLENDING OPERATIONS
-==============================================================================
-
-D3DBLENDOP_ADD:
-OutputPixel = SourcePixel*SourceBlendFactor + DestPixel*DestBlendFactor 
-• good for glow effects; doesn't require sorting; can saturate objects easily
-
-D3DBLENDOP_SUBTRACT:
-OutputPixel = SourcePixel*SourceBlendFactor - DestPixel*DestBlendFactor 
-
-D3DBLENDOP_REVSUBTRACT: 
-OutputPixel = DestPixel*DestBlendFactor - SourcePixel*SourceBlendFactor 
-
-D3DBLENDOP_MIN:
-OutputPixel = min(SourcePixel*SourceBlendFactor, DestPixel*DestBlendFactor)
-
-D3DBLENDOP_MAX:
-OutputPixel = max(SourcePixel*SourceBlendFactor, DestPixel*DestBlendFactor)
-
-==============================================================================
-ALPHA TESTING
-==============================================================================
-
-if(Aˢ [Operation] ref == true) { accept pixel into buffer }
-
-D3DCMP_NEVER:           Alpha test always fails
-D3DCMP_ALWAYS:          Alpha test always succeeds
-D3DCMP_LESS:            <
-D3DCMP_EQUAL:           ==
-D3DCMP_LESSEQUAL:       <=
-D3DCMP_GREATER:         >
-D3DCMP_NOTEQUAL:        !=
-D3DCMP_GREATEREQUAL:    >=
 
 //////////////////////////////////////////////////////////////////////////////
 //STENCILING
@@ -401,5 +244,204 @@ D3DSTENCILOP_DECR: Decrement the buffer entry, wraps to max if goes under 0
 //Stencil write mask
 gd3dDevice->SetRenderState(D3DRS_STENCILWRITEMASK, 0x0000ffff);
 NewValue = Value & WriteMask
+
+////////////////////////////////////////////////////////////////////////////// 
+//TRANSFORMATIONS
+////////////////////////////////////////////////////////////////////////////// 
+
+==============================================================================
+VIEW MATRIX
+Inverse of the Camera World Matrix
+changes the world scene basis so the camera is at the origin
+==============================================================================
+
+FLY-CAMERA
+Assumes orthogonality with view matrix
+matView._11 = right.x;    matView._12 = up.x;   matView._13 = forward.x;
+matView._21 = right.y;    matView._22 = up.y;   matView._23 = forward.y;
+matView._31 = right.z;    matView._32 = up.z;   matView._33 = forward.z; 
+matView._41 = -D3DXVec3Dot(&pos,&right); 
+matView._42 = -D3DXVec3Dot(&pos,&up);
+matView._43 = -D3DXVec3Dot(&pos,&forward);
+
+LOOKAT-CAMERA
+D3DXMatrixIdentity(&m_world);
+m_world._41 = pos.x;
+m_world._42 = pos.y;
+m_world._43 = pos.z;
+D3DXMATRIX matRX, matRY, matRZ;
+D3DXMatrixRotationX(&matRX, m_pitch); 
+D3DXMatrixRotationY(&matRY, m_yaw);
+D3DXMatrixRotationZ(&matRZ, m_roll);
+m_world *= matRZ * matRX * matRY;
+D3DXMatrixInverse(m_view.MatrixPtr(), nullptr, &m_world.GetMatrix());
+
+==OR==
+
+D3DXMatrixLookAtLH(&matView, &LookAtPosition, &Forward, &Up)
+
+==============================================================================
+PROJECTION MATRICES
+Projects the final scene onto the screen (Screen space)
+==============================================================================
+
+VIEW FRUSTUM:
+Pyramid volume from camera to world, has near and front clipping planes
+
+ORTHOGONAL PROJECTION MATRIX:
+objects remain same size regardless of depth
+
+PERSPECTIVE PROJECTION MATRIX:
+objects different sizes according to depth, uses horizon as vanishing point 
+
+D3DXMatrixPerspectiveFovLH(&projectionMatrix,
+                           D3DX_PI/2,    //field of view (α)
+                           Width/height  //aspect ratio (R)
+                           10.0f,        //z-value of the near view-plane (n)
+                           1000.0f);     //z-value of the far view-plane (f)
+
+PROJECTING VERTS INTO SCREEN SPACE:
+For view space coordinates x,y positions need to be between [-1,1]
+For view space coordinate z, depth needs to be between [0,-1]
+
+tan(b/2) = R*tan(α/2)
+tan(b/2)*n = W/2
+tan(α/2)*n = H/2
+
+ A = 1/(R*tan(α/2))
+ B = 1/(R*tan(b/2))
+ C = f/(f-n)
+ D = -fn/(f-n)
+
+         | A 0 0 0 |
+[x y z 1]| 0 B 0 0 | = [Ax By (Cz+D)  z]
+         | 0 0 C 1 |   HOMOGENEOUS CLIP SPACE
+         | 0 0 D 0 |
+         PROJ MATRIX
+
+In homogeneous clip space: culling/clipping
+If x,y is in range [-w,w] and z is in range [0,w] then okay
+To get final coordinate, divide by w (which is screen space z)
+
+[x' y' z' 1] = [Ax/z  By/z  C+(D/z)  1]
+ --------------------------------------
+| x' = x/(zRtan(α/2))        = Ax/z    |
+| y' = y/(ztan(α/2))         = By/z    |
+| z' = (f/f-n)-(fn/(z(f-n))) = C+(D/z) |
+ --------------------------------------
+
+///////////////////////////////////////////////////////////////////////////////////////
+//CAMERAS
+///////////////////////////////////////////////////////////////////////////////////////
+
+----------------
+|  YAW:    Y   |
+|  PITCH:  X   |
+|  ROLL:   Z   |
+----------------
+
+FIXED POSITION: No movement of camera
+FIRST PERSON: Player is camera
+THIRD PERSON: Camera floats above player
+LOOK-AT POSITION: Position of target object
+DESIRED POSITION: Position where camera intends to move to
+ORIENTATION: Current direction in world space; Yaw, pitch, roll
+
+=============================================================================
+GIMBAL LOCK
+=============================================================================
+A set of three gimbals mounted together to allow three degrees of freedom
+If the middle gimbal is rotated greater than 90, the top and bottle gimbals 
+are aligned and in gimbal lock losing a degree of freedom. 
+
+MATRICES: 
+- Suffer from gimbal lock
+- More storage space needed (12 values)
+
+QUATERNIONS: 
+- Fix gimbal lock
+- Less storage space needed (4 values, 1 scale, 3 translation = 8)
+- Have to compute a final matrix from them anyway
+
+///////////////////////////////////////////////////////////////////////////////////////
+//OPTIMISATION
+///////////////////////////////////////////////////////////////////////////////////////
+
+FARPLANE CULLING
+• Any objects past the farplane are culled
+• Limitation is if plane is too close objects seen disappearing
+• This can be fixed by using fog to hide far distances
+
+FRUSTUM CULLING
+• Only objects in frustum are drawn. 
+• If Polygon outside it's not visible and hence discarded
+• If partially inside its clipped so outside parts are removed
+
+FRONT/BACKFACE CULLING
+• Winding order of vertices indicates which way polygon is facing
+    - Clockwise (DirectX)
+    - Counter clockwise (OpenGL)
+
+CLIPPING
+• Any screen space coordinates outside [–1,–1,0] to [1,1,1] culled
+
+OCCLUSION CULLING
+• Identifies parts of the scene visible/not visible to the viewer
+• Objects behind other objects are discarded
+• Can use a plane to represent occluder *similar to frustum culling)
+• Can use potential visible sets
+
+Potential Visible Sets:
+- The list a node keeps of which other nodes it can potentially see
+- Pre-computed data which is then indexed at run time to quickly 
+  obtain an estimate of the visible geometry. 
+- The camera view-space is subdivided into convex regions
+- PVS is computed for each region.
+- Convex areas are called SECTORS. 
+- Adjacent sectors are linked to one another via PORTALS
+- Best for indoor games with doors/windows for portals
+- Well suited for recursive functions.
+
+1) Subdivide scene into convex regions called sectors
+2) Calculate what other sectors can be seen by each one
+3) Render scene from viewer's position with a viewing frustum
+4) If a portal is seen into another sector clip the frustum using 
+   the portal as a guide for dimensions
+5) Connecting sector is rendered but using the new frustum
+
+OPTIMIZATION TIPS
+• Don’t allocate stencil if you don’t use it
+• R5G6B5 color sufficient for dynamic reflection maps
+• Use low resolution (<256x256) 8-bit normalization cube-maps
+• Use half instead of float where strict precision isn't important
+• Render a depth-only pass before color pass to reduce pixel shader use
+
+///////////////////////////////////////////////////////////////////////////////////////
+//PRIMITIVES
+///////////////////////////////////////////////////////////////////////////////////////
+
+POINT LISTS:  .    .    . .   .
+LINE LIST: ._________________. 
+LINE STRIP: ._______._______.___._______._____.
+
+TRIANGLE LISTS:
+     __
+    |\ | Triangle1 {1,2,3} Limitation is no sharing of vertices
+    |_\| Triangle2 {3,4,1} which increases vertex count
+
+TRIANGLE STRIPS: 
+     ___
+    |\ |\  Specify first four points then one
+    |_\|_\ point for every new triangle in strip
+
+TRIANGLE FANS:
+     ____
+    |\  /| All triangles connect
+    | \/ | to a common point
+    | /\ |
+    |/__\|
+
+CONVEX POLYGONS: line between two points in polygon never crosses border 
+CONCAVE POLYGONS: line between two points in polygon can cross border
 
 */////////////////////////////////////////////////////////////////////////////

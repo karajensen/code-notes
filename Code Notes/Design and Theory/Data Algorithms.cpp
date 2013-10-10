@@ -3,6 +3,12 @@
 //////////////////////////////////////////////////////////////////////////////
 /*
 
+BIG-O NOTATION:
+Used to describe the performance of algorithm based on item amount
+O(1) = constant time; doesn't depend on number of items
+O(N) = linear time; depends on nummber of items using a power-of curve
+O(logN) = logarithmic time; depends on the number of items using a log curve
+
 ALGORITHM LIST:
  •  Linear Search
  •  Binary Search

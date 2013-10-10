@@ -519,6 +519,9 @@ det = volume(V) = a.(b X c) = | bˣ bʸ bᶻ |
 DETERMINANT
 ==============================================================================
 
+• For a set of basis vectors, the determinant of the matrix of those vectors
+  determines handedness: +det = right-handed, -det = left-handed
+
 2X2 DETERMINANT
  ----------------------------
 | det(A) = | a b | = ad - bc |

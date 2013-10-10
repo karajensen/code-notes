@@ -158,7 +158,6 @@ L.pop_back() //Deletes the element at the end of a list.
 L.push_back(x) //Adds an element to the end of a list.
 L.back(); //returns reference to last element
 L.capacity() //returns number of elements vector can contain before more memory needed
-L.reserve(100) //reserves 100 spots (but doesn't create any objects) of vector's type (doesn't affect size)
 L.emplace_back //Adds an element constructed in place to the end of a list.
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////

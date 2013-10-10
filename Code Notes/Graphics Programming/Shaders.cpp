@@ -7,12 +7,14 @@
 float, int
 vec2, vec3, vec4
 mat3, mat4
+half
 
 //HLSL VARIABLE TYPES
 //Sections can be accessed via xyzw/rgba
 float, int
 float2, float3, float4 
 float4x4
+half
 
 //////////////////////////////////////////////////////////////////////////////
 //GLSL SHADER INTRINSICS
@@ -383,7 +385,11 @@ technique MAIN
         LIGHTING = TRUE;
         ZENABLE = TRUE;
         ZWRITEENABLE = TRUE;
-        CULLMODE = NONE; //Can have: CCW,CW,NONE     
+        CullMode = NONE; //Can have: CCW,CW,NONE     
+
+        DepthBias = 0.0001; //between -1.0 to 1.0 for offsetting shadows/wireframe/decals
+        SlopeScaleDepthBias = 0.0;
+        FillMode = Wireframe;
 
         //alpha blending
         AlphaBlendEnable = TRUE;    

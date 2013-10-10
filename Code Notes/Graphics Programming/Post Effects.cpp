@@ -129,4 +129,15 @@ randomly samples pixels around center pixel; some areas too little/too much this
 POISSON DISC SAMPLING: 
 random sampling with additional checks to whether samples are too close to each other
 
+//////////////////////////////////////////////////////////////////////////////
+//COLOR CORRECTION
+//////////////////////////////////////////////////////////////////////////////
+
+GAMMA CORRECTION
+• the relationship between a pixel's numerical value and its actual luminance
+
+SRGB COLOR SPACE
+• Texture blending operations are done in linear space
+• sRGB format is gamma corrected color which produce incorrect results in linear space
+
 *////////////////////////////////////////////////////////////////////////////////////

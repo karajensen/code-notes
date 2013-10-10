@@ -138,7 +138,7 @@
     <ClCompile Include="Graphics Programming\OpenGL.cpp" />
     <ClCompile Include="Graphics Programming\Post Effects.cpp" />
     <ClCompile Include="Graphics Programming\Rendering.cpp" />
-    <ClCompile Include="Graphics Programming\Scene.cpp" />
+    <ClCompile Include="Graphics Programming\Lighting.cpp" />
     <ClCompile Include="Graphics Programming\Shaders.cpp" />
     <ClCompile Include="Graphics Programming\Shadows.cpp" />
     <ClCompile Include="Graphics Programming\Terrain.cpp" />
@@ -261,6 +261,11 @@
     <ClInclude Include="Classes\logger.h" />
     <ClInclude Include="Classes\matrix.h" />
     <ClInclude Include="Classes\timer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\Optimising - Bottleneck chart.png" />
+    <Image Include="Images\Optimising - View Frustum.png" />
+    <Image Include="Images\STL - container performance.PNG" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

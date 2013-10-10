@@ -763,7 +763,7 @@ public:
         Matrix mat;
         float c = cos(radians);
         float s = sin(radians);
-        float cinv = 1.0f-(cos(radians));
+        float cinv = 1.0f-c;
         mat.m11 = (cinv*(vec.x*vec.x)) + c;
         mat.m12 = (cinv*(vec.x*vec.y)) + (s*vec.z);
         mat.m13 = (cinv*(vec.x*vec.z)) - (s*vec.y);

@@ -292,3 +292,9 @@ for(int r = 0; r < rows; ++r)
         position.z = startZ + (c*height);
     }
 }
+
+//WHETHER NUMBER IS EVEN
+if(x % 2)
+{
+    //x is odd
+}

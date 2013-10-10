@@ -140,8 +140,7 @@ PIXEL SHADER PIPELINE:
 - Find view angle (angle relative to the surface normal) and value from a 
   height map using UV coordinates
 - Use both to calculate new UV coordinates to access tex2D information
-- Steeper view-angles = more displacement giving illusion of depth as the 
-  view changes
+- Steeper view-angles = more displacement giving illusion of depth as the view changes
 
 NEEDS FOR PROCESS: 
   • A height map
