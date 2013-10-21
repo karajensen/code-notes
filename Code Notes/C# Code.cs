@@ -124,8 +124,10 @@ bool isInt = myint is int;
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 //ENUM
-//always have zero entry and default(enum) is zero
-public enum MyEnum
+//implicitly have zero entry
+//default(enum) is zero
+//can specify use of any int type except char
+public enum MyEnum //defaults to int
 {
     ZERO = 0,
     ONE = 1,
@@ -145,7 +147,7 @@ public enum MyEnum
 
 //64-BIT FLAGS, maximum 64 flags
 [System.Flags]
-public enum MyEnum : long
+public enum MyEnum : long 
 {
   A = 0x001, // or = 1
   B = 0x002, // or = 2

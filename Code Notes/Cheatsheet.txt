@@ -215,9 +215,9 @@ INCLUDING LIBRARIES:
 [C++] Can be anywhere, can define variables/expressions, uses #ifdef
 
 DOWNCASTING: int myInt = 1.0/2.0;
-[C# ] No downcasting, Compile error, only implicitly converts if range can fit in new variable
-[CLI] Downcasting okay, Compile warning, implicitly converts no matter what
-[C++] Downcasting okay, Compile warning, implicitly converts no matter what
+[C# ] Typesafe: No downcasting, Compile error, only implicitly converts if range can fit in new variable
+[CLI] Not Typesafe: Downcasting okay, Compile warning, implicitly converts no matter what
+[C++] Not Typesafe: Downcasting okay, Compile warning, implicitly converts no matter what
 
 VALUE TO BOOL CONVERSION: if(myNumber){}
 [C# ] Cannot accept a number into a bool; cannot use number as bool in if-statements

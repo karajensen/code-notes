@@ -99,6 +99,7 @@
     <ClCompile Include="Classes\timer.cpp" />
     <ClCompile Include="Code Notes.cpp" />
     <ClCompile Include="Code.cpp" />
+    <ClCompile Include="Databases.cpp" />
     <ClCompile Include="Design and Theory\Code Examples\Example - DFS with Minimax.cpp" />
     <ClCompile Include="Design and Theory\Code Examples\Example - Managing Events.cpp" />
     <ClCompile Include="Design and Theory\Code Examples\Example - Merge Sort.cpp" />
@@ -164,10 +165,13 @@
     <ClCompile Include="Languages\Python modules.cpp" />
     <ClCompile Include="Languages\Python notes.cpp" />
     <ClCompile Include="Memory.cpp" />
+    <ClCompile Include="Source Control.cpp" />
     <ClCompile Include="STL Containers.cpp" />
     <ClCompile Include="STL Notes.cpp" />
     <ClCompile Include="STL.cpp" />
     <ClCompile Include="Templates.cpp" />
+    <ClCompile Include="Web Development.cpp" />
+    <ClCompile Include="OS Development.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />

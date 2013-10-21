@@ -318,25 +318,4 @@ BINARY FILES
 • More accurate as no conversion/round-off errors for numbers
 • Risky as different computers have different internal representation
 
-//////////////////////////////////////////////////////////////////////////////
-//EXCEPTIONS
-//////////////////////////////////////////////////////////////////////////////
-
-THROW BY VALUE, CATCH BY REFERENCE
-• Don't throw pointers, if absolutely needed, use a smart pointer
-• Catch by reference to enable polymorphism for the thrown object
-
-UNWINDING THE STACK: 
-• When exception is thrown, copy of thrown variable is made 
-• Copy made even if ref specified since needing it after function out of scope
-
-• Reference used to allow inheritance with catching exception types 
-• Stack releases memory until reaching the corresponding try-catch block
-• Any destructors are called on way- if exception is called in destructor, 
-  it must resolve it otherwise two exceptions are occuring
-• Pointers are destroyed without calling delete. Solved through smart pointers
-
-If Exception type wasn't explicitly thrown: unexpected()->terminate()->abort()
-If Exception type was known but not caught: terminate()->abort()
-
 */////////////////////////////////////////////////////////////////////////////

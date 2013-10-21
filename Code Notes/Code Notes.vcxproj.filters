@@ -50,6 +50,9 @@
     <Filter Include="Graphics Programming\Shaders">
       <UniqueIdentifier>{c2c0a7dc-3971-4525-a2a3-51da664aa807}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Development">
+      <UniqueIdentifier>{97902568-2e3d-4035-9b93-2b2d577eb5cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Design and Theory\Code Examples\Example - DFS with Minimax.cpp">
@@ -125,9 +128,6 @@
       <Filter>Design and Theory\Pattern Examples</Filter>
     </ClCompile>
     <ClCompile Include="Design and Theory\Design Patterns Overview.cpp">
-      <Filter>Design and Theory</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Software Development.cpp">
       <Filter>Design and Theory</Filter>
     </ClCompile>
     <ClCompile Include="Game Programming\AI and pathfinding.cpp">
@@ -300,6 +300,21 @@
     </ClCompile>
     <ClCompile Include="Graphics Programming\Lighting.cpp">
       <Filter>Graphics Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Design and Theory\Software Development.cpp">
+      <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="Web Development.cpp">
+      <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="Databases.cpp">
+      <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="OS Development.cpp">
+      <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Control.cpp">
+      <Filter>Development</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

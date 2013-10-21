@@ -3,19 +3,26 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 /*
 
-CLI: COMMON LANGUAGE INFRASTUCTURE
-.NET Framework is a version of this; contains CLR and BCL
+.NET FRAMEWORK
+• Development framework for creating windows applications
+• Used by languages C#, VB.NET, C++/CLI
+• A type of CLI (Common Language Infrastructure) which contains:
+    | 
+    |  CLR: Common Language Runtime
+    |  • Virtual Execution System (VES)
+    |  • Garbage Collector
+    |  • Just In Time Compiler
+    |  • Managed Heap
+    |  
+    |  BCL/FCL: Base/Framework Class Library
+    |  • Shared .NET classes used by .NET languages
 
-CLR: COMMON LANGUAGE RUNTIME
-Core of the .NET Framework. Includes Virtual Execution System (VES), 
-Just in Time Compiler (JIT), Garbage Collector, Managed heap
-
-BCL: BASE CLASS LIBRARY
-Set of .NET classes used by .NET Languages (C#, VB.NET, C++/CLI)
+VES: VIRTUAL EXECUTION SYSTEM
+• Environment for executing managed code
 
 JIT: JUST-IN-TIME COMPILER
-Source code is compiled into an intermediate language (MSIL), 
-at runtime this is compiled into native code
+• Source code is compiled into Microsoft intermediate language (MSIL)
+• MSIL is converted to native code at runtime
 
 ASSEMBLY/MODULES
 • Exe/dll that contain metadata that describe internal version number/data details
@@ -27,6 +34,21 @@ ASSEMBLY/MODULES
 ////////////////////////////////////////////////////////////////////////////////////////////
 //VARIABLES
 ////////////////////////////////////////////////////////////////////////////////////////////
+
+VARIABLE     BYTES   SUFFIX     RANGE
+byte         1                  0 to 255
+sbyte        1                  –128 to 127 
+bool         1                  true/false
+char         2       ''         0 to 65535
+short        2                  –32768 to 32767
+ushort       2                  0 to 65535
+int          4                  –2147483648 to 2147483647
+uint         4                  0 to 4294967295         
+long         8                  -9223372036854775808 to 9223372036854775807
+ulong        8                  0 to 1.85 x 1019
+float        4       f          3.4E +/- 38 (7 digits)   
+double       8                  1.7E +/- 308 (15 digits)             
+decimal      12      m          28 digits
 
 VALUE-TYPE VARIABLES
 • Structs and basic data types, doesn't use new to create new objects

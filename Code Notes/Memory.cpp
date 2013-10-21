@@ -159,8 +159,18 @@ wp.lock()       //returns a shared_ptr of same type, use instead of .get()
 wp.expired()    //returns true if object has been deleted, false if okay
 
 //UNIQUE POINTER
-//only one of a kind
-std::unique_ptr<MyClass> up(new MyClass);
+//requires contructor/destructor even if empty implementation
+class MyClass
+{
+public:
+    class ForwardDec;
+    std::unique_ptr<ForwardDec> test;
+    MyClass();
+    ~MyClass();
+};
+#include "ForwardDec.h"
+MyClass::MyClass(){}
+MyClass::~MyClass(){}
 
 //USING WITH POLYMORPHISM
 std::shared_ptr<Base> ptr(new Derived);
