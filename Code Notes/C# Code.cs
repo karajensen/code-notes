@@ -198,6 +198,7 @@ for (int i = 0; i < count; ++i){}
 //uses explicit cast for each item
 foreach (str in myStringArray)
 foreach (int value in array)
+foreach (int value in Enumerable.Range(0, 100)) //Enumerable requires LINQ
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //PREPROCESSOR

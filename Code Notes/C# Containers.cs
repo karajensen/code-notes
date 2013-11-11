@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
-//IENUMERABLE
+//ENUMERABLE / LINQ
 ////////////////////////////////////////////////////////////////////////////////////////////
 //LINQ queries can be used on containers that supports IEnumerable<T> interface
 //Most containers inherit from IEnumerable<T>
@@ -22,8 +22,8 @@ var myQuery = from item in myArray
               orderby item.GetValue() descending
               select item.GetValue();     
 
-// Array generation of 100 items
-var myQuery = from item in Enumerable.Range(0, 100)
+// Array generation of 100 items (note Enumerable requires LINQ)
+var myQuery = from number in Enumerable.Range(0, 100)
               select item * 2.0;
 
 // Nested queries, second from is nested inside first from

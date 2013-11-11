@@ -305,17 +305,23 @@ and rearrange to solve for t₁ and t₂
 GJK COLLISION ALGORITHM
 ==============================================================================
 
-MINKOWSKI DIFFERENCE: 
- - subtraction of all the points of shape A by all points of shape B
- - ends up with a shape A-B that encloses both shapes with the center point
-   equal to center of A - center of B
+MINKOWSKI DIFFERENCE:
+- Create from two convex hulls by subtracting all points of A from all points of B
+- If contains the origin, both hulls are colliding
+- As hulls get closer, Minkowski Difference hull gets closer to origin
 
-GJK ALGORITHM
- - if any of the new points created are in all four quadrants of a basis, collision occurs
- - for colliding objects the minkowski difference object A-B will include the origin
- - as objects get closer, cloud of points get closer to origin
- - made more effeciant by calculating points and choosing points at the 
-   extremes to do further calcs on during testing
+GJK ALGORITHM:
+- Doesn't require computing whole Minkowski Difference hull
+- Builds a simplex inside the Minkowski Difference to see if it encloses the origin
+- Uses a 'support' function to find the furthest point in the MD hull in a direction
+  which helps create the simplex with the largest area enclosing the MD hull
+
+  • Randomly choose a point in A and B and subract to get a direction between the two
+  • Find any points along that direction that are further away if possible
+  • Generate the Minkowski Difference point of the chosen two points
+  • In this direction, the point is on the edge of the Minkowski Difference hull
+
+
 
 
 
