@@ -35,20 +35,21 @@ ASSEMBLY/MODULES
 //VARIABLES
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-VARIABLE     BYTES   SUFFIX     RANGE
-byte         1                  0 to 255
-sbyte        1                  –128 to 127 
-bool         1                  true/false
-char         2       ''         0 to 65535
-short        2                  –32768 to 32767
-ushort       2                  0 to 65535
-int          4                  –2147483648 to 2147483647
-uint         4                  0 to 4294967295         
-long         8                  -9223372036854775808 to 9223372036854775807
-ulong        8                  0 to 1.85 x 1019
-float        4       f          3.4E +/- 38 (7 digits)   
-double       8                  1.7E +/- 308 (15 digits)             
-decimal      12      m          28 digits
+VARIABLE     BYTES  BITS    SUFFIX  RANGE
+byte         1      8               0 to 255
+sbyte        1      8               –128 to 127 
+bool         1      8               true/false
+char         2      16      ''      0 to 65535
+short        2      16              –32768 to 32767
+ushort       2      16              0 to 65535
+int          4      32              –2,147,483,648 to 2,147,483,647    
+uint         4      32              0 to 4,294,967,295         
+long         8      64              -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
+ulong        8      64              0 to 1.85 x 1019
+float        4      32      f       3.4E +/- 38 (7 digits)   
+double       8      64              1.7E +/- 308 (15 digits)             
+decimal      12     96      m       28 digits
+object       4-8    32-64           Depends on whether 32/64 bit platform
 
 VALUE-TYPE VARIABLES
 • Structs and basic data types, doesn't use new to create new objects
@@ -85,8 +86,10 @@ CONST/READONLY VARIABLE DIFFERENCES:
 • Const compile time and faster; Readonly runtime and slower
 • Const can be declared inside methods; Readonly only as member variable
 • Const replaces value during compilation; Readonly becomes const after contructor called
-• Const only used with numbers and strings; Readonly used with everything
+• Const only used with inbuilt numbers/strings; Readonly used with everything
 • Const can't be initialised with 'new'; Readonly can be initialised with 'new'
+• Const can never be changed. Readonly objects only make the reference to the object 
+  constant, not the object itself. The reference can also be hacked through reflection.
 
 VARIABLE INITIALISATION
 • Class members and local variables at start of method and not within block scope auto-initialised
@@ -96,17 +99,25 @@ VARIABLE INITIALISATION
 //CLASS
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-INTERFACES
-• No contructors/finalisers allowed
-• No Definitions or visibility accessors allowed
-• Methods cannot be virtual
-• Can't create object directly from interface
-• Can be inherited by structs though returns boxed struct 
-
 ABSTRACT CLASS
-• Can't create object directly from abstract class
-• Can create abstract class without defining any abstract methods
-• If abstract methods are defined, must have abstract class
+• Can't create object directly from abstract class, can be casted to
+• Partial Implementation- Don't have to override virtual non-abstract methods
+• No inheritance by structs
+• Must used abstract keyword for methods and class
+
+INTERFACES
+• Can't create object directly from interface, can be casted to
+• No Partial Implementation- Have to implement all methods
+• Can be inherited by structs though returns boxed struct
+• Methods are auto abstract that derived class can only override unless derived uses virtual 
+• No constructors/finalisers allowed
+• No member variables, only properties which only create the variable when implemented
+• No visibility accessors allowed in interface, derived defines them
+• Methods can be use Implicit or Explicit Implementation
+    - Implicit can only be used on one method definition
+    - Explicit required if interfaces inherited have same members to avoid conflicts
+    - Explicit can't use visibility, abstract, virtual keywords
+    - Explicit can only be accessed if casted to interface implemented from
 
 CLASS CONSTRUCTION
 • Do not call abstract/virtual methods in constructor; undefined behaviour; calls Derived version
@@ -141,6 +152,10 @@ INDEXER/PROPERTY DIFFERENCES
 • Indexer accessed through index and [], Properties accessed as though member variable
 • Indexer cannot be static, Properties can be static
 • Indexer passes in index value, Properties don't pass in anything, both have 'value' keyword
+
+ATTRIBUTES
+• Hidden objects at runtime that contain metadata- information about the class
+• Use reflection to access
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //INHERITANCE

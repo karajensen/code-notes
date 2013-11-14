@@ -118,6 +118,7 @@ typeof(myObject) //return class
 System.Type type = obj.GetType()
 bool isObject = myClass is Object; 
 bool isInt = myint is int;
+bool hasInterface = myClass is IMyClass;
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //ENUMS

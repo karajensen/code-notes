@@ -152,19 +152,25 @@ MyStaticClass.myInt; //using static members
 
 //INTERFACE CLASS
 //No implementation for methods/properties
-public interface IMyClass()
+//No member variables, only properties
+interface IMyClass()
 {
-    int MyMethod1(); //accessor determine by derived class
+    int MyInt { get; set; }
+    int MyMethod1(); // visibility determined by derived class
     float MyMethod2();
 };
 
-public class MyClass() : IMyClass
+public class MyClass() : IMyClass, IMyClass2
 {
-    public int MyMethod1() { return 10; } //implemented method
-    float IMyClass.MyMethod2() {} //non-implemented method, cannot be used by object itself
+    public int MyInt { get { m_myint; } set { m_myint = value; }}
+
+    public int MyMethod1() { return 10; } // Implemented method
+    int IMyClass.MyMethod1() { throw NotImplementedException(); } // Explicit Implementation for Non-implemented method
+    float IMyClass2.MyMethod2() {}; // Explicit Implementation for conflicts
+    public float MyMethod2() {} // Implicit Implementation for conflicts
 };
 
-//ABSTRACT CLASS
+//ABSTRACT BASE CLASS
 //class keyword is required for any abstract methods or compiler warning
 //abstract methods are auto made virtual (can't be private)
 public abstract class MyABC
