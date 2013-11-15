@@ -35,22 +35,6 @@ ASSEMBLY/MODULES
 //VARIABLES
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-VARIABLE     BYTES  BITS    SUFFIX  RANGE
-byte         1      8               0 to 255
-sbyte        1      8               –128 to 127 
-bool         1      8               true/false
-char         2      16      ''      0 to 65535
-short        2      16              –32768 to 32767
-ushort       2      16              0 to 65535
-int          4      32              –2,147,483,648 to 2,147,483,647    
-uint         4      32              0 to 4,294,967,295         
-long         8      64              -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
-ulong        8      64              0 to 1.85 x 1019
-float        4      32      f       3.4E +/- 38 (7 digits)   
-double       8      64              1.7E +/- 308 (15 digits)             
-decimal      12     96      m       28 digits
-object       4-8    32-64           Depends on whether 32/64 bit platform
-
 VALUE-TYPE VARIABLES
 • Structs and basic data types, doesn't use new to create new objects
 • variable exists on stack or register
@@ -64,19 +48,7 @@ REFERENCE-TYPE VARIABLES
 • memory auto deleted once no other references for the object exist
 • values are copied shallow
 • Reference itself passed by-val, object it points to stays the same
-• Equality: If both refer to the same interal object
-
-STRUCTS [VALUE-TYPE]
-• All variables not explicitly initialised are set to default
-• struct auto defaults to public, methods default to private
-• Can't create user-defined constructor/destructors
-• Auto creates default constructor/destructor, System.Object methods
-
-CLASSES [REF-TYPE]
-• All variables not explicitly initialised are set to default
-• class auto defaults to internal, methods default to private
-• Default constructor/destructor only generated if none provided
-• Auto creates default constructor/destructor, System.Object methods, operator==
+• Equality: If both refer to the same interal object address
 
 STRINGS
 • String literals are interned so that for each occurrence of a particular
@@ -96,20 +68,37 @@ VARIABLE INITIALISATION
 • Must explicitly initialise variables in block scope or error
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-//CLASS
+//CLASS/STRUCT/FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////////////////
+
+ORDER OF ARGUMENT EVALUATION
+• Always evaluated left to right in expressions and argument passing
+
+STRUCTS [VALUE-TYPE]
+• All variables not explicitly initialised are set to default
+• struct auto defaults to public, methods default to private
+• Can't create user-defined constructor/destructors
+• Auto creates default constructor/destructor, System.Object methods
+
+CLASSES [REF-TYPE]
+• All variables not explicitly initialised are set to default
+• class auto defaults to internal, methods default to private
+• Default constructor/destructor only generated if none provided
+• Auto creates default constructor/destructor, System.Object methods, operator==
 
 ABSTRACT CLASS
 • Can't create object directly from abstract class, can be casted to
 • Partial Implementation- Don't have to override virtual non-abstract methods
 • No inheritance by structs
 • Must used abstract keyword for methods and class
+• Can inherit one class and multiple interfaces
 
 INTERFACES
 • Can't create object directly from interface, can be casted to
 • No Partial Implementation- Have to implement all methods
 • Can be inherited by structs though returns boxed struct
 • Methods are auto abstract that derived class can only override unless derived uses virtual 
+• Can extend multiple interfaces through inheritance. Can not inherit classes.
 • No constructors/finalisers allowed
 • No member variables, only properties which only create the variable when implemented
 • No visibility accessors allowed in interface, derived defines them
@@ -131,7 +120,7 @@ CLASS CONSTRUCTION
 5) Derived Dispose or Derived Finaliser
 6) Base Dispose or Base Finaliser
 
-OBJECT DESTRUCTION:
+OBJECT DESTRUCTION
 Destructor: obtained through inheriting IDisposable, called explicitly to clean up unmanaged objects
 Finaliser: called when object is garbage collected, implement for cleaning managed objects (c++ destructor syntax)
 

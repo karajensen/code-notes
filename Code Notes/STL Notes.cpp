@@ -32,7 +32,7 @@ SORT/SEARCHING
 Sorting Fastest-slowest: Partitions, partial_sort, sort, stable_sort
 Require sort ascending, Search speed O(logN): binary_search, lower_bound, upper_bound, equal_range
 Don't require sorting, Search speed O(N): count, count_if, find, find_if
-                       
+                    
 CONDITION          UNSORTED      SORTED               SET/MAP         MULTI SET/MAP
 does obj exist     std::find     std::binary_search  .count()        .find()
 find obj           std::find     std::equal_range    .count()        .find()     

@@ -211,7 +211,7 @@ S.size(); //number of elements
 #include <queue>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-queue<int> Q;
+queue<int> Q; //FIFO queue
 priority_queue<int> pQ; //largest is automatically sorted to head of queue using heap sort
 
 Q.empty(); //returns true/false if empty (faster than size)
@@ -225,7 +225,7 @@ Q.pop() //removes element at front
 #include <stack> 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-stack<int> S;
+stack<int> S; //LIFO stack
 stack<int,vector<int>> S; //create the stack from the vector container (can be deque/list)
 
 S.empty(); //returns true/false if empty (faster than size)

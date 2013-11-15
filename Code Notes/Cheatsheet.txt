@@ -128,7 +128,7 @@
 
 [1] struct Derived : IBase1, IBase2 {} Inherit no classes, multiple interfaces
     class Derived : Base, IBase {} Inherit one class, multiple interfaces
-    interface Derived : Base1, Base2, IBase {} Inherit multiple classes/interfaces
+    interface Derived : IBase1, IBase2 {} Extends multiple interfaces
 
 [2] Classes cannot be more visible than their base classes- base interfaces can have
     any visibility. Interfaces cannot be more visible than their base interfaces.
@@ -184,7 +184,7 @@ PARENT-CHILD SCOPE: int myInt = 2; { int myInt = 1; }
 [CLI] As long as scope seperates variables, it can be redeclared
 [C++] As long as scope seperates variables, it can be redeclared
 
-STAND-ALONE VARIABLES:
+STAND-ALONE/GLOBAL VARIABLES:
 [C# ] Not allowed. Must have variables inside class/struct.
 [CLI] Allowed
 [C++] Allowed
@@ -233,6 +233,16 @@ PASSING BY-REF:
 [C# ] Cannot return a reference, passes in reference with out/ref, tracks changes to objects address
 [CLI] Can return a reference and passes in reference with %, tracks changes to objects address
 [C++] Can return a reference and passes in reference with &, doesn't track changes objects address
+
+SEQUENCE POINTS:
+[C# ] Doesn't require sequence points
+[CLI] Unknown
+[C++] Requires sequence points between changing a variable and reading it
+
+ORDER OF ARGUMENT EVALUATION
+[C# ] Left to right always
+[CLI] Unknown
+[C++] Compiler specific
 
 ====================================================================================
 CLASS/STRUCT DIFFERENCES

@@ -8,35 +8,14 @@
     <Filter Include="Game Programming">
       <UniqueIdentifier>{56332ae5-5b17-4582-8cae-a2112a12f7df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game Programming\Images">
-      <UniqueIdentifier>{87405c82-bc77-4839-ad49-d2cfe431191d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Classes">
       <UniqueIdentifier>{39dfb591-3f86-4639-97f1-1d1cf46132e9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Languages">
       <UniqueIdentifier>{89a625b0-f51a-450f-b16f-c2724f0b99a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Design and Theory">
-      <UniqueIdentifier>{c7a40aef-576f-4ca1-ac35-95aaebb932f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Design and Theory\Images">
-      <UniqueIdentifier>{af291cfb-70c1-47d2-b0f7-73750f43f65a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Design and Theory\Pattern Examples">
-      <UniqueIdentifier>{27105e06-59f7-4ef4-b6d7-bfa4a1eede6d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Design and Theory\Code Examples">
-      <UniqueIdentifier>{57ec459d-69d5-4b37-a1b9-24505b92fac0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics Programming">
       <UniqueIdentifier>{9fd5eadb-2534-4e81-8566-f3b5d5a8f325}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics Programming\Images">
-      <UniqueIdentifier>{71e39718-9a33-471b-8d23-e5e44439e69d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Images">
-      <UniqueIdentifier>{64150252-014b-40e9-af40-e88cae3f7af0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Managed Source">
       <UniqueIdentifier>{4da91be5-dba0-48f2-a979-5a7d71242983}</UniqueIdentifier>
@@ -53,86 +32,14 @@
     <Filter Include="Development">
       <UniqueIdentifier>{97902568-2e3d-4035-9b93-2b2d577eb5cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Images">
+      <UniqueIdentifier>{d5246f57-2735-4357-a353-33eb12eb8d89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Development\Code Examples">
+      <UniqueIdentifier>{57ec459d-69d5-4b37-a1b9-24505b92fac0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Design and Theory\Code Examples\Example - DFS with Minimax.cpp">
-      <Filter>Design and Theory\Code Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Code Examples\Example - Managing Events.cpp">
-      <Filter>Design and Theory\Code Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Code Examples\Example - Merge Sort.cpp">
-      <Filter>Design and Theory\Code Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Abstract Factory.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Bridge.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Builder.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Chain of Responsibility.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Command.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Composite.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Decorator.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Facade-Adapter.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Flyweight.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Interpreter.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Iterator.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Memento.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Obsever-Mediator.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Pimpl.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Prototype.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Proxy.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Singleton.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - State.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Strategy.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Template.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Pattern Examples\Pattern - Visitor.cpp">
-      <Filter>Design and Theory\Pattern Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Design Patterns Overview.cpp">
-      <Filter>Design and Theory</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Programming\AI and pathfinding.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
     <ClCompile Include="Game Programming\Collisions.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
@@ -241,9 +148,6 @@
     <ClCompile Include="Boost.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Class Notes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Class.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -271,9 +175,6 @@
     <ClCompile Include="Templates.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Bullet.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
     <ClCompile Include="Game Programming\Simulation.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
@@ -286,12 +187,6 @@
     <ClCompile Include="Languages\Maya API Locator Class.cpp">
       <Filter>Languages\Maya Plugin Templates</Filter>
     </ClCompile>
-    <ClCompile Include="Design and Theory\Data Structures.cpp">
-      <Filter>Design and Theory</Filter>
-    </ClCompile>
-    <ClCompile Include="Design and Theory\Data Algorithms.cpp">
-      <Filter>Design and Theory</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics Programming\Shaders.cpp">
       <Filter>Graphics Programming</Filter>
     </ClCompile>
@@ -301,182 +196,101 @@
     <ClCompile Include="Graphics Programming\Lighting.cpp">
       <Filter>Graphics Programming</Filter>
     </ClCompile>
-    <ClCompile Include="Design and Theory\Software Development.cpp">
+    <ClCompile Include="Development\Code Examples\Pattern - Abstract Factory.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Bridge.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Builder.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Chain of Responsibility.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Command.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Composite.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Decorator.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Facade-Adapter.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Flyweight.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Interpreter.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Iterator.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Memento.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Obsever-Mediator.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Pimpl.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Prototype.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Proxy.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Singleton.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - State.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Strategy.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Template.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Pattern - Visitor.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Algorithms and Structures.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Web Development.cpp">
+    <ClCompile Include="Development\Databases.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Databases.cpp">
+    <ClCompile Include="Development\Design Patterns.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="OS Development.cpp">
+    <ClCompile Include="Development\OS Development.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Source Control.cpp">
+    <ClCompile Include="Development\Programming Notes.cpp">
       <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Software Development.cpp">
+      <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Source Control.cpp">
+      <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Web Development.cpp">
+      <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Code Examples\Examples - Algorithms and Structures.cpp">
+      <Filter>Development\Code Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Bullet Physics.cpp">
+      <Filter>Game Programming</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="IMAGES\Collision - Box Algorithms.png">
-      <Filter>Game Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Collision - Sphere Algorithms.png">
-      <Filter>Game Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\MR - DOF theory and 3 Point Lighting.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\MR - Final Gathering.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\MR - Global Illumination.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\MR - Importons.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\MR - Irradiance Particles.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\MR - Subsurface Scattering.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Render - RayTracing.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Light - Lighting Models Diagram.jpg">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Light - Vector relationships.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Light - PerVertex and PerPixel lighting.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Light - Specular Models.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Light - Spot.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Shadow - Shadow Volume Stencil Testing.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Integration - Explicit &amp; Implicit.png">
-      <Filter>Game Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Mapping - Bump Mapping Normals.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Light - Inverse Square Attenuation.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Light - Material Effects.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Light - Material Types.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Data - Binary Search.png">
-      <Filter>Design and Theory\Images</Filter>
-    </None>
-    <None Include="IMAGES\Data - Merged Sort.PNG">
-      <Filter>Design and Theory\Images</Filter>
-    </None>
-    <None Include="IMAGES\Pattern - observer.png">
-      <Filter>Design and Theory\Images</Filter>
-    </None>
-    <None Include="IMAGES\Buffer - Depth Buffer Testing.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Model - Primitives.jpg">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Model - Skybox.bmp">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Optimising - Backface Culling.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Optimising - BSP trees.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Optimising - BSP.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Optimising - Occulsion Culling.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Optimising - Octree Example.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Optimising - Portals.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Optimising - View Frustum.gif">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Maths - barycentric coordinates.png">
-      <Filter>Game Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Physics - kinematics.png">
-      <Filter>Game Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Maths - expressing in basis.png">
-      <Filter>Game Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Maths - plane equation.png">
-      <Filter>Game Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Maths - polar coordinates.png">
-      <Filter>Game Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Maths - expressing in basis diagram.png">
-      <Filter>Game Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Maths - rotation around arbitrary axis.png">
-      <Filter>Game Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\DirectX - Surfaces.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Light - Bump Mapping Normals.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Render - Projection Matrix.PNG">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\DirectX - Vertex declaractions &amp; shader vars.PNG">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Texture - Filter types.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Texture - Tints,Shades,Tones.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Render - Rendering Pipeline.jpg">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Render - Shader Pipeline.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Render - ShaderModel 5.0 Pipeline.jpg">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Terrain - Clipmapping.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Render - Projection Matrix2.PNG">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Texture - Mapping.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
-    <None Include="IMAGES\Texture - Wrapping.png">
-      <Filter>Graphics Programming\Images</Filter>
-    </None>
     <None Include="Languages\Code Examples\Max - ConvexHull.ms">
       <Filter>Languages\Code Examples</Filter>
     </None>
@@ -508,18 +322,6 @@
     <None Include="Hotkeys.txt" />
     <None Include="..\.gitignore" />
     <None Include="Symbols.txt" />
-    <None Include="Images\Physics - constraints.png">
-      <Filter>Game Programming\Images</Filter>
-    </None>
-    <None Include="Images\Code - Iterators.png">
-      <Filter>Source Files\Images</Filter>
-    </None>
-    <None Include="IMAGES\Code - Hex Converting.png">
-      <Filter>Source Files\Images</Filter>
-    </None>
-    <None Include="Images\Code - Execution Environment.png">
-      <Filter>Source Files\Images</Filter>
-    </None>
     <None Include="C# Memory.cs">
       <Filter>Managed Source</Filter>
     </None>
@@ -581,14 +383,182 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Images\Optimising - Bottleneck chart.png">
-      <Filter>Graphics Programming\Images</Filter>
+    <Image Include="Images\Code - BigONotationGraph.png">
+      <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Optimising - View Frustum.png">
-      <Filter>Graphics Programming\Images</Filter>
+    <Image Include="Images\Code - Binary Search.png">
+      <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\STL - container performance.PNG">
-      <Filter>Source Files\Images</Filter>
+    <Image Include="Images\Code - Execution Environment.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Hex Converting.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Iterators.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Merged Sort.PNG">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - STL container performance.PNG">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Tree Binary Space Partitioning.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Tree Octree Partitioning.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Trees.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Backface Culling.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Bottleneck chart.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Deferred Rendering (with transparency).jpg">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Deferred Rendering.jpg">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Depth Buffer Testing.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - DirectX Surfaces.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - DOF theory and 3 Point Lighting.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Final Gathering.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Global Illumination.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Importons.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Irradiance Particles.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Mapping vertex declarations to shader.PNG">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Occulsion Culling.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Portals.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Primitives.jpg">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Projection Matrix.PNG">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Projection Matrix2.PNG">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - RayTracing.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Rendering Pipeline Diagram.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Rendering Pipeline.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Shadow Volume Stencil Testing.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Skybox.bmp">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Subsurface Scattering.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Terrain Clipmapping.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - View Frustum.gif">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - View Frustum.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - barycentric coordinates.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - constraints.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - expressing in basis diagram.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - expressing in basis.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Integration.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - kinematics.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - plane equation.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - polar coordinates.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Rotation around arbitrary axis.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Bump Mapping Normals.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Colors.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Inverse Square Attenuation.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Lighting Models Diagram.jpg">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Material Effects.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Material Types.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - PerVertex and PerPixel lighting.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Specular Models.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Spot Light.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Texture Filter types.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Texture Mapping.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Texture Wrapping.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Collision Box Algorithms.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Collision Sphere Algorithms.png">
+      <Filter>Images</Filter>
     </Image>
   </ItemGroup>
 </Project>

@@ -17,8 +17,7 @@ PROTOTYPE:
 Copies from a set of base objects to create new objects
 
 SINGLETON: 
-Ensure a class only has one instance and allow anyone seeing that 
-class to have access to it
+Ensure a class only has one instance and allow anyone seeing that class to have access to it
                                                                              
 =============================================================================
 STRUCTURAL PATTERNS                                                          
@@ -80,8 +79,7 @@ STRATEGY:
 Allows choosing an algorithm at runtime
 
 VISITOR:     
-Seperates objects from their methods; calls custom methods in 
-derived objects from base*
+Seperates objects from their methods; calls custom methods in derived objects from base*
 
 OBSERVER:    
 Sends an event message when an object changes state to any observers
