@@ -4,12 +4,10 @@
 /*
 
 C++ VARIABLE               C# VARIABLE      BYTES     RANGE
----                        byte             1         0 to 255
----                        sbyte            1         -128 to 127
 bool                       bool             1         true/false
 char                       ---              1         Signage Dependent on compiler
-signed char                ---              1         0 to 255
-unsigned char              ---              1         –128 to 127    
+signed char                byte             1         0 to 255
+unsigned char              sbyte            1         –128 to 127    
 char16_t                   char             2         0 to 65535 (UTF-16 character representation)
 short                      short            2         –32768 to 32767
 unsigned short (U)         ushort           2         0 to 65535

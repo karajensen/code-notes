@@ -27,8 +27,7 @@ PIMPL:
 Allows changing the implementation without touching the interface
 
 DECORATOR: 
-Allows mixing/matching of classes without need for writing a 
-subclass for each and every match
+Allows mixing/matching of classes without need for writing a subclass for each and every match
 
 FLYWEIGHT: 
 Use of an object to store common information for a class of objects

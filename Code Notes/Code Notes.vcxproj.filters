@@ -8,14 +8,8 @@
     <Filter Include="Game Programming">
       <UniqueIdentifier>{56332ae5-5b17-4582-8cae-a2112a12f7df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Classes">
-      <UniqueIdentifier>{39dfb591-3f86-4639-97f1-1d1cf46132e9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Languages">
       <UniqueIdentifier>{89a625b0-f51a-450f-b16f-c2724f0b99a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Languages\Code Examples">
-      <UniqueIdentifier>{c5a5c66f-251b-4981-b12d-cc93dac934dd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Languages\Maya Plugin Templates">
       <UniqueIdentifier>{f4b28f55-3d6d-44e6-9f44-0420248e5765}</UniqueIdentifier>
@@ -26,11 +20,20 @@
     <Filter Include="Images">
       <UniqueIdentifier>{d5246f57-2735-4357-a353-33eb12eb8d89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Development\Code Examples">
-      <UniqueIdentifier>{57ec459d-69d5-4b37-a1b9-24505b92fac0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game Programming\Shaders">
       <UniqueIdentifier>{710b86da-7bb9-4035-b3bf-eb7663361258}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Development\Classes">
+      <UniqueIdentifier>{39dfb591-3f86-4639-97f1-1d1cf46132e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managed Source">
+      <UniqueIdentifier>{6a4b5a84-606c-48e3-a497-af44e2c5a910}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Development\Examples">
+      <UniqueIdentifier>{57ec459d-69d5-4b37-a1b9-24505b92fac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Languages\Examples">
+      <UniqueIdentifier>{c5a5c66f-251b-4981-b12d-cc93dac934dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -89,19 +92,19 @@
       <Filter>Languages</Filter>
     </ClCompile>
     <ClCompile Include="Languages\Code Examples\MEL - Special Shatter.cpp">
-      <Filter>Languages\Code Examples</Filter>
+      <Filter>Languages\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Classes\assimpmesh.cpp">
-      <Filter>Source Files\Classes</Filter>
+      <Filter>Development\Classes</Filter>
     </ClCompile>
     <ClCompile Include="Classes\camera.cpp">
-      <Filter>Source Files\Classes</Filter>
+      <Filter>Development\Classes</Filter>
     </ClCompile>
     <ClCompile Include="Classes\logger.cpp">
-      <Filter>Source Files\Classes</Filter>
+      <Filter>Development\Classes</Filter>
     </ClCompile>
     <ClCompile Include="Classes\timer.cpp">
-      <Filter>Source Files\Classes</Filter>
+      <Filter>Development\Classes</Filter>
     </ClCompile>
     <ClCompile Include="Algorithms.cpp">
       <Filter>Source Files</Filter>
@@ -152,70 +155,70 @@
       <Filter>Languages\Maya Plugin Templates</Filter>
     </ClCompile>
     <ClCompile Include="Classes\input.cpp">
-      <Filter>Source Files\Classes</Filter>
+      <Filter>Development\Classes</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Abstract Factory.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Bridge.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Builder.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Chain of Responsibility.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Command.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Composite.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Decorator.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Facade-Adapter.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Flyweight.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Interpreter.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Iterator.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Memento.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Obsever-Mediator.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Pimpl.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Prototype.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Proxy.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Singleton.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - State.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Strategy.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Template.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Visitor.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Development\Algorithms and Structures.cpp">
       <Filter>Development</Filter>
@@ -224,9 +227,6 @@
       <Filter>Development</Filter>
     </ClCompile>
     <ClCompile Include="Development\Design Patterns.cpp">
-      <Filter>Development</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\OS Development.cpp">
       <Filter>Development</Filter>
     </ClCompile>
     <ClCompile Include="Development\Programming Notes.cpp">
@@ -242,16 +242,10 @@
       <Filter>Development</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Examples - Algorithms and Structures.cpp">
-      <Filter>Development\Code Examples</Filter>
+      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Game Programming\Bullet Physics.cpp">
       <Filter>Game Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="C++CLI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="C# Notes.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game Programming\Directx.cpp">
       <Filter>Game Programming</Filter>
@@ -283,42 +277,33 @@
     <ClCompile Include="Game Programming\Texturing.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
+    <ClCompile Include="C# Notes.cpp">
+      <Filter>Managed Source</Filter>
+    </ClCompile>
+    <ClCompile Include="C++CLI.cpp">
+      <Filter>Managed Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Languages\Code Examples\Max - ConvexHull.ms">
-      <Filter>Languages\Code Examples</Filter>
+      <Filter>Languages\Examples</Filter>
     </None>
     <None Include="Languages\Code Examples\PyQt - CodingWindowInMaya.py">
-      <Filter>Languages\Code Examples</Filter>
+      <Filter>Languages\Examples</Filter>
     </None>
     <None Include="Languages\Code Examples\PyQt - CreatingWindowInDesigner.py">
-      <Filter>Languages\Code Examples</Filter>
+      <Filter>Languages\Examples</Filter>
     </None>
     <None Include="Languages\Code Examples\PyQt - FileReader.pyw">
-      <Filter>Languages\Code Examples</Filter>
+      <Filter>Languages\Examples</Filter>
     </None>
     <None Include="Languages\Code Examples\Python - RealFlow MultiBody Loader.rfs">
-      <Filter>Languages\Code Examples</Filter>
+      <Filter>Languages\Examples</Filter>
     </None>
     <None Include="Cheatsheet.txt" />
     <None Include="Hotkeys.txt" />
     <None Include="..\.gitignore" />
     <None Include="Symbols.txt" />
-    <None Include="C# .NET Framework.cs">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="C# Class.cs">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="C# Code.cs">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="C# Containers.cs">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="C# Memory.cs">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="Game Programming\Shaders\main.glsl">
       <Filter>Game Programming\Shaders</Filter>
     </None>
@@ -328,34 +313,49 @@
     <None Include="Game Programming\Shaders\toon.glsl">
       <Filter>Game Programming\Shaders</Filter>
     </None>
+    <None Include="C# .NET Framework.cs">
+      <Filter>Managed Source</Filter>
+    </None>
+    <None Include="C# Class.cs">
+      <Filter>Managed Source</Filter>
+    </None>
+    <None Include="C# Code.cs">
+      <Filter>Managed Source</Filter>
+    </None>
+    <None Include="C# Containers.cs">
+      <Filter>Managed Source</Filter>
+    </None>
+    <None Include="C# Memory.cs">
+      <Filter>Managed Source</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\assimpmesh.h">
-      <Filter>Source Files\Classes</Filter>
+      <Filter>Development\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Classes\camera.h">
-      <Filter>Source Files\Classes</Filter>
+      <Filter>Development\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Classes\color.h">
-      <Filter>Source Files\Classes</Filter>
+      <Filter>Development\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Classes\dynamicarray.h">
-      <Filter>Source Files\Classes</Filter>
+      <Filter>Development\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Classes\logger.h">
-      <Filter>Source Files\Classes</Filter>
+      <Filter>Development\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Classes\matrix.h">
-      <Filter>Source Files\Classes</Filter>
+      <Filter>Development\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Classes\timer.h">
-      <Filter>Source Files\Classes</Filter>
+      <Filter>Development\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Classes\vector3.h">
-      <Filter>Source Files\Classes</Filter>
+      <Filter>Development\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Classes\input.h">
-      <Filter>Source Files\Classes</Filter>
+      <Filter>Development\Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

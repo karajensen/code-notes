@@ -123,7 +123,6 @@
     <ClCompile Include="Development\Code Examples\Pattern - Visitor.cpp" />
     <ClCompile Include="Development\Databases.cpp" />
     <ClCompile Include="Development\Design Patterns.cpp" />
-    <ClCompile Include="Development\OS Development.cpp" />
     <ClCompile Include="Development\Programming Notes.cpp" />
     <ClCompile Include="Development\Software Development.cpp" />
     <ClCompile Include="Development\Source Control.cpp" />

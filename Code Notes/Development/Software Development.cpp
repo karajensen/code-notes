@@ -20,4 +20,37 @@ SCRUM
 • Scrum of scrums: team representitives have a 'standup' meeting
 • Retrospective to reflect on how the iteration went
 
+//////////////////////////////////////////////////////////////////////////////
+//WINDOWS DEVELOPMENT
+//////////////////////////////////////////////////////////////////////////////
+
+4 APPLICATION TYPES:
+• Console applications
+• Windows applications
+• ASP.NET applications
+• Web Services
+
+FUSLOGVW.EXE
+Displays details for failed assembly binds. Allows diagnosing why .NET framework
+cannot locate an assembly at runtime (TypeLoadException)
+
+DEPENDS.EXE
+Dependency walker for 32/64 bit modules (dll,exe) and builds heirarchical tree
+diagrams of all dependent modules, shows exported functions
+
+//////////////////////////////////////////////////////////////////////////////
+//MAC DEVELOPMENT
+//////////////////////////////////////////////////////////////////////////////
+
+• Code in C++/Objective-C
+• Use Xcode for IDE and Cocoa for framework
+• Graphics API is OpenGL
+
+//////////////////////////////////////////////////////////////////////////////
+//ANDRIOD DEVELOPMENT
+//////////////////////////////////////////////////////////////////////////////
+
+• Code in Java (SDK) or C++ (NDK)
+• Graphics API is OpenGL ES (embedded)
+
 *//////////////////////////////////////////////////////////////////////////////
