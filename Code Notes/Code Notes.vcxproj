@@ -130,19 +130,19 @@
     <ClCompile Include="Development\Web Development.cpp" />
     <ClCompile Include="Game Programming\Bullet Physics.cpp" />
     <ClCompile Include="Game Programming\Collisions.cpp" />
+    <ClCompile Include="Game Programming\Directx.cpp" />
+    <ClCompile Include="Game Programming\Lighting.cpp" />
     <ClCompile Include="Game Programming\Maths.cpp" />
+    <ClCompile Include="Game Programming\Mental Ray.cpp" />
+    <ClCompile Include="Game Programming\OpenGL.cpp" />
+    <ClCompile Include="Game Programming\Post Effects.cpp" />
+    <ClCompile Include="Game Programming\Rendering.cpp" />
+    <ClCompile Include="Game Programming\Shaders.cpp" />
+    <ClCompile Include="Game Programming\Shadows.cpp" />
     <ClCompile Include="Game Programming\Simulation.cpp" />
     <ClCompile Include="Game Programming\Physics.cpp" />
-    <ClCompile Include="Graphics Programming\Directx.cpp" />
-    <ClCompile Include="Graphics Programming\Mental Ray.cpp" />
-    <ClCompile Include="Graphics Programming\OpenGL.cpp" />
-    <ClCompile Include="Graphics Programming\Post Effects.cpp" />
-    <ClCompile Include="Graphics Programming\Rendering.cpp" />
-    <ClCompile Include="Graphics Programming\Lighting.cpp" />
-    <ClCompile Include="Graphics Programming\Shaders.cpp" />
-    <ClCompile Include="Graphics Programming\Shadows.cpp" />
-    <ClCompile Include="Graphics Programming\Terrain.cpp" />
-    <ClCompile Include="Graphics Programming\Texturing.cpp" />
+    <ClCompile Include="Game Programming\Terrain.cpp" />
+    <ClCompile Include="Game Programming\Texturing.cpp" />
     <ClCompile Include="Inheritance.cpp" />
     <ClCompile Include="Languages\Assembly.cpp" />
     <ClCompile Include="Languages\Code Examples\MEL - Special Shatter.cpp" />
@@ -177,15 +177,9 @@
     <None Include="C# Containers.cs" />
     <None Include="C# Memory.cs" />
     <None Include="Cheatsheet.txt" />
-    <None Include="Graphics Programming\Shaders\blur-sharpen.hlsl" />
-    <None Include="Graphics Programming\Shaders\bounds.fx" />
-    <None Include="Graphics Programming\Shaders\glow-depth.hlsl" />
-    <None Include="Graphics Programming\Shaders\main.fx" />
-    <None Include="Graphics Programming\Shaders\main.glsl" />
-    <None Include="Graphics Programming\Shaders\normal-depth.glsl" />
-    <None Include="Graphics Programming\Shaders\post.hlsl" />
-    <None Include="Graphics Programming\Shaders\toon.fx" />
-    <None Include="Graphics Programming\Shaders\toon.glsl" />
+    <None Include="Game Programming\Shaders\main.glsl" />
+    <None Include="Game Programming\Shaders\normal-depth.glsl" />
+    <None Include="Game Programming\Shaders\toon.glsl" />
     <None Include="Hotkeys.txt" />
     <None Include="Languages\Code Examples\Max - ConvexHull.ms" />
     <None Include="Languages\Code Examples\PyQt - CodingWindowInMaya.py" />
@@ -265,6 +259,14 @@
     <Image Include="Images\Shader - Texture Filter types.png" />
     <Image Include="Images\Shader - Texture Mapping.png" />
     <Image Include="Images\Shader - Texture Wrapping.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Game Programming\Shaders\blur-sharpen.hlsl" />
+    <FxCompile Include="Game Programming\Shaders\bounds.fx" />
+    <FxCompile Include="Game Programming\Shaders\glow-depth.hlsl" />
+    <FxCompile Include="Game Programming\Shaders\main.fx" />
+    <FxCompile Include="Game Programming\Shaders\post.hlsl" />
+    <FxCompile Include="Game Programming\Shaders\toon.fx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -14,20 +14,11 @@
     <Filter Include="Languages">
       <UniqueIdentifier>{89a625b0-f51a-450f-b16f-c2724f0b99a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics Programming">
-      <UniqueIdentifier>{9fd5eadb-2534-4e81-8566-f3b5d5a8f325}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Managed Source">
-      <UniqueIdentifier>{4da91be5-dba0-48f2-a979-5a7d71242983}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Languages\Code Examples">
       <UniqueIdentifier>{c5a5c66f-251b-4981-b12d-cc93dac934dd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Languages\Maya Plugin Templates">
       <UniqueIdentifier>{f4b28f55-3d6d-44e6-9f44-0420248e5765}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics Programming\Shaders">
-      <UniqueIdentifier>{c2c0a7dc-3971-4525-a2a3-51da664aa807}</UniqueIdentifier>
     </Filter>
     <Filter Include="Development">
       <UniqueIdentifier>{97902568-2e3d-4035-9b93-2b2d577eb5cf}</UniqueIdentifier>
@@ -37,6 +28,9 @@
     </Filter>
     <Filter Include="Development\Code Examples">
       <UniqueIdentifier>{57ec459d-69d5-4b37-a1b9-24505b92fac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Programming\Shaders">
+      <UniqueIdentifier>{710b86da-7bb9-4035-b3bf-eb7663361258}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -48,30 +42,6 @@
     </ClCompile>
     <ClCompile Include="Game Programming\Physics.cpp">
       <Filter>Game Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics Programming\Directx.cpp">
-      <Filter>Graphics Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics Programming\Mental Ray.cpp">
-      <Filter>Graphics Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics Programming\OpenGL.cpp">
-      <Filter>Graphics Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics Programming\Post Effects.cpp">
-      <Filter>Graphics Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics Programming\Rendering.cpp">
-      <Filter>Graphics Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics Programming\Shadows.cpp">
-      <Filter>Graphics Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics Programming\Terrain.cpp">
-      <Filter>Graphics Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics Programming\Texturing.cpp">
-      <Filter>Graphics Programming</Filter>
     </ClCompile>
     <ClCompile Include="Languages\Assembly.cpp">
       <Filter>Languages</Filter>
@@ -120,12 +90,6 @@
     </ClCompile>
     <ClCompile Include="Languages\Code Examples\MEL - Special Shatter.cpp">
       <Filter>Languages\Code Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="C# Notes.cpp">
-      <Filter>Managed Source</Filter>
-    </ClCompile>
-    <ClCompile Include="C++CLI.cpp">
-      <Filter>Managed Source</Filter>
     </ClCompile>
     <ClCompile Include="Classes\assimpmesh.cpp">
       <Filter>Source Files\Classes</Filter>
@@ -187,14 +151,8 @@
     <ClCompile Include="Languages\Maya API Locator Class.cpp">
       <Filter>Languages\Maya Plugin Templates</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics Programming\Shaders.cpp">
-      <Filter>Graphics Programming</Filter>
-    </ClCompile>
     <ClCompile Include="Classes\input.cpp">
       <Filter>Source Files\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics Programming\Lighting.cpp">
-      <Filter>Graphics Programming</Filter>
     </ClCompile>
     <ClCompile Include="Development\Code Examples\Pattern - Abstract Factory.cpp">
       <Filter>Development\Code Examples</Filter>
@@ -289,6 +247,42 @@
     <ClCompile Include="Game Programming\Bullet Physics.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
+    <ClCompile Include="C++CLI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C# Notes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Directx.cpp">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Lighting.cpp">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Mental Ray.cpp">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\OpenGL.cpp">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Post Effects.cpp">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Rendering.cpp">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Shaders.cpp">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Shadows.cpp">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Terrain.cpp">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Texturing.cpp">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Languages\Code Examples\Max - ConvexHull.ms">
@@ -306,51 +300,33 @@
     <None Include="Languages\Code Examples\Python - RealFlow MultiBody Loader.rfs">
       <Filter>Languages\Code Examples</Filter>
     </None>
-    <None Include="C# .NET Framework.cs">
-      <Filter>Managed Source</Filter>
-    </None>
-    <None Include="C# Class.cs">
-      <Filter>Managed Source</Filter>
-    </None>
-    <None Include="C# Code.cs">
-      <Filter>Managed Source</Filter>
-    </None>
-    <None Include="C# Containers.cs">
-      <Filter>Managed Source</Filter>
-    </None>
     <None Include="Cheatsheet.txt" />
     <None Include="Hotkeys.txt" />
     <None Include="..\.gitignore" />
     <None Include="Symbols.txt" />
+    <None Include="C# .NET Framework.cs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="C# Class.cs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="C# Code.cs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="C# Containers.cs">
+      <Filter>Source Files</Filter>
+    </None>
     <None Include="C# Memory.cs">
-      <Filter>Managed Source</Filter>
+      <Filter>Source Files</Filter>
     </None>
-    <None Include="Graphics Programming\Shaders\blur-sharpen.hlsl">
-      <Filter>Graphics Programming\Shaders</Filter>
+    <None Include="Game Programming\Shaders\main.glsl">
+      <Filter>Game Programming\Shaders</Filter>
     </None>
-    <None Include="Graphics Programming\Shaders\bounds.fx">
-      <Filter>Graphics Programming\Shaders</Filter>
+    <None Include="Game Programming\Shaders\normal-depth.glsl">
+      <Filter>Game Programming\Shaders</Filter>
     </None>
-    <None Include="Graphics Programming\Shaders\glow-depth.hlsl">
-      <Filter>Graphics Programming\Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\Shaders\main.fx">
-      <Filter>Graphics Programming\Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\Shaders\main.glsl">
-      <Filter>Graphics Programming\Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\Shaders\normal-depth.glsl">
-      <Filter>Graphics Programming\Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\Shaders\post.hlsl">
-      <Filter>Graphics Programming\Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\Shaders\toon.fx">
-      <Filter>Graphics Programming\Shaders</Filter>
-    </None>
-    <None Include="Graphics Programming\Shaders\toon.glsl">
-      <Filter>Graphics Programming\Shaders</Filter>
+    <None Include="Game Programming\Shaders\toon.glsl">
+      <Filter>Game Programming\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -560,5 +536,25 @@
     <Image Include="Images\MathsPhysics - Collision Sphere Algorithms.png">
       <Filter>Images</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Game Programming\Shaders\blur-sharpen.hlsl">
+      <Filter>Game Programming\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Game Programming\Shaders\bounds.fx">
+      <Filter>Game Programming\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Game Programming\Shaders\glow-depth.hlsl">
+      <Filter>Game Programming\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Game Programming\Shaders\main.fx">
+      <Filter>Game Programming\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Game Programming\Shaders\post.hlsl">
+      <Filter>Game Programming\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Game Programming\Shaders\toon.fx">
+      <Filter>Game Programming\Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
