@@ -36,20 +36,17 @@ ASSEMBLY/MODULES
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 VALUE-TYPE VARIABLES
-• Structs, enums, nullable and basic data types, doesn't use new to create new objects
-• variable exists on stack or register
-• values are copied deeply
-• Passed by-val
+• Structs, enums, nullable/basic data types, reference/pointer used to store a reference variable
+• Variable exists on stack or register, passed by-val and are copied deeply
+• Memory auto deleted by stack when out of scope
 • Equality: If both are same type and have same contents
 • Sealed: can't inherit anything or be derived from
 
 REFERENCE-TYPE VARIABLES
-• Classes, arrays, uses new to create new objects
-• object it refers to exists on the heap
-• memory auto deleted once no other references for the object exist
-• values are copied shallow
-• Reference itself passed by-val, object it points to stays the same
-• Equality: If both refer to the same interal object address
+• Classes, arrays, boxed value-types
+• Variable exists in the heap with a value-type object refering to it, copied shallow
+• Memory auto deleted by garbage collector when reference count equals zero
+• Equality: If both have the same memory address
 • Can inherit one class and be derived from
 
 ARRAYS
@@ -293,12 +290,12 @@ WEAK REFERENCES
 • Long Weak Reference: Tells when object is fully removed by GC
 
 BOXING
-• Boxing allows variable of type System.Object to refer to a System.ValueType
-• System.Object only capable of holding reference on heap; System.ValueType may be on stack/register
-• Boxing auto happens when converting value-type to object- Copies value into a new object on the heap
-• New boxed object remembers what type it was created from and will only unbox if cast to correct type
+• Process of converting a value type to a System.Object reference type
+• Copy of the value-type is wrapped in System.Object and put on the heap
+• This boxed object remembers what the original type was and will only unbox if cast correctly
+• Unboxing copies the boxed value to another value-type variable
 • Boxing is implicit, Unboxing is reverse and explicit
-• Ineffecient as Garbage Collected needs to remove new boxed object
+• Ineffecient as copying required and Garbage Collected needs to remove new boxed object
 • If nullable value-type is null, returns null before doing any boxing
 
 ////////////////////////////////////////////////////////////////////////////////////////////

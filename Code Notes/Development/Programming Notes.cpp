@@ -19,7 +19,7 @@ long long (LL)             long             8         -9,223,372,036,854,775,808
 unsigned long long (ULL)   ulong            8         0 to 18,446,744,073,709,551,615
 float (f)                  float (f)        4         3.4E +/- 38 (7 digits)   
 double                     double           8         1.7E +/- 308 (15 digits)             
-long double (L)            ---              8         1.7E +/- 308 (15 digits)
+long double (L)            ---              8         Depends on machine, minimum size of double
 ---                        decimal (m)      12        28 digits
 pointer/reference          object           4/8       Depends on whether 32/64 bit platform
 
@@ -35,23 +35,27 @@ Two hex values = one byte
 0xff = 0xffffffff = 255 = 11111111
 
 VALUE TYPES: have automatic storage, stored on stack/register
-REFERENCE TYPES: have dynamic storage, stored on heap 
+REFERENCE TYPES: have dynamic storage, stored on heap
 STATIC TYPES: have static storage, stored in fixed seperate memory/data segment
 
 LOCAL SCOPE: Variable defined in a block
 GLOBAL SCOPE: Variable defined outside a block, can be in a namespace
 CLASS SCOPE: Member Variables in a class
 FUNCTION PROTOTYPE SCOPE: Variables in function prototype
+
 PUBLIC/EXTERNAL LINKAGE: Can be accessed accross files
 PRIVATE/INTERNAL LINKAGE: Can only be accessed by file declared in
 
-DECLARING VARIABLES:
+DEEP COPY: Underlying memory the reference/pointer points to is copied
+SHALLOW COPY: Reference/pointer is copied and points to original data
+
+DECLARING VARIABLES
 • Determines how much memory is needed for a data object
 • Determines how the bits in memory are interpreted 
  (bool and char use same amount of memory but shown differently)
 • Determines what methods can be performed using the data object.
 
-NAMING CONVENTION:
+NAMING CONVENTION
 • Characters usable: alphabet, numbers, underscore character
 • The first character in a name cannot be a numeric digit.
 • You can’t use a keyword for a name.
@@ -59,16 +63,25 @@ NAMING CONVENTION:
 • Camel notation: myVariable
 • Pascal notation: MyVariable
 
-TYPE-SAFETY: How much language allows type errors/conversion (ie. int as float)
-TYPECASTING: Forcing conversion explicitly
-AUTOMATIC TYPE CONVERSION: Automatically converted by compilier
-  • INTEGRAL CONVERSION: Short, char and bool converted to int by compilier before usage
-  • STANDARD CONVERSION: Conversion between types without loss of data (int to char)
-  • PROMOTION: Lower types are converted up to a larger type
-    short -> unsigned short -> int -> unsigned int -> long -> unsigned long -> float -> double -> long double
+TYPE-SAFETY
+• How much compiler will check that you don't mix incompatible variables
+• Eg. C++ prevents floating point being added to string
 
-DEEP COPY: Underlying memory the reference/pointer points to is copied
-SHALLOW COPY: Reference/pointer is copied and points to original data
+TYPE-CAST/DOWNCASTING/EXPLICIT CONVERSION
+• Data may be lost, done by user with cast operator
+• base -> derived
+• double -> float -> long -> int -> short
+• unsigned -> signed
+
+AUTOMATIC/IMPLICIT CONVERSION
+• No data is lost, auto done by compiler
+• derived -> base
+• short -> int -> long -> float -> double
+• signed -> unsigned
+
+ORDER OF EXPRESSION EVALUATION
+• Known as short-circuiting logical expressions
+• Order is left to right where right is only done if left is true: if(left && right)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //OPERATORS
@@ -96,10 +109,6 @@ if equal precedence then first one is done first in expression
 &&
 ||
 bitwise operators
-
-ORDER OF EXPRESSION EVALUATION
-Known as short-circuiting logical expressions
-Order is left to right where right is only done if left is true: if(left && right)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //PROGRAM EXECUTION

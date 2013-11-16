@@ -165,14 +165,14 @@ VARIABLE DIFFERENCES
 ====================================================================================
 
 VALUE VARIABLE TYPES:
-[C# ] Structs, basic data types created on stack/register
-[CLI] Classes, structs, basic data types created on stack/register
-[C++] Classes, structs, basic data types created on stack/register
+[C# ] Structs, enums, nullable/basic data types, reference object created on stack/register
+[CLI] Any variable created on stack/register
+[C++] Any variable created on stack/register
 
 REFERENCE VARIABLE TYPES:
-[C# ] Classes created on heap
-[CLI] Classes, structs, basic data types created on heap
-[C++] Classes, structs, basic data types created on heap
+[C# ] Classes, arrays, boxed value-types created on heap
+[CLI] Any variable created on heap
+[C++] Any variable created on heap
 
 CREATING REFERENCE TYPES:
 [C# ] Uses new, garbage collected, can't be overloaded, array form, no placement form
@@ -215,9 +215,9 @@ INCLUDING LIBRARIES:
 [C++] Can be anywhere, can define variables/expressions, uses #ifdef
 
 DOWNCASTING: int myInt = 1.0/2.0;
-[C# ] Typesafe: No downcasting, Compile error, only implicitly converts if range can fit in new variable
-[CLI] Not Typesafe: Downcasting okay, Compile warning, implicitly converts no matter what
-[C++] Not Typesafe: Downcasting okay, Compile warning, implicitly converts no matter what
+[C# ] No downcasting, Compile error, only implicitly converts if range can fit in new variable
+[CLI] Downcasting okay, Compile warning, implicitly converts no matter what
+[C++] Downcasting okay, Compile warning, implicitly converts no matter what
 
 VALUE TO BOOL CONVERSION: if(myNumber){}
 [C# ] Cannot accept a number into a bool; cannot use number as bool in if-statements

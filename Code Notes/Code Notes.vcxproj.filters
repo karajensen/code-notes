@@ -533,6 +533,9 @@
     <Image Include="Images\MathsPhysics - Collision Sphere Algorithms.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Code - Boxing.gif">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Game Programming\Shaders\blur-sharpen.hlsl">
