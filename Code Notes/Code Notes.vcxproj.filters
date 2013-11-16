@@ -226,9 +226,6 @@
     <ClCompile Include="Development\Databases.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Development\Design Patterns.cpp">
-      <Filter>Development</Filter>
-    </ClCompile>
     <ClCompile Include="Development\Programming Notes.cpp">
       <Filter>Development</Filter>
     </ClCompile>

@@ -36,19 +36,25 @@ ASSEMBLY/MODULES
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 VALUE-TYPE VARIABLES
-• Structs and basic data types, doesn't use new to create new objects
+• Structs, enums, nullable and basic data types, doesn't use new to create new objects
 • variable exists on stack or register
 • values are copied deeply
 • Passed by-val
 • Equality: If both are same type and have same contents
+• Sealed: can't inherit anything or be derived from
 
 REFERENCE-TYPE VARIABLES
-• Classes, uses new to create new objects
+• Classes, arrays, uses new to create new objects
 • object it refers to exists on the heap
 • memory auto deleted once no other references for the object exist
 • values are copied shallow
 • Reference itself passed by-val, object it points to stays the same
 • Equality: If both refer to the same interal object address
+• Can inherit one class and be derived from
+
+ARRAYS
+• All arrays are reference even if elements are value-types
+• Inherit System.Array
 
 STRINGS
 • String literals are interned so that for each occurrence of a particular
@@ -91,7 +97,7 @@ ABSTRACT CLASS
 • Partial Implementation- Don't have to override virtual non-abstract methods
 • No inheritance by structs
 • Must used abstract keyword for methods and class
-• Can inherit one class and multiple interfaces
+• Can inherit one class and implement multiple interfaces
 
 INTERFACES
 • Can't create object directly from interface, can be casted to

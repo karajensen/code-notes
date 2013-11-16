@@ -62,7 +62,8 @@ SELECTION SORT
 =======================================================================================
 INSERTION SORT
 =======================================================================================
-Note: Insertion Sort generally faster than selection/bubble, as fast as bubble if array in exact reverse order
+Insertion Sort generally faster than selection/bubble
+As fast as bubble if array in exact reverse order
 1) Iterate through array once for every value
 2) Inside a while loop for that value, check it against the previous value
 3) If previous is larger, move the value before it and continue to check against the new previous value
@@ -152,6 +153,22 @@ DISADVANTAGE: Possibility of getting into an infinite loop
 2. If not, expand the node, move to a child of the node, and repeat.
 3. If a node is a terminal state or depth reached return to the parent and try another child
 
+=======================================================================================
+DIJKSTRA [UNINFORMED SEARCH METHOD]
+=======================================================================================
+USED: To search graphs for shortest path
+ACTION: Chooses nodes with lowest cost so far value
+DISADVANTAGE: Searches entire graph considering high amount of nodes; wasteful
+
+=======================================================================================
+A* [INFORMED SEARCH METHOD]
+=======================================================================================
+Most ideal to use priority queue with iteration for Open/Closed lists
+std::priority_queue has no iteration; best to use sorted vector
+USED: Search weighted graphs with heuristics for shortest path
+ACTION: Chooses node with lowest estimated total cost
+ADVANTAGE: Less nodes considered than Dijkstra; effecient
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //HASH TABLES
@@ -200,7 +217,7 @@ SEPERATE CHAINING
 • Uses less space than a large hash table with open addressing
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//TREE STRUCTURES
+//TREES/GRAPHS
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 BALANCED TREE: roughly equal nodes on right/left sides of tree (faster)
@@ -213,6 +230,17 @@ AVL TREE: self-balancing binary tree that uses balance factor
 RED-BLACK TREE: self-balancing binary tree that uses balance factor
 2-3 TREES: self-balancing B-Tree with up to 3 child nodes
 2-3-4 TREES: self-balancing B-Tree with up to 4 child nodes
+
+EDGES: Connects nodes to each other; have weights
+ADJACENT VERTICES: verts connected via an edge
+VERTICES: Graph nodes
+DIRECTED GRAPH: Edges have directions
+WEIGHTED GRAPH: Nodes have /costs
+CYCLIC GRAPH: Edge number >= vertices
+ACYCLIC GRAPH: Tree
+COST: Amount required to reach node (use positive values only)
+HEURISTIC: The best guess on how much a node is worth (never overestimate actual cost of node)
+POLICY: Solution that tells the optimal/shortest path to any goal node from any start node
 
 =======================================================================================
 HEAPS
@@ -316,33 +344,5 @@ W of +inf: Game is won
 Anything less than highest choice (α) for player doesn't need to be looked at
 Anything more than lowest choice (β) for opponent doesn't need to be looked 
 Values searched are in range [min->max] [α->β] ([-INF,INF] initially)
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//GRAPHS/PATHFINDING
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-EDGES: Connects nodes to each other; have weights
-ADJACENT VERTICES: verts connected via an edge
-VERTICES: Graph nodes
-DIRECTED GRAPH: Edges have directions
-WEIGHTED GRAPH: Nodes have /costs
-CYCLIC GRAPH: Edge number >= vertices
-ACYCLIC GRAPH: Tree
-COST: Amount required to reach node (use positive values only)
-HEURISTIC: The best guess on how much a node is worth (never overestimate actual cost of node)
-POLICY: Solution that tells the optimal/shortest path to any goal node from any start node
-
-DIJKSTRA[UNINFORMED SEARCH METHOD]:
-  USED: To search graphs for shortest path
-  ACTION: Chooses nodes with lowest cost so far value
-  DISADVANTAGE: Searches entire graph considering high amount of nodes; wasteful
-
-A*[INFORMED SEARCH METHOD]:
-  USED: Search weighted graphs with heuristics for shortest path
-  ACTION: Chooses node with lowest estimated total cost
-  ADVANTAGE: Less nodes considered than Dijkstra; effecient
-  NOTE: Most ideal to use priority queue with iteration for Open/Closed lists
-        std::priority_queue has no iteration; best to use sorted vector
-
 
 *////////////////////////////////////////////////////////////////////////////////////////////////////

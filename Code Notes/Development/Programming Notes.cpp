@@ -99,7 +99,7 @@ bitwise operators
 
 ORDER OF EXPRESSION EVALUATION
 Known as short-circuiting logical expressions
-Order is left to right where right is only done if left is true: if(first && second)
+Order is left to right where right is only done if left is true: if(left && right)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //PROGRAM EXECUTION
@@ -147,24 +147,43 @@ TWOS COMPLEMENT
     Invert:   1110
     Add One:  1111  (decimal -1)
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//MEMORY LOCATIONS
-////////////////////////////////////////////////////////////////////////////////////////////////////
+===============================================================================
+RAM MEMORY LOCATIONS
+===============================================================================
 
-STACK ------------------------------------------------------------------------
-• Each function called has a Stack Frame containing local variables until the function returns
+RANDOM ACCESS MEMORY (RAM)
+• Physical Main memory where everything is held for execution
+• Virtual memory is memory on hard drive extending RAM
+
+SEGMENTS
+• Sections of memory used for various purposes
+• Segmentation Fault: Attempt to access RAM location that the CPU cannot physically access
+
+INITIALIZED DATA SEGMENT
+• Contains global/static/constant data
+
+UNINITIALIZED DATA SEGMENT (BSS)
+• Contains zero-initialised data
+
+THE STACK
+• LIFO Segment storing temporary/local/value-type variables and keeps track of program execution
+• Each function called has a 'Stack Frame' containing local variables until the function returns
 • Contains memory address of next instruction to execute after the called function returns
 • Self manages memory; variables allocated and freed automatically, no fragmentation
 • Has limit on size, Fast access
 
-HEAP ------------------------------------------------------------------------
+THE HEAP
+• Segment storing dynamically allocated reference-type variables
 • User allocates memory; memory may become fragmented
-• Larger size than stack
-• Slower than stack as it uses pointers to access
-• Doesn't actually use a heap structure
+• Larger size than stack though slower as it uses pointers to access
+• Doesn't actually use a heap structure, can be based off queue
 
-REGISTERS -------------------------------------------------------------------
-• Temporary storage for processing data/calculations.
+===============================================================================
+CPU MEMORY LOCATIONS
+===============================================================================
+
+REGISTERS
+• Physical Temporary storage for processing data/calculations taken from cache
 • ESP: STACK POINTER REGISTER: Always points to the top of the stack
 • EBP: STACK BASE POINTER REGISTER: Pointer to data on the stack. 
 • EAX: ACCUMULATOR REGISTER: Primarly used for mathematical operations
@@ -176,21 +195,10 @@ REGISTERS -------------------------------------------------------------------
 • FLAGS REGISTER: Reports on the status of the program being executed
 • IP (INTRUCTION POINTER) REGISTER: Contains a pointer to the next intruction to be executed
 
-CACHES -----------------------------------------------------------------------
-• Temporary storage for frequently accessed data for rapid access
+CACHES
+• Physical Temporary storage for frequently accessed data for rapid access, sends to registers
 • No processing on data- must be moved to registers if this is needed
-• CACHE MISS: Failed attempt to read/write to the cache resulting in main memory access
-
-RANDOM ACCESS MEMORY (RAM) ---------------------------------------------------
-• Main memory where everything is held for execution
-• Virtual memory is memory on hard drive extending RAM
-
-SEGMENTS ---------------------------------------------------------------------
-• Sections of memory used for various purposes
-• DATA SEGMENT: Contains Initialized data segment and Uninitialized data segment(BSS)
-• INITIALIZED DATA SEGMENT: Contains global/static/constant data
-• UNINITIALIZED DATA SEGMENT(BSS): Contains uninitialised data
-• SEGMENTATION FAULT: Attempt to access memory that the CPU cannot physically address
+• Cache Miss: Failed attempt to read/write to the cache resulting in RAM access
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //FUNCTIONS
@@ -303,13 +311,13 @@ STATIC BINDING: Uses pointer/ref type to determine function to call at compilati
 DYNAMIC BINDING: Uses held object type to determine function to call at runtime
 
 IS-A RELATIONSHIP
-  Class inherits an interface + implementation for non pure virtual functions
-  Eg. Public inheritance
+Class inherits an interface + implementation for non pure virtual functions
+Eg. Public inheritance
 
 HAS-A RELATIONSHIP
-  Class acquires implementation without the interface 
-  (interface can still be used within class methods, but not outside class)
-  Eg. Containment/Composition/Layering, Private/Protected inheritance
+Class acquires implementation without the interface 
+Interface can still be used within class methods, but not outside class
+Eg. Containment/Composition/Layering, Private/Protected inheritance
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //POLYMORPHISM
@@ -319,23 +327,94 @@ To exhibit polymorphism, f() must be able to operate with values of at least
 two distinct types finding and executing type-appropriate code.
 
 1) PREPROCESSING (AD-HOC/PARAMETRIC)
-    #define f(int x) ((x) += 2)
-    #define f(double x) ((x) += 2)
-    #define f(X) ((X) += 2)
+   #define f(int x) ((x) += 2)
+   #define f(double x) ((x) += 2)
+   #define f(X) ((X) += 2)
 
 2) OVERLOADING (AD-HOC)
-    void f(int& x)    { x += 2; }
-    void f(double& x) { x += 2; }
+   void f(int& x)    { x += 2; }
+   void f(double& x) { x += 2; }
 
 3) TEMPLATES (PARAMETRIC)
-    template <typename T>
-    void f(T& x) { x += 2; }
+   template <typename T>
+   void f(T& x) { x += 2; }
 
 4) VIRTUAL METHODS (AD-HOC)
-    BaseClass* pBase = &derivedObject;
-    pBase->MyVirtualFunction();
+   BaseClass* pBase = &derivedObject;
+   pBase->MyVirtualFunction();
 
 AD-HOC POLYMORPHISM: object types are explicitly defined for overloading
 PARAMETRIC POLYMORPHISM: object types aren't defined, any object can be used
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//EXCEPTIONS
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+1) THROW BY VALUE
+• When exception is thrown, copy of thrown variable is made as it needs it after function out of scope
+• Don't throw pointers, if absolutely needed, use a smart pointer
+
+2) STACK UNWINDS
+• Stack releases memory until reaching the corresponding try-catch block
+• Any destructors are called on way- if exception is called in destructor, 
+  it must resolve it otherwise two exceptions are occuring
+• Pointers are destroyed without calling delete. Solved through smart pointers
+
+3) CATCH BY REFERENCE
+• Catch reference as used to allow inheritance with exception types 
+
+EXCEPTION PATH
+If Exception type wasn't explicitly thrown: unexpected()->terminate()->abort()
+If Exception type was known but not caught: terminate()->abort()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//MULTITHREADING
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+• Threads within a program share same data space/information with main thread
+• Thread has a beginning, execution sequence and conclusion
+• Thread has instruction pointer- keeps track of where its currently running
+• Threads can be interrupted and put to sleep while other threads are running
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//DESIGN PATTERNS
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+==============================================================================================
+CREATION PATTERNS
+==============================================================================================
+FACTORY: Creates groups of objects
+BUILDER: Connects together components of the one object
+PROTOTYPE: Copies from a set of base objects to create new objects
+SINGLETON: Ensure a class only has one instance and allow anyone seeing that class to have access to it
+                                                                             
+==============================================================================================
+STRUCTURAL PATTERNS                                                          
+==============================================================================================
+
+PIMPL: Allows changing the implementation without touching the interface
+DECORATOR: Allows mixing/matching of classes without need for writing a subclass for each and every match
+FLYWEIGHT: Use of an object to store common information for a class of objects
+COMPOSITE: A class built ontop of an object class that manages groups of the objects
+PROXY: Uses a pointer/reference/proxy object to send changes to the real object
+FACADE: Wrapper class on top of a complicated class
+ADAPTER: Wrapper class on top of unrelated classes
+BRIDGE: Creates a bridge between a class and different ways of using that class
+           
+==============================================================================================
+BEHAVIOURAL PATTERNS
+==============================================================================================
+
+MEMENTO: Allows object to restore to a previous state (undo/redo)
+ITERATOR: Allows movement over range of elements in a container
+INTERPRETER: Decodes each symbol in a string/sentence
+TEMPLATE: Skeleton algorithm; changing a method won't change the overall algorithm
+COMMAND: Functor/lambda holding a method, the object to call the method and any arguments
+CHAIN OF RESPONSIBILITY: Passes a command through a series of objects until handled
+STATE: Alters an object's behaviour when its state changes
+STRATEGY: Allows choosing an algorithm at runtime
+VISITOR: Seperates objects from their methods; calls custom methods in derived objects from base*
+OBSERVER: Sends an event message when an object changes state to any observers
+MEDIATOR: Talks between two classes without either having to know about the other
 
 *///////////////////////////////////////////////////////////////////////////////////////////////////
