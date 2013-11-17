@@ -6,34 +6,43 @@
 .NET FRAMEWORK
 • Development framework for creating windows applications
 • Used by languages C#, VB.NET, C++/CLI
-• A type of CLI (Common Language Infrastructure) which contains:
-    | 
-    |  CLR: Common Language Runtime
-    |  • Virtual Execution System (VES)
-    |  • Garbage Collector
-    |  • Just In Time Compiler
-    |  • Managed Heap
+• A type of COMMON LANGUAGE INFRASTRUCTURE (CLI)
     |  
-    |  BCL/FCL: Base/Framework Class Library
-    |  • Shared .NET classes used by .NET languages
+    |__ COMMON TYPE SYSTEM (CTS)
+    |   • Shared basic data types used by .NET languages
+    |   
+    |__ BASE/FRAMEWORK CLASS LIBRARY (BCL/FCL)
+    |   • Shared classes used by .NET languages
+    |   
+    |__ COMMON LANGUAGE RUNTIME (CLR)
+        • Responsible for .NET program execution
+        • Contains Virtual Execution System, Garbage Collector, JIT Compiler, Managed Heap
+            |   
+            |__ VIRTUAL EXECUTION SYSTEM (VES)
+            |   • Environment for executing managed code
+            |   
+            |__ JUST-IN-TIME COMPILER (JIT)
+                • Source code is compiled into Common Intermediate Language (CIL)
+                • Microsoft Intermediate Language (MSIL) is another name for CIL
+                • CIL is stored in an assembly and converted to native code at runtime
 
-VES: VIRTUAL EXECUTION SYSTEM
-• Environment for executing managed code
-
-JIT: JUST-IN-TIME COMPILER
-• Source code is compiled into Microsoft intermediate language (MSIL)
-• MSIL is converted to native code at runtime
-
-ASSEMBLY/MODULES
-• Exe/dll that contain metadata that describe internal version number/data details
-• Only loaded if required. Can use two versions of same assembly in single application
+ASSEMBLIES
+• Exe/dll that contain metadata about the information inside and optional resources (images, sound)
+• Dll only loaded if required. Can use two versions of same assembly in single application
 • Share assemblies between applications using Global Assembly Cache
 • Assemblies must be strong named; guaranteed uniqueness
 • Assemblies contain modules. Modules contain classes.
-
+                
 ////////////////////////////////////////////////////////////////////////////////////////////
 //VARIABLES
 ////////////////////////////////////////////////////////////////////////////////////////////
+
+sbyte     System.SByte         byte    System.Byte
+short     System.Int16         ushort  System.UInt16
+int       System.Int32         uint    System.UInt32
+long      System.Int64         ulong   System.UInt64
+float     System.Single        double  System.Double
+decimal   System.Decimal       bool    System.Boolean
 
 VALUE-TYPE VARIABLES
 • Structs, enums, nullable/basic data types, reference/pointer used to store a reference variable

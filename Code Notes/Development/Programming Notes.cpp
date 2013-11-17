@@ -14,9 +14,9 @@ unsigned short (U)         ushort           2         0 to 65535
 int                        ---              2/4       Depends on machine, minimum size of short
 unsigned int (U)           ---              2/4       Depends on machine, minimum size of short
 long (L)                   int              4         -2,147,483,648 to 2,147,483,647                   
-unsigned long (UL)         uint             4         0 to 4,294,967,295  
-long long (LL)             long             8         -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
-unsigned long long (ULL)   ulong            8         0 to 18,446,744,073,709,551,615
+unsigned long (UL)         uint (U)         4         0 to 4,294,967,295  
+long long (LL)             long (L)         8         -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
+unsigned long long (ULL)   ulong (UL)       8         0 to 18,446,744,073,709,551,615
 float (f)                  float (f)        4         3.4E +/- 38 (7 digits)   
 double                     double           8         1.7E +/- 308 (15 digits)             
 long double (L)            ---              8         Depends on machine, minimum size of double
@@ -45,6 +45,10 @@ FUNCTION PROTOTYPE SCOPE: Variables in function prototype
 
 PUBLIC/EXTERNAL LINKAGE: Can be accessed accross files
 PRIVATE/INTERNAL LINKAGE: Can only be accessed by file declared in
+
+UNARY OPERATOR: Act on single values: - + ++ --
+BINARY OPERATOR: Act on two values: - + * % / = += -= *= /=
+TERNARY OPERATOR: Act on three values: ?: 
 
 DEEP COPY: Underlying memory the reference/pointer points to is copied
 SHALLOW COPY: Reference/pointer is copied and points to original data
@@ -83,10 +87,6 @@ ORDER OF EXPRESSION EVALUATION
 • Known as short-circuiting logical expressions
 • Order is left to right where right is only done if left is true: if(left && right)
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//OPERATORS
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 ESCAPED CHARACTERS
 Newline = \n 
 Horizontal tab = \t
@@ -96,19 +96,6 @@ Single quote = \’
 Double quote = \”
 Return = \r
 Null character = \0
-
-PRECENDENCE
-if equal precedence then first one is done first in expression
-()
-!
-* and / 
-+ and - 
-%
-==
-< and > 
-&&
-||
-bitwise operators
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //PROGRAM EXECUTION

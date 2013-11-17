@@ -201,6 +201,8 @@
     <Image Include="Images\Code - BigONotationGraph.png" />
     <Image Include="Images\Code - Binary Search.png" />
     <Image Include="Images\Code - Boxing.gif" />
+    <Image Include="Images\Code - C# Operator Precedence.png" />
+    <Image Include="Images\Code - C++ Operator Precedence.png" />
     <Image Include="Images\Code - Execution Environment.png" />
     <Image Include="Images\Code - Hex Converting.png" />
     <Image Include="Images\Code - Iterators.png" />
