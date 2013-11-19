@@ -4,6 +4,7 @@
 
 Func<int, double> myFn; //Takes in int, returns double
 Action<int> myFn; //Takes in int, no return value
+Action<int, double> myFn; //Multiple arguments, no return value
 Action myFn; //No params/return value
 delegate void MyDelegate(int x) //custom delegate signature
 

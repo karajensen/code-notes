@@ -24,16 +24,6 @@ long double (L)            ---              8         Depends on machine, minimu
 pointer/reference          object           4/8       Depends on whether 32/64 bit platform
 
 
-BYTE: 8 bits (256 values; 2⁸)
-WORD: 2 bytes
-DOUBLE WORD: 2 words
-QUAD WORD: 2 double words
-
-HEXADECIMAL: 
-1-F (1-15 where A = 10)
-Two hex values = one byte
-0xff = 0xffffffff = 255 = 11111111
-
 VALUE TYPES: have automatic storage, stored on stack/register
 REFERENCE TYPES: have dynamic storage, stored on heap
 STATIC TYPES: have static storage, stored in fixed seperate memory/data segment
@@ -46,9 +36,9 @@ FUNCTION PROTOTYPE SCOPE: Variables in function prototype
 PUBLIC/EXTERNAL LINKAGE: Can be accessed accross files
 PRIVATE/INTERNAL LINKAGE: Can only be accessed by file declared in
 
-UNARY OPERATOR: Act on single values: - + ++ --
-BINARY OPERATOR: Act on two values: - + * % / = += -= *= /=
-TERNARY OPERATOR: Act on three values: ?: 
+UNARY OPERATOR: Act on single values
+BINARY OPERATOR: Act on two values
+TERNARY OPERATOR: Act on three values
 
 DEEP COPY: Underlying memory the reference/pointer points to is copied
 SHALLOW COPY: Reference/pointer is copied and points to original data
@@ -77,7 +67,8 @@ TYPE-CAST/DOWNCASTING/EXPLICIT CONVERSION
 • double -> float -> long -> int -> short
 • unsigned -> signed
 
-AUTOMATIC/IMPLICIT CONVERSION
+AUTOMATIC/UPCASTING/IMPLICIT CONVERSION
+• Bool is converted to int internally
 • No data is lost, auto done by compiler
 • derived -> base
 • short -> int -> long -> float -> double
@@ -86,6 +77,7 @@ AUTOMATIC/IMPLICIT CONVERSION
 ORDER OF EXPRESSION EVALUATION
 • Known as short-circuiting logical expressions
 • Order is left to right where right is only done if left is true: if(left && right)
+• Doesn't work with bitwise operators
 
 ESCAPED CHARACTERS
 Newline = \n 
@@ -123,7 +115,6 @@ RUN TIME: Action performed during program execution
 //MEMORY REPRESENTATION
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-FLOATING POINT PRECISION: Binary cannot express some floating point values (0.1) exactly
 ENDIAN-NESS: Ordering of bytes in memory of a data object
 
 LITTLE ENDIAN (BACKWARDS)
@@ -134,14 +125,6 @@ LITTLE ENDIAN (BACKWARDS)
 BIG ENDIAN (FORWARDS)
 • multi-byte values are written most significant byte first
 • 0x12345678 is written in memory as 12 34 56 78
-
-TWOS COMPLEMENT
-• Standard way of representing negative integers in binary
-• + sign is changed by inverting all of the bits and adding one
-
-    Start:    0001  (decimal 1)
-    Invert:   1110
-    Add One:  1111  (decimal -1)
 
 ===============================================================================
 RAM MEMORY LOCATIONS
@@ -362,6 +345,73 @@ PARAMETRIC POLYMORPHISM: object types aren't defined, any object can be used
 EXCEPTION PATH
 If Exception type wasn't explicitly thrown: unexpected()->terminate()->abort()
 If Exception type was known but not caught: terminate()->abort()
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//BIT MANIPULATION
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+BYTE: 8 bits
+WORD: 2 bytes
+DOUBLE WORD: 2 words
+QUAD WORD: 2 double words
+
+STRUCTURE OF A BYTE
+Most values a byte can have: 0 -> (128+64+32+16+8+4+2+1) = 0 -> 255 = 256
+ 2⁷  2⁶  2⁵  2⁴  2³  2²  2¹  2°
+128  64  32  16  8   4   2   1
+
+HEXADECIMAL
+1-F (1-15 where A = 10)
+Two hex values = one byte
+0xff = 0xffffffff = 255 = 11111111
+
+FLOATING POINT PRECISION: Binary cannot express some floating point values (0.1) exactly
+COUNTING IN BINARY: 0000  0001  0010  0011  0100  0101  0110  0111  1000
+BINARY-TO-DECIMAL: 1101 = 1x2³ + 1x2² + 0x2¹ + 1x2° = 13
+HEX-TO-DECIMAL: A3F = 10x16² + 3x16¹ + 15x16° = 2623
+HEX-TO-BINARY: 0xC2 = binaryC binary2 = 1100 0010 = 11000010 (use image table)
+BINARY-TO-HEX: 11000010 = 1100 0010 = 0xC2 (use image table)
+
+TWOS COMPLEMENT
+• Standard way of representing negative integers in binary
+• −x is defined as ∼x + 1
+  Start:    0001  (decimal 1)
+  Invert:   1110
+  Add One:  1111  (decimal -1)
+
+BITWISE OPERATORS
+• Can be used with boolean, intergers and char
+• Bools are converted to ints holding true: 0x00000001, 0001, 1 and false: 0x00000000, 0000, 0
+
+~     bitwise NOT    Returns all bits flipped
+|     bitwise OR     Returns 1/true if either or both are 1/true
+&     bitwise AND    Returns 1/true if both are 1/true
+^     bitwise XOR    Returns 1/true if either but not both are 1/true
+<<    left shift     Moves all bits to the left, drops the last 0 or 1 and adds 0 to the start
+>>    right shift    Moves all bits to the right, drops the first 0 or 1 and adds 0 to the end
+
+USING WITH BOOL
+bool ifBothAreTrue   = myBool1 & myBool2
+bool ifEitherAreTrue = myBool1 | myBool2
+bool ifEitherAreTrue = myBool1 ^ myBool2
+bool failed |= HasCallFailed()
+
+USING  WITH BITS
+Flipping bits:     ~00000011 = 11111100
+Checking bits on:  if 00000011 & 00000010 == 00000010 then on
+Turning bits on:   00000011 | 00000100 = 00000111 turning bit 2 on
+Turning bits off:  00000011 & 11111101 = 00000001 turning bit 1 off
+Toggling bits:     00000011 ^ 00000001 = 00000010 and back to 000000011 if called again
+Shifting left:     10000011 << 3 = 00011000 (new values may not be zeroed)
+Shifting right:    10000011 >> 3 = 00010000 (new values may not be zeroed)
+
+USING WITH VALUES/MASKS 
+Adding two masks: value = MASK1 | MASK2 
+Turn off a mask:  value &= ~MASK1
+Add a mask:       value |= MASK1
+Test if masked:   if value & MASK1 == MASK1 then has mask
+Multiply by 2ˣ:   value <<= 3 is same as value *= 2³
+Divide by 2ˣ:     value >>= 3 is same as value /= 2³
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //MULTITHREADING

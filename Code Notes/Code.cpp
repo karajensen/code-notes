@@ -129,11 +129,33 @@ union MyColor
 enum myenum {red, orange = 100, yellow, green = 0}; //red = 0, orange = 100, yellow = 101, green = 0
 enum myenum2 {red, orange, yellow, green}; //redifining despite new name not possible in VS
 
-//declaring an enmun instance
+//DECLARING AN ENMUN INSTANCE
 myenum e;
 e = red;
 e = myenum(2);
 myenum nextEnum = static_cast<myenum>(e+1);
+
+//ENUM FOR BIT FLAGS
+enum MASKS
+{
+    NO_FLAG = 0,  // 0x000
+    MASK1 = 1,    // 0x001
+    MASK2 = 2,    // 0x002
+    MASK3 = 4,    // 0x004
+    MASK4 = 8,    // 0x008
+    MASK5 = 16,   // 0x010
+    MASK6 = 32,   // 0x020
+    MASK7 = 64,   // 0x040
+    MASK8 = 128   // 0x080
+}
+
+//Operators work on bool/integers/chars
+//Amount of bytes minimally guaranteed determines amount of bit flags can be stored
+unsigned char //Can have 8 (bytes) flags maximum
+unsigned short //Can have 16 (bytes) flags maximum
+unsigned int //Can have 16 (bytes) flags maximum 
+unsigned long //Can have 32 (bytes) flags maximum
+
 
 //////////////////////////////////////////////////////////////////////////////
 //LOOPING

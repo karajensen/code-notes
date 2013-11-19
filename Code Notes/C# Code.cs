@@ -136,23 +136,26 @@ public enum MyEnum //defaults to int
     THREE //will equal 6
 }
 int x = (int)MyEnum.ONE;
+string zero = MyEnum.ZERO.ToString() //gives ZERO
 
 //32-BIT FLAGS, maximum 32 flags
 [System.Flags]
 public enum MyEnum
 {
-  A = 0x001, // or = 1
-  B = 0x002, // or = 2
-  C = 0x004, // or = 4
+    NO_FLAG = 0, // 0x000
+    MASK1 = 1,   // 0x001
+    MASK2 = 2,   // 0x002
+    MASK3 = 4    // 0x004
 }
 
 //64-BIT FLAGS, maximum 64 flags
 [System.Flags]
 public enum MyEnum : long 
 {
-  A = 0x001, // or = 1
-  B = 0x002, // or = 2
-  C = 0x004, // or = 4
+    NO_FLAG = 0, // 0x000
+    MASK1 = 1,   // 0x001
+    MASK2 = 2,   // 0x002
+    MASK3 = 4    // 0x004
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -200,6 +203,10 @@ for (int i = 0; i < count; ++i){}
 foreach (str in myStringArray)
 foreach (int value in array)
 foreach (int value in Enumerable.Range(0, 100)) //Enumerable requires LINQ
+
+//GOTO
+goto myLabel;
+myLabel:
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //PREPROCESSOR

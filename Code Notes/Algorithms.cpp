@@ -298,3 +298,10 @@ if(x % 2)
 {
     //x is odd
 }
+
+//GETTING COLOR COMPONENTS VIA BIT SHIFTING
+unsigned int color;
+int r = color & 0xFF;
+int g = (color>>8) & 0xFF;
+int b = (color>>16) & 0xFF;
+int a = (color>>24) & 0xFF;

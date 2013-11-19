@@ -263,6 +263,25 @@ hashMap.size();         //number of elements in hashmap
 hashMap["Key"] = 30;    //inserts under key the value 30
 hashMap["Key"];         //accesses value using key  
 
+//////////////////////////////////////////////////////////////////////////////
+#include <bitset>
+//////////////////////////////////////////////////////////////////////////////
+
+bitset<numberOfbits> mb; //creates array with n bits; initialised to false
+
+mybits[i];          //access bit
+mybits.size();      //size of array
+mybits.any();       //returns true if any bit is set to true
+mybits.none();      //returns true if no bits are set to true
+mybits.set();       //sets all to true
+mybits.set(1);      //set bit 1 to true
+mybits.reset();     //sets all to false
+mybits.reset(1);    //set bit 1 to false
+mybits.flip();      //flips all bits to opposite value
+mybits.flip(1);     //flips bit 1 to opposite
+mybits.count();     //returns number of true bits
+mybits.to_string(); //converts bitset to string
+mybits.to_ulong();  //converts bitset to unsigned long
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <iterator>

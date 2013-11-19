@@ -109,9 +109,6 @@
     <ClCompile Include="Algorithms.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Bit Manipulation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Boost.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

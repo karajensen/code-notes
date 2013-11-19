@@ -86,7 +86,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Algorithms.cpp" />
-    <ClCompile Include="Bit Manipulation.cpp" />
     <ClCompile Include="Boost.cpp" />
     <ClCompile Include="C# Notes.cpp" />
     <ClCompile Include="C++CLI.cpp" />
