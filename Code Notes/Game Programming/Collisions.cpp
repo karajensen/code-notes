@@ -316,14 +316,22 @@ GJK ALGORITHM:
 - Uses a 'support' function to find the furthest point in the MD hull in a direction
   which helps create the simplex with the largest area enclosing the MD hull
 
-  • Randomly choose a point in A and B and subract to get a direction between the two
-  • Find any points along that direction that are further away if possible
-  • Generate the Minkowski Difference point of the chosen two points
-  • In this direction, the point is on the edge of the Minkowski Difference hull
+CHOOSING THE INITIAL POINTS:
+• Randomly choose a point in A and B and subract to get a direction between the two
+• Find any points along that direction that are the furthest away (+ largest dot product)
+• Generate the Minkowski Difference point of the chosen two points which is an edge point 
+• Negate the direction
 
-
-
-
+WHILE COLLISION IS NOT FOUND:
+• Get a new edge point in the direction
+• Check if this new point is past the origin (has a + dot product with it)
+• If not past the origin, origin isn't inside the difference and collision cannot occur
+• If line simplex: Cross the line and the last point to origin to get the next direction
+• If a tri-plane simplex: Next direction is the normal that points towards the origin
+• If a tetrahedron simplex: 
+    - If origin is inside all three planes (the forth was checked as a tri plane) then collision
+    - If origin is outside a plane, remove the furthest point
+    - The next direction is the normal to the plane towards the origin
 
 //////////////////////////////////////////////////////////////////////////////
 //COLLISION RESOLUTION
