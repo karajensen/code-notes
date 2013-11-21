@@ -242,6 +242,7 @@
     <Image Include="Images\MathsPhysics - constraints.png" />
     <Image Include="Images\MathsPhysics - expressing in basis diagram.png" />
     <Image Include="Images\MathsPhysics - expressing in basis.png" />
+    <Image Include="Images\MathsPhysics - GJK Collision Detection.png" />
     <Image Include="Images\MathsPhysics - Integration.png" />
     <Image Include="Images\MathsPhysics - kinematics.png" />
     <Image Include="Images\MathsPhysics - plane equation.png" />

@@ -539,6 +539,9 @@
     <Image Include="Images\Code - C++ Operator Precedence.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\MathsPhysics - GJK Collision Detection.png">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Game Programming\Shaders\blur-sharpen.hlsl">
