@@ -1,16 +1,22 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
-//ENUMERABLE / LINQ
+//IENUMERABLE / LINQ
 ////////////////////////////////////////////////////////////////////////////////////////////
 //LINQ queries can be used on containers that supports IEnumerable<T> interface
-//Most containers inherit from IEnumerable<T>
+//Most containers inherit from IEnumerable<T> except ArrayList which inherits IEnumerable
+//IEnumerable is the untemplated version of IEnumerable and cannot use LINQ
+
+using System.Collections.Generic;
+using System.LINQ;
 
 IEnumerable<int> myIEnum = myContainer.Where(item => item.IsActive()); // from subset of container
 IEnumerable<int> myIEnum = new List<int>(){1,2,3}; // from whole container
-IEnumerable<int> myIEnum = myContainer;
+IEnumerable<int> myIEnum = myContainer; // implicit conversion
 
-myIEnum.ToArray()   // Converting to array
-myIEnum.ToList()    // Converting to list
-myIEnum.Cast<int>() // Cast back to original container type
+myIEnum.Exlude(myIEnum2) // remove myIEnum2 from myIEnum
+myIEnum.Union(myIEnum2)  // joint two IEnumerable<T>
+myIEnum.ToArray()        // Converting to array
+myIEnum.ToList()         // Converting to list
+myIEnum.Cast<int>()      // Cast back to original container type
 
 // Query subset of container
 var myQuery = from item in myContainer //for each number
@@ -64,8 +70,13 @@ string myString = "one"+"two";
 string myString = "one"+1; //auto converts to string using concatonation
 string myString = 1; //doesn't auto convert
 
-str.ToUpper(); //returns upper case version
-str.ToLower(); //returns lower case version
+str.ToUpper();        //returns upper case version
+str.ToLower();        //returns lower case version
+str.PadLeft(x);       //add x spaces to front of string 
+str.PadRight(x);      //add x spaces to end of string 
+str.PadLeft(x,'a');   //add x 'a' to front of string 
+str.PadRight(x,'a');  //add x 'a' to end of string 
+str.Split(seperator); //splits into string[] minus the seperator
 
 string.Empty //returns empty string
 
@@ -137,6 +148,17 @@ Array.Copy(myArray1, myArray2, n) //copies n elements from start of 1 to start o
 Array.Clear(myArray, i, n) //clears to default from index i for n number of elements
 
 ////////////////////////////////////////////////////////////////////////////////////////////
+//ARRAYLIST
+////////////////////////////////////////////////////////////////////////////////////////////
+//• Derives from IEnumerable, not IEnumerable<T> and cannot use LINQ
+//• Stores a list of System.Object
+
+ArrayList myArrayList = new ArrayList();
+
+myArrayList[0]
+myArrayList.Add("myObject")
+
+////////////////////////////////////////////////////////////////////////////////////////////
 //LISTS
 ////////////////////////////////////////////////////////////////////////////////////////////
 //• Dynamically resizes, memory layout same as std::vector
@@ -144,7 +166,6 @@ Array.Clear(myArray, i, n) //clears to default from index i for n number of elem
 //• Does not have virtual methods for Add/Remove as it was designed to be fast
 //• Inherit from ICollection<T> not IList<T> due to no virtual methods
 
-using System.Collections.Generic;
 List<int> myList = new List<int>();
 List<int> myList = new List<int>(20); //reserve space for 20 elements
 List<int> myList = new List<int>{ 1, 2, 3 };

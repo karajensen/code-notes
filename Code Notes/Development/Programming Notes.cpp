@@ -23,16 +23,15 @@ long double (L)            ---              8         Depends on machine, minimu
 ---                        decimal (m)      12        28 digits
 pointer/reference          object           4/8       Depends on whether 32/64 bit platform
 
-
 VALUE TYPES: have automatic storage, stored on stack/register
-REFERENCE TYPES: have dynamic storage, stored on heap
+REFERENCE TYPES: have dynamic storage, stored on heap, accessed through references/pointers
 STATIC TYPES: have static storage, stored in fixed seperate memory/data segment
+OBJECTS: Instances of a class
 
 LOCAL SCOPE: Variable defined in a block
 GLOBAL SCOPE: Variable defined outside a block, can be in a namespace
 CLASS SCOPE: Member Variables in a class
 FUNCTION PROTOTYPE SCOPE: Variables in function prototype
-
 PUBLIC/EXTERNAL LINKAGE: Can be accessed accross files
 PRIVATE/INTERNAL LINKAGE: Can only be accessed by file declared in
 
@@ -104,17 +103,12 @@ Null character = \0
 • Accepts machine code, Outputs machine code in form of executable
 • Links together your code with any external libraries
 
-OPCODE: single executable machine language instruction
-OPERANDS: arguments given after the opcode
-MNEMONICS: set to equal an opcode or a series of opcodes/operands
-
 COMPILE TIME: Action performed during compilation; uses no execution time.
 RUN TIME: Action performed during program execution
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//MEMORY REPRESENTATION
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
+OPCODE: single executable machine language instruction
+OPERANDS: arguments given after the opcode
+MNEMONICS: set to equal an opcode or a series of opcodes/operands
 ENDIAN-NESS: Ordering of bytes in memory of a data object
 
 LITTLE ENDIAN (BACKWARDS)
@@ -196,6 +190,9 @@ UNARY FUNCTION: called with one argument.
 BINARY FUNCTION: called with two arguments.
 FRIEND FUNCTION: can see a class's private parts
 
+STATIC BINDING: Uses pointer/ref type to determine function to call at compilation
+DYNAMIC BINDING: Uses internal held object type to determine function to call at runtime
+
 FUNCTION CALLING
 1) program places address of calling function on stack
 2) any variables used locally are created as auto vars and placed on stack
@@ -232,62 +229,41 @@ FASTCALL CALLING CONVENTION
 • Calling function cleans the stack
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//OBJECT ORIENTED PROGRAMMING
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-6 MOST IMPORTANT OOP FEATURES
-    P • Polymorphism
-    A • Abstraction
-    I • Inheritance
-    R • Reusability of code
-    E • Encapsulation 
-    D • Data hiding
-
-POLYMORPHISM: 
-When a function can operate with values of at least two distinct types and executes type-appropriate code
-
-ABSTRACTION: 
-Sectioning off variables/functions into private (IMPLEMENTATION) and public (INTERFACE) of a class
- 
-INHERITANCE:
-Using previously written classes as a base for new classes.
-
-RE-USABILITY:
-Using inheritance/functions/templates to prevent code duplication.
-
-DATA HIDING: 
-The insulation of data from direct access by a program
-
-ENCAPSULATION: 
-The wrapping of data and functions with common features into a single class/structure
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
 //CLASSES
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 AGGREGATE:
-• Array/class/struct/union with no user-declared constructors, private and 
-  protected non-static data members, base classes and virtual functions.
+• Array/class/struct/union
+• No user-declared constructors
+• No private/protected non-static members
+• No Base classes or virtual functions
 • Array is an aggregate even it is an array of non-aggregate class type.
-• Doesn't matter what static members it has
 • Can be initialized with {}
+• Doesn't matter what static members it has
 
 PLAIN-OLD-DATA (POD):
-• An aggregate class with no user-declared assignment op/destructor,
-  Non-static members have to be POD types, non-static arrays have to hold 
-  POD types and references have to refer to POD types;
-• Doesn't matter what static members it has
+• Aggregate class with extra requirements
+• No user-declared assignment operator/destructor
+• Non-static members must be POD types
+• Non-static arrays/references/pointers must hold POD types
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//INHERITANCE
+//OBJECT ORIENTED PROGRAMMING
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+POLYMORPHISM: Implementing the same methods in different ways
+ABSTRACTION: Providing an interface for commonly used actions (eg. IMyClass, =0)
+INHERITANCE: Using previously written classes as a base for new classes
+RE-USABILITY: Preventing code duplication (eg. templates, shared functions/classes)
+DATA HIDING: Type of encapsulation- hiding members from view (eg. Pimpl)
+ENCAPSULATION: Hiding private implementation details behind a public interface/class (eg. private/public)
+
+===============================================================================
+INHERITANCE
+===============================================================================
 COVARIANCE: Allows assinging MyClass or derived from it to MyClass object [polymorphism basis]
 CONTRAVARIANCE: Allows assigning MyClass or what MyClass derived from to MyClass object 
 INVARIANCE: Allows neither
-
-STATIC BINDING: Uses pointer/ref type to determine function to call at compilation
-DYNAMIC BINDING: Uses held object type to determine function to call at runtime
 
 IS-A RELATIONSHIP
 Class inherits an interface + implementation for non pure virtual functions
@@ -298,12 +274,11 @@ Class acquires implementation without the interface
 Interface can still be used within class methods, but not outside class
 Eg. Containment/Composition/Layering, Private/Protected inheritance
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//POLYMORPHISM
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-To exhibit polymorphism, f() must be able to operate with values of at least 
-two distinct types finding and executing type-appropriate code.
+===============================================================================
+POLYMORPHISM
+===============================================================================
+AD-HOC POLYMORPHISM: object types are explicitly defined for overloading
+PARAMETRIC POLYMORPHISM: object types aren't defined, any object can be used
 
 1) PREPROCESSING (AD-HOC/PARAMETRIC)
    #define f(int x) ((x) += 2)
@@ -321,9 +296,6 @@ two distinct types finding and executing type-appropriate code.
 4) VIRTUAL METHODS (AD-HOC)
    BaseClass* pBase = &derivedObject;
    pBase->MyVirtualFunction();
-
-AD-HOC POLYMORPHISM: object types are explicitly defined for overloading
-PARAMETRIC POLYMORPHISM: object types aren't defined, any object can be used
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //EXCEPTIONS
@@ -427,40 +399,42 @@ Divide by 2ˣ:     value >>= 3 is same as value /= 2³
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 ==============================================================================================
-CREATION PATTERNS
-==============================================================================================
-FACTORY: Creates groups of objects
-BUILDER: Connects together components of the one object
-PROTOTYPE: Copies from a set of base objects to create new objects
-SINGLETON: Ensure a class only has one instance and allow anyone seeing that class to have access to it
-                                                                             
-==============================================================================================
-STRUCTURAL PATTERNS                                                          
+CREATIONAL PATTERNS
 ==============================================================================================
 
-PIMPL: Allows changing the implementation without touching the interface
-DECORATOR: Allows mixing/matching of classes without need for writing a subclass for each and every match
-FLYWEIGHT: Use of an object to store common information for a class of objects
-COMPOSITE: A class built ontop of an object class that manages groups of the objects
-PROXY: Uses a pointer/reference/proxy object to send changes to the real object
-FACADE: Wrapper class on top of a complicated class
-ADAPTER: Wrapper class on top of unrelated classes
-BRIDGE: Creates a bridge between a class and different ways of using that class
+ABSTRACT FACTORY  Creates an instance of several families of classes    When requiring interface
+FACTORY METHOD    Creates an instance of several derived classes        When requiring object
+BUILDER           Connects together components of the one object        
+PROTOTYPE         A fully initialized instance to be copied or cloned   
+SINGLETON         A class of which only a single instance can exist     Main application class
+                                                   
+==============================================================================================
+STRUCTURAL PATTERNS  
+==============================================================================================
+
+PIMPL       Allows changing the implementation without touching the interface   Data hiding
+DECORATOR   Allows mixing subclasses to form a final object                     GUI design
+FLYWEIGHT   A small object that stores common information for a class
+COMPOSITE   A class that managers groups of an object                           Object managers
+PROXY       An object representing and changing another object                  Reference/pointers
+FACADE
+ADAPTER
+BRIDGE
            
 ==============================================================================================
 BEHAVIOURAL PATTERNS
 ==============================================================================================
 
-MEMENTO: Allows object to restore to a previous state (undo/redo)
-ITERATOR: Allows movement over range of elements in a container
-INTERPRETER: Decodes each symbol in a string/sentence
-TEMPLATE: Skeleton algorithm; changing a method won't change the overall algorithm
-COMMAND: Functor/lambda holding a method, the object to call the method and any arguments
-CHAIN OF RESPONSIBILITY: Passes a command through a series of objects until handled
-STATE: Alters an object's behaviour when its state changes
-STRATEGY: Allows choosing an algorithm at runtime
-VISITOR: Seperates objects from their methods; calls custom methods in derived objects from base*
-OBSERVER: Sends an event message when an object changes state to any observers
-MEDIATOR: Talks between two classes without either having to know about the other
+STRATEGY        Family of interchangable algorithms
+COMMAND         Holds a method and anything needed to call that method          Functors/lambdas
+CHAIN OF RESP   Passes a command through series of objects until handled        Events
+ITERATOR        Allows movement over range of elements in a container           Containers
+OBSERVER        Looks at another object and updated when that object is
+STATE           Alters an objects behavior when its state changes
+MEDIATOR        Talks between two classes that don't know each other
+VISITOR         Function class that works on a particular object type
+MEMENTO         Allows capture and restore an objects internal state            Undo/Redo
+INTERPRETER     Decodes each symbol in a string for a particular meaning        Compilers
+TEMPLATE        Algorithm with only function calls to other classes
 
 *///////////////////////////////////////////////////////////////////////////////////////////////////

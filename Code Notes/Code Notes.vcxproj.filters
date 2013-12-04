@@ -11,29 +11,26 @@
     <Filter Include="Languages">
       <UniqueIdentifier>{89a625b0-f51a-450f-b16f-c2724f0b99a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Languages\Maya Plugin Templates">
-      <UniqueIdentifier>{f4b28f55-3d6d-44e6-9f44-0420248e5765}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Development">
       <UniqueIdentifier>{97902568-2e3d-4035-9b93-2b2d577eb5cf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Images">
       <UniqueIdentifier>{d5246f57-2735-4357-a353-33eb12eb8d89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game Programming\Shaders">
-      <UniqueIdentifier>{710b86da-7bb9-4035-b3bf-eb7663361258}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Development\Classes">
-      <UniqueIdentifier>{39dfb591-3f86-4639-97f1-1d1cf46132e9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Managed Source">
       <UniqueIdentifier>{6a4b5a84-606c-48e3-a497-af44e2c5a910}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Development\Examples">
-      <UniqueIdentifier>{57ec459d-69d5-4b37-a1b9-24505b92fac0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Languages\Examples">
-      <UniqueIdentifier>{c5a5c66f-251b-4981-b12d-cc93dac934dd}</UniqueIdentifier>
+      <UniqueIdentifier>{d7791879-ac81-42b7-8093-357ed87496f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Programming\Shaders">
+      <UniqueIdentifier>{434d317d-1842-4ace-8f00-7ad4b34d225f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Development\Classes">
+      <UniqueIdentifier>{e36ef539-6dea-4f46-8d29-475cf275745e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Development\Examples">
+      <UniqueIdentifier>{d6c4568d-c066-4cf0-9a5f-4a7491f60ff7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -91,21 +88,6 @@
     <ClCompile Include="Languages\Python notes.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
-    <ClCompile Include="Languages\Code Examples\MEL - Special Shatter.cpp">
-      <Filter>Languages\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Classes\assimpmesh.cpp">
-      <Filter>Development\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Classes\camera.cpp">
-      <Filter>Development\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Classes\logger.cpp">
-      <Filter>Development\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Classes\timer.cpp">
-      <Filter>Development\Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Algorithms.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -142,81 +124,6 @@
     <ClCompile Include="Game Programming\Simulation.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
-    <ClCompile Include="Languages\Maya API Command Class.cpp">
-      <Filter>Languages\Maya Plugin Templates</Filter>
-    </ClCompile>
-    <ClCompile Include="Languages\Maya API Node Class.cpp">
-      <Filter>Languages\Maya Plugin Templates</Filter>
-    </ClCompile>
-    <ClCompile Include="Languages\Maya API Locator Class.cpp">
-      <Filter>Languages\Maya Plugin Templates</Filter>
-    </ClCompile>
-    <ClCompile Include="Classes\input.cpp">
-      <Filter>Development\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Abstract Factory.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Bridge.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Builder.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Chain of Responsibility.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Command.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Composite.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Decorator.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Facade-Adapter.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Flyweight.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Interpreter.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Iterator.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Memento.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Obsever-Mediator.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Pimpl.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Prototype.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Proxy.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Singleton.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - State.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Strategy.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Template.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Pattern - Visitor.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
     <ClCompile Include="Development\Algorithms and Structures.cpp">
       <Filter>Development</Filter>
     </ClCompile>
@@ -234,9 +141,6 @@
     </ClCompile>
     <ClCompile Include="Development\Web Development.cpp">
       <Filter>Development</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Code Examples\Examples - Algorithms and Structures.cpp">
-      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Game Programming\Bullet Physics.cpp">
       <Filter>Game Programming</Filter>
@@ -277,36 +181,51 @@
     <ClCompile Include="C++CLI.cpp">
       <Filter>Managed Source</Filter>
     </ClCompile>
+    <ClCompile Include="Code Examples\Example - Algorithms and Structures.cpp">
+      <Filter>Development\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Code Examples\Example - Behavioural Patterns.cpp">
+      <Filter>Development\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Code Examples\Example - Creational Patterns.cpp">
+      <Filter>Development\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Code Examples\Example - Structural Patterns.cpp">
+      <Filter>Development\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Code Examples\Classes\assimpmesh.cpp">
+      <Filter>Development\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Code Examples\Classes\camera.cpp">
+      <Filter>Development\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Code Examples\Classes\input.cpp">
+      <Filter>Development\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Code Examples\Classes\logger.cpp">
+      <Filter>Development\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Code Examples\Classes\timer.cpp">
+      <Filter>Development\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Code Examples\Example - MEL Special Shatter.cpp">
+      <Filter>Languages\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Code Examples\Example - Maya API Command.cpp">
+      <Filter>Languages\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Code Examples\Example - Maya API Locator.cpp">
+      <Filter>Languages\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Code Examples\Example - Maya API Node.cpp">
+      <Filter>Languages\Examples</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Languages\Code Examples\Max - ConvexHull.ms">
-      <Filter>Languages\Examples</Filter>
-    </None>
-    <None Include="Languages\Code Examples\PyQt - CodingWindowInMaya.py">
-      <Filter>Languages\Examples</Filter>
-    </None>
-    <None Include="Languages\Code Examples\PyQt - CreatingWindowInDesigner.py">
-      <Filter>Languages\Examples</Filter>
-    </None>
-    <None Include="Languages\Code Examples\PyQt - FileReader.pyw">
-      <Filter>Languages\Examples</Filter>
-    </None>
-    <None Include="Languages\Code Examples\Python - RealFlow MultiBody Loader.rfs">
-      <Filter>Languages\Examples</Filter>
-    </None>
     <None Include="Cheatsheet.txt" />
     <None Include="Hotkeys.txt" />
     <None Include="..\.gitignore" />
     <None Include="Symbols.txt" />
-    <None Include="Game Programming\Shaders\main.glsl">
-      <Filter>Game Programming\Shaders</Filter>
-    </None>
-    <None Include="Game Programming\Shaders\normal-depth.glsl">
-      <Filter>Game Programming\Shaders</Filter>
-    </None>
-    <None Include="Game Programming\Shaders\toon.glsl">
-      <Filter>Game Programming\Shaders</Filter>
-    </None>
     <None Include="C# .NET Framework.cs">
       <Filter>Managed Source</Filter>
     </None>
@@ -322,35 +241,27 @@
     <None Include="C# Memory.cs">
       <Filter>Managed Source</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Classes\assimpmesh.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\camera.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\color.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\dynamicarray.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\logger.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\matrix.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\timer.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\vector3.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\input.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
+    <None Include="Code Examples\Shaders\main.glsl">
+      <Filter>Game Programming\Shaders</Filter>
+    </None>
+    <None Include="Code Examples\Shaders\normal-depth.glsl">
+      <Filter>Game Programming\Shaders</Filter>
+    </None>
+    <None Include="Code Examples\Shaders\toon.glsl">
+      <Filter>Game Programming\Shaders</Filter>
+    </None>
+    <None Include="Code Examples\Example - Maxscript Convex Hull.ms">
+      <Filter>Languages\Examples</Filter>
+    </None>
+    <None Include="Code Examples\Example - PyQt Creating Window in Designer.py">
+      <Filter>Languages\Examples</Filter>
+    </None>
+    <None Include="Code Examples\Example - PyQt Creating Window In Maya.py">
+      <Filter>Languages\Examples</Filter>
+    </None>
+    <None Include="Code Examples\Example - PyQt File Reader.pyw">
+      <Filter>Languages\Examples</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\Code - BigONotationGraph.png">
@@ -544,22 +455,51 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Game Programming\Shaders\blur-sharpen.hlsl">
+    <ClInclude Include="Code Examples\Classes\assimpmesh.h">
+      <Filter>Development\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Code Examples\Classes\camera.h">
+      <Filter>Development\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Code Examples\Classes\color.h">
+      <Filter>Development\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Code Examples\Classes\dynamicarray.h">
+      <Filter>Development\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Code Examples\Classes\input.h">
+      <Filter>Development\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Code Examples\Classes\logger.h">
+      <Filter>Development\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Code Examples\Classes\matrix.h">
+      <Filter>Development\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Code Examples\Classes\timer.h">
+      <Filter>Development\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Code Examples\Classes\vector3.h">
+      <Filter>Development\Classes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Code Examples\Shaders\blur-sharpen.hlsl">
       <Filter>Game Programming\Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Game Programming\Shaders\bounds.fx">
+    <FxCompile Include="Code Examples\Shaders\bounds.fx">
       <Filter>Game Programming\Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Game Programming\Shaders\glow-depth.hlsl">
+    <FxCompile Include="Code Examples\Shaders\glow-depth.hlsl">
       <Filter>Game Programming\Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Game Programming\Shaders\main.fx">
+    <FxCompile Include="Code Examples\Shaders\main.fx">
       <Filter>Game Programming\Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Game Programming\Shaders\post.hlsl">
+    <FxCompile Include="Code Examples\Shaders\post.hlsl">
       <Filter>Game Programming\Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Game Programming\Shaders\toon.fx">
+    <FxCompile Include="Code Examples\Shaders\toon.fx">
       <Filter>Game Programming\Shaders</Filter>
     </FxCompile>
   </ItemGroup>

@@ -356,7 +356,7 @@ NON-ROTATING OBJECTS
 | u = vᵃ-vᵇ | 
  -----------
  u = Relative velocity of vertex Pᵃ on A which collides with object B
- vᵃ/vᵇ = Linear velocity = Translational velocity
+ vᵃ,vᵇ = Linear velocity = Translational velocity
 
 RESULT IN COLLISION: 
 

@@ -32,10 +32,10 @@
     char * one = "one"; one = "two" can be done.
     char * lit = "literal"; lit[0] = 'h' cannot be done.
 
-[10] Order that function parameters are evaluated is up to the complier.
-     myFunction(getA(),getB()) can be called getA()->getB()->myFunction() or
-     getB()->getA()->myFunction(). With int z = x++ + y++; 
-     x++ or y++ can be evaluated in any order
+[10] Order that function arguments/calls are evaluated is up to the complier.
+     MyFn(getA(), myInt); getA/myInt called in any order
+     y = x++ - getA(); x++/getA evaluated in any order
+     getA() && getB(); conditional logic always left to right
 
 [11] Calling a virtual/pure virtual function in constructor is undefined 
      behaviour. Base version will be called but dangerous
@@ -72,6 +72,9 @@
 
 [20] Between two sequence points a variable must not be modified more than 
      once. Eg. i = ++i is bad.
+
+[21] Using swap/= on a shared pointer removes it from the previous reference 
+     count and adds it onto the new reference count.
 
 ////////////////////////////////////////////////////////////////////////////////////
 //STL CHEATSHEET
@@ -242,7 +245,7 @@ SEQUENCE POINTS:
 ORDER OF ARGUMENT EVALUATION
 [C# ] Left to right always
 [CLI] Unknown
-[C++] Compiler specific
+[C++] Conditional operators left to right, everything else Compiler specific
 
 ====================================================================================
 CLASS/STRUCT DIFFERENCES

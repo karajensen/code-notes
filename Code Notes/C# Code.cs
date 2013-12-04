@@ -36,6 +36,7 @@ default(bool) //false
 default(number) //0
 default(objects) //null
 default(String) //null
+default(enum) //0
 
 //VARIABLE CONSTANTS
 float.PositiveInfinity
@@ -126,8 +127,7 @@ bool hasInterface = myClass is IMyClass;
 
 //ENUM
 //implicitly have zero entry
-//default(enum) is zero
-//can specify use of any int type except char
+//can use byte, sbyte, short, ushort, int, uint, long, and ulong (not char)
 public enum MyEnum //defaults to int
 {
     ZERO = 0,
