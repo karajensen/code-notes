@@ -50,6 +50,10 @@ git commit -am "Description"
 DISCARD ALL UNCOMMITED CHANGES
 git reset --hard
 
+REVERT BACK TO COMMIT
+git reset --hard commitid
+[get commitid from the git log second column]
+
 PUSH LOCAL CHANGES TO REMOTE
 git push
 git push origin master

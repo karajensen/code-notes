@@ -249,6 +249,32 @@ NewValue = Value & WriteMask
 //TRANSFORMATIONS
 ////////////////////////////////////////////////////////////////////////////// 
 
+----------------
+|  YAW:    Y   |
+|  PITCH:  X   |
+|  ROLL:   Z   |
+----------------
+
+EULER ANGLES
+• Set of pitch, roll, yaw combined to form a matrix
+• Suffer from gimbal lock
+• Less storage space needed (3 values)
+
+MATRICES: 
+• Suffer from gimbal lock if used with Euler Angles
+• More storage space needed (12 values)
+• Slow, rounding errors
+
+QUATERNIONS: 
+• No Gimbal lock
+• Less storage space needed (4 values)
+• Fast, less rounding errors
+
+GIMBAL LOCK
+• A set of three gimbals mounted together to allow three degrees of freedom
+• If the middle gimbal is rotated greater than 90, the top and bottle gimbals 
+  are aligned and in gimbal lock losing a degree of freedom. 
+
 ==============================================================================
 VIEW MATRIX
 Inverse of the Camera World Matrix
@@ -329,39 +355,6 @@ To get final coordinate, divide by w (which is screen space z)
 | y' = y/(ztan(α/2))         = By/z    |
 | z' = (f/f-n)-(fn/(z(f-n))) = C+(D/z) |
  --------------------------------------
-
-///////////////////////////////////////////////////////////////////////////////////////
-//CAMERAS
-///////////////////////////////////////////////////////////////////////////////////////
-
-----------------
-|  YAW:    Y   |
-|  PITCH:  X   |
-|  ROLL:   Z   |
-----------------
-
-FIXED POSITION: No movement of camera
-FIRST PERSON: Player is camera
-THIRD PERSON: Camera floats above player
-LOOK-AT POSITION: Position of target object
-DESIRED POSITION: Position where camera intends to move to
-ORIENTATION: Current direction in world space; Yaw, pitch, roll
-
-=============================================================================
-GIMBAL LOCK
-=============================================================================
-A set of three gimbals mounted together to allow three degrees of freedom
-If the middle gimbal is rotated greater than 90, the top and bottle gimbals 
-are aligned and in gimbal lock losing a degree of freedom. 
-
-MATRICES: 
-- Suffer from gimbal lock
-- More storage space needed (12 values)
-
-QUATERNIONS: 
-- Fix gimbal lock
-- Less storage space needed (4 values, 1 scale, 3 translation = 8)
-- Have to compute a final matrix from them anyway
 
 ///////////////////////////////////////////////////////////////////////////////////////
 //OPTIMISATION

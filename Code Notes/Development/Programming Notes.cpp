@@ -404,8 +404,8 @@ CREATIONAL PATTERNS
 
 ABSTRACT FACTORY  Creates an instance of several families of classes    When requiring interface
 FACTORY METHOD    Creates an instance of several derived classes        When requiring object
-BUILDER           Connects together components of the one object        
-PROTOTYPE         A fully initialized instance to be copied or cloned   
+BUILDER           Different objects are initialised by same process     Complex initialisation sharing      
+PROTOTYPE         A fully initialized instance to be copied or cloned   Multiple object variations
 SINGLETON         A class of which only a single instance can exist     Main application class
                                                    
 ==============================================================================================
@@ -414,10 +414,10 @@ STRUCTURAL PATTERNS
 
 PIMPL       Allows changing the implementation without touching the interface   Data hiding
 DECORATOR   Allows mixing subclasses to form a final object                     GUI design
-FLYWEIGHT   A small object that stores common information for a class
-COMPOSITE   A class that managers groups of an object                           Object managers
+FLYWEIGHT   A fully initialized instance to referenced                          Sharing objects
+COMPOSITE   A class that manages groups of objects                              Object managers
 PROXY       An object representing and changing another object                  Reference/pointers
-FACADE
+FACADE      
 ADAPTER
 BRIDGE
            
@@ -425,16 +425,16 @@ BRIDGE
 BEHAVIOURAL PATTERNS
 ==============================================================================================
 
-STRATEGY        Family of interchangable algorithms
-COMMAND         Holds a method and anything needed to call that method          Functors/lambdas
-CHAIN OF RESP   Passes a command through series of objects until handled        Events
-ITERATOR        Allows movement over range of elements in a container           Containers
-OBSERVER        Looks at another object and updated when that object is
+STRATEGY        Family of interchangable algorithms                         Switching algorithms
+COMMAND         Holds a method and anything needed to call that method      Functors/lambdas
+CHAIN OF RESP   Passes a command through series of objects until handled    Events
+ITERATOR        Allows movement over range of elements in a container       Containers
+OBSERVER        Looks at another object and updated when that object is     Ad-Hoc object updates
 STATE           Alters an objects behavior when its state changes
-MEDIATOR        Talks between two classes that don't know each other
-VISITOR         Function class that works on a particular object type
-MEMENTO         Allows capture and restore an objects internal state            Undo/Redo
-INTERPRETER     Decodes each symbol in a string for a particular meaning        Compilers
-TEMPLATE        Algorithm with only function calls to other classes
+MEDIATOR        Talks between two classes that don't know each other        
+VISITOR         Class methods are seperated into a seperate class           High method code change
+MEMENTO         Allows capture and restore an objects internal state        Undo/Redo
+INTERPRETER     Decodes each symbol in a string for a particular meaning    Compilers
+TEMPLATE        Algorithm with only function calls to other classes         Object algorithm variations
 
 *///////////////////////////////////////////////////////////////////////////////////////////////////

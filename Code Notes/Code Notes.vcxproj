@@ -96,13 +96,11 @@
     <ClCompile Include="Code Examples\Classes\logger.cpp" />
     <ClCompile Include="Code Examples\Classes\timer.cpp" />
     <ClCompile Include="Code Examples\Example - Algorithms and Structures.cpp" />
-    <ClCompile Include="Code Examples\Example - Behavioural Patterns.cpp" />
-    <ClCompile Include="Code Examples\Example - Creational Patterns.cpp" />
+    <ClCompile Include="Code Examples\Example - Design Patterns.cpp" />
     <ClCompile Include="Code Examples\Example - Maya API Command.cpp" />
     <ClCompile Include="Code Examples\Example - Maya API Locator.cpp" />
     <ClCompile Include="Code Examples\Example - Maya API Node.cpp" />
     <ClCompile Include="Code Examples\Example - MEL Special Shatter.cpp" />
-    <ClCompile Include="Code Examples\Example - Structural Patterns.cpp" />
     <ClCompile Include="Code Notes.cpp" />
     <ClCompile Include="Code.cpp" />
     <ClCompile Include="Development\Algorithms and Structures.cpp" />
@@ -172,6 +170,7 @@
     <Image Include="Images\Code - Boxing.gif" />
     <Image Include="Images\Code - C# Operator Precedence.png" />
     <Image Include="Images\Code - C++ Operator Precedence.png" />
+    <Image Include="Images\Code - Design Patterns.png" />
     <Image Include="Images\Code - Execution Environment.png" />
     <Image Include="Images\Code - Hex Converting.png" />
     <Image Include="Images\Code - Iterators.png" />
@@ -191,7 +190,6 @@
     <Image Include="Images\Graphics - Global Illumination.png" />
     <Image Include="Images\Graphics - Importons.png" />
     <Image Include="Images\Graphics - Irradiance Particles.png" />
-    <Image Include="Images\Graphics - Mapping vertex declarations to shader.PNG" />
     <Image Include="Images\Graphics - Occulsion Culling.png" />
     <Image Include="Images\Graphics - Portals.png" />
     <Image Include="Images\Graphics - Primitives.jpg" />
@@ -218,6 +216,7 @@
     <Image Include="Images\MathsPhysics - plane equation.png" />
     <Image Include="Images\MathsPhysics - polar coordinates.png" />
     <Image Include="Images\MathsPhysics - Rotation around arbitrary axis.png" />
+    <Image Include="Images\MathsPhysics - Trigonometry.png" />
     <Image Include="Images\Shader - Bump Mapping Normals.png" />
     <Image Include="Images\Shader - Colors.png" />
     <Image Include="Images\Shader - Inverse Square Attenuation.png" />

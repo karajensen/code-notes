@@ -205,6 +205,32 @@ if(FAILED(D3DXCreateEffectFromFile(d3ddev,filename,0,0,
 }
 
 ////////////////////////////////////////////////////////////////////////////// 
+//DIRECTX MAPPING VERTEX DATA TO VERTEX SHADER
+////////////////////////////////////////////////////////////////////////////// 
+
+struct Vertex
+{
+    D3DXVECTOR3 position;
+    D3DXVECTOR3 normal;
+    D3DXVECTOR2 uv1;
+    D3DXVECTOR2 uv2;
+};
+
+D3DVERTEXELEMENT9 VertexDec[] =
+{
+    { 0, 0,  D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
+    { 0, 12, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL,   0 },     
+    { 0, 24, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0 },
+    { 0, 32, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 1 },
+    D3DDECL_END()
+}; 
+
+OutputVS VertexShader(float4 position : Position0,
+                      float4 normal   : Normal0,
+                      float2 uv1      : TEXCOORD0,
+                      float2 uv2      : TEXCOORD1)
+
+////////////////////////////////////////////////////////////////////////////// 
 //DIRECTX SEND INFO TO A SHADER
 ////////////////////////////////////////////////////////////////////////////// 
 

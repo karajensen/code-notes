@@ -184,15 +184,6 @@
     <ClCompile Include="Code Examples\Example - Algorithms and Structures.cpp">
       <Filter>Development\Examples</Filter>
     </ClCompile>
-    <ClCompile Include="Code Examples\Example - Behavioural Patterns.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Code Examples\Example - Creational Patterns.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Code Examples\Example - Structural Patterns.cpp">
-      <Filter>Development\Examples</Filter>
-    </ClCompile>
     <ClCompile Include="Code Examples\Classes\assimpmesh.cpp">
       <Filter>Development\Classes</Filter>
     </ClCompile>
@@ -219,6 +210,9 @@
     </ClCompile>
     <ClCompile Include="Code Examples\Example - Maya API Node.cpp">
       <Filter>Languages\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Code Examples\Example - Design Patterns.cpp">
+      <Filter>Development\Examples</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -325,9 +319,6 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Irradiance Particles.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Mapping vertex declarations to shader.PNG">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Occulsion Culling.png">
@@ -451,6 +442,12 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\MathsPhysics - GJK Collision Detection.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Design Patterns.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Trigonometry.png">
       <Filter>Images</Filter>
     </Image>
   </ItemGroup>

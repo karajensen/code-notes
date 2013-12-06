@@ -9,6 +9,9 @@ m = milli = 10¯³    k = kilo = 10³
 µ = micro = 10¯⁶    M = mega = 10⁶
 n = nano = 10¯⁹     G = giga = 10⁹
 
+Degrees to radians:  (PI / 180) * degrees;
+Radians to degrees:  (180 / PI) * radians;
+
 -------------------------------------------------------------------------
 DERIVATIVES/ANTI-DIFFERENTIATION
 --------------------------------------------------------------------------
@@ -33,29 +36,48 @@ X                   Y
        /|                /|       sinƟ = O/C = y/‖r‖
     r / |             C / |       cosƟ = A/C = x/‖r‖  
      /  | ‖r‖sinƟ      /  | O     tanƟ = O/A = x/y
-    /Ɵ  |             /Ɵ  |
-    ----              ----
-   ‖r‖cosƟ              A
+    /Ɵ  |             /Ɵ  |       cscƟ = C/O
+    ----              ----        secƟ = C/A
+   ‖r‖cosƟ              A         cotƟ = A/O
 
 
-IDENTITIES:
+IDENTITIES WHEN R = 1 (UNIT CIRCLE)
+sinƟ = y
+cosƟ = x
+tanƟ = sinƟ / cosƟ
+cotƟ = cosƟ / sinƟ
+cscƟ = 1 / sinƟ
+secƟ = 1 / cosƟ
+cotƟ = 1 / tanƟ
+
+PYTHAGOREAN THEOREM 
+a² + b² = c²
+sin²Ɵ + cos²Ɵ = 1
+tan²Ɵ + 1 = sec²Ɵ
+1 + cot²Ɵ = csc²Ɵ
+
+DOUBLE ANGLE FORMULAS
 sin(2Ɵ) = 2sinƟcosƟ
 cos(2Ɵ) = cos²Ɵ-sin²Ɵ = 2cos²Ɵ-1 = 1-2sin²Ɵ
 tan(2Ɵ) = (2tanƟ)/(1-tan²Ɵ)
 
+EVEN/ODD FOMULAS
 sin(-Ɵ) = -sinƟ
-cos(-Ɵ) = sinƟ
+cos(-Ɵ) = cosƟ
 tan(-Ɵ) = -tanƟ
+csc(-Ɵ) = -cscƟ
+sec(-Ɵ) = secƟ
+cot(-Ɵ) = -cotƟ
 
+HALF ANGLE FORMULAS
 sin²Ɵ = ¹/₂(1-cos(2Ɵ))
 cos²Ɵ = ¹/₂(1+cos(2Ɵ))
 tan²Ɵ = (1-cos(2Ɵ)) / (1+cos(2Ɵ))
-sin²Ɵ + cos²Ɵ = 1
 
 SINE WAVES:
 To combine waves, just add each equation to each other
 To get circular waves, use radius r as x
- -------------------
+ -------------------    
 | y = asin(kx-wt+ɸ) |
  -------------------
  a = amplitude; height of sine wave
@@ -82,11 +104,10 @@ Contains: Zero vector
           Scalar multiplication of any vector (multiplicative closure)
 
 LINEAR INDEPENDENCE: 
-Obtained if a vector cannot be written in terms of other vectors in the set
-    
-    eg(1):  Basis Vectors               S = {v₀,v₁,V₂...vⁿ}
-            Resulting/Spanned Vectors   T = {V₀,V₁,V₂...Vⁿ}
-            Where                       V = a₀v₀ + a₁v₁ + a₂v₂ + ... + aⁿvⁿ
+Obtained if a vector cannot be written in terms of other vectors in the set    
+Basis Vectors               S = {v₀,v₁,V₂...vⁿ}
+Resulting/Spanned Vectors   T = {V₀,V₁,V₂...Vⁿ}
+Where                       V = a₀v₀ + a₁v₁ + a₂v₂ + ... + aⁿvⁿ
 
 LINEAR SPACE: Vector space with inner/dot product and norm
 EUCLIDEAN SPACE: Linear space using real numbers for scalars
@@ -357,7 +378,6 @@ PLANE LINEAR EQUATION
  | ax + by + cz + d = 0 | where d = -(ax₀ + by₀ + cz₀)
   ----------------------
 
-
 //////////////////////////////////////////////////////////////////////////////
 //CIRCLES
 //////////////////////////////////////////////////////////////////////////////
@@ -372,10 +392,11 @@ PLANE LINEAR EQUATION
 (x-center.x)² + (y-center.y)² < (z-center.z)² = r²  [inside]
 (x-center.x)² + (y-center.y)² > (z-center.z)² = r²  [outside]
 
-
 //////////////////////////////////////////////////////////////////////////////
 //MATRICES
 //////////////////////////////////////////////////////////////////////////////
+
+MATRIX: Two dimensional array of numeric data
 
 DIAGONAL MATRIX                 IDENTITY MATRIX
 | a 0 0 |                       | 1 0 0 | 
@@ -612,6 +633,17 @@ SCALING
 | 0 0 0  1 || 1  |   |  1   |
 
 ==============================================================================
+2D ROTATION
+==============================================================================
+     
+| cosƟ -sinƟ  0 || x |   | x' |
+| sinƟ  cosƟ  0 || y | = | y' |
+|  0     0    1 || 0 |   | 0  |
+
+x' = xcosƟ - ysinƟ
+y' = xsinƟ + ycosƟ
+
+==============================================================================
 ROTATION
 ==============================================================================
 
@@ -627,16 +659,14 @@ ROTATION
 |   0     0    1  0 |   |  0 -sinƟ  cosƟ  0 |    | sinƟ  0  cosƟ  0 |
 |   0     0    0  1 |   |  0   0     0    1 |    |  0    0   0    1 |
 
-==============================================================================
-2D ROTATION
-==============================================================================
-     
-| cosƟ -sinƟ  0 || x |   | x' |
-| sinƟ  cosƟ  0 || y | = | y' |
-|  0     0    1 || 0 |   | 0  |
+COMBINED ROTATION MATRIX
+A = cos(pitch)  C = cos(yaw)  E = cos(roll)
+B = sin(pitch)  D = sin(yaw)  F = sin(roll)
 
-x' = xcosƟ - ysinƟ
-y' = xsinƟ + ycosƟ
+|  CE      -CF       D   0 |
+|  BDE+AF  -BDF+AE  -BC  0 |
+| -ADE+BF   ADF+BE   AC  0 |
+|  0        0        0   1 |
 
 ==============================================================================
 ROTATION AROUND ARBITARY AXIS
@@ -723,38 +753,13 @@ n = unit normal vector of plane
 DESCRIBING IN A DIFFERENT BASIS
 ==============================================================================
 
-A point/vector moves if a transform is applied
 The coordinates a point/vector has depends on the basis it's described in
-Changing the basis doesn't change where the object is in space
-It just changes how it's expressed
+Changing the basis doesn't change where the object is in space- just changes how it's expressed
+To transform into local space, use inverse matrix
+To transform into world space, use world matrix
 
----------------------------------------------------------------------
-eg(1) DESCRIBING IN A DIFFERENT BASIS USING VECTORS
----------------------------------------------------------------------
-
-u = (5,8) find coordinates in space with basis {vo:(1,2) and v1:(4,7)}
-
-u = 5i + 8j 
-  = avo + bv1 = a(1,2) + b(4,7) 
-  = (a,2a) + (4b,7b)
-
-As (5,8) = (a+4b,2a+7b)
-5 = a + 4b and 8 = 2a + 7b
-Substitute and solve for a,b to find new coordinates in {vo,v1} basis
-(a,b) = (-3,2)
-
----------------------------------------------------------------------
-eg(2) DESCRIBING IN A DIFFERENT BASIS USING MATRICES
----------------------------------------------------------------------
-
-Express from local into external
-Vᵉˣᵗ = AVˡᵒᶜ
-
-Express from external into local
-Vˡᵒᶜ = A¯¹Vᵉˣᵗ
-
-Where A is the transformation matrix that transforms the object's basis 
-vectors from their initial starting position of aligned with world basis
+Vᵉˣᵗ = AVˡᵒᶜ    Express from local into external
+Vˡᵒᶜ = A¯¹Vᵉˣᵗ  Express from external into local
 
 //////////////////////////////////////////////////////////////////////////////
 //SYSTEMS OF LINEAR EQUATIONS
@@ -850,7 +855,6 @@ ExpectedValue = Pr(x1)*v1 + Pr(x2)*v2 + ...
 Pr(x) = probability of x happening
 v = value recieved if x happens
 
-
 //////////////////////////////////////////////////////////////////////////////
 //IMAGINARY NUMBERS
 //////////////////////////////////////////////////////////////////////////////
@@ -916,7 +920,7 @@ CONVERTING TO/FROM POLAR FORM:
          -----------------------------------
 
 //////////////////////////////////////////////////////////////////////////////
-//QUATERNION/ROTATIONS
+//QUATERNIONS
 //////////////////////////////////////////////////////////////////////////////
 
  ----------------------
