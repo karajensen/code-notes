@@ -436,5 +436,8 @@ TRIANGLE FANS:
 
 CONVEX POLYGONS: line between two points in polygon never crosses border 
 CONCAVE POLYGONS: line between two points in polygon can cross border
+POLYHEDRA: three dimensional object with flat faces and straight edges
+POLYTOPES: convex hulls of finite points sets (line segments, triangles, polyhedra)
+QUADRICS: spheres, cones, cylinders
 
 */////////////////////////////////////////////////////////////////////////////

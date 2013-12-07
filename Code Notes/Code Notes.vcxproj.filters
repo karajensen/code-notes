@@ -232,9 +232,6 @@
     <None Include="C# Containers.cs">
       <Filter>Managed Source</Filter>
     </None>
-    <None Include="C# Memory.cs">
-      <Filter>Managed Source</Filter>
-    </None>
     <None Include="Code Examples\Shaders\main.glsl">
       <Filter>Game Programming\Shaders</Filter>
     </None>

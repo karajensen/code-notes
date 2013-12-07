@@ -91,12 +91,14 @@ STRUCTS [VALUE-TYPE]
 • struct auto defaults to public, methods default to private
 • Can't create user-defined constructor/destructors
 • Auto creates default constructor/destructor, System.Object methods
+• Can't use member initialisation unless const/static, Struct can't be static
 
 CLASSES [REF-TYPE]
 • All variables not explicitly initialised are set to default
 • class auto defaults to internal, methods default to private
 • Default constructor/destructor only generated if none provided
 • Auto creates default constructor/destructor, System.Object methods, operator==
+• Can use member initialisation, class can be static
 
 ABSTRACT CLASS
 • Can't create object directly from abstract class, can be casted to

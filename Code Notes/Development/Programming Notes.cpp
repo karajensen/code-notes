@@ -415,10 +415,10 @@ STRUCTURAL PATTERNS
 PIMPL       Allows changing the implementation without touching the interface   Data hiding
 DECORATOR   Allows mixing subclasses to form a final object                     GUI design
 FLYWEIGHT   A fully initialized instance to referenced                          Sharing objects
-COMPOSITE   A class that manages groups of objects                              Object managers
-PROXY       An object representing and changing another object                  Reference/pointers
-FACADE      
-ADAPTER
+COMPOSITE   A tree class that holds and recurses through child objects          Tree/Node objects
+FACADE      A class that managers groups of various objects                     Object managers
+PROXY       A wrapper that provides same functionality as class wrapped         C++/CLI wrappers
+ADAPTER     A wrapper that changes the interface of the class wrapped           Legacy libraries
 BRIDGE
            
 ==============================================================================================

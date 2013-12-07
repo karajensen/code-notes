@@ -152,7 +152,6 @@
     <None Include="C# Class.cs" />
     <None Include="C# Code.cs" />
     <None Include="C# Containers.cs" />
-    <None Include="C# Memory.cs" />
     <None Include="Cheatsheet.txt" />
     <None Include="Code Examples\Example - Maxscript Convex Hull.ms" />
     <None Include="Code Examples\Example - PyQt Creating Window in Designer.py" />

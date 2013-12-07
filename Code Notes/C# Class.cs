@@ -117,6 +117,7 @@ public string this[int x, int y]
 //STRUCTS [VALUE-TYPE]
 public struct MyStruct
 {
+    public int myInt; // value-types can't use member initialisation
 }
 
 //CLASSES [REFERENCE-TYPE]
