@@ -447,6 +447,9 @@
     <Image Include="Images\MathsPhysics - Trigonometry.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Graphics - Incremental Convex Hull Algorithm.png">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code Examples\Classes\assimpmesh.h">

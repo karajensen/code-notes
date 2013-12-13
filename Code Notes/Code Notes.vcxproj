@@ -188,6 +188,7 @@
     <Image Include="Images\Graphics - Final Gathering.png" />
     <Image Include="Images\Graphics - Global Illumination.png" />
     <Image Include="Images\Graphics - Importons.png" />
+    <Image Include="Images\Graphics - Incremental Convex Hull Algorithm.png" />
     <Image Include="Images\Graphics - Irradiance Particles.png" />
     <Image Include="Images\Graphics - Occulsion Culling.png" />
     <Image Include="Images\Graphics - Portals.png" />
