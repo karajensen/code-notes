@@ -303,31 +303,3 @@ int r = color & 0xFF;
 int g = (color >> 8) & 0xFF;
 int b = (color >> 16) & 0xFF;
 int a = (color >> 24) & 0xFF;
-
-//CONVERTING MOUSE COORD INTO 3D COORD
-D3DXVECTOR3 mousePosition(position.x, position.y, CAMERA_NEAR);
-D3DXVec3TransformNormal(&mousePosition, &mousePosition, &invProjectionMatrix);
-D3DXVec3TransformNormal(&mousePosition, &mousePosition, &invViewMatrix);
-
-//DETERMINE MOUSE DIRECTION IN 3D COORD
-//note: invViewMatrix is the camera world matrix
-D3DXVECTOR3 mouseDirection(-(position.x-previous.x), position.y-previous.y, 0.0f);
-D3DXVec3Normalize(&mouseDirection, &mouseDirection);
-mouseDirection.z = CAMERA_NEAR;
-D3DXVec3TransformNormal(&mouseDirection, &mouseDirection, &invProjectionMatrix);
-D3DXVec3TransformNormal(&mouseDirection, &mouseDirection, &invViewMatrix);
-D3DXVec3Normalize(&mouseDirection, &mouseDirection);
-D3DXVec3Normalize(&axis, &axis);
-const float dot = D3DXVec3Dot(&axis, &mouseDirection);
-const float angleWithAxis = RadToDeg(std::acos(dot));
-
-//MOUSE PICKING
-//note: invViewMatrix is the camera world matrix
-D3DXVECTOR3 rayOrigin(invViewMatrix._41, invViewMatrix._42, invViewMatrix._43);
-D3DXVECTOR3 mouseRay, rayDirection;
-mouseRay.x =  (((2.0f*x)/WINDOW_WIDTH )-1) / projectionMatrix._11;
-mouseRay.y = -(((2.0f*y)/WINDOW_HEIGHT)-1) / projectionMatrix._22;
-mouseRay.z =  CAMERA_NEAR;
-rayDirection.x = mouseRay.x * invViewMatrix._11 + mouseRay.y * invViewMatrix._21 + mouseRay.z * invViewMatrix._31,
-rayDirection.y = mouseRay.x * invViewMatrix._12 + mouseRay.y * invViewMatrix._22 + mouseRay.z * invViewMatrix._32,
-rayDirection.z = mouseRay.x * invViewMatrix._13 + mouseRay.y * invViewMatrix._23 + mouseRay.z * invViewMatrix._33);

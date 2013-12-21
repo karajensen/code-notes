@@ -1,6 +1,6 @@
-﻿//////////////////////////////////////////////////////////////////////////////
-//COLLISIONS
-//////////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////////////////////////////
+// COLLISIONS
+///////////////////////////////////////////////////////////////////////////////////////////////////
 /*
 PERFECTLY ELASTIC COLLISION: collision with no loss of energy
 COLLISION DETECTION: Detection/prediction of collision of objects
@@ -20,216 +20,47 @@ Once proxies are tested, to obtain greater accuracies, A/B are colliding if:
  u = relative velocity of vertex Pᵃ of A colliding with B
  n = normal to the plane of collsion
 
-//////////////////////////////////////////////////////////////////////////////
-//SPHERE-SPHERE COLLISION ALGORITHM
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MOUSE MOVEMENT ALONG AXIS
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-    FLOAT3 ballToBall = p1 - p2;
-    float distance = (ballToBall.x * ballToBall.x) + 
-                     (ballToBall.y * ballToBall.y) + 
-                     (ballToBall.z * ballToBall.z);
-    float minDistance = r1 + r2;
-    if((minDistance*minDistance) > distance)
-        return true;
-    return false;
+• axis is any vector in 3D space that the mouse has to move along/away from
+• invViewMatrix is camera world matrix
+• Mouse direction aligned with axis if dot > 0.0f
 
-//////////////////////////////////////////////////////////////////////////////
-//SPHERE-PLANE COLLISION ALGORITHM
-//////////////////////////////////////////////////////////////////////////////
+D3DXVECTOR3 mouseDirection(-(position.x-previous.x), position.y-previous.y, 0.0f);
+D3DXVec3Normalize(&mouseDirection, &mouseDirection);
+mouseDirection.z = CAMERA_NEAR;
+D3DXVec3TransformNormal(&mouseDirection, &mouseDirection, &invProjectionMatrix);
+D3DXVec3TransformNormal(&mouseDirection, &mouseDirection, &invViewMatrix);
+D3DXVec3Normalize(&mouseDirection, &mouseDirection);
+D3DXVec3Normalize(&axis, &axis);
+const float dot = D3DXVec3Dot(&axis, &mouseDirection);
 
-- Get normalized vector from sphere center pointing to plane center
-- Times by radius to get length from sphere center to edge of sphere in direction of box
-- Vector addition to get vector from origon to point on sphere closest to plane
-
-N.(F – P) = 0  holds true for any point F on the plane; P is point on plane
-N = Plane->Normal
-F = SphereVector
-P = Plane->Center
-
-D3DXVECTOR3 SphereCenterToPlane = Plane->Center - Sphere->Center;
-D3DXVec3Normalize(&SphereCenterToPlane,&SphereCenterToPlane);
-D3DXVECTOR3 SphereVector = Sphere->Radius * SphereCenterToPlane;
-SphereVector = SphereVector + Sphere->Center;
-
-D3DXVECTOR3 SphereToPlane = SphereVector - Plane->Center;
-float amount = D3DXVec3Dot(&Plane->Normal,&SphereToPlane);
-if(amount <= 0)
-    return true; //0 = point is on the plane; 
-                    //<0 = point is behind the plane
-else
-    return false; // >0 = point is before the plane
-
-//////////////////////////////////////////////////////////////////////////////
-//SPHERE-POINT COLLISION ALGORITHM
-//////////////////////////////////////////////////////////////////////////////
-
-Get vector from sphere center to point and find distance
-If distance is less then radius distance then the point is inside the sphere
-
-    D3DXVECTOR3 vec = Sphere->Center - Point->Center;
-    float dist = (vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z);
-    if(dist <= (pow(Sphere->Radius,2)))
-        return true;
-    else
-        return false;
-
-//////////////////////////////////////////////////////////////////////////////
-//SPHERE-LINE COLLISION ALGORITHM
-//////////////////////////////////////////////////////////////////////////////
-
-FLOAT3 P0,P1                                //points on each end of line
-FLOAT3 d = P1 - P0;                         //vector along the line
-FLOAT3 LineToSphere = SphereCenter - P0;    //vector from sphere to line
-FLOAT3 normal                               //normal for line
-
-//CHECK BODY
-//n.(SphereCenter-P0) = dis from line
-float distance = (normal.normalize).dot(LineToSphere);  
-float magdistance = GetMagnitude(distance);
-if(magdistance < radius)
-{
-    //SPHERE iS INSIDE LINE; CHECK ENDS (Get position of collision on line)
-    FLOAT3 colPosition = SphereCenter - (distance*normal.normalize);
-
-    //FIND VALUE OF T (colPosition = P0 + td parametric line equation)
-    float t;
-    if(d.x == 0)
-        t = (colPosition.y - P0.y)/d.y;
-    else
-        t = (colPosition.x - P0.x)/d.x;
-
-    if(t > 1) //if past the end of the line
-    {
-        if((SphereCenter-P1).length() > radius))
-            return false;
-    }
-    else if(t < 0)  //if before the start of the line
-    {
-        if((SphereCenter-P0).length() > radius))
-            return false;
-    }
-    return true;
-}
-return false;
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MOUSE RAY-CASTING
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-//////////////////////////////////////////////////////////////////////////////
-//BOX-BOX COLLISION ALGORITHM
-//////////////////////////////////////////////////////////////////////////////
 
-if(BoxA->max.x < BoxB->min.x || BoxA->min.x > BoxB->max.x)
-    return false;
-if(BoxA->max.y < BoxB->min.y || BoxA->min.y > BoxB->max.y)
-    return false;
-if(BoxA->max.z < BoxB->min.z || BoxA->min.z > BoxB->max.z)
-    return false;
-else
-    return true;
 
-//////////////////////////////////////////////////////////////////////////////
-//PLANE-RAY COLLISION ALGORITHM
-//////////////////////////////////////////////////////////////////////////////
 
-Ray: P₀(x,y,z) with d(dx,dy,dz)
-Plane: n̂(a,b,c)
 
-1) Determine if ray will intersect plane
-     
-     if d.n̂ > 0 collision
-     if d.n̂ < 0 no collision
 
-2) Get t amount along ray
 
-    C = A/cosƟ from trig
-    ⁂ t = (P₁-P₀).n̂/cosƟ    
 
-    a.b̂ = ‖a‖cosƟ from projection
-    ⁂ d.n̂ = ‖d‖cosƟ
-    ⁂ cosƟ = d.n̂/‖d‖
-    ⁂ cosƟ = d.n̂
 
-    ⁂ t = (P₁-P₀).n̂ / d.n̂
 
-    Point on plane P(t) ray will collide with:
-    P(t) = P₀ + td
 
-//////////////////////////////////////////////////////////////////////////////
-//POINT-LINE COLLISION
-//////////////////////////////////////////////////////////////////////////////
 
-bool selectedEdge = false;
-for (int i = 0; i < EDGE.EdgeList.Count; i++)
-{
-    //vector along line from start to end
-    float lx = EDGE.EdgeList[i].start.X - EDGE.EdgeList[i].end.X;
-    float ly = EDGE.EdgeList[i].start.Y - EDGE.EdgeList[i].end.Y;
-    float nx = ly;
-    float ny = -lx;
-    float vx = e.X - EDGE.EdgeList[i].end.X;    //po to p1
-    float vy = e.Y - EDGE.EdgeList[i].end.Y;
 
-    //normalize normal
-    double length = Math.Sqrt((double)((nx*nx)+(ny*ny)));
-    nx = (float)(nx/length);
-    ny = (float)(ny/length);
 
-    //get magnitude distance (p1-p0).n = dis
-    float distance = (vx * nx) + (vy * ny);
-    if (distance < 0) { distance *= -1; }
 
-    if (distance < MinMouseDistance)
-    {
-        //check bounds n (l is pointing towards start node, use end as P0)
-        //P(t) = P(o) + td
-        //t = (P(t)x - P(o)x)/dx
-        if (lx != 0)
-        {
-            float t = ((float)(e.X - EDGE.EdgeList[i].end.X)) / lx;
-            if ((t < 0) || (t > 1))
-                continue;
-        }
-        else if (ly != 0)
-        {
-            float t = ((float)(e.Y - EDGE.EdgeList[i].end.Y)) / ly;
-            if ((t < 0) || (t > 1))
-                continue;
-        }
-        else
-            continue;
 
-        //FOUND EDGE
-        return;
-    }
-}
-//////////////////////////////////////////////////////////////////////////////
-//2D PLANE-POINT COLLISION
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//PLANE-POINT COLLISION [SAME SIDE TECHNIQUE]
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-BARYCENTRIC TECHNIQUE
-- Input point position into P(t) and rearrange to find t
-- u1 and u2 are vectors spanning full sides of plane
-- if value of t is between 0 and 1, point is inside plane
-
-//Mouse-tile collision testing
-t = (((input->mouseY-T->P0.y)/T->u1.y)-((input->mouseX-T->P0.x)/T->u1.x))
-    /((T->u2.y/T->u1.y)-(T->u2.x/T->u1.x));
-
-if((t >= 0)&&(t <= 1.0f))
-{
-    s = ((input->mouseX - T->P0.x)/T->u1.x)-((t*T->u2.x)/T->u1.x);
-    if((s >= 0)&&(s <= 1.0f))
-    {
-        //clicked on tile
-        ChangeSelection(T);
-        return true;
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////////
-//3D PLANE-POINT COLLISION
-//////////////////////////////////////////////////////////////////////////////
-
-SAME SIDE TECHNIQUE
 Test what side of each edge the origin is on
 
    c
@@ -251,21 +82,130 @@ Test CB Side:
 n X (c-b) = CBN = vector pointing from c-b to center
 (p-b) . CBN > 0 then true
 
-BARYCENTRIC TECHNIQUE
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//PLANE-POINT COLLISION [BARYCENTRIC TECHNIQUE]
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Convert world coordinates of p into barycentric coordinates
+// Plane equation: d = su + tv where d = p - p0
+// Dot by u/v to: d.v = (su + tv).v and d.u = (su + tv).u
+// Rearrange to: s = (dv - t(vv)) / (uv) and t = (du - s(uu)) / (uv)
+// Substitute each one into the other and find s,t
+
+D3DXVECTOR3 u = p1 - p0;
+D3DXVECTOR3 v = p2 - p0;
+D3DXVECTOR3 d = p - p0;
+
+const float uu = D3DXVec3Dot(&u, &u);
+const float vv = D3DXVec3Dot(&v, &v);
+const float uv = D3DXVec3Dot(&u, &v);
+const float dv = D3DXVec3Dot(&d, &v);
+const float du = D3DXVec3Dot(&d, &u);
+const float t = ((uv * du) - (dv * uu)) / ((uv * uv) - (vv * uu));
+const float s = ((dv * uv) - (du * vv)) / ((uv * uv) - (uu * vv));
+
+// Determine if inside half of the plane (triangle)
+const bool inside = t >= 0.0f && s >= 0.0f && t+s <= 1.0f;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// PLANE-RAY COLLISION
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+Ray: P₀(x,y,z) with d(dx,dy,dz)
+Plane: n̂(a,b,c)
+
+1) Determine if ray will intersect plane: if d.n̂ < 0 collision
+2) Get t amount along ray:
+
+C = A/cosƟ from trig
+⁂ t = (P₁-P₀).n̂/cosƟ
+
+a.b̂ = ‖a‖cosƟ from projection
+⁂ d.n̂ = ‖d‖cosƟ
+⁂ cosƟ = d.n̂/‖d‖
+⁂ cosƟ = d.n̂
+
+⁂ t = (P₁-P₀).n̂ / d.n̂
+
+3) Find point of intersection: P = P₀ + td
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// CIRCLE-POINT COLLISION ALGORITHM
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+float radius;
+D3DXVECTOR3 position;
+float maxX = position.x + radius;
+float minX = position.x - radius;
+float maxZ = position.z + radius;
+float minZ = position.z - radius;
+
+// Get indices at the min/max/position
+int maxXIndex, maxZIndex, minXIndex, minZIndex, positionIndex;
+int xDistance = maxXIndex - minXIndex;
+
+for(int x = minXIndex; x <= maxXIndex; ++x)
+{
+    for(int z = minZIndex; z <= maxZIndex; ++z)
+    {
+        int index = (z * xDistance) + x;
+        const D3DXVECTOR3& p = GetPosition(index);
+
+        if(D3DXVec3Length(&(p - position)) < radius)
+        {
+            // inside the circle
+        }
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// SPHERE-SPHERE COLLISION ALGORITHM
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+D3DXVECTOR3 particleToParticle = particleB.GetPosition() - particleA.GetPosition();
+const float length = D3DXVec3Length(&particleToParticle);
+const float combinedRadius = particleA.GetRadius() + particleB.GetRadius();
+
+if (length < combinedRadius)
+{
+    particleToParticle /= length;
+    const D3DXVECTOR3 translation = particleToParticle*fabs(combinedRadius-length);
+    particleA.ResolveCollision(-translation);
+    particleB.ResolveCollision(translation);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// SPHERE-RAY COLLISION ALGORITHM
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 
 
 
-//////////////////////////////////////////////////////////////////////////////
-//LINE-INTERSECTION TECHNIQUE [CONVEX/CONCAVE]
-//////////////////////////////////////////////////////////////////////////////
-supports concave/convex shapes
-slow and ineffecient
 
-1) For each outside edge of the model, create a line
-2) Test this array of lines against other model's array of lines for each line
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// CUBE-CUBE COLLISION ALGORITHM
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+if(BoxA->max.x < BoxB->min.x || BoxA->min.x > BoxB->max.x)
+    return false;
+if(BoxA->max.y < BoxB->min.y || BoxA->min.y > BoxB->max.y)
+    return false;
+if(BoxA->max.z < BoxB->min.z || BoxA->min.z > BoxB->max.z)
+    return false;
+else
+    return true;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// LINE-INTERSECTION TECHNIQUE [CONVEX/CONCAVE]
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+• supports concave/convex shapes but slow and ineffecient
+• For each outside edge of the model, create a line
+• Test this array of lines against other model's array of lines for each line
 
 Line1: P₁(t) = P₁(0) + t₁d₁
 Line2: P₂(t) = P₂(0) + t₂d₂
@@ -281,19 +221,19 @@ P₁(0) + t₁d₁ = P₂(0) + t₂d₂
 
 and rearrange to solve for t₁ and t₂
 
-//////////////////////////////////////////////////////////////////////////////
-//GJK COLLISION ALGORITHM [CONVEX]
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// GJK COLLISION ALGORITHM [CONVEX]
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 MINKOWSKI DIFFERENCE:
-- Create from two convex hulls by subtracting all points of A from all points of B
-- If contains the origin, both hulls are colliding
-- As hulls get closer, Minkowski Difference hull gets closer to origin
+• Create from two convex hulls by subtracting all points of A from all points of B
+• If contains the origin, both hulls are colliding
+• As hulls get closer, Minkowski Difference hull gets closer to origin
 
 GJK ALGORITHM:
-- Doesn't require computing whole Minkowski Difference hull
-- Builds a simplex inside the Minkowski Difference to see if it encloses the origin
-- Uses a 'support' function to find the furthest point in the MD hull in a direction
+• Doesn't require computing whole Minkowski Difference hull
+• Builds a simplex inside the Minkowski Difference to see if it encloses the origin
+• Uses a 'support' function to find the furthest point in the MD hull in a direction
   which helps create the simplex with the largest area enclosing the MD hull
 
 CHOOSING THE INITIAL POINTS:
@@ -315,21 +255,16 @@ WHILE COLLISION IS NOT FOUND:
 
 FINDING PENETRATION DEPTH
 • Use Expanding Polytope Algorithm (EPA) with the terminating GJK simplex
+• Find the triangle of simplex that is closest to the origin
+• If the projected point of the origin does not lie within the triangle on the plane, find next closest
+• Search along the triangle normal and find the Minkowski difference edge hull point
+• If this point is close to the face, terminate as found
+• If not close, extend the simplex to include this new point and continue loop
+• Once closest face is found, penetration vector is face normal * distance to origin
 
-
-
-
-
-
-
-
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //COLLISION RESOLUTION
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
  ---------------
 | uᶠ.n = -euⁱ.n |
@@ -361,7 +296,6 @@ change in velocity for A and B
  --------------------------
 Use these values and uᶠ.n = -euⁱ.n to find equation for impulse(J) 
 
-
 ==============================================================================
 ROTATING OBJECTS
 ==============================================================================
@@ -388,4 +322,4 @@ change in angular velocity for A and B
  --------------------------------
  Use these values to find equation for impulse(J)
 
- *///////////////////////////////////////////////////////////////////////////////
+ *///////////////////////////////////////////////////////////////////////////////////////////////////

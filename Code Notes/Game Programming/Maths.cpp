@@ -98,9 +98,7 @@ Set of linerly independent vectors which spans/creates a vector space
 
 VECTOR SPACE: 
 Set of all vectors created by linear combinations of the vector basis
-Contains: Zero vector
-          Sum of any two vectors (closure)
-          Additive inverse of any vector
+Contains: Zero vector, Sum of any two vectors (closure), Additive inverse of any vector
           Scalar multiplication of any vector (multiplicative closure)
 
 LINEAR INDEPENDENCE: 
@@ -139,6 +137,7 @@ a.b = 0     Ɵ = 90 vectors are ⊥ to each other
   -----►                 ▼
 
 DOT PRODUCT RULES:
+  a.a = ‖a‖²
   a.b = b.a
   (a+b).c = a.c + b.c
   k(a.b) = ka.b = a.kb
@@ -225,8 +224,7 @@ AFFINE INDEPENDENCE:
 For P = P₀ + a₁v₁ + a₂v₂ + ... + aⁿvⁿ if vectors {v₁,v₂...vⁿ} are linearly 
 independent then set of points {P₀,P₁...Pⁿ} will be linearly independent
 
-SIMPLEX: Set of points of minimal size with affine independence that 
-         spans a space of points
+SIMPLEX: Set of points of minimal size with affine independence that spans a space of points
                   ▪
        ▪         /|\
       / \       / | \   
@@ -234,12 +232,7 @@ SIMPLEX: Set of points of minimal size with affine independence that
     ▪-----▪     \ | /
       2D         \▪/  3D
 
-CONVEX: shape where line between 2 points doesn't cross border
-CONVEX HULL: Smallest convex set
-    For a line: segment of line between 2 points
-    For a simplex: space inside 3 points
-BARYCENTRIC COORDINATES: coordinates used when describing points in relation 
-                         to a simplex
+BARYCENTRIC COORDINATES: coordinates used when describing points in relation to a simplex
 
 =============================================================================
 AFFINE COMBINATION
@@ -325,10 +318,14 @@ LINE PARAMETRIC EQUATION
  P(t) = coordinate on line
  P₀ = Point on line
 
+FINDING P(t):
  Can be split into 3 equations:
  x = P₀ˣ + tdˣ
  y = P₀ʸ + tdʸ
  z = P₀ᶻ + tdᶻ
+
+ FINDING t:
+ t = (P - P₀) / d
 
 =============================================================================
 LINE LINEAR EQUATION
@@ -352,20 +349,41 @@ LINE LINEAR EQUATION
 PLANE PARAMETRIC EQUATION
 =============================================================================
  
- P = a₀P₀ + a₁P₁ + a₂P₂      where a₀ + a₁ + a₂ = 1
- P = (1-t-s)P₀ + tP₁ + sP₂   where a₁ = s and a₂ = t
- -----------------------
-| P(t) = P₀ + su₁ + tu₂ |
- -----------------------
- s,t = Barycentric coordinate
- u = vectors along line stemming from P₀
- P(t) = coordinate on plane (P(x,y,z))
- P₀ = Point on plane
+P = a₀P₀ + a₁P₁ + a₂P₂      where a₀ + a₁ + a₂ = 1
+P = (1-t-s)P₀ + tP₁ + sP₂   where a₁ = s and a₂ = t
+ -------------------------
+| P(s,t) = P₀ + su + tv |
+ -------------------------
+s,t = Barycentric coordinate
 
- Can be split into 3 equations:
- x = P₀ˣ + su₁ˣ + tu₂ˣ
- y = P₀ʸ + su₁ʸ + tu₂ʸ
- z = P₀ᶻ + su₁ᶻ + tu₂ᶻ
+P(t) = coordinate on plane (P(x,y,z))
+P₀ = Point on plane
+u = P₁ - P₀
+v = P₂ - P₀
+d = P - P₀
+
+FINDING P(t):
+Can be split into 3 equations:
+x = P₀ˣ + suˣ + tvˣ
+y = P₀ʸ + suʸ + tvʸ
+z = P₀ᶻ + suᶻ + tvᶻ
+
+FINDING s,t:
+Convert world coordinates of p into barycentric coordinates
+Plane equation: P(s,t) - P₀ = su + tv becomes d = su + tv
+
+1) d = su + tv (dot by v)
+   d.v = (su + tv).v
+   d.v = s(u.v) + t(v.v)
+   s = (d.v - t(v.v)) / u.v
+
+2) d = su + tv (dot by u)
+   d.u = (su + tv).u
+   d.u = s(u.u) + t(u.v)
+   t = (d.u - s(u.u)) / u.v
+
+Sub t into s and rearrange: t = ((u.v * d.u) - (d.v * u.u)) / ((u.v * u.v) - (v.v * u.u))
+Sub s into t and rearrange: s = ((d.v * u.v) - (d.u * v.v)) / ((u.v * u.v) - (u.u * v.v))
 
 =============================================================================
 PLANE LINEAR EQUATION
