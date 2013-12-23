@@ -21,43 +21,6 @@ Once proxies are tested, to obtain greater accuracies, A/B are colliding if:
  n = normal to the plane of collsion
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// MOUSE MOVEMENT ALONG AXIS
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-• axis is any vector in 3D space that the mouse has to move along/away from
-• invViewMatrix is camera world matrix
-• Mouse direction aligned with axis if dot > 0.0f
-
-D3DXVECTOR3 mouseDirection(-(position.x-previous.x), position.y-previous.y, 0.0f);
-D3DXVec3Normalize(&mouseDirection, &mouseDirection);
-mouseDirection.z = CAMERA_NEAR;
-D3DXVec3TransformNormal(&mouseDirection, &mouseDirection, &invProjectionMatrix);
-D3DXVec3TransformNormal(&mouseDirection, &mouseDirection, &invViewMatrix);
-D3DXVec3Normalize(&mouseDirection, &mouseDirection);
-D3DXVec3Normalize(&axis, &axis);
-const float dot = D3DXVec3Dot(&axis, &mouseDirection);
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// MOUSE RAY-CASTING
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
 //PLANE-POINT COLLISION [SAME SIDE TECHNIQUE]
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -87,47 +50,83 @@ n X (c-b) = CBN = vector pointing from c-b to center
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Convert world coordinates of p into barycentric coordinates
-// Plane equation: d = su + tv where d = p - p0
-// Dot by u/v to: d.v = (su + tv).v and d.u = (su + tv).u
-// Rearrange to: s = (dv - t(vv)) / (uv) and t = (du - s(uu)) / (uv)
+// Plane equation: pp = su + tv where pp = p - p0 and is a point on the plane
+// Dot by u/v to: pp.v = (su + tv).v and pp.u = (su + tv).u
+// Rearrange to: s = (pp.v - t(v.v)) / (u.v) and t = (p.u - s(u.u)) / (u.v)
 // Substitute each one into the other and find s,t
 
 D3DXVECTOR3 u = p1 - p0;
 D3DXVECTOR3 v = p2 - p0;
-D3DXVECTOR3 d = p - p0;
+D3DXVECTOR3 pp = pointOnPlane - p0; // to find pointOnPlane, use plane-ray collision
 
 const float uu = D3DXVec3Dot(&u, &u);
 const float vv = D3DXVec3Dot(&v, &v);
 const float uv = D3DXVec3Dot(&u, &v);
-const float dv = D3DXVec3Dot(&d, &v);
-const float du = D3DXVec3Dot(&d, &u);
-const float t = ((uv * du) - (dv * uu)) / ((uv * uv) - (vv * uu));
-const float s = ((dv * uv) - (du * vv)) / ((uv * uv) - (uu * vv));
+const float pv = D3DXVec3Dot(&pp, &v);
+const float pu = D3DXVec3Dot(&pp, &u);
+const float t = ((uv * pu) - (pv * uu)) / ((uv * uv) - (vv * uu));
+const float s = ((pv * uv) - (pu * vv)) / ((uv * uv) - (uu * vv));
 
-// Determine if inside half of the plane (triangle)
-const bool inside = t >= 0.0f && s >= 0.0f && t+s <= 1.0f;
+const bool inside = t >= 0.0f && s >= 0.0f && t+s <= 1.0f; // determine if inside triangle
+const bool inside = t >= 0.0f && s >= 0.0f && t+s <= 2.0f; // determine if inside plane
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // PLANE-RAY COLLISION
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-Ray: P₀(x,y,z) with d(dx,dy,dz)
-Plane: n̂(a,b,c)
+Plane equation: (P-P₀).n = 0
+Line equation: L = L₀ + td
+Intersection point when L = P
 
-1) Determine if ray will intersect plane: if d.n̂ < 0 collision
-2) Get t amount along ray:
+(L₀ + td - P₀).n = 0     expand out the dot:
+td.n + (L₀ - P₀).n = 0   solve for t:
+t = (P₀ - L₀).n / d.n
 
-C = A/cosƟ from trig
-⁂ t = (P₁-P₀).n̂/cosƟ
+// Determine if normal is facing the pick direction
+const float faceDirection = D3DXVec3Dot(&face.normal, &direction);
+if(faceDirection < 0.0f)
+{
+    const float epsilon = 0.001f;
+    const float t = D3DXVec3Dot(&(face.origin - origin), &face.normal) / faceDirection;
+    D3DXVECTOR3 intersection = origin + (t * direction);
 
-a.b̂ = ‖a‖cosƟ from projection
-⁂ d.n̂ = ‖d‖cosƟ
-⁂ cosƟ = d.n̂/‖d‖
-⁂ cosƟ = d.n̂
+    // Ensure point of intersection is on the plane
+    assert(fabs(D3DXVec3Dot(&(intersection - face.origin), &face.normal)) <= epsilon);
+            
+    // Ensure ray is in front of the plane
+    // To restrict the test to line-plane, check if t <= 1.0f
+    bool success = t >= 0.0f;
+}
 
-⁂ t = (P₁-P₀).n̂ / d.n̂
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// SPHERE-RAY COLLISION ALGORITHM
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-3) Find point of intersection: P = P₀ + td
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// SPHERE-SPHERE COLLISION ALGORITHM
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+D3DXVECTOR3 particleToParticle = particleB.GetPosition() - particleA.GetPosition();
+const float length = D3DXVec3Length(&particleToParticle);
+const float combinedRadius = particleA.GetRadius() + particleB.GetRadius();
+
+if (length < combinedRadius)
+{
+    particleToParticle /= length;
+    const D3DXVECTOR3 translation = particleToParticle*fabs(combinedRadius-length);
+    particleA.ResolveCollision(-translation);
+    particleB.ResolveCollision(translation);
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // CIRCLE-POINT COLLISION ALGORITHM
@@ -157,34 +156,6 @@ for(int x = minXIndex; x <= maxXIndex; ++x)
         }
     }
 }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// SPHERE-SPHERE COLLISION ALGORITHM
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-D3DXVECTOR3 particleToParticle = particleB.GetPosition() - particleA.GetPosition();
-const float length = D3DXVec3Length(&particleToParticle);
-const float combinedRadius = particleA.GetRadius() + particleB.GetRadius();
-
-if (length < combinedRadius)
-{
-    particleToParticle /= length;
-    const D3DXVECTOR3 translation = particleToParticle*fabs(combinedRadius-length);
-    particleA.ResolveCollision(-translation);
-    particleB.ResolveCollision(translation);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// SPHERE-RAY COLLISION ALGORITHM
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // CUBE-CUBE COLLISION ALGORITHM
@@ -321,5 +292,116 @@ change in angular velocity for A and B
 | wᵇ(f) = wᵇ(i) - (¹/iᵇ)(r X Jn) |
  --------------------------------
  Use these values to find equation for impulse(J)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MOUSE MOVEMENT ALONG AXIS
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+• axis is any vector in 3D space that the mouse has to move along/away from
+• invViewMatrix is camera world matrix
+• Mouse direction aligned with axis if dot > 0.0f
+
+D3DXVECTOR3 mouseDirection(-(position.x-previous.x), position.y-previous.y, 0.0f);
+D3DXVec3Normalize(&mouseDirection, &mouseDirection);
+mouseDirection.z = CAMERA_NEAR;
+D3DXVec3TransformNormal(&mouseDirection, &mouseDirection, &invProjectionMatrix);
+D3DXVec3TransformNormal(&mouseDirection, &mouseDirection, &invViewMatrix);
+D3DXVec3Normalize(&mouseDirection, &mouseDirection);
+D3DXVec3Normalize(&axis, &axis);
+const float dot = D3DXVec3Dot(&axis, &mouseDirection);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MOUSE RAY-CASTING
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+• Generate a mouse origin and direction in view space coordinates
+• Convert the origin/direction to mesh local coordinates
+• For every face in the local mesh:
+    - Determine if normal is facing the ray direction
+    - Find the ray-plane intersection point
+    - Find if this intersection point is within the triangle
+    - Determine if intersection distance is smaller than before
+
+m_distanceToMesh = FLT_MAX;
+rayOrigin = world.Position();
+
+// Create screen space mouse ray
+D3DXVECTOR3 mouseRay;
+mouseRay.x =  (((2.0f*x)/WINDOW_WIDTH )-1) / projection.GetMatrix()._11;
+mouseRay.y = -(((2.0f*y)/WINDOW_HEIGHT)-1) / projection.GetMatrix()._22;
+mouseRay.z =  CAMERA_NEAR;
+
+// Convert to view space mouse ray (camera world is inverse view matrix)
+D3DXVec3TransformNormal(&rayDirection, &mouseRay, &world.GetMatrix());
+
+// Convert origin/direction into local mesh coordinates
+D3DXMATRIX worldInverse;
+D3DXVECTOR3 origin, direction;
+D3DXMatrixInverse(&worldInverse, 0, &world);
+D3DXVec3TransformCoord(&origin, &rayOrigin, &worldInverse);
+D3DXVec3TransformNormal(&direction, &rayDirection, &worldInverse);
+D3DXVec3Normalize(&direction, &direction);
+
+// For each face in local coordinates
+for(const Face& face : m_faces)
+{
+    D3DXVECTOR3 u = face.p1 - face.p0;
+    D3DXVECTOR3 v = face.p2 - face.p0;
+
+    D3DXVECTOR3 normal;
+    D3DXVec3Cross(&normal, &u, &v);
+    D3DXVec3Normalize(&normal, &normal);
+
+    // Determine if normal is facing the pick direction
+    const float faceDirection = D3DXVec3Dot(&face.normal, &direction);
+    if(faceDirection < 0.0f)
+    {
+        // Find the line-plane intersection point
+        // Plane: (P-P₀).n = 0, Line: L = L₀ + td
+        // Intersection point when L = P
+        // Expand and Substitute for t = (P₀ - L₀).n / d.n
+        const float epsilon = 0.001f;
+        const float t = D3DXVec3Dot(&(face.origin - origin), &face.normal) / faceDirection;
+        D3DXVECTOR3 intersection = origin + (t * direction);
+
+        // Ensure point of intersection is on the plane
+        assert(fabs(D3DXVec3Dot(&(intersection - face.origin), &face.normal)) <= epsilon);
+            
+        // Ensure ray is in front of the plane
+        if(t >= 0.0f)
+        {
+            // Convert world coordinates of p into barycentric coordinates 
+            // p is a point on the plane found through plane-ray intersection
+            // Plane equation: planeToPoint = su + tv where planeToPoint = p - p0
+            // Dot by u/v to: pp.v = (su + tv).v and pp.u = (su + tv).u
+            // Rearrange to: s = (pp.v - t(v.v)) / (u.v) and t = (p.u - s(u.u)) / (u.v)
+            // Substitute each one into the other and find s,t
+            D3DXVECTOR3 planeToPoint = intersection - face.origin;
+            const float uu = D3DXVec3Dot(&u, &u); 
+            const float vv = D3DXVec3Dot(&v, &v);
+            const float uv = D3DXVec3Dot(&u, &v);
+            const float pv = D3DXVec3Dot(&planeToPoint, &face.v); 
+            const float pu = D3DXVec3Dot(&planeToPoint, &face.u);
+            float denominator = (uv * uv) - (vv * uu);
+            denominator = denominator == 0.0f ? epsilon : denominator;
+            const float bt = ((uv * pu) - (pv * uu)) / denominator;
+            const float bs = ((pv * uv) - (pu * vv)) / denominator;
+
+            // Determine if inside half of the plane (triangle)
+            if(bt >= 0.0f && bs >= 0.0f && bs + bt <= 1.0f)
+            {
+                // Convert back to world coordinates to find the distance
+                D3DXVec3TransformCoord(&intersection, &intersection, &world);
+                const float distanceToMesh = D3DXVec3Length(&(intersection - rayOrigin));
+                if(distanceToMesh < m_distanceToMesh)
+                {
+                    // Set the new mesh as selected
+                    m_distanceToMesh = distanceToMesh;
+                    return true;
+                }
+            }
+        }
+    }
+}
 
  *///////////////////////////////////////////////////////////////////////////////////////////////////

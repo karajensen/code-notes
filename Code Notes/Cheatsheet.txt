@@ -37,43 +37,45 @@
      y = x++ - getA(); x++/getA evaluated in any order
      getA() && getB(); conditional logic always left to right
 
-[11] Calling a virtual/pure virtual function in constructor is undefined 
-     behaviour. Base version will be called but dangerous
+[11] 'this' can be used in constructor except to call virtual functions 
+      which is undefined behaviour. Base version will be called but dangerous
 
-[12] Assigning/Copying by-val from Derived to Base causes slicing where 
+[12] 'delete this' calls the destructor.
+
+[13] Assigning/Copying by-val from Derived to Base causes slicing where 
      the derived information is lost
 
-[13] Virtual methods can't be templates as at run-time; when it finds out
+[14] Virtual methods can't be templates as at run-time; when it finds out
      what type is needed for the call, it can't generate the template
      class instance anymore.
 
-[14] Don't store an array of derived class objects in a base class pointer.
+[15] Don't store an array of derived class objects in a base class pointer.
      Pointer arithmatic uses sizeof(Baseclass), not sizeof(Derivedclass)
      delete [] myArray and myArray[x] also uses pointer arithmatic
 
-[15] Base class determines the access rights of the method for base class
+[16] Base class determines the access rights of the method for base class
      pointer holding derived object.
      - If base method is public, derived will be called even if not public.
      - If base method is protected, only derived can call it.
      - If base method is private, can't be called.
 
-[16] Never redefine default variables from the base class; base class 
+[17] Never redefine default variables from the base class; base class 
      pointers will always use base class default values.
 
-[17] Throw by value; catch by reference to allow polymorphism.
+[18] Throw by value; catch by reference to allow polymorphism.
      Never throw pointers as memory may not exist when unwinding the stack.
 
-[18] With #define f(x) make sure to include brackets around the x inside the
+[19] With #define f(x) make sure to include brackets around the x inside the
      defined body: ((x)+=2) in case x is an expression
 
-[19] Compiler sees these as function declarations
+[20] Compiler sees these as function declarations
      MyClass obj(MyClass2(value)); Fixed by MyClass obj((MyClass2(value)));
      MyClass obj(); Fixed by MyClass obj;
 
-[20] Between two sequence points a variable must not be modified more than 
+[21] Between two sequence points a variable must not be modified more than 
      once. Eg. i = ++i is bad.
 
-[21] Using swap/= on a shared pointer removes it from the previous reference 
+[22] Using swap/= on a shared pointer removes it from the previous reference 
      count and adds it onto the new reference count.
 
 ////////////////////////////////////////////////////////////////////////////////////

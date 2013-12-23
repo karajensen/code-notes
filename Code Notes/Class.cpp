@@ -59,6 +59,7 @@ MyClass::MyClass(int x, double y):
 //make virtual if class is to be inherited from
 virtual ~MyClass();
 MyClass::~MyClass(){}
+delete this; // calls destructor
 
 //COPY CONSTRUCTOR
 MyClass::MyClass(const MyClass& obj)

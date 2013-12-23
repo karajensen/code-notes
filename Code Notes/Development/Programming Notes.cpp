@@ -405,36 +405,36 @@ CREATIONAL PATTERNS
 ABSTRACT FACTORY  Creates an instance of several families of classes    When requiring interface
 FACTORY METHOD    Creates an instance of several derived classes        When requiring object
 BUILDER           Different objects are initialised by same process     Complex initialisation sharing      
-PROTOTYPE         A fully initialized instance to be copied or cloned   Multiple object variations
 SINGLETON         A class of which only a single instance can exist     Main application class
+PROTOTYPE         A fully initialized instance to be copied             Multiple object variations
                                                    
 ==============================================================================================
 STRUCTURAL PATTERNS  
 ==============================================================================================
 
-PIMPL       Allows changing the implementation without touching the interface   Data hiding
-DECORATOR   Allows mixing subclasses to form a final object                     GUI design
-FLYWEIGHT   A fully initialized instance to referenced                          Sharing objects
-COMPOSITE   A tree class that holds and recurses through child objects          Tree/Node objects
-FACADE      A class that managers groups of various objects                     Object managers
-PROXY       A wrapper that provides same functionality as class wrapped         C++/CLI wrappers
-ADAPTER     A wrapper that changes the interface of the class wrapped           Legacy libraries
-BRIDGE
+FLYWEIGHT   A fully initialized instance to referenced                       Sharing/Instancing objects
+DECORATOR   Allows mixing subclasses to form a final object                  GUI design
+COMPOSITE   A tree class that holds and recurses through child objects       Tree/Node objects
+FACADE      A class that manages groups of various objects                   Object managers
+PIMPL       Change the single implementation without changing the interface  Data hiding
+BRIDGE      Switch multiple implementations without changing the interface   Switching implementations                     
+PROXY       A wrapper that provides same functionality as class wrapped      C++/CLI wrappers/pointers
+ADAPTER     A wrapper that changes the interface of the class wrapped        Legacy libraries
            
 ==============================================================================================
 BEHAVIOURAL PATTERNS
 ==============================================================================================
 
-STRATEGY        Family of interchangable algorithms                         Switching algorithms
-COMMAND         Holds a method and anything needed to call that method      Functors/lambdas
-CHAIN OF RESP   Passes a command through series of objects until handled    Events
-ITERATOR        Allows movement over range of elements in a container       Containers
+MEDIATOR        Talks between two classes that don't know each other        Keep unrelated classes apart
 OBSERVER        Looks at another object and updated when that object is     Ad-Hoc object updates
-STATE           Alters an objects behavior when its state changes
-MEDIATOR        Talks between two classes that don't know each other        
-VISITOR         Class methods are seperated into a seperate class           High method code change
-MEMENTO         Allows capture and restore an objects internal state        Undo/Redo
-INTERPRETER     Decodes each symbol in a string for a particular meaning    Compilers
+CHAIN OF RESP   Passes a command through series of objects until handled    Events
+COMMAND         Holds a method and anything needed to call that method      Functors/lambdas
+STATE           Alters an objects behavior when its state changes           Multiple states/behaviours
+STRATEGY        Family of interchangable algorithms                         Switching algorithms
 TEMPLATE        Algorithm with only function calls to other classes         Object algorithm variations
+MEMENTO         Allows capture and restore an objects internal state        Undo/Redo
+ITERATOR        Allows movement over range of elements in a container       Containers
+INTERPRETER     Decodes each symbol in a string for a particular meaning    Compilers
+VISITOR         Class methods are seperated into a seperate class           High method code change
 
 *///////////////////////////////////////////////////////////////////////////////////////////////////

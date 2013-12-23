@@ -40,7 +40,6 @@ X                   Y
     ----              ----        secƟ = C/A
    ‖r‖cosƟ              A         cotƟ = A/O
 
-
 IDENTITIES WHEN R = 1 (UNIT CIRCLE)
 sinƟ = y
 cosƟ = x
@@ -201,7 +200,6 @@ VECTOR PROJECTION
  for â.b̂ the number (-1->1) gives the % along b the perpᵦa reaches
  for a.b̂ the number gives the distance along b the perpᵦa reaches
 
-
 //////////////////////////////////////////////////////////////////////////////
 //POINTS
 //////////////////////////////////////////////////////////////////////////////
@@ -276,7 +274,7 @@ z = ‖r‖sinɸ
 
 
 //////////////////////////////////////////////////////////////////////////////
-//LINES
+//LINES/PLANES
 //////////////////////////////////////////////////////////////////////////////
 
 LINE: Set of points where coordinates of all points satisfies f(x) = y
@@ -308,14 +306,15 @@ if u.(v X w) = 0 then coplanar as u.(v X w) = volume of parralopied
 LINE PARAMETRIC EQUATION
 =============================================================================
  
- P = a₀P₀ + a₁P₁    where a₀ + a₁ = 1
- P = (1-t)P₀ + tP₁  where a₁ = t
- ----------------
-| P(t) = P₀ + td |
- ----------------
+ P = a₀P₀ + a₁P₁ where a₀ + a₁ = 1 and make a₁ = t
+ ---------------------
+| P = (1-t)P₀ + tP₁   |
+| P = P₀ + t(P₁ - P₀) |
+| P = P₀ + td         |
+ ---------------------
  t = Barycentric coordinate
- d = vector along line (P₁-P₀)
- P(t) = coordinate on line
+ d = vector along line
+ P = coordinate on line
  P₀ = Point on line
 
 FINDING P(t):
@@ -326,6 +325,51 @@ FINDING P(t):
 
  FINDING t:
  t = (P - P₀) / d
+
+=============================================================================
+PLANE PARAMETRIC EQUATION
+=============================================================================
+ 
+P = a₀P₀ + a₁P₁ + a₂P₂ where a₀ + a₁ + a₂ = 1 and make a₁ = s and a₂ = t
+ ------------------------------
+| P = (1-s-t)P₀ + sP₁ + tP₂    |
+| P = P₀ + s(P₁-P₀) + t(P₂-P₀) |
+| P = P₀ + su + tv             |
+ ------------------------------
+s,t = Barycentric coordinates
+P = coordinate on plane
+P₀ = Point on plane
+u = P₁ - P₀
+v = P₂ - P₀
+d = P - P₀
+
+FINDING P:
+Can be split into 3 equations:
+x = P₀ˣ + suˣ + tvˣ
+y = P₀ʸ + suʸ + tvʸ
+z = P₀ᶻ + suᶻ + tvᶻ
+
+FINDING S,T:
+Convert world coordinates of p into barycentric coordinates
+Plane equation: P - P₀ = su + tv
+pp = P - P₀ where P is a point on the plane
+Use plane-ray intersection to determine P if given a point/direction
+
+1) pp = su + tv (dot by v)
+   pp.v = (su + tv).v
+   pp.v = s(u.v) + t(v.v)
+   s = (pp.v - t(v.v)) / u.v
+
+2) pp = su + tv (dot by u)
+   pp.u = (su + tv).u
+   pp.u = s(u.u) + t(u.v)
+   t = (pp.u - s(u.u)) / u.v
+
+Sub t into s and rearrange: 
+t = ((u.v * pp.u) - (pp.v * u.u)) / ((u.v * u.v) - (v.v * u.u))
+
+Sub s into t and rearrange: 
+s = ((pp.v * u.v) - (pp.u * v.v)) / ((u.v * u.v) - (u.u * v.v))
 
 =============================================================================
 LINE LINEAR EQUATION
@@ -344,46 +388,6 @@ LINE LINEAR EQUATION
   ------------
  | y = mx + c |
   ------------
-
-=============================================================================
-PLANE PARAMETRIC EQUATION
-=============================================================================
- 
-P = a₀P₀ + a₁P₁ + a₂P₂      where a₀ + a₁ + a₂ = 1
-P = (1-t-s)P₀ + tP₁ + sP₂   where a₁ = s and a₂ = t
- -------------------------
-| P(s,t) = P₀ + su + tv |
- -------------------------
-s,t = Barycentric coordinate
-
-P(t) = coordinate on plane (P(x,y,z))
-P₀ = Point on plane
-u = P₁ - P₀
-v = P₂ - P₀
-d = P - P₀
-
-FINDING P(t):
-Can be split into 3 equations:
-x = P₀ˣ + suˣ + tvˣ
-y = P₀ʸ + suʸ + tvʸ
-z = P₀ᶻ + suᶻ + tvᶻ
-
-FINDING s,t:
-Convert world coordinates of p into barycentric coordinates
-Plane equation: P(s,t) - P₀ = su + tv becomes d = su + tv
-
-1) d = su + tv (dot by v)
-   d.v = (su + tv).v
-   d.v = s(u.v) + t(v.v)
-   s = (d.v - t(v.v)) / u.v
-
-2) d = su + tv (dot by u)
-   d.u = (su + tv).u
-   d.u = s(u.u) + t(u.v)
-   t = (d.u - s(u.u)) / u.v
-
-Sub t into s and rearrange: t = ((u.v * d.u) - (d.v * u.u)) / ((u.v * u.v) - (v.v * u.u))
-Sub s into t and rearrange: s = ((d.v * u.v) - (d.u * v.v)) / ((u.v * u.v) - (u.u * v.v))
 
 =============================================================================
 PLANE LINEAR EQUATION
@@ -827,29 +831,6 @@ SOLUTIONS Has rows | 1 0 ... 0 | a | or | 0 0 ... 0 | 0 |
 -> UNDER-DETERMINED: Infinitely Many Solutions when R < N 
 -> OVER-DETERMINED: One Unique Solution but too many equations when R > N 
 -> EXACT: One solution with exact number of equations when R = N
-
-----------------------------------------------------------------
-Eg(1): Find Intersection of Plane and Line
-----------------------------------------------------------------
-Given Po and P1 are on the line P(t) = Po + t(P1-Po)
-    x = xo + t(x1-xo)
-    y = yo + t(y1-yo)
-    z = zo + t(z1-zo)
-
-Rearrange ot make t the subject:
-    t = (x-xo)/(x1-xo) = (y-yo)/(y1-yo) = (z-zo)/(z1-zo)
-    let ∆x = x1-xo, ∆y = y1-yo, ∆z = z1-zo
-
-EQUATIONS:
-    ax + by + cz = d
-    ∆yx -∆xy = ∆yxo - ∆xyo
-    ∆yz - ∆zy = ∆yzo - ∆zyo
-
-AUGMENTED MATRIX:
-|  a   b   c |      d      |        
-| ∆y -∆x   0 | ∆yxo - ∆xyo |
-|  0 -∆z  ∆y | ∆yzo - ∆zyo |
-
 
 //////////////////////////////////////////////////////////////////////////////
 //PROBABILITY 
