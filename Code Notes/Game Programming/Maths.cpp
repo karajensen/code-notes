@@ -12,12 +12,6 @@ n = nano = 10¯⁹     G = giga = 10⁹
 Degrees to radians:  (PI / 180) * degrees;
 Radians to degrees:  (180 / PI) * radians;
 
--------------------------------------------------------------------------
-DERIVATIVES/ANTI-DIFFERENTIATION
---------------------------------------------------------------------------
-f(x) = axⁿ          f'(x) = axⁿ
-f'(x) = anx¯¹       f(x) = axⁿ⁺¹/n+1
-
 --------------------------------------------------------------------------
 COORDINATES
 --------------------------------------------------------------------------
@@ -28,6 +22,30 @@ COORDINATES
   /  RH COODINATE     /  LH COODINATE     Thumb = Z
  ▼   SYSTEM          ▼   SYSTEM
 X                   Y
+
+//////////////////////////////////////////////////////////////////////////////
+//ALGEBRA
+//////////////////////////////////////////////////////////////////////////////
+
+EXPANDING BRACKETS
+(x - a)(x + b) = 0                  
+x(x + b) - a(x + b) = 0             
+x² - abx - ab = 0                   
+
+DERIVATIVES/ANTI-DIFFERENTIATION
+f(x) = axⁿ      f'(x) = axⁿ
+f'(x) = anx¯¹   f(x) = axⁿ⁺¹/n+1
+
+SOLVE QUADRATIC EQUATION
+ax² + bx + c = 0
+x = -b ± √(b² - 4ac) / 2a
+
+CIRCLES EQUATIONS
+where c = center of circle
+(x-cˣ)² + (y-cʸ)² = r²                = r² on the circle boundry
+(x-cˣ)² + (y-cʸ)² + (z-cᶻ)² = r²      > r² outside circle
+(P-c).(P-c) = r²                      < r² inside circle
+P.P - 2P.c + c.c = r²
 
 //////////////////////////////////////////////////////////////////////////////
 //TRIGONOMETRY
@@ -136,10 +154,15 @@ a.b = 0     Ɵ = 90 vectors are ⊥ to each other
   -----►                 ▼
 
 DOT PRODUCT RULES:
-  a.a = ‖a‖²
-  a.b = b.a
-  (a+b).c = a.c + b.c
-  k(a.b) = ka.b = a.kb
+a.a = ‖a‖²
+a.b = b.a
+(a+b).c = a.c + b.c
+k(a.b) = ka.b = a.kb
+
+EXPANDING DOT PRODUCTS:
+(c - a).(c + b) = 0 
+c.(c + b) - a.(c + b) = 0
+c.c + b.c - a.c - a.b = 0
 
 =============================================================================
 NORMS
@@ -272,7 +295,6 @@ x = ‖r‖cosɸcosƟ                     x = ‖r‖cosƟ
 y = ‖r‖cosɸsinƟ                     y = ‖r‖sinƟ
 z = ‖r‖sinɸ
 
-
 //////////////////////////////////////////////////////////////////////////////
 //LINES/PLANES
 //////////////////////////////////////////////////////////////////////////////
@@ -399,20 +421,6 @@ PLANE LINEAR EQUATION
   ---------------------- 
  | ax + by + cz + d = 0 | where d = -(ax₀ + by₀ + cz₀)
   ----------------------
-
-//////////////////////////////////////////////////////////////////////////////
-//CIRCLES
-//////////////////////////////////////////////////////////////////////////////
-
-2D CIRCLE EQUATION: 
-(x-center.x)² + (y-center.y)² = r²  [on circle]
-(x-center.x)² + (y-center.y)² < r²  [inside]
-(x-center.x)² + (y-center.y)² > r²  [outside]
-
-3D CIRCLE EQUATION: 
-(x-center.x)² + (y-center.y)² + (z-center.z)² = r²  [on circle]
-(x-center.x)² + (y-center.y)² < (z-center.z)² = r²  [inside]
-(x-center.x)² + (y-center.y)² > (z-center.z)² = r²  [outside]
 
 //////////////////////////////////////////////////////////////////////////////
 //MATRICES
@@ -787,9 +795,7 @@ Vˡᵒᶜ = A¯¹Vᵉˣᵗ  Express from external into local
 //SYSTEMS OF LINEAR EQUATIONS
 //////////////////////////////////////////////////////////////////////////////
 
-USED: Finding common points in a series of planes/lines
-
-A Series of plane equations can be written:
+A Series of equations can be written:
 ax + by + cz = d    | a b c || x |   | d |
 ex + fy + gz = h    | e f g || y | = | h |  or Av = w
 ix + jy + kz = l    | i j k || z |   | l |
@@ -799,8 +805,7 @@ We want v which is the intersection of all three equations
 | v = A¯¹w |
  ----------
 
-ROW REDUCTION: 
-Aim is to get Augmented matrix into Row/Row reduced Echelon form
+ROW REDUCTION: Aim is to get Augmented matrix into Row/Row reduced Echelon form
 
 AUGMENTED MATRIX:       ROW ECHELON FORM:       ROW REDUCED ECHELON FORM:
 | a b c | d |           | 1 t s | q |           | 1 0 0 | m |

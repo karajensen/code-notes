@@ -10,12 +10,12 @@ X▪          derivative                  ∏           pi
 √()         square root                 τ           torque
 ∞           infinite                    α           alpha
 ∑           sum of                      ᶜ           centripetal
-‖ ‖         magnitude                   ⊗           tensor product
-⊥           perpendicular               ⁂          therefore
-¹/₂         half                        ≤≥           less/greater
-tan¯¹()     trigonmetry                 ▲►▼◄         arrows
-̅            conjugate                   ̿             double conjugate
-•           dot point
+‖ ‖         magnitude                   ⊗          tensor product
+⊥          perpendicular               ⁂          therefore
+¹/₂         half                        ≤≥          less/greater
+tan¯¹()     trigonmetry                 ▲►▼◄        arrows
+̅            conjugate                   ̿            double conjugate
+•           dot point                   ±           plusminus
 
 ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻᶿᵝᶲᴬᴮᴰᴱᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾᴿᵀᵁᵂ¯⁴⁵²³¹°⁶⁷⁸⁹⁺⁻⁼⁽⁾ 
 ₐₑᵢₒᵣᵤᵥₓᵦ₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎

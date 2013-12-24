@@ -49,11 +49,12 @@ n X (c-b) = CBN = vector pointing from c-b to center
 //PLANE-POINT COLLISION [BARYCENTRIC TECHNIQUE]
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Convert world coordinates of p into barycentric coordinates
-// Plane equation: pp = su + tv where pp = p - p0 and is a point on the plane
-// Dot by u/v to: pp.v = (su + tv).v and pp.u = (su + tv).u
-// Rearrange to: s = (pp.v - t(v.v)) / (u.v) and t = (p.u - s(u.u)) / (u.v)
-// Substitute each one into the other and find s,t
+Convert world coordinates of p into barycentric coordinates
+Plane equation: pp = su + tv where pp = p - p0 and is a point on the plane
+Dot by u/v to: pp.v = (su + tv).v and pp.u = (su + tv).u
+Rearrange to: s = (pp.v - t(v.v)) / (u.v) and t = (p.u - s(u.u)) / (u.v)
+For notes rearranging, see planes in maths section
+Substitute each one into the other and find s,t
 
 D3DXVECTOR3 u = p1 - p0;
 D3DXVECTOR3 v = p2 - p0;
@@ -102,15 +103,35 @@ if(faceDirection < 0.0f)
 // SPHERE-RAY COLLISION ALGORITHM
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+Sphere equation: (P-c).(P-c) = r²
+(P-c).(P-c) = r²
+P.(P-c) - c.(P-c) = r²
+P.P - 2P.c + c.c = r²
+Substitute Line equation: P = P₀ + td
+(P₀ + td).(P₀ + td) - 2(P₀ + td).c + c.c = r²
+P₀.P₀ + 2tP₀.d + t²d.d - 2P₀.c - 2td.c + c.c = r²
+t²d.d + t(2P₀.d - 2d.c) + P₀.P₀ - 2P₀.c + c.c = r²
+(d.d)t² + 2(P₀ - c).dt + (P₀ - c).(P₀ - c) - r² = 0
+Using quadratic formula: at² + bt + c = 0 
+t = -b ± √(b² - 4ac) / 2a where t >= 0 to hit the sphere
 
+const float radiusSqr = radius * radius;
+const D3DXVECTOR3 CP0 = m_rayOrigin - center;
+const double a = D3DXVec3Dot(&m_rayDirection, &m_rayDirection);
+const double b = D3DXVec3Dot(&(2 * CP0), &m_rayDirection); 
+const double c = D3DXVec3Dot(&CP0, &CP0) - radiusSqr; 
 
-
-
-
-
-
-
-
+const double squaredComponent = (b * b) - (4 * a * c);
+if(squaredComponent >= 0)
+{
+    const double squared = std::sqrt(squaredComponent);
+    const double t1 = (-b + squared) / (2 * a);
+    const double t2 = (-b - squared) / (2 * a);
+    if(t1 >= 0 || t2 >= 0)
+    {
+        // intersection occured
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // SPHERE-SPHERE COLLISION ALGORITHM
