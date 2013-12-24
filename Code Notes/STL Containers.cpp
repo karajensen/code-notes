@@ -212,7 +212,7 @@ S.size(); //number of elements
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 queue<int> Q; //FIFO queue
-priority_queue<int> pQ; //largest is automatically sorted to head of queue using heap sort
+priority_queue<int> pQ; //largest is automatically sorted to front of queue using heap sort
 
 Q.empty(); //returns true/false if empty (faster than size)
 Q.size(); //number of elements

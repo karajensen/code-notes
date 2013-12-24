@@ -410,6 +410,24 @@ OPTIMIZATION TIPS
 • Render a depth-only pass before color pass to reduce pixel shader use
 
 ///////////////////////////////////////////////////////////////////////////////////////
+//TERRAIN GENERATION
+///////////////////////////////////////////////////////////////////////////////////////
+
+MIDPOINT DISPLACEMENT ALGORITHM
+• Start with basic four vertex shape and slip by adding vertex in middle
+• Get x/z values of middle vertex from midpoint of surrounding vertices
+• Get y value of middle vertex from a value between -d/2 and d/2
+• Continue to split new four faces multiplying d by 2^-r each time
+• Filter to remove sharp transitions
+• Smaller R = rougher terrain
+
+FAULT FORMATION ALGORITHM
+• Starts with grid for terrain and creates random line accross the terrain
+• Raise vertices on one side of the line and lower on other by amount d
+• Create another line and repeat, reducing d each pass
+• More passes = rougher terrain
+
+///////////////////////////////////////////////////////////////////////////////////////
 //PRIMITIVES
 ///////////////////////////////////////////////////////////////////////////////////////
 

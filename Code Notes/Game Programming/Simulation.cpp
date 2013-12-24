@@ -238,45 +238,43 @@ Increase in K:
 //STEERING BEHAVIOURS
 /////////////////////////////////////////////////////////////////////////////////
 
-===> www.red3D.com for reference
-
 HIERARCHY OF CONTROL
-  Action Selection; strategy, goals, planning
-  Steering; path determination
-  Locomotion; animation, articulation
+Action Selection; strategy, goals, planning
+Steering; path determination
+Locomotion; animation, articulation
 
 -----------------------------------------------------------------------
 IMPLEMENTING STEERING BEHAVIOURS
 -----------------------------------------------------------------------
-  STATE SPACE MODEL:
-  X(t) = |x(t)| X▪(t) = |v(t)|  
-         |v(t)|         |a(t)|
+STATE SPACE MODEL:
+X(t) = |x(t)| X▪(t) = |v(t)|  
+       |v(t)|         |a(t)|
 
-  OBJECT FRAME:
-  {r,f,u} are the basis vectors for the vehicle
-  forward vector for vehicle always aligned to velocity
-  B(t) =  | rx  fx  ux |
-          | ry  fy  uy |
-          | rz  fz  uz |
+OBJECT FRAME:
+{r,f,u} are the basis vectors for the vehicle
+forward vector for vehicle always aligned to velocity
+B(t) =  | rx  fx  ux |
+        | ry  fy  uy |
+        | rz  fz  uz |
 
 -----------------------------------------------------------------------
 FOR EACH TIMESTEP UPDATE
 -----------------------------------------------------------------------
-  SEMI-IMPLICIT EULER SCHEME:
-  v(t+∆t) = truncate(v(t) + a(t)∆t, vᵐᵃˣ)
-          = truncate(v(t) + (¹/m)F(t)∆t, vᵐᵃˣ)
-  x(t+∆t) = x(t) + v(t+∆t)∆t
+SEMI-IMPLICIT EULER SCHEME:
+v(t+∆t) = truncate(v(t) + a(t)∆t, vᵐᵃˣ)
+        = truncate(v(t) + (¹/m)F(t)∆t, vᵐᵃˣ)
+x(t+∆t) = x(t) + v(t+∆t)∆t
 
-  STEERING FORCE:
-  F(t) = truncate(m(v'(t)-v(t)), Fᵐᵃˣ)
+STEERING FORCE:
+F(t) = truncate(m(v'(t)-v(t)), Fᵐᵃˣ)
 
-  UPDATING BASIS ORIENTATION:
-  want forward vector to always be aligned to velocity vector
-  u(temp) = uᵗ/‖uᵗ‖
-  f(t+∆t) = v(t+∆t)/‖(t+∆t)‖
-  r(t+∆t) = f(t+∆t) X u(temp)
-  u(t+∆t) = r(t+∆t) X f(t+∆t)
-  B(t+∆t) = -sin¯¹(fˣ(t+∆t))  used for switching between external/local frame
+UPDATING BASIS ORIENTATION:
+want forward vector to always be aligned to velocity vector
+u(temp) = uᵗ/‖uᵗ‖
+f(t+∆t) = v(t+∆t)/‖(t+∆t)‖
+r(t+∆t) = f(t+∆t) X u(temp)
+u(t+∆t) = r(t+∆t) X f(t+∆t)
+B(t+∆t) = -sin¯¹(fˣ(t+∆t))  used for switching between external/local frame
 
 -----------------------------------------------------------------------
 USER INPUTS: v'(t)
@@ -353,7 +351,6 @@ Problems include management as behaviours increase
 
  F(t) = Fˢ(t) + Fᵈ(t) + mg
  a(t) = (1/m)(Fˢ(t) + Fᵈ(t) + mg)
-
 
 //////////////////////////////////////////////////////////////////////////////
 //PARTICLES/FLUID SIMULATION

@@ -43,9 +43,6 @@
     <ClCompile Include="Game Programming\Physics.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
-    <ClCompile Include="Languages\Assembly.cpp">
-      <Filter>Languages</Filter>
-    </ClCompile>
     <ClCompile Include="Languages\Maxscript forms.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
@@ -142,9 +139,6 @@
     <ClCompile Include="Development\Web Development.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Bullet Physics.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
     <ClCompile Include="Game Programming\Directx.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
@@ -157,22 +151,10 @@
     <ClCompile Include="Game Programming\OpenGL.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Post Effects.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
     <ClCompile Include="Game Programming\Rendering.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
     <ClCompile Include="Game Programming\Shaders.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Programming\Shadows.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Programming\Terrain.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Programming\Texturing.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
     <ClCompile Include="C# Notes.cpp">
@@ -180,9 +162,6 @@
     </ClCompile>
     <ClCompile Include="C++CLI.cpp">
       <Filter>Managed Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Code Examples\Example - Algorithms and Structures.cpp">
-      <Filter>Development\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Code Examples\Classes\assimpmesh.cpp">
       <Filter>Development\Classes</Filter>
@@ -211,8 +190,11 @@
     <ClCompile Include="Code Examples\Example - Maya API Node.cpp">
       <Filter>Languages\Examples</Filter>
     </ClCompile>
-    <ClCompile Include="Code Examples\Example - Design Patterns.cpp">
-      <Filter>Development\Examples</Filter>
+    <ClCompile Include="Code Examples\Design Patterns.cpp">
+      <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Colour.cpp">
+      <Filter>Game Programming</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

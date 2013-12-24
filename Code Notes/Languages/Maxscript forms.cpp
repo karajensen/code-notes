@@ -97,33 +97,12 @@ button myButton "Button text"
 //LABEL
 label myLabel "Text"
 
-//CHECKBOX
-
-//RADIO BUTTON
-
-//SLIDER
-
-//DROP DOWN LIST
-
-//COLOR PICKER
-
 //PROGRESS BAR
 progressBar myProgress value:0  //from 0-100
-
-//EDIT TEXT
-
-//LIST BOX
-
-//COMBO BOX 
-//combination of list and text box
-
-//CHECKBUTTON 
-//stays down when pressed, pops up when pressed again
 
 //PICKBUTTON 
 //allows select object in scene
 pickbutton myPickButton "Text" autoDisplay:true //display name of picked obj
-
 
 //////////////////////////////////////////////////////////////////////////////  
 //OPEN/SAVE DIALOGS

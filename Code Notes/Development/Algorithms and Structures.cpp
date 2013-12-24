@@ -34,146 +34,67 @@ Quick Sort             O(NlogN)    O(N)        Array        Comparison, recursiv
 Merge Sort             O(NlogN)    O(N)        Array        Recursive, Stable, continually splits elements in half
 Heap Sort              O(NlogN)    O(N)        Array        Comparison, In-place that builds heap out of data
 
-CONTAINERS    ACESSING   SEARCHING   INSERTING   REMOVING   DESCRIPTION
-Array         O(1)       O(N)        O(N)        O(N)       Block of continuous memory
-List          O(N)       O(N)        O(1)        O(1)       Elements scattered and linked to each other
-Stack         ---        ---         O(1)        O(1)       Last-In-First-Out
-Queue         ---        ---         O(1)        O(1)       First-In-First-Out
-Hash Table    O(1)       O(1)        O(1)        O(1)       Maps keys to values which live in slots
-BS Tree       O(logN)    O(logN)     O(logN)     O(logN)    Binary Tree with only 2 children to each parent
+CONTAINERS     ACESSING   SEARCHING   INSERTING   REMOVING   DESCRIPTION
+Array          O(1)       O(N)        O(N)        O(N)       Block of continuous memory
+List           O(N)       O(N)        O(1)        O(1)       Elements scattered and linked to each other
+Stack          ---        ---         O(1)        O(1)       Last-In-First-Out
+Queue          ---        ---         O(1)        O(1)       First-In-First-Out
+Priority Queue ---        ---         O(logN)     O(1)       Largest sorted to front of queue
+Hash Table     O(1)       O(1)        O(1)        O(1)       Maps keys to values which live in slots
+Binary Tree    O(logN)    O(logN)     O(logN)     O(logN)    Binary Tree with only 2 children to each parent
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//SORTING ALGORITHMS
+//SEARCH/SORT ALGORITHMS
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-=======================================================================================
-BUBBLE SORT
-=======================================================================================
-1) Iterate through array once for every value
-2) Each iteration, check two neighbouring values and swap largest to right
+/********************************************************************************
+ BUBBLE SORT
+ 1) Iterate through array once for every value
+ 2) Each iteration, check two neighbouring values and swap largest to right
+*********************************************************************************/
+void BubbleSort(std::vector<int>& values)
+{
+    int temporary = 0;
+    for(unsigned int i = 0; i < values.size(); ++i)
+    {
+        for(unsigned int j = 0; j < values.size()-i-1; ++j)
+        {
+            if(values[j] > values[j + 1])
+            {
+                temporary = values[j];
+                values[j] = values[j + 1];
+                values[j + 1] = temporary;
+            }
+        }
+    }
+}
 
-=======================================================================================
-SELECTION SORT
-=======================================================================================
-1) Iterate through array once for every value
-2) Each iteration, move the smallest value for whole array to front
-3) Next iteration, iterate over remaining values
 
-=======================================================================================
-INSERTION SORT
-=======================================================================================
-Insertion Sort generally faster than selection/bubble
-As fast as bubble if array in exact reverse order
-1) Iterate through array once for every value
-2) Inside a while loop for that value, check it against the previous value
-3) If previous is larger, move the value before it and continue to check against the new previous value
-4) Continue until the previous value is smaller than the value
 
-=======================================================================================
-MERGE SORT
-=======================================================================================
-1) For a list of elements, split in half and continue this until a tree with single value nodes is created
-2) Move up the tree, sorting children of a parent into order and merging to become the parent
-3) Continue this until reaching root node
 
-=======================================================================================
-QUICKSORT
-=======================================================================================
-Partitioning algorithm that continues on until elements are sectioned into single slots
-Pivot value is taken via 'Median of three'
-   • Middle, start and end values of array are looked at
-   • The largest value of those three and smallest value are used to create a middle value
-   • Middle value becomes the pivot for partitioning
-   • When doing sections too small for median of three, use another sorting algorithm
 
-=======================================================================================
-RADIX SORT
-=======================================================================================
-Requires many containers to store temporary copies
-Linked lists can be used as alot of adding/deleting
-Number of passes is determined by the units of largest number (100 = 3 passes, 1000 = 4 passes)
 
-1) First pass look at first digit on right of a number
-2) Depending on the number, copy it over to a container between 0->9
-3) Copy back to main container from containers 0->9, clear the temp cont.
-4) Repeat for 10s and 100s etc. digits until sorted
 
-=======================================================================================
-HEAP SORT
-=======================================================================================
-Uses a heap structure to sort elements for an array
-1) Add the unsorted array to the heap
-2) The heap sorts the array weakly
-3) Elements are removed from the heap in largest to smallest order
-3) As elements are re-added, they are sorted properly into the array
 
-=======================================================================================
-BUCKET/BIN SORT
-=======================================================================================
-• Chooses amount of buckets and partitions array into those
-• Buckets are sorted seperately 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//SEARCHING ALGORITHMS
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
-=======================================================================================
-LINEAR SEARCH [ARRAYS]
-=======================================================================================
-1) Iterate through array to find the value
-2) Break if value found
 
-=======================================================================================
-BINARY SEARCH [ARRAYS]
-=======================================================================================
-1) Look at middle value and compare
-2) If target is higher, get middle value of upper section
-3) If target is lower, get middle value of lower section
-4) Repeat until number if found
 
-=======================================================================================
-BREADTH-FIRST SEARCH [GRAPHS/TREES]
-=======================================================================================
-ADVANTAGE: Less likely to get stuck in infinite loop
-DISADVANTAGE: Takes longer than depth first search
-              As all possible paths are being considered nodes are never 
-              deleted from memory until a terminal state is reached
 
-1. A node is expanded and all children checked to whether they have children or not (won/loss)
-2. If any have children, all their children are checked for children before moving to another depth level
-3. All levels done until depth reached
 
-=======================================================================================
-DEPTH FIRST SEARCH [GRAPHS/TREES]
-=======================================================================================
-ADVANTAGE: Less memory used as only a few nodes need to be kept in memory
-DISADVANTAGE: Possibility of getting into an infinite loop 
 
-1. Check if current node is a goal state.
-2. If not, expand the node, move to a child of the node, and repeat.
-3. If a node is a terminal state or depth reached return to the parent and try another child
 
-=======================================================================================
-DIJKSTRA [UNINFORMED SEARCH METHOD]
-=======================================================================================
-USED: To search graphs for shortest path
-ACTION: Chooses nodes with lowest cost so far value
-DISADVANTAGE: Searches entire graph considering high amount of nodes; wasteful
 
-=======================================================================================
-A* [INFORMED SEARCH METHOD]
-=======================================================================================
-Most ideal to use priority queue with iteration for Open/Closed lists
-std::priority_queue has no iteration; best to use sorted vector
-USED: Search weighted graphs with heuristics for shortest path
-ACTION: Chooses node with lowest estimated total cost
-ADVANTAGE: Less nodes considered than Dijkstra; effecient
+
+
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //HASH TABLES
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
 • Expensive to expand- all object's IDs must be changed
 • Objects inside cannot be ordered easily
 • Copying table is slow
@@ -344,5 +265,30 @@ W of +inf: Game is won
 Anything less than highest choice (α) for player doesn't need to be looked at
 Anything more than lowest choice (β) for opponent doesn't need to be looked 
 Values searched are in range [min->max] [α->β] ([-INF,INF] initially)
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//PATHFINDING
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DIJKSTRA [UNINFORMED SEARCH METHOD]
+• Searches graphs for shortest path
+• Chooses nodes with lowest cost so far value
+• Searches entire graph, less effecient than A*
+
+A* [INFORMED SEARCH METHOD]
+• Searches weighted graphics ith heuristics for shortest path
+• Chooses node with lowest estimated total cost
+• Less nodes considered and more effeciant than Dijkstra
+• Most ideal to use priority queue with iteration for Open/Closed lists
+• std::priority_queue has no iteration; best to use sorted vector
+• 2D Heuristic formula: |Goalʸ-Nodeʸ|+|Goalˣ-Nodeˣ|
+
+- Create two lists: open/closed
+- Add start pole to the open list
+- While there are nodes in the open list, get the node with the smallest total estimate cost
+- Check if this node is the goal
+- For all other direct nodes connected to this node, update its costs and move to the open list
+- Once all connected nodes are finished, add the parent node to the closed list
+- Continue until goal node or no solution is found 
 
 *////////////////////////////////////////////////////////////////////////////////////////////////////

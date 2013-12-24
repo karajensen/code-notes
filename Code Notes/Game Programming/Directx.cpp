@@ -174,8 +174,7 @@ if(FAILED(d3ddev->StretchRect(AARenTarSurface, NULL,
 { /*failed*/ }
 
 //Render the texture color buffer as normal to a quad and do any post work
-d3ddev->SetRenderTarget(0,BackBuffer);
-
+d3ddev->SetRenderTarget(0, BackBuffer);
 
 ////////////////////////////////////////////////////////////////////////////// 
 //DIRECTX CHECK SHADER MODEL

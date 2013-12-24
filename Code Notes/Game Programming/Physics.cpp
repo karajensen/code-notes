@@ -1,6 +1,6 @@
-﻿//////////////////////////////////////////////////////////////////////////////
-//GAME PHYSICS
-//////////////////////////////////////////////////////////////////////////////
+﻿/////////////////////////////////////////////////////////////////////////////////////////
+//PHYSICS
+/////////////////////////////////////////////////////////////////////////////////////////
 /*
 
 KINEMATICS: the study of the motion of objects without regard to the causes of this motion
@@ -56,20 +56,9 @@ dv = ∆v = vᶠ-v° (average velocity)
 v = dx/dt       (instantaneous velocity)
 
 =============================================================================
-NEWTON'S LAWS
-=============================================================================
-1) Every body remains in a state of rest or uniform motion(constant velocity) 
-   unless it is acted upon by an external unbalanced force.
-
-2) A body of mass subject to a force undergoes an acceleration that has the 
-   same direction as the force [F = ma]
-
-3) The mutual forces of action and reaction between two bodies are equal, 
-   opposite and collinear.
-
-=============================================================================
 KINEMATIC EQUATIONS
 =============================================================================
+
 Can be used in 1D/2D/3D problems with components
 Can only be used when accerlation (a/aᶜ/α) is constant
 
@@ -90,6 +79,7 @@ i:(1,0), j:(0,-1) then g is +
 =============================================================================
 FORCE(F)
 =============================================================================
+
 F = ma          forces acting on object
 Fᶜ = maᶜ        centripetal force
 N = mgcosƟ      force from surface onto object
@@ -97,9 +87,20 @@ Fr = µN         friction acting on object
 
 ∑F = F + Fr + mgcosƟ
 
+NEWTON'S LAWS
+1) Every body remains in a state of rest or uniform motion(constant velocity) 
+   unless it is acted upon by an external unbalanced force.
+
+2) A body of mass subject to a force undergoes an acceleration that has the 
+   same direction as the force [F = ma]
+
+3) The mutual forces of action and reaction between two bodies are equal, 
+   opposite and collinear.
+
 =============================================================================
 ENERGY(E)
 =============================================================================
+
 NON-ISOLATED SYSTEM:
  ∆E = W + Q 
  W = ∆KE + ∆GPE + ∆SPE + ∆TE
@@ -114,24 +115,19 @@ SPE = Spring Potential energy (will be 0 in perfectly elastic collisions)
 TE = Thermal energy due to friction
 Q = Energy due to heating of system
 
-----------------------------------------------------------------------------
 ENERGY TRANSFER: WORK(W)
-----------------------------------------------------------------------------
 Energy is transferred from the environment into the system
 W = τƟ
 W = F.d             when d is alligned with force
-W = ‖F‖‖d‖cosƟ      when d isn't alligned with force; want component of 
-                    force in direction of d
+W = ‖F‖‖d‖cosƟ      when d isn't alligned with force
+                    want component of force in direction of d
 
 W(overall) = ∆E
 W(KE) = ∆KE
 W(GPE) = ∆GPE
 
-----------------------------------------------------------------------------
 ENERGY TRANSFER: HEAT(Q)
-----------------------------------------------------------------------------
 Energy is transferred from the system back into the environment
-
 
 =============================================================================
 MOMENTUM(p)
@@ -216,23 +212,22 @@ n̂ = axis of rotation/normal to the area of the rotation
 w = sŵ = sn̂ = dƟ/dt
 α = dw/dt = d²Ɵ/dt²
 
-
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 //POSITIONAL PHYSICS
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
------------------------------------------------------------------------------
+=============================================================================
 MOTION
------------------------------------------------------------------------------
+=============================================================================
 For a block sliding down a hill with a pushing force:
   F = ma
   N = mgcosƟ
   Fr = µN
   where ∑F = F + mgsinƟ + Fr
 
------------------------------------------------------------------------------
+=============================================================================
 SPRINGS: HOOKE'S LAW
------------------------------------------------------------------------------
+=============================================================================
 The force on m, due to the spring:              Fs(t) = -kx(t)
 The force on m, due to friction and surface:    Fr(t) = -µv(t)
 Total force on m:                               F(t) = Fs(t) + Fr(t)
@@ -246,9 +241,9 @@ x(t): displacement from initial displacement Xo
 k: spring constant
 µ: friction coeffeciant
 
------------------------------------------------------------------------------
+=============================================================================
 BALLISTICS/PROJECTILES
------------------------------------------------------------------------------
+=============================================================================
 A projectile is shot at angle Ɵ where up is positive j, right positive i
 No air resistance so i component of velocity doesn't change
 
@@ -272,10 +267,9 @@ No air resistance so i component of velocity doesn't change
   to find total distance travelled (dˣ) sub t(f) into:
   dˣ = v(0)ˣt + (1/2)aˣt² 
 
-
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 //ROTATIONAL PHYSICS
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
 ANGULAR VELOCITY = w
 LINEAR VELOCITY = v
@@ -291,34 +285,63 @@ RIGHT-HAND RULE:
 Curl fingeres in direction object is rotating
 Stick thumb up; Thumb is in direction of w
 
-POINT/BODY ROTATING AROUND AN AXIS: no change in body's orientation
-    2D RELATIONS: when axis of rotation is about i,j or k
-     -------------------
-    | vᵀ(t) = w(t)x(t)  |
-    | aᶜ(t) = w(t)vᵀ(t) |
-     -------------------
+=============================================================================
+POINT/BODY ROTATING AROUND AN AXIS
+=============================================================================
+no change in body's orientation
 
-     3D RELATIONS: when axis of rotation is about arbitary axis
-     ----------------------
-    | vᵀ(t) = w(t) X x(t)  |    
-    | aᶜ(t) = w(t) X vᵀ(t) |
-     ----------------------
+2D RELATIONS: when axis of rotation is about i,j or k
+ -------------------
+| vᵀ(t) = w(t)x(t)  |
+| aᶜ(t) = w(t)vᵀ(t) |
+ -------------------
 
-     where ŵ,v̂,âᶜ make up the basis at point P 
-     Point P rotates around an axis with center Or
-     x(t) is the radius vector from Or to point P
-     w(t) = sŵ where s = Speed (radians per sec)
+3D RELATIONS: when axis of rotation is about arbitary axis
+ ----------------------
+| vᵀ(t) = w(t) X x(t)  |    
+| aᶜ(t) = w(t) X vᵀ(t) |
+ ----------------------
 
-POINT FIXED TO A ROTATING BODY: change in body's orientation
-    A force F is applied to Point P on an object which results in a torque
-    that rotates the whole body's orientation around the axis R X F
-    with an angular accerlation α
+where ŵ,v̂,âᶜ make up the basis at point P 
+Point P rotates around an axis with center Or
+x(t) is the radius vector from Or to point P
+w(t) = sŵ where s = Speed (radians per sec)
 
-    α = angular acceleration produced by toque
-    i = moment of inertia of the point
+=============================================================================
+POINT FIXED TO A ROTATING BODY
+=============================================================================
+change in body's orientation
 
-     --------
-    | τ = iα |
-     --------
+A force F is applied to Point P on an object which results in a torque
+that rotates the whole body's orientation around the axis R X F
+with an angular accerlation α
 
-*/////////////////////////////////////////////////////////////////////////////
+α = angular acceleration produced by toque
+i = moment of inertia of the point
+
+ --------
+| τ = iα |
+ --------
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// CONSTRAINTS
+/////////////////////////////////////////////////////////////////////////////////////////
+
+POINT TO POINT CONSTRAINT/BALL JOINT
+local pivot points of 2 rigid bodies match in world space
+
+HINGE CONSTRAINT/REVOLUTE JOINT
+body can only rotate around one axis (hinge axis) by restricting 2 degrees of freedom
+
+SLIDER CONSTRAINT/PRISMATIC JOINT
+body can translate in one axis
+
+CONE TWIST CONSTRAINT
+point to point constraint that adds cone/twist axis limits. X-axis is twist axis.
+
+6 DEGREE OF FREEDOM CONSTRAINT
+first 3 degree of freedom (linear axis) is translation of rb
+last 3 degree of freedom is angular motion of rb
+each axis can be locked, free or limited
+
+*/////////////////////////////////////////////////////////////////////////////////////////

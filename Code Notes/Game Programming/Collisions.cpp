@@ -78,7 +78,6 @@ const bool inside = t >= 0.0f && s >= 0.0f && t+s <= 2.0f; // determine if insid
 Plane equation: (P-P₀).n = 0
 Line equation: L = L₀ + td
 Intersection point when L = P
-
 (L₀ + td - P₀).n = 0     expand out the dot:
 td.n + (L₀ - P₀).n = 0   solve for t:
 t = (P₀ - L₀).n / d.n
