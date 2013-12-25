@@ -26,6 +26,11 @@ RGB (Red/Green/Blue)                   Additive colour model
 TEXTURE MAPPING: UV coordinates for 2D image
 CUBE MAPPING: UVW coordinates for 3D cube image
 
+PAL:  25fps     576 pixel lines  720 × 576
+NTSC: 29.97fps  525 pixel lines  720 × 486
+INTERLACE: for tvs to prevent shuttering artifacts, frame is split into two fields
+PROGRESSIVE: frame is drawn top to bottom
+
 ////////////////////////////////////////////////////////////////////////////////////////
 //TEXTURE FILTERING
 ////////////////////////////////////////////////////////////////////////////////////////

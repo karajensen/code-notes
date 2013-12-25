@@ -284,18 +284,9 @@ playblast -filename "test.mov";    //creates playblast using active viewport
 //==========================================================================
 currentUnit -query -time; //query the time units
 currentUnit -time "min";  //set the time units; keys are changed to keep animation speed relative to new time
-currentUnit -time "min" -updateAnimation false;    //set the time units; keys aren't changed (can become faster/slower)
- -----------------------------------------
-| game  |    Games Animation Speed |    15fps |
-| film  |    Standard Film Speed      |    24fps |
-| pal   |    PAL(frames)              |    25fps |
-| ntsc  |    NTSC(frames)          |    30fps |
-| show  |    Show Format(frames)      |    48fps |
-| palf  |    PAL(fields)              |    50fps |
-| ntscf |    NTSC(fields)          |    60fps |
- -----------------------------------------
+currentUnit -time "min" -updateAnimation false;  //set the time units; keys aren't changed (can become faster/slower)
 
-currentTime 10sec;    //can use: hour, min, sec, millisec, game, film, pal, ntsc, show, palf, ntscf
+currentTime 10sec;  //can use: hour, min, sec, millisec, game, film, pal, ntsc, show, palf, ntscf
 
 //Changing time without changing viewport
 float $cTime = `currentTime -query`;
