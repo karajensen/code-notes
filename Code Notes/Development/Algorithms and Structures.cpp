@@ -29,7 +29,7 @@ Bubble Sort            O(N²)       O(1)        Array        Comparison, simple,
 Insertion Sort         O(N²)       O(1)        Array        In-place, stable, fast for small arrays
 Select Sort            O(N²)       O(N)        Array        Comparison, In-place, fast for small arrays
 Bucket/Bin Sort        O(N+K)      O(NK)       Array        Distribution, Partitions array into buckets
-Radix Sort             O(NK)       O(N+K)      Array        Distribution, Works on arrays of numbers
+Radix Sort             O(NK)       O(N+K)      Array        Distribution, Works on arrays of numbers, can be stable sort
 Quick Sort             O(NlogN)    O(N)        Array        Comparison, recursive, faster than other O(NlogN), works well with cache
 Merge Sort             O(NlogN)    O(N)        Array        Recursive, Stable, continually splits elements in half
 Heap Sort              O(NlogN)    O(N)        Array        Comparison, In-place that builds heap out of data
@@ -49,6 +49,7 @@ Binary Tree    O(logN)    O(logN)     O(logN)     O(logN)    Binary Tree with on
 
 /********************************************************************************
  BUBBLE SORT
+ Sorts in ascending order
  1) Iterate through array once for every value
  2) Each iteration, check two neighbouring values and swap largest to right
 *********************************************************************************/
@@ -69,27 +70,200 @@ void BubbleSort(std::vector<int>& values)
     }
 }
 
+/********************************************************************************
+ RADIX SORT
+ Sorts in ascending order
+ 1) Find the maximum number
+ 2) For each significant position in the maximum number (1, 10, 100...)
+    - Find the amount of occurances of each digit from the values and store in bucket
+    - Convert this amount to index positions for the sorted array
+    - Build the sorted array backwards changing the 
+      index position for a digit when a place is filled
+*********************************************************************************/
+void RadixSort(std::vector<int>& values)
+{
+    auto getDigit = [](int number, int position) { return number/position % 10; };
 
+    int max = *std::max_element(values.begin(), values.end());
+    std::array<int, 10> digitBucket;
 
+    // for each radix significant position in the maximum number (1, 10, 100...)
+    for (int position = 1; max/position > 0; position *= 10)
+    {
+        std::vector<int> sorted(values.size());
+        digitBucket.assign(0);
 
+        // Find amount of occurances of each digit
+        for (int i = 0; i < static_cast<int>(values.size()); ++i)
+        {
+            const int digit = getDigit(values[i], position);
+            digitBucket[digit]++;
+        }
 
+        // Convert this amount to index positions for the sorted array
+        for (int i = 1; i < static_cast<int>(digitBucket.size()); ++i)
+        {
+            digitBucket[i] += digitBucket[i - 1];
+        }
+        
+        // Build the sorted array backwards changing the index 
+        // position for a digit when a place is filled
+        for (int i = static_cast<int>(values.size())-1; i >= 0; --i)
+        {
+            const int digit = getDigit(values[i], position);
+            digitBucket[digit]--;
+            sorted[digitBucket[digit]] = values[i];
+        }
+        
+        std::copy(sorted.begin(), sorted.end(), values.begin());
+    }
+}
 
+/********************************************************************************
+ QUICK SORT
+ Sorts in ascending order
+ 1) Partition the container to values lower than pivot and values higher
+ 2) For each partition created, repeat step one if there are values
+*********************************************************************************/
+void QuickSort(std::vector<int>& values, int minIndex, int maxIndex)
+{
+    int p2MinIndex = minIndex;
+    int p1MaxIndex = maxIndex;
+    const int pivot = values[(maxIndex + minIndex)/2];
+    
+    // Partition the container to values lower than pivot and values higher
+    // Creates: p1 -> p1MaxIndex -> p2MinIndex -> p2 (pivot value exists in p2)
+    while (p2MinIndex <= p1MaxIndex) 
+    {
+        while(values[p2MinIndex] < pivot)
+            ++p2MinIndex;
+    
+        while(values[p1MaxIndex] > pivot)
+            --p1MaxIndex;
+    
+        if(p2MinIndex <= p1MaxIndex)
+        {
+            // Swap the values into the correct partition
+            const int temporary = values[p2MinIndex];
+            values[p2MinIndex] = values[p1MaxIndex];
+            values[p1MaxIndex] = temporary;
+            p2MinIndex++;
+            p1MaxIndex--;
+        }
+    }
 
+    // check if first partition needs partitioning
+    if(minIndex < p1MaxIndex)
+    {
+        QuickSort(values, minIndex, p1MaxIndex);
+    }
 
+    // check if second partition needs partitioning
+    if(p2MinIndex < maxIndex)
+    {
+        QuickSort(values, p2MinIndex, maxIndex); 
+    }
+}
 
+/********************************************************************************
+ BINARY SEARCH
+ Requires ascending sort. Swap end/start assignment in loop for descending sort.
+ 1) Look at middle value and check if required value
+ 2) If target is higher, get middle value of upper section
+ 3) If target is lower, get middle value of lower section
+*********************************************************************************/
+bool BinarySearch(std::vector<int>& values, int searchvalue)
+{
+    int start = 0;
+    int end = static_cast<int>(values.size()) - 1;
 
+    while(start <= end)
+    {
+        const int middle = (end + start) / 2;
 
+        if (searchvalue == values[middle])
+        {
+            return true;
+        }
+        else if (searchvalue < values[middle])
+        {
+            end = middle - 1; //start = middle + 1; for descending
+        }
+        else
+        {
+            start = middle + 1; //end = middle - 1; for descending
+        }
+    }
+    return false;
+}
 
+/********************************************************************************
+ BREADTH FIRST SEARCH
+ 1) Add root to a queue
+ 2) While the queue is not empty:
+    - Pop the front of the queue and check if goal node
+    - If not, add all children to the end of the queue
+ Advantage: Less likely to get stuck in infinite loop
+ Disadvantage: Slower, all nodes kept in memory
+*********************************************************************************/
+bool BreadthFirstSearch(Node& root, int searchvalue)
+{
+    std::queue<const Node*> searchqueue;
+    searchqueue.push(&root);
 
+    while(!searchqueue.empty())
+    {
+        const Node* node = searchqueue.front();
+        searchqueue.pop();
 
+        // Check for goal node
+        if(node->value == searchvalue)
+        {
+            return true;
+        }
 
+        // Add all children to end of queue in any order
+        for(const Node& child : node->children)
+        {
+            searchqueue.push(&child);
+        }
+    }
+    return false;
+}
 
+/********************************************************************************
+ DEPTH FIRST SEARCH
+ 1) Add root to a stack
+ 2) While the stack is not empty:
+    - Pop the top of the stack and check if goal node
+    - If not, add all children to the top of the stack
+ Advantage: Faster, less nodes kept in memory
+ Disadvantage: Possibility of getting into an infinite loop 
+*********************************************************************************/
+bool DepthFirstSearch(Node& root, int searchvalue)
+{
+    std::stack<const Node*> searchstack;
+    searchstack.push(&root);
 
+    while(!searchstack.empty())
+    {
+        const Node* node = searchstack.top();
+        searchstack.pop();
 
+        // Check for goal node
+        if(node->value == searchvalue)
+        {
+            return true;
+        }
 
-
-
-
+        // Add all children to top of stack in any order
+        for(const Node& child : node->children)
+        {
+            searchstack.push(&child);
+        }
+    }
+    return false;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //HASH TABLES

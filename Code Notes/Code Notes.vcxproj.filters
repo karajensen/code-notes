@@ -17,9 +17,6 @@
     <Filter Include="Images">
       <UniqueIdentifier>{d5246f57-2735-4357-a353-33eb12eb8d89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Managed Source">
-      <UniqueIdentifier>{6a4b5a84-606c-48e3-a497-af44e2c5a910}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Languages\Examples">
       <UniqueIdentifier>{d7791879-ac81-42b7-8093-357ed87496f9}</UniqueIdentifier>
     </Filter>
@@ -58,9 +55,6 @@
     <ClCompile Include="Languages\MEL algorithms.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
-    <ClCompile Include="Languages\MEL animation.cpp">
-      <Filter>Languages</Filter>
-    </ClCompile>
     <ClCompile Include="Languages\MEL forms.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
@@ -74,9 +68,6 @@
       <Filter>Languages</Filter>
     </ClCompile>
     <ClCompile Include="Languages\Python for Maya.cpp">
-      <Filter>Languages</Filter>
-    </ClCompile>
-    <ClCompile Include="Languages\Python for RealFlow.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
     <ClCompile Include="Languages\Python modules.cpp">
@@ -157,12 +148,6 @@
     <ClCompile Include="Game Programming\Shaders.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
-    <ClCompile Include="C# Notes.cpp">
-      <Filter>Managed Source</Filter>
-    </ClCompile>
-    <ClCompile Include="C++CLI.cpp">
-      <Filter>Managed Source</Filter>
-    </ClCompile>
     <ClCompile Include="Code Examples\Classes\assimpmesh.cpp">
       <Filter>Development\Classes</Filter>
     </ClCompile>
@@ -196,24 +181,18 @@
     <ClCompile Include="Game Programming\Colour.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
+    <ClCompile Include="C# Notes.cpp">
+      <Filter>Languages</Filter>
+    </ClCompile>
+    <ClCompile Include="C++CLI.cpp">
+      <Filter>Languages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Cheatsheet.txt" />
     <None Include="Hotkeys.txt" />
     <None Include="..\.gitignore" />
     <None Include="Symbols.txt" />
-    <None Include="C# .NET Framework.cs">
-      <Filter>Managed Source</Filter>
-    </None>
-    <None Include="C# Class.cs">
-      <Filter>Managed Source</Filter>
-    </None>
-    <None Include="C# Code.cs">
-      <Filter>Managed Source</Filter>
-    </None>
-    <None Include="C# Containers.cs">
-      <Filter>Managed Source</Filter>
-    </None>
     <None Include="Code Examples\Shaders\main.glsl">
       <Filter>Game Programming\Shaders</Filter>
     </None>
@@ -235,203 +214,18 @@
     <None Include="Code Examples\Example - PyQt File Reader.pyw">
       <Filter>Languages\Examples</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Images\Code - BigONotationGraph.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Binary Search.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Execution Environment.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Hex Converting.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Iterators.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Merged Sort.PNG">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - STL container performance.PNG">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Tree Binary Space Partitioning.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Tree Octree Partitioning.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Trees.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Backface Culling.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Bottleneck chart.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Deferred Rendering (with transparency).jpg">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Deferred Rendering.jpg">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Depth Buffer Testing.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - DirectX Surfaces.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - DOF theory and 3 Point Lighting.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Final Gathering.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Global Illumination.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Importons.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Irradiance Particles.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Occulsion Culling.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Portals.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Primitives.jpg">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Projection Matrix.PNG">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Projection Matrix2.PNG">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - RayTracing.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Rendering Pipeline Diagram.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Rendering Pipeline.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Shadow Volume Stencil Testing.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Skybox.bmp">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Subsurface Scattering.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Terrain Clipmapping.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - View Frustum.gif">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - View Frustum.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - barycentric coordinates.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - constraints.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - expressing in basis diagram.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - expressing in basis.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - Integration.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - kinematics.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - plane equation.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - polar coordinates.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - Rotation around arbitrary axis.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Bump Mapping Normals.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Colors.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Inverse Square Attenuation.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Lighting Models Diagram.jpg">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Material Effects.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Material Types.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - PerVertex and PerPixel lighting.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Specular Models.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Spot Light.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Texture Filter types.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Texture Mapping.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Texture Wrapping.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - Collision Box Algorithms.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - Collision Sphere Algorithms.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Boxing.gif">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - C# Operator Precedence.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - C++ Operator Precedence.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - GJK Collision Detection.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Design Patterns.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - Trigonometry.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Incremental Convex Hull Algorithm.png">
-      <Filter>Images</Filter>
-    </Image>
+    <None Include="C# .NET Framework.cs">
+      <Filter>Languages</Filter>
+    </None>
+    <None Include="C# Class.cs">
+      <Filter>Languages</Filter>
+    </None>
+    <None Include="C# Code.cs">
+      <Filter>Languages</Filter>
+    </None>
+    <None Include="C# Containers.cs">
+      <Filter>Languages</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code Examples\Classes\assimpmesh.h">
@@ -481,5 +275,202 @@
     <FxCompile Include="Code Examples\Shaders\toon.fx">
       <Filter>Game Programming\Shaders</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\Code - Algorithms Search.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Algorithms Sort Performance.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Algorithms Sort.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - BigONotationGraph.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Boxing.gif">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - C# Operator Precedence.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - C++ Operator Precedence.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Containers STL performance.PNG">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Containers Trees.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Design Patterns.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Execution Environment.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Hex Converting.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Iterators.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Partitioning Binary Space.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Partitioning Octree.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Backface Culling.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Bottleneck chart.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Deferred Rendering (with transparency).jpg">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Deferred Rendering.jpg">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Depth Buffer Testing.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - DirectX Surfaces.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - DOF theory and 3 Point Lighting.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Final Gathering.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Global Illumination.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Importons.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Incremental Convex Hull Algorithm.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Irradiance Particles.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Occulsion Culling.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Portals.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Primitives.jpg">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Projection Matrix.PNG">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Projection Matrix2.PNG">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - RayTracing.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Rendering Pipeline Diagram.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Rendering Pipeline.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Shadow Volume Stencil Testing.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Skybox.bmp">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Subsurface Scattering.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Terrain Clipmapping.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - View Frustum.gif">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - View Frustum.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Barycentric coordinates.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Changing frame of reference.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Collision Box Algorithms.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Collision Sphere Algorithms.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - constraints.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - GJK Collision Detection.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Integration.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - kinematics.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - plane equation.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - polar coordinates.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Rotation around arbitrary axis.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Trigonometry.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Bump Mapping Normals.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Colors.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Inverse Square Attenuation.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Lighting Models Diagram.jpg">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Material Effects.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Material Types.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - PerVertex and PerPixel lighting.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Specular Models.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Spot Light.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Texture Filter types.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Texture Mapping.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Shader - Texture Wrapping.png">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
 </Project>

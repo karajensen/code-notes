@@ -24,7 +24,7 @@ transform(S, E, back_inserter(myCon), doCopyLam); //insert at end rather than co
 //ELEMENT EXISTANCE
 count(S, E, myObj) //returns int on number of items of myObj in container
 count_if(S, E, boolLam) //returns number of obj that lamda returns true
-binary_search(S, E, myObj, equalLam) //return true if myObj exists (equalLam returns true)
+binary_search(S, E, myObj, equalLam) //return true if myObj exists, requires sorted container
 
 //FIND OBJECT
 //If not found, returns E
@@ -296,6 +296,9 @@ if(x % 2)
 {
     //x is odd
 }
+
+//GET DIGIT AT RADIX SIGNIFICANT POSITION (1, 10, 100..)
+int digit = number/position % 10;
 
 //GETTING COLOR COMPONENTS VIA BIT SHIFTING
 unsigned int color;

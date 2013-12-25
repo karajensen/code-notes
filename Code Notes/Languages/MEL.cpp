@@ -10,21 +10,21 @@ Melscript      script executed      all data/scene-series of connected nodes
 //EXPRESSION EDITOR: Code run at particluar events
 //**********************************************************************
 //NOTE: All proc/vars made in script editor become automatically global
-//        To fix, enclose body in {}, procs can't be helped
-//        Pathnames can't have spaces in them
+//      To fix, enclose body in {}, procs can't be helped
+//      Pathnames can't have spaces in them
 //**********************************************************************
 
-\n        //newline
-\\        //slash
-\t        //tab
-\r        //return
-$        //variable
-%        //modulus
+\n  //newline
+\\  //slash
+\t  //tab
+\r  //return
+$   //variable
+%   //modulus
 
 
 //EXECUTING
-currentTime -query;            //command executed but nothing returned
-`currentTime -query`;        //command executed and results returned
+currentTime -query;         //command executed but nothing returned
+`currentTime -query`;       //command executed and results returned
 eval("currentTime -query"); //command as string executed and results returned
 
 //LOADING SCRIPTS
@@ -109,7 +109,6 @@ do{}while($i = 0)
 continue; //skip the rest of the loop to the next iteration
 break; //cancel the whole loop
 
-
 //-------------------------------------------------------------------------------
 //PROCEEDURES
 //-------------------------------------------------------------------------------
@@ -121,22 +120,18 @@ global proc myProc() {}
 proc float myProc(int $procVar) { return 3.4; }
 proc int[] myProc(float $myfloatArray[]) { return $myIntArray; }
 
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //VARIABLES
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 //PREDEFINED VARIABLES
-frame    //integer storing current frame number
+frame   //integer storing current frame number
 time    //no of seconds (default settings) past since playback
 deg/rad //used after number only
 
 //CONVERSIONS
 int $myInt = $myString;
 int $myInt = $myFloat;
-
 
 //---------------------------------------------------------------------
 //GLOBAL VARIABLES (CONST!)
@@ -199,12 +194,11 @@ $myIntArray = $tempArray;
 //not dynamic: needs values to initialise and can't be resized
 //only hold float values and needs dimensions to be set
 //To get object's matrices, see Xform
-matrix $myMatrix[$rows][$cols] = <<    0.0, 1.0, 0.0 ;    
+matrix $myMatrix[$rows][$cols] = << 0.0, 1.0, 0.0 ;    
                                     1.0, 1.0, 1.0 ;
                                     0.0, 0.0, 1.0 >>;
 $m + $n        //matrix addition
 $m * $n        //matrix multiplication (make sure they conform!)
-
 
 //-----------------------------------------------------------------
 //VECTORS
@@ -239,12 +233,11 @@ $myVec1 = $myVec2 ^ $myVec3;
 cross($myVec1,$myVec2);
 
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //STRINGS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-string $myString;    //assigned default value of ""
+string $myString;  //assigned default value of ""
 string $myStringArray[];
 int $NoOfCharas = size($myString);
 
@@ -277,8 +270,6 @@ match "test$" "this is a test"; //test for word at end of string, returns "test"
 match "[0-9]+" "testing01252a"; //returns 01252
 match "(abc)+" "123abcabc456"; //returns abcabc
 
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //RENDERING/HYPERSHADE
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -286,8 +277,8 @@ match "(abc)+" "123abcabc456"; //returns abcabc
 //SETTING/GETTING RENDERER
 //Types: "mayaSoftware" "mayaHardware" "mentalRay"
 defaultRenderGlobals.currentRenderer;                                
-string &renderer = `getAttr defaultRenderGlobals.currentRenderer`;              //store current renderer
-setAttr defaultRenderGlobals.currentRenderer -type "string" "mayaHardware";      //change renderer
+string &renderer = `getAttr defaultRenderGlobals.currentRenderer`; //store current renderer
+setAttr defaultRenderGlobals.currentRenderer -type "string" "mayaHardware";  //change renderer
 
 //HYPERSHADE
 hyperShade -assign initialShadingGroup; //assign default lambert shader to selected

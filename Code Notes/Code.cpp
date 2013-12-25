@@ -162,7 +162,9 @@ unsigned long //Can have 32 (bytes) flags maximum
 //////////////////////////////////////////////////////////////////////////////
 
 //FOR LOOP
-for (int i = 0; i < 5; i++){}
+//Never use unsigned int when looping backwards to 0
+//When decrementing past zero the unsigned int will cycle over
+for (int i = 0; i < 5; ++i){}
 
 //FOR EACH LOOP
 for (double x : myDoubleArray){ x += 1.0; }  //by-val

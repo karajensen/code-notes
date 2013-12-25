@@ -326,6 +326,7 @@ BYTE: 8 bits
 WORD: 2 bytes
 DOUBLE WORD: 2 words
 QUAD WORD: 2 double words
+RADIX: Number base for a counting system (Decimal:10, Binary:2)
 
 STRUCTURE OF A BYTE
 Most values a byte can have: 0 -> (128+64+32+16+8+4+2+1) = 0 -> 255 = 256

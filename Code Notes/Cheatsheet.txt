@@ -78,6 +78,9 @@
 [22] Using swap/= on a shared pointer removes it from the previous reference 
      count and adds it onto the new reference count.
 
+[23] Never use unsigned int when looping backwards to 0. When decrementing past
+     zero the unsigned int will cycle over and the loop will not end
+
 ////////////////////////////////////////////////////////////////////////////////////
 //STL CHEATSHEET
 ////////////////////////////////////////////////////////////////////////////////////

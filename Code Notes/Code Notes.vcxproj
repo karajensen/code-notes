@@ -125,13 +125,11 @@
     <ClCompile Include="Languages\Maxscript.cpp" />
     <ClCompile Include="Languages\Maya API.cpp" />
     <ClCompile Include="Languages\MEL algorithms.cpp" />
-    <ClCompile Include="Languages\MEL animation.cpp" />
     <ClCompile Include="Languages\MEL forms.cpp" />
     <ClCompile Include="Languages\MEL objects.cpp" />
     <ClCompile Include="Languages\MEL.cpp" />
     <ClCompile Include="Languages\Python containers.cpp" />
     <ClCompile Include="Languages\Python for Maya.cpp" />
-    <ClCompile Include="Languages\Python for RealFlow.cpp" />
     <ClCompile Include="Languages\Python modules.cpp" />
     <ClCompile Include="Languages\Python notes.cpp" />
     <ClCompile Include="Memory.cpp" />
@@ -158,20 +156,40 @@
     <None Include="Symbols.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Code Examples\Classes\assimpmesh.h" />
+    <ClInclude Include="Code Examples\Classes\camera.h" />
+    <ClInclude Include="Code Examples\Classes\color.h" />
+    <ClInclude Include="Code Examples\Classes\dynamicarray.h" />
+    <ClInclude Include="Code Examples\Classes\input.h" />
+    <ClInclude Include="Code Examples\Classes\logger.h" />
+    <ClInclude Include="Code Examples\Classes\matrix.h" />
+    <ClInclude Include="Code Examples\Classes\timer.h" />
+    <ClInclude Include="Code Examples\Classes\vector3.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Code Examples\Shaders\blur-sharpen.hlsl" />
+    <FxCompile Include="Code Examples\Shaders\bounds.fx" />
+    <FxCompile Include="Code Examples\Shaders\glow-depth.hlsl" />
+    <FxCompile Include="Code Examples\Shaders\main.fx" />
+    <FxCompile Include="Code Examples\Shaders\post.hlsl" />
+    <FxCompile Include="Code Examples\Shaders\toon.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\Code - Algorithms Search.png" />
+    <Image Include="Images\Code - Algorithms Sort Performance.png" />
+    <Image Include="Images\Code - Algorithms Sort.png" />
     <Image Include="Images\Code - BigONotationGraph.png" />
-    <Image Include="Images\Code - Binary Search.png" />
     <Image Include="Images\Code - Boxing.gif" />
     <Image Include="Images\Code - C# Operator Precedence.png" />
     <Image Include="Images\Code - C++ Operator Precedence.png" />
+    <Image Include="Images\Code - Containers STL performance.PNG" />
+    <Image Include="Images\Code - Containers Trees.png" />
     <Image Include="Images\Code - Design Patterns.png" />
     <Image Include="Images\Code - Execution Environment.png" />
     <Image Include="Images\Code - Hex Converting.png" />
     <Image Include="Images\Code - Iterators.png" />
-    <Image Include="Images\Code - Merged Sort.PNG" />
-    <Image Include="Images\Code - STL container performance.PNG" />
-    <Image Include="Images\Code - Tree Binary Space Partitioning.png" />
-    <Image Include="Images\Code - Tree Octree Partitioning.png" />
-    <Image Include="Images\Code - Trees.png" />
+    <Image Include="Images\Code - Partitioning Binary Space.png" />
+    <Image Include="Images\Code - Partitioning Octree.png" />
     <Image Include="Images\Graphics - Backface Culling.png" />
     <Image Include="Images\Graphics - Bottleneck chart.png" />
     <Image Include="Images\Graphics - Deferred Rendering (with transparency).jpg" />
@@ -198,12 +216,11 @@
     <Image Include="Images\Graphics - Terrain Clipmapping.png" />
     <Image Include="Images\Graphics - View Frustum.gif" />
     <Image Include="Images\Graphics - View Frustum.png" />
-    <Image Include="Images\MathsPhysics - barycentric coordinates.png" />
+    <Image Include="Images\MathsPhysics - Barycentric coordinates.png" />
+    <Image Include="Images\MathsPhysics - Changing frame of reference.png" />
     <Image Include="Images\MathsPhysics - Collision Box Algorithms.png" />
     <Image Include="Images\MathsPhysics - Collision Sphere Algorithms.png" />
     <Image Include="Images\MathsPhysics - constraints.png" />
-    <Image Include="Images\MathsPhysics - expressing in basis diagram.png" />
-    <Image Include="Images\MathsPhysics - expressing in basis.png" />
     <Image Include="Images\MathsPhysics - GJK Collision Detection.png" />
     <Image Include="Images\MathsPhysics - Integration.png" />
     <Image Include="Images\MathsPhysics - kinematics.png" />
@@ -223,25 +240,6 @@
     <Image Include="Images\Shader - Texture Filter types.png" />
     <Image Include="Images\Shader - Texture Mapping.png" />
     <Image Include="Images\Shader - Texture Wrapping.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Code Examples\Classes\assimpmesh.h" />
-    <ClInclude Include="Code Examples\Classes\camera.h" />
-    <ClInclude Include="Code Examples\Classes\color.h" />
-    <ClInclude Include="Code Examples\Classes\dynamicarray.h" />
-    <ClInclude Include="Code Examples\Classes\input.h" />
-    <ClInclude Include="Code Examples\Classes\logger.h" />
-    <ClInclude Include="Code Examples\Classes\matrix.h" />
-    <ClInclude Include="Code Examples\Classes\timer.h" />
-    <ClInclude Include="Code Examples\Classes\vector3.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Code Examples\Shaders\blur-sharpen.hlsl" />
-    <FxCompile Include="Code Examples\Shaders\bounds.fx" />
-    <FxCompile Include="Code Examples\Shaders\glow-depth.hlsl" />
-    <FxCompile Include="Code Examples\Shaders\main.fx" />
-    <FxCompile Include="Code Examples\Shaders\post.hlsl" />
-    <FxCompile Include="Code Examples\Shaders\toon.fx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

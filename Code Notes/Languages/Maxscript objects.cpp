@@ -5,7 +5,6 @@
 $.name              //name of currently selected object
 myCollection = $*   //put all objects in scene into collection
 
-
 //PICKING OBJECTS FROM SCENE
 //Set function that returns bool in filter
 fn MySphereFilter obj = ( ClassOf obj == Sphere ) //returns bool if sphere
@@ -89,7 +88,6 @@ scale obj [10.0, 2.0, 4.0]
 rotate obj (quat 45 y_axis)
 about obj1 rotate obj2 (quat 45 y_axis) //use obj1's pivot point as origin
 
-
 //////////////////////////////////////////////////////////////////////////////  
 //EDITABLE MESHES
 ////////////////////////////////////////////////////////////////////////////// 
@@ -103,7 +101,6 @@ mymesh = mesh vertices:vertArray faces:indices
 //MESH FUNCTIONS
 vertNumber = getNumVerts myMesh //get number of verts in mesh
 
-
 //////////////////////////////////////////////////////////////////////////////  
 //LIGHTS
 ////////////////////////////////////////////////////////////////////////////// 
@@ -116,7 +113,6 @@ mylight = omnilight pos:[0,0,0] castshadows:on
 mylight.rgb             //light color
 mylight.excludeList     //nodes excluded from light
 mylight.projectorMap    //can assign texturemap to allow patterns in light
-
 
 //////////////////////////////////////////////////////////////////////////////  
 //SHADERS
@@ -134,7 +130,6 @@ myshader.diffusemap
 
 //TEXTURE MAPS
 mymap = marble Vein_Width:0.1 size:12
-
 
 //////////////////////////////////////////////////////////////////////////////  
 //CAMERAS

@@ -115,16 +115,15 @@ point.cartesionize();
 
 //METHODS
 point.distanceTo(point2); //length of vector between points
-point * matrix;              //transforming points, returns new point
+point * matrix;           //transforming points, returns new point
 point *= matrix;          //transforming points
 
 //POINTS ARRAY
 MPointArray points;
-points.length();                    //size of the array
-points.clear();                        //clear the array
-points.setSizeIncrement(elementNo);    //sets size of array
+points.length();                     //size of the array
+points.clear();                      //clear the array
+points.setSizeIncrement(elementNo);  //sets size of array
 points.append(point);                //chooses the next avaliable slot to fill?
-
 
 //===============================================================================
 //VECTORS
@@ -144,24 +143,23 @@ vector = point;
 vector *= 2.0f;              //times by scalar
 vector*vector1;              //dot product
 vector^vector1;              //cross product
-vector.length();          //length of vector
+vector.length();             //length of vector
 vector.normalize();          //normalize the vector
-vector.normal();          //returns normalized copy of vector
-vector.angle(vector2);      //returns angle between two vectors
+vector.normal();             //returns normalized copy of vector
+vector.angle(vector2);       //returns angle between two vectors
 vector.rotateBy(eulerRot);
 vector.rotateBy(quat);
-vector.rotateTo(vector2);        //returns quaternion necessary to rotate vec to vec2
-vector * matrix;                //transforming vectors, returns new point
-vector *= matrix;                //transforming vectors
-vector.transformAsNormal(mat);    //where mat is the world matrix; creates the inverse normal matrix and transforms
+vector.rotateTo(vector2);      //returns quaternion necessary to rotate vec to vec2
+vector * matrix;               //transforming vectors, returns new point
+vector *= matrix;              //transforming vectors
+vector.transformAsNormal(mat); //where mat is the world matrix; creates the inverse normal matrix and transforms
 
 //===============================================================================
 //QUATERNIONS
 //===============================================================================
 MQuaternion quat;
 
-quat *= quat1;    //quaternion *
-
+quat *= quat1;  //quaternion *
 
 //===============================================================================
 //MATRICES
@@ -171,9 +169,9 @@ MFloatMatrix matrix;
 
 matrix.setToIdentity();
 matrix(row,column);          //returns value at row,column
-matrix * matrix2;          //matrix multiplication
-matrix.get(floatMatrix);  //convert between float/double matrices
-matrix.inverse();          //inverse of matrix
+matrix * matrix2;            //matrix multiplication
+matrix.get(floatMatrix);     //convert between float/double matrices
+matrix.inverse();            //inverse of matrix
 matrix.transpose();          //transpose of matrix
 matrix.tansformAsNormal(mat) //pass in transformation matrix and function converst it to inverse tranpose
 
@@ -193,12 +191,10 @@ transMat.getRotation();
 transMat.getScale();
 transMat.getTranslation();
 
-
 //===============================================================================
 //MAYA STRINGS
 //===============================================================================
 MString("My string");
-
 
 //===============================================================================
 //TIME
@@ -206,49 +202,45 @@ MString("My string");
 MTime time;
 MTime time(value,MTime::kSeconds);
 
-time = MAnimControl::minTime();    //can be maxTime; gives start/end range of timeline
+time = MAnimControl::minTime();  //can be maxTime; gives start/end range of timeline
 MGlobal::viewFrame(time);        //change the frame
-
 
 //===============================================================================
 //EULER ROTATION
 //===============================================================================
 MEulerRotation eulerRot;
 
-eulerRot.asMatrix();    //returns rotation matrix
-
+eulerRot.asMatrix();   //returns rotation matrix
 
 //===============================================================================
 //DISTANCE OBJECT
 //===============================================================================
 MDistance distance(1.0, MDistance::uiUnit());
 
-
 //===============================================================================
 //DAGPATH OBJECTS
 //===============================================================================
 MDagPath dagpath;
 
-dagpath.isValid();            //whether the path stored is an actual node or not
-dagpath.pop();                //when a dagpath is requested, it gives path to shape; use pop to get transform
-dagpath.apiType();            //gives type of object the path is of
-dagPath.instanceNumber();    //returns instance number of node
-
+dagpath.isValid();         //whether the path stored is an actual node or not
+dagpath.pop();             //when a dagpath is requested, it gives path to shape; use pop to get transform
+dagpath.apiType();         //gives type of object the path is of
+dagPath.instanceNumber();  //returns instance number of node
 
 //===============================================================================
 //MAYA OBJECTS
 //===============================================================================
 MObject object; //a void* to an internal object
 
-object.isNull();    //checks whether nullptr
-thisMObject();        //returns MObject for object that called the method
+object.isNull();  //checks whether nullptr
+thisMObject();    //returns MObject for object that called the method
 
 //===============================================================================
 //MAYA HANDLES
 //===============================================================================
 MDataHandle handle;
 
-handle.copy(handle1);    //copy data from one handle to another
+handle.copy(handle1);  //copy data from one handle to another
 
 //Converting Handles
 double dbl = handle.asDouble();
@@ -267,50 +259,48 @@ MItGeometry iter;
 //VERTEX ITERATOR
 MItMeshVertex iter(dagPath,component,&status); //component is MObject, dagPath is component's dagpath
 iter.count();                    //number of verts for the mesh
-iter.position(MSpace::kWorld);    //returns position of pointed-to vertex
+iter.position(MSpace::kWorld);   //returns position of pointed-to vertex
 iter.index();                    //returns int index of vertex for mesh
 
 //EDGE ITERATOR
 MItMeshEdge iter(dagPath,component,&status);
 iter.count();                    //number of edges for the mesh
 iter.index();                    //returns int index of edge for mesh
-iter.index(0); iter.index(1);   //returns index of vertices 0/1 connected to the edge
+iter.index(0); iter.index(1);    //returns index of vertices 0/1 connected to the edge
 iter.point(0,MSpace::kWorld);    //returns MPoint vertex 0 connected to edge
 iter.point(1,MSpace::kWorld);    //returns MPoint vertex 1 connected to edge
 
 //FACE ITERATOR
 MItMeshPolygon iter(dagPath,component,&status);
-iter.count();                    //number of faces for the mesh
+iter.count();                     //number of faces for the mesh
 iter.polygonVertexCount();        //number of verts for the face
-iter.index();                    //returns int index for face
-iter.point(i,MSpace::kWorld);    //returns MPoint for vertex at index 
-iter.getNormal(normalVector);    //returns MVector for normal for face
-
+iter.index();                     //returns int index for face
+iter.point(i,MSpace::kWorld);     //returns MPoint for vertex at index 
+iter.getNormal(normalVector);     //returns MVector for normal for face
 
 //===============================================================================
 //BOUNDING BOX
 //===============================================================================
 MBoundingBox bbox;
 
-bbox.expand(point);    //expands the bounding box to include any points added
-
+bbox.expand(point);  //expands the bounding box to include any points added
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //FUNCTION OBJECTS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //TYPES OF FUNCTION OBJECTS
-MFnPlugin pluginFn;                    //initialising/uninitialising plugin
-MFnNurbsCurve curveFn;                //working with curve objects
-MFnTransform transformFn;            //wokring with objects that have transform nodes
-MFnDependencyNode shapeFn;            //working with objects that have shape nodes
-MFnSurface surfaceFn;                //working with NURBS
-MFnSurfaceData surfaceDataFn;        //working with NURBS
-MFnSet setFn;                        //working with shader groups
-MFnDagNode dagNodeFn;                //working with dag paths/objects
-MFnEulerRotation eulerFn;            //wokring with objects that have transform nodes
-MFnQuaternion quatFn;                //wokring with objects that have transform nodes
-MFnMesh meshFn;                        //working with meshes
+MFnPlugin pluginFn;             //initialising/uninitialising plugin
+MFnNurbsCurve curveFn;          //working with curve objects
+MFnTransform transformFn;       //wokring with objects that have transform nodes
+MFnDependencyNode shapeFn;      //working with objects that have shape nodes
+MFnSurface surfaceFn;           //working with NURBS
+MFnSurfaceData surfaceDataFn;   //working with NURBS
+MFnSet setFn;                   //working with shader groups
+MFnDagNode dagNodeFn;           //working with dag paths/objects
+MFnEulerRotation eulerFn;       //wokring with objects that have transform nodes
+MFnQuaternion quatFn;           //wokring with objects that have transform nodes
+MFnMesh meshFn;                 //working with meshes
 
 //REGISTERING OBJECTS WITH FUNCTION OBJECTS
 //allows using certain methods on the objects
@@ -320,7 +310,6 @@ myFunctionObject.setObject(myMayaObject);
 
 //FUNCTION OBJECT METHODS
 myFunctionObject.object();    //get the attached object
-
 
 //----------------------------------------------------------------------------
 //CURVE FUNCTION OBJECT
@@ -390,7 +379,6 @@ dagNodeFn.child(childNumber)        //returns a MObject for the child requrested
 meshfn.getPoints(vertices) //Takes reference to MPointArray and gets all vertices for mesh
 meshfn.create(vertices.length(), polycounts.length(), vertices, polycounts, indices);
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //COMPONENTS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -408,25 +396,24 @@ if(status == MS::kSuccess) //will fail if dagpath isn't to an acceptable mesh/ve
         int index = iter.index();
     }
 }
-s
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //SELECTION
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 MSelectionList selection;
 
-MGlobal::getActiveSelectionList    (selection);             //get user selection
+MGlobal::getActiveSelectionList    (selection);            //get user selection
 MGlobal::getSelectionListByName("nodeName",selection);    //get specific selection
 
 //METHODS
-selection.clear();    //clear container
+selection.clear();  //clear container
 selection.length(); //size of container
 
 //SELECTING A SHADER
 MObject shadingGroupObj;
 MGlobal::getSelectionListByName("initialShadingGroup",selection);
 selection.getDependNode(0,shadingGroupObj);
-
 
 //ITERATING OVER SELECTED 
 MItSelectionList iter(selection);
@@ -444,7 +431,6 @@ for(iter.reset(); !iter.isDone(); iter.next())
 
 //SELECTION MASKS
 MFn::kGeometric;    //poly,NURBS,SubD objects
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //ATTRIBUTES
@@ -475,17 +461,16 @@ NodeAttr.myAttribute = cAttr.create("fullName","shortName");
 cAttr.addChild(NodeAttr.attribute1); //add other attributes to parent
 cAttr.addChild(NodeAttr.attribute2);
 
-
 //ATTRIBUTE SETTINGS
-nAttr.setKeyable(true);         //Set an attribute keyable; this puts it in the channel box (doesn't happen by default)
-nAttr.setDefault(0);         //Value initialised to when instance is created; data not stored in attribute if never changed from default (saves space)
-nAttr.setHidden(true);         //Set attribute hidden (visible by default)
+nAttr.setKeyable(true);       //Set an attribute keyable; this puts it in the channel box (doesn't happen by default)
+nAttr.setDefault(0);          //Value initialised to when instance is created; data not stored in attribute if never changed from default (saves space)
+nAttr.setHidden(true);        //Set attribute hidden (visible by default)
 nAttr.setStorable(false);     //don't save attribute information (for output attributes as they're calculated)
 nAttr.setReadable(false);     //whether attribute can send data to another attribute
 nAttr.setWritable(false);     //whether attribute can receive data from another attribute
-nAttr.setConnectable(false); //whether attribute can be connected to another attribute
-nAttr.setArray(false);         //whether attribute holds single value (default settings) or any array
-nAttr.setCached(false);         //whether compute() is called for all queries of data
+nAttr.setConnectable(false);  //whether attribute can be connected to another attribute
+nAttr.setArray(false);        //whether attribute holds single value (default settings) or any array
+nAttr.setCached(false);       //whether compute() is called for all queries of data
 nAttr.setMin(value);
 nAttr.setMax(value);
 
@@ -496,7 +481,7 @@ nodeFn.addAttribute(nAttr, MFnDependencyNode::kGlobalDynamicAttr); //add a attri
 nodeFn.removeAttribute(nAttr, MFnDependencyNode::kLocalDynamicAttr);
 
 //FINALISE ATTRIBUTES
-addAttribute(NodeAttr.myAttribute);             //add attributes to node
+addAttribute(NodeAttr.myAttribute); //add attributes to node
 addAttribute(NodeAttr.myCompoundAttribute);  //add compound attribute (also need to add any children seperately)
 attributeAffects(NodeAttr.myInputAttribute, NodeAttr.myOutputAttribute); //set input effects output
 
@@ -509,7 +494,6 @@ attributeAffects(NodeAttr.myInputAttribute, NodeAttr.myOutputAttribute); //set i
 //Get plug for shape nodes: use MFnDependencyNode
 
 MPlug plug;
-
 myPlug.value();
 
 //CHOOSING A PLUG FROM AN OBJECT
@@ -534,7 +518,7 @@ myPlug.connectedTo(plugConnections,true,false);
 MPlug inputPlug = plugConnections[0]; //first element is the single input connection for the attribute
 
 //POINT PLUG TO AN ELEMENT OF OUTPUT CONNECTIONS
-unsigned int instanceNum = myShapeDagPath.instanceNumber();    //get instance number of shape
+unsigned int instanceNum = myShapeDagPath.instanceNumber(); //get instance number of shape
 myPlug.selectAncestorLogicalIndex(instanceNum); //point plug to correct output connection
 
 //COMPOUND PLUGS
@@ -550,7 +534,7 @@ for(unsigned int i = 0; i < myPlug.numChildren(); i++)
 myArrayPlug.numElements();
 myArrayPlug.elementByPhysicalIndex(i);    //returns MPlug for that element
 myArrayPlug.elementByLogicalIndex(23);    //returns MPlug, if element doesnt exist, creates it
-myArrayPlug.logicalIndex();                //returns ID for element
+myArrayPlug.logicalIndex();               //returns ID for element
 
 
 //GET PLUG NAME DEPENDING ON GEOMETRY TYPE
@@ -601,5 +585,5 @@ dgMod.connect(transformFn.findPlug("translateX"),transformFn2.findPlug("translat
 dgMod.disconnect(inputPlug,desintationPlug);
 dgMod.renameNode(myNode,MString("myname"));
 
-dagMod.reparentNode(object,parent);                //parents object under parent (both are MObject)
+dagMod.reparentNode(object,parent); //parents object under parent (both are MObject)
 dagMod.MDGModifier::createNode(MeltNode::id);    
