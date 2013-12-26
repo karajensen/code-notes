@@ -33,12 +33,12 @@ public static explicit operator int(MyClass value)
 }
 
 //PARAMS VARIADIC FUNCTION
-ShowParams(typeof(int), "hello", 123);
+//also used for passing generic arrays
+ShowParams(10, typeof(int), "hello", 123);
 public void ShowParams(params object[] objects)
 {
-    for (int i = 0; i < objects.Length; ++i)
+    foreach (object obj in objects)
     {
-        Console.WriteLine(objects[i]);
     }
 }
 

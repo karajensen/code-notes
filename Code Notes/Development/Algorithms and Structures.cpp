@@ -34,14 +34,16 @@ Quick Sort             O(NlogN)    O(N)        Array        Comparison, recursiv
 Merge Sort             O(NlogN)    O(N)        Array        Recursive, Stable, continually splits elements in half
 Heap Sort              O(NlogN)    O(N)        Array        Comparison, In-place that builds heap out of data
 
-CONTAINERS     ACESSING   SEARCHING   INSERTING   REMOVING   DESCRIPTION
-Array          O(1)       O(N)        O(N)        O(N)       Block of continuous memory
-List           O(N)       O(N)        O(1)        O(1)       Elements scattered and linked to each other
-Stack          ---        ---         O(1)        O(1)       Last-In-First-Out
-Queue          ---        ---         O(1)        O(1)       First-In-First-Out
-Priority Queue ---        ---         O(logN)     O(1)       Largest sorted to front of queue
-Hash Table     O(1)       O(1)        O(1)        O(1)       Maps keys to values which live in slots
-Binary Tree    O(logN)    O(logN)     O(logN)     O(logN)    Binary Tree with only 2 children to each parent
+CONTAINERS         ACCESS    SEARCH    INSERT     REMOVE    DESCRIPTION
+Array              O(1)      O(N)      O(N)       O(N)      Block of continuous memory
+List               O(N)      O(N)      O(1)       O(1)      Elements scattered and linked to each other
+Stack              ---       ---       O(1)       O(1)      Last-In-First-Out
+Queue              ---       ---       O(1)       O(1)      First-In-First-Out
+Priority Queue     ---       ---       O(logN)    O(1)      Largest sorted to front of queue
+Hash Table         O(1)      O(1)      O(1)       O(1)      Maps keys to values which live in slots
+BS Trees           O(logN)   O(logN)   O(logN)    O(logN)   2 children per node, no duplicate, left child is lower, right higher
+Heap               ---       O(N)      O(logN)    O(logN)   Weakly ordered binary tree where root is highest value
+B-Tree             O(logN)   O(logN)   O(logN)    O(logN)   Tree with more than 2 children per node
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //SEARCH/SORT ALGORITHMS
@@ -312,109 +314,100 @@ SEPERATE CHAINING
 • Uses less space than a large hash table with open addressing
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//TREES/GRAPHS
+//TREES
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 BALANCED TREE: roughly equal nodes on right/left sides of tree (faster)
 UNBALANCED TREE: right/left sides not equal in volume (slower)
 HEIGHT VALUE/BALANCE FACTOR: childnode keys added for both sides and compared
-
-BINARY TREE: balanced/unbalanced tree with only two children
-B-TREE: balanced tree with multiple children nodes
-AVL TREE: self-balancing binary tree that uses balance factor
-RED-BLACK TREE: self-balancing binary tree that uses balance factor
-2-3 TREES: self-balancing B-Tree with up to 3 child nodes
-2-3-4 TREES: self-balancing B-Tree with up to 4 child nodes
-
-EDGES: Connects nodes to each other; have weights
-ADJACENT VERTICES: verts connected via an edge
-VERTICES: Graph nodes
-DIRECTED GRAPH: Edges have directions
-WEIGHTED GRAPH: Nodes have /costs
-CYCLIC GRAPH: Edge number >= vertices
-ACYCLIC GRAPH: Tree
-COST: Amount required to reach node (use positive values only)
-HEURISTIC: The best guess on how much a node is worth (never overestimate actual cost of node)
-POLICY: Solution that tells the optimal/shortest path to any goal node from any start node
-
-=======================================================================================
-HEAPS
-=======================================================================================
-
-• Weakly ordered Binary Tree that keeps node with largest key as root node
-• Not used for searching; used for fast removing from top of heap
-• Nodes are not guaranteed to be in order
-• All nodes have a smaller value than their parent
-• Heaps are implemented as arrays
-
-INSERTING INTO HEAP
-• Element is placed on bottom of heap
-• Traverses up heap until it finds a node larger than it and becomes it's child
-
-DELETING FROM HEAP
-• Removing only happens from the top
-• Take a node from bottom and put it on top and move it down until it fits properly
+BINARY TREE: Tree with only two children
+B-TREES: Tree with more than two children
+SPACIAL PARTITIONING SCHEME: subdivide a space into partitions
+OBJECT PARTITIONING SCHEME: subdivide an object into partitions
 
 =======================================================================================
 BINARY TREES
 =======================================================================================
 
-BINARY SEARCH TREE [BINARY TREE]:
-• Only two children per node
-• Fast insertions, deletions, searching
-• Placements of nodes depend on their value
+BINARY SEARCH TREE:
+• The left subtree of a node contains only nodes with values less
+• The right subtree of a node contains only nodes with values greater
+• The left and right subtree each must also be a binary search tree.
+• There must be no duplicate nodes
+• Used for sets, maps and dictionarys
 
-K-DIMENSIONAL TREES [BINARY TREE]:
-• Binary Search Tree with keys being multi-dimensional
-• Which keys are used to traverse the tree is determined by depth down tree
-• On root node, start with first key and with each depth, loop through keys
+SPLAY TREE
+• Self-balancing Binary Search Tree
+• Recently accessed elements are quick to access
+• Height of tree has impact on performance
+• Used for caches/garbage collection
+
+RED-BLACK TREE
+• Self-balancing Binary Search Tree
+• Root is black, each node alternates from red/black down the tree
+• All leaf nodes must have a 'nil' node
+• All red nodes must have 2 black or nil nodes
+• Height balanced: Path from the root to the furthest leaf is no more 
+  than twice as long as the path from the root to the nearest leaf
+
+HEAPS
+• Weakly ordered Binary Tree that keeps node with largest or smallest key as root node
+• Used for fast removing from top of heap, can only remove from top
+• Min Heap: All nodes have a smaller value than their parent but not guarenteed to be in any other order
+• Max Heap: All nodes have a greater value than their parent but not guarenteed to be in any other order
+• Inserts at bottom of heap and traverses up until finds a larger node to be its parent
 
 =======================================================================================
-BINARY SPACE PARTITIONING TREES (BSP)
+B-TREES
 =======================================================================================
 
+GENERIC B-TREE
+• Tree with multiple children
+• Optimized for systems that read/write large blocks of memory
+• Used in databases and filesystems for quick random access to arbitrary blocks
+
+2-3/2-3-4 TREES
+• Self balancing tree
+• 2-node has one data element, and if internal has two child nodes;
+• 3-node has two data elements, and if internal has three child nodes;
+• 4-node has three data elements, and if internal has four child nodes.
+
+=======================================================================================
+PARTITIONING TREES
+=======================================================================================
+
+BINARY SPACE PARTITIONING TREES
+• Spacial Partitioning Scheme
 • Binary search tree for polygons
-• Partitions a scene using a plane in order from front to back
+• Partitions a scene using a splitter plane
+• When 3 children per node are recieved, splits again to move back to 2 children
 • Best pre-computed offline and later read into the program
 • Best suited for indoor environments
 
-1) Take a list of polygons and send it to the next node to calculate
-2) Calculate a splitter plane between the polygons
-3) Polys on one side of plane go into one child node, the other side goes into the other child node
-4) Repeat with another list until condition (ie. node is filled with polys)
+K-D TREE
+• Spacial Partitioning Scheme
+• Binary space partitioning tree used for points in k-dimensions
+• Splitter plane lies on axis of points
 
-CREATING A SPLITTING PLANE
-1. Loop through all polygons and create a plane for each one.
-2. For each plane add up the number of polygons that are on the front side and on the back side.
-3. Plane with lowest absolute difference (abs[front total – back total]) is 
-   the best polygon to use as splitting plane
+R-TREE
+• Spacial Partitioning Scheme
+• Partitions geometric objects, points and polygons
+• Groups nearby objects and uses their combined bounding rectangle as the parent
 
-=======================================================================================
 QUAD(2D) / OCT(3D) TREES
-=======================================================================================
+• Spacial Partitioning Scheme
+• Partitions polygons or geometric objects
+• Quadtrees have four children, Octrees have eight children
+• Create a large bounding box around entire geometry and recursively divide the box into smaller boxes
+• Best suited for outdoor environments
 
-• Create a large bounding box around entire geometry. 
-• Rrecursively divide the box into smaller boxes
-• This divides the the polygons depending on what box they fall into
-• Process continues until conditions are met: minimum number of polys in a node or recursion depth met
-• Better for outdoor scenes
-
-QUAD: Partitions scene into four sections; 2D Data structure
-OCT: Partitions scene into eight sections; 3D Data structure
+BOUNDING VOLUME HIERARCHY TREE
+• Object Partitioning Scheme done on a single object
+• Used in collision detection and ray tracing
 
 =======================================================================================
 MINIMAX TREES
 =======================================================================================
-
-USED: Perfect information (No element of random chance), 2 player
-GOAL: Player chooses moves to maximise the minimum payoff; tries to get the best score
-      Opponent chooses moves to minimise the maximum payoff; tries to reduce player's score
-
-MAX NODE: Node that gives the highest payoff; player chooses this
-MIN NODE: Node that gives the lowest payoff; opponent chooses this
-DEPTH: Level searched to give a list of leaf nodes
-L or -inf: Game is lost
-W of +inf: Game is won
 
        6        (root)
       / \
@@ -423,12 +416,20 @@ W of +inf: Game is won
    / \   / \ 
   6   8 3   6   (opponent: chooses lowest)
 
-1) Choose a depth to search on the tree
-2) Build a list of possible moves at the required depth
-3) Traverse up the list from the bottom using MINIMAXto sort values
-4) Parent nodes are given the likely value chosen of their children as traversed up
+• Tree built from bottom up where each level it alternates between the lowest/highest choice
+• Can have any number of children per node at a specifically chosen depth
+• Parent nodes are given the likely value chosen of their children as traversed up
+• Used for games with perfect information (No element of random chance), 2 players
+• Goal: Player chooses moves to maximise the minimum payoff; tries to get the best score
+        Opponent chooses moves to minimise the maximum payoff; tries to reduce player's score
 
-αβ PRUNING:
+MAX NODE: Node that gives the highest payoff; player chooses this
+MIN NODE: Node that gives the lowest payoff; opponent chooses this
+DEPTH: Level searched to give a list of leaf nodes
+L or -inf: Game is lost
+W of +inf: Game is won
+
+αβ PRUNING FOR OPTIMISATION:
        6
       / \
      /   \
@@ -441,8 +442,17 @@ Anything more than lowest choice (β) for opponent doesn't need to be looked
 Values searched are in range [min->max] [α->β] ([-INF,INF] initially)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//PATHFINDING
+//GRAPHS
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DIRECTED GRAPH: Graph with edges with directions
+WEIGHTED GRAPH: Graph with edges and/or nodes have a cost
+CYCLIC GRAPH: Edge number greater than vertex number
+ACYCLIC GRAPH: Tree structure
+
+COST: Amount required to reach node (use positive values only)
+HEURISTIC: The best guess on how much a node is worth (never overestimate actual cost of node)
+POLICY: Solution that tells the optimal/shortest path to any goal node from any start node
 
 DIJKSTRA [UNINFORMED SEARCH METHOD]
 • Searches graphs for shortest path
@@ -450,7 +460,7 @@ DIJKSTRA [UNINFORMED SEARCH METHOD]
 • Searches entire graph, less effecient than A*
 
 A* [INFORMED SEARCH METHOD]
-• Searches weighted graphics ith heuristics for shortest path
+• Searches weighted graph with heuristics for shortest path
 • Chooses node with lowest estimated total cost
 • Less nodes considered and more effeciant than Dijkstra
 • Most ideal to use priority queue with iteration for Open/Closed lists
