@@ -4,6 +4,7 @@
 
 /*------------------------------------------------------------------
 OPENGL: Column Major Matrix / Right Handed Coordinate System
+VERTEX WINDING ORDER: Anticlockwise 
 ------------------------------------------------------------------
 Trans * Rot * Scale = LocalWorld
 ParentWorld * LocalWorld = World

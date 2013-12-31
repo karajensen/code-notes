@@ -10,12 +10,38 @@ auto sortLam = [](const MyClass& o1, const MyClass& o2) -> bool { return o1.myIn
 auto createLam = []() -> int { return rand()%10; }
 struct DelFunctor { template<typename T> void operator()(const T* ptr) const { delete ptr; ptr = nullptr; } };
 
+//OPERATION FUNCTORS
+plus<T> op          // (const T& x, const T& y) const {return x+y;}
+minus<T> op         // (const T& x, const T& y) const {return x-y;}
+divides<T> op       // (const T& x, const T& y) const {return x/y;}
+multiplies<T> op    // (const T& x, const T& y) const {return x*y;}
+not_equal_to<T> op  // (const T& x, const T& y) const {return x!=y;}
+modulus<T> op       // (const T& x, const T& y) const {return x%y;}
+less<T> op          // (const T& x, const T& y) const {return x<y;}    
+less_equal<T> op    // (const T& x, const T& y) const {return x<=y;}    
+greater_equal<T> op // (const T& x, const T& y) const {return x>=y;}
+greater<T> op       // (const T& x, const T& y) const {return x>y;}
+equal_to<T> op      // (const T& x, const T& y) const {return x==y;}
+
+//=======================================================================================================
+//ITERATIVE ALGORITHMS
+//=======================================================================================================
+
 //ITERATIVE
 for_each(S, E, doLam) //Non-modifying; Sends const dereferenced object into lambda for each element
 for_each(S, E, DelFunctor); //Non-modifying; fast memory deletion in array
 transform(S, E, S2, doCopyLam) //Modifying; each element calls lambda then is copied to second container
 transform(myString.begin(), myString.end(), myString.begin(), toupper); //Modifying; can be copied in place
 transform(S, E, back_inserter(myCon), doCopyLam); //insert at end rather than copying
+
+//NUMERIC (in #include <numeric>)
+accumulate(S, E, initial) //returns initial+values over whole range 
+accumulate(S, E, initial, std::minus<T>()) //returns initial-values over whole range
+iota(S, E, value) //for each element: assign value then increment value (value++)
+partial_sum(S1, E1, S2) //for each C2 element add all previous values in C1: S2[i] = S1[i] + S1[i-1] + ... + S1[0]
+inner_product(s1, E1, S2, value) //multiplies elements and accumulates: value += S1[i] * S2[i], returns final value
+adjacent_difference(S1, E1, S2) //for each C2 element: S2[i] = S1[i] - S1[i-1] with S2[0] = S1[0]
+adjacent_difference(S1, E1, S2, std::plus<T>()) //for each C2 element: S2[i] = S1[i] + S1[i-1] with S2[0] = S1[0]
 
 //=======================================================================================================
 //SEARCHING ALGORITHMS
@@ -24,15 +50,15 @@ transform(S, E, back_inserter(myCon), doCopyLam); //insert at end rather than co
 //ELEMENT EXISTANCE
 count(S, E, myObj) //returns int on number of items of myObj in container
 count_if(S, E, boolLam) //returns number of obj that lamda returns true
-binary_search(S, E, myObj, equalLam) //return true if myObj exists, requires sorted container
+binary_search(S, E, myObj, equalLam) //returns true if lamda is true, requires sorting
 
 //FIND OBJECT
 //If not found, returns E
 find(S, E, myObj, equalLam) //Returns iterator to first instance of element
 find_if(S, E, boolLam) //Returns iterator to first element in range that lambda returns true
 find_if_not(S, E, boolLam) //Returns iterator to first element in range that lambda returns false
-lower_bound(S, E, myObj, sortLam) //returns first value >= myObj (when sortLam returns false)
-upper_bound(S, E, myObj, sortLam) //returns first value > myObj (when sortLam returns false)
+lower_bound(S, E, myObj, sortLam) //returns first value found >= myObj, requires sorting
+upper_bound(S, E, myObj, sortLam) //returns first value found > myObj, requires sorting
 
 //FIND MULTIPLE OBJECTS
 search(S, E, S2, E2, equalLam) //Search for range 2 in range 1, returns iterator to start of sequence found or E if none
@@ -48,7 +74,6 @@ max(T, T) //returns maximum of two values
 minmax(T, T) //returns std::pair(min,max) where .first is min and .second is max
 min_element(S, E) //returns minimum element between range
 max_element(S, E) //returns maximum element between
-accumulate(S, E, initial, op) //returns initial+values over whole range; BinaryOperation op defaults to + and is optional
 
 //CONTAINER STATE
 all_of(S, E, boolLam) //If all objs return true then returns true, else false; If no objs in range returns true
@@ -119,8 +144,8 @@ set_symmetric_difference(S, E, S2, E2, S3) //copies elements in 1 that don't exi
 //CHANGE ORDER
 reverse(S, E) //reverses order of elements
 reverse_copy(S, E, S2) //copies into 2 with the reverse order, returns iterator E2
-rotate(S, M, E) //shifts so M becomes start of container, S loops around to other end
-rotate_copy(S, M, E, S2) //copies into 2 and shifts so M becomes start of container
+rotate(A, B, C) //ranges B-C and A-B swap places. B needs to be between A and C.
+rotate_copy(A, B, C, S2) //Copies into 2 with ranges B-C and A-B swapped. B needs to be between A and C.
 random_shuffle(S, E) //randomly shuffles elements
 
 //PARTITIONS
@@ -139,7 +164,7 @@ stable_sort(S, E, sortLam) //sorts container in ascending order, equal elements 
 partial_sort(S, M, E, sortLam) //smallest elements from S-E are put in ascending order from S-M, M-E becomes unordered
 partial_sort_copy(S, E, S2, E2, sortLam) //copies range to 2 and sorts in ascending order
 is_sorted(S, E, sortLam) //returns false if not sorted in ascending order, stop when mismatching pair found
-is_sorted_until(S, E, sortLam) //Returns it to first element which does not follow an ascending order else returns E
+is_sorted_until(S, E, sortLam) //Returns itr to first element which does not follow an ascending order else returns E
 nth_element(S, M, E, sortLam) //puts M at the position it'd be if range was sorted, elements before are less/after are more (in any order)
 
 //=======================================================================================================
@@ -273,21 +298,11 @@ std::equal(str1.begin(), str1.end(), str2.begin(),
 MessageBox(nullptr, TEXT(error), TEXT("ERROR"), MB_OK);
 
 //GET 1D INDEX FROM 2D COORD
-for(int c = 0; c < MaxCols; ++c)
+for(int x = 0; x < columns; ++x)
 {
-    for(int r = 0; r < MaxRows; ++r)
+    for(int z = 0; z < rows; ++z)
     {
-        int index = (MaxCols*r)+c;
-    }
-}
-
-//CREATE 2D GRID
-for(int r = 0; r < rows; ++r)
-{
-    for(int c = 0; c < columns; ++c)
-    {
-        position.x = startX + (r*width);
-        position.z = startZ + (c*height);
+        int index = (columns*z)+x;
     }
 }
 
@@ -306,3 +321,8 @@ int r = color & 0xFF;
 int g = (color >> 8) & 0xFF;
 int b = (color >> 16) & 0xFF;
 int a = (color >> 24) & 0xFF;
+
+//GENERATE FIBONACCI NUMBERS
+//copies into container: 1 1 2 3 5 8 13 21 34 55
+std::vector<int> v = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+std::adjacent_difference(v.begin(), v.end() - 1, v.begin() + 1, std::plus<int>());

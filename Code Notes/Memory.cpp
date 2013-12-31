@@ -21,7 +21,7 @@ const int* const ptr = &value //can't change value or what pointer points to
 int* myArray = new int[SIZE]; 
 int** myArrayPointer = &myArray;
 
-*(myArray+3) /*or*/ myArray[3] //to access elements
+*(myArray+3) /*or*/ myArray[3] /*or*/ 3[myArray] //to access elements
 delete [] myArray; //free array
 
 //////////////////////////////////////////////////////////////////////////////

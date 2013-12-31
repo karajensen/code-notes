@@ -81,6 +81,8 @@
 [23] Never use unsigned int when looping backwards to 0. When decrementing past
      zero the unsigned int will cycle over and the loop will not end
 
+[24] For pointer math a[i] is the same as i[a] as its converted to *(a + i)
+
 ////////////////////////////////////////////////////////////////////////////////////
 //STL CHEATSHEET
 ////////////////////////////////////////////////////////////////////////////////////
@@ -159,7 +161,7 @@
 
 [1] Don't change insides of pointer to System::string as it's interned- for each
     occurance of a particular string only occurs once in memory and can be 
-	referenced by multiple variables. 
+    referenced by multiple variables. 
 
 [2] Always create a finaliser/destructor pair if needing to release 
     managed/unmanaged resources.

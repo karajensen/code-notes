@@ -20,9 +20,6 @@
     <Filter Include="Languages\Examples">
       <UniqueIdentifier>{d7791879-ac81-42b7-8093-357ed87496f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game Programming\Shaders">
-      <UniqueIdentifier>{434d317d-1842-4ace-8f00-7ad4b34d225f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Development\Classes">
       <UniqueIdentifier>{e36ef539-6dea-4f46-8d29-475cf275745e}</UniqueIdentifier>
     </Filter>
@@ -178,14 +175,14 @@
     <ClCompile Include="Code Examples\Design Patterns.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Colour.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
     <ClCompile Include="C# Notes.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
     <ClCompile Include="C++CLI.cpp">
       <Filter>Languages</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Texture.cpp">
+      <Filter>Game Programming</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -193,15 +190,6 @@
     <None Include="Hotkeys.txt" />
     <None Include="..\.gitignore" />
     <None Include="Symbols.txt" />
-    <None Include="Code Examples\Shaders\main.glsl">
-      <Filter>Game Programming\Shaders</Filter>
-    </None>
-    <None Include="Code Examples\Shaders\normal-depth.glsl">
-      <Filter>Game Programming\Shaders</Filter>
-    </None>
-    <None Include="Code Examples\Shaders\toon.glsl">
-      <Filter>Game Programming\Shaders</Filter>
-    </None>
     <None Include="Code Examples\Example - Maxscript Convex Hull.ms">
       <Filter>Languages\Examples</Filter>
     </None>
@@ -255,26 +243,6 @@
     <ClInclude Include="Code Examples\Classes\vector3.h">
       <Filter>Development\Classes</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Code Examples\Shaders\blur-sharpen.hlsl">
-      <Filter>Game Programming\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Code Examples\Shaders\bounds.fx">
-      <Filter>Game Programming\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Code Examples\Shaders\glow-depth.hlsl">
-      <Filter>Game Programming\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Code Examples\Shaders\main.fx">
-      <Filter>Game Programming\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Code Examples\Shaders\post.hlsl">
-      <Filter>Game Programming\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Code Examples\Shaders\toon.fx">
-      <Filter>Game Programming\Shaders</Filter>
-    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\Graphics - Backface Culling.png">
@@ -467,6 +435,9 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Code - Trees.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Amdahls Law.png">
       <Filter>Images</Filter>
     </Image>
   </ItemGroup>

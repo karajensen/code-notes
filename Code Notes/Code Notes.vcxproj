@@ -118,7 +118,7 @@
     <ClCompile Include="Game Programming\Shaders.cpp" />
     <ClCompile Include="Game Programming\Simulation.cpp" />
     <ClCompile Include="Game Programming\Physics.cpp" />
-    <ClCompile Include="Game Programming\Colour.cpp" />
+    <ClCompile Include="Game Programming\Texture.cpp" />
     <ClCompile Include="Inheritance.cpp" />
     <ClCompile Include="Languages\Maxscript forms.cpp" />
     <ClCompile Include="Languages\Maxscript objects.cpp" />
@@ -149,9 +149,6 @@
     <None Include="Code Examples\Example - PyQt Creating Window in Designer.py" />
     <None Include="Code Examples\Example - PyQt Creating Window In Maya.py" />
     <None Include="Code Examples\Example - PyQt File Reader.pyw" />
-    <None Include="Code Examples\Shaders\main.glsl" />
-    <None Include="Code Examples\Shaders\normal-depth.glsl" />
-    <None Include="Code Examples\Shaders\toon.glsl" />
     <None Include="Hotkeys.txt" />
     <None Include="Symbols.txt" />
   </ItemGroup>
@@ -167,17 +164,10 @@
     <ClInclude Include="Code Examples\Classes\vector3.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Code Examples\Shaders\blur-sharpen.hlsl" />
-    <FxCompile Include="Code Examples\Shaders\bounds.fx" />
-    <FxCompile Include="Code Examples\Shaders\glow-depth.hlsl" />
-    <FxCompile Include="Code Examples\Shaders\main.fx" />
-    <FxCompile Include="Code Examples\Shaders\post.hlsl" />
-    <FxCompile Include="Code Examples\Shaders\toon.fx" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="Images\Code - Algorithms Search.png" />
     <Image Include="Images\Code - Algorithms Sort Performance.png" />
     <Image Include="Images\Code - Algorithms Sort.png" />
+    <Image Include="Images\Code - Amdahls Law.png" />
     <Image Include="Images\Code - BigONotationGraph.png" />
     <Image Include="Images\Code - Boxing.gif" />
     <Image Include="Images\Code - C# Operator Precedence.png" />

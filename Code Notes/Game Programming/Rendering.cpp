@@ -373,8 +373,6 @@ FRUSTUM CULLING
 
 FRONT/BACKFACE CULLING
 • Winding order of vertices indicates which way polygon is facing
-    - Clockwise (DirectX)
-    - Counter clockwise (OpenGL)
 
 CLIPPING
 • Any screen space coordinates outside [–1,–1,0] to [1,1,1] culled
@@ -383,28 +381,10 @@ OCCLUSION CULLING
 • Identifies parts of the scene visible/not visible to the viewer
 • Objects behind other objects are discarded
 • Can use a plane to represent occluder *similar to frustum culling)
-• Can use potential visible sets
-
-Potential Visible Sets:
-- The list a node keeps of which other nodes it can potentially see
-- Pre-computed data which is then indexed at run time to quickly 
-  obtain an estimate of the visible geometry. 
-- The camera view-space is subdivided into convex regions
-- PVS is computed for each region.
-- Convex areas are called SECTORS. 
-- Adjacent sectors are linked to one another via PORTALS
-- Best for indoor games with doors/windows for portals
-- Well suited for recursive functions.
-
-1) Subdivide scene into convex regions called sectors
-2) Calculate what other sectors can be seen by each one
-3) Render scene from viewer's position with a viewing frustum
-4) If a portal is seen into another sector clip the frustum using 
-   the portal as a guide for dimensions
-5) Connecting sector is rendered but using the new frustum
+• Can use Potential Visible Sets for indoor scenes
 
 OPTIMIZATION TIPS
-• Don’t allocate stencil if you don’t use it
+• Don't allocate stencil if you don’t use it
 • R5G6B5 color sufficient for dynamic reflection maps
 • Use low resolution (<256x256) 8-bit normalization cube-maps
 • Use half instead of float where strict precision isn't important

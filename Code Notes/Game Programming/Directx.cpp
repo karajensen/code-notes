@@ -4,6 +4,7 @@
 
 /*------------------------------------------------------------------
 DIRECTX: Row Major Matrix / Left Handed Coordinate System
+VERTEX WINDING ORDER: Clockwise 
 ------------------------------------------------------------------
 LocalWorld = Scale * Rot * Trans
 World = LocalWorld * ParentWorld

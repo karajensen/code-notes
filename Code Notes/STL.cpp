@@ -294,7 +294,8 @@ typedef _Longlong int64_t;
 typedef _ULonglong uint64_t;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <exception> / #include <assert.h>
+#include <exception> 
+#include <assert.h>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 assert(x == 0); //will break if x != 0
@@ -375,3 +376,21 @@ MessageBox(NULL, message.c_str(), TEXT("ERROR"), MB_OK);
 // argc is number of arguments, including the string used to invoke the program
 // argv is array of arguments, including the string used to invoke the program
 int main(int argc, char* argv[])
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <future>
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//FUTURE
+std::future<T> future
+wait()  //waits for the result to become available 
+get()   //returns the result or blocks until the result is avaliable
+
+//ASYNC
+//Runs the given function asynchronously potentially in a separate thread
+//Code continues after line and will only block if handle is destroyed or value requested
+//Returns std::future that will eventually hold the result of that function call
+//std::launch::async is the policy and is optional
+std::future<int> handle = std::async(std::launch::async, [](){ MyFn()});
+std::launch::async 	    //A new thread is launched to execute the task asynchronously 
+std::launch::deferred 	//Task is executed on the calling thread the first time its result is requested 
