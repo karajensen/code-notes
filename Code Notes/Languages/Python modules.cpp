@@ -17,7 +17,6 @@ sys.executable  //Name of the project executable
 sys.argv        //List of strings of command line arguments
 sys.argv[0]     //Name of the script (implicit)
 
-
 //////////////////////////////////////////////////////////////////////////////
 //import math
 //////////////////////////////////////////////////////////////////////////////
@@ -150,7 +149,6 @@ calendar.isleap(year)
 
 shutil.copytree("folder1","folder2")    //copy folder1 to folder2, folder 2 cannot exist
 
-
 //////////////////////////////////////////////////////////////////////////////
 //import collections
 //////////////////////////////////////////////////////////////////////////////
@@ -162,7 +160,6 @@ myTupleObj = MyTuple(1,2,3) //can use it like a class
 //DEFAULT DICTIONARIES
 myDict = collections.defaultdict(int) //default value created is from int()     
 myDict[3] += "hello" //if key doesn't exist, creates value/key with default value
-
 
 //////////////////////////////////////////////////////////////////////////////
 //import os

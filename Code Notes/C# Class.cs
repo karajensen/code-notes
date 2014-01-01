@@ -87,7 +87,7 @@ class Program
 //SCALAR PROPERTY
 public int MyInt
 {
-    get { return myInt; }
+    get { return myInt; } //property field
     private set { myInt = value; } //can change internal visibility
 }
 
@@ -203,6 +203,7 @@ public class Base
 {
     protected int myInt;
     public virtual void MyMethod(){} //virtual members can't be private
+    public virtual int MyProperty { get { return 0; } } //property fields can't be virtual
 }
 public class Derived : Base, IBase
 {

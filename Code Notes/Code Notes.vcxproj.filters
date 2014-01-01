@@ -70,9 +70,6 @@
     <ClCompile Include="Languages\Python modules.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
-    <ClCompile Include="Languages\Python notes.cpp">
-      <Filter>Languages</Filter>
-    </ClCompile>
     <ClCompile Include="Algorithms.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -183,6 +180,9 @@
     </ClCompile>
     <ClCompile Include="Game Programming\Texture.cpp">
       <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\Python.cpp">
+      <Filter>Languages</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

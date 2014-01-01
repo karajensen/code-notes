@@ -131,7 +131,7 @@
     <ClCompile Include="Languages\Python containers.cpp" />
     <ClCompile Include="Languages\Python for Maya.cpp" />
     <ClCompile Include="Languages\Python modules.cpp" />
-    <ClCompile Include="Languages\Python notes.cpp" />
+    <ClCompile Include="Languages\Python.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="STL Containers.cpp" />
     <ClCompile Include="STL Notes.cpp" />
