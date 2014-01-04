@@ -72,8 +72,8 @@ equal_range(S, E, myObj, equalLam) //Returns pair of itrs for bounds of subrange
 min(T, T) //returns minimum of two values
 max(T, T) //returns maximum of two values
 minmax(T, T) //returns std::pair(min,max) where .first is min and .second is max
-min_element(S, E) //returns minimum element between range
-max_element(S, E) //returns maximum element between
+min_element(S, E, sortLam) //returns minimum element between range
+max_element(S, E, sortLam) //returns maximum element between
 
 //CONTAINER STATE
 all_of(S, E, boolLam) //If all objs return true then returns true, else false; If no objs in range returns true
@@ -108,9 +108,11 @@ std::generate(O.begin(), O.end(), [&](){ return MyClass(); });
 //COPYING
 copy(S, E, S2) //copies O into O2, returns iterator to E2
 copy(S, E, ostreamItr); //copy container into output stream
+copy(S, E, back_inserter(O2)) //inserts O into O2, returns iterator to E2
 copy_n(S, n, S2) //copies from O to n elements into O2, returns iterator to E2, does nothing if n <= 0
-copy_if(S, E, S2, boolLam) //only copies element if lamda is true
-copy_backward(S, E, E2) //copies O into O2 backwards, returns iterator to S2; both containers end with same ordering
+copy_if(S, E, S2, boolLam) //only copies element if lamda is true, returns iterator to E2
+copy_if(S, E, back_inserter(O2), boolLam) //inserts into C2 rather than copies, returns iterator to E2
+copy_backward(S, E, E2) //copies O into O2 backwards, returns iterator to S2
 
 //MOVING
 //Requires move constructor/assignment operator

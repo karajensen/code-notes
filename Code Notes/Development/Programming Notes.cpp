@@ -232,6 +232,9 @@ FASTCALL CALLING CONVENTION
 //CLASSES
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+DESTRUCTOR: Called when out of scope, delete used or explicitly
+FINALISER: Called when object is garbage collected
+
 AGGREGATE:
 • Array/class/struct/union
 • No user-declared constructors

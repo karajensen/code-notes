@@ -160,6 +160,17 @@ ATTRIBUTES
 • Hidden objects at runtime that contain metadata- information about the class
 • Use reflection to access
 
+PARTIAL CLASSES
+• Class can be defined over multiple files
+• Must have same visibility and all use partial keyword
+• Any part that declares abstract, sealed or inherits does it for all
+
+PARTIAL METHODS
+• Must be part of a partial class
+• Can have ref but not out parameters
+• Must be void- if definition not given, all mention of function is removed
+• Are implicitly private- cannot be public
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 //INHERITANCE
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,6 +202,12 @@ SYSTEM.VALUETYPE
 
 IENUMERABLE<T>
 • All containers derive from it, allows iteration with foreach
+
+SEALING
+• Statically resolves any virtual methods as no derived classes
+• Can seal whole class to prevent it being inherited from
+• All methods are sealed by default except those with virtual/override
+• Can seal individual methods to prevent them from being further overridden
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //OPERATOR OVERLOADING
@@ -230,8 +247,7 @@ CAN'T BE OVERLOADED
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 DELEGATES
-• Derives from System.Delegate
-• Reference to a method or lambda
+• Reference to a method or lambda deriving from System.Delegate
 • Sealed; cannot be derived from
 
 ANONYMOUS DELEGATES
@@ -242,10 +258,10 @@ ANONYMOUS DELEGATES
 • Cannot use pointer or access unsafe code
 
 EVENTS
+• Holds delegates for publishers/subscribers
 • Publisher: class that sends the event
 • Subscriber: class that recieves/handles the event
-• Events that have no subscribers are never called.
-• Events are based on the EventHandler delegate and the EventArgs base class
+• Events that have no subscribers are never called
 
 LAMBDAS
 • A captured variable will not be garbage-collected until the lamda goes out of scope

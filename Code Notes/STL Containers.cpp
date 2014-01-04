@@ -341,22 +341,24 @@ std::advance(itr, std::distance<vector<int>::const_iterator>(itr, cItr)); //move
 //==================================================================================================
 
 //Algorithms that require a range to copy can insert instead
-//Call reserve in advance to prevent memory allocation
 transform(S, E, back_inserter(myCon), doCopyLam); //insert at end rather than copying
 transform(S, E, front_inserter(myCon), doCopyLam); //insert at front rather than copying
 transform(S, E, inserter(myCon, myCon.begin()+myCon.size()/2), doCopyLam); //insert in middle
 
 //BACK INSERT ITERATOR
+//inserts at back of container
 back_insert_iterator<vector<int>> backIter; 
 back_inserter(myContainer) //creates back_insert_iterator
 
 //FRONT INSERT ITERATOR
+//inserts at front of container
 front_insert_iterator<vector<int>> frontIter; 
 front_inserter(myContainer) //creates front_insert_iterator
 
 //INSERT ITERATOR
+//inserts at given position
 insert_iterator<vector<int>> insertIter;
-inserter(myContainer, myContainer.begin()) //creates insert_iterator, inserts at given position
+inserter(myContainer, myContainer.begin()) //creates insert_iterator
 
 //==================================================================================================
 //STREAM ITERATORS

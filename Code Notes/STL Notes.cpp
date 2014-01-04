@@ -149,66 +149,18 @@ SET
 • If changing value in set using iterator, make sure set is resorted
 
 ///////////////////////////////////////////////////////////////////////////////////////
-//STL ITERATORS
-///////////////////////////////////////////////////////////////////////////////////////
-
-CONST ITERATOR/ITERATOR/REVERSE ITERATOR
-• Vector/Array/Deque: Random Access Iterator
-• List: Bidirectional Iterator
-• Forward List: Forward Iterator, no reverse iterator
-• Map: Bidirectional Iterator
-
-begin()    cbegin()    iterator to start            map, array, deque, vector, list, forward list
-rbegin()   crbegin()   iterator to last value       map, array, deque, vector, list
-end()      cend()      iterator to one past end     map, array, deque, vector, list, forward list
-rend()     crend()     iterator to one past start   map, array, deque, vector, list
-
-BACK INSERT ITERATOR
-• Output iterator
-• inserts items at the end of the container. 
-• calls .push_back(), only used with containers that have it (vector, deque, string, list)
-
-FRONT INSERT ITERATOR
-• Output iterator
-• inserts items at the front of the container.
-• calls .push_front(), only used with containers that have it (deque, list)
-
-INSERT ITERATOR
-• Output iterator
-• inserts items in front of the location specified as an argument
-
-OSTREAM ITERATOR
-• Output iterator
-• ineffecient due to lots of error checking/formatting
-
-OSTREAMBUF ITERATOR
-• Output iterator
-• Faster than ostream_iterator
-
-ISTREAM ITERATOR
-• Input iterator
-• ineffecient due to lots of error checking/formatting
-
-ISTREAMBUF ITERATOR
-• Input iterator
-• Faster than istream_iterator, doesn't skip over any character
-• directly grabs what's next in stream buffer, no extra checking/formatting
-
-///////////////////////////////////////////////////////////////////////////////////////
-//ITERATOR TYPES
+//ITERATOR CATEGORIES
 ///////////////////////////////////////////////////////////////////////////////////////
 
 INPUT ITERATOR
 • iterator that a program can use to read only
 • single pass, one way iterator; can't back up once incremented
-• each time one moves through container, different order of moving 
-  through elements
+• each time one moves through container, different order of moving through elements
 
 OUTPUT ITERATOR
 • iterator that a program can use to write only
 • single pass, one way iterator; can't back up once incremented
-• each time one moves through container, different order of moving 
-  through elements
+• each time one moves through container, different order of moving through elements
 
 FORWARD ITERATOR
 • Goes through sequence in same order each time
@@ -237,6 +189,51 @@ Fixed order   No      No       Yes      Yes           Yes
 i[n]          No      No       No       No            Yes
 i+n, i-n      No      No       No       No            Yes
 i+=n, i-=n    No      No       No       No            Yes
+
+///////////////////////////////////////////////////////////////////////////////////////
+//ITERATOR TYPES
+///////////////////////////////////////////////////////////////////////////////////////
+
+CONTAINER ITERATORS
+• Vector/Array/Deque: Random Access Iterator
+• List: Bidirectional Iterator
+• Forward List: Forward Iterator
+• Map: Bidirectional Iterator
+• Queue/Stack: No Iteration
+
+BACK INSERT ITERATOR
+• Output iterator
+• inserts items at the end of the container. 
+• calls .push_back(), only used with containers that have it (vector, deque, string, list)
+• For set/maps, only affects insertion performance as values are sorted
+
+FRONT INSERT ITERATOR
+• Output iterator
+• inserts items at the front of the container.
+• calls .push_front(), only used with containers that have it (deque, list)
+• For set/maps, only affects insertion performance as values are sorted
+
+INSERT ITERATOR
+• Output iterator
+• inserts items in front of the location specified as an argument
+• For set/maps, only affects insertion performance as values are sorted
+
+OSTREAM ITERATOR
+• Output iterator
+• ineffecient due to lots of error checking/formatting
+
+OSTREAMBUF ITERATOR
+• Output iterator
+• Faster than ostream_iterator
+
+ISTREAM ITERATOR
+• Input iterator
+• ineffecient due to lots of error checking/formatting
+
+ISTREAMBUF ITERATOR
+• Input iterator
+• Faster than istream_iterator, doesn't skip over any character
+• directly grabs what's next in stream buffer, no extra checking/formatting
 
 ///////////////////////////////////////////////////////////////////////////////////////
 //ITERATOR/REFERENCE INVALIDATION

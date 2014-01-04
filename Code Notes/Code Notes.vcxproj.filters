@@ -23,9 +23,6 @@
     <Filter Include="Development\Classes">
       <UniqueIdentifier>{e36ef539-6dea-4f46-8d29-475cf275745e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Development\Examples">
-      <UniqueIdentifier>{d6c4568d-c066-4cf0-9a5f-4a7491f60ff7}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game Programming\Collisions.cpp">
@@ -83,9 +80,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Code.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Inheritance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Memory.cpp">
@@ -169,9 +163,6 @@
     <ClCompile Include="Code Examples\Example - Maya API Node.cpp">
       <Filter>Languages\Examples</Filter>
     </ClCompile>
-    <ClCompile Include="Code Examples\Design Patterns.cpp">
-      <Filter>Development</Filter>
-    </ClCompile>
     <ClCompile Include="C# Notes.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
@@ -184,12 +175,14 @@
     <ClCompile Include="Languages\Python.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
+    <ClCompile Include="Development\Design Patterns.cpp">
+      <Filter>Development</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Cheatsheet.txt" />
     <None Include="Hotkeys.txt" />
     <None Include="..\.gitignore" />
-    <None Include="Symbols.txt" />
     <None Include="Code Examples\Example - Maxscript Convex Hull.ms">
       <Filter>Languages\Examples</Filter>
     </None>
@@ -440,5 +433,8 @@
     <Image Include="Images\Code - Amdahls Law.png">
       <Filter>Images</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Questions.txt" />
   </ItemGroup>
 </Project>

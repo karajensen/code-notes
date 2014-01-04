@@ -251,9 +251,13 @@ public void MyMemberFunction(int x){}
 MyDelegate myDel = this.MyMemberFunction; //auto binds object calling
 MyDelegate myDel = obj.MyMemberFunction;
 
-//LAMBDAS
-MyDelegate myDel = x => myOutsideInt += x;
+//ANONYMOUS METHODS
+//Canot use unsafe code
+//Cannot access the ref or out parameters of an outer scope
+MyDelegate myDel = delegate(int x){ myOutsideInt += x; }
+MyDelegate myDel = x => myOutsideInt += x; //Lamda method
 
+//LAMDA METHODS
 x => (double)x * 2;            //Takes in int, returns double
 x => myOutsideInt += x;        //Takes in int, no return value
 (int x) => x*x                 //explicitly specifying argument type

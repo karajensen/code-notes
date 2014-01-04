@@ -6,6 +6,26 @@ std::move   // moves the variable to another variable leaving the first in an un
 std::swap   // swaps the value of two variables
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <typeinfo>
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//Requires RTTI turned on and virtual methods as type_info stored in v-table
+
+typeid(myObject)    //returns type_info for object
+myTypeInfor.name()  //get unique string identifying the class type
+
+if(typeid(MyClass) == typeid(myObject)){ /*object is of that class*/ }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <type_traits>
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::is_base_of<A,B>::value //returns true if A is a base class of B
+std::is_assignable<A,B>::value //returns true if A==B is possible
+std::is_move_assignable<A>::value //returns true if A has a move assignment operator
+std::is_move_constructible<A>::value //returns true if A has a move constructor
+std::has_virtual_destructor<A>::value //returns true if A has a virtual destructor
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <random>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -56,19 +76,10 @@ round_toward_neg_infinity //if it rounds toward negative infinity.
 round_indeterminate //if the rounding style is indeterminable at compile time.
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <type_traits>
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-std::is_base_of<A,B>::value //returns true if A is a base class of B
-std::is_assignable<A,B>::value //returns true if A==B is possible
-std::is_move_assignable<A>::value //returns true if A has a move assignment operator
-std::is_move_constructible<A>::value //returns true if A has a move constructor
-std::has_virtual_destructor<A>::value //returns true if A has a virtual destructor
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <cmath>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+modf(x, &y) //returns the fractional part of double x and puts integer part in double y
 abs(-1); //Gets absolute value for double
 fabs(-1); //Gets absolute value for float
 pow(2, 8); //finding 2⁸

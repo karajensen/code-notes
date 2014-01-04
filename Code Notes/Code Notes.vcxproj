@@ -95,7 +95,6 @@
     <ClCompile Include="Code Examples\Classes\input.cpp" />
     <ClCompile Include="Code Examples\Classes\logger.cpp" />
     <ClCompile Include="Code Examples\Classes\timer.cpp" />
-    <ClCompile Include="Code Examples\Design Patterns.cpp" />
     <ClCompile Include="Code Examples\Example - Maya API Command.cpp" />
     <ClCompile Include="Code Examples\Example - Maya API Locator.cpp" />
     <ClCompile Include="Code Examples\Example - Maya API Node.cpp" />
@@ -104,6 +103,7 @@
     <ClCompile Include="Code.cpp" />
     <ClCompile Include="Development\Algorithms and Structures.cpp" />
     <ClCompile Include="Development\Databases.cpp" />
+    <ClCompile Include="Development\Design Patterns.cpp" />
     <ClCompile Include="Development\Programming Notes.cpp" />
     <ClCompile Include="Development\Software Development.cpp" />
     <ClCompile Include="Development\Source Control.cpp" />
@@ -119,7 +119,6 @@
     <ClCompile Include="Game Programming\Simulation.cpp" />
     <ClCompile Include="Game Programming\Physics.cpp" />
     <ClCompile Include="Game Programming\Texture.cpp" />
-    <ClCompile Include="Inheritance.cpp" />
     <ClCompile Include="Languages\Maxscript forms.cpp" />
     <ClCompile Include="Languages\Maxscript objects.cpp" />
     <ClCompile Include="Languages\Maxscript.cpp" />
@@ -150,7 +149,6 @@
     <None Include="Code Examples\Example - PyQt Creating Window In Maya.py" />
     <None Include="Code Examples\Example - PyQt File Reader.pyw" />
     <None Include="Hotkeys.txt" />
-    <None Include="Symbols.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code Examples\Classes\assimpmesh.h" />
@@ -229,6 +227,9 @@
     <Image Include="Images\Shader - Texture Filter types.png" />
     <Image Include="Images\Shader - Texture Mapping.png" />
     <Image Include="Images\Shader - Texture Wrapping.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Questions.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

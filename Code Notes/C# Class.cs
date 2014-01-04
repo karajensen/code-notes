@@ -80,6 +80,10 @@ class Program
     }
 }
 
+//PARTIAL METHODS
+partial void MyMethod();     //declartion in one file
+partial void MyMethod() {}   //definition in another file
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 //PROPERTIES
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -184,15 +188,19 @@ public class MyClass : MyABC
     public override void MyAbstractMethod(){} //override and provide a definition
 }
 
-//SEALING CLASSES
-//Statically resolves any virtual methods as no derived classes
-//Can seal whole class to prevent it being inherited from
-public sealed class Derived : Base
+//PARTIAL CLASSES
+//Class can be defined over multiple files
+public partial class MyClasss
 {
-    //SEALING METHODS
-    //All methods are sealed by default except those with virtual/override
-    //Can seal individual methods to prevent them from being further overridden
-    public sealed override void MyVirtualMethod(){}
+    private void MyMethod1()
+    {
+    }
+}
+public partial class MyCLass
+{
+    public void MyMethod2()
+    {
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -228,6 +236,16 @@ public interface Derived : Base, IBase {}
 
 //CLASS: Can inherit only one class, multiple interfaces; class must be first in list
 public class Derived : Base, IBase {}
+
+//SEALING CLASSES
+//Prevents class from being derived from
+public sealed class Derived : Base
+{
+}
+
+//SEALING METHODS    
+//Can seal individual methods to prevent them from being further overridden
+public sealed override void MyVirtualMethod(){}
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //POLYMORPHISM
