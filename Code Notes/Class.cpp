@@ -25,11 +25,17 @@ public:
 
     //CONSTRUCTOR
     //initialisation list must be in same order defined in class
-    //single argument constructor: use explicit to stop implicit conversions from taking place
-    //myObj = 4.3f; without explicit acts as cast operator
-    explicit MyClass(float myFloat) :
+    MyClass() :
         m_constMember(0),
         m_refMember(ref)
+    {
+    }
+
+    //CONVERSION CONSTRUCTOR
+    //single argument constructor
+    //use explicit to stop implicit conversions from taking place
+    //myObj = 4.3f; without explicit acts as cast operator
+    explicit MyClass(float myFloat)
     {
     }
 

@@ -16,7 +16,7 @@ A:  - pointers hold a memory address for the variable, references are another na
     - pointers can be null, references cannot
 
 Q: What are some circumstances where using a pointer is preferable to using a reference?
-A: When the variable may be null or not exist or when you require pointer maths on an array
+A: When the variable may be null or not exist or when you require pointer arithmatic
 
 Q: What obstacles preventing use of const correct interfaces in new classes that are being written? 
 A: If the class wraps or uses a class that does not use it
@@ -101,7 +101,7 @@ Q: What is the difference between public, protected and private inheritance?
 A:  - Public inheritance does not change the visibility of base members at all.
     - Protected inheritance blocks outside use of base public members as they are seen as protected.
     - Private inheritance blocks outside use of base public/protected members as they are seen as private.
-    - All inheritance internally within the derived class does not change visibility
+    - All inheritance internally within the immediate derived class does not change visibility
 
 Q: Why does changing the private members of a class cause recompilation of anything using the class?
 A: Private data members can change the size of the object and participate in function overload resolution
@@ -125,20 +125,22 @@ Q: What is a destructor, and what are two ways it is called?
 A: Explicitly through ~MyClass() or delete this or implicitly when the object goes out of scope
 
 Q: What is a default constructor, and when does the compiler automatically generate one? 
-A:
+A: An implicitly created function that initialises the class. It is created when
+     - A constructor is not explicitly defined
+     - There are no members that cannot be assigned automatically (const, references)
+     - The default signature is not defined with = delete
 
-Q: What is a copy constructor, and when does the compiler automatically call one?
-A:
-
-Q: What is the difference between a copy constructor and an overloaded assignment operator?
-A:
+Q: What is the difference between a copy constructor and a copy assignment operator?
+A: A copy constructor is used to initialised a new object with the values of a given object
+   A copy assignment operator is used to equalise the object with the already constructed given object
 
 Q: When do you need to provide a copy constructor and assignment operator?
 A:   - When there are members that cannot be automatically copied (reference variables)
      - When deep copying is required
 
 Q: What is a conversion constructor, and when does the compiler automatically call one? 
-A:
+A: A constructor with a single argument without the explicit keyword. 
+   It is automatically called when the argument type is assigned to the object.
 
 Q: Name two situations where you must use an initialisation list as opposed to assignment in constructors. 
 A: For const and reference members
@@ -153,22 +155,27 @@ Q: What is the purpose of the explicit keyword?
 A: For single argument constructors to prevent implicit casts from the argument type to the class type
 
 Q: Why might a class have a private destructor?
-A:
+A: If the class wishes to manage destruction itself ie. for reference counted objects
 
 Q: How is a virtual function different to a normal function?    
-A:
+A: It can be redefined in a derived class to provide a different implementation
+   At runtime, depending on the calling object the correct implementation is chosen
 
 Q: How do you define an abstract base class, and what is its purpose?
 A: It prevents any instances of the class from being constructed. Defined by =0 after any method.
 
 Q: When is a virtual destructor necessary?
-A: 
+A: When the class expects to be inherited from. If not made virtual, any deletion of the derived object 
+   from its base class pointer will result in only the base destructor being called.
 
-Q: What is a v-table, how is it represented and what implications does this have for usage of byte manipulating functions such as memset?
+Q: What is a v-table and how is it represented?
+A:
+
+Q: What implications does the v-table have for usage of byte manipulating functions such as memset?
 A:
 
 Q: Are virtual functions slow? Explain.
-A:
+A: 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PERSONAL QUESTIONS
