@@ -365,21 +365,12 @@ inserter(myContainer, myContainer.begin()) //creates insert_iterator
 //==================================================================================================
 
 //OSTREAM ITERATOR
-ostream_iterator<int,char> ostreamItr(cout, " "); //stream, seperator between each item
+ostream_iterator<T,char> ostreamItr(cout, " "); //stream, seperator between each item
 *out_iter++ = 15;  //works like cout << 15 << " ";
 std::copy(object.begin(), object.end(), ostreamItr);
-
-//OSTREAMBUF ITERATOR
-//Faster than ostream_iterator
-ostreambuf_iterator<char> ostreamItr(cout);
-std::copy(mystring.begin(), mystring.end(), ostreamItr);
+std::copy(object.begin(), object.end(), ostream_iterator<T>(cout, " "));
 
 //ISTREAM ITERATOR
 ifstream myFile("myFile.txt");
 myFile.unset(ios::skipws); //disable skipping of whitespace (uses operator<< which skips by default)
 std::string myString((istream_iterator<char>(myFile)), istream_iterator<char>());
-
-//ISTREAMBUF ITERATOR
-//Faster than istream_iterator, doesn't skip over any character
-ifstream myFile("myFile.txt");
-std::string myString((istreambuf_iterator<char>(myFile)), istreambuf_iterator<char>());

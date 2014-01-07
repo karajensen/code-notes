@@ -289,6 +289,39 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////////////
+//DEFAULT VALUES
+/////////////////////////////////////////////////////////////////////////////////////
+
+//must provide default values for parameters right to left
+int MyFunction(int a, int b = 2);
+int MyClass::MyMethod(int a, int b){} //don't need default for definition
+
+//ALLOWABLE DEFAULT VALUES
+//can't use non-static class members
+void MyMethod(int x, int y = 0);        // constant
+void MyMethod(int x = Fn(5));           // Non-member function with constant arguments
+void MyMethod(int x = Fn(global));      // Non-member function with global variable
+void MyMethod(int x = Fn(m_static));    // Non-member function with static member variable
+void MyMethod(int x = StaticFn());      // Static member function
+void MyMethod(int x = (global==0?1:2))  // Ternary expressions
+
+//INHERITING DEFAULT VALUES
+//Never redefine default values in derived as base class pointers will always use base value
+class Base
+{
+public:
+    virtual void MyMethod(int x = 10) = 0;
+};
+class Derived : public Base
+{
+public:
+    virtual void MyMethod(int x = 2);
+};
+basePtr->MyMethod(0);   //calls derived method
+basePtr->MyMethod();    //calls derived method but uses base class default value
+derivedPtr->MyMethod(); //calls derived method and uses derived default value
+
+/////////////////////////////////////////////////////////////////////////////////////
 //INHERITANCE
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -335,39 +368,22 @@ myDerived->MyMethod(); //cannot be called as seen as private with outside use
 /////////////////////////////////////////////////////////////////////////////////////
 
 //OBJECTS
-//Calls function based on object type
 derived.MyMethod()     //uses Derived::MyMethod()
-base.MyMethod()        //uses Base::MyMethod()
 derived.MyVirtual()    //uses Derived::MyVirtual()
+base.MyMethod()        //uses Base::MyMethod()
 base.MyVirtual()       //uses Base::MyVirtual()
 
 //POINTER/REFERENCES
-//Virtual: Calls function based on underlying object type
-//Non-virtual: Calls function based on ref/pointer type
-Derived* deriPtr = &derivedObject;
-Base* basePtr = &derivedObject;
-
-deriPtr->MyVirtual();        //uses Derived::MyVirtual()
-deriPtr->MyMethod();         //uses Derived::MyVirtual()
-deriPtr->MyDerived();        //uses Derived::MyDerived()
-deriPtr->Base::MyVirtual();  //uses Base::MyVirtual()
-
-basePtr->MyVirtual();        //uses Derived::MyVirtual()
-basePtr->MyMethod();         //uses Base::MyMethod()
-basePtr->Base::MyVirtual();  //uses Base::MyVirtual()
-basePtr->MyDerived();        //ERROR!
-
-//ARRAYS AND POLYMORPHIM
-//Avoid as pointer arithmatic on base class arrays of derived objects
-//pointer arithmatic will use sizeof(Base) not sizeof(Derived)
-Base* myArray = new Derived[2];
-myArray[1] = *(myArray+1)
-delete [] myArray //delete [] also uses pointer arithmatic
+deriPtr->MyVirtual();           //uses Derived::MyVirtual()
+deriPtr->MyMethod();            //uses Derived::MyMethod()
+deriPtr->Base::MyVirtual();     //uses Base::MyVirtual()           
+basePtr->MyVirtual();           //uses Derived::MyVirtual()
+basePtr->MyMethod();            //uses Base::MyMethod()
+basePtr->Derived::MyDerived();  //ERROR!
 
 //NON-VIRTUAL INTERFACE IDIOM
 //virtual functions in derived/base don't have to match
 //Chosen visibility determined from type of pointer/reference used
-//if virtual base function shouldn't be called, make it private
 class Base
 {
 private:
@@ -379,31 +395,8 @@ public:
     virtual void MyMethod() override;
 }
 
-Base* base = &derived; //Uses base class visility: Cannot call MyMethod()
-Derived* deri = &derived; //Uses derived class visibility: Can call MyMethod()
-
-/////////////////////////////////////////////////////////////////////////////////////
-//INHERITING DEFAULT VARIABLES
-/////////////////////////////////////////////////////////////////////////////////////
-
-//never redefine default variables from the base class
-//base class pointers will always use base class default values
-class Base
-{
-public:
-    virtual void MyMethod(int x = 10) = 0;
-};
-class Derived : public Base
-{
-public:
-    virtual void MyMethod(int x = 2);
-};
-
-//calls derived method
-basePtr->MyMethod(2); 
-
-//calls derived method but uses base class default value
-basePtr->MyMethod();
+basePtr->MyMethod(); //Uses base class visility: Cannot call MyMethod()
+deriPtr->MyMethod() //Uses derived class visibility: Can call MyMethod()
 
 /////////////////////////////////////////////////////////////////////////////////////
 //DATA HIDING
@@ -425,7 +418,7 @@ virtual Derived& MyMethod(int x);
 //Methods are hidden but still accessible if type is cast to Base
 static_cast<Base*>(derivedObj)->MyMethod(10); //can use base class version
 
-//To prevent any data hiding of base class
+//PREVENTING BASE CLASS DATA HIDING
 class Derived: public Base 
 {
 public:

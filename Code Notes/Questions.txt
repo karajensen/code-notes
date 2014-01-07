@@ -25,31 +25,30 @@ Q: What is the difference between const char* and char *const?
 A: const char* is a pointer to a const char variable while char *const is a constant pointer to a char variable
 
 Q: What is function overloading?
-A:
+A: When multiple functions have the same name but differ by number/type of arguments and 
+   for pointer/reference arguments only whether const or non-const
 
 Q: What is a function pointer, and can you name a use?
-A:
+A: A pointer that holds the address of a function. Used for callbacks and passing with events.
 
 Q: What is recursion, and what would normally happen if recursion went too deep?
 A: Calling the function within the function. Will cause stack overflow if going too deep.
 
-Q: What kind of expressions can be used as a default parameter?
-A:
+Q: What kind of values can be used as a default value?
+A: Constant, ternary expressions, global and static variables, static and non-member functions
 
 Q: What the two operators used for de-referencing pointers to member functions? 
-A:
+A: ->* and .*
 
 Q: How do you take the address of an overloaded function?
-A: 
-
-Q: Explain some reasons inline functions are beneficial or detrimental
-A:
+A: You need to cast it to the overload you require: (void(MyClass::*)(double))&MyClass::MyMethod
 
 Q: Is there a way to inline a function without using the inline keyword?
-A:
+A: The compiler will ultimately determine what is inlined or not. By giving the function 
+   declaration a body in the header file this suggests inlining without the inline keyword.
 
 Q: Describe any circumstances where the inline keyword would not inline a function.
-A:
+A: If the compiler decides the function is not optimized by doing so
 
 Q: What are the five operators that cannot be overloaded.
 A: .       The membership operator
@@ -62,37 +61,41 @@ Q: How are prefix and postfix versions of operator++() differentiated?
 A: Prefix returns a reference to the object incremented while postfix returns a copy incremented
 
 Q: What is a conversion or cast operator, and provide an example where one might be useful?
-A:
+A: Allows casting the class object to a different variable type, useful for casting between user-defined types
 
 Q: Name a circumstance where the compiler will invisibly generate a temporary due to operator overloading.
-A:
+A: If there is no direct match for the given argument and a match where the compiler can implicitly cast.
 
-Q: Name the overloaded operators that are not inherited by derived classes.
-A:
+Q: Name the overloaded operator that is not inherited by derived classes.
+A: Assignment Operator
 
 Q: What does the static keyword mean when used on a local variable of a function?
-A:
+A: When the function is first called, the variable is initialised to the given value which 
+   is maintained between calls to that same function as its stored in a special memory segment
 
 Q: What common mistake when using static members will cause a linker error?
-A:
+A: Not initialising them in the cpp file
 
 Q: What is the purpose of the extern keyword?
-A:
+A: For global variables it allows external access accross multiple files
 
 Q: When are static local variables in functions constructed?
-A:
+A: On startup, initialised to 0 and then re-initialised to the given value when the function is first called
 
 Q: When are global objects and static member objects constructed and destructed?
-A:
+A: On startup, they are initialised to 0 or the value given to them for inialisation. 
+   They are destructed when the program exits.
 
 Q: What determines the construction order for global objects and static members, and why could it be a problem?
-A:
+A: Global and static members are initialised before the application but there is no guarantee of initialisation order.
+   This can be a problem is some global or static members rely on others for initialisation.
 
 Q: When should you use multiple inheritance?
-A:
+A: When a class needs functionality from multiple classes
 
 Q: What is virtual inheritance and when should it be used?
-A:
+A: Used when the inheritance pattern is diamond shaped and allows inherited classes that 
+   have the same base class to share that class.
 
 Q: What is the difference between public, protected and private inheritance?
 A:  - Public inheritance does not change the visibility of base members at all.
@@ -113,7 +116,7 @@ Q: When is using friend classes a good idea?
 A: When there is tight coupling and a close relationship between the two classes ie. Visitor pattern
 
 Q: How can the using keyword be used in a class?
-A: To define a namespace within the class scope or method scope and to access hidden base methods
+A: To define a namespace within the class or prevent data hiding of base class members
 
 Q: Is it ever a good idea to use "delete this" in a member function?
 A: No as it calls the destructor. Any code in the function after the call may cause an exception.
@@ -156,10 +159,10 @@ Q: How is a virtual function different to a normal function?
 A:
 
 Q: How do you define an abstract base class, and what is its purpose?
-A:
+A: It prevents any instances of the class from being constructed. Defined by =0 after any method.
 
 Q: When is a virtual destructor necessary?
-A:
+A: 
 
 Q: What is a v-table, how is it represented and what implications does this have for usage of byte manipulating functions such as memset?
 A:

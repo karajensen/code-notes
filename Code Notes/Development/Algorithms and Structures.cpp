@@ -26,13 +26,9 @@ A*                     O(E)        O(N)        Graph/Tree   Pathfinding using he
                                        
 SORTING ALGORITHM      AVG SPEED   AVG SPACE   STRUCTURE    DESCRIPTION               
 Bubble Sort            O(N²)       O(1)        Array        Comparison, simple, swaps elements 
-Insertion Sort         O(N²)       O(1)        Array        In-place, stable, fast for small arrays
-Select Sort            O(N²)       O(N)        Array        Comparison, In-place, fast for small arrays
-Bucket/Bin Sort        O(N+K)      O(NK)       Array        Distribution, Partitions array into buckets
 Radix Sort             O(NK)       O(N+K)      Array        Distribution, Works on arrays of numbers, can be stable sort
 Quick Sort             O(NlogN)    O(N)        Array        Comparison, recursive, faster than other O(NlogN), works well with cache
 Merge Sort             O(NlogN)    O(N)        Array        Recursive, Stable, continually splits elements in half
-Heap Sort              O(NlogN)    O(N)        Array        Comparison, In-place that builds heap out of data
 
 CONTAINERS         ACCESS    SEARCH    INSERT     REMOVE    DESCRIPTION
 Array              O(1)      O(N)      O(N)       O(N)      Block of continuous memory
@@ -119,6 +115,17 @@ void RadixSort(std::vector<int>& values)
         
         std::copy(sorted.begin(), sorted.end(), values.begin());
     }
+}
+
+/********************************************************************************
+ MERGE SORT
+ 1)
+ 2)
+*********************************************************************************/
+void MergeSort(std::vector<int>& values)
+{
+
+
 }
 
 /********************************************************************************
@@ -322,6 +329,7 @@ UNBALANCED TREE: right/left sides not equal in volume (slower)
 HEIGHT VALUE/BALANCE FACTOR: childnode keys added for both sides and compared
 BINARY TREE: Tree with only two children
 B-TREES: Tree with more than two children
+TRIE: Node key is constructed from position in tree combining parents
 SPACIAL PARTITIONING SCHEME: subdivide a space into partitions
 OBJECT PARTITIONING SCHEME: subdivide an object into partitions
 

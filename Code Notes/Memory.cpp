@@ -1,6 +1,6 @@
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 //POINTERS
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 int* myPointer = nullptr; //store null
 int* myPointer = &myInt;  //store address of variable
@@ -20,13 +20,22 @@ const int* const ptr = &value //can't change value or what pointer points to
 //POINTER TO ARRAYS
 int* myArray = new int[SIZE]; 
 int** myArrayPointer = &myArray;
-
-*(myArray+3) /*or*/ myArray[3] /*or*/ 3[myArray] //to access elements
 delete [] myArray; //free array
+*(myArray+3) /*or*/ myArray[3] /*or*/ 3[myArray] //to access elements
 
-//////////////////////////////////////////////////////////////////////////////
+//Avoid as pointer arithmatic on base class arrays of derived objects
+//pointer arithmatic will use sizeof(Base) not sizeof(Derived)
+Base* myArray = new Derived[2];
+myArray[1] = *(myArray+1)
+delete [] myArray //delete [] also uses pointer arithmatic
+
+//FUNCTION ADDRESSES
+&MyClass::MyMethod //address of member function
+(void(MyClass::*)(double))&MyClass::MyMethod //address of overloaded function
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 //LAMBDAS
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 //• Can't be templated
 //• Can't use auto with binding, must use std::function type
 //• If inside a class, may become friends
@@ -46,9 +55,39 @@ auto myLambda = [&](int x){ myVar += 10; }      //use all vars in scope by ref
 auto myLambda = [=](int x){ myVar += 10; }      //use all vars in scope by val
 auto myLambda = [&](int x){ MyClassFunction(x); m_myMember += 1; }
 
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+//FUNCTION OBJECTS
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+//FUNCTOR
+//Function with operator()
+struct MyFunctor
+{
+    bool operator()(int x) { return x > 0; }
+}
+
+//POINTER-TO-FUNCTION
+typedef bool(*pFunction)(int x, double y);
+pFunction myFunction = &MyFunction; 
+myFunction(5, 1.0);
+
+//POINTER-TO-MEMBER FUNCTION
+class MyClass
+{
+public:
+    
+    typedef void(MyClass::*MyMethodFn)();
+    void MyMethod(){}
+    MyMethodFn m_myMethodFn;
+};
+
+m_myMethodFn = &MyClass::MyMethodFn;
+(myObject.*m_myMethodFn)();
+(myObject->*m_myMethodFn)();
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 //BINDING FUNCTIONS
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 using namespace std::placeholders; //for _1, _2...
 void MyFunction(int x, double y, float z);
@@ -81,60 +120,14 @@ auto memberFn = std::bind(&MyClass::MyMethod, this, _1);
 auto memberFn = std::bind(&MyClass::MyMethod, &myObject, _1);
 memberFn(2) // object is bound with method
 
-//////////////////////////////////////////////////////////////////////////////
-//FUNCTORS
-//////////////////////////////////////////////////////////////////////////////
+//BINDING OVERLOADED FUNCTIONS
+void MyClass::MyMethod(int x);
+void MyClass::MyMethod(double x);
+std::bind((void(MyClass::*)(double))&MyClass::MyMethod, this, _1);
 
-//Function with operator()
-struct MyFunctor
-{
-    bool operator()(int x) { return x > 0; }
-}
-
-std::plus<double> add; //create a plus<double> object
-std::plus<double>() //using as function
-double y = add(2.2, 3.4); //using plus<double>::operator()()
-
-template <class T> struct plus { T operator() (const T& x, const T& y) const {return x + y;} };
-template <class T> struct minus { T operator() (const T& x, const T& y) const {return x - y;} };
-template <class T> struct multiplies { T operator() (const T& x, const T& y) const {return x * y;} };
-template <class T> struct negate { T operator() (const T& x) const {return -x;} };
-template <class T> struct not_equal_to { bool operator() (const T& x, const T& y) const {return x != y;} };
-template <class T> struct less_equal { bool operator() (const T& x, const T& y) const {return x<=y;} };
-template <class T> struct less { bool operator() (const T& x, const T& y) const {return x<y;} };
-template <class T> struct greater { bool operator() (const T& x, const T& y) const {return x > y;} };
-template <class T> struct greater_equal { bool operator() (const T& x, const T& y) const {return x>=y;} };
-
-//////////////////////////////////////////////////////////////////////////////
-//FUNCTION POINTERS 
-//////////////////////////////////////////////////////////////////////////////
-
-//POINTER-TO-FUNCTION
-typedef bool (*pFunction)(int x);
-pFunction myFunction = &MyFunction; 
-myFunction(5);
-
-//POINTER-TO-MEMBER FUNCTIONS
-class Test
-{
-public:
-    
-    typedef void(Test::*Action)();
-    typedef void(Test::*ActionConst)() const;
-
-    void DrawConst(){} const;
-    void Draw(){}
-
-    Action m_action;
-    ActionConst m_actionconst;
-};
-
-m_action = &Test::Draw;
-m_actionconst = &Test::DrawConst;
-
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 //SMART POINTERS
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 if(SmartPtr) //true if valid, false if null
 *SmartPtr    //dereference pointer
@@ -220,9 +213,9 @@ private:
     friend class MyClassDeleter;
 };
 
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 //AUTO POINTER [DEPRECATED]
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 //pass auto pointers by reference otherwise takes ownership and sets to null
 #include <memory>
@@ -237,62 +230,20 @@ auto_ptr<int> pr(&rigue); //can’t point to memory on the stack
 
 auto_ptr<int> p1(p2); //ownership is passed to p1 and p2 is set to nullptr
 
-//////////////////////////////////////////////////////////////////////////////
-//DEBUGGING MEMORY
-//////////////////////////////////////////////////////////////////////////////
-
-//OVERLOADING NEW
-void *operator new(size_t size)
-{
-    cout << "new used"; //give message
-    return malloc(size);
-}
-void *operator new(size_t size, unsigned int lineNumber)
-{
-    cout << "new used at " << lineNumber; //give message
-    return malloc(size);
-}
-void operator delete(void* p)
-{
-    cout << "delete used";  //give message
-    free(p);
-}
-
-//OVERLOADING NEW ARRAY
-void *operator new[](size_t size)
-{
-    cout << "new array used";
-    return malloc(size);
-}
-void operator delete[](void* p)
-{
-    cout << "delete array used";
-    free(p);
-}
-
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 //C-STYLE MEMORY ALLOCATION
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 #include <malloc.h>
 
-//Allocating memory
-int* pPointer = (int*)malloc(allocationSizeInBytes);
+int* pPointer = (int*)malloc(allocationSizeInBytes); //Allocating memory
+free(pPointer); //Freeing memory
+int* pPointer = (int*)realloc(pPointer,numberOfExtraElements); //Resizing memory
+int* pDestination = (int*)memmove(pDestination,pSource,SizeInBytes); //Moving memory
+int* pPointer = (int*)realloc(allocationSizeInBytes); //Reallocating memory
 
-//Freeing memory
-free(pPointer);
-
-//Resizing memory
-int* pPointer = (int*)realloc(pPointer,numberOfExtraElements);
-
-//Moving memory
-int* pDestination = (int*)memmove(pDestination,pSource,SizeInBytes);
-
-//Reallocating memory
-int* pPointer = (int*)realloc(allocationSizeInBytes);
-
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 //PLACEMENT NEW
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 #include <new>
 
 //PLACEMENT NEW

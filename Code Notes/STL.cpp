@@ -100,9 +100,7 @@ _copysign(x, y) //returns double with magnitude of x and sign of y
 copysign(x, y) //returns double with magnitude of x and sign of y
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <sstream>
-#include <iostream>
-#include <fstream>
+#include <sstream> #include <iostream> #include <fstream> #include <iomanip>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //-------------------------------------------------------------------------------
@@ -200,47 +198,26 @@ myFile.read(myArray, x) //reads x characters from the file and places them in th
 fstream myFile; //requires filemode
 myFile.open("file.txt", ios_base::in|ios_base::out|ios_base::binary)
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <iomanip>
-///////////////////////////////////////////////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
+//STREAM MANIPULATION
+//-------------------------------------------------------------------------------
+// Use in stream or stream.setf to set flags, strea.unsetf to remove flags
 
-//sets width to 3, affects next item displayed only, will expand width if too small to fit item, uses fill character
-cout.width(3) /*or*/ setw(3) 
-
-//changes the fill character from the default " "
-cout.fill('*') /*or*/ setfill('*') 
-
-//SETTING/UNSETTING STREAM FLAGS
-cout.unsetf(ios_base::boolalpha); //sets bit back to 0 for boolalpha
-cout.setf(ios_base::boolalpha); //converts 1 or 0 to true or false when using expression such as x<3
-cout.setf(ios::skipws); //enable skipping of whitespace
-cout.setf(ios_base::showpoint); //shows decimal point no matter what
-cout.setf(ios_base::showpos); //use + for positive numbers
-cout.setf(ios_base::uppercase); //Use uppercase letters for hex output/E notation
-cout.setf(ios_base::showbase); //Use C++ base prefixes (0,0x) for decimal/hex
-cout.setf(ios_base::adjustfield, ios_base::left); //adjust output to left
-cout.setf(ios_base::adjustfield, ios_base::right); //adjust output to right
-
-//HEX/DECIMAL
-cout.setf(ios_base::basefield, ios_base::dec)
-cout.setf(ios_base::basefield, ios_base::hex)
-
-//FIXED/SCIENTIFIC NOTATION
-cout.setf(ios_base::floatfield, ios_base::fixed); //uses fixed-point notation
-cout.setf(ios_base::floatfield, ios_base::scientific); //uses scientific notation
-
-//PRECISION
-setprecision(2) //will show trailing 0s, precision is number of digits to right
-cout.precision(2); //of decimal point (float) use showpoint to show trailing 0s on ints
-                                        
-//STANDARD NOTATION 
-cout.unsetf(ios_base::floatfield);
-setprecision(2) //sets number of sig digits to 2 from standard 6, no trailing 0s
-cout.precision(2); //(0.0234 -> 0.023, 23.4 -> 23, 323 -> 323, 323.3 -> 3.2e002)                          
-
-//SAVING SETTINGS
-ios_base::fmtflags initialState = cout.setf(ios::left, ios::adjustfield); //save old settings into fmtflags old
-cout.setf(initialState); //restore original settings
+std::setw(3)         //for next item only expands item to fill the width with the fill character
+std::setfill('*')    //changes the fill character from the default " "
+std::boolalpha       //converts 1 or 0 to true or false
+std::skipws          //enable skipping of whitespace
+std::showpoint       //shows decimal point no matter what
+std::showpos         //use + for positive numbers
+std::hex             //shows numbers as hex
+std::dec             //shows number as decimal
+std::nouppercase     //don't use uppercase
+std::uppercase       //use uppercase
+std::fixed           //use fixed-point notation
+std::scientific      //uses scientific notation
+std::setprecision(2) //will show trailing 0s, precision is number of digits to right
+std::right           //adjust output to right
+std::left            //adjust output to right
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <ctime>

@@ -156,7 +156,6 @@ unsigned short //Can have 16 (bytes) flags maximum
 unsigned int //Can have 16 (bytes) flags maximum 
 unsigned long //Can have 32 (bytes) flags maximum
 
-
 //////////////////////////////////////////////////////////////////////////////
 //LOOPING
 //////////////////////////////////////////////////////////////////////////////
@@ -239,14 +238,10 @@ int my2DArray[rows][cols];
 MyFunction(my2DArray, rows)
 
 //INLINE FUNCTIONS
-//function body replaced by function call in body
+//function call is replaced by function body
+//compiler ultimately decides what is inlined
 inline void MyFunction(int x){ x += 2; }
                                                   
-//DEFAULT VALUES 
-//must provide default values for parameters right to left
-int MyFunction(int a, int b = 2);
-int MyClass::MyMethod(int a, int b){} //don't need default for definition
-
 //PRIVATE (INTERNAL LINKAGE) FUNCTIONS
 //Functions have external linkage by default. Use static to change
 static int MyFunction(int& arg);
