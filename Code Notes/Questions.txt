@@ -169,13 +169,21 @@ A: When the class expects to be inherited from. If not made virtual, any deletio
    from its base class pointer will result in only the base destructor being called.
 
 Q: What is a v-table and how is it represented?
-A:
+A: Vtbl is array of function addresses for a class that has virtual functions in the static data segment
+   Usually stored as a static array generated at compile-time though exact implementation compiler specific
+
+Q: What are the hidden data members of a class and when are they created?
+   vtble pointer: when a class has virtual functions 
+   virtual base: when virtual multiple inheritance with a shared base class is used
 
 Q: What implications does the v-table have for usage of byte manipulating functions such as memset?
-A:
+A: memset only works on POD types as it overwrites the give bytes with a value. This is bad for using it to 
+   initialise anything non-POD as it can overwrite the hidden pointer to the vtble and pointers to virtual bases.
 
 Q: Are virtual functions slow? Explain.
-A: 
+A: They are slower than a normal function call. The compiler does not know at compile-time which function will
+   be called. Extra calls to the vtbl to find the correct address as well as not being able to use the normal 
+   function optimizations such as inlining contributes to this speed.
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PERSONAL QUESTIONS

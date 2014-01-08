@@ -112,8 +112,13 @@ MyClass1* ptr1 = const_cast<MyClass2>(ptr2);
 //Only hold one var at a time; shares same memory location
 //the size of that spot is determined by the largest variable (ie. long)
 //can be used to access a variable in multiple ways (ie. for colors)
+//cannot use inheritance
 union MyColor
 {
+    MyColor() : color(0) //can have user defined constructor
+    {
+    }
+
     unsigned int color;
     struct
     {
@@ -198,7 +203,8 @@ else {}
 
 //TERNARY OPERATOR
 int value = (a < b) ? a : b;
-obj->Exists() ? obj->DoSomething() : obj->DoSomethingElse();
+obj->Exists() ? obj->DoSomething() : throw ("exception");
+(a == 0 ? a : b) = 1; //if(a == 0) a = 1 else b = 1
 
 //SWITCH STATEMENTS
 //can have nothing inside the switch statement or just default

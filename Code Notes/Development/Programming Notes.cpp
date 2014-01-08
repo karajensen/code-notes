@@ -193,21 +193,20 @@ FRIEND FUNCTION: can see a class's private parts
 STATIC BINDING: Uses pointer/ref type to determine function to call at compilation
 DYNAMIC BINDING: Uses internal held object type to determine function to call at runtime
 
-FUNCTION CALLING
-1) program places address of calling function on stack
-2) any variables used locally are created as auto vars and placed on stack
-3) if function calls another its information is placed on top of stack
-
-RETURNING VALUES
-1) Returns a value by copying the return value to a specified register/location
-2) The calling function examines that location. Both the returning and 
-   calling function have to agree on the type of data at that location. 
-
 ARGUMENTS/PARAMETERS
 Actual Argument/Parameter = The value passed to the function 
 Formal Argument/Parameter = A variable that’s used to receive passed values
 Argument = used to denote Actual Argument/Parameter
 Parameter = used to denote Formal Argument/Parameter 
+
+FUNCTION CALLING
+• Copy required registers/argments to the stack
+• Push the return address
+• Any variables used locally are placed on the stack
+• Jump to the function's address- This is hardcoded in the binary unless virtual. If virtual:
+    - Get the vtable pointer
+    - Find the correct address from the vtable and jump to that address
+• Get the return value from a predefined location and restore registers
 
 CDECL CALLING CONVENTION
 • Arguments passed via stack. 
