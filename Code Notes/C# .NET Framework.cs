@@ -1,10 +1,69 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
+//LINQ
+////////////////////////////////////////////////////////////////////////////////////////////
+using System.LINQ;
+
+// QUERY FROM A CONTAINER
+var myQuery = from item in myContainer
+              where (item % 2) == 0 
+              orderby item.GetValue() descending
+              select item.GetValue(); 
+
+// USING OVER RANGE
+var myQuery = from number in Enumerable.Range(0, 100)
+              select item * 2.0;
+
+// NESTED QUERIES
+// second from is nested inside first from
+var myQuery = from x in Enumerable.Range(0, 100)
+              from y in Enumerable.Range(0, 100)
+              select Tuple.Create(x, y);
+
+// GROUPING
+// creates array of anonymous types where the group category is 
+// Key() and all items that fit into that group are in ToList()
+var myQuery = from item in myArray
+              group item by item.ID into g
+              select new { ID = g.Key, Items = g.ToList() }; 
+
+// USING IN LOOP
+foreach (var item in myQuery){}
+
+//QUERY AGGREGATE METHODS
+//apply function to each successive element
+myQuery.Count(); // returns number of elements that pass condition
+myQuery.ToList(); // returns list of elements that pass condition
+myQuery.ToArray(); // returns array of elements that pass condition
+myQuery.Min(); // returns the minimum value in query
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//CONSOLE
+////////////////////////////////////////////////////////////////////////////////////////////
+
+// Writing information to an inaccessible console does not cause an exception to be raised
+// Represents the standard input, output, and error streams for console applications
+// Cannot be inherited
+System.Console.WriteLine("Hello World!");
+
+////////////////////////////////////////////////////////////////////////////////////////////
 //RANDOM VALUES
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 var rand = new Random(0);
 rand.Next(max) //returns value from 0 to max
 rand.Next() % max //returns value from 0 to max
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//MATHS
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Math.Sqrt(myDouble)
+Math.Sin(myDouble)
+Math.Cos(myDouble)
+Math.Tan(myDouble)
+Math.Min(myVar)
+Math.Max(myVar)    
+Math.Sign(myVar)
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //EXCEPTIONS
@@ -53,18 +112,6 @@ catch (ArgumentException e)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-//MATHS
-////////////////////////////////////////////////////////////////////////////////////////////
-
-Math.Sqrt(myDouble)
-Math.Sin(myDouble)
-Math.Cos(myDouble)
-Math.Tan(myDouble)
-Math.Min(myVar)
-Math.Max(myVar)    
-Math.Sign(myVar)
-
-////////////////////////////////////////////////////////////////////////////////////////////
 //INPUT/OUTPUT
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -109,6 +156,18 @@ if (result == System.Windows.Forms.DialogResult.OK)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
+//TIMERS
+////////////////////////////////////////////////////////////////////////////////////////////
+
+using System.Diagnostics
+var stopWatch = new Stopwatch()
+stopWatch.Start() //begin counting
+stopWatch.Stop() //stop counting
+stopWatch.Elapsed() //returns time passed
+stopWatch.Elapsed().ToString("s\\.f") //returns time passed as string
+stopWatch.Reset() //resets timer
+
+////////////////////////////////////////////////////////////////////////////////////////////
 //REFLECTION
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -148,7 +207,6 @@ string ReturnValue = (string)instance.GetType().GetMethod("MyMethod").Invoke(ins
 instance.GetType().GetProperty("MyProperty").SetValue(instance, (object)"argument", null);
 instance.GetType().GetProperty("MyProperty").GetValue(instance, null);
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////
 //DIAGNOSTICS
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -170,13 +228,25 @@ Debug.Listeners.Remove("Default");
 Debug.Listeners.Add(listener);
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-//TIMERS
+//DATABASES
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-using System.Diagnostics
-var stopWatch = new Stopwatch()
-stopWatch.Start() //begin counting
-stopWatch.Stop() //stop counting
-stopWatch.Elapsed() //returns time passed
-stopWatch.Elapsed().ToString("s\\.f") //returns time passed as string
-stopWatch.Reset() //resets timer
+MyDatabase db = new MyDatabase(@"c:\mydatabase.mdf");
+db.ObjectTrackingEnabled = false; //set as readonly to improve performance, turns off defered loading
+db.DeferredLoadingEnabled = false; //retrieve all related tables, not just the queried one
+
+//LOAD OPTIONS
+DataLoadOptions dlo = new DataLoadOptions();
+dlo.LoadWith<MyTable>(t => t.MyColumn); // preload required column
+dlo.LoadWith<MyTable2>(t => t.MyColumn3); // preload from another table
+dlo.AssociateWith<MyTable>(t => t.MyColumn.Where(r => r.RowValue != 1)); // only retrieve a subset
+db.LoadOptions = dlo;
+
+// LINQ DATABASE QUERYING
+var myQuery = from item in db.MyTable
+              where item.MyColumn1 == "MyColumn" 
+              orderby item.MyColumn2
+              select item;
+
+// EXECUTE SQL QUERY
+IEnumerable<MyColumn> results = db.ExecuteQuery<MyColumn>(@"SELECT * FROM MyColumn");

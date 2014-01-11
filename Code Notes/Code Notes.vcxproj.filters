@@ -115,9 +115,6 @@
     <ClCompile Include="Development\Source Control.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Development\Web Development.cpp">
-      <Filter>Development</Filter>
-    </ClCompile>
     <ClCompile Include="Game Programming\Directx.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
@@ -176,6 +173,9 @@
       <Filter>Languages</Filter>
     </ClCompile>
     <ClCompile Include="Development\Design Patterns.cpp">
+      <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Web Development.cpp">
       <Filter>Development</Filter>
     </ClCompile>
   </ItemGroup>
@@ -431,6 +431,9 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Code - Amdahls Law.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Entity Relationship Diagram.png">
       <Filter>Images</Filter>
     </Image>
   </ItemGroup>

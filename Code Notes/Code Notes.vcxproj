@@ -171,6 +171,7 @@
     <Image Include="Images\Code - C# Operator Precedence.png" />
     <Image Include="Images\Code - C++ Operator Precedence.png" />
     <Image Include="Images\Code - Design Patterns.png" />
+    <Image Include="Images\Code - Entity Relationship Diagram.png" />
     <Image Include="Images\Code - Execution Environment.png" />
     <Image Include="Images\Code - Hex Converting.png" />
     <Image Include="Images\Code - Iterators.png" />

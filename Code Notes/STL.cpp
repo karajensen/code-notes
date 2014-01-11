@@ -8,12 +8,19 @@ std::swap   // swaps the value of two variables
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <typeinfo>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-//Requires RTTI turned on and virtual methods as type_info stored in v-table
+//Requires RTTI turned on and virtual methods (type_info stored in v-table)
 
 typeid(myObject)    //returns type_info for object
 myTypeInfor.name()  //get unique string identifying the class type
 
-if(typeid(MyClass) == typeid(myObject)){ /*object is of that class*/ }
+// requires object, not pointer
+Base* myBasePointer = new Derived();
+Derived* myDerivedPointer = new Derived();
+if(typeid(Derived) == typeid(*myBasePointer))    { /* returns true */ }
+if(typeid(Derived) == typeid(*myDerivedPointer)) { /* returns true */ }
+if(typeid(Base) == typeid(*myBasePointer))       { /* returns false */ }
+if(typeid(Base) == typeid(*myDerivedPointer))    { /* returns false */ }
+if(typeid(Derived) == typeid(Base))              { /* returns false */ }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <type_traits>
