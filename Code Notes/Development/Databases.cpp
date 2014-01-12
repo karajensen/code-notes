@@ -129,15 +129,23 @@ DESIGN RULES
 • Each table should have an primary key column where each row has a unique value
 • A table should avoid nullable columns as they increase complexity of operations
 • A table should not have a row entry as a list of values or repeating columns to list the values
-• To avoid multiple values/columns, create many tables that link to the main table
 
 DATA NORMALIZATION
-• Goal is to achieve several narrow tables with few columns
+• Goal is to achieve several narrow tables with few columns by applying the normalization forms
 • Too much and number and complexity of joins will increase reducing performance
 • A good amount improves performance
     - Faster sorting and index creation
     - Fewer indexes per table improving performance of INSERT, UPDATE and DELETE statements
     - Fewer null values and less opportunity for inconsistency
+
+1ST NORMAL FORM
+• 
+
+2ND NORMAL FORM
+• 
+
+3RD NORMAL FORM
+• 
 
 DATA INTEGRITY
 • Entity integrity: enforces Identifier columns to have unique values within a table
@@ -149,8 +157,10 @@ DATA INTEGRITY
     - Prevents deleting parent table rows that are in the child table
 
 DATABASE KEYS
-• Primary Key: One or more columns holding a unique id for the table
+• Primary Key: One or more columns holding a unique id for the table, cannot be null
 • Foreign Key: Column used to create parent-child relationships between tables
+• Clustered Key: Sorts the rows by column with it, only one per table, defaults to primary key
+• Non-clustered Key: 
 
 EXTENDED PROPERTIES
 • Should not contain sensitive information
