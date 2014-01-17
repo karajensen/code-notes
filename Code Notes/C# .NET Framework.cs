@@ -29,12 +29,12 @@ var myQuery = from item in myArray
 // USING IN LOOP
 foreach (var item in myQuery){}
 
-//QUERY AGGREGATE METHODS
-//apply function to each successive element
 myQuery.Count(); // returns number of elements that pass condition
 myQuery.ToList(); // returns list of elements that pass condition
 myQuery.ToArray(); // returns array of elements that pass condition
 myQuery.Min(); // returns the minimum value in query
+myQuery.Max(); // return the maximum value in query
+myQuery.Sum(); // return the sum of all values in query
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //CONSOLE
@@ -44,6 +44,7 @@ myQuery.Min(); // returns the minimum value in query
 // Represents the standard input, output, and error streams for console applications
 // Cannot be inherited
 System.Console.WriteLine("Hello World!");
+System.Console.ReadLine(); //pause
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //RANDOM VALUES
@@ -230,25 +231,55 @@ Debug.Listeners.Add(listener);
 ////////////////////////////////////////////////////////////////////////////////////////////
 //DATABASES
 ////////////////////////////////////////////////////////////////////////////////////////////
+//TableAdapters, DataAdapters and DataCommands will open/close the connection automatically if not already open
+//SqlConnection manages connection pooling implicitly
+
 using System.Data;
 using System.Data.SqlClient;
 
-MyDatabase db = new MyDatabase(@"c:\mydatabase.mdf");
-db.ObjectTrackingEnabled = false; //set as readonly to improve performance, turns off defered loading
-db.DeferredLoadingEnabled = false; //retrieve all related tables, not just the queried one
+string connectionStr = Properties.Settings.Default.ConnectionString;
+using (SqlConnection connection = new SqlConnection(connectionStr))
+{
+    connection.Open();
 
-//LOAD OPTIONS
-DataLoadOptions dlo = new DataLoadOptions();
-dlo.LoadWith<MyTable>(t => t.MyColumn); // preload required column
-dlo.LoadWith<MyTable2>(t => t.MyColumn3); // preload from another table
-dlo.AssociateWith<MyTable>(t => t.MyColumn.Where(r => r.RowValue != 1)); // only retrieve a subset
-db.LoadOptions = dlo;
+    // RETRIEVE TABLE INFORMATION
+    string query = "SELET * FROM MyTable";
+    SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+    DataTable table = new DataTable;
+    adapter.Fill(table);
+    foreach (DataRow row in table.Rows)
+    {
+        int id = Convert.ToInt32(row["ID"]);
+        string name = row["Name"];
+    }    
 
-// LINQ DATABASE QUERYING
-var myQuery = from item in db.MyTable
-              where item.MyColumn1 == "MyColumn" 
-              orderby item.MyColumn2
-              select item;
+    // CALL A STORED PROCEDURE
+    using (SqlCommand cmd = new SqlCommand("MyProcedure", connection)) 
+    {
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = "MyName";
+        cmd.ExecuteNonQuery(); // for no return types
+    }
 
-// EXECUTE SQL QUERY
-IEnumerable<MyColumn> results = db.ExecuteQuery<MyColumn>(@"SELECT * FROM MyColumn");
+    // CREATING A DATA CONTEXT
+    DataContext context = new DataContext(connection);
+    DataLoadOptions options = new DataLoadOptions();
+
+    options.LoadWith<MyTable>(t => t.MyColumn); // preload required column
+    options.LoadWith<MyTable2>(t => t.MyColumn3); // preload from another table
+    options.AssociateWith<MyTable>(t => t.MyColumn.Where(r => r.RowValue != 1)); // only retrieve a subset
+
+    context.ObjectTrackingEnabled = false; //set as readonly to improve performance, turns off defered loading
+    context.DeferredLoadingEnabled = false; //retrieve all related tables, not just the queried one
+    context.LoadOptions = dlo;
+
+    // LINQ DATABASE QUERYING WITH CONTEXT
+    var myQuery = from item in context.MyTable
+                  where item.MyColumn1 == "MyColumn" 
+                  orderby item.MyColumn2
+                  select item;
+
+    // EXECUTE SQL QUERY WITH CONTEXT
+    IEnumerable<MyColumn> results = context.ExecuteQuery<MyColumn>(@"SELECT * FROM MyColumn");
+
+} //using() will automatically call Close()

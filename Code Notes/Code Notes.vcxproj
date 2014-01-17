@@ -102,12 +102,14 @@
     <ClCompile Include="Code Notes.cpp" />
     <ClCompile Include="Code.cpp" />
     <ClCompile Include="Development\Algorithms and Structures.cpp" />
-    <ClCompile Include="Development\Databases.cpp" />
+    <ClCompile Include="Development\Databases.sql" />
     <ClCompile Include="Development\Design Patterns.cpp" />
     <ClCompile Include="Development\Programming Notes.cpp" />
     <ClCompile Include="Development\Software Development.cpp" />
     <ClCompile Include="Development\Source Control.cpp" />
-    <ClCompile Include="Development\Web Development.cpp" />
+    <ClCompile Include="Development\Web Development.xml">
+      <SubType>Designer</SubType>
+    </ClCompile>
     <ClCompile Include="Game Programming\Collisions.cpp" />
     <ClCompile Include="Game Programming\Directx.cpp" />
     <ClCompile Include="Game Programming\Lighting.cpp" />
@@ -170,6 +172,7 @@
     <Image Include="Images\Code - Boxing.gif" />
     <Image Include="Images\Code - C# Operator Precedence.png" />
     <Image Include="Images\Code - C++ Operator Precedence.png" />
+    <Image Include="Images\Code - Database Normalization.png" />
     <Image Include="Images\Code - Design Patterns.png" />
     <Image Include="Images\Code - Entity Relationship Diagram.png" />
     <Image Include="Images\Code - Execution Environment.png" />
@@ -178,6 +181,8 @@
     <Image Include="Images\Code - STL container performance.PNG" />
     <Image Include="Images\Code - Trees Partitioning.png" />
     <Image Include="Images\Code - Trees.png" />
+    <Image Include="Images\Code - UML Diagrams.png" />
+    <Image Include="Images\Code - Web server.png" />
     <Image Include="Images\Graphics - Backface Culling.png" />
     <Image Include="Images\Graphics - Bottleneck chart.png" />
     <Image Include="Images\Graphics - Deferred Rendering (with transparency).jpg" />

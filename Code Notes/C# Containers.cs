@@ -1,9 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 //IENUMERABLE
 ////////////////////////////////////////////////////////////////////////////////////////////
-//LINQ queries can be used on containers that supports IEnumerable<T> interface
-//Most containers inherit from IEnumerable<T> except ArrayList which inherits IEnumerable
-//IEnumerable is the untemplated version of IEnumerable and cannot use LINQ
+// LINQ queries can be used on containers that supports IEnumerable<T> interface
+// Containers inherit from IEnumerable<T> except ArrayList and System.Array which inherits IEnumerable
+// IEnumerable is the untemplated version of IEnumerable and cannot use LINQ
 
 using System.Collections.Generic;
 
@@ -11,11 +11,16 @@ IEnumerable<int> myIEnum = myContainer.Where(item => item.IsActive()); // from s
 IEnumerable<int> myIEnum = new List<int>(){1,2,3}; // from whole container
 IEnumerable<int> myIEnum = myContainer; // implicit conversion
 
-myIEnum.Exlude(myIEnum2) // remove myIEnum2 from myIEnum
-myIEnum.Union(myIEnum2)  // joint two IEnumerable<T>
-myIEnum.ToArray()        // Converting to array
-myIEnum.ToList()         // Converting to list
-myIEnum.Cast<int>()      // Cast back to original container type
+myIEnum.Exlude(myIEnum2)      // remove myIEnum2 from myIEnum
+myIEnum.Union(myIEnum2)       // joint two IEnumerable<T>
+myIEnum.ToArray()             // Converting to array
+myIEnum.ToList()              // Converting to list
+myIEnum.Cast<int>()           // Cast back to original container type
+myIEnum.Sum()                 // Sum of all values
+myIEnum.Where(i => i.active)  // Get subset of ienumerable
+myIEnum.Reverse()             // reverses order
+myIEnum.Min()                 // get minimum value
+myIEmum.Max()                 // get maximum value
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //MULTI-TYPED CONTAINERS
@@ -59,9 +64,9 @@ builder.Append(2);
 ////////////////////////////////////////////////////////////////////////////////////////////
 //ARRAYS
 ////////////////////////////////////////////////////////////////////////////////////////////
-//• Derived from System.Array
-//• Can't be dynamically resized
-//• Array name is reference type despite the variable type it holds
+// Derived from System.Array and can't be dynamically resized
+// Derives from IEnumerable, not IEnumerable<T> and cannot use LINQ
+// Array name is reference type despite the variable type it holds
 
 int[] myArray = new int[ArrayAmount] 
 int[] myArray = new int[] { 1,2,3,4 };
@@ -103,6 +108,7 @@ myArray[0][1] //jaggered array
 myArray[0,2] //rectangle array
 myArray.Length // number of elements
 myArray.Min(x => x.GetValue())
+myArray.Cast<MyClass>() //casts to IEnumerable<T>, allows use of LINQ
 
 Array.IndexOf(myArray, 2) //returns index of first element found from start or -1 if not found
 Array.LastIndexOf(myArray, 2) //returns index of first element found from end or -1 if not found
@@ -120,8 +126,8 @@ Array.Clear(myArray, i, n) //clears to default from index i for n number of elem
 ////////////////////////////////////////////////////////////////////////////////////////////
 //ARRAYLIST
 ////////////////////////////////////////////////////////////////////////////////////////////
-//• Derives from IEnumerable, not IEnumerable<T> and cannot use LINQ
-//• Stores a list of System.Object
+// Derives from IEnumerable, not IEnumerable<T> and cannot use LINQ
+// Stores a list of System.Object
 
 ArrayList myArrayList = new ArrayList();
 

@@ -302,6 +302,13 @@ MyDelegate myDel = MyFunction; //Accepts despite requiring derived as a paramete
 //OBJECT LIFETIME
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+//IDISPOSABLE
+//class that inherits IDisposable contains a destructor, use using() to ensure its called
+using(MyDisposable myDis = new MyDisposable())
+{
+    myDis.DoSomething();
+}
+
 //BOXING
 object boxed = 10; //occurs implicitly for value-types
 int unBoxed = boxed as int; //occurs explicitly for value-types

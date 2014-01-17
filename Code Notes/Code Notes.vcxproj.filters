@@ -103,9 +103,6 @@
     <ClCompile Include="Development\Algorithms and Structures.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Development\Databases.cpp">
-      <Filter>Development</Filter>
-    </ClCompile>
     <ClCompile Include="Development\Programming Notes.cpp">
       <Filter>Development</Filter>
     </ClCompile>
@@ -175,7 +172,10 @@
     <ClCompile Include="Development\Design Patterns.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Development\Web Development.cpp">
+    <ClCompile Include="Development\Databases.sql">
+      <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Web Development.xml">
       <Filter>Development</Filter>
     </ClCompile>
   </ItemGroup>
@@ -434,6 +434,15 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Code - Entity Relationship Diagram.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - UML Diagrams.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Database Normalization.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Web server.png">
       <Filter>Images</Filter>
     </Image>
   </ItemGroup>
