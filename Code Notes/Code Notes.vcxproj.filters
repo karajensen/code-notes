@@ -445,6 +445,9 @@
     <Image Include="Images\Code - Web server.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Code - HTML Element.png">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Questions.txt" />
