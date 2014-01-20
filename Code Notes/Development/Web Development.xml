@@ -70,6 +70,7 @@ HYPERTEXT MARKUP LANGUAGE (HTML)
     <!--LINKS-->
     <a href="mypage.html">MyLink</a> <!--Add Global styled Link to text-->
     <a href="mypage.html" class ="MyClass">MyLink</a> <!--Add Class styled Link to text-->
+    <a href="myPage.html" target="_blank">Open window</a> <!--Open popup window-->
 
     <!--IMAGES-->
     <img src="/images/logo.jpg" height="50px" width="200px" border="0" alt="MyText"/> <!--Add Image-->
@@ -217,12 +218,18 @@ JAVASCRIPT
   myString.indexOf("substring"); <!--Returns first index of or -1 if not found-->
   myString.length <!--Number of characters in string-->
   myString.substr(0, 3); <!--Generate substring from index 0 to 3-->
+  
+  <!--ARRAYS-->
+  myArray = new Array();
+  myArra[0] = "myEntry1"; <!--auto resizes-->
 
   <!--CONVERSIONS-->
   myString = 8 + "MyString"; <!--Auto converts: "8MyString"-->
   myInt = parseInt("8"); <!--Returns NaN if not a number-->
 
-  <!--CURRENT PAGE PROPERTIES-->
+  <!--PAGE PROPERTIES-->
+  screen.availWidth
+  screen.availHeight
   document.bgColor = "#000000";
   document.write("MyText<b>InBold</b>"); <!--Adds the text where the <script></script> is positioned-->
   document.lastModified; <!--Text for when the page was last modified-->
@@ -303,3 +310,20 @@ document.myForm.job.selectedIndex <!--get selected index of drop down box (zero-
 JAVASCRIPT WINDOWS
 ==========================================================================================-->
 
+<!--Open a new window-->
+myWindow = window.open("myPage.html", "myPage", "height=300, width=400");
+
+<!--Window Methods-->
+myWindow.close();
+myWindow.moveTo(0,0);
+myWindow.resizeTo(200,100);
+
+<!--Window Properties-->
+fullscreen=1 <!--can also take yes/no-->
+height=300
+width=400
+location=1 <!--display the address bar-->
+resizable=0
+menubar=1 <!--display the file/edit menubar-->
+status=0 <!--display the status bar-->
+toolbar=1 <!--display the browser toolbar-->
