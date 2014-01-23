@@ -166,7 +166,7 @@ EXTENDED PROPERTIES
 //STRUCTURED QUERY LANGUAGE (SQL)
 /////////////////////////////////////////////////////////////////////////////////////////////////
 • Not case sensitive- use [] if using a name that's also a keyword
-• % is wilcard symbol
+• % or * is wildcard symbol
 */
  
 /*TYPE		           BYTES     RANGE*/
@@ -203,25 +203,31 @@ datetime          8      0001-01-01 to 9999-12-31, January 1,1 AD to December 31
 **************************************************************/
 
 /*SELECT*/
-SELECT * FROM MyTable;                            /*select all from table*/
-SELECT MyColumn1, MyColumn2 FROM MyTable;         /*select columns from table, determines reported order of columns*/
-SELECT DISTINCT MyColumn FROM MyTable;            /*select only unique entries from column*/
-SELECT * FROM MyTable ORDER BY MyColumn DESC;     /*orders table by given column, ASC for ascending*/
-SELECT * FROM MyTable WHERE MyColumn=value;       /*selection where condition*/
+SELECT * FROM MyTable;                      /*select all from table*/
+SELECT MyColumn1, MyColumn2 FROM MyTable;   /*select columns from table, determines reported order of columns*/
+SELECT DISTINCT MyColumn FROM MyTable;      /*select only unique entries from column*/
+SELECT * FROM MyTable WHERE MyColumn1=value ORDER BY MyColumn2;
+
+/*ORDER BY*/
+.. ORDER BY MyColumn;  /*orders table by given column, default is descending*/
+.. ORDER BY 1 DESC;    /*orders table by column number 1*/
+.. ORDER BY 1,2 ASC;   /*orders by column 1 and if duplicate values, orders by column 2*/
 
 /*WHERE*/
-SELECT * FROM MyTable WHERE MyColumn1=v1 AND (MyColumn2=v2 OR MyColumn3=v3);
-WHERE MyColumn1=v1 AND MyColumn2=v2; /*select all where both conditions are true*/
-WHERE MyColumn1=v1 OR MyColumn2=v2;  /*select all where one or more conditions are true*/
-WHERE MyColumn=value;                /*select all values equal to value, strings use ''*/
-WHERE MyColumn<>value;               /*select all values not equal to value (can be !=)*/
-WHERE MyColumn BETWEEN v1 AND v2;    /*select all values between 1 and 2*/
-WHERE MyColumn IN (v1, v2);          /*select all values in given array of values*/
-WHERE MyColumn LIKE 's%';            /*select all ending with letter*/
-WHERE MyColumn LIKE '%s';            /*select all starting with letter*/
-WHERE MyColumn LIKE '%temp%';        /*select all with substring 'temp'*/
-WHERE MyColumn NOT LIKE '%temp%';    /*select all without substring 'temp'*/
-WHERE MyColumn IS NULL;              /*select all values from column that are null*/
+.. WHERE MyColumn=value;                /*select all values equal to value, strings use ''*/
+.. WHERE MyColumn<>value;               /*select all values not equal to value (can be !=)*/
+.. WHERE MyColumn BETWEEN v1 AND v2;    /*select all values between 1 and 2*/
+.. WHERE MyColumn IN (v1, v2);          /*select all values in given array of values*/
+.. WHERE MyColumn NOT IN (v1, v2);      /*select all values not in given array of values*/
+.. WHERE MyColumn LIKE 's*';            /*select all starting with letter*/
+.. WHERE MyColumn LIKE '*s';            /*select all ending with letter*/
+.. WHERE MyColumn LIKE '[ST]*';         /*select all starting with S or T*/
+.. WHERE MyColumn LIKE '*temp*';        /*select all with substring 'temp'*/
+.. WHERE MyColumn NOT LIKE '*temp*';    /*select all without substring 'temp'*/
+.. WHERE MyColumn IS NULL;              /*select all values from column that are null*/
+.. WHERE MyColumn1=v1 AND MyColumn2=v2; /*select all where both conditions are true*/
+.. WHERE MyColumn1=v1 OR MyColumn2=v2;  /*select all where one or more conditions are true*/
+.. WHERE MyColumn1=v1 AND (MyColumn2=v2 OR MyColumn3=v3);
 
 /*INSERT*/
 INSERT INTO MyTable (MyColumn1, MyColumn2) VALUES (10, 'example'); /*insert entry into table, entries can be omitted*/
@@ -233,6 +239,13 @@ UPDATE MyTable SET MyColumn1=v1 WHERE MyPK=v3;          /*update for primary key
 /*DELETE*/
 DELETE * FROM MyTable; /*or*/ DELETE FROM MyTable;  /*deletes all data, cannot be undone*/
 DELETE FROM MyTable WHERE MyColumn=value;           /*delete entry if column holds value*/
+
+/**************************************************************
+FUNCTIONS
+**************************************************************/
+
+RTRIM(MyColumn) /*removes white spaces from column name*/
+CONVERT(varchar(20), MyColumn) /*convert numeric to varchar*/
 
 /**************************************************************
  PROCEDURES

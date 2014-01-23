@@ -106,10 +106,7 @@
     <ClCompile Include="Development\Design Patterns.cpp" />
     <ClCompile Include="Development\Programming Notes.cpp" />
     <ClCompile Include="Development\Software Development.cpp" />
-    <ClCompile Include="Development\Source Control.cpp" />
-    <ClCompile Include="Development\Web Development.xml">
-      <SubType>Designer</SubType>
-    </ClCompile>
+    <ClCompile Include="Development\Web Development.cpp" />
     <ClCompile Include="Game Programming\Collisions.cpp" />
     <ClCompile Include="Game Programming\Directx.cpp" />
     <ClCompile Include="Game Programming\Lighting.cpp" />
@@ -164,6 +161,7 @@
     <ClInclude Include="Code Examples\Classes\vector3.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Images\Code - Agile Lifecycle.png" />
     <Image Include="Images\Code - Algorithms Search.png" />
     <Image Include="Images\Code - Algorithms Sort Performance.png" />
     <Image Include="Images\Code - Algorithms Sort.png" />
@@ -182,6 +180,7 @@
     <Image Include="Images\Code - STL container performance.PNG" />
     <Image Include="Images\Code - Trees Partitioning.png" />
     <Image Include="Images\Code - Trees.png" />
+    <Image Include="Images\Code - Trie.png" />
     <Image Include="Images\Code - UML Diagrams.png" />
     <Image Include="Images\Code - Web server.png" />
     <Image Include="Images\Graphics - Backface Culling.png" />

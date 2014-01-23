@@ -16,21 +16,31 @@ IN-PLACE ALGORITHM: Transforms input using a data structure with a small, consta
 STABLE SORT: Maintains the original order of equal elements
 COMPARISON SORT: Examines data only by comparing two elements with operator
 DISTRIBUTION SORT: Data is distributed to multiple intermediate structures
+         
+---------------------------------------------------------------------------------------------------------
+ARRAY SORTING     AVG SPD     SPACE    DESCRIPTION
+---------------------------------------------------------------------------------------------------------
+Quick Sort        O(NlogN)    O(N)     Comparison, Recursive, Unstable, Fastest average though can get worst speed of O(N²)
+Radix Sort        O(NK)       O(N+K)   Distribution, Can be stable, Works on arrays of numbers
+Bucket/Bin Sort   O(NK)       O(N+K)   Distribution, Can be stable, Partitions into buckets
+Heap Sort         O(NLogN)    O(1)     Comparison, In-place, Unstable, Removes top of heap and reconstructs
+Merge Sort        O(NlogN)    O(N)     Comparison, Recursive, Stable, Continually splits elements in half
+Insertion Sort    O(N²)       O(1)     Comparison, In-place, Stable, Bad for large arrays
+Selection Sort    O(N²)       O(1)     Comparison, In-place, Can be stable, Bad for large arrays
+Bubble Sort       O(N²)       O(1)     Comparison, In-place, Stable, Swaps elements, Slowest of all sorts
 
-SEARCHING ALGORITHM    AVG SPEED   AVG SPACE   STRUCTURE    DESCRIPTION
-Binary Search          O(logN)     O(1)        Array        Sorted arrays, compares the value with the middle element
-Linear Search          O(N)        O(1)        Array        Unsorted arrays, Brute force checking
-Breadth-First Search   O(N+E)      O(N)        Graph/Tree   Traverses to all children before moving down a level
-Depth-First Search     O(N+E)      O(N)        Graph/Tree   Traverses graph to the greatest depth before backtracking
-A*                     O(E)        O(N)        Graph/Tree   Pathfinding using heuristics to traverse
-                                       
-SORTING ALGORITHM      AVG SPEED   AVG SPACE   STRUCTURE    DESCRIPTION               
-Bubble Sort            O(N²)       O(1)        Array        Comparison, simple, swaps elements 
-Radix Sort             O(NK)       O(N+K)      Array        Distribution, Works on arrays of numbers, can be stable sort
-Quick Sort             O(NlogN)    O(N)        Array        Comparison, recursive, faster than other O(NlogN), works well with cache
-Merge Sort             O(NlogN)    O(N)        Array        Recursive, Stable, continually splits elements in half
+---------------------------------------------------------------------------------------------------------
+SEARCHING ALGORITHM    AVG SPD   SPACE   STRUCTURE    DESCRIPTION
+---------------------------------------------------------------------------------------------------------
+Binary Search          O(logN)   O(1)    Array        Sorted arrays, compares the value with the middle element
+Linear Search          O(N)      O(1)    Array        Unsorted arrays, Brute force checking
+Breadth-First Search   O(N+E)    O(N)    Graph/Tree   Traverses to all children before moving down a level
+Depth-First Search     O(N+E)    O(N)    Graph/Tree   Traverses graph to the greatest depth before backtracking
+A*                     O(E)      O(N)    Graph/Tree   Pathfinding using heuristics to traverse
 
+---------------------------------------------------------------------------------------------------------
 CONTAINERS         ACCESS    SEARCH    INSERT     REMOVE    DESCRIPTION
+---------------------------------------------------------------------------------------------------------
 Array              O(1)      O(N)      O(N)       O(N)      Block of continuous memory
 List               O(N)      O(N)      O(1)       O(1)      Elements scattered and linked to each other
 Stack              ---       ---       O(1)       O(1)      Last-In-First-Out

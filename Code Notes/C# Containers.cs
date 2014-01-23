@@ -69,6 +69,7 @@ builder.Append(2);
 // Array name is reference type despite the variable type it holds
 
 int[] myArray = new int[ArrayAmount] 
+int[] myArray = new int[4] { 1,2,3,4 };
 int[] myArray = new int[] { 1,2,3,4 };
 int[] myArray = { 1,2,3,4 };
 

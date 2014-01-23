@@ -109,9 +109,6 @@
     <ClCompile Include="Development\Software Development.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Development\Source Control.cpp">
-      <Filter>Development</Filter>
-    </ClCompile>
     <ClCompile Include="Game Programming\Directx.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
@@ -175,7 +172,7 @@
     <ClCompile Include="Development\Databases.sql">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Development\Web Development.xml">
+    <ClCompile Include="Development\Web Development.cpp">
       <Filter>Development</Filter>
     </ClCompile>
   </ItemGroup>
@@ -388,6 +385,9 @@
     <Image Include="Images\Shader - Texture Wrapping.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Code - Agile Lifecycle.png">
+      <Filter>Images</Filter>
+    </Image>
     <Image Include="Images\Code - Algorithms Search.png">
       <Filter>Images</Filter>
     </Image>
@@ -395,6 +395,9 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Code - Algorithms Sort.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Amdahls Law.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Code - BigONotationGraph.png">
@@ -409,13 +412,22 @@
     <Image Include="Images\Code - C++ Operator Precedence.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Code - Database Normalization.png">
+      <Filter>Images</Filter>
+    </Image>
     <Image Include="Images\Code - Design Patterns.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Entity Relationship Diagram.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Code - Execution Environment.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Code - Hex Converting.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - HTML Element.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Code - Iterators.png">
@@ -430,22 +442,13 @@
     <Image Include="Images\Code - Trees.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Code - Amdahls Law.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Entity Relationship Diagram.png">
+    <Image Include="Images\Code - Trie.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Code - UML Diagrams.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Code - Database Normalization.png">
-      <Filter>Images</Filter>
-    </Image>
     <Image Include="Images\Code - Web server.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - HTML Element.png">
       <Filter>Images</Filter>
     </Image>
   </ItemGroup>
