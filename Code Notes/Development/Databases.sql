@@ -167,6 +167,8 @@ EXTENDED PROPERTIES
 /////////////////////////////////////////////////////////////////////////////////////////////////
 • Not case sensitive- use [] if using a name that's also a keyword
 • % or * is wildcard symbol
+• Data Definition Language (DDL): Used to define the database structure, cannot be undone
+• Data Manipulation Language (DML): Used to managing data, can be undone
 */
  
 /*TYPE		           BYTES     RANGE*/
@@ -198,9 +200,9 @@ datetimeoffset    10     0001-01-01 to 9999-12-31, January 1,1 A.D. to December 
 smalldatetime     4      1900-01-01 to 2079-06-06, January 1, 1900 to June 6, 2079, 00:00:00 to 23:59:59
 datetime          8      0001-01-01 to 9999-12-31, January 1,1 AD to December 31, 9999 AD, 00:00:00 to 23:59:59.9999999
 
-/**************************************************************
- COMMANDS
-**************************************************************/
+/*****************************************************************************
+ DATA MANIPULATION LANGUAGE COMMANDS
+*****************************************************************************/
 
 /*SELECT*/
 SELECT * FROM MyTable;                      /*select all from table*/
@@ -237,21 +239,34 @@ UPDATE MyTable SET MyColumn1=v1, MyColumn2='example';   /*update all given colum
 UPDATE MyTable SET MyColumn1=v1 WHERE MyPK=v3;          /*update for primary key the column values*/
 
 /*DELETE*/
-DELETE * FROM MyTable; /*or*/ DELETE FROM MyTable;  /*deletes all data, cannot be undone*/
+DELETE * FROM MyTable; /*or*/ DELETE FROM MyTable;  /*deletes all data, can be undone though slower than TRUNCATE*/
 DELETE FROM MyTable WHERE MyColumn=value;           /*delete entry if column holds value*/
 
-/**************************************************************
+/*****************************************************************************
+ DATA DEFINITION LANGUAGE COMMANDS
+*****************************************************************************/
+
+CREATE    /*to create objects in the database*/
+ALTER     /*alters the structure of the database*/
+COMMENT   /*add comments to the data dictionary*/
+RENAME    /*rename an object*/
+
+DROP DATABASE MyDatabase  /*delete the database*/  
+DROP TABLE MyTable        /*delete the table*/  
+TRUNCATE TABLE MyTable    /*remove all records from within a table*/
+
+/*****************************************************************************
 FUNCTIONS
-**************************************************************/
+*****************************************************************************/
 
 RTRIM(MyColumn) /*removes white spaces from column name*/
 CONVERT(varchar(20), MyColumn) /*convert numeric to varchar*/
 
-/**************************************************************
+/*****************************************************************************
  PROCEDURES
  CREATE_PROCEDURE used the first time the procedure is saved
  to the database (ecomes ALTER PROCEDURE once saved
-**************************************************************/
+*****************************************************************************/
 CREATE_PROCEDURE dbo.InsertValues(@Name nvarchar(255), @DueDate datetime, @IsEnabled bit = 1)
 AS
 INSERT MyTable([Name], DueDate, Notes, IsEnabled)
