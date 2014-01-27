@@ -166,9 +166,9 @@ EXTENDED PROPERTIES
 //STRUCTURED QUERY LANGUAGE (SQL)
 /////////////////////////////////////////////////////////////////////////////////////////////////
 • Not case sensitive- use [] if using a name that's also a keyword
-• % or * is wildcard symbol
 • Data Definition Language (DDL): Used to define the database structure, cannot be undone
 • Data Manipulation Language (DML): Used to managing data, can be undone
+• Syntax chosen mostly from SQL server, other DBMS can have different
 */
  
 /*TYPE		           BYTES     RANGE*/
@@ -205,10 +205,18 @@ datetime          8      0001-01-01 to 9999-12-31, January 1,1 AD to December 31
 *****************************************************************************/
 
 /*SELECT*/
-SELECT * FROM MyTable;                      /*select all from table*/
-SELECT MyColumn1, MyColumn2 FROM MyTable;   /*select columns from table, determines reported order of columns*/
-SELECT DISTINCT MyColumn FROM MyTable;      /*select only unique entries from column*/
-SELECT * FROM MyTable WHERE MyColumn1=value ORDER BY MyColumn2;
+SELECT * FROM MyTable;                        /*select all from table*/
+SELECT MyCol1, MyCol2 FROM MyTable;           /*select columns from table, determines reported order of columns*/
+SELECT DISTINCT MyCol FROM MyTable;           /*select only unique entries from column*/
+SELECT MyCol AS MyAlias FROM MyTable;         /*display column under a different name*/
+SELECT AVG(MyCol1) AS MyAlias FROM MyTable;   /*using functions*/
+SELECT * FROM MyTable WHERE MyCol1=value ORDER BY MyCol2;
+
+/*CONCATONATION*/
+SELECT (MyCol+1.0) AS MyAlias FROM MyTable;       /*Adding values to columns, use alias as auto assigns name*/
+SELECT (MyCol1-MyCol2) AS MyAlias FROM MyTable;   /*Difference of two value columns*/
+SELECT (MyCol & 'temp') AS MyAlias FROM MyTable;  /*strings, can also use + for symbol*/
+SELECT MyCol1, (MyCol2+MyCol3) AS MyAlias FROM MyTable;
 
 /*ORDER BY*/
 .. ORDER BY MyColumn;  /*orders table by given column, default is descending*/
@@ -216,27 +224,27 @@ SELECT * FROM MyTable WHERE MyColumn1=value ORDER BY MyColumn2;
 .. ORDER BY 1,2 ASC;   /*orders by column 1 and if duplicate values, orders by column 2*/
 
 /*WHERE*/
-.. WHERE MyColumn=value;                /*select all values equal to value, strings use ''*/
-.. WHERE MyColumn<>value;               /*select all values not equal to value (can be !=)*/
-.. WHERE MyColumn BETWEEN v1 AND v2;    /*select all values between 1 and 2*/
-.. WHERE MyColumn IN (v1, v2);          /*select all values in given array of values*/
-.. WHERE MyColumn NOT IN (v1, v2);      /*select all values not in given array of values*/
-.. WHERE MyColumn LIKE 's*';            /*select all starting with letter*/
-.. WHERE MyColumn LIKE '*s';            /*select all ending with letter*/
-.. WHERE MyColumn LIKE '[ST]*';         /*select all starting with S or T*/
-.. WHERE MyColumn LIKE '*temp*';        /*select all with substring 'temp'*/
-.. WHERE MyColumn NOT LIKE '*temp*';    /*select all without substring 'temp'*/
-.. WHERE MyColumn IS NULL;              /*select all values from column that are null*/
-.. WHERE MyColumn1=v1 AND MyColumn2=v2; /*select all where both conditions are true*/
-.. WHERE MyColumn1=v1 OR MyColumn2=v2;  /*select all where one or more conditions are true*/
-.. WHERE MyColumn1=v1 AND (MyColumn2=v2 OR MyColumn3=v3);
+.. WHERE MyCol=value;                /*select all values equal to value, strings use ''*/
+.. WHERE MyCol<>value;               /*select all values not equal to value (can be !=)*/
+.. WHERE MyCol BETWEEN v1 AND v2;    /*select all values between 1 and 2*/
+.. WHERE MyCol IN (v1, v2);          /*select all values in given array of values*/
+.. WHERE MyCol NOT IN (v1, v2);      /*select all values not in given array of values*/
+.. WHERE MyCol LIKE 's*';            /*select all starting with letter, can also use % for wildcard*/
+.. WHERE MyCol LIKE '*s';            /*select all ending with letter*/
+.. WHERE MyCol LIKE '[ST]*';         /*select all starting with S or T*/
+.. WHERE MyCol LIKE '*temp*';        /*select all with substring 'temp'*/
+.. WHERE MyCol NOT LIKE '*temp*';    /*select all without substring 'temp'*/
+.. WHERE MyCol IS NULL;              /*select all values from column that are null*/
+.. WHERE MyCol1=v1 AND MyCol2=v2;    /*select all where both conditions are true*/
+.. WHERE MyCol1=v1 OR MyCol2=v2;     /*select all where one or more conditions are true*/
+.. WHERE MyCol1=v1 AND (MyCol2=v2 OR MyCol3=v3);
 
 /*INSERT*/
-INSERT INTO MyTable (MyColumn1, MyColumn2) VALUES (10, 'example'); /*insert entry into table, entries can be omitted*/
+INSERT INTO MyTable (MyCol1, MyCol2) VALUES (10, 'example'); /*insert entry into table, entries can be omitted*/
 
 /*UPDATE*/
-UPDATE MyTable SET MyColumn1=v1, MyColumn2='example';   /*update all given columns to given values*/
-UPDATE MyTable SET MyColumn1=v1 WHERE MyPK=v3;          /*update for primary key the column values*/
+UPDATE MyTable SET MyCol1=v1, MyCol2='example';   /*update all given columns to given values*/
+UPDATE MyTable SET MyCol1=v1 WHERE MyPK=v3;       /*update for primary key the column values*/
 
 /*DELETE*/
 DELETE * FROM MyTable; /*or*/ DELETE FROM MyTable;  /*deletes all data, can be undone though slower than TRUNCATE*/
@@ -255,12 +263,56 @@ DROP DATABASE MyDatabase  /*delete the database*/
 DROP TABLE MyTable        /*delete the table*/  
 TRUNCATE TABLE MyTable    /*remove all records from within a table*/
 
+/*//////////////////////////////////////////////////////////////////////////////////////////////////
+//FUNCTIONS AND PROCEDURES
+/////////////////////////////////////////////////////////////////////////////////////////////////
+*/
+
+GREATEST() /*Finds the greatest member in a series of expressions*/
+LEAST()    /*Finds the least member in a series of expressions*/
+
 /*****************************************************************************
-FUNCTIONS
+AGGREGATE FUNCTIONS: Return a single value
 *****************************************************************************/
 
-RTRIM(MyColumn) /*removes white spaces from column name*/
-CONVERT(varchar(20), MyColumn) /*convert numeric to varchar*/
+AVG(MyCol)             /*returns average in value column*/
+COUNT(MyCol)           /*number of rows in a column, null values not counted*/
+COUNT(*)               /*number of rows in table*/
+COUNT(DISTINCT MyCol)  /*number of unique rows in a column*/
+MAX(MyCol)             /*return highest number in column*/
+MIN(MyCol)             /*return lowest number in column*/
+SUM(MyCol)             /*sums values in a column*/
+
+/*****************************************************************************
+ARITHMATIC FUNCTIONS: Manipulate numeric data
+*****************************************************************************/
+
+EXP(x)     /*returns e^x*/
+MOD(x/y)   /*returns x % y*/
+SQRT(x)    /*returns Square root of x*/
+
+/*****************************************************************************
+DATE TIME FUNCTIONS
+*****************************************************************************/
+
+ADD_MONTHS()  /*Adds a number of months to a specified date*/
+LAST_DAY()    /*Returns the last day of a particular month*/
+SYSDATE()     /*Returns the date set on the computer*/
+
+/*****************************************************************************
+CHARACTER FUNCTIONS
+*****************************************************************************/
+
+LTRIM(MyCol) /*removes white spaces from left of value or column name*/
+RTRIM(MyCol) /*removes white spaces from right of value or column name*/
+REPLACE()
+LEN()       /*Returns the length of a string*/
+
+/*****************************************************************************
+CONVERSION FUNCTIONS
+*****************************************************************************/
+
+CAST(MyColumn AS nvarchar(5));
 
 /*****************************************************************************
  PROCEDURES

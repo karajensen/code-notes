@@ -31,6 +31,9 @@ DYNAMIC WEB SITE
 3) The server processes the file and runs any instructions it finds
 4) Dynamically generated html is returned to the client
 
+SANS-SERIF FONT: rounded edges of characters
+SERIF FONT: little lines on edges of characters
+
 */
 ////////////////////////////////////////////////////////////////////////////////////////////
 //HYPERTEXT MARKUP LANGUAGE (HTML)
@@ -60,11 +63,11 @@ DYNAMIC WEB SITE
     // • has a unique ID, must be unique
     // • can set properties also through style
     <MyElement class ="MyCustomClass" id = "MyID" style="visibility: hidden;"</MyElement>
-    <div class ="MyCustomClass"></div>   // Container
-    <span class="MyCustomClass"></span>  // Formatting section
-    <section></section>                  // Page divisions
-    <article></article>                  // Section of the page that contains the main content
-    <aside></aside>                      // Quotation, advertisement, sidebar
+    <div></div>         // Container
+    <span></span>       // Formatting section
+    <section></section> // Page divisions
+    <article></article> // Section of the page that contains the main content
+    <aside></aside>     // Quotation, advertisement, sidebar
     
     // LINKS
     <a href="mypage.html">MyLink</a>                       // Add Global styled Link to text
@@ -129,14 +132,17 @@ DYNAMIC WEB SITE
 //CASCADING STYLE SHEETS (CSS)
 //////////////////////////////////////////////////////////////////////////////////////////
 
-// ADDING CSS
-<link rel="stylesheet" type="text/css" href="resumestyle.css" />  // Add Stylesheet
-<style type="text/css"> div { font-family: Verdana; } </style>   // Adding CSS inside page
+// INLINE STYLING: Add CSS to individual elements within style attribute
+<div class ="MyCustomClass"></div>
 
-// CLASS
-.MyCustomClass // selector
-{ // start declaraction
-  // property:value;
+// EXTERNAL STYLE: Uses <link> to connect to extenal .CSS
+<link rel="stylesheet" type="text/css" href="resumestyle.css" />
+
+// PAGE-LEVEL STYLE: Add CSS to entire page using <style> tag
+<style type="text/css"> div { font-family: Verdana; } </style>
+
+.MyCustomClass
+{
   width: 888px;
   height: 25px;
   visibility: hidden; // visible
@@ -162,6 +168,8 @@ DYNAMIC WEB SITE
   border-style: solid;
   border-width: 1px;
   border-color: #939393;
+  border-radius: 4px; // creates rounded corners
+  box-shadow: 5px 5px gray; // create drop shadow
 
   margin: 0;
   margin-top: 0;
@@ -182,29 +190,33 @@ DYNAMIC WEB SITE
   scrollbar-shadow-color: #FF00FF;
   scrollbar-track-color: #FFAA22;  
   
-} // end declaration
+}
 
-// GLOBAL LINKS
-a         { color: #e8e8eb; text-decoration: none; } // all links
-a:link    { color: #e8e8eb; text-decoration: none; }
-a:visited { color: #e8e8eb; text-decoration: none; }
-a:hover   { color: #e8e8eb; text-decoration: none; }
-a:active  { color: #e8e8eb; text-decoration: none; }
-a:focus   { color: #e8e8eb; text-decoration: none; }
+// CLASSES
+// comma for multiple classes or else seen as contextual selector
+.MyClass, div
+{ 
+    property:value; //declaration
+}
 
-// CLASS LINKS
+//PSEUDO CLASS
+//elementSelector:pseudoclass
+a               { color: #e8e8eb; text-decoration: none; } // all links
+a:link          { color: #e8e8eb; text-decoration: none; }
+a:visited       { color: #e8e8eb; text-decoration: none; }
+a:hover         { color: #e8e8eb; text-decoration: none; }
+a:active        { color: #e8e8eb; text-decoration: none; }
+a:focus         { color: #e8e8eb; text-decoration: none; }
 a.MyClass:link  { color: #e8e8eb; text-decoration: none; }
-
-// IMAGES
-a img { border: none; }
-
-// MULTIPLE CLASSES
-// comma is important or seen as contextual selector
-a, div { }
+a img           { border: none; }
 
 // CONTEXTUAL SELECTORS
 // will only occur when <MyParent><MyChild>Testing</MyChild></MyParent>
 .MyParent .MyChild { }
+
+// UNIVERSAL SELECTORS
+// Apply properties to all elements
+* { }
 
 // ELEMENT CLASSES
 // Only be applied to a div <div class="MyClass"></div> and not a <span>
@@ -214,6 +226,12 @@ div.MyClass { }
 // Only be applied to HTML elements with an id <div id="MyID"></div>
 // ID cannot start with number, cannot use symbols
 #MyID { }
+
+// CASCADING PROPERTY
+// Properties are kept and overwritten if needed
+<MyParent><MyChild>MyBold12Text</MyChild><MyParent> // will retain bold property
+.MyParent { font-size: 48px; font-weight: bold; }
+.MyChild { font-size: 12px; }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //JAVASCRIPT
