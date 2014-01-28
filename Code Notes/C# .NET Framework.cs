@@ -284,11 +284,10 @@ using (SqlConnection connection = new SqlConnection(connectionStr))
 
 } //using() will automatically call Close()
 
-/*
 /////////////////////////////////////////////////////////////////////////////////////////
 //WINDOWS PRESENTATION FOUNDATION (WPF)
 /////////////////////////////////////////////////////////////////////////////////////////
-• Part of the .NET Framework
+/*
 • Seperates appearance from behaviour through markup (XAML) and code-behind (C#)
 • At runtime converts XAML to class instances
 • Measured with double-precision floating-point numbers rather than single-precision
@@ -296,9 +295,7 @@ using (SqlConnection connection = new SqlConnection(connectionStr))
 • Support for flow, fixed and XML Paper Specification (XPS) documents
 */
 
-//---------------------------------------------------------------------------------------
-//MARKUP (XAML)
-//---------------------------------------------------------------------------------------
+//MARKUP (XAML) ------------------------------------------------------------------------
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="MyProject.MyWindow
@@ -344,9 +341,7 @@ using (SqlConnection connection = new SqlConnection(connectionStr))
 
 </Window>
 
-//---------------------------------------------------------------------------------------
-//CODE-BEHIND (C#)
-//---------------------------------------------------------------------------------------
+//CODE-BEHIND (C#) -------------------------------------------------------------------------
 namespace MyProject
 {
     public partial class MyWindow : Window

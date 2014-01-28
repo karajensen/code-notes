@@ -31,6 +31,9 @@ NTSC: 29.97fps  525 pixel lines  720 × 486
 INTERLACE: for tvs to prevent shuttering artifacts, frame is split into two fields
 PROGRESSIVE: frame is drawn top to bottom
 
+SANS-SERIF FONT: rounded edges of characters
+SERIF FONT: little lines on edges of characters
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //TEXTURE FILTERING
 ///////////////////////////////////////////////////////////////////////////////////////////////////

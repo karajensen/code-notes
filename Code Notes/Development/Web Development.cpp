@@ -3,22 +3,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 /*
 NETWORK: Requires common language (protocol) and link (wireless or physical)
-CLIENT: Computer that initiates an exchange between another computer, connects only when required
-SERVER: Computer that receives the connection from another computer, runs continuous listening program
-CLIENT-SIDE SCRIPT: Javascript that runs on client computer
-SERVER-SIDE SCRIPT: ASP.NET, PHP that generates HTML and runs on web server
-
 ROUTER: Directs network traffic along the correct route
 TCP/IP: Network protocol that the internet uses for exchange of packets
 IP ADDRESS: Internet Protocol address, four-byte unique number for every computer connected to net
 DOMAIN NAME SYSTEM: Translates domain names (web addresses) into IP addresses
-URL: Uniform Resource Locator
-ASP.NET: Allows create of dynamic web pages
 
-HYPERTEXT TRANSFER PROTOCOL (HTTP)
-• Allows browsers to communicate with the web server
-• Uses GET method when requesting a web page
-• Uses POST method when sending data to be processed (ie. search, submit)
+CLIENT: Computer that initiates an exchange between another computer, connects only when required
+SERVER: Computer that receives the connection from another computer, runs continuous listening program
+CLIENT-SIDE SCRIPT: Javascript that runs on client computer in a static web site
+SERVER-SIDE SCRIPT: ASP.NET, PHP, Ruby on Rails that run on a web server and create a dynamic web site
 
 STATIC WEB SITE 
 1) The browser sends the GET request to the server
@@ -31,8 +24,47 @@ DYNAMIC WEB SITE
 3) The server processes the file and runs any instructions it finds
 4) Dynamically generated html is returned to the client
 
-SANS-SERIF FONT: rounded edges of characters
-SERIF FONT: little lines on edges of characters
+////////////////////////////////////////////////////////////////////////////////////////////
+//WEB SERVERS
+////////////////////////////////////////////////////////////////////////////////////////////
+
+WEB SERVER
+• Type of server for internet: Hosts websites, virtual directories, share information
+• Responds to requests for files from web clients and logs activity
+• Apache HTTP Server / Internet Information Services (IIS) most popular
+• Default protocols supported are HTTP and HTTPS
+• For each site, must have at least one application/virtual directory pair
+
+HYPERTEXT TRANSFER PROTOCOL (HTTP)
+• Allows browsers to communicate with the web server
+• Uses GET method when requesting a web page
+• Uses POST method when sending data to be processed (ie. search, submit)
+
+WEB SERVER APPLICATION
+• A group of files that delievers content over protocols
+• Application becomes part of the site URL
+
+VIRTUAL DIRECTORIES
+• Must have a virtual directory for every web server application
+• Directory name/path that maps to a physical directory with the application content
+• Becomes part of the application URL
+
+DEPLOYMENT ON IIS
+• Use Visual Studio to create a Web deployment package
+• Install package manually on server or One-Click Publish which deploys remotely in one step
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//WEB SERVICES
+////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
 
 */
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -366,3 +398,7 @@ resizable=0
 menubar=1 // display the file/edit menubar
 status=0 // display the status bar
 toolbar=1 // display the browser toolbar
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//ASP.NET
+////////////////////////////////////////////////////////////////////////////////////////////

@@ -164,7 +164,7 @@ EXTENDED PROPERTIES
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //STRUCTURED QUERY LANGUAGE (SQL)
-/////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 • Not case sensitive- use [] if using a name that's also a keyword
 • Data Definition Language (DDL): Used to define the database structure, cannot be undone
 • Data Manipulation Language (DML): Used to managing data, can be undone
@@ -224,19 +224,20 @@ SELECT MyCol1, (MyCol2+MyCol3) AS MyAlias FROM MyTable;
 .. ORDER BY 1,2 ASC;   /*orders by column 1 and if duplicate values, orders by column 2*/
 
 /*WHERE*/
-.. WHERE MyCol=value;                /*select all values equal to value, strings use ''*/
-.. WHERE MyCol<>value;               /*select all values not equal to value (can be !=)*/
-.. WHERE MyCol BETWEEN v1 AND v2;    /*select all values between 1 and 2*/
-.. WHERE MyCol IN (v1, v2);          /*select all values in given array of values*/
-.. WHERE MyCol NOT IN (v1, v2);      /*select all values not in given array of values*/
-.. WHERE MyCol LIKE 's*';            /*select all starting with letter, can also use % for wildcard*/
-.. WHERE MyCol LIKE '*s';            /*select all ending with letter*/
-.. WHERE MyCol LIKE '[ST]*';         /*select all starting with S or T*/
-.. WHERE MyCol LIKE '*temp*';        /*select all with substring 'temp'*/
-.. WHERE MyCol NOT LIKE '*temp*';    /*select all without substring 'temp'*/
-.. WHERE MyCol IS NULL;              /*select all values from column that are null*/
-.. WHERE MyCol1=v1 AND MyCol2=v2;    /*select all where both conditions are true*/
-.. WHERE MyCol1=v1 OR MyCol2=v2;     /*select all where one or more conditions are true*/
+.. WHERE MyCol=value;                        /*select all equal to value, strings use ''*/
+.. WHERE MyCol<>value;                       /*select all not equal to value (can be !=)*/
+.. WHERE MyCol BETWEEN v1 AND v2;            /*select all between 1 and 2*/
+.. WHERE MyCol IN (v1, v2);                  /*select all in given array of values*/
+.. WHERE MyCol IN (SELECT * FROM MyTable2);  /*select all that exist in Table2*/
+.. WHERE MyCol NOT IN (v1, v2);              /*select all not in given array of values*/
+.. WHERE MyCol LIKE 's*';                    /*select all starting with letter, can also use % for wildcard*/
+.. WHERE MyCol LIKE '*s';                    /*select all ending with letter*/
+.. WHERE MyCol LIKE '[ST]*';                 /*select all starting with S or T*/
+.. WHERE MyCol LIKE '*temp*';                /*select all with substring 'temp'*/
+.. WHERE MyCol NOT LIKE '*temp*';            /*select all without substring 'temp'*/
+.. WHERE MyCol IS NULL;                      /*select all values from column that are null*/
+.. WHERE MyCol1=v1 AND MyCol2=v2;            /*select all where both conditions are true*/
+.. WHERE MyCol1=v1 OR MyCol2=v2;             /*select all where one or more conditions are true*/
 .. WHERE MyCol1=v1 AND (MyCol2=v2 OR MyCol3=v3);
 
 /*INSERT*/
@@ -254,18 +255,17 @@ DELETE FROM MyTable WHERE MyColumn=value;           /*delete entry if column hol
  DATA DEFINITION LANGUAGE COMMANDS
 *****************************************************************************/
 
-CREATE    /*to create objects in the database*/
-ALTER     /*alters the structure of the database*/
-COMMENT   /*add comments to the data dictionary*/
-RENAME    /*rename an object*/
+CREATE TABLE MyTable(MyCol1 int, MyCol2 varchar(255));  /*create new table*/
+DROP DATABASE MyDatabase                                /*delete the database*/  
+DROP TABLE MyTable                                      /*delete the table*/  
+TRUNCATE TABLE MyTable                                  /*remove all records from within a table*/
+ALTER TABLE MyTable DROP COLUMN MyCol                   /*delete column in table*/
+ALTER TABLE MyTable ADD MyCol int                       /*add column to table*/
+ALTER TABLE MyTable ALTER COLUMN MyCol int              /*change datatype of column*/
 
-DROP DATABASE MyDatabase  /*delete the database*/  
-DROP TABLE MyTable        /*delete the table*/  
-TRUNCATE TABLE MyTable    /*remove all records from within a table*/
-
-/*//////////////////////////////////////////////////////////////////////////////////////////////////
+/*////////////////////////////////////////////////////////////////////////////////////////////////
 //FUNCTIONS AND PROCEDURES
-/////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 */
 
 GREATEST() /*Finds the greatest member in a series of expressions*/
