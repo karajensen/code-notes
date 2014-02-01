@@ -24,9 +24,10 @@ DYNAMIC WEB SITE
 3) The server processes the file and runs any instructions it finds
 4) Dynamically generated html is returned to the client
 
-////////////////////////////////////////////////////////////////////////////////////////////
-//WEB SERVERS
-////////////////////////////////////////////////////////////////////////////////////////////
+HYPERTEXT TRANSFER PROTOCOL (HTTP)
+• Allows browsers to communicate with the web server
+• Uses GET method when requesting a web page
+• Uses POST method when sending data to be processed (ie. search, submit)
 
 WEB SERVER
 • Type of server for internet: Hosts websites, virtual directories, share information
@@ -35,36 +36,67 @@ WEB SERVER
 • Default protocols supported are HTTP and HTTPS
 • For each site, must have at least one application/virtual directory pair
 
-HYPERTEXT TRANSFER PROTOCOL (HTTP)
-• Allows browsers to communicate with the web server
-• Uses GET method when requesting a web page
-• Uses POST method when sending data to be processed (ie. search, submit)
-
 WEB SERVER APPLICATION
 • A group of files that delievers content over protocols
 • Application becomes part of the site URL
 
 VIRTUAL DIRECTORIES
-• Must have a virtual directory for every web server application
-• Directory name/path that maps to a physical directory with the application content
-• Becomes part of the application URL
+• Directory name specified in IIS which maps to a physical directory
+  on a local server hard drive or directory on a remote server.
+• Must have a virtual directory for every web server application which becomes part of the application URL
+• Can have unlimited amount though affects performance
+• Uses an alias to shorted the address, either manually or automatically chosen
 
-DEPLOYMENT ON IIS
+WEB SERVICES
+• Allows software to connect to other software applications across the web
+• Applications access Web services via Web protocols and data formats such as HTTP, XML, SOAP
+• Connecting doesn't require knowledge about implementation of each service
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//ASP.NET
+////////////////////////////////////////////////////////////////////////////////////////////
+• Active Server Pages, Server-Side scripting language that allow dynamic building of web pages
+
+<div>
+    <%= DateTime.Now.ToString() %> // Returns the current date-time
+    <asp:Label ID="MyID" runat="server" Text='<%# Eval("Description") %>' />
+    <asp:Button ID="MyID" runat="server" Text="MyButton" />
+    <asp:TextBox ID="MyID" runat="server"></asp:TextBox>
+</div>
+
+ASP.NET OBJECTS
+• Static text: HTML, CSS, Javascript all sent directly without conversion
+• ASP.NET Server controls: Emit HTML that is inserted into the page
+• Programming code: C#, VB that is embedded or placed in seperate file known as Code Behind file
+
+HTTP HANDLERS/MODULES
+• When users request an .aspx file, the request is processed by the page through the page handler
+• Can be customised for output and recieving incoming messages (RSS feeds, Security, logging)
+• Called on every request made to the webserver for the site
+
+ASP.NET LIFECYCLE
+• 
+
+
+
+
+CLIENT-BASED STATE MANAGEMENT
+• Storing information the user inputs to the page in the client that is reinstated when page is requested
+• VIEW STATE: Hidden Dictionary object that stores the current state of page/controls
+• CONTROL STATE: Stores state of controls specifically and cannot be turned off like view state
+• HIDDEN FIELDS: Hidden element that does not render, only avaliable with HTTP POST not HTTP GET
+• COOKIES: File stored or in-memory in browser which is sent when a server request is made
+• QUERY STRING: Info appended to the end of a page URL using '?', only avaliable with HTTP GET not HTTP POST
+
+SERVER-BASED STATE MANAGEMENT
+• Storing information the user inputs to the page in the server, more costly than client-based
+• APPLICATION STATE: HttpApplicationState class, persists between browser sessions
+• SESSION STATE: HttpSessionState class scoped to the current browser session
+• PROFILE PROPERTIES: SqlProfileProvider class that allows you to store profile data in a SQL database on server
+
+DEPLOYMENT TO WEB SERVER
 • Use Visual Studio to create a Web deployment package
 • Install package manually on server or One-Click Publish which deploys remotely in one step
-
-////////////////////////////////////////////////////////////////////////////////////////////
-//WEB SERVICES
-////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
 
 */
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,17 +106,12 @@ DEPLOYMENT ON IIS
 // • Void element: cannot have content, requires no closing bracket (br, meta)
 
 <!DOCTYPE HTML>
-<html>
+<html> //begin page
   <head>
     
     <title>My Title</title>
     <link href="favicon.ico" rel="icon" />
     <meta charset="utf-8"> // character set
-    
-    // MOBILE
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">	    
 
   </head>
   <body>
@@ -94,6 +121,7 @@ DEPLOYMENT ON IIS
     // • access element via 'this.property'
     // • has a unique ID, must be unique
     // • can set properties also through style
+    // • Can use single ' or double quotes " for properties
     <MyElement class ="MyCustomClass" id = "MyID" style="visibility: hidden;"</MyElement>
     <div></div>         // Container
     <span></span>       // Formatting section
@@ -130,7 +158,7 @@ DEPLOYMENT ON IIS
     <strong></strong> // Bold 
     <em></em>         // Italic
     <small></small>   // small print
-    <br />            // Newline
+    <br />            // Newline, void element
     &nbsp;            // Space    
     
     // EVENTS
@@ -298,32 +326,33 @@ div.MyClass { }
                                      
   // ARRAYS
   myArray = new Array();
-  myArra[0] = "myEntry1"; // auto resizes
+  myArray.length 
+  myArray[0] = "myEntry1"; // auto resizes, zero-based          
 
   // CONVERSIONS
   myString = 8 + "MyString"; // Auto converts: "8MyString"
   myInt = parseInt("8");     // Returns NaN if not a number
 
-  // PAGE PROPERTIES
+  // HTML DOCUMENT OBJECT MODEL (DOM)
+  // Views html as a tree, elements must be defined above script to be seen
   screen.availWidth
   screen.availHeight
   document.bgColor = "#000000";
-  document.write("MyText<b>InBold</b>");  // Adds the text where the <script></script> is positioned
-  document.lastModified;                  // Text for when the page was last modified
-  document.title;                         // Title of the page
-
-  // PAGE ELEMENT PROPERTIES
-  // Elements must be defined above script to be seen
-  myElement = document.getElementById("MyElementID"); // Returns null if element doesn't exist
-  myElement.innerText    // OR MyElementID.innerText
-  myElement.bgColor;     // can read/write all properties of element
-  myElement.style.width; // access properties declared in <style></style> tags
+  document.write("MyText<b>InBold</b>");    // Adds the text where the <script></script> is positioned
+  document.lastModified;                    // Text for when the page was last modified
+  document.title;                           // Title of the page
+  document.getElementById("MyElementID");   // Returns element by its ID or null if doesn't exist
+  document.getElementByName("MyElName");    // Returns element by its name or null if doesn't exist
+  document.getElementsByTagName("MyElTag"); // Returns element by its tag or null if doesn't exist
+  myElement.innerText                       // OR MyElementID.innerText
+  myElement.bgColor;                        // can read/write all properties of element
+  myElement.style.width;                    // access properties declared in <style></style> tags
 
   // FUNCTION DEFINITION
   function MyFunction(myString, myArg)
   {
-  var localInt = 10;    // Local to function scope, without becomes global
-  return myArg + myint; // All global variables avaliable
+    var localInt = 10;    // Local to function scope, without becomes global
+    return myArg + myint; // All global variables avaliable
   }
   myArg = MyFunction("MyText", 5);
 
@@ -398,7 +427,3 @@ resizable=0
 menubar=1 // display the file/edit menubar
 status=0 // display the status bar
 toolbar=1 // display the browser toolbar
-
-////////////////////////////////////////////////////////////////////////////////////////////
-//ASP.NET
-////////////////////////////////////////////////////////////////////////////////////////////

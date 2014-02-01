@@ -8,6 +8,7 @@ ROW: Row of individual records
 COLUMN: Attributes/category
 CONTROLS: Constraints, triggers, defaults, and customized user data types
 SNAPSHOT: Read-only, static view of a database
+SUBQUERY: Connect one or more queries together; query more than one table at a time
 
 COLUMN TYPES
 • Raw data columns store specific data
@@ -205,30 +206,23 @@ datetime          8      0001-01-01 to 9999-12-31, January 1,1 AD to December 31
 *****************************************************************************/
 
 /*SELECT*/
-SELECT * FROM MyTable;                        /*select all from table*/
-SELECT MyCol1, MyCol2 FROM MyTable;           /*select columns from table, determines reported order of columns*/
-SELECT DISTINCT MyCol FROM MyTable;           /*select only unique entries from column*/
-SELECT MyCol AS MyAlias FROM MyTable;         /*display column under a different name*/
-SELECT AVG(MyCol1) AS MyAlias FROM MyTable;   /*using functions*/
-SELECT * FROM MyTable WHERE MyCol1=value ORDER BY MyCol2;
-
-/*CONCATONATION*/
+SELECT * FROM MyTable;                            /*select all from table*/
+SELECT MyCol1, MyCol2 FROM MyTable;               /*select columns from table, determines reported order of columns*/
+SELECT DISTINCT MyCol FROM MyTable;               /*select only unique entries from column*/
+SELECT MyCol AS MyAlias FROM MyTable;             /*display column under a different name*/
 SELECT (MyCol+1.0) AS MyAlias FROM MyTable;       /*Adding values to columns, use alias as auto assigns name*/
 SELECT (MyCol1-MyCol2) AS MyAlias FROM MyTable;   /*Difference of two value columns*/
 SELECT (MyCol & 'temp') AS MyAlias FROM MyTable;  /*strings, can also use + for symbol*/
+SELECT MyTable.MyColumn FROM MyTable;			  /*qualification of column names*/
 SELECT MyCol1, (MyCol2+MyCol3) AS MyAlias FROM MyTable;
 
-/*ORDER BY*/
-.. ORDER BY MyColumn;  /*orders table by given column, default is descending*/
-.. ORDER BY 1 DESC;    /*orders table by column number 1*/
-.. ORDER BY 1,2 ASC;   /*orders by column 1 and if duplicate values, orders by column 2*/
-
 /*WHERE*/
+/*filters individual rows of data*/
 .. WHERE MyCol=value;                        /*select all equal to value, strings use ''*/
 .. WHERE MyCol<>value;                       /*select all not equal to value (can be !=)*/
 .. WHERE MyCol BETWEEN v1 AND v2;            /*select all between 1 and 2*/
 .. WHERE MyCol IN (v1, v2);                  /*select all in given array of values*/
-.. WHERE MyCol IN (SELECT * FROM MyTable2);  /*select all that exist in Table2*/
+.. WHERE MyCol IN (SELECT * FROM MyTable2);  /*select all that exist in Table2 (Subquery)*/
 .. WHERE MyCol NOT IN (v1, v2);              /*select all not in given array of values*/
 .. WHERE MyCol LIKE 's*';                    /*select all starting with letter, can also use % for wildcard*/
 .. WHERE MyCol LIKE '*s';                    /*select all ending with letter*/
@@ -239,6 +233,28 @@ SELECT MyCol1, (MyCol2+MyCol3) AS MyAlias FROM MyTable;
 .. WHERE MyCol1=v1 AND MyCol2=v2;            /*select all where both conditions are true*/
 .. WHERE MyCol1=v1 OR MyCol2=v2;             /*select all where one or more conditions are true*/
 .. WHERE MyCol1=v1 AND (MyCol2=v2 OR MyCol3=v3);
+
+/*ORDERING*/
+/*sort individual rows of data*/
+.. ORDER BY MyColumn;   /*orders rows by given column, default is descending*/
+.. ORDER BY 1 DESC;     /*orders rows by column number 1*/
+.. ORDER BY 1,2 ASC;    /*orders by column 1 and if duplicate values, orders by column 2*/
+.. WHERE .. ORDER BY .. /*after WHERE or standalone*/
+
+/*GROUPING*/
+/*• sort groups of data calculated by an aggregate function
+  • When using one or more aggregate function, must have group by
+  • All column names except names used in aggregate/alias must be in GROUP BY clause*/
+SELECT Count(MyColumn1), MyColumn2 FROM MyTable GROUP BY MyColumn2
+
+/*GROUP FILTERING*/
+/*filters groups of data calculated by an aggregate function*/
+.. GROUP BY .. HAVING Count(MyColumn1) > 2
+
+/*SUBQUERIES*/
+SELECT MyTable2.C1, MyTable2.C2, 
+(SELECT MIN(MyTable1.C1) FROM MyTable1 WHERE MyTable1.ID = MyTable2.ID) AS MyAlias
+FROM MyTable2 ORDER BY MyTable2.C2
 
 /*INSERT*/
 INSERT INTO MyTable (MyCol1, MyCol2) VALUES (10, 'example'); /*insert entry into table, entries can be omitted*/
@@ -276,9 +292,9 @@ AGGREGATE FUNCTIONS: Return a single value
 *****************************************************************************/
 
 AVG(MyCol)             /*returns average in value column*/
+AVG(DISTINCT MyCol)    /*only use unique values for function*/
 COUNT(MyCol)           /*number of rows in a column, null values not counted*/
 COUNT(*)               /*number of rows in table*/
-COUNT(DISTINCT MyCol)  /*number of unique rows in a column*/
 MAX(MyCol)             /*return highest number in column*/
 MIN(MyCol)             /*return lowest number in column*/
 SUM(MyCol)             /*sums values in a column*/
@@ -295,9 +311,8 @@ SQRT(x)    /*returns Square root of x*/
 DATE TIME FUNCTIONS
 *****************************************************************************/
 
-ADD_MONTHS()  /*Adds a number of months to a specified date*/
-LAST_DAY()    /*Returns the last day of a particular month*/
-SYSDATE()     /*Returns the date set on the computer*/
+DATEPART('yyyy', MyCol) /*returns a numeric date of year, uses date datatype*/
+SYSDATE()               /*Returns the date set on the computer*/
 
 /*****************************************************************************
 CHARACTER FUNCTIONS
