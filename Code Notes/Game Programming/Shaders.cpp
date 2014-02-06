@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////
-//SHADER VARIABLES
+//SHADERS
 //////////////////////////////////////////////////////////////////////////////
 
 //GLSL VARIABLE TYPES
@@ -9,6 +9,14 @@ float, int, vec2, vec3, vec4, mat3, mat4, half
 //HLSL VARIABLE TYPES
 //Sections can be accessed via xyzw/rgba
 float, int, float2, float3, float4, float4x4, half
+
+//SHADER REGISTERS
+//Constant registers: lower-latency access and more frequent updates from the CPU
+//Texture registers: perform better for arbitrarily indexed data
+//shader model 2.0 allows 256 constant registers. Application itself will use some of these
+float myFloat; //each register is a float4 (float, float2 etc will take up whole register)
+float myArray[100] //to save space, pack arrays as float4
+float4 myArray[25]; float data = myArray[index/4][index%4];
 
 //////////////////////////////////////////////////////////////////////////////
 //GLSL SHADER INTRINSICS

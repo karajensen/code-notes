@@ -74,12 +74,6 @@ HTTP HANDLERS/MODULES
 • Can be customised for output and recieving incoming messages (RSS feeds, Security, logging)
 • Called on every request made to the webserver for the site
 
-ASP.NET LIFECYCLE
-• 
-
-
-
-
 CLIENT-BASED STATE MANAGEMENT
 • Storing information the user inputs to the page in the client that is reinstated when page is requested
 • VIEW STATE: Hidden Dictionary object that stores the current state of page/controls
@@ -97,6 +91,35 @@ SERVER-BASED STATE MANAGEMENT
 DEPLOYMENT TO WEB SERVER
 • Use Visual Studio to create a Web deployment package
 • Install package manually on server or One-Click Publish which deploys remotely in one step
+
+=========================================================================================================
+ASP.NET LIFECYCLE
+=========================================================================================================
+
+1) INSTANTIATION
+• Webserver recieves page request and passes it to ASP.NET engine
+• ASP.NET auto-generates html and the control hierarchy from the server .aspx page if needed
+• Auto generated html stored in temporary folder so it doesn't need to be regenerated for every page request
+
+2) INITIALIZATION
+• Page and controls fire their Init events, controls UniqueID is set
+
+3) LOAD VIEW STATE
+• View state data saved from the previous page visit is loaded and recursively populated into the control hierarchy
+• View state data is validated to ensure no tampering or dynamic control injection
+
+4) LOAD POSTBACK DATA
+
+5) LOAD PAGE
+
+6) RAISE POSTBACK EVENT
+
+7) SAVE VIEW STATE
+
+8) RENDER
+
+9) UNLOAD
+• Page properties (Response, Request) are unloaded and cleanup occurs
 
 */
 ////////////////////////////////////////////////////////////////////////////////////////////

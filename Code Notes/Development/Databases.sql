@@ -251,6 +251,20 @@ SELECT Count(MyColumn1), MyColumn2 FROM MyTable GROUP BY MyColumn2
 /*filters groups of data calculated by an aggregate function*/
 .. GROUP BY .. HAVING Count(MyColumn1) > 2
 
+/*INNER JOIN*/
+/*joins two seperate tables; outputs duplicated columns*/
+SELECT * FROM MyTable1, MyTable2 WHERE MyTable1.ID = MyTable2.ID;
+
+/*NATURAL JOIN*/
+/*joins two seperate tables; output prevents duplicated columns*/
+SELECT * FROM MyTable1, MyTable2 WHERE MyTable1.ID = MyTable2.ID;
+
+/*SELF JOIN*/
+/*joins same table together, must use aliases*/
+SELECT T1.MyCol1, T2.MyCol2
+FROM MyTable1 AS T1, MyTable2 AS T2
+WHERE T1.ID = T2.ID AND T1.Col1 != T2.Col2;
+
 /*SUBQUERIES*/
 SELECT MyTable2.C1, MyTable2.C2, 
 (SELECT MIN(MyTable1.C1) FROM MyTable1 WHERE MyTable1.ID = MyTable2.ID) AS MyAlias
@@ -349,3 +363,20 @@ CREATE_PROCEDURE dbo.GetValues
 AS
 SELECT * FROM  MyTable
 RETURN
+
+/*
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//ACTIVEX DATA OBJECTS (ADO)
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+• Programming interface to access data in a database for websites
+
+ACCESSING DATA FROM ASP.NET PAGE
+1) Create an ADO connection to a database
+2) Open the database connection
+3) Create an ADO recordset
+4) Open the recordset
+5) Extract the data you need from the recordset
+6) Close the recordset
+7) Close the connection
+
