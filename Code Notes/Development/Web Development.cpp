@@ -48,9 +48,8 @@ VIRTUAL DIRECTORIES
 • Uses an alias to shorted the address, either manually or automatically chosen
 
 WEB SERVICES
-• Allows software to connect to other software applications across the web
-• Applications access Web services via Web protocols and data formats such as HTTP, XML, SOAP
-• Connecting doesn't require knowledge about implementation of each service
+• Service that constantly runs on a web server which provides libraries other web applications can access
+• Accessed through web protocols/data formats HTTP, XML, SOAP
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //ASP.NET
