@@ -367,9 +367,9 @@ BITWISE OPERATORS
 
 USING WITH BOOL
 bool ifBothAreTrue   = myBool1 & myBool2
-bool ifEitherAreTrue = myBool1 | myBool2
-bool ifEitherAreTrue = myBool1 ^ myBool2
-bool failed |= HasCallFailed()
+bool ifEitherAreTrue = myBool1 | myBool2 (either are true)
+bool ifEitherAreTrue = myBool1 ^ myBool2 (either are true but not both)
+bool failed = false; failed |= HasCallFailed()
 
 USING  WITH BITS
 Flipping bits:     ~00000011 = 11111100

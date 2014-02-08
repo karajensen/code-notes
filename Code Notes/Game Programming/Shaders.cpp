@@ -1,45 +1,174 @@
-////////////////////////////////////////////////////////////////////////////////////////////
+﻿//////////////////////////////////////////////////////////////////////////////////////////////////////
 //SHADERS
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+-----------------------------------------------------------------------------------------------------
+GLSL SHADER               HLSL SHADER    DESCRIPTION
+-----------------------------------------------------------------------------------------------------
+Vertex                    Vertex         Outputs data for each vertex in mesh
+Tessellation Control  	  Hull           Outputs control point data for surfaces
+Tessellation Evaluation   Domain         Outputs vertex data from tessellation generator/control points
+Geometry                  Geometry       Takes in single primitive, outputs none or more primitives
+Fragment                  Pixel          Outputs data for each pixel mesh may contribute to
+Compute                   Compute        General-purpose data-parallel processing  
 
-//GLSL VARIABLE TYPES
-//Sections can be accessed via xyzw/rgba
-float, int, vec2, vec3, vec4, mat3, mat4, half
+-----------------------------------------------------------------------------------------------------
+GRAPHICS API   MODEL   FEATURES          
+-----------------------------------------------------------------------------------------------------
+DirectX 8.0    1.0    HLSL introduced
+DirectX 9.0    2.0    Static flow control
+DirectX 9.0c   3.0    Vertex texture lookup, Position/Face/Loop counter/Index input registers
+DirectX 10.0   4.0    Geometry shaders, Bit operators, native integers
+DirectX 11.0   5.0    Domain/Hull shaders, Compute shaders
+OpenGL 2.1     120    GLSL introduced
+OpenGL 3.2     150    Geometry shaders   
+OpenGL 4.0     400    Both Tessellation shaders
+OpenGL 4.3     430    Compute Shaders
 
-//HLSL VARIABLE TYPES
-//Sections can be accessed via xyzw/rgba
-float, int, float2, float3, float4, float4x4, half
+-----------------------------------------------------------------------------------------------------
+SHADER MODEL    ConstantReg.  TempReg.  InstructSlots  Textures
+-----------------------------------------------------------------------------------------------------
+HLSL vs1.0      96            12        128            -
+HLSL vs2.0      256           12        256            -
+HLSL vs3.0      256           32        512            
+HLSL vs4.0      65536         4096      4096           
+HLSL vs5.0      65536         4096      4096           
+HLSL ps1.0      8             2         12             4-6
+HLSL ps2.0      32            32        96             16
+HLSL ps3.0      224           32        512            16
+HLSL ps4.0      65536         4096      ∞              16
+HLSL ps5.0      65536         4096      ∞              16
 
-//SHADER REGISTERS
-//Constant registers: lower-latency access and more frequent updates from the CPU
-//Texture registers: perform better for arbitrarily indexed data
-//shader model 2.0 allows 256 constant registers. Application itself will use some of these
+SHADER REGISTERS
+• Constant registers: lower-latency access and more frequent updates from the CPU
+• Texture registers: perform better for arbitrarily indexed data
+• Maximum allowed registers may be less- shader itself internally uses some
+
+SHADER SAMPLERS
+• HLSL 3.0-: Textures/samplers bound to each other
+• HLSL 4.0+: Textures/samplers seperate objects
+
+SWIZZLING: Using x/y/z/w to refer to each component
+SWIZZLE MASK: Combining components (.xy, .xyz, .xx)
+TESSELLATION: Converts low-detail subdivision surfaces into higher-detail primitives
+
+*/
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//SHADER COMPONENTS
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//VERTEX INPUT REGISTERS
+v0-v15     // Input register: sends vertex data (position,UVs,normals)
+r0-r11     // Temp register: holds temporary data/results
+c0-c255    // Constant float register: variables sent into the shader
+a0         // Address register           
+b0-b15     // Constant boolean register: store results of logic flow
+i0-i15     // Constant integer register: used by loop/rep 
+aL         // Loop counter register: store loop counter
+
+//VERTEX OUTPUT REGISTERS                   
+oPos       // Position register: outputs position
+oFog       // Fog register: outputs fog value
+oPts       // Point size register: determines how each reg behaves
+oD0-oD1    // Color register: 0 is diffuse, 1 is specular output
+oT0-oT8    // Tex coordinate register: outputs texture coordinates       
+
+//PIXEL INPUT REGISTERS
+v0-v1      // Input color register: vertex color passed in
+r0-r12/32  // Temp register: holds temporary datas
+c0-c255    // Constant float register: variables sent into the shader
+b0-b15     // Constant boolean register: store results of logic flow
+i0-i15     // Constant integer register: used by loop/rep 
+t0-t07     // Tex coordinate register: contains texture coordinates
+s0-s15     // Sampler register: stores texture file to sample
+p0         // Predicate register
+
+//PIXEL OUTPUT REGISTERS
+oC0-3      // Output color register: determines which render target color outputs to
+oDepth     // Output depth register: outputs a depth value used with testing
+
+//CONSTANT REGISTER PACKING
 float myFloat; //each register is a float4 (float, float2 etc will take up whole register)
 float myArray[100] //to save space, pack arrays as float4
-float4 myArray[25]; float data = myArray[index/4][index%4];
 
-////////////////////////////////////////////////////////////////////////////////////////////
-//OPTIMISATIONS
-////////////////////////////////////////////////////////////////////////////////////////////
+//HLSL 4.0+ CONSTANT REGISTER PACKING
+//Uses cbuffer which automatically packs floats into float4 where possible
+cbuffer
+{
+    float2 myFloat;
+    float myFloat;
+    //float padding
+    float3 myFloat;
+    float myArray[10]; //always assigns full float4 for arrays with last entry only float 
+}
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//SHADER OPTIMIZATIONS
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//ASSEMBLY INSTRUCTIONS
+dp4 dest, src0, src01   // float4 dot product
+mov dest, src           // move source to destination
+dcl_2d s0               // Declare a pixel shader sampler.
+texld dst, src0, src1   // Sample from a texture
+dcl_position v0         // Passing in vertex position
+dcl_texcoord v1         // Passing in vertex textcoord
+mov oT0.xy, v1          // Saving UVs in vertex shader
+dcl t0.xy               // Retrieving UVs in pixel shader
+texld r0, t0, s0        // Sample from a texture
+mov oC0, r0             // Send final color in pixel shader
 
+//PACKING ARRAYS AS FLOAT4
+//arrays are always packed as float4 even if only using a float
+//saves space but can have instruction cost accessing members
+float4 myArray[25]; //float myARray[100];
+float value = myArray[index/4][index%4];  // Accessing through computation
+float value = myArray[index>>2][index&3];
+float myArr[100] = (float[100])myArray;   // Does not cast: copies and ineffeciant!
 
+//SAVING SPACE THROUGH CONSTANT CONTAINER
+//commonly used constants can be cached
+const float4 constants = float4(1.0, 0.0, 0.5, 0.2)
 
+//SUMMING VECTOR COMPONENTS
+float sum = myFlt.x + myFlt.y + myFlt.z + myFlt.w; // inefficient
+const float4 allOne = vec4(1.0); // faster to use dot to sum
+float sum = dot(myFlt4, allOne); 
+float sum = dot(myFlt3, allOne.xyz);
 
+//MAD (MULTIPLY THEN ADD)
+//usually single-cyle and fast
+float4 result = (value / 2.0) + 1.0; // divide may not be optimized to a mad
+float4 result = (value * 0.5) + 1.0; // always use multiply in case
+float result = 0.5 * (1.0 + value);  // add + multiply may not be optimized to a mad
+float result = 0.5 + (0.5 * value);  // always use multiply first then add
 
+//SWIZZLE MASKS
+gl_Position.x = in_pos.x; 
+gl_Position.y = in_pos.y;
+gl_Position.xy = in_pos.xy; // faster than adding both seperately
 
+//SETTING INDIVIDUAL COMPONENTS
+float4 finalColour = myColor; //uses temporary float4
+finalColour.a = 1.0;
+gl_FragColor = finalColour; 
+const float2 constants = float2(1.0, 0.0); //instead, use MAD, swizzling and constat container
+gl_FragColor = (myColor.xyzw * constants.xxxy) + constants.yyyx;
 
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 //GLSL SHADER INTRINSICS
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//VARIABLE TYPES
+//Sections can be accessed via xyzw/rgba
+float, int, vec2, vec3, vec4, mat3, mat4, half
 
 mix(a,b,c)              // c == 0 ? a : b, interpolates for other values
 step(a,b)               // a > b ? 0.0 : 1.0
 length(vector)          // Length of a vector
 texture2D(Sampler, uvs) // Query from a texture
 normalize(vector)       // Normalizes a vector
-pow(1.0f, 3.0f)         // Calculates 1�
+pow(1.0f, 3.0f)         // Calculates 1³
 max(a,b)                // Chooses max of a and b
 dot(a,b)                // Dots two vectors
 abs(a)                  // magnitude of value
@@ -69,14 +198,18 @@ float constantAttenuation;
 float linearAttenuation;   
 float quadraticAttenuation;
 
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 //HLSL SHADER INTRINSICS
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//VARIABLE TYPES
+//Sections can be accessed via xyzw/rgba
+float, int, float2, float3, float4, float4x4, half
 
 mul()             // Multiplies two matrices
 sin()             // Calculates sine of an angle (in radians).
 cos()             // Calculates cosine of an angle (in radians).
-pow(1.0f, 3.0f)   // Calculates 1�
+pow(1.0f, 3.0f)   // Calculates 1³
 normalize()       // Normalizes a vector
 max(x,y)          // Selects max of x and y
 reflect()         // Calculates the ref vector, based on the pos of the camera.
@@ -86,9 +219,9 @@ float4x4 World                 : World;
 float4x4 WorldViewProjection   : WorldViewProjection;
 float4x4 WorldInvTrans         : WorldInverseTranspose;
 
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 //TEXTURING
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //HLSL
 Texture DiffuseTexture;
@@ -107,9 +240,9 @@ float4 Texture = tex2D(TextureSampler, input.UV);
 uniform sampler2D TextureSampler;
 vec4 Texture = texture2D(TextureSampler, gl_TexCoord[0].st);
 
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 //NORMAL MAPPING
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //HLSL TANGENT SPACE NORMAL MAPPING (red/blue)
 float3 bump = bumpdepth*(tex2D(BumpSampler, input.UV).rgb - 0.5)
@@ -123,17 +256,17 @@ input.Normal = normalize(bump);
 vec3 bump = bumpdepth*(texture2D(BumpSampler, gl_TexCoord[0].st).xyz - 0.5);
 vec3 normNormal = normalize(Normal + bump.x*Tangent + bump.y*Binormal);
                         
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 //ATTENUATION
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //HLSL
 float d = length(LightPos);                
 float4 Attenuation = (1.0 / (att0 + att1*d + att2*d*d));  
 
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 //DIFFUSE
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
  //HLSL
  float4 diffuse = (dot(input.LightVector, input.Normal) + 1.0) * 0.5; 
@@ -143,9 +276,9 @@ float4 Attenuation = (1.0 / (att0 + att1*d + att2*d*d));
  vec4 diffuse = (dot(lightVector, normNormal) + 1.0) * 0.5;
  diffuse *= intensity * gl_LightSource[i].diffuse * attenuation;
 
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 //SPECULAR
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 //Size: Size of highlights (higher = smaller)
 //Brightness: Brightness of the highlights (higher = brighter)
    
@@ -165,9 +298,9 @@ vec3 halfVector = normalize(lightVector + normalize(-WorldViewPos));
 specular = pow(max(dot(normNormal, halfVector),0.0), specularSize); 
 specular *= gl_LightSource[i].specular * specularTexture * attenuation;
 
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 //REFLECTIONS/REFRACTIONS
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //HLSL
 float3 ReflectionVector = reflect(-input.CameraVector, input.Normal)
@@ -175,9 +308,9 @@ float4 Reflection = texCUBE(EnvironSampler, ReflectionVector)
 float3 RefractionVector = refract(-input.CameraVector, input.Normal, RI)
 float4 Refractions = texCUBE(EnvironSampler, RefractionVector)           
 
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 //GLSL SHADER BODY
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //VERTEX SHADER
 //uniform = specific to vertex
@@ -212,9 +345,9 @@ void main()
     gl_FragColor = texture2D(Sampler0, gl_TexCoord[0].st);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 //HLSL SHADER BODY
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 float4x4 World                  : World;
 float4x4 WorldViewProjection    : WorldViewProjection;
@@ -290,49 +423,3 @@ technique MAIN
         PixelShader = compile ps_3_0 PShader();
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////
-//SHADER ASSEMBLY
-////////////////////////////////////////////////////////////////////////////////////////////
-
-//VERTEX INPUT REGISTERS
-v0-v15    // INPUT REGISTER: sends vertex data (position,UVs,normals)
-r0-r11    // TEMP REGISTER: holds temporary data/results
-c0-c255   // CONSTANT FLOAT REGISTER: variables sent into the shader
-a0        // ADDRESS REGISTER           
-b0-b15    // CONSTANT BOOLEAN REGISTER: store results of logic flow
-i0-i15    // CONSTANT INTEGER REGISTER: used by loop/rep 
-aL        // LOOP COUNTER REGISTER: store loop counter
-
-//PIXEL INPUT REGISTERS
-v0-v1      // INPUT COLOR REGISTER: vertex color passed in
-r0-r12/32  // TEMP REGISTER: holds temporary datas
-c0-c255    // CONSTANT FLOAT REGISTER: variables sent into the shader
-b0-b15     // CONSTANT BOOLEAN REGISTER: store results of logic flow
-i0-i15     // CONSTANT INTEGER REGISTER: used by loop/rep 
-t0-t07     // TEX COORDINATE REGISTER: contains texture coordinates
-s0-s15     // SAMPLER REGISTER: stores texture file to sample
-p0         // PREDICATE REGISTER
-
-//VERTEX OUTPUT REGISTERS                   
-oPos       // POSITION REGISTER: outputs position
-oFog       // FOG REGISTER: outputs fog value
-oPts       // POINT SIZE REGISTER: determines how each reg behaves
-oD0-oD1    // COLOR REGISTER: 0 is diffuse, 1 is specular output
-oT0-oT8    // TEX COORDINATE REGISTER: outputs texture coordinates          
-
-//PIXEL OUTPUT REGISTERS
-oC0-3      // OUTPUT COLOR REGISTER: determines which render target color outputs to
-oDepth     // OUTPUT DEPTH REGISTER: outputs a depth value used with testing
-
-//INSTRUCTIONS
-dp4 dest, src0, src01   // float4 dot product
-mov dest, src           // move source to destination
-dcl_2d s0               // Declare a pixel shader sampler.
-texld dst, src0, src1   // Sample from a texture
-dcl_position v0         // Passing in vertex position
-dcl_texcoord v1         // Passing in vertex textcoord
-mov oT0.xy, v1          // Saving UVs in vertex shader
-dcl t0.xy               // Retrieving UVs in pixel shader
-texld r0, t0, s0        // Sample from a texture
-mov oC0, r0             // Send final color in pixel shader

@@ -55,57 +55,21 @@ SUSPECT             Recovery of file failed; if lives in primary filegroup, data
 DEFUNCT             The file was dropped when it was not online
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//TYPES OF DATABASES
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-RELATIONAL DATABASE
-• Two or more two-dimensional tables that are related to one another
-
-OLTP DATABASE
-• Online Transaction Processing relational database
-• Support large numbers of concurrent users who are regularly adding and modifying data
-• Complex and contain lots of data
-• Individual transactions are completed quickly and access relatively small amounts of data
-• Used in businesses and websites
-
-DATA WAREHOUSE
-• Organize lots of stable data for ease of analysis and retrieval
-• Provide stable data that represents business history
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
 //SYSTEM DATABASES
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 SQL SERVER
 • Database management system (DBMS) containing 5 system databases that are used to manage user-created databases
 • Maximum of 32,767 databases can be created on an instance of SQL Server
-• To create databases, must have CREATE DATABASE, CREATE ANY DATABASE or ALTER ANY DATABASE permissions
-• System databases cannot perform operations:
-    - Changing the database owner
-    - Dropping the database
-    - Dropping the guest user from the database
-    - Enabling change data capture
-    - Participating in database mirroring
-    - Removing the primary filegroup, primary data file, or log file
-    - Renaming the database or primary filegroup
-    - Setting the database to OFFLINE
-    - Setting the primary filegroup to READ_ONLY
 
 MASTER DATABASE
 • Records all the system-level information for an instance of SQL Server
 • Logon accounts, endpoints, linked servers, system configuration settings
 • Records location of all other databases
-• Cannot perform operations:
-    - Adding files or filegroups
-    - Creating a full-text catalog or full-text index
-    - Creating triggers on system tables in the database
-    - Setting the database to READ_ONLY
 
 MODEL DATABASE
 • Template for all databases created
 • For any changes all databases created afterward will inherit those changes
-• Cannot perform operations:
-    - Adding files or filegroups
     
 MSDB DATABASE
 • Scheduling alerts, mail and jobs
@@ -118,11 +82,6 @@ TEMPDB
 • Global resource that is available to all users connected to the instance of SQL Server
 • Holds temporary objects such as global and local temporary tables and stored procedures
 • Recreated every time SQL Server starts
-• Cannot perform operations:
-    - Adding filegroups
-    - Creating a full-text catalog or full-text index
-    - Creating triggers on system tables in the database
-    - Setting the database to READ_ONLY
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //DATABASE DESIGN
@@ -216,6 +175,17 @@ SELECT (MyCol & 'temp') AS MyAlias FROM MyTable;  /*strings, can also use + for 
 SELECT MyTable.MyColumn FROM MyTable;			  /*qualification of column names*/
 SELECT MyCol1, (MyCol2+MyCol3) AS MyAlias FROM MyTable;
 
+/*INSERT*/
+INSERT INTO MyTable (MyCol1, MyCol2) VALUES (10, 'example'); /*insert entry into table, entries can be omitted*/
+
+/*UPDATE*/
+UPDATE MyTable SET MyCol1=v1, MyCol2='example';   /*update all given columns to given values*/
+UPDATE MyTable SET MyCol1=v1 WHERE MyPK=v3;       /*update for primary key the column values*/
+
+/*DELETE*/
+DELETE * FROM MyTable; /*or*/ DELETE FROM MyTable;  /*deletes all data, can be undone though slower than TRUNCATE*/
+DELETE FROM MyTable WHERE MyColumn=value;           /*delete entry if column holds value*/
+
 /*WHERE*/
 /*filters individual rows of data*/
 .. WHERE MyCol=value;                        /*select all equal to value, strings use ''*/
@@ -251,35 +221,10 @@ SELECT Count(MyColumn1), MyColumn2 FROM MyTable GROUP BY MyColumn2
 /*filters groups of data calculated by an aggregate function*/
 .. GROUP BY .. HAVING Count(MyColumn1) > 2
 
-/*INNER JOIN*/
-/*joins two seperate tables; outputs duplicated columns*/
-SELECT * FROM MyTable1, MyTable2 WHERE MyTable1.ID = MyTable2.ID;
-
-/*NATURAL JOIN*/
-/*joins two seperate tables; output prevents duplicated columns*/
-SELECT * FROM MyTable1, MyTable2 WHERE MyTable1.ID = MyTable2.ID;
-
-/*SELF JOIN*/
-/*joins same table together, must use aliases*/
-SELECT T1.MyCol1, T2.MyCol2
-FROM MyTable1 AS T1, MyTable2 AS T2
-WHERE T1.ID = T2.ID AND T1.Col1 != T2.Col2;
-
 /*SUBQUERIES*/
 SELECT MyTable2.C1, MyTable2.C2, 
 (SELECT MIN(MyTable1.C1) FROM MyTable1 WHERE MyTable1.ID = MyTable2.ID) AS MyAlias
 FROM MyTable2 ORDER BY MyTable2.C2
-
-/*INSERT*/
-INSERT INTO MyTable (MyCol1, MyCol2) VALUES (10, 'example'); /*insert entry into table, entries can be omitted*/
-
-/*UPDATE*/
-UPDATE MyTable SET MyCol1=v1, MyCol2='example';   /*update all given columns to given values*/
-UPDATE MyTable SET MyCol1=v1 WHERE MyPK=v3;       /*update for primary key the column values*/
-
-/*DELETE*/
-DELETE * FROM MyTable; /*or*/ DELETE FROM MyTable;  /*deletes all data, can be undone though slower than TRUNCATE*/
-DELETE FROM MyTable WHERE MyColumn=value;           /*delete entry if column holds value*/
 
 /*****************************************************************************
  DATA DEFINITION LANGUAGE COMMANDS
@@ -297,9 +242,6 @@ ALTER TABLE MyTable ALTER COLUMN MyCol int              /*change datatype of col
 //FUNCTIONS AND PROCEDURES
 //////////////////////////////////////////////////////////////////////////////////////////////////
 */
-
-GREATEST() /*Finds the greatest member in a series of expressions*/
-LEAST()    /*Finds the least member in a series of expressions*/
 
 /*****************************************************************************
 AGGREGATE FUNCTIONS: Return a single value
@@ -326,7 +268,7 @@ DATE TIME FUNCTIONS
 *****************************************************************************/
 
 DATEPART('yyyy', MyCol) /*returns a numeric date of year, uses date datatype*/
-SYSDATE()               /*Returns the date set on the computer*/
+GETDATE()               /*Returns the date set on the computer*/
 
 /*****************************************************************************
 CHARACTER FUNCTIONS
@@ -345,38 +287,32 @@ CAST(MyColumn AS nvarchar(5));
 
 /*****************************************************************************
  PROCEDURES
- CREATE_PROCEDURE used the first time the procedure is saved
- to the database (ecomes ALTER PROCEDURE once saved
 *****************************************************************************/
-CREATE_PROCEDURE dbo.InsertValues(@Name nvarchar(255), @DueDate datetime, @IsEnabled bit = 1)
-AS
-INSERT MyTable([Name], DueDate, Notes, IsEnabled)
-VALUES (@Name, @DueDate, @Notes, @IsEnabled)
 
-CREATE_PROCEDURE dbo.UpdateValues(@EntryID int, @Name nvarchar(255), @IsEnabled)
-AS
-UPDATE MyTable
-SET [Name] = @Name, IsEnabled = @IsEnabled
-WHERE EntryID = @EntryID
+/*Inserting Procedure*/
+CREATE PROCEDURE dbo.InsertValues(@Name nvarchar(255), @DueDate datetime, @IsEnabled bit = 1)
+AS BEGIN
+INSERT MyTable([Name], DueDate, Notes, IsEnabled) VALUES (@Name, @DueDate, @Notes, @IsEnabled)
+END
 
-CREATE_PROCEDURE dbo.GetValues
-AS
+/*Updating Procedure*/
+CREATE PROCEDURE dbo.UpdateValues(@EntryID int, @Name nvarchar(255), @IsEnabled)
+AS BEGIN
+UPDATE MyTable SET [Name] = @Name, IsEnabled = @IsEnabled WHERE EntryID = @EntryID
+END
+
+/*Getting Procedure*/
+CREATE PROCEDURE dbo.GetValues
+AS BEGIN
 SELECT * FROM  MyTable
 RETURN
+END
 
-/*
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//ACTIVEX DATA OBJECTS (ADO)
-//////////////////////////////////////////////////////////////////////////////////////////////////
+/*Modifying Procedure*/
+ALTER PROCEDURE dbo.MyProcedure(@EntryID int)
+AS BEGIN
+UPDATE MyTable SET * WHERE EntryID = @EntryID
+END
 
-• Programming interface to access data in a database for websites
-
-ACCESSING DATA FROM ASP.NET PAGE
-1) Create an ADO connection to a database
-2) Open the database connection
-3) Create an ADO recordset
-4) Open the recordset
-5) Extract the data you need from the recordset
-6) Close the recordset
-7) Close the connection
-
+/*Executing Procedure in SQL*/
+EXECUTE MyProcedure 10.0 'MyString'

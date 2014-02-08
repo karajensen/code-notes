@@ -1,6 +1,6 @@
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 //WEB DEVELOPMENT
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
 NETWORK: Requires common language (protocol) and link (wireless or physical)
 ROUTER: Directs network traffic along the correct route
@@ -40,90 +40,16 @@ WEB SERVER APPLICATION
 • A group of files that delievers content over protocols
 • Application becomes part of the site URL
 
-VIRTUAL DIRECTORIES
-• Directory name specified in IIS which maps to a physical directory
-  on a local server hard drive or directory on a remote server.
-• Must have a virtual directory for every web server application which becomes part of the application URL
-• Can have unlimited amount though affects performance
-• Uses an alias to shorted the address, either manually or automatically chosen
-
 WEB SERVICES
 • Service that constantly runs on a web server which provides libraries other web applications can access
-• Accessed through web protocols/data formats HTTP, XML, SOAP
-
-////////////////////////////////////////////////////////////////////////////////////////////
-//ASP.NET
-////////////////////////////////////////////////////////////////////////////////////////////
-• Active Server Pages, Server-Side scripting language that allow dynamic building of web pages
-
-<div>
-    <%= DateTime.Now.ToString() %> // Returns the current date-time
-    <asp:Label ID="MyID" runat="server" Text='<%# Eval("Description") %>' />
-    <asp:Button ID="MyID" runat="server" Text="MyButton" />
-    <asp:TextBox ID="MyID" runat="server"></asp:TextBox>
-</div>
-
-ASP.NET OBJECTS
-• Static text: HTML, CSS, Javascript all sent directly without conversion
-• ASP.NET Server controls: Emit HTML that is inserted into the page
-• Programming code: C#, VB that is embedded or placed in seperate file known as Code Behind file
-
-HTTP HANDLERS/MODULES
-• When users request an .aspx file, the request is processed by the page through the page handler
-• Can be customised for output and recieving incoming messages (RSS feeds, Security, logging)
-• Called on every request made to the webserver for the site
-
-CLIENT-BASED STATE MANAGEMENT
-• Storing information the user inputs to the page in the client that is reinstated when page is requested
-• VIEW STATE: Hidden Dictionary object that stores the current state of page/controls
-• CONTROL STATE: Stores state of controls specifically and cannot be turned off like view state
-• HIDDEN FIELDS: Hidden element that does not render, only avaliable with HTTP POST not HTTP GET
-• COOKIES: File stored or in-memory in browser which is sent when a server request is made
-• QUERY STRING: Info appended to the end of a page URL using '?', only avaliable with HTTP GET not HTTP POST
-
-SERVER-BASED STATE MANAGEMENT
-• Storing information the user inputs to the page in the server, more costly than client-based
-• APPLICATION STATE: HttpApplicationState class, persists between browser sessions
-• SESSION STATE: HttpSessionState class scoped to the current browser session
-• PROFILE PROPERTIES: SqlProfileProvider class that allows you to store profile data in a SQL database on server
-
-DEPLOYMENT TO WEB SERVER
-• Use Visual Studio to create a Web deployment package
-• Install package manually on server or One-Click Publish which deploys remotely in one step
-
-=========================================================================================================
-ASP.NET LIFECYCLE
-=========================================================================================================
-
-1) INSTANTIATION
-• Webserver recieves page request and passes it to ASP.NET engine
-• ASP.NET auto-generates html and the control hierarchy from the server .aspx page if needed
-• Auto generated html stored in temporary folder so it doesn't need to be regenerated for every page request
-
-2) INITIALIZATION
-• Page and controls fire their Init events, controls UniqueID is set
-
-3) LOAD VIEW STATE
-• View state data saved from the previous page visit is loaded and recursively populated into the control hierarchy
-• View state data is validated to ensure no tampering or dynamic control injection
-
-4) LOAD POSTBACK DATA
-
-5) LOAD PAGE
-
-6) RAISE POSTBACK EVENT
-
-7) SAVE VIEW STATE
-
-8) RENDER
-
-9) UNLOAD
-• Page properties (Response, Request) are unloaded and cleanup occurs
+• Web applications access service through XML based (platform independent) protocols:
+    - SOAP/REST: XML-based protocal used to exchange information over HTTP
+    - WSDL: XML-based protocal used to describe capabilities and how to connect to service
 
 */
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 //HYPERTEXT MARKUP LANGUAGE (HTML)
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 // • Language browsers use to display webpages, Passed from webserver to client
 // • Void element: cannot have content, requires no closing bracket (br, meta)
 
@@ -210,9 +136,9 @@ ASP.NET LIFECYCLE
   </footer>
 </html>
 
-//////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 //CASCADING STYLE SHEETS (CSS)
-//////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // INLINE STYLING: Add CSS to individual elements within style attribute
 <div class ="MyCustomClass"></div>
@@ -315,9 +241,9 @@ div.MyClass { }
 .MyParent { font-size: 48px; font-weight: bold; }
 .MyChild { font-size: 12px; }
 
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 //JAVASCRIPT
-////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 //• Can be used in header/body or inside links/elements
 //• When inside <script></script> tags use " for string otherwise use '
 

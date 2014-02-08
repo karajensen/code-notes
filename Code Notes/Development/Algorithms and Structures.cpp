@@ -128,17 +128,6 @@ void RadixSort(std::vector<int>& values)
 }
 
 /********************************************************************************
- MERGE SORT
- 1)
- 2)
-*********************************************************************************/
-void MergeSort(std::vector<int>& values)
-{
-
-
-}
-
-/********************************************************************************
  QUICK SORT
  Sorts in ascending order
  1) Partition the container to values lower than pivot and values higher
