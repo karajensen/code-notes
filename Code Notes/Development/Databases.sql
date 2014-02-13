@@ -230,13 +230,15 @@ FROM MyTable2 ORDER BY MyTable2.C2
  DATA DEFINITION LANGUAGE COMMANDS
 *****************************************************************************/
 
-CREATE TABLE MyTable(MyCol1 int, MyCol2 varchar(255));  /*create new table*/
-DROP DATABASE MyDatabase                                /*delete the database*/  
-DROP TABLE MyTable                                      /*delete the table*/  
-TRUNCATE TABLE MyTable                                  /*remove all records from within a table*/
-ALTER TABLE MyTable DROP COLUMN MyCol                   /*delete column in table*/
-ALTER TABLE MyTable ADD MyCol int                       /*add column to table*/
-ALTER TABLE MyTable ALTER COLUMN MyCol int              /*change datatype of column*/
+/*create new table, defaults to NULL possible for field*/
+CREATE TABLE MyTable(MyCol1 int NOT NULL, MyCol2 varchar(255)); 
+
+DROP DATABASE MyDatabase                   /*delete the database*/  
+DROP TABLE MyTable                         /*delete the table*/  
+TRUNCATE TABLE MyTable                     /*remove all records from within a table*/
+ALTER TABLE MyTable DROP COLUMN MyCol      /*delete column in table*/
+ALTER TABLE MyTable ADD MyCol int          /*add column to table*/
+ALTER TABLE MyTable ALTER COLUMN MyCol int /*change datatype of column*/
 
 /*////////////////////////////////////////////////////////////////////////////////////////////////
 //FUNCTIONS AND PROCEDURES

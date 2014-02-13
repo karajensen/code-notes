@@ -312,6 +312,9 @@ for (vector<int>::iterator itr = scores.begin(); itr != scores.end(); ++itr)
 for (auto& item : myVector) //doesn't work with vs2010
     int x = item;
 
+for each(auto& item in myVector)
+    int x = item;
+
 for (vector<int>::reverse_iterator rItr = scores.rbegin(); rItr = scores.rend(); ++rItr)
     rItr->myMethod();
 
