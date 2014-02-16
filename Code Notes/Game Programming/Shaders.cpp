@@ -39,23 +39,28 @@ HLSL ps3.0      224           32        512            16
 HLSL ps4.0      65536         4096      ∞              16
 HLSL ps5.0      65536         4096      ∞              16
 
-SHADER REGISTERS
-• Constant registers: lower-latency access and more frequent updates from the CPU
-• Texture registers: perform better for arbitrarily indexed data
-• Maximum allowed registers may be less- shader itself internally uses some
-
-SHADER SAMPLERS
-• HLSL 3.0-: Textures/samplers bound to each other
-• HLSL 4.0+: Textures/samplers seperate objects
-
 SWIZZLING: Using x/y/z/w to refer to each component
 SWIZZLE MASK: Combining components (.xy, .xyz, .xx)
 TESSELLATION: Converts low-detail subdivision surfaces into higher-detail primitives
 
-*/
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //SHADER COMPONENTS
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////s
+• CONSTANT REGISTERS: lower-latency access and more frequent updates from the CPU
+• TEXTURE REGISTERS: perform better for arbitrarily indexed data
+*/
+
+//ASSEMBLY INSTRUCTIONS
+dp4 dest, src0, src01   // float4 dot product
+mov dest, src           // move source to destination
+dcl_2d s0               // Declare a pixel shader sampler.
+texld dst, src0, src1   // Sample from a texture
+dcl_position v0         // Passing in vertex position
+dcl_texcoord v1         // Passing in vertex textcoord
+mov oT0.xy, v1          // Saving UVs in vertex shader
+dcl t0.xy               // Retrieving UVs in pixel shader
+texld r0, t0, s0        // Sample from a texture
+mov oC0, r0             // Send final color in pixel shader
 
 //VERTEX INPUT REGISTERS
 v0-v15     // Input register: sends vertex data (position,UVs,normals)
@@ -87,36 +92,9 @@ p0         // Predicate register
 oC0-3      // Output color register: determines which render target color outputs to
 oDepth     // Output depth register: outputs a depth value used with testing
 
-//CONSTANT REGISTER PACKING
-float myFloat; //each register is a float4 (float, float2 etc will take up whole register)
-float myArray[100] //to save space, pack arrays as float4
-
-//HLSL 4.0+ CONSTANT REGISTER PACKING
-//Uses cbuffer which automatically packs floats into float4 where possible
-cbuffer
-{
-    float2 myFloat;
-    float myFloat;
-    //float padding
-    float3 myFloat;
-    float myArray[10]; //always assigns full float4 for arrays with last entry only float 
-}
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //SHADER OPTIMIZATIONS
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//ASSEMBLY INSTRUCTIONS
-dp4 dest, src0, src01   // float4 dot product
-mov dest, src           // move source to destination
-dcl_2d s0               // Declare a pixel shader sampler.
-texld dst, src0, src1   // Sample from a texture
-dcl_position v0         // Passing in vertex position
-dcl_texcoord v1         // Passing in vertex textcoord
-mov oT0.xy, v1          // Saving UVs in vertex shader
-dcl t0.xy               // Retrieving UVs in pixel shader
-texld r0, t0, s0        // Sample from a texture
-mov oC0, r0             // Send final color in pixel shader
 
 //PACKING ARRAYS AS FLOAT4
 //arrays are always packed as float4 even if only using a float
@@ -156,56 +134,33 @@ const float2 constants = float2(1.0, 0.0); //instead, use MAD, swizzling and con
 gl_FragColor = (myColor.xyzw * constants.xxxy) + constants.yyyx;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-//GLSL SHADER INTRINSICS
+//HLSL
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //VARIABLE TYPES
-//Sections can be accessed via xyzw/rgba
-float, int, vec2, vec3, vec4, mat3, mat4, half
+bool myBool;
+int myInt;    //32-bit signed int
+half myFlt;   //16-bit float
+float myFlt;  //32-bit float
+double myDbl; //64-bit double
 
-mix(a,b,c)              // c == 0 ? a : b, interpolates for other values
-step(a,b)               // a > b ? 0.0 : 1.0
-length(vector)          // Length of a vector
-texture2D(Sampler, uvs) // Query from a texture
-normalize(vector)       // Normalizes a vector
-pow(1.0f, 3.0f)         // Calculates 1³
-max(a,b)                // Chooses max of a and b
-dot(a,b)                // Dots two vectors
-abs(a)                  // magnitude of value
+//VECTOR TYPES
+//From n2 to n4 where 'vector' defaults to 4
+float4 myFlt /*or*/ float myFlt[4] /*or*/ vector<float,4> myFlt /*or*/ vector myFlt
+bool3 myBool /*or*/ bool myBool[3] /*or*/ vector<bool,3> myBool
 
-gl_TexCoord[0]
-gl_Position
-gl_Vertex                      // 4D vertex position
-gl_Normal                      // 3D vertex normal
-gl_Color                       // 4D vertex color
-gl_ModelViewMatrix             // 4x4 world-view matrix.
-gl_ModelViewProjectionMatrix   // 4x4 world-view-projection matrix.
-gl_NormalMatrix                // 3x3 inverse transpose world-view matrix
-gl_MultiTexCoord0              // Can go up to x
-gl_FragColor                   // 4D final color values
-gl_FragDepth                   // float with final depth value
+//MATRIX TYPES
+//float nxn where n=[1,4]
+float3x4 myMat; /*or*/ matrix<float,3,4>
+float2x2 
 
-gl_LightSource[i]
-vec4 ambient;             
-vec4 diffuse;             
-vec4 specular;            
-vec4 position;            
-vec3 spotDirection;       
-float spotExponent;       
-float spotCutoff;         
-float spotCosCutoff; // cos(spotCutoff)
-float constantAttenuation; 
-float linearAttenuation;   
-float quadraticAttenuation;
+//ACCESSING COMPONENTS
+//Sections can be accessed via xyzw/rgba but not both
+//ps2.0- does not have support for chained swizzing
+float value = myFlt[0];
+float2 value = myFlt.xy;
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//HLSL SHADER INTRINSICS
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//VARIABLE TYPES
-//Sections can be accessed via xyzw/rgba
-float, int, float2, float3, float4, float4x4, half
-
+//INTRINSICS
 mul()             // Multiplies two matrices
 sin()             // Calculates sine of an angle (in radians).
 cos()             // Calculates cosine of an angle (in radians).
@@ -215,15 +170,28 @@ max(x,y)          // Selects max of x and y
 reflect()         // Calculates the ref vector, based on the pos of the camera.
 refract()         // Same as reflect, but bends the vector
 
-float4x4 World                 : World;
-float4x4 WorldViewProjection   : WorldViewProjection;
-float4x4 WorldInvTrans         : WorldInverseTranspose;
+//MODEL 3.0- CONSTANT REGISTER PACKING
+float myFloat; //each register is a float4 (float, float2 etc will take up whole register)
+float myArray[100] //to save space, pack arrays as float4
+
+//MODEL 4.0+ CONSTANT REGISTER PACKING
+//Uses cbuffer which automatically packs floats into float4 where possible
+cbuffer
+{
+    float2 myFloat;
+    float myFloat;
+    //float padding
+    float3 myFloat;
+    float myArray[10]; //always assigns full float4 for arrays with last entry only float 
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
+//HLSL SHADING
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //TEXTURING
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//HLSL
+//HLSL 3.0-: Textures/samplers bound to each other
+//HLSL 4.0+: Textures/samplers seperate objects
 Texture DiffuseTexture;
 sampler TextureSampler = sampler_state 
 { 
@@ -236,117 +204,44 @@ sampler TextureSampler = sampler_state
 };
 float4 Texture = tex2D(TextureSampler, input.UV);
 
-//GLSL
-uniform sampler2D TextureSampler;
-vec4 Texture = texture2D(TextureSampler, gl_TexCoord[0].st);
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//NORMAL MAPPING
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//HLSL TANGENT SPACE NORMAL MAPPING (red/blue)
+//TANGENT SPACE NORMAL MAPPING (red/blue)
 float3 bump = bumpdepth*(tex2D(BumpSampler, input.UV).rgb - 0.5)
 input.Normal = normalize(input.Normal + bump.x*input.Tangent + bump.y*input.Binormal);
 
-//HLSL OBJECT SPACE NORMAL MAPPING (rainbow)
+//OBJECT SPACE NORMAL MAPPING (rainbow)
 float3 bump = bumpdepth*((tex2D(BumpSampler, input.UV).rgb * 2.0) - 1.0);
 input.Normal = normalize(bump);             
 
-//GLSL TANGENT SPACE NORMAL MAPPING (red/blue)
-vec3 bump = bumpdepth*(texture2D(BumpSampler, gl_TexCoord[0].st).xyz - 0.5);
-vec3 normNormal = normalize(Normal + bump.x*Tangent + bump.y*Binormal);
-                        
-//////////////////////////////////////////////////////////////////////////////////////////////////////
 //ATTENUATION
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//HLSL
 float d = length(LightPos);                
 float4 Attenuation = (1.0 / (att0 + att1*d + att2*d*d));  
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//DIFFUSE
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+//DIFFUSE SHADING
+float4 diffuse = (dot(input.LightVector, input.Normal) + 1.0) * 0.5; 
+diffuse *= intensity * color * attenuation;   
 
- //HLSL
- float4 diffuse = (dot(input.LightVector, input.Normal) + 1.0) * 0.5; 
- diffuse *= intensity * color * attenuation;   
-
- //GLS
- vec4 diffuse = (dot(lightVector, normNormal) + 1.0) * 0.5;
- diffuse *= intensity * gl_LightSource[i].diffuse * attenuation;
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//SPECULAR
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+//SPECULAR PHONG
 //Size: Size of highlights (higher = smaller)
 //Brightness: Brightness of the highlights (higher = brighter)
-   
-//HLSL PHONG
 float3 reflectionVector = normalize(reflect(-input.LightVector, input.Normal));
 float3 specular = specularIntensity * specularColor * 
                   (pow(saturate(dot(reflectionVector, input.CameraVector)), specularSize));
-                                         
-
-//HLSL BLINN-PHONG
+                                        
+//SPECULAR BLINN-PHONG
 float3 halfVector = normalize(input.LightVector + input.CameraVector); 
 float3 specular = specularIntensity * specularColor * 
                   (pow(saturate(dot(input.Normal.rbg, halfVector)), specularSize));   
 
-//GLSL BLINN-PHONG
-vec3 halfVector = normalize(lightVector + normalize(-WorldViewPos));
-specular = pow(max(dot(normNormal, halfVector),0.0), specularSize); 
-specular *= gl_LightSource[i].specular * specularTexture * attenuation;
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//REFLECTIONS/REFRACTIONS
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//HLSL
+//REFLECTIONS
 float3 ReflectionVector = reflect(-input.CameraVector, input.Normal)
 float4 Reflection = texCUBE(EnvironSampler, ReflectionVector)       
+
+//REFRACTIONS
 float3 RefractionVector = refract(-input.CameraVector, input.Normal, RI)
-float4 Refractions = texCUBE(EnvironSampler, RefractionVector)           
+float4 Refractions = texCUBE(EnvironSampler, RefractionVector)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-//GLSL SHADER BODY
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//VERTEX SHADER
-//uniform = specific to vertex
-//varying = has another declaration in fragment shader
-varying vec3 Normal;
-varying vec3 Binormal;
-varying vec3 Tangent;
-varying vec3 VertexNormal;
-varying vec3 WorldViewPos;
-
-void main()
-{
-    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-    WorldViewPos = vec3(gl_ModelViewMatrix * gl_Vertex);
-    gl_TexCoord[0] = gl_MultiTexCoord0;
-    Normal = gl_NormalMatrix * gl_Normal;
-    Tangent = gl_NormalMatrix * gl_MultiTexCoord1.xyz;
-    Binormal = gl_NormalMatrix * gl_MultiTexCoord2.xyz;
-}
-
-//FRAGMENT SHADER
-//uniform = specific to fragment
-//varying = has another declaration in vertex shader
-uniform sampler2D Sampler0;
-varying vec3 Normal;
-varying vec3 Binormal;
-varying vec3 Tangent;
-varying vec3 WorldViewPos;
-
-void main()
-{
-    gl_FragColor = texture2D(Sampler0, gl_TexCoord[0].st);
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//HLSL SHADER BODY
+//HLSL BODY
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 float4x4 World                  : World;
@@ -423,3 +318,109 @@ technique MAIN
         PixelShader = compile ps_3_0 PShader();
     }
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//GLSL
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//VARIABLE TYPES
+//Sections can be accessed via xyzw/rgba but not both
+float, int, vec2, vec3, vec4, mat3, mat4, half
+
+//INTRINSICS
+mix(a,b,c)              // c == 0 ? a : b, interpolates for other values
+step(a,b)               // a > b ? 0.0 : 1.0
+length(vector)          // Length of a vector
+texture2D(Sampler, uvs) // Query from a texture
+normalize(vector)       // Normalizes a vector
+pow(1.0f, 3.0f)         // Calculates 1³
+max(a,b)                // Chooses max of a and b
+dot(a,b)                // Dots two vectors
+abs(a)                  // magnitude of value
+
+gl_TexCoord[0]
+gl_Position
+gl_Vertex                      // 4D vertex position
+gl_Normal                      // 3D vertex normal
+gl_Color                       // 4D vertex color
+gl_ModelViewMatrix             // 4x4 world-view matrix.
+gl_ModelViewProjectionMatrix   // 4x4 world-view-projection matrix.
+gl_NormalMatrix                // 3x3 inverse transpose world-view matrix
+gl_MultiTexCoord0              // Can go up to x
+gl_FragColor                   // 4D final color values
+gl_FragDepth                   // float with final depth value
+gl_LightSource[i]
+{
+  vec4 ambient;             
+  vec4 diffuse;             
+  vec4 specular;            
+  vec4 position;            
+  vec3 spotDirection;       
+  float spotExponent;       
+  float spotCutoff;         
+  float spotCosCutoff; // cos(spotCutoff)
+  float constantAttenuation; 
+  float linearAttenuation;   
+  float quadraticAttenuation;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//GLSL SHADING
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//TEXTURING
+uniform sampler2D TextureSampler;
+vec4 Texture = texture2D(TextureSampler, gl_TexCoord[0].st);
+
+//TANGENT SPACE NORMAL MAPPING (red/blue)
+vec3 bump = bumpdepth*(texture2D(BumpSampler, gl_TexCoord[0].st).xyz - 0.5);
+vec3 normNormal = normalize(Normal + bump.x*Tangent + bump.y*Binormal);
+                        
+//SPECULAR BLINN-PHONG
+//Size: Size of highlights (higher = smaller)
+//Brightness: Brightness of the highlights (higher = brighter)
+vec3 halfVector = normalize(lightVector + normalize(-WorldViewPos));
+specular = pow(max(dot(normNormal, halfVector),0.0), specularSize); 
+specular *= gl_LightSource[i].specular * specularTexture * attenuation;
+
+//DIFFUSE SHADING
+vec4 diffuse = (dot(lightVector, normNormal) + 1.0) * 0.5;
+diffuse *= intensity * gl_LightSource[i].diffuse * attenuation; 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//GLSL BODY
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//VERTEX SHADER
+//uniform = specific to vertex
+//varying = has another declaration in fragment shader
+varying vec3 Normal;
+varying vec3 Binormal;
+varying vec3 Tangent;
+varying vec3 VertexNormal;
+varying vec3 WorldViewPos;
+
+void main()
+{
+    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+    WorldViewPos = vec3(gl_ModelViewMatrix * gl_Vertex);
+    gl_TexCoord[0] = gl_MultiTexCoord0;
+    Normal = gl_NormalMatrix * gl_Normal;
+    Tangent = gl_NormalMatrix * gl_MultiTexCoord1.xyz;
+    Binormal = gl_NormalMatrix * gl_MultiTexCoord2.xyz;
+}
+
+//FRAGMENT SHADER
+//uniform = specific to fragment
+//varying = has another declaration in vertex shader
+uniform sampler2D Sampler0;
+varying vec3 Normal;
+varying vec3 Binormal;
+varying vec3 Tangent;
+varying vec3 WorldViewPos;
+
+void main()
+{
+    gl_FragColor = texture2D(Sampler0, gl_TexCoord[0].st);
+}
+

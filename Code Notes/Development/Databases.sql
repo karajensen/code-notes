@@ -231,7 +231,7 @@ FROM MyTable2 ORDER BY MyTable2.C2
 *****************************************************************************/
 
 /*create new table, defaults to NULL possible for field*/
-CREATE TABLE MyTable(MyCol1 int NOT NULL, MyCol2 varchar(255)); 
+CREATE TABLE MyTable(MyCol1 int PRIMARY KEY NOT NULL, MyCol2 varchar(255)); 
 
 DROP DATABASE MyDatabase                   /*delete the database*/  
 DROP TABLE MyTable                         /*delete the table*/  
