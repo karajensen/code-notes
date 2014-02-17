@@ -124,9 +124,6 @@
     <ClCompile Include="Game Programming\Rendering.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Shaders.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
     <ClCompile Include="Code Examples\Classes\assimpmesh.cpp">
       <Filter>Development\Classes</Filter>
     </ClCompile>
@@ -174,6 +171,9 @@
     </ClCompile>
     <ClCompile Include="Development\Web Development.cpp">
       <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Shaders.cpp">
+      <Filter>Game Programming</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

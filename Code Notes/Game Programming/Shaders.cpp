@@ -144,31 +144,101 @@ half myFlt;   //16-bit float
 float myFlt;  //32-bit float
 double myDbl; //64-bit double
 
-//VECTOR TYPES
-//From n2 to n4 where 'vector' defaults to 4
+//VECTOR/ARRAY TYPES
 float4 myFlt /*or*/ float myFlt[4] /*or*/ vector<float,4> myFlt /*or*/ vector myFlt
 bool3 myBool /*or*/ bool myBool[3] /*or*/ vector<bool,3> myBool
+int2 myint   /*or*/ int myInt[2]   /*or*/ vector<int,2> myInt
 
 //MATRIX TYPES
 //float nxn where n=[1,4]
 float3x4 myMat; /*or*/ matrix<float,3,4>
 float2x2 
 
-//ACCESSING COMPONENTS
+//ACCESSING VECTOR/MATRIX COMPONENTS
 //Sections can be accessed via xyzw/rgba but not both
 //ps2.0- does not have support for chained swizzing
 float value = myFlt[0];
 float2 value = myFlt.xy;
 
+//STRUCTURES
+struct MyStruct
+{
+};
+
+//VARIABLE PREFIXES
+typedef float MyFloat;
+float myGlobalFlt;       // global variable defaults to uniform/extern
+const float myFlt = 4;   // variable cannot be modified
+static                   // variable will not be exposed outside shader
+extern                   // variable is exposed outside shader
+uniform                  // Does not change per-vertex or per-pixel, links to outside application, readonly
+shared                   // allows variable to be accessed accross mutliple .fx files
+volatile                 // hints that it will be modified often, only global variables
+
+//CASTING
+//Copies instead of converts
+float4x4 myMat = (float4x4)myFlt;
+float myFlt = (float)myInt;
+
+//PREPROCESSOR
+#include "myshader.fx"
+#define MYDEFINE
+#undef MYDEFINE
+#ifdef MYDEFINE
+#ifndef MYDEFINE
+#elif MYDEFINE
+#else
+#endif
+
 //INTRINSICS
-mul()             // Multiplies two matrices
-sin()             // Calculates sine of an angle (in radians).
-cos()             // Calculates cosine of an angle (in radians).
-pow(1.0f, 3.0f)   // Calculates 1³
-normalize()       // Normalizes a vector
-max(x,y)          // Selects max of x and y
-reflect()         // Calculates the ref vector, based on the pos of the camera.
-refract()         // Same as reflect, but bends the vector
+abs(x)              // return absolute value
+all(vec)            // boolean, int, float vector, returns true if all components are true
+any(vec)            // boolean, int, float vector, returns true if any component is true
+abort()             // Terminates the current draw or dispatch call being executed (SM4+)
+cross(a,b)          // crosses two vectors
+clamp(x,min,max)    // returns clamped value
+ceil(x)             // rounds upwards to nearest int
+degrees(rad)        // converts rad to degrees
+determinant(mat)    // returns determinant of matrix
+dot(a,b)            // dots two vectors
+distance(a,b)       // returns distance between two points
+ddx(x)              // Returns the partial derivative of x with respect to the screen-space x-coordinate
+ddy(x)              // Returns the partial derivative of x with respect to the screen-space y-coordinate
+floor(x)            // rounds downwards to nearest int
+frac(x)             // returns fractional part of x
+fwidth(x)           // Returns abs(ddx(x)) + abs(ddy(x))
+isfinite(x)         // returns true if x is a finite number
+isinf(x)            // return true if pos or neg infinity
+isnan(x)            // return true if not a number
+length(a)           // return length of a vector
+lerp(x,y,s)         // linear interpolation: x*(1-s) + y*s
+max(x,y)            // Selects max of x and y
+min(x,y)            // Selects min of x and y
+mad(a,b,c)          // Performs mad assembly operation: a * b + c (SM5)
+modf(x, intPart)    // returns fractional part, stores int part
+mul(matA, matB)     // Matrix multiplication
+normalize(vec)      // Normalizes a vector
+pow(1.0f, 3.0f)     // Calculates 1³
+radians(deg)        // converts degrees to rad
+reflect(vec, norm)  // reflects vector along the normal
+rsqrt(x)            // Returns 1 / sqrt(x)
+round(x)            // returns rounded to the nearest integer
+transpose(mat)      // creates transpose of matrix
+trunc(x)            // removes the fractional part of x
+saturate(x)         // clamps value between 0 and 1
+sqrt(x)             // Square root
+step(a,b)           // a > b ? 0.0 : 1.0
+sign(x)             // Returns the sign of x
+sin(angle)          // Calculates sine of an angle (in radians).
+cos(angle)          // Calculates cosine of an angle (in radians).
+tan(angle)          // Angle in radians
+acos(x)
+asin(x)
+atan(x/y) /*or*/ atan2(x,y)
+
+//VERTEX VARIABLES
+
+//PIXEL VARIABLES
 
 //MODEL 3.0- CONSTANT REGISTER PACKING
 float myFloat; //each register is a float4 (float, float2 etc will take up whole register)
@@ -185,13 +255,16 @@ cbuffer
     float myArray[10]; //always assigns full float4 for arrays with last entry only float 
 }
 
+//SAMPLERS
+//HLSL 3.0-: Textures/samplers bound to each other
+//HLSL 4.0+: Textures/samplers seperate objects
+tex2D(mySampler, uvs)  // 2D texture lookup
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //HLSL SHADING
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //TEXTURING
-//HLSL 3.0-: Textures/samplers bound to each other
-//HLSL 4.0+: Textures/samplers seperate objects
 Texture DiffuseTexture;
 sampler TextureSampler = sampler_state 
 { 
@@ -324,31 +397,112 @@ technique MAIN
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //VARIABLE TYPES
-//Sections can be accessed via xyzw/rgba but not both
-float, int, vec2, vec3, vec4, mat3, mat4, half
+bool myBool;
+int myInt;      //signed integer
+uint myInt;     //unsigned integer
+half myFlt;     //16-bit float
+float myFlt;    //32-bit float
+++myFlt;        //supports pre/post fix
+
+//VECTOR TYPES
+//Sections can be accessed via xyzw/rgba/stpq but can't be mixed
+vec2, vec3, vec4     //floating point vector
+bvec2, bvec3, bvec4  //boolean vector
+ivec2, ivec3, ivec4  //signed int vector
+uvec2, uvec3, uvec4  //unsigned int vector
+
+//ARRAYS
+float[3] myArray /*or*/ float myArray[3];
+myArray[0]
+
+//MATRIX TYPES
+mat2    //2x2 matrix
+mat3    //3x3 matrix
+mat4    //4x4 matrix
+matnxn  //where n=[2,4]
+
+//STRUCTURES
+struct MyStruct
+{
+};
+
+//VARIABLE PREFIXES
+const float myFlt = 4;  // variable cannot be modified
+uniform                 // Does not change per-vertex or per-pixel, links to outside application, readonly
+varying                 // Change per-vertex/per-pixel, can be seen between vertex/fragment shader
+
+//PREPROCESSOR
+#version 150  //shader model to use, must be before anything else
+#include "myshader.fx"
+#define MYDEFINE
+#undef MYDEFINE
+#ifdef MYDEFINE
+#ifndef MYDEFINE
+#elif MYDEFINE
+#else
+#endif
 
 //INTRINSICS
-mix(a,b,c)              // c == 0 ? a : b, interpolates for other values
-step(a,b)               // a > b ? 0.0 : 1.0
-length(vector)          // Length of a vector
-texture2D(Sampler, uvs) // Query from a texture
-normalize(vector)       // Normalizes a vector
-pow(1.0f, 3.0f)         // Calculates 1³
-max(a,b)                // Chooses max of a and b
-dot(a,b)                // Dots two vectors
-abs(a)                  // magnitude of value
+abs(a)                    // magnitude of value
+all(boolVec)              // takes in boolean vec, return true if all components are true
+any(boolVec)              // takes in boolean vec, return true if any component is true
+cross(a,b)                // Crosses two vector
+clamp(x, min, max)        // returns clamped value
+ceil(x)                   // rounds upwards to nearest int
+determinant(mat)          // returns determinant of matrix
+distance(vecA, vecB)      // distance between two points
+dot(a,b)                  // Dots two vectors
+degrees(rad)              // converts radians to degrees
+dFdx(a)                   // derivative in x, a=float or vector, only in pixel shader
+dFdy(a)                   // derivative in y, a=float or vector, only in pixel shader
+floor(x)                  // rounds downwards to nearest int
+fract(x)                  // x - floor(x)
+fwidth(a)                 // return = abs(dFdx (p)) + abs(dFdy (p)), only in pixel shader
+inverse(mat)              // returns inverse of matrix
+isinf(x)                  // return true if pos or neg infinity
+isnan(x)                  // return true if not a number
+length(myVec)             // Length of a vector
+pow(1.0f, 3.0f)           // Calculates 1³
+normalize(myVec)          // Normalizes a vector
+mix(a,b,c)                // c == 0 ? a : b, interpolates for other values
+max(x,y)                  // returns maximum value
+min(x,y)                  // returns minimum value
+modf(x, intPart)          // returns fractional part, stores int part
+reflect(vec, norm)        // reflects vector along normal
+round(x)                  // rounds to nearest integer
+roundEvent(x)             // rounds to nearest integer, 0.5 rounds to nearest even int
+radians(deg)              // converts degrees to radians
+step(a,b)                 // a > b ? 0.0 : 1.0
+transpose(mat)            // returns transposed matrix
+sin(angle)                // angle in radians
+cos(angle)                // angle in radians
+tan(angle)                // angle in radians
+asin(x)
+acos(x)
+atan(y,x) /*or*/ atan(y/x)
 
-gl_TexCoord[0]
-gl_Position
-gl_Vertex                      // 4D vertex position
-gl_Normal                      // 3D vertex normal
-gl_Color                       // 4D vertex color
+//VERTEX VARIABLES
+vec4 gl_Colour            //Input
+vec3 gl_Normal            //Input
+vec4 gl_Vertex            //Input
+vec4 gl_MultiTexCoord0    //Input from 0 to 7
+float gl_FogCoord         //Input
+vec4 gl_Position          //Output
+vec4 gl_TexCoord[]        //Output
+float gl_FogFragCoord;    //Output
+
+//FRAGMENT VARIABLES
+vec4 gl_FragCoord;        //Input
+bool gl_FrontFacing;      //Input
+float gl_ClipDistance[];  //Input
+vec2 gl_PointCoord;       //Input
+vec4 gl_FragColor         //Output
+float gl_FragDepth        //Output
+
+//PRE-DEFINED VARIABLES
 gl_ModelViewMatrix             // 4x4 world-view matrix.
 gl_ModelViewProjectionMatrix   // 4x4 world-view-projection matrix.
 gl_NormalMatrix                // 3x3 inverse transpose world-view matrix
-gl_MultiTexCoord0              // Can go up to x
-gl_FragColor                   // 4D final color values
-gl_FragDepth                   // float with final depth value
 gl_LightSource[i]
 {
   vec4 ambient;             
@@ -363,6 +517,14 @@ gl_LightSource[i]
   float linearAttenuation;   
   float quadraticAttenuation;
 }
+
+//SAMPLERS
+sample1D, sampler2D, sampler3D      // access 1D, 2D, 3D texture
+samplerCube                         // access cube mapped texture
+sampler2DRect                       // access rectangular texture
+sampler1DArray, sampler2DArray      // access 1D, 2D array texture
+samplerBuffer                       // access buffer texture
+texture2D(mySampler, uvs)           // Query from a texture, vec2 uvs
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //GLSL SHADING
@@ -392,8 +554,6 @@ diffuse *= intensity * gl_LightSource[i].diffuse * attenuation;
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //VERTEX SHADER
-//uniform = specific to vertex
-//varying = has another declaration in fragment shader
 varying vec3 Normal;
 varying vec3 Binormal;
 varying vec3 Tangent;
@@ -411,8 +571,6 @@ void main()
 }
 
 //FRAGMENT SHADER
-//uniform = specific to fragment
-//varying = has another declaration in vertex shader
 uniform sampler2D Sampler0;
 varying vec3 Normal;
 varying vec3 Binormal;

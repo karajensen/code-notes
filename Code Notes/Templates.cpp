@@ -9,13 +9,16 @@
 template <class T> void MyFunction(T x);
 template <typename T> void MyFunction(T x);
 
+//EXPLICIT INSTANTIATION
+//use template to create function for type int
+//To allow template class/methods to live in .cpp, for every use of 
+//template add an explicit instantiation to .cpp file
+template MyClass<float>; //for class templates
+template void MyFunction<int>(int x, int y); //for function templates
+
 //EXPLICIT SPECIALISATION
 //don't use template; use a specialised function coded instead
 template <> void MyFunction(char x, char y); 
-
-//EXPLICIT INSTANTIATION
-//use template to create function for type int
-template void MyFunction<int>(int x, int y); 
 
 //TRAILING RETURN TYPE
 //useful for template functions when return type isn't known
@@ -79,6 +82,27 @@ template <typename T> class Derived : public Base<T>
 };
 
 //////////////////////////////////////////////////////////////////////////////
+//NESTED TYPES
+//////////////////////////////////////////////////////////////////////////////
+// Type MyClass::MySubClass seen as static member of class unless typename is used
+
+template<typename T, typename C>
+class Derived: public Base<T>::Nested //don't use typename
+{
+public:          
+
+    explicit Derived(int x) : 
+        Base<T>::Nested(x)  //don't use typename
+    {}
+
+    void MyFunction(typename C::MyValue& myValue); //use typename
+ 
+private
+    typename Base<T>::Nested temp; //use typename 
+    std::unique_ptr<typename C::MyValue> myPtr; //use typename
+};
+
+//////////////////////////////////////////////////////////////////////////////
 //PARTIAL SPECIALIZATIONS
 //////////////////////////////////////////////////////////////////////////////
 
@@ -100,9 +124,7 @@ Pair<int, float> obj; //makes R same type as S
 //TEMPLATE CLASS FRIENDS
 //////////////////////////////////////////////////////////////////////////////
 
-//---------------------------------------------------------------
 //NON TEMPLATE FRIEND FUNCTIONS
-//---------------------------------------------------------------
 //Allows the function to be friends to all possible instantiations 
 template <class T>
 class Tclass
@@ -115,9 +137,7 @@ void Tclass::counts(Tclass<T> &)
 {
 };
 
-//---------------------------------------------------------------
 //BOUND TEMPLATE FRIEND FUNCTIONS
-//---------------------------------------------------------------
 //template prototypes before class declaration
 template <class T> void testOne();
 template <class T> void testTwo(T &);
@@ -140,49 +160,13 @@ void testTwo(T & hf)
 {
 }
 
-//---------------------------------------------------------------
 //UNBOUND TEMPLATE FRIEND FUNCTIONS
-//---------------------------------------------------------------
 template <typename T>
 class ManyFriend
 {
 public:
     template <typename C, typename D> friend void testOne(C &, D &);
 };
-
-//////////////////////////////////////////////////////////////////////////////
-//TEMPLATE NESTED TYPES
-//////////////////////////////////////////////////////////////////////////////
-
-//if a type (C::iterator) can be seen as either a static member of class 
-//C or a type of C, must use typename before the type is declared
-//Exception is for base object in derived class constructors
-
-//EXAMPLE1
-template<class C> 
-void f(const C& container, typename C::iterator iter);
-
-//EXAMPLE2
-template<typename T>
-class Derived: public Base<T>::Nested //don't use typename
-{
-public:                               
-    explicit Derived(int x) : 
-        Base<T>::Nested(x)  //don't use typename
-    {}
- 
-    typename Base<T>::Nested temp; //use typename 
-};
-
-//EXAMPLE3
-//value_type is nested inside iterator_traits<IterT> 
-//and IterT is a template parameter
-template<class IterT>
-void workWithIterator(IterT iter)
-{
-    typedef typename std::iterator_traits<IterT>::value_type value_type;
-    value_type temp(*iter);
-}
 
 //////////////////////////////////////////////////////////////////////////////
 //VARIADIC TEMPLATES
