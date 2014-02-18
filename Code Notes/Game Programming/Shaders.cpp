@@ -43,6 +43,9 @@ SWIZZLING: Using x/y/z/w to refer to each component
 SWIZZLE MASK: Combining components (.xy, .xyz, .xx)
 TESSELLATION: Converts low-detail subdivision surfaces into higher-detail primitives
 
+DYNAMIC FLOW CONTROL/BRANCHING: Choose path based on dynamic variable that can change during execution
+STATIC FLOW CONTROL/BRANCHING: Choose path based on constant variable that cannot be modified during execution
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //SHADER COMPONENTS
 //////////////////////////////////////////////////////////////////////////////////////////////////////s
@@ -110,9 +113,8 @@ const float4 constants = float4(1.0, 0.0, 0.5, 0.2)
 
 //SUMMING VECTOR COMPONENTS
 float sum = myFlt.x + myFlt.y + myFlt.z + myFlt.w; // inefficient
-const float4 allOne = vec4(1.0); // faster to use dot to sum
-float sum = dot(myFlt4, allOne); 
-float sum = dot(myFlt3, allOne.xyz);
+float sum = dot(myFlt4, vec4(1.0)); // faster to use dot to sum
+float sum = dot(myFlt3, vec4(1.0).xyz);
 
 //MAD (MULTIPLY THEN ADD)
 //usually single-cyle and fast
@@ -130,7 +132,7 @@ gl_Position.xy = in_pos.xy; // faster than adding both seperately
 float4 finalColour = myColor; //uses temporary float4
 finalColour.a = 1.0;
 gl_FragColor = finalColour; 
-const float2 constants = float2(1.0, 0.0); //instead, use MAD, swizzling and constat container
+const float2 constants = float2(1.0, 0.0); //instead, use MAD, swizzling and constant container
 gl_FragColor = (myColor.xyzw * constants.xxxy) + constants.yyyx;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -145,20 +147,24 @@ float myFlt;  //32-bit float
 double myDbl; //64-bit double
 
 //VECTOR/ARRAY TYPES
+//Sections can be accessed via xyzw/rgba but not both
+//ps2.0- does not have support for chained swizzing
 float4 myFlt /*or*/ float myFlt[4] /*or*/ vector<float,4> myFlt /*or*/ vector myFlt
 bool3 myBool /*or*/ bool myBool[3] /*or*/ vector<bool,3> myBool
 int2 myint   /*or*/ int myInt[2]   /*or*/ vector<int,2> myInt
+float3 myFlt = { 1.0f, 2.0f, 3.0f };
+float4 myFlt = float4(myFlt3, 1.0f);
+float value = myFlt[0];
+float2 value = myFlt.xy;
 
 //MATRIX TYPES
 //float nxn where n=[1,4]
 float3x4 myMat; /*or*/ matrix<float,3,4>
-float2x2 
-
-//ACCESSING VECTOR/MATRIX COMPONENTS
-//Sections can be accessed via xyzw/rgba but not both
-//ps2.0- does not have support for chained swizzing
-float value = myFlt[0];
-float2 value = myFlt.xy;
+float2x2 myMat = { 1.0f, 2.0f, 3.0f, 4.0f };
+float value = myMat[0][1];    //from 0 to 3
+float value = myMat.m00;      //from m00 to m33
+float value = myMat._11;      //from _11 to _44
+float2 value = myMat._11_22;
 
 //STRUCTURES
 struct MyStruct
@@ -168,9 +174,10 @@ struct MyStruct
 //VARIABLE PREFIXES
 typedef float MyFloat;
 float myGlobalFlt;       // global variable defaults to uniform/extern
-const float myFlt = 4;   // variable cannot be modified
-static                   // variable will not be exposed outside shader
-extern                   // variable is exposed outside shader
+const float myFlt = 4;   // variable cannot be modified by shader (can be modfied by application if visible)
+static float myGlobal;   // variable will not be exposed outside shader
+static float myLocal;    // value will persist across multiple calls to the shader
+extern float myGlobal;   // variable is exposed outside shader
 uniform                  // Does not change per-vertex or per-pixel, links to outside application, readonly
 shared                   // allows variable to be accessed accross mutliple .fx files
 volatile                 // hints that it will be modified often, only global variables
