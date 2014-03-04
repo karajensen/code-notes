@@ -168,28 +168,6 @@ myList.Sort() //sorts into ascending order
 myList.BinarySearch(myItem) //returns index of first element found or < 0 if not found, must be sorted
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-//LINKED LIST
-////////////////////////////////////////////////////////////////////////////////////////////
-//• Memory seperated and each member has reference to next
-//• No random access
-
-var myLL = new LinkedList<float>();
-
-myLL.Count            // number of values in list
-myLL.First            // return first node of list
-myLL.Last             // return last node of list
-myLL.RemoveFirst()    // removes first node
-myLL.RemoveLast()     // removes last node
-myLL.Remove(value)    // removes first occurance of value from list
-myLL.Clear()          // removes all nodes
-myLL.GetEnumerator()  // return enumerator for list
-myLL.AddFirst(value)  // adds value to start of list
-myLL.AddLast(value)   // adds value to end of list
-myLL.Contains(value)  // returns true if list holds the value
-myLL.Find(value)      // returns first node that matches value
-myLL.FindLast(value)  // returns last node that matches value
-
-////////////////////////////////////////////////////////////////////////////////////////////
 //DICTIONARY
 ////////////////////////////////////////////////////////////////////////////////////////////
 //• Dictionary<K,V> -> IDictionary<K,V> -> ICollection<KeyValuePair<K,V>> -> IEnumerable<KeyValuePair<K,V>>
@@ -237,6 +215,8 @@ mySL.Values //returns IList<V> with the values sorted in ascending order
 //LINKED LISTS
 ////////////////////////////////////////////////////////////////////////////////////////////
 //• Each node in list is a double-linked LinkedListNode<T>
+//• Memory seperated and each member has reference to next
+//• No random access
 
 var myList = new LinkedList<T>()
 

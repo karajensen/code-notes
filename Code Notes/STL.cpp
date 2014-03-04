@@ -144,7 +144,7 @@ cin.gcount() //returns the number of characters read by the last unformatted ext
 cin.putback('\n')
 cin.get() //returns type int so you can't concatenate
 cin.get(mychar) //gets the next character in the input queue including \0, spaces etc.
-getline(cin, myString, 'M') //read line up to deliminator or string::npos, discard deliminator
+getline(cin, myString, 'M') //read line up to deliminator or \r, returns true if not eof
 
 //each reads the line up to 49 characters or the deliminator 
 //Failbit set if more characters exist than allocated size or no characters found
@@ -198,6 +198,12 @@ ifstream myFile("file.txt") /*or*/ ifstream myFile;
 myFile.open("file.txt", filemode);
 myFile.is_open() //return true if file has opened
 myFile.read(myArray, x) //reads x characters from the file and places them in the array
+
+//Read whole file into string
+std::ifstream::pos_type filesize = file.tellg();
+file.seekg(0, std::ios::beg);            
+mystr.resize(filesize);
+file.read(&mystr[0], filesize);
 
 //-------------------------------------------------------------------------------
 //FSTREAM [INPUT/OUTPUT STREAM]
