@@ -37,14 +37,13 @@ boost::algorithm::to_lower(str);                     //all lower case
 boost::algorithm::to_upper(str);                     //all upper case
 boost::algorithm::trim(str);                         //removes spaces at start/end of string
 boost::algorithm::trim_copy(str);                    //removes spaces at start/end of string
-boost::trim_left_copy(str);                          //removes spaces at start of string
-boost::trim_right_copy(str);                         //removes spaces at end of string
-boost::erase_head(str, n);                           //erase n from the start of the string
+boost::algorithm::trim_left_copy(str);               //removes spaces at start of string
+boost::algorithm::trim_right_copy(str);              //removes spaces at end of string
+boost::algorithm::trim_left_if(str,is_any_of("0"));  //removes 0 from start
+boost::algorithm::trim_right_if(str,is_any_of("0")); //removes 0 from end
 boost::algorithm::iequals(str1,str2);                //case-sensitive comparison
 boost::algorithm::istarts_with(str,"text");          //returns true or false
 boost::algorithm::iends_with(str, ".exe");           //returns true or false
-boost::algorithm::trim_left_if(str,is_any_of("0"));  //removes 0 from start
-boost::algorithm::trim_right_if(str,is_any_of("0")); //removes 0 from end
 boost::algorithm::replace_first(str,"one","three");  //replaces first one with three
 boost::algorithm::replace_last(str,"one","three");   //replaces last one with three
 boost::algorithm::replace_all(str,"one","three");    //replaces all one with three
