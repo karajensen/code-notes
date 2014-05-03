@@ -428,7 +428,7 @@ PLANE LINEAR EQUATION
 
 MATRIX: Two dimensional array of numeric data
 
-DIAGONAL MATRIX                 IDENTITY MATRIX
+DIAGONAL MATRIX                 IDENTITY MATRIX: (I¯¹ = Iᵀ = I)
 | a 0 0 |                       | 1 0 0 | 
 | 0 b 0 |                       | 0 1 0 |
 | 0 0 c |                       | 0 0 1 |
@@ -464,10 +464,10 @@ A + B = B + A           (AB)C = A(BC)
 A(B + C) = AB + AC      a(AB) = aA(B) = A(aB)
 
 (A¯¹)¯¹ = A             det(AB) = det(A)det(B)
-I¯¹ = I                 det(Aᵀ) = det(A)
-(Aᵀ)¯¹ = (A¯¹)ᵀ         det(A¯¹) = det(A)¯¹
-(AB)¯¹ = B¯¹A¯¹    
-(cA)¯¹ = c¯¹A¯¹   
+(Aᵀ)¯¹ = (A¯¹)ᵀ         det(Aᵀ) = det(A)
+(AB)¯¹ = B¯¹A¯¹         det(A¯¹) = det(A)¯¹
+(cA)¯¹ = c¯¹A¯¹ 
+  
 
 ==============================================================================
 VECTOR NOTATION

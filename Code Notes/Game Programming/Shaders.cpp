@@ -39,6 +39,13 @@ HLSL ps3.0      224           32        512            16
 HLSL ps4.0      65536         4096      ∞              16
 HLSL ps5.0      65536         4096      ∞              16
 
+UNIFORM INPUT: Does not change per-vertex or per-pixel, readonly to shader
+VARYING INPUT: Change per-vertex/per-pixel
+ATTRIBUTES: 'in' values passed to vertex shader; default to varying but can use uniform keyword
+CONSTANT TABLE: Holds uniform name, register and size with $ before any uniform attributes
+CONSTANT REGISTERS: lower-latency access and more frequent updates from the CPU
+TEXTURE REGISTERS: perform better for arbitrarily indexed data
+
 SWIZZLING: Using x/y/z/w to refer to each component
 SWIZZLE MASK: Combining components (.xy, .xyz, .xx)
 TESSELLATION: Converts low-detail subdivision surfaces into higher-detail primitives
@@ -46,12 +53,10 @@ TESSELLATION: Converts low-detail subdivision surfaces into higher-detail primit
 DYNAMIC FLOW CONTROL/BRANCHING: Choose path based on dynamic variable that can change during execution
 STATIC FLOW CONTROL/BRANCHING: Choose path based on constant variable that cannot be modified during execution
 
+*/
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //SHADER COMPONENTS
-//////////////////////////////////////////////////////////////////////////////////////////////////////s
-• CONSTANT REGISTERS: lower-latency access and more frequent updates from the CPU
-• TEXTURE REGISTERS: perform better for arbitrarily indexed data
-*/
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //ASSEMBLY INSTRUCTIONS
 dp4 dest, src0, src01   // float4 dot product
@@ -99,40 +104,67 @@ oDepth     // Output depth register: outputs a depth value used with testing
 //SHADER OPTIMIZATIONS
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//PACKING ARRAYS AS FLOAT4
+//• Floats faster for calculations, integers faster for indexing
+//• Compiler may optimize isnan() and isfinite() calls
+//• NaN * 0 = 0 not NaN except with precise keyword
+//• Use of static keyword for global bools only evaluates the one path instead of both
+//• If missing components in vertex stream, auto sets z/y to 0.0 and w to 1.0
+
+//PACKING ARRAYS/VALUES AS FLOAT4
 //arrays are always packed as float4 even if only using a float
 //saves space but can have instruction cost accessing members
 float4 myArray[25]; //float myARray[100];
-float value = myArray[index/4][index%4];  // Accessing through computation
+float value = myArray[index/4][index%4];  //Accessing through computation
 float value = myArray[index>>2][index&3];
-float myArr[100] = (float[100])myArray;   // Does not cast: copies and ineffeciant!
+float myArr[100] = (float[100])myArray;   //Does not cast: copies and ineffeciant!
+const float4 constants = float4(1.0, 0.0, 0.5, 0.2) //commonly used constants can be cached
 
-//SAVING SPACE THROUGH CONSTANT CONTAINER
-//commonly used constants can be cached
-const float4 constants = float4(1.0, 0.0, 0.5, 0.2)
+//VECTORISE OPERATIONS
+float a,b,c,d;
+a = x + 1;            
+b = x + 2;     =>     float4 vec;
+c = x + 3;            vec = x + float4(1,2,3,4)
+d = x + 4;
 
 //SUMMING VECTOR COMPONENTS
-float sum = myFlt.x + myFlt.y + myFlt.z + myFlt.w; // inefficient
-float sum = dot(myFlt4, vec4(1.0)); // faster to use dot to sum
+float sum = a + b + c + d; //inefficient
+float sum = myFlt.x + myFlt.y + myFlt.z + myFlt.w; //inefficient
+float sum = dot(myFlt4, vec4(1.0)); //faster to use dot to sum
 float sum = dot(myFlt3, vec4(1.0).xyz);
+float sum = dot(vec4(a,b,c,d), vec4(1.0));
+
+//SETTING VECTOR LENGTH
+50.0 * normalize(vec)  =>  vec * (50.0 * rsqrt(dot(vec, vec))) //uses less instructions
 
 //MAD (MULTIPLY THEN ADD)
 //usually single-cyle and fast
-float4 result = (value / 2.0) + 1.0; // divide may not be optimized to a mad
-float4 result = (value * 0.5) + 1.0; // always use multiply in case
-float result = 0.5 * (1.0 + value);  // add + multiply may not be optimized to a mad
-float result = 0.5 + (0.5 * value);  // always use multiply first then add
+(x / 2.0) + 1.0        =>  (x * 0.5) + 1.0 //divide may not be optimized, use multiply if possible
+x * (1.0 - x)          =>  -(x * x) + x //expand out brackets that require add before mul
+(x + a) / b            =>  x * (1.0 / b) + (a / b) //expand out brackets
+x += (a * b) + (c * d) =>  x += a * b; x += c * b //move to seperate lines
+
+//BUILT-IN-FUNCTIONS
+a / (x * b)       =>  rcp(x) * a / b //a / b implemented as a * rcp(b) but not always.
+(x + a) / x       =>  a * rcp(x) + 1 //Check if explicitly using rcp gives better results
+1.0 / sqrt(x)     =>  rsqrt(x) //1.0/sqrt(x) maps to rcp(sqrt(x)): instead use single instruction
+abs(x * y)        =>  abs(x) * abs(y)  //use abs() on input or it forces an extra MOV 
+-(x * y)          =>  -x * y //use - on input or it forces an extra MOV 
+1.0 - saturate(x) =>  saturate(1.0 - x) //use saturate() on output or it forces an extra MOV
+min(x) or max(x)  =>  saturate(x) //saturate() cheaper than min or max
+step() or sign()  =>  if {} else {} //conditional assigment faster
 
 //SWIZZLE MASKS
 gl_Position.x = in_pos.x; 
 gl_Position.y = in_pos.y;
-gl_Position.xy = in_pos.xy; // faster than adding both seperately
+gl_Position.xy = in_pos.xy; //faster than adding both seperately
 
 //SETTING INDIVIDUAL COMPONENTS
-float4 finalColour = myColor; //uses temporary float4
+//uses temporary float4
+float4 finalColour = myColor; 
 finalColour.a = 1.0;
 gl_FragColor = finalColour; 
-const float2 constants = float2(1.0, 0.0); //instead, use MAD, swizzling and constant container
+//instead, use MAD, swizzling and constant container
+const float2 constants = float2(1.0, 0.0); 
 gl_FragColor = (myColor.xyzw * constants.xxxy) + constants.yyyx;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -175,8 +207,8 @@ struct MyStruct
 typedef float MyFloat;
 float myGlobalFlt;       // global variable defaults to uniform/extern
 const float myFlt = 4;   // variable cannot be modified by shader (can be modfied by application if visible)
-static float myGlobal;   // variable will not be exposed outside shader
-static float myLocal;    // value will persist across multiple calls to the shader
+static float myGlobal;   // outside main(): variable will not be exposed outside shader
+static float myLocal;    // inside main(): value will persist across multiple calls to the shader
 extern float myGlobal;   // variable is exposed outside shader
 uniform                  // Does not change per-vertex or per-pixel, links to outside application, readonly
 shared                   // allows variable to be accessed accross mutliple .fx files
@@ -242,47 +274,17 @@ tan(angle)          // Angle in radians
 acos(x)
 asin(x)
 atan(x/y) /*or*/ atan2(x,y)
-
-//VERTEX VARIABLES
-
-//PIXEL VARIABLES
-
-//MODEL 3.0- CONSTANT REGISTER PACKING
-float myFloat; //each register is a float4 (float, float2 etc will take up whole register)
-float myArray[100] //to save space, pack arrays as float4
-
-//MODEL 4.0+ CONSTANT REGISTER PACKING
-//Uses cbuffer which automatically packs floats into float4 where possible
-cbuffer
-{
-    float2 myFloat;
-    float myFloat;
-    //float padding
-    float3 myFloat;
-    float myArray[10]; //always assigns full float4 for arrays with last entry only float 
-}
-
-//SAMPLERS
-//HLSL 3.0-: Textures/samplers bound to each other
-//HLSL 4.0+: Textures/samplers seperate objects
-tex2D(mySampler, uvs)  // 2D texture lookup
+        
+//VERTEX INPUTS             VERTEX OUTPUTS   PIXEL INPUTS    PIXEL OUTPUTS
+POSITION0  TANGENT0         POSITION         COLOR0          COLOR0
+NORMAL0    BINORMAL0        PSIZE            TEXCOORD0       DEPTH
+PSIZE0     TESSFACTOR0      FOG
+COLOR0     BLENDINDICES0    COLOR0
+TEXCOORD0  BLENDWEIGHT0     TEXCOORD0
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //HLSL SHADING
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//TEXTURING
-Texture DiffuseTexture;
-sampler TextureSampler = sampler_state 
-{ 
-    texture = <DiffuseTexture>; 
-    magfilter = LINEAR; 
-    minfilter = LINEAR; 
-    mipfilter = LINEAR; 
-    AddressU = WRAP; 
-    AddressV = WRAP; 
-};
-float4 Texture = tex2D(TextureSampler, input.UV);
 
 //TANGENT SPACE NORMAL MAPPING (red/blue)
 float3 bump = bumpdepth*(tex2D(BumpSampler, input.UV).rgb - 0.5)
@@ -324,13 +326,28 @@ float4 Refractions = texCUBE(EnvironSampler, RefractionVector)
 //HLSL BODY
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//SHADER MODEL 3.0- CONSTANTS
+float myFloat; //each register is a float4 (float, float2 etc will take up whole register)
+float myArray[100] //to save space, pack arrays as float4
 float4x4 World                  : World;
 float4x4 WorldViewProjection    : WorldViewProjection;
 float4x4 WorldInvTrans          : WorldInverseTranspose;
-
 float3 CameraPos;
 float3 LightPos;
 
+//SHADER MODEL 4.0+ CONSTANTS
+//can be used by both vertex/pixel shader
+//automatically packs floats into float4 where possible
+cbuffer ConstantBuffer
+{
+    float4x4 viewProjection;
+    float4x4 viewInvTranspose;
+    float3 lightPosition;
+    //float padding
+    float myArray[10]; //always assigns full float4 for arrays with last entry only float 
+}
+
+//SHADER MODEL 3.0- SAMPLERS
 Texture DiffuseTexture;
 sampler ColorSampler = sampler_state 
 { 
@@ -338,19 +355,21 @@ sampler ColorSampler = sampler_state
     magfilter = LINEAR; 
     minfilter = LINEAR; 
     mipfilter = LINEAR; 
-    AddressU = WRAP;  //CLAMP
+    AddressU = WRAP;  //can have CLAMP
     AddressV = WRAP; 
 };
 
 struct VS_OUTPUT
 {
-    float4 Pos           : POSITION; 
+    float4 Pos           : POSITION;    // SHADER MODEL 3.0-
+    float4 Pos           : SV_POSITION; // SHADER MODEL 4.0+
     float2 UV            : TEXCOORD0;
     float3 Normal        : TEXCOORD1;
     float3 LightVector   : TEXCOORD2;
     float3 CameraVector  : TEXCOORD3;
     float3 Tangent       : TEXCOORD4;
     float3 Binormal      : TEXCOORD5;
+    float4 Colour        : COLOR;
 };
 
 VS_OUTPUT VShader(float4 inPos      : POSITION, 
@@ -365,15 +384,21 @@ VS_OUTPUT VShader(float4 inPos      : POSITION,
     output.Normal = mul(inNormal,WorldInvTrans);
     output.Tangent = mul(inTangent,WorldInvTrans);
     output.Binormal = mul(inBinormal,WorldInvTrans);
-    output.LightVector = LightPos - PosWorld;
+    output.LightVector = normalize(LightPos - PosWorld);
     output.CameraVector = CameraPos - PosWorld;
     output.UV = inUV;
     return output;
 }
 
-float4 PShader(VS_OUTPUT input) : COLOR0
+float4 PShader(VS_OUTPUT input) : COLOR0    // SHADER MODEL 3.0-
+float4 PShader(VS_OUTPUT input) : SV_TARGET // SHADER MODEL 4.0+: can output only float3
 { 
-    return tex2D(ColorSampler, input.UV);
+    //Do in pixel shader as after intepolation, normal may not be normalised anymore
+    normalize(input.Normal);
+
+    float4 Texture = tex2D(ColorSampler, input.UV); //SHADER MODEL 3.0-
+
+    return Texture;
 }
 
 technique MAIN
@@ -384,12 +409,9 @@ technique MAIN
         ZENABLE = TRUE;
         ZWRITEENABLE = TRUE;
         CullMode = NONE; //CCW,CW,NONE     
-
         DepthBias = 0.0001; //between -1.0 to 1.0 for offsetting shadows/wireframe/decals
         SlopeScaleDepthBias = 0.0;
         FillMode = Wireframe;
-
-        //alpha blending
         AlphaBlendEnable = TRUE;    
         SrcBlend = SrcAlpha;        
         DestBlend = InvSrcAlpha;    
@@ -436,7 +458,7 @@ struct MyStruct
 //VARIABLE PREFIXES
 const float myFlt = 4;  // variable cannot be modified
 uniform                 // Does not change per-vertex or per-pixel, links to outside application, readonly
-varying                 // Change per-vertex/per-pixel, can be seen between vertex/fragment shader
+varying                 // Changes per-vertex/per-pixel
 
 //PREPROCESSOR
 #version 150  //shader model to use, must be before anything else
@@ -561,31 +583,65 @@ diffuse *= intensity * gl_LightSource[i].diffuse * attenuation;
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //VERTEX SHADER
+//Opengl (1.0 -> 2.x)
 varying vec3 Normal;
 varying vec3 Binormal;
 varying vec3 Tangent;
 varying vec3 VertexNormal;
 varying vec3 WorldViewPos;
 
+//Opengl Core (3.0+)
+in vec3 in_Position;
+in vec2 in_UVs;
+in vec3 in_Normal;
+out vec3 VertToLight;
+out vec3 Normal;
+uniform vec3 lightPosition;
+uniform mat4 world;
+uniform mat4 worldViewProjection;
+uniform mat4 worldViewInvTranpose;
+
 void main()
 {
+    //Opengl (1.0 -> 2.x)
     gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
     WorldViewPos = vec3(gl_ModelViewMatrix * gl_Vertex);
     gl_TexCoord[0] = gl_MultiTexCoord0;
     Normal = gl_NormalMatrix * gl_Normal;
     Tangent = gl_NormalMatrix * gl_MultiTexCoord1.xyz;
     Binormal = gl_NormalMatrix * gl_MultiTexCoord2.xyz;
+
+    //Opengl Core (3.0+)
+	gl_Position = worldViewProjection * vec4(in_Position, 1.0);
+	Normal = (worldViewInvTranpose * vec4(in_Normal, 1.0)).xyz;
+	gl_TexCoord[0].st = in_UVs;
+    vec4 worldViewPos = world * vec4(in_Position, 1.0);
+	vec4 lightViewPos = worldViewInvTranpose * vec4(lightPosition, 1.0);
+	VertToLight = normalize((lightViewPos - worldViewPos).xyz);
 }
 
 //FRAGMENT SHADER
+//Opengl (1.0 -> 2.x)
 uniform sampler2D Sampler0;
 varying vec3 Normal;
 varying vec3 Binormal;
 varying vec3 Tangent;
 varying vec3 WorldViewPos;
 
+//Opengl Core (3.0+)
+in vec3 Normal;
+in vec4 Color;
+out vec4 out_Color;
+
 void main()
 {
-    gl_FragColor = texture2D(Sampler0, gl_TexCoord[0].st);
+    //Do in pixel shader as after intepolation, normal may not be normalised anymore
+    normalize(Normal);
+
+    //Opengl (1.0 -> 2.x)
+    gl_FragColor = texture2D(Sampler0, gl_TexCoord[0].st); 
+
+    //Opengl Core (3.0+)
+    out_Color = ex_Color;
 }
 

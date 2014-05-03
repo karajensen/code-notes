@@ -90,10 +90,12 @@ git branch
 CREATE NEW BRANCH
 git fetch origin //gets updates from server
 git checkout -b myBranch origin/ParentBranch
+git checkout -b myBranch commitID
 git push -u origin myBranch //creates remote branch
 
 CHECKOUT A BRANCH
 git checkout myBranch
+git checkout commitID (for viewing at an id)
 
 SHOW CHANGED FILES IN BRANCH
 git status
