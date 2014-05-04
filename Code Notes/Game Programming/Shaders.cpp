@@ -55,46 +55,92 @@ STATIC FLOW CONTROL/BRANCHING: Choose path based on constant variable that canno
 
 */
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-//SHADER COMPONENTS
+//SHADER ASSEMBLY
 //////////////////////////////////////////////////////////////////////////////////////////////////////
+//Reference: Learn vertex and pixel shader programming with DX9
 
-//ASSEMBLY INSTRUCTIONS
-dp4 dest, src0, src01   // float4 dot product
-mov dest, src           // move source to destination
-dcl_2d s0               // Declare a pixel shader sampler.
-texld dst, src0, src1   // Sample from a texture
-dcl_position v0         // Passing in vertex position
-dcl_texcoord v1         // Passing in vertex textcoord
-mov oT0.xy, v1          // Saving UVs in vertex shader
-dcl t0.xy               // Retrieving UVs in pixel shader
-texld r0, t0, s0        // Sample from a texture
-mov oC0, r0             // Send final color in pixel shader
+_gt // a > b
+_ge // a >= b
+_eq // a == b
+_ne // a != b
+_le // a <= b
+_lt // a < b
+
+abs                         // Make absolute
+add                         // Addition
+break_comp                  // Conditinoal break out of loop
+break_pred                  // Predicate break out of loop
+call                        // Call a function
+callnz                      // Function call if doesn't equal zero
+callnz_pred                 // Function call if predicate doesn't equal zero
+crs                         // Cross product
+dcl_2d s0                   // Declare a pixel shader sampler.
+dcl_position v0             // Passing in vertex position
+dcl_texcoord v1             // Passing in vertex textcoord
+dcl t0.xy                   // Retrieving UVs in pixel shader
+def c0, 1.0, 2.0, 3.0, 4.0  // Sets c0 with a const float vector
+defb b0, true               // Sets b0 with a const boolean
+defi i0, 1, 2, 3, 4         // Sets i0 with a const int vector
+dp3 dest, src0, src01       // float3 Dot product
+dp4 dest, src0, src01       // float4 Dot product
+dst                         // Distance vector
+exp                         // Exponential full precision
+expp                        // Exponential partial
+frc dest, src               // Fractional portion of float
+if_comp                     // if(comparison)
+if_pred                     // if(predicate)
+label                       // Address location to jump to
+lit                         // Lighting
+log                         // Logarithm full precision
+logp                        // Logarithm partial
+lrp                         // Linear interpolation
+mad                         // Multiply then add
+max                         // Maximum
+min                         // Minimum
+mov dest, src               // Copy source register to destination register
+mov oC0, r0                 // Send final color in pixel shader
+mov oT0.xy, v1              // Saving UVs in vertex shader
+mova a0, c0                 // Copy float-pt register to address register and rounds to int
+mul                         // multiply
+nop                         // No operation
+nrm                         // Normalize
+pow                         // Power of
+rep                         // start re-endrep block (while loop)
+ret                         // Return from function
+rcp                         // Reciprocal (1/x)
+rsq                         // Reciprocal square root
+sge dest, a, b              // Set: dest = a >= b ? 1.0 : 0.0
+sgn                         // Sign
+sincos                      // Sine and cosine
+slt dest, a, b              // Set: dest = a < b ? 1.0 : 0.0
+sub                         // Subtraction
+texldl                      // Sample from texture with mipmaps
+texld dst, src0, src1       // Sample from texture
+vs.2.0                      // Version and main shader entry point
 
 //VERTEX INPUT REGISTERS
-v0-v15     // Input register: sends vertex data (position,UVs,normals)
-r0-r11     // Temp register: holds temporary data/results
-c0-c255    // Constant float register: variables sent into the shader
-a0         // Address register           
-b0-b15     // Constant boolean register: store results of logic flow
-i0-i15     // Constant integer register: used by loop/rep 
+v0-v15     // Input register: sends vertex attributes (position, UVs, normals)
+r0-r11     // Temp/scratch register: holds temporary vertex data/results
+c0-c255    // Constant float register: variables sent into the shader       
+b0-b15     // Constant boolean register: quad boolean vectors, store results of logic flow
+i0-i15     // Constant integer register: quad integer vectors, used by loop/rep 
 aL         // Loop counter register: store loop counter
 
 //VERTEX OUTPUT REGISTERS                   
+a0         // Write-only Address register used as index offset into table of registers
 oPos       // Position register: outputs position
 oFog       // Fog register: outputs fog value
-oPts       // Point size register: determines how each reg behaves
+oPts       // Point size register
 oD0-oD1    // Color register: 0 is diffuse, 1 is specular output
-oT0-oT8    // Tex coordinate register: outputs texture coordinates       
+oT0-oT8    // Texture coordinate register
 
 //PIXEL INPUT REGISTERS
-v0-v1      // Input color register: vertex color passed in
-r0-r12/32  // Temp register: holds temporary datas
-c0-c255    // Constant float register: variables sent into the shader
-b0-b15     // Constant boolean register: store results of logic flow
-i0-i15     // Constant integer register: used by loop/rep 
+v0-v1      // Input color register: vertex color passed in (diffuse = 0, specular = 1)
+vFace      // Face register
+vPos       // Position register
+r0-r12/32  // Temp/scratch register: holds temporary pixel data/results
 t0-t07     // Tex coordinate register: contains texture coordinates
-s0-s15     // Sampler register: stores texture file to sample
-p0         // Predicate register
+s0-s15     // Sampler register: readonly, stores texture file to sample
 
 //PIXEL OUTPUT REGISTERS
 oC0-3      // Output color register: determines which render target color outputs to
@@ -582,15 +628,14 @@ diffuse *= intensity * gl_LightSource[i].diffuse * attenuation;
 //GLSL BODY
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//VERTEX SHADER
-//Opengl (1.0 -> 2.x)
+//OPENGL 2.0- VERTEX SHADER
 varying vec3 Normal;
 varying vec3 Binormal;
 varying vec3 Tangent;
 varying vec3 VertexNormal;
 varying vec3 WorldViewPos;
 
-//Opengl Core (3.0+)
+//OPENGL CORE 3.0+ VERTEX SHADER
 in vec3 in_Position;
 in vec2 in_UVs;
 in vec3 in_Normal;
@@ -603,7 +648,7 @@ uniform mat4 worldViewInvTranpose;
 
 void main()
 {
-    //Opengl (1.0 -> 2.x)
+    //OPENGL 2.0-
     gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
     WorldViewPos = vec3(gl_ModelViewMatrix * gl_Vertex);
     gl_TexCoord[0] = gl_MultiTexCoord0;
@@ -611,7 +656,7 @@ void main()
     Tangent = gl_NormalMatrix * gl_MultiTexCoord1.xyz;
     Binormal = gl_NormalMatrix * gl_MultiTexCoord2.xyz;
 
-    //Opengl Core (3.0+)
+    //OPENGL CORE 3.0+
 	gl_Position = worldViewProjection * vec4(in_Position, 1.0);
 	Normal = (worldViewInvTranpose * vec4(in_Normal, 1.0)).xyz;
 	gl_TexCoord[0].st = in_UVs;
@@ -620,15 +665,14 @@ void main()
 	VertToLight = normalize((lightViewPos - worldViewPos).xyz);
 }
 
-//FRAGMENT SHADER
-//Opengl (1.0 -> 2.x)
+//OPENGL 2.0- FRAGMENT SHADER
 uniform sampler2D Sampler0;
 varying vec3 Normal;
 varying vec3 Binormal;
 varying vec3 Tangent;
 varying vec3 WorldViewPos;
 
-//Opengl Core (3.0+)
+//OPENGL CORE 3.0+ FRAGMENT SHADER
 in vec3 Normal;
 in vec4 Color;
 out vec4 out_Color;
@@ -638,10 +682,10 @@ void main()
     //Do in pixel shader as after intepolation, normal may not be normalised anymore
     normalize(Normal);
 
-    //Opengl (1.0 -> 2.x)
+    //OPENGL 2.0-
     gl_FragColor = texture2D(Sampler0, gl_TexCoord[0].st); 
 
-    //Opengl Core (3.0+)
+    //OPENGL CORE 3.0+
     out_Color = ex_Color;
 }
 
