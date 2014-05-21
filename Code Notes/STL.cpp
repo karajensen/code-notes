@@ -200,11 +200,13 @@ myFile.is_open() //return true if file has opened
 myFile.read(myArray, x) //reads x characters from the file and places them in the array
 
 //Read whole file into string
-std::ifstream::pos_type filesize = file.tellg();
-file.seekg(0, std::ios::beg);            
-mystr.resize(filesize);
-file.read(&mystr[0], filesize);
-
+std::ifstream file(m_filepath, std::ios::in|std::ios::ate|std::ios::_Nocreate);
+const int size = static_cast<int>(file.tellg());
+file.seekg(0, std::ios::beg);
+m_shaderText.clear();
+m_shaderText.resize(size);
+file.read(&m_shaderText[0], m_shaderText.size());
+    
 //-------------------------------------------------------------------------------
 //FSTREAM [INPUT/OUTPUT STREAM]
 //-------------------------------------------------------------------------------

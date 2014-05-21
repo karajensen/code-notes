@@ -16,6 +16,9 @@ myOptional = boost::none; //assign no value
 boost::gregorian::date today = boost::gregorian::day_clock::universal_day();
 std::string today = boost::gregorian::to_iso_string(today);
 
+//BOOST THREADING
+boost::mutex::scoped_lock lock(myMutex);
+
 ///////////////////////////////////////////////////////////////////////////
 //CONTAINERS
 ///////////////////////////////////////////////////////////////////////////
@@ -53,6 +56,7 @@ boost::algorithm::icontains(str, "substring")
 
 //BOOST REGEX
 boost::regex_replace("OneTwo", boost::regex("One"), "Three") //returns "ThreeTwo"
+boost::regex_replace(str, boost::regex reg("//.*?\n"), "") //returns str without // comments
 
 //BOOST LEXICAL CAST
 str = boost::lexical_cast<string>(number);   //number->string
@@ -238,3 +242,50 @@ root.add_child("one",one);
 // Writing property tree to xml
 property_tree::xml_parser::xml_writer_settings<char> settings('\t', 1);
 property_tree::write_xml(filePath.generic_string(), root, std::locale(), settings);
+
+//////////////////////////////////////////////////////////////////////////////
+//BOOST GEOMETRY
+//////////////////////////////////////////////////////////////////////////////
+
+#include <boost/polygon/polygon.hpp>
+
+// Only supports int
+typedef boost::polygon::point_data<int> point;
+typedef boost::polygon::polygon_set_data<int> polygon_set;
+typedef boost::polygon::polygon_data<int> polygon_data;
+typedef std::vector<polygon_data> polygon_container;
+using namespace boost::polygon::operators; // required for operator overloads
+
+// CREATE A POLYGON SET
+polygon_container polygons;
+std::vector<point> points;
+points.push_back(point(0,1));
+points.push_back(point(2,3));
+points.push_back(point(3,4));
+points.push_back(point(0,1)); // requires first point again to end shape
+polygon_data polygon;
+boost::polygon::set_points(polygon, points.begin(), points.end());
+polygons.push_back(polygon); // doesn't clean polygon
+polygons += polygon; // cleans polygon (removes intersections etc.) while adding
+polygon_set mySet = polygons;  // set container of polygons
+mySet.get(polygons);   // retrieve container of polygons
+
+// OBTAIN POINTS FROM POLYGON CONTAINER
+for each(const polygon_data& polygon in polygons)
+{
+    // Don't obtain the duplicate last point
+    for(auto itr = polygon.begin(); itr != polygon.end()-1; ++itr)
+    {
+        const int x = itr->get(boost::polygon::HORIZONTAL);
+        const int z = itr->get(boost::polygon::VERTICAL);
+    }
+}
+
+// FUNCTIONS
+// polys can either be polygon_container or polygon_set
+mySet = polys1 - polys2;     // boolean SUBTRACT (difference)
+mySet = polys1 | polys2;     // boolean OR (union)
+mySet = polys1 & polys2;     // boolean AND (intersection)
+mySet = polys1 ^ polys2;     // boolean XOR (disjoint-union)
+equivalence(polys1, polys2)  // whether two sets equal
+area(polys)                  // returns enclosed area of polygon

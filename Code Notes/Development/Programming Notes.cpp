@@ -389,14 +389,17 @@ Multiply by 2ˣ:   value <<= 3 is same as value *= 2³
 Divide by 2ˣ:     value >>= 3 is same as value /= 2³
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//CONCURRENCY
+//MULTITHREADING
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-MULTITHREADING
 • Threads within a program share same data space/information with main thread
 • Thread has a beginning, execution sequence and conclusion
 • Thread has instruction pointer- keeps track of where its currently running
 • Threads can be interrupted and put to sleep while other threads are running
+
+SYNCHRONIZATION
+• Ready-only data for all threads that read it no synchronization is needed
+• If one or more threads modify the data, synchronization (mutexes etc) is required
 
 AMDAHLS LAW
 • Used to find the maximum expected improvement to an overall system when part of the system is improved

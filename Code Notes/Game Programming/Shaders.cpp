@@ -57,7 +57,12 @@ STATIC FLOW CONTROL/BRANCHING: Choose path based on constant variable that canno
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //SHADER ASSEMBLY
 //////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //Reference: Learn vertex and pixel shader programming with DX9
+GPUShaderAnalyzer.exe ./Input.hlsl -I ./Output.txt -ASIC D3D -profile vs_4_0 -function VShader
+GPUShaderAnalyzer.exe ./Input.hlsl -I ./Output.txt -ASIC D3D -profile ps_4_0 -function PShader
+GPUShaderAnalyzer.exe ./Input.vert -I ./Output.txt -ASIC IL -profile glsl_vs -function main
+GPUShaderAnalyzer.exe ./Input.frag -I ./Output.txt -ASIC IL -profile glsl_fs -function main
 
 _gt // a > b
 _ge // a >= b
