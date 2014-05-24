@@ -13,10 +13,9 @@
 [4] All single argument constructors must be declared with 'explicit' to
     prevent unwanted casting to the single argument's type.
 
-[5] If multiple inheritance and both classes inherited share a base,
-    inherit each virtually and call the shared base class in the 
-    initialization list alongside them both. Both will not call their
-    base class.
+[5] If multiple inheritance and both classes inherited share a base, inherit each 
+    virtually and call the shared base class in the initialization list alongside 
+    them both. Both will not call their base class.
 
 [6] Constructor body called base->derived. Destructor body called derived->base
 
@@ -72,8 +71,8 @@
      MyClass obj(MyClass2(value)); Fixed by MyClass obj((MyClass2(value)));
      MyClass obj(); Fixed by MyClass obj;
 
-[21] Between two sequence points a variable must not be modified more than 
-     once. Eg. i = ++i is bad.
+[21] Between two sequence points a variable must not be modified more than once. 
+     Eg. i = ++i is bad.
 
 [22] Using swap/= on a shared pointer removes it from the previous reference 
      count and adds it onto the new reference count.
@@ -87,8 +86,8 @@
 //STL CHEATSHEET
 ////////////////////////////////////////////////////////////////////////////////////
 
-[1] Always use Empty() instead of Size() == 0 as some lists Size() is linear
-    time lookup. Empty() is always constant time.
+[1] Always use Empty() instead of Size() == 0 as Empty() is always constant time
+    while Size() can be linear time lookup
 
 [2] Inserting/Removing causes most cached iterators/pointers/references to be 
     invalidated depending on the container type. This includes iterators in a loop.
@@ -111,12 +110,12 @@
     inserted member is at the front or back in which iterators are invalidated 
     and references are not. 
 
-[8] Erasing from a deque invalidates all iterators/references unless the 
-    erased member is from the front or back in which only the erased member 
-    is invalidated.
+[8] Erasing from a deque invalidates all iterators/references unless the erased member 
+    is from the front or back in which only the erased member is invalidated.
     
-[9] Queue and Stack are built on top of Deque; Priority Queue is build on top
-    of a combined Vector/Heap.
+[9] Queue and Stack are built on top of Deque
+    Priority Queue is build on top of a combined Vector/Heap.
+    Map is based on a balanced binary tree, Unordered Map is based on a hash table
 
 [10] STL Containers/Strings lack a virtual destructor. You shouldn't inherit from them.
 
@@ -124,13 +123,15 @@
      to the front of the container and returns an iterator to the end of this range.
      Use the erase-remove idiom for vector/deque and member methods for list/maps.
 
-[12] remove, remove_if, unique don't work with associative containers. Use member methods
-     or for loop to remove members.
+[12] std::remove, std::remove_if, std::unique don't work with associative containers. 
+     Use member methods or for loop to remove members.
 
-[13] Use member insert to fill in a container with default constructors.
-
-[14] Data for strings not guaranteed to be stored in continuous memory
+[13] Data for strings not guaranteed to be stored in continuous memory
      Internal representation of string not guaranteed to end with null character
+
+[14] Prefer != for iterators to < as < only works with random access iterators
+
+[15] Prefer '\n' to std::endl as std::endl also flushes the stream buffer
 
 ////////////////////////////////////////////////////////////////////////////////////
 //C# CHEATSHEET

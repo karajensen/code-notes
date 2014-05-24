@@ -34,6 +34,9 @@ transform(S, E, S2, doCopyLam) //Modifying; each element calls lambda then is co
 transform(myString.begin(), myString.end(), myString.begin(), toupper); //Modifying; can be copied in place
 transform(S, E, back_inserter(myCon), doCopyLam); //insert at end rather than copying
 
+//STREAMING
+copy(S, E, ostream_iterator<T>(cout, " ")); //copy container into output stream with space between elements
+
 //NUMERIC (in #include <numeric>)
 accumulate(S, E, initial) //returns initial+values over whole range 
 accumulate(S, E, initial, std::minus<T>()) //returns initial-values over whole range
@@ -107,7 +110,6 @@ std::generate(O.begin(), O.end(), [&](){ return MyClass(); });
 
 //COPYING
 copy(S, E, S2) //copies O into O2, returns iterator to E2
-copy(S, E, ostream_iterator<T>(cout, " ")); //copy container into output stream
 copy(S, E, back_inserter(O2)) //inserts O into O2, returns iterator to E2
 copy_n(S, n, S2) //copies from O to n elements into O2, returns iterator to E2, does nothing if n <= 0
 copy_if(S, E, S2, boolLam) //only copies element if lamda is true, returns iterator to E2

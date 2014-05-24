@@ -4,11 +4,13 @@
 
 Edit.ConvertTabsToSpaces
 
-int localVariable;
+int local;
 static int localStatic; //Local static: keeps variable in memory even when function exits
 register int regInt; //may store variable in register not on stack: NO address, can't be global
 volatile int volInt; //don't cache value, check actual value each time its asked for
 mutable int mutInt; //value changes ignored for bitwise const checking, allows changes for const objects/methods
+const int constInt; //may store variable in read-only memory
+constexpr int myInt = 1.0 * constInt; //evaluates at compile time, will store in read-only memory
 
 //GLOBAL VARIABLES
 int myGlobalInt; //Global static: external linkage  (can be accessed via extern)
@@ -229,6 +231,12 @@ label:  //do something
 //////////////////////////////////////////////////////////////////////////////
 //FUNCTIONS
 //////////////////////////////////////////////////////////////////////////////
+
+//MAIN ENTRY FUNCTION
+//argc is number of arguments, including the string used to invoke the program
+//argv is array of arguments, including the string used to invoke the program
+//must be called main or winmain
+int main(int argc, char* argv[]){ /*no return auto returns 0 (success)*/ }
 
 //PASSING ARRAYS/C-STRING
 //pass array name (pointer to first member) and number of elements

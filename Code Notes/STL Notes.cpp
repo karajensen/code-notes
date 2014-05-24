@@ -135,12 +135,16 @@ HEAP
 ///////////////////////////////////////////////////////////////////////////////////////
 
 MAP
-• fast for range iteration over elements
-• elements sorted from lowest to highest with their key
-• uses a balanced binary tree to store values, has a O(logN) lookup/insert time
+• Based on balanced binary tree
+• Sorted from lowest to highest with their key
+• has a O(logN) lookup and insert time
 • Multi map can have multiple values to the one key
-• Unordered map not sorted, fast for accessing individual elements by key
 • Map iterators point to pairs where key is const to prevent breaking sorted order
+
+UNORDERED MAP
+• Based on hash table
+• Not sorted
+• Fast for accessing individual elements by key
 
 SET
 • elements themselves are the keys

@@ -5,6 +5,10 @@
 Q: Name a data structure that can replicate a cache and why
 A: Splay trees as they are designed to provide a faster access to the same piece of data for the second time
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//C++ QUESTIONS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 Q: What is the difference between a pointer and a reference?
 A:  - pointers hold a memory address for the variable, references are another name for the variable
     - pointers must be dereferenced to use the variable
@@ -181,11 +185,18 @@ A: They are slower than a normal function call. The compiler does not know at co
    be called. Extra calls to the vtbl to find the correct address as well as not being able to use the normal 
    function optimizations such as inlining contributes to this speed.
 
+Q: What are the typical performance bottlenecks in a C++ application?
+A: Dynamic allocation, algorithm processing many inputs, inserting/deleting in containers
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//STL QUESTIONS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 Q: What is the underlying type of std::map?
 A: Balanced binary tree
 
-Q: What are the typical performance bottlenecks in a C++ application?
-A: Dynamic allocation, algorithm processing many inputs, inserting/deleting in containers
+Q: What is the difference between myVector[0] and myVector.at(0)?
+A: at() does bounds checking and operator[] does not
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PERSONAL QUESTIONS
@@ -216,3 +227,4 @@ ANSWER STRUCTURE: Situation, Action, Response
 21) How do you reach a decision if you don't have all the facts?
 22) What do you like and dislike about job we are discussing?
 23) Tell me about a time when you had to do something you really didn't like doing
+24) What are some technical books you have recently read?

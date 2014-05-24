@@ -375,25 +375,33 @@ OutputDebugString((error+"\n").c_str());
 // WINDOWS POPUP
 MessageBox(NULL, message.c_str(), TEXT("ERROR"), MB_OK);
 
-// PASSING COMMAND LINE ARGUMENTS
-// argc is number of arguments, including the string used to invoke the program
-// argv is array of arguments, including the string used to invoke the program
-int main(int argc, char* argv[])
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <future>
+#include <thread>
+#include <mutex>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//FUTURE
-std::future<T> future
-wait()  //waits for the result to become available 
-get()   //returns the result or blocks until the result is avaliable
+//THREADING
+//Moves arguments into thread
+//Will terminate if out of scope
+std::thread thread(&MyFunction, arg1, arg2);
+thread.join(); //stop thread once function call is finished
 
-//ASYNC
-//Runs the given function asynchronously potentially in a separate thread
-//Code continues after line and will only block if handle is destroyed or value requested
-//Returns std::future that will eventually hold the result of that function call
-//std::launch::async is the policy and is optional
-std::future<int> handle = std::async(std::launch::async, [](){ MyFn()});
-std::launch::async 	    //A new thread is launched to execute the task asynchronously 
-std::launch::deferred 	//Task is executed on the calling thread the first time its result is requested 
+//MUTEX
+std::mutex myMutex;
+std::lock_guard<std::mutex> lock(myMutex); //scoped locking/unlocking
+if(myMutex.try_lock()) //doesn't block if can't lock
+{
+    myMutex.unlock()
+}
+
+//FUTURE
+//Do function asynchronously and hold return type once finished
+//Will terminate if out of scope
+std::future<T> handle = std::async(std::launch::async, &MyFunction);
+handle.wait() //blocks until result is available
+handle.get()  //blocks until result is available and returns result
+
+//FUTURE POLICIES
+std::launch::async 	   //A new thread is launched to execute the task asynchronously 
+std::launch::deferred  //Task is executed on the calling thread the first time its result is requested 
