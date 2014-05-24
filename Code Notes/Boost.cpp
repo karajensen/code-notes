@@ -2,11 +2,11 @@
 //BOOST LIBRARIES
 ///////////////////////////////////////////////////////////////////////////
 
-//PREVENT COPYING OF CLASSES
+//BOOST NON-COPYABLE
 //inherits privately, gives compiler error if copying occurs
 class MyClass : boost::noncopyable 
 
-//OBJECT WITH OPTIONAL NONE
+//BOOST OPTIONAL
 boost::optional<double> myOptional;
 myOptional.is_initialized(); //check if has a value assigned
 myOptional = 2.0; //assign a value
@@ -122,6 +122,24 @@ sharedPtr.reset(new MyClass());
 // WEAK POINTER
 // observer of shared pointer; goes null when shared_ptr reference = 0
 boost::weak_ptr<MyClass> weakPtr(sharedPtr);
+
+//////////////////////////////////////////////////////////////////////////////
+//THREADING
+//////////////////////////////////////////////////////////////////////////////
+
+// Automatically locks/unlocks thread in scope
+boost::mutex::scoped_lock lock(myMutex);
+
+// Doesn't wait if mutex is already locked
+if(myMutex.try_lock())
+{
+    myMutex.unlock();
+}
+
+// Creating a new thread
+void MyFunction(int a1, double a2){ /*do something*/ }
+boost::thread myThread(&MyFunction, 10, 2.0); // Does copy (use pointers for objects)
+myThread.join();
 
 
 //////////////////////////////////////////////////////////////////////////////

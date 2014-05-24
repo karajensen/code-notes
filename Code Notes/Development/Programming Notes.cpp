@@ -45,8 +45,8 @@ SHALLOW COPY: Reference/pointer is copied and points to original data
 DECLARING VARIABLES
 • Determines how much memory is needed for a data object
 • Determines how the bits in memory are interpreted 
- (bool and char use same amount of memory but shown differently)
-• Determines what methods can be performed using the data object.
+• Determines what methods can be performed using the data object
+• Statically typed languages require variable type to be defined
 
 NAMING CONVENTION
 • Characters usable: alphabet, numbers, underscore character
@@ -60,13 +60,13 @@ TYPE-SAFETY
 • How much compiler will check that you don't mix incompatible variables
 • Eg. C++ prevents floating point being added to string
 
-TYPE-CAST/DOWNCASTING/EXPLICIT CONVERSION
+TYPE-CAST / EXPLICIT CONVERSION
 • Data may be lost, done by user with cast operator
 • base -> derived
 • double -> float -> long -> int -> short
 • unsigned -> signed
 
-AUTOMATIC/UPCASTING/IMPLICIT CONVERSION
+AUTOMATIC / IMPLICIT CONVERSION
 • Bool is converted to int internally
 • No data is lost, auto done by compiler
 • derived -> base
