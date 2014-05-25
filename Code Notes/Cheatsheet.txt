@@ -82,6 +82,9 @@
 
 [24] For pointer math a[i] is the same as i[a] as its converted to *(a + i)
 
+[25] Use auto for lambda return types as a conversion is needed to return as
+     std::function. Only use std::function if needed to pass lambda.
+
 ////////////////////////////////////////////////////////////////////////////////////
 //STL CHEATSHEET
 ////////////////////////////////////////////////////////////////////////////////////

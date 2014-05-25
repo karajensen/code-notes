@@ -45,6 +45,10 @@ auto myLamda = [](int x) { return 3*2; } //if only one line, can omit trailing r
 auto myLamda = [](int x)->double { return 3*2; }
 auto myLamda = &MyFunction; //storing pointer to function
 auto myLamda = MyFunctor; //storing functor object
+
+//CONVERTING TO STD::FUNCTION
+//• Internal lambda type is different from std::function and a conversion is needed
+//• Only use std::function as return type if needed to pass lambda 
 std::function<double(int)> myLamda = [](int x){ return x+2.0; }
 
 //CAPTURING OUTSIDE VARIABLES
