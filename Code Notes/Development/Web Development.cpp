@@ -196,9 +196,12 @@ WEB SERVICES
   scrollbar-face-color: #FF5522;
   scrollbar-highlight-color: #FF69B4;
   scrollbar-shadow-color: #FF00FF;
-  scrollbar-track-color: #FFAA22;  
-  
+  scrollbar-track-color: #FFAA22; 
 }
+
+// VERTICAL TEXT ALIGN
+#parent {display: table;}
+#child { display: table-cell; vertical-align: middle; }
 
 // CLASSES
 // comma for multiple classes or else seen as contextual selector
@@ -262,15 +265,21 @@ div.MyClass { }
   myInt = 8;
   myInt--; // increment/decrement
   myFloat = 4.0;
+  myObj = null;
+  myObj = {x: 2, y: 1} // auto creates object with parameters
+  myObj = myObj || "default value";
 
   // STRINGS
-  myString = "MyString\n";           // supports escape characters
-  myString = new String("MyString"); 
-  myString.toUpperCase();            // Returns upper case of string
-  myString.toLowerCase();            // Returns lower case of string
-  myString.indexOf("substring");     // Returns first index of or -1 if not found
-  myString.length                    // Number of characters in string
-  myString.substr(0, 3);             // Generate substring from index 0 to 3
+  str = "MyString\n";               // supports escape characters
+  str = new String("MyString");     
+  str.toUpperCase();                // Returns upper case of string
+  str.toLowerCase();                // Returns lower case of string
+  str.indexOf("substring");         // Returns first index of or -1 if not found
+  str.length                        // Number of characters in string
+  str.substr(0, 3);                 // Generate substring from index 0 to 3
+  str.replace(/_[A-Za-z0-9]*/g,"")  // replace everything after _ with ""
+  str.replace(str1, str2);          // returns new string
+  str.split(",")                    // returns array of string without seperator
                                      
   // ARRAYS
   myArray = new Array();
@@ -296,13 +305,15 @@ div.MyClass { }
   myElement.bgColor;                        // can read/write all properties of element
   myElement.style.width;                    // access properties declared in <style></style> tags
 
-  // FUNCTION DEFINITION
+  // FUNCTIONS
   function MyFunction(myString, myArg)
   {
     var localInt = 10;    // Local to function scope, without becomes global
     return myArg + myint; // All global variables avaliable
   }
   myArg = MyFunction("MyText", 5);
+  MyFunction("MyText"); // any arguments to right not used become null
+  MyFunction({a:"MyText", b:5}); // using named arguments
 
   // MESSAGE BOX
   alert("Message");
@@ -320,58 +331,12 @@ div.MyClass { }
   for (i = 1; i <= 100; i++) { }
   do { } while (myBoolean)
 
+  // LIBRARIES
+  Math.max(a,b)
+
 </script>
 
 // SCRIPT USAGE
 <a href="javascript:MyFunction('use commas for string')">MyLink</a>
 <div onclick="MyFunction('Hello')"></div>
 <b onclick="MyFunction('Hello');MyOtherFunction();">Some Bold Text</b>
-
-//========================================================================================
-//JAVASCRIPT FORMS
-//========================================================================================
-<form name="myForm" method="post" action="myScript.aspx">
-  
-  // TEXT BOX
-  <input name="name" type="text" size="30">
-    
-  // DROP DOWN BOX
-  <select name="job">
-    <option value="student">Student</option>
-    <option value="professional">Professional</option>
-  </select>
-
-  // BUTTON
-  <input type="button" value="Send!" onClick="CheckForm();">
-    
-  // SUBMIT BUTTON
-  // automatically calls myForm.submit() unless return false is used
-  <input type="submit" value="Send!" onClick="CheckForm(); return false;">
-   
-</form>
-
-document.myForm.submit(); // submits the form
-document.myForm.name.value; // get value of input element
-document.myForm.job.selectedIndex // get selected index of drop down box (zero-based index)
-
-//========================================================================================
-//JAVASCRIPT WINDOWS
-//========================================================================================
-
-// Open a new window
-myWindow = window.open("myPage.html", "myPage", "height=300, width=400");
-
-// Window Methods
-myWindow.close();
-myWindow.moveTo(0,0);
-myWindow.resizeTo(200,100);
-
-// Window Properties
-fullscreen=1 // can also take yes/no
-height=300
-width=400
-location=1 // display the address bar
-resizable=0
-menubar=1 // display the file/edit menubar
-status=0 // display the status bar
-toolbar=1 // display the browser toolbar

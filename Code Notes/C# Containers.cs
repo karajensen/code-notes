@@ -44,6 +44,7 @@ var autoClass = new { myInt = 10, myString = "String" };
 string myString = "one"+"two";
 string myString = "one"+1; //auto converts to string using concatonation
 string myString = 1; //doesn't auto convert
+string.Empty //returns empty string
 
 str.ToUpper();        //returns upper case version
 str.ToLower();        //returns lower case version
@@ -51,9 +52,9 @@ str.PadLeft(x);       //add x spaces to front of string
 str.PadRight(x);      //add x spaces to end of string 
 str.PadLeft(x,'a');   //add x 'a' to front of string 
 str.PadRight(x,'a');  //add x 'a' to end of string 
-str.Split(seperator); //splits into string[] minus the seperator
 
-string.Empty //returns empty string
+str.Split(new String[]{ str2 }, StringSplitOptions.None); //splits into string[] minus the seperator
+str.Split(new char[]{ ' ','\n' });
 
 //STRING BUILDER
 //string that can be modified directly

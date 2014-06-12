@@ -29,6 +29,11 @@ BOOST_FOREACH(Shader_Ptr shader, m_shaders)
 //FILL A STD::VECTOR
 boost::assign::list_of<T>("one")("two"); //returns std::vector<T>
 
+//BOOST BIMAP
+boost::bimap<a, b> myBiMap = boost::assign::list_of<boost::bimap<a, b>::relation>(objA1, objB1)(objA2, objB2);
+auto it = myBiMap.left.find(objA1); // returns itr for objA1 or myBiMap.left.end()
+auto it = myBiMap.right.find(objB1); // returns itr for objB1 or myBiMap.right.end()
+
 ///////////////////////////////////////////////////////////////////////////
 //STRINGS
 ///////////////////////////////////////////////////////////////////////////
