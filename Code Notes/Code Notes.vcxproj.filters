@@ -109,16 +109,10 @@
     <ClCompile Include="Development\Software Development.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Directx.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
     <ClCompile Include="Game Programming\Lighting.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
     <ClCompile Include="Game Programming\Mental Ray.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Programming\OpenGL.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
     <ClCompile Include="Game Programming\Rendering.cpp">
@@ -173,6 +167,9 @@
       <Filter>Development</Filter>
     </ClCompile>
     <ClCompile Include="Game Programming\Shaders.cpp">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\RenderEngines.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
   </ItemGroup>

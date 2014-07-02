@@ -88,20 +88,39 @@ int intarray[2][4]
 //CASTING
 //////////////////////////////////////////////////////////////////////////////
 
-//C-style casting
 long(myInt)
 (int)myInt 
-
-//C++ Style casting
 float myFloat = static_cast<float>(myDouble)
 
-//converts explicitly safely; only pointers of classes with virtual functions
+// STRING TO NUMBER
+atoi("3") //converts cstring to int
+atof("3.0") //converts cstring to float
+
+// NUMBER TO STRING C++
+// Superseeds std::strstream
+// Requires cast to & as operator<< returns base class
+static_cast<std::ostringstream&>(std::ostringstream() << value).str()
+
+// NUMBER TO STRING C
+// Can have buffer overruns, difficult to use with templates
+char buffer[256];
+sprintf(buffer, "%d", myInt);
+
+//CONVERT WIDE STRING/STRING
+std::string str(wstr.begin(),  wstr.end());
+std::wstring wstr(str.begin(), str.end());
+
+//SAFE CASTING
+//only pointers of classes with virtual functions
 //returns 0 if the conversion failed; slowest
 MyClass1* ptr1 = dynamic_cast<MyClass2>(ptr2) 
 
-//converts explicitly unsafely [only pointers]
-MyClass1* ptr1 = reinterpret_cast<MyClass2>(ptr2) 
+//UNSAFE CASTING
+MyClass1* ptr1 = reinterpret_cast<MyClass2>(ptr2) // only for pointers
+MyClass1* ptr1 = static_cast<MyClass2*>(ptr2) 
+MyClass1& obj1 = static_cast<MyClass2&>(obj2) 
 
+//REMOVING CONST
 //converts const to non-const [only pointers]
 //bad if var is stored in read-only memory
 //use only if know underlying type is non-const
@@ -131,16 +150,29 @@ union MyColor
 //////////////////////////////////////////////////////////////////////////////
 //ENUMERATIONS
 //////////////////////////////////////////////////////////////////////////////
-//compiler replaces name with integer value when encountering it
+// compiler replaces name with integer value when encountering it
 
-enum myenum {red, orange = 100, yellow, green = 0}; //red = 0, orange = 100, yellow = 101, green = 0
-enum myenum2 {red, orange, yellow, green}; //redifining despite new name not possible in VS
+// UNNAMED ENUM
+// Used for constants
+enum { RED, ORANGE }
 
-//DECLARING AN ENMUN INSTANCE
-myenum e;
-e = red;
-e = myenum(2);
-myenum nextEnum = static_cast<myenum>(e+1);
+// ENUM PLAIN
+enum MyEnum {RED, ORANGE = 100, YELLOW, GREEN = 0}; //red = 0, orange = 100, yellow = 101, green = 0
+MyEnum myEnum = RED;
+myEnum = static_cast<MyEnum>(2); // requires cast from int to enum
+int myInt = myEnum; // no cast from enum to int
+
+// ENUM CLASS
+// enum class has operator=, operator==, operator<, can add own methods
+enum class MyClassEnum {RED, ORANGE};
+MyClassEnum myClassEnum = RED;
+myClassEnum = static_cast<MyClassEnum>(2); // requires cast from int to enum
+int myInt = static_cast<int>(myClassEnum) // requires cast from enum to int
+
+// SHARING SCOPE
+// when in same scope requires myenum1::red for usage
+enum MyEnum1 {RED, ORANGE};
+enum MyEnum2 {RED};
 
 //ENUM FOR BIT FLAGS
 enum MASKS

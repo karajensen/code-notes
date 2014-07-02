@@ -188,6 +188,12 @@ A: They are slower than a normal function call. The compiler does not know at co
 Q: What are the typical performance bottlenecks in a C++ application?
 A: Dynamic allocation, algorithm processing many inputs, inserting/deleting in containers
 
+Q: Why should you always catch a const reference?
+A: Const is used to prevent the exception from being modified and giving incorrect crash information
+   Reference is used so the exception can be resolved polymorphically and so slicing does not happen
+   Reference is used instead of pointer to reduce the need to manage any memory at the catch position
+   Allocating memory for an exception through a pointer may not work if the exception is out of memory.
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //STL QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

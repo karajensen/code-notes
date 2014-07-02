@@ -264,17 +264,6 @@ template<typename T> T RadToDeg(T radians)
     return static_cast<T>(180.0/M_PI)*radians;
 }
 
-//CONVERT VALUES TO A STRING
-template<typename T>
-std::string StringCast(const T& value)
-{
-    return static_cast<std::ostringstream&>(std::ostringstream() << value).str();
-}
-
-//CONVERT WIDE STRING/STRING
-std::string str(wstr.begin(),  wstr.end());
-std::wstring wstr(nstr.begin(), nstr.end());
-
 //CSTRING: REVERSE LETTERS
 char test[] = "this is a test";
 char saved = ' ';
@@ -330,3 +319,14 @@ int a = (color >> 24) & 0xFF;
 //copies into container: 1 1 2 3 5 8 13 21 34 55
 std::vector<int> v = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 std::adjacent_difference(v.begin(), v.end() - 1, v.begin() + 1, std::plus<int>());
+
+//SAFE RELEASE
+SafeRelease(&myPointer); // pointer to object
+template <typename T> void SafeRelease(T** pObject)
+{
+    if(*pObject)
+    {
+        (*pObject)->Release();
+        *pObject = nullptr;
+    }
+}

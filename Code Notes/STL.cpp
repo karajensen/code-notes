@@ -240,8 +240,6 @@ strncpy(cstring1, cstring2, 3) //copy 3 members of cstring2 to cstring1, must do
 strcat(cstring1, cstring2) //append contents of cstring2 to cstring1
 strcmp(cstring1, cstring2) //returns 0 if same, < 0 if first < second, > 0 value if first > second
 strchr(cstring1, ch) //returns address of first occurance of char chosen, or nullptr if not there
-atoi("3") //converts cstring to int
-atof("3.0") //converts cstring to float
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <cctype>
@@ -290,9 +288,16 @@ try
 { 
     myFunction();
 } 
-catch(std::exception& e)
+catch(const std::exception& e)
 {
+    // Always catch by const reference
+    // Reference is used instead of pointer to reduce the need to manage any memory at the catch position
+    // Allocating memory for an exception through a pointer may not work if the exception is out of memory.
+
     cout << e.what() << endl;
+
+    throw e; // throws a copy of e, splices off any derived type
+    throw; //original exception is thrown again
 }
 catch (...) //catches anything
 {
@@ -309,7 +314,6 @@ void myFunction() throw(); //DOESN'T THROW EXCEPTION
 set_unexpected(MyUnexpectedFn);
 void MyUnexpectedFn()
 {
-    throw; //original exception is thrown again
     throw std::bad_exception(); //bad_exception is thrown
 }
 
@@ -333,7 +337,7 @@ try
 {
     throw MyClass();
 }
-catch(std::exception & e)
+catch(const std::exception& e)
 {
     cout << e.what() << endl;
 }

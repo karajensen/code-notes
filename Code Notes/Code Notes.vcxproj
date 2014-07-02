@@ -108,11 +108,10 @@
     <ClCompile Include="Development\Software Development.cpp" />
     <ClCompile Include="Development\Web Development.cpp" />
     <ClCompile Include="Game Programming\Collisions.cpp" />
-    <ClCompile Include="Game Programming\Directx.cpp" />
+    <ClCompile Include="Game Programming\RenderEngines.cpp" />
     <ClCompile Include="Game Programming\Lighting.cpp" />
     <ClCompile Include="Game Programming\Maths.cpp" />
     <ClCompile Include="Game Programming\Mental Ray.cpp" />
-    <ClCompile Include="Game Programming\OpenGL.cpp" />
     <ClCompile Include="Game Programming\Rendering.cpp" />
     <ClCompile Include="Game Programming\Shaders.cpp" />
     <ClCompile Include="Game Programming\Simulation.cpp" />

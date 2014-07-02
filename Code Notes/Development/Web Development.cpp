@@ -155,7 +155,8 @@ WEB SERVICES
   height: 25px;
   visibility: hidden; // visible
   cursor: crosshair;
-  
+  opacity: 1.0;
+
   font-family: Verdana, Geneva, sans-serif;
   font-size: 9pt;
   font-style: normal; // italic
@@ -165,7 +166,7 @@ WEB SERVICES
   text-align: right; // center,left
   text-transform: capitalize;
   text-decoration: underline;
-  
+ 
   background-repeat: repeat-y; // no-repeat,repeat-x
   background: #939393;
   background-position: right top;
@@ -250,93 +251,114 @@ div.MyClass { }
 //• Can be used in header/body or inside links/elements
 //• When inside <script></script> tags use " for string otherwise use '
 
-// LOAD A SCRIPT FILE
-<script src="myscript.js"></script>
+<script>...</script> // Inlining javascript
+<script src="myscript.js"></script> // Loading a script file
+<noscript>JavaScript is turned off</noscript> // only displayed if no support
 
-// NO JAVASCRIPT SUPPORT
-<noscript>JavaScript is turned off</noscript>// only displayed if no support
-
-// SCRIPT
 <script type="text/javascript">
-
-  // GLOBAL VARIABLES
-  // Don't use same name as element ID
-  myBool = true;
-  myInt = 8;
-  myInt--; // increment/decrement
-  myFloat = 4.0;
-  myObj = null;
-  myObj = {x: 2, y: 1} // auto creates object with parameters
-  myObj = myObj || "default value";
-
-  // STRINGS
-  str = "MyString\n";               // supports escape characters
-  str = new String("MyString");     
-  str.toUpperCase();                // Returns upper case of string
-  str.toLowerCase();                // Returns lower case of string
-  str.indexOf("substring");         // Returns first index of or -1 if not found
-  str.length                        // Number of characters in string
-  str.substr(0, 3);                 // Generate substring from index 0 to 3
-  str.replace(/_[A-Za-z0-9]*/g,"")  // replace everything after _ with ""
-  str.replace(str1, str2);          // returns new string
-  str.split(",")                    // returns array of string without seperator
-                                     
-  // ARRAYS
-  myArray = new Array();
-  myArray.length 
-  myArray[0] = "myEntry1"; // auto resizes, zero-based          
-
-  // CONVERSIONS
-  myString = 8 + "MyString"; // Auto converts: "8MyString"
-  myInt = parseInt("8");     // Returns NaN if not a number
-
-  // HTML DOCUMENT OBJECT MODEL (DOM)
-  // Views html as a tree, elements must be defined above script to be seen
-  screen.availWidth
-  screen.availHeight
-  document.bgColor = "#000000";
-  document.write("MyText<b>InBold</b>");    // Adds the text where the <script></script> is positioned
-  document.lastModified;                    // Text for when the page was last modified
-  document.title;                           // Title of the page
-  document.getElementById("MyElementID");   // Returns element by its ID or null if doesn't exist
-  document.getElementByName("MyElName");    // Returns element by its name or null if doesn't exist
-  document.getElementsByTagName("MyElTag"); // Returns element by its tag or null if doesn't exist
-  myElement.innerText                       // OR MyElementID.innerText
-  myElement.bgColor;                        // can read/write all properties of element
-  myElement.style.width;                    // access properties declared in <style></style> tags
-
-  // FUNCTIONS
-  function MyFunction(myString, myArg)
-  {
-    var localInt = 10;    // Local to function scope, without becomes global
-    return myArg + myint; // All global variables avaliable
-  }
-  myArg = MyFunction("MyText", 5);
-  MyFunction("MyText"); // any arguments to right not used become null
-  MyFunction({a:"MyText", b:5}); // using named arguments
-
-  // MESSAGE BOX
-  alert("Message");
-
-  // PROMPT BOX
-  result = prompt("Question Text", "Default Answer");
-  if(result){ } // result will be null or 0 if cancel clicked
-
-  // CONDITIONALS
-  if(myInt == 10) { }
-  else if(!(myInt != 10) || (myInt < 4)) { }
-  else { }
-  
-  // LOOPS
-  for (i = 1; i <= 100; i++) { }
-  do { } while (myBoolean)
-
-  // LIBRARIES
-  Math.max(a,b)
-
-</script>
-
-// SCRIPT USAGE
 <a href="javascript:MyFunction('use commas for string')">MyLink</a>
 <div onclick="MyFunction('Hello')"></div>
 <b onclick="MyFunction('Hello');MyOtherFunction();">Some Bold Text</b>
+
+// VARIABLES
+// Don't use same name as element ID
+myBool = true;
+myInt = 8;
+myInt--; // increment/decrement
+myFloat = 4.0;
+myObj = null;
+myObj = {x: 2, y: 1} // auto creates object with parameters
+myObj = myObj || "default value";
+var myObj; // Makes local to scope (Without becomes global to all)
+
+// STRINGS
+str = "MyString\n";               // supports escape characters
+str = new String("MyString");     
+str.toUpperCase();                // Returns upper case of string
+str.toLowerCase();                // Returns lower case of string
+str.indexOf("substring");         // Returns first index of or -1 if not found
+str.length                        // Number of characters in string
+str.substr(0, 3);                 // Generate substring from index 0 to 3
+str.replace(/_[A-Za-z0-9]*/g,"")  // replace everything after _ with ""
+str.replace(str1, str2);          // returns new string
+str.split(",")                    // returns array of string without seperator
+                                     
+// ARRAYS
+myArray = new Array();
+myArray.length 
+myArray[0] = "myEntry1"; // auto resizes, zero-based          
+
+// CONVERSIONS
+myString = myInt.toString();
+myString = 8 + "MyString";    // Auto converts: "8MyString"
+myInt = parseInt("8");        // Returns NaN if not a number
+
+// FUNCTIONS
+function MyFunction(myString, myArg)
+{
+    var localInt = 10;    // Local to function scope, without becomes global
+    return myArg + myint; // All global variables avaliable
+}
+myArg = MyFunction("MyText", 5);
+MyFunction("MyText"); // any arguments to right not used become null
+MyFunction({a:"MyText", b:5}); // using named arguments
+
+// CLASSES
+// No constructors/destructors
+function MyClass(b) 
+{
+    this.myMember = b; 
+
+    this.MyMethod = function(a)
+    {
+        this.myMember = a;
+    }
+}
+var myObj = new MyClass(b);
+
+// EXCEPTIONS
+try
+{
+}
+catch(ex)
+{
+    alert(ex.toString());
+    throw ex; // rethrow same exception so console can log it
+}
+
+// MESSAGING
+alert("Message");
+console.log("Message"); // requires test for console == null before use
+console.error("Message");
+
+// PROMPT BOX
+result = prompt("Question Text", "Default Answer");
+if(result){ } // result will be null or 0 if cancel clicked
+
+// CONDITIONALS
+if(myInt == 10) { }
+else if(!(myInt != 10) || (myInt < 4)) { }
+else { }
+  
+// LOOPS
+for (i = 1; i <= 100; i++) { }
+do { } while (myBoolean)
+
+// LIBRARIES
+Math.max(a,b)
+Math.abs(a)
+
+// HTML DOCUMENT OBJECT MODEL (DOM)
+// Views html as a tree, elements must be defined above script to be seen
+screen.availWidth
+screen.availHeight
+document.bgColor = "#000000";
+document.write("MyText<b>InBold</b>");    // Adds the text where the <script></script> is positioned
+document.lastModified;                    // Text for when the page was last modified
+document.title;                           // Title of the page
+document.getElementById("MyElementID");   // Returns element by its ID or null if doesn't exist
+document.getElementByName("MyElName");    // Returns element by its name or null if doesn't exist
+document.getElementsByTagName("MyElTag"); // Returns element by its tag or null if doesn't exist
+myElement.innerText                       // OR MyElementID.innerText
+myElement.bgColor;                        // can read/write all properties of element
+myElement.style.width;                    // access properties declared in <style></style> tags
