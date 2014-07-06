@@ -8,6 +8,9 @@
 #define MYCLASSAPI __declspec(dllimport)
 #endif
 
+/**
+* Used by native: cannot contain any managed code
+*/
 namespace Wrapper
 {
     class MYCLASSAPI MyNativeClass

@@ -6,6 +6,9 @@ namespace Wrapper
 {
     class Logger;
 
+    /**
+    * Used by managed: can contain both native and managed
+    */
     public ref class MyClass
     {
     public:
