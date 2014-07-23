@@ -73,9 +73,17 @@ catch(const boost::bad_lexical_cast& e)
     LogError(e.what());
 }
 
-//BOOST SPLIT
+//BOOST SPLIT REGEX
+//will split when str is found; does not keep deliminator in vector
+//if deliminator is at start or end of text may have empty entry in vector
+#include "boost/algorithm/string/regex.hpp"
 std::vector<std::string> components;
-boost::split(components, line, boost::is_any_of("|"));
+boost::algorithm::split_regex(components, text, boost::regex(str))
+
+//BOOST SPLIT
+//will split string when a,b or c is found; keeps deliminator in vector
+std::vector<std::string> components;
+boost::split(components, text, boost::is_any_of("abc"), boost::token_compress_on);
 
 //BOOST TOKENIZER
 std::string removedSeperator;

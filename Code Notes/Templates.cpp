@@ -42,7 +42,12 @@ class MyClass
 {
 public:
 
-    MyClass<T>(); //constructor, <T> not required
+    //constructor, <T> not required
+    MyClass<T>() : 
+        m_member(S()) //initialise templated member to default
+    {
+    }
+   
     ~MyClass<T>(); //destructor, <T> not required
     MyClass<T>& operator=(const MyClass<T> & o); //assignment operator
     MyClass(const MyClass<T> & c); //copy constructor
