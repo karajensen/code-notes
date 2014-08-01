@@ -10,7 +10,15 @@ auto sortLam = [](const MyClass& o1, const MyClass& o2) -> bool { return o1.myIn
 auto createLam = []() -> int { return rand()%10; }
 struct DelFunctor { template<typename T> void operator()(const T* ptr) const { delete ptr; ptr = nullptr; } };
 
-//OPERATION FUNCTORS
+// ACCEPTED PREDICATES
+struct myFunctor { void operator()(int i){} };   // ..., myFunctor);
+std::plus<T> stdFunctor;                         // ..., stdFunctor); or ..., std::plus<T>());
+auto myLambda = [](int i) {};                    // ..., myLambda);
+inline void myFunction(const MyClass& o){}       // ..., myFunction);
+class MyClass { static void MyStatic(int i){} }; // ..., MyClass::MyStatic);
+class MyClass { void MyMember(int i){} };        // ..., std::bind(&MyClass::MyMember, &obj, _1));
+
+// OPERATION FUNCTORS
 plus<T> op          // (const T& x, const T& y) const {return x+y;}
 minus<T> op         // (const T& x, const T& y) const {return x-y;}
 divides<T> op       // (const T& x, const T& y) const {return x/y;}

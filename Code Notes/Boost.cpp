@@ -33,6 +33,7 @@ boost::assign::list_of<T>("one")("two"); //returns std::vector<T>
 boost::bimap<a, b> myBiMap = boost::assign::list_of<boost::bimap<a, b>::relation>(objA1, objB1)(objA2, objB2);
 auto it = myBiMap.left.find(objA1); // returns itr for objA1 or myBiMap.left.end()
 auto it = myBiMap.right.find(objB1); // returns itr for objB1 or myBiMap.right.end()
+it->first, it->second // get values from iterator
 
 ///////////////////////////////////////////////////////////////////////////
 //STRINGS
@@ -61,7 +62,8 @@ boost::algorithm::icontains(str, "substring")
 
 //BOOST REGEX
 boost::regex_replace("OneTwo", boost::regex("One"), "Three") //returns "ThreeTwo"
-boost::regex_replace(str, boost::regex reg("//.*?\n"), "") //returns str without // comments
+boost::regex_replace(str, boost::regex("//.*?\n"), "") //returns str removing all between // to \n
+boost::regex_replace(line, boost::regex("//.*?$"), ""); //return str removing all between // to end of string
 
 //BOOST LEXICAL CAST
 str = boost::lexical_cast<string>(number);   //number->string

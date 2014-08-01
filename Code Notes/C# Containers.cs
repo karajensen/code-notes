@@ -12,7 +12,8 @@ IEnumerable<int> myIEnum = new List<int>(){1,2,3}; // from whole container
 IEnumerable<int> myIEnum = myContainer; // implicit conversion
 
 myIEnum.Exlude(myIEnum2)      // remove myIEnum2 from myIEnum
-myIEnum.Union(myIEnum2)       // joint two IEnumerable<T>
+myIEnum.Concat(myIEnum2)      // joins two IEnumerable<T>, keeps duplicates 
+myIEnum.Union(myIEnum2)       // joins two IEnumerable<T>, removes duplicates
 myIEnum.ToArray()             // Converting to array
 myIEnum.ToList()              // Converting to list
 myIEnum.Cast<int>()           // Cast back to original container type
@@ -189,8 +190,8 @@ var myD = new Dictionary<key, value>(StringComparer.InvariantCultureIgnoreCase)
 
 myD.Comparer //returns IEqualityComparer<T> used to compare equality of keys
 myD.Count //returns number of key/value pairs 
-myD.Item[key] //get value for key, if key doesn't exist throws KeyNotFoundException
-myD.Item[key] = value //set value for key, if key doesn't exist creates new entry
+myD[key] //get value for key, if key doesn't exist throws KeyNotFoundException
+myD[key] = value //set value for key, if key doesn't exist creates new entry
 myD.Keys //returns Dictionary<key,value>.KeyCollection; used same as array
 myD.Values //returns Dictionary<key,value>.ValueCollection; used same as array
 myD.Add(key,value) //throws ArgumentException if key already exists
