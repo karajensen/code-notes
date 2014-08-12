@@ -1,70 +1,59 @@
 //////////////////////////////////////////////////////////////////////////////
-//TEMPLATE FUNCTIONS
+//TEMPLATES
 //////////////////////////////////////////////////////////////////////////////
 
-//IMPLICIT INSTANTIATION
-//Compiler substitutes T for the variable needed
-//only types that require it will create a version of the template
-//class/typename interchangable
-template <class T> void MyFunction(T x);
-template <typename T> void MyFunction(T x);
+// IMPLICIT INSTANTIATION
+// Compiler determines what types require templates and creates versions for them only
+// keyword 'class' interchangable with 'typename'
+template <typename T> void MyFunction(T x) {} 
+MyFunction<int>(x) /*or*/ MyFunction(x)
 
-//EXPLICIT INSTANTIATION
-//use template to create function for type int
-//To allow template class/methods to live in .cpp, for every use of 
-//template add an explicit instantiation to .cpp file
-template MyClass<float>; //for class templates
-template void MyFunction<int>(int x, int y); //for function templates
+template <typename T, typename S = int> //int = default type, only one allowed on class templates
+class MyClass
+{
+public:
+    MyClass<T>() : m_member(S()) {} //<T> optional, initialise templated member to default
+    MyClass<T>& operator=(const MyClass<T> & o);
+    MyClass(const MyClass<T> & c);
+    friend void MyFunction(T& value); ///< friends to all possible instantiations 
+private:
+    S m_member;
+};
+MyClass<int, double> obj;
+
+// EXPLICIT INSTANTIATION
+// Tells compiler to create a version of the template for the type
+// To allow template class/methods to live in .cpp, for every use of template add an explicit instantiation to .cpp file
+template MyClass<int>; 
+template void MyFunction<int>(int x);
 
 //EXPLICIT SPECIALISATION
-//don't use template; use a specialised function coded instead
-template <> void MyFunction(char x, char y); 
+//Tells compiler to not use template; use a specialised function instead for the given types
+template <> void MyFunction(int x); 
+template <> MyClass<int>::MyFunction();
 
 //TRAILING RETURN TYPE
 //useful for template functions when return type isn't known
 template<typename T, typename C>
-auto myFunction(T x, C y) -> decltype(x+y){ return x+y; }
+auto MyFunction(T x, C y) -> decltype(x+y) { return x+y; }
 
 //TEMPLATES FOR CALLBACKS
 template <typename T, typename F>
 T UseObjectWithFuntion(T obj, F fn){ return fn(obj); }
 
-//EXPLICITLY CALLING A VERSION OF A TEMPLATE
-MyFunction<int>(x, y);
-MyFunction<float>(x, y);
-
-//////////////////////////////////////////////////////////////////////////////
-//CLASS TEMPLATES
-//////////////////////////////////////////////////////////////////////////////
-
-template <typename T, typename S = int> //int = default type, only allowed on class templates
-class MyClass
-{
-public:
-
-    //constructor, <T> not required
-    MyClass<T>() : 
-        m_member(S()) //initialise templated member to default
-    {
-    }
-   
-    ~MyClass<T>(); //destructor, <T> not required
-    MyClass<T>& operator=(const MyClass<T> & o); //assignment operator
-    MyClass(const MyClass<T> & c); //copy constructor
-
-private:
-
-    S m_member; //member of type S
-};
-
-MyClass<int> intobj;
-MyClass<int,double> pairObj;
+//PARTIAL SPECIALIZATION
+//Alternative way to do default values
+//Can only partially specialize classes, cannot specialise single member functions
+template <typename T, typename S> class MyClass {}; 
+template <typename T> class MyClassSpec <T, int> {}; // Set S as int
+template <typename S> class MyClassSpec <S, S> {}; // Set T as S
+template <typename T> void MyClass<T, int>::MyFunction(); // Cannot specialise without specialising whole class
+MyClassSpec<float> obj;
 
 //////////////////////////////////////////////////////////////////////////////
 //TEMPLATE INHERITANCE
 //////////////////////////////////////////////////////////////////////////////
 
-//BASE CLASS
 template <typename T> class Base
 {
 public:
@@ -72,7 +61,6 @@ public:
     void MyMethod();
 };
 
-//DERIVED CLASS
 template <typename T> class Derived : public Base<T> 
 {
     Derived():Base<T>
@@ -86,11 +74,20 @@ template <typename T> class Derived : public Base<T>
     }
 };
 
-//////////////////////////////////////////////////////////////////////////////
-//NESTED TYPES
-//////////////////////////////////////////////////////////////////////////////
-// Type MyClass::MySubClass seen as static member of class unless typename is used
+//CURIOUSLY RECURRING TEMPLATE PATTERN (CRTP)
+//class A has a base class which is a template specialization for the class A itself.
+template <typename A> 
+class Base
+{
+    A& DoSomething();
+};
+//Class A derives from base and passes own type in
+class A : public Base<A> 
+{
+};
 
+//NESTED TYPES
+//Type MyClass::MySubClass seen as static member of class unless typename is used
 template<typename T, typename C>
 class Derived: public Base<T>::Nested //don't use typename
 {
@@ -105,72 +102,6 @@ public:
 private
     typename Base<T>::Nested temp; //use typename 
     std::unique_ptr<typename C::MyValue> myPtr; //use typename
-};
-
-//////////////////////////////////////////////////////////////////////////////
-//PARTIAL SPECIALIZATIONS
-//////////////////////////////////////////////////////////////////////////////
-
-//PARTIAL SPECIALIZATION
-template <class T, class S> class Pair {}; //original template
-template <class T> class Pair<T, int> {}; //S is specialised to int
-
-//POINTER PARTIAL SPECIALIZATION
-template <class T> class Pair {};
-template <class T*> class Pair {};
-
-//RESTRICTING WITH PARTIAL SPECIALIZATION
-//Alternative way to do default values
-template <class T, class S, class R> class Pair {}; //original template
-template <class T, class S> class Pair<T,S,S> {}; //R is specialised to S
-Pair<int, float> obj; //makes R same type as S
-
-//////////////////////////////////////////////////////////////////////////////
-//TEMPLATE CLASS FRIENDS
-//////////////////////////////////////////////////////////////////////////////
-
-//NON TEMPLATE FRIEND FUNCTIONS
-//Allows the function to be friends to all possible instantiations 
-template <class T>
-class Tclass
-{
-public:
-    friend void friendFunction(Tclass<T> &); //friend to all instantiations
-};
-
-void Tclass::counts(Tclass<T> &)
-{
-};
-
-//BOUND TEMPLATE FRIEND FUNCTIONS
-//template prototypes before class declaration
-template <class T> void testOne();
-template <class T> void testTwo(T &);
-
-//template class
-template <class C>
-class Tclass
-{
-public:
-    friend void testOne<C>();
-    friend void testTwo<C>(Tclass<C> &);
-};
-
-template <typename T>
-void testOne()
-{
-}
-template <typename T>
-void testTwo(T & hf)
-{
-}
-
-//UNBOUND TEMPLATE FRIEND FUNCTIONS
-template <typename T>
-class ManyFriend
-{
-public:
-    template <typename C, typename D> friend void testOne(C &, D &);
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -190,21 +121,3 @@ void show_list(const T& value, const Args&... args) // args is a function parame
 //can use any number, order or type of arguments
 show_list(2.0,"hello",4*2,'c');
 show_list(1.0,'d',"astring");
-
-//////////////////////////////////////////////////////////////////////////////
-//CURIOUSLY RECURRING TEMPLATE PATTERN (CRTP)
-//////////////////////////////////////////////////////////////////////////////
-//Occurs when class A has a base class which is a template specialization 
-//for the class A itself.
-
-//Template base class
-template <class Derived> 
-class Base
-{
-    Derived& doSomething();
-};
-//Class A derives from base and passes own type in
-class A : public Base<A> 
-{
-};
-

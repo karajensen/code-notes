@@ -75,6 +75,7 @@ numeric_limits<int>::digits //number of non-signed bits for int, number of digit
 numeric_limits<int>::has_infinity //whether type can represent infinity
 numeric_limits<int>::infinity() //representation of positive infinity if possible
 numeric_limits<int>::round_style //returns rounding style used
+numeric_limits<float>::epsilon() //floating point error amount
 
 round_toward_zero //if it rounds toward zero.
 round_to_nearest //if it rounds to the nearest representable value.
@@ -279,7 +280,8 @@ typedef _ULonglong uint64_t;
 #include <assert.h>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-assert(x == 0); //will break if x != 0
+assert(myPtr != nullptr); // break if myPtr is null
+static_assert(myPtr != nullptr, "myPtr shouldn't be null"); // must be constant string literal
 throw("Message goes here");
 exit(EXIT_FAILURE);
 

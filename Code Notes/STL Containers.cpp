@@ -19,9 +19,14 @@ myPair.first / myPair.second //access members of pair
 string::npos //maximum allowable size for string; maximum value of unsigned int
 
 string str; //initialises to ""
-string str("one"); 
+string str("str"); 
 string str(n,'a'); //fill n times with 'a'
-string str(char_array, n); //fill n times with char_array
+string str(char_array, n); //fill char_array of n size
+wstring wstr(L"wstr");
+
+// Converting wstring and string
+string str(wstr.begin(),  wstr.end());
+wstring wstr(str.begin(), str.end());
 
 str[0]
 str.empty() //returns true/false if empty (faster than size)
@@ -208,6 +213,7 @@ M.empty();          // returns true/false if empty (faster than size)
 M.size();           // number of element pairs
 M.count("MyKey")    // returns number of items that have that key
 M.find("MyKey")     // returns MyMap.end() if not found or iterator MyMap::iterator if found
+M.erase("MyKey")    // removes element with matching key, non-throwing if item doesn't exist
 itr->first          // returns key
 itr->second         // returns object
 

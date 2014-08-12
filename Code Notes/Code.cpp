@@ -8,7 +8,7 @@ int local;
 static int localStatic; //Local static: keeps variable in memory even when function exits
 register int regInt; //may store variable in register not on stack: NO address, can't be global
 volatile int volInt; //don't cache value, check actual value each time its asked for
-mutable int mutInt; //value changes ignored for bitwise const checking, allows changes for const objects/methods
+mutable int mutInt; //value changes ignored for bitwise const checking; used to show internal synchronization
 const int constInt; //may store variable in read-only memory
 constexpr int myInt = 1.0 * constInt; //evaluates at compile time, will store in read-only memory
 
@@ -96,19 +96,25 @@ float myFloat = static_cast<float>(myDouble)
 atoi("3") //converts cstring to int
 atof("3.0") //converts cstring to float
 
-// NUMBER TO STRING C++
+// NUMBER TO STRING
+// Only for integers and floating types
+// Gives large precision with no control
+to_string(value);
+to_wstring(value);
+
+// NUMBER TO STRING: STREAM
+// More control with formatting and types
 // Superseeds std::strstream
-// Requires cast to & as operator<< returns base class
+// operator<< returns std::ostream, str() part of std::ostringstream
 static_cast<std::ostringstream&>(std::ostringstream() << value).str()
 
-// NUMBER TO STRING C
+// NUMBER TO STRING: PRINTF/WPRINTF
 // Can have buffer overruns, difficult to use with templates
 char buffer[256];
-sprintf(buffer, "%d", myInt);
-
-//CONVERT WIDE STRING/STRING
-std::string str(wstr.begin(),  wstr.end());
-std::wstring wstr(str.begin(), str.end());
+std::sprintf(buf, "%d", myInt)
+std::sprintf(buf, "%u", myUint) 
+std::sprintf(buf, "%f", myDbl) 
+std::sprintf(buf, "%f", myFloat) 
 
 //SAFE CASTING
 //only pointers of classes with virtual functions
@@ -301,7 +307,8 @@ void MyFunction(int & x, short y)
 //shifts the return type to after the function arguments
 double MyFunction(int x, int y) {} /*or*/
 auto MyFunction(int x, int y) -> double {}
-auto MyFunction(int x, int y) -> decltype(x) {} //make return type same as x
+auto MyFunction(int x, int y) -> decltype(x) {} // make return type same as x
+auto MyFunction(MyFn fn, int x) -> decltype(fn(x)) { return fn(x)); }
 
 //C-VARIADIC FUNCTION
 MyFunction("This is a %i %f test",2,3.0f);

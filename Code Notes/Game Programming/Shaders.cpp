@@ -307,7 +307,7 @@ min(x,y)            // Selects min of x and y
 mad(a,b,c)          // Performs mad assembly operation: a * b + c (SM5)
 modf(x, intPart)    // returns fractional part, stores int part
 mul(matA, matB)     // Matrix multiplication
-normalize(vec)      // Normalizes a vector
+normalize(vec)      // Returns the normalized vector
 pow(1.0f, 3.0f)     // Calculates 1³
 radians(deg)        // converts degrees to rad
 reflect(vec, norm)  // reflects vector along the normal
