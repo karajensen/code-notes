@@ -16,15 +16,15 @@ PROTOTYPE         A fully initialized instance to be copied             Multiple
 STRUCTURAL PATTERNS  
 ==============================================================================================
 
-FLYWEIGHT   A fully initialized instance to referenced                       Sharing/Instancing objects
-DECORATOR   Allows mixing subclasses to form a final object                  GUI design
-COMPOSITE   A tree class that holds and recurses through child objects       Tree/Node objects
-FACADE      A class that manages groups of various objects                   Object managers
-PIMPL       Change the single implementation without changing the interface  Data hiding
-BRIDGE      Switch multiple implementations without changing the interface   Switching implementations                     
-PROXY       A wrapper that provides same functionality as class wrapped      C++/CLI wrappers/pointers
-ADAPTER     A wrapper that changes the interface of the class wrapped        Legacy libraries
-           
+FLYWEIGHT     A fully initialized instance to referenced                       Sharing/Instancing objects
+DECORATOR     Allows mixing subclasses to form a final object                  Chaining together individual components
+COMPOSITE     A tree class that holds and recurses through child objects       Tree/Node objects
+FACADE        A class that manages groups of various objects                   Object managers
+PIMPL         Change the single implementation without changing the interface  Data hiding
+BRIDGE        Switch multiple implementations without changing the interface   Switching implementations                     
+PROXY         A wrapper that provides same functionality as class wrapped      C++/CLI wrappers/pointers
+ADAPTER       A wrapper that changes the interface of the class wrapped        Legacy libraries      
+
 ==============================================================================================
 BEHAVIOURAL PATTERNS
 ==============================================================================================
@@ -34,7 +34,8 @@ OBSERVER        Looks at another object and updated when that object is     Ad-H
 CHAIN OF RESP   Passes a command through series of objects until handled    Events
 COMMAND         Holds a method and anything needed to call that method      Functors/lambdas
 STATE           Alters an objects behavior when its state changes           Multiple states/behaviours
-STRATEGY        Family of interchangable algorithms                         Switching algorithms
+STRATEGY        Implements from interchangable algorithms                   Switching algorithms
+POLICY          Implements from templated inherited classes					Creating class with multiple implementations		
 TEMPLATE        Algorithm with only function calls to other classes         Object algorithm variations
 MEMENTO         Allows capture and restore an objects internal state        Undo/Redo
 ITERATOR        Allows movement over range of elements in a container       Containers
@@ -871,3 +872,33 @@ public:
         obj.m_myInt = 20;
     }
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//POLICY PATTERN
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class PolicyA
+{
+public:
+	void DoSomething(){}
+};
+
+class PolicyB
+{
+public:
+	void DoSomething(){}
+};
+
+template <typename MyPolicy>
+class MyClass : public MyPolicy
+{
+public:
+
+	void MyFunction()
+	{
+		MyPolicy::DoSomething();
+	}
+};
+
+MyClass<PolicyA> objWithA;
+MyClass<PolicyB> objWithB;

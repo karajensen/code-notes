@@ -109,17 +109,11 @@
     <ClCompile Include="Development\Software Development.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Lighting.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
     <ClCompile Include="Game Programming\Mental Ray.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
     <ClCompile Include="Game Programming\Rendering.cpp">
       <Filter>Game Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Code Examples\Classes\assimpmesh.cpp">
-      <Filter>Development\Classes</Filter>
     </ClCompile>
     <ClCompile Include="Code Examples\Classes\camera.cpp">
       <Filter>Development\Classes</Filter>
@@ -172,6 +166,9 @@
     <ClCompile Include="Game Programming\RenderEngines.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
+    <ClCompile Include="Game Programming\Lighting.cpp">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Cheatsheet.txt" />
@@ -203,16 +200,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Code Examples\Classes\assimpmesh.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Code Examples\Classes\camera.h">
       <Filter>Development\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Code Examples\Classes\color.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Code Examples\Classes\dynamicarray.h">
       <Filter>Development\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Code Examples\Classes\input.h">

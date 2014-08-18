@@ -71,8 +71,9 @@ struct MyFunctor
 }
 
 //POINTER-TO-FUNCTION
-typedef bool(*pFunction)(int x, double y);
-pFunction myFunction = &MyFunction; 
+typedef bool(*MyFunctionPtr)(int, double); /*or*/
+using MyFunctionPtr = bool(*)(int, double);
+MyFunctionPtr myFunction = &MyFunction;
 myFunction(5, 1.0);
 
 //POINTER-TO-MEMBER FUNCTION
@@ -250,12 +251,8 @@ int* pPointer = (int*)realloc(allocationSizeInBytes); //Reallocating memory
 /////////////////////////////////////////////////////////////////////////////////////////////
 #include <new>
 
-//PLACEMENT NEW
-//places memory on stack rather than heap
+// creates a new object and puts in it the memory pointed to by buffer
 char buffer[512];
-int * p_buffer = new (buffer) int[SIZE]; 
-                                                                 
-//PLACEMENT NEW [CLASSES]
-char* buffer = new char[512]; // get a block of memory
-Testclass* p_class = new (buffer) Testclass("hello") //place object in buffer
-p_class->~Testclass() //delete placement new 
+int* myArray = new (buffer) int[SIZE]; 
+MyClass* myObj = new (buffer) MyClass();
+myObj->~MyClass() // classes require destructor to be called explicitly instead of 'delete'

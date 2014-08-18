@@ -33,10 +33,11 @@ sizeof(myInt) //gives size of myInt in bytes
 sizeof(myArray) //gives size of whole array rather than first element
 sizeof(myCString) //size of whole char array
 sizeof(myPointer) //Gives the size of the pointer
+sizeof(MyClass::myMember); //Gives size of the type
 
 //VARIABLE INCREMENTING
-b = ++a //increment a and then use it in expression; b = new value of a
-b = a++ //use a in expression then increment it after; b = old value of a
+b = ++a    // increment a and then use it (before anything else)
+b = a++    // use a and then increment it (after everything including assigment)
 ++++++i;   // OKAY: parsed as (++(++(++i)))
 i++ * ++i; // BAD: i is modified more than once
 i = ++i    // BAD: i is modified more than once
@@ -67,9 +68,17 @@ int&& xvalue();
 //CSTRINGS
 char cstring = 'C'; //single character; can read/write
 char cstring[256]; //character buffer, can read/write
-char* cstring = "mystring" //Constant string literal, read only, \0 automatic
 char cstring[] = "mystring" //the \0 is done automatically
 char cstring[] = {'v','a','t','a','n','i','\0'};
+
+//STRING LITERALS
+//Constant string literal, read only, \0 automatic
+char* str = "mystring"
+auto* str = R"(Raw string literal)" //anything between the() doesn't need to be escaped
+auto* str = u8"UTF-8 string literal"
+auto* str = u"UTF-16 string literal"
+auto* str = U"UTF-32 string literal"
+auto* str = L"Wide-string literal"
 
 //ARRAYS
 //must be constant size input
@@ -117,20 +126,19 @@ std::sprintf(buf, "%f", myDbl)
 std::sprintf(buf, "%f", myFloat) 
 
 //SAFE CASTING
-//only pointers of classes with virtual functions
-//returns 0 if the conversion failed; slowest
-MyClass1* ptr1 = dynamic_cast<MyClass2>(ptr2) 
+//only pointers/references of classes with virtual functions; slowest cast
+auto* myPtr = dynamic_cast<MyDerived>(myBasePtr) //returns 0 if fail
+auto& myObj = dynamic_cast<MyDerived&>(myBaseObj) //throws std::bad_cast if fail
 
 //UNSAFE CASTING
-MyClass1* ptr1 = reinterpret_cast<MyClass2>(ptr2) // only for pointers
-MyClass1* ptr1 = static_cast<MyClass2*>(ptr2) 
-MyClass1& obj1 = static_cast<MyClass2&>(obj2) 
+auto* myPtr = reinterpret_cast<MyDerived>(myBasePtr) // only for pointers
+auto* myPtr = static_cast<MyDerived*>(myBasePtr)
+auto& myObj = static_cast<MyDerived&>(myBaseObject)
 
 //REMOVING CONST
 //converts const to non-const [only pointers]
-//bad if var is stored in read-only memory
-//use only if know underlying type is non-const
-MyClass1* ptr1 = const_cast<MyClass2>(ptr2);
+//bad if variable is stored in read-only memory- use only if underlying type is non-const
+auto* myPtr = const_cast<MyClass>(myPtr);
 
 //////////////////////////////////////////////////////////////////////////////
 //UNIONS
@@ -321,6 +329,15 @@ void MyFunction(char* text, ...)
     va_end(arguments); //Store results in text
     cout << buffer;
 }
+
+//DEFAULT VALUES
+void MyMethod(int x, int y = 0);        // constant, parameters must be right to left
+void MyMethod(int x = Fn(5));           // Non-member function with constant arguments
+void MyMethod(int x = Fn(global));      // Non-member function with global variable
+void MyMethod(int x = Fn(m_static));    // Non-member function with static member variable
+void MyMethod(int x = StaticFn());      // Static member function
+void MyMethod(int x = (global==0?1:2))  // Ternary expressions
+void MyMethod(int x = m_member)         // CANT DO: can't use non-static class members
 
 //////////////////////////////////////////////////////////////////////////////
 //NAMESPACES

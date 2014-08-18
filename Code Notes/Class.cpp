@@ -17,7 +17,6 @@ public:
     MyClass& operator=(const MyClass& obj);  // copy assignnment operator
     MyClass& operator=(MyClass && obj);      // move assignment operator
     unsigned int MyClass::operator&();       // address operator
-    MyClass() = delete;                      // don't create a default constructor
 
     //DESTRUCTOR
     virtual ~MyClass(){} // virtual destructor required for inheritance
@@ -40,9 +39,10 @@ public:
     }
 
     //INITIALIZER LIST CONSTRUCTOR
-    MyClass(std::initializer_list<float> list) :
-        myVector(list)
+    MyClass(std::initializer_list<double> list) 
     {
+        m_myVector.resize(list.size());
+        std::copy(list.begin(), list.end(), m_myVector);
     }
 
     //MOVE CONSTRUCTOR
@@ -89,28 +89,37 @@ public:
     static void StaticMethod()  
     {
         //only access static members and have friendship with class
-        m_singleton->m_constMember = x;
+        sm_singleton->m_constMember = x;
     }
 
     //CAST OPERATOR
-    //definition: MyClass::operator double(){ return 2.0 }
-    //returns double even without return type in signature
-    //can be used for custom types: operator Vector3();
-    operator double();
-    double myDouble = obj; //called implicitly
+    //converts class type to another type
+	explicit operator double() { return 2.0; } //definition: MyClass::operator double(){}
+    double myDouble = obj; //called implicitly if explicit is not used
     double myDouble = double(obj); //called explicitly
-                                                  
+
+    //DEFAULT VALUES
+    //Only needed in class member declaration, not definition
+    void MyMethod(int x = 0);
+
+    //METHOD MODIFIERS
+    MyClass() = default;             //create a default constructor (no need for body)
+    MyClass() = delete;              //don't create a default constructor
+    void MyFunction(int x) = delete; //don't allow overload with this signature
+
+    //MEMBER INITIALISATION
+    //Overridden by value set in initialisation lists
+	float m_member = 3.0f;
+	static float sm_member = 3.0f;
+	const int m_constMember = 2; //If not initialised in-place, must be in initialisation list
+    const int& m_refMember; //Must be in initialisation list
+
 private:
 
     //Prevent copying, no declaration required
     //Important if dynamic allocation occurs in class
-    MyClass(const MyClass); 
-    MyClass& operator=(const MyClass);
-
-    const int m_constMember; //Must be initialised in initialisation list
-    const int& m_refMember; //Must be initialised in initialisation list
-    static const int STATIC = 20; //Only const int can be defined in class header
-    MyClass* m_singleton; 
+	MyClass(const MyClass) = delete;
+	MyClass& operator=(const MyClass) = delete;
 };
 
 //STRUCTURES
@@ -295,39 +304,6 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////////////
-//DEFAULT VALUES
-/////////////////////////////////////////////////////////////////////////////////////
-
-//must provide default values for parameters right to left
-int MyFunction(int a, int b = 2);
-int MyClass::MyMethod(int a, int b){} //don't need default for definition
-
-//ALLOWABLE DEFAULT VALUES
-//can't use non-static class members
-void MyMethod(int x, int y = 0);        // constant
-void MyMethod(int x = Fn(5));           // Non-member function with constant arguments
-void MyMethod(int x = Fn(global));      // Non-member function with global variable
-void MyMethod(int x = Fn(m_static));    // Non-member function with static member variable
-void MyMethod(int x = StaticFn());      // Static member function
-void MyMethod(int x = (global==0?1:2))  // Ternary expressions
-
-//INHERITING DEFAULT VALUES
-//Never redefine default values in derived as base class pointers will always use base value
-class Base
-{
-public:
-    virtual void MyMethod(int x = 10) = 0;
-};
-class Derived : public Base
-{
-public:
-    virtual void MyMethod(int x = 2);
-};
-basePtr->MyMethod(0);   //calls derived method
-basePtr->MyMethod();    //calls derived method but uses base class default value
-derivedPtr->MyMethod(); //calls derived method and uses derived default value
-
-/////////////////////////////////////////////////////////////////////////////////////
 //INHERITANCE
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -338,17 +314,25 @@ public:
     Base(int x); //constructors can't be virtual
     virtual ~Base(); //put as virtual only if want to derive from it
     virtual ~Base()=0; //used if needing abstract class but all methods implemented
-    virtual void MyMethod()=0; //pure virtual method, no objects of Base can be created
+    virtual void MyMethod(int x)=0; //pure virtual method, no objects of Base can be created
 };
 
 // PUBLIC INHERITANCE
 class Derived : public Base //compilier assumes private if public not specified
 {
 public: 
-    Derived(int x, int y) : Base(x) {} //Default Base constructor used if not specified
-    virtual void MyMethod() override //virtual/override not required but important
+
+    //Default Base constructor used in initialisation list if not specified
+    Derived(int x, int y) : Base(x) {} 
+
+    //Inheriting constructors, no need for constructor to specify base constructor
+    using Base::Base;
+
+    //Only requires signature to match virtual base method
+    //override and virtual are optional, final prevents further overriding
+    virtual void MyMethod(int x) override final
     {
-        Base::MyMethod(); 
+        Base::MyMethod(x); 
     }
 
 private:
@@ -369,27 +353,23 @@ class Derived : private Base
 };
 myDerived->MyMethod(); //cannot be called as seen as private with outside use
 
-/////////////////////////////////////////////////////////////////////////////////////
-//VIRTUAL FUNCTIONS
-/////////////////////////////////////////////////////////////////////////////////////
+// VIRTUAL FUNCTION OBJECTS: derived and base are objects of respective types
+derived.MyMethod()   // calls Derived::MyMethod()
+derived.MyVirtual()  // calls Derived::MyVirtual()
+base.MyMethod()      // calls Base::MyMethod()
+base.MyVirtual()     // calls Base::MyVirtual()
 
-//OBJECTS
-derived.MyMethod()     //uses Derived::MyMethod()
-derived.MyVirtual()    //uses Derived::MyVirtual()
-base.MyMethod()        //uses Base::MyMethod()
-base.MyVirtual()       //uses Base::MyVirtual()
+// VIRTUAL FUNCTION POINTER/REFERENCES: derived and base both hold pointer to derived object
+derived->MyVirtual();          // calls Derived::MyVirtual()
+derived->MyMethod();           // calls Derived::MyMethod()
+derived->Base::MyVirtual();    // calls Base::MyVirtual()           
+base->MyVirtual();             // calls Derived::MyVirtual()
+base->MyMethod();              // calls Base::MyMethod()
+base->Derived::MyDerived();    // ERROR!
 
-//POINTER/REFERENCES
-deriPtr->MyVirtual();           //uses Derived::MyVirtual()
-deriPtr->MyMethod();            //uses Derived::MyMethod()
-deriPtr->Base::MyVirtual();     //uses Base::MyVirtual()           
-basePtr->MyVirtual();           //uses Derived::MyVirtual()
-basePtr->MyMethod();            //uses Base::MyMethod()
-basePtr->Derived::MyDerived();  //ERROR!
-
-//NON-VIRTUAL INTERFACE IDIOM
-//virtual functions in derived/base don't have to match
-//Chosen visibility determined from type of pointer/reference used
+// NON-VIRTUAL INTERFACE IDIOM
+// Visibility of virtual functions in derived/base don't have to match
+// Visibility determined by type of pointer used, not type of object pointed to
 class Base
 {
 private:
@@ -401,35 +381,24 @@ public:
     virtual void MyMethod() override;
 }
 
-basePtr->MyMethod(); //Uses base class visility: Cannot call MyMethod()
-deriPtr->MyMethod() //Uses derived class visibility: Can call MyMethod()
+basePtr->MyMethod(); // Uses base class visility: Cannot call MyMethod()
+deriPtr->MyMethod() // Uses derived class visibility: Can call MyMethod()
 
-/////////////////////////////////////////////////////////////////////////////////////
-//DATA HIDING
-/////////////////////////////////////////////////////////////////////////////////////
-
-//HIDING A METHOD
-[BASE] virtual void MyMethod(int x); //Hidden
-[DERI] virtual void MyMethod(double y);
-
-//HIDING AN OVERLOADED METHOD
-[BASE] virtual void MyMethod(int x); //Not hidden, can be called via Base::show
-[BASE] virtual void MyMethod(char * x); //Hidden
-[DERI] virtual void MyMethod(int x); 
-
-//Difference in return type doesn't hide 
-virtual Base& MyMethod(int x); //Not hidden
-virtual Derived& MyMethod(int x);
-
-//Methods are hidden but still accessible if type is cast to Base
-static_cast<Base*>(derivedObj)->MyMethod(10); //can use base class version
-
-//PREVENTING BASE CLASS DATA HIDING
-class Derived: public Base 
+//INHERITING DEFAULT VALUES
+//Never redefine default values in derived as base class pointers will always use base value
+class Base
 {
 public:
-  using Base::MyMethod; //inherit all base show methods
-}
+    virtual void MyMethod(int x = 10) = 0;
+};
+class Derived : public Base
+{
+public:
+    virtual void MyMethod(int x = 2);
+};
+basePtr->MyMethod(0);   //calls derived method
+basePtr->MyMethod();    //calls derived method but uses base class default value
+derivedPtr->MyMethod(); //calls derived method and uses derived default value
 
 /////////////////////////////////////////////////////////////////////////////////////
 //BASE-DERIVED CONVERSION

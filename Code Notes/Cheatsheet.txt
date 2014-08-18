@@ -44,19 +44,15 @@
 [13] Assigning/Copying by-val from Derived to Base causes slicing where 
      the derived information is lost
 
-[14] Virtual methods can't be templates as at run-time; when it finds out
-     what type is needed for the call, it can't generate the template
-     class instance anymore.
+[14] Virtual methods can't be templates as templates generated at compile time
+     and virtual method type solved at run-time.
 
 [15] Don't store an array of derived class objects in a base class pointer.
      Pointer arithmatic uses sizeof(Baseclass), not sizeof(Derivedclass)
      delete [] myArray and myArray[x] also uses pointer arithmatic
 
-[16] Base class determines the access rights of the method for base class
-     pointer holding derived object.
-     - If base method is public, derived will be called even if not public.
-     - If base method is protected, only derived can call it.
-     - If base method is private, can't be called.
+[16] Type of object/pointer determines the visibility of methods called
+     even if pointer holds derived object. Known as non-virtual interface idiom
 
 [17] Never redefine default variables from the base class; base class 
      pointers will always use base class default values.
@@ -90,7 +86,7 @@
 ////////////////////////////////////////////////////////////////////////////////////
 
 [1] Always use Empty() instead of Size() == 0 as Empty() is always constant time
-    while Size() can be linear time lookup
+    while Size() can be linear time lookup depending on the container
 
 [2] Inserting/Removing causes most cached iterators/pointers/references to be 
     invalidated depending on the container type. This includes iterators in a loop.

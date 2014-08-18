@@ -32,15 +32,6 @@ template void MyFunction<int>(int x);
 template <> void MyFunction(int x); 
 template <> MyClass<int>::MyFunction();
 
-//TRAILING RETURN TYPE
-//useful for template functions when return type isn't known
-template<typename T, typename C>
-auto MyFunction(T x, C y) -> decltype(x+y) { return x+y; }
-
-//TEMPLATES FOR CALLBACKS
-template <typename T, typename F>
-T UseObjectWithFuntion(T obj, F fn){ return fn(obj); }
-
 //PARTIAL SPECIALIZATION
 //Alternative way to do default values
 //Can only partially specialize classes, cannot specialise single member functions
@@ -49,6 +40,31 @@ template <typename T> class MyClassSpec <T, int> {}; // Set S as int
 template <typename S> class MyClassSpec <S, S> {}; // Set T as S
 template <typename T> void MyClass<T, int>::MyFunction(); // Cannot specialise without specialising whole class
 MyClassSpec<float> obj;
+
+//TRAILING RETURN TYPE
+//useful for template functions when return type isn't known
+template<typename T, typename C>
+auto MyFunction(T x, C y) -> decltype(x+y) { return x+y; }
+
+//////////////////////////////////////////////////////////////////////////////
+//TEMPLATE TEMPLATE PARAMETERS
+//////////////////////////////////////////////////////////////////////////////
+//Allows a parameter that is a template itself to be passed in as a type
+//Template type passed in must match template template signature
+//Used to implement the policy pattern
+
+template <typename T, template <typename> class B> class ClassA {}
+template <typename S> class ClassB {}; // signature of ClassB matches B
+ClassA<int, ClassB<double>> obj;
+
+template <template <typename, typename> class B> class ClassA {} 
+template <typename T, typename S> ClassB {}; // signature of ClassB matches B
+ClassA<ClassB<double, int>> obj;
+
+template<template<typename> class B, typename T> void MyFunction(C<T>& obj){}
+template <typename S> class ClassB {}; // signature of ClassB matches C
+Class2<double> obj;
+MyFunction(obj);
 
 //////////////////////////////////////////////////////////////////////////////
 //TEMPLATE INHERITANCE
