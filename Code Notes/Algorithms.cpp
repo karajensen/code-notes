@@ -329,7 +329,7 @@ std::vector<int> v = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 std::adjacent_difference(v.begin(), v.end() - 1, v.begin() + 1, std::plus<int>());
 
 //SAFE RELEASE
-SafeRelease(&myPointer); // pointer to object
+SafeRelease(&myPointer);
 template <typename T> void SafeRelease(T** pObject)
 {
     if(*pObject)

@@ -47,6 +47,7 @@ public:
 
     //MOVE CONSTRUCTOR
     //Doesn't take const objects as it modifies rvalue passed in
+    //Will be used implicitly for returning values if exists
     MyClass(MyClass && obj):
         m_pointer(std::move(obj.myPointer),
         m_member(std::move(obj.m_member)

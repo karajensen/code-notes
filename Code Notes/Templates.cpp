@@ -32,23 +32,35 @@ template void MyFunction<int>(int x);
 template <> void MyFunction(int x); 
 template <> MyClass<int>::MyFunction();
 
-//PARTIAL SPECIALIZATION
-//Alternative way to do default values
-//Can only partially specialize classes, cannot specialise single member functions
+//CLASSES: PARTIAL SPECIALIZATION
+//Can only partially specialize at class level, not member functions
 template <typename T, typename S> class MyClass {}; 
 template <typename T> class MyClassSpec <T, int> {}; // Set S as int
 template <typename S> class MyClassSpec <S, S> {}; // Set T as S
-template <typename T> void MyClass<T, int>::MyFunction(); // Cannot specialise without specialising whole class
+template <typename T> void MyClass<T, int>::MyFunction(); // Cannot be done
 MyClassSpec<float> obj;
 
-//TRAILING RETURN TYPE
-//useful for template functions when return type isn't known
-template<typename T, typename C>
-auto MyFunction(T x, C y) -> decltype(x+y) { return x+y; }
+//FUNCTIONS: PARTIAL SPECIALIZATION
+//Functions can't be partially specialised- overloaded instead
+template <typename T, typename S> void MyFunction(T t, S s){}
+template <typename T> void MyFunction(T t, float s){} // overloads MyFunction
+MyFunction(x, y); // uses overload resolution
+
 
 //////////////////////////////////////////////////////////////////////////////
-//TEMPLATE TEMPLATE PARAMETERS
+//TEMPLATE PARAMETERS
 //////////////////////////////////////////////////////////////////////////////
+
+// VALUE PARAMETERS
+// Forces a parameter to a type
+template <typename T, int n>
+class MyClass
+{
+    T[n] m_myArray;
+};
+MyClass<double, 20> myObj;
+
+//TEMPLATE TEMPLATE PARAMETERS
 //Allows a parameter that is a template itself to be passed in as a type
 //Template type passed in must match template template signature
 //Used to implement the policy pattern
@@ -65,6 +77,11 @@ template<template<typename> class B, typename T> void MyFunction(C<T>& obj){}
 template <typename S> class ClassB {}; // signature of ClassB matches C
 Class2<double> obj;
 MyFunction(obj);
+
+//TRAILING RETURN TYPE
+//useful for template functions when return type isn't known
+template<typename T, typename C>
+auto MyFunction(T x, C y) -> decltype(x+y) { return x+y; }
 
 //////////////////////////////////////////////////////////////////////////////
 //TEMPLATE INHERITANCE
