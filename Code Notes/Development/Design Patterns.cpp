@@ -877,20 +877,30 @@ public:
 //POLICY PATTERN
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class PolicyA
+// BASIC PATTERN: Host class inherits from one policy class
+class PolicyClassA
 {
 public:
 	void DoSomething(){}
+protected:
+    ~PolicyClassA(){} // protected non-virtual destructor prevents polymorphism
 };
 
-class PolicyB
+class PolicyClassB
 {
 public:
 	void DoSomething(){}
+
+    // can define extra functions to use outside host cass
+    // require specialisation if using in host class
+    void DoSomethingElse(){} 
+
+protected:
+    ~PolicyClassB(){} // protected non-virtual destructor prevents polymorphism
 };
 
 template <typename MyPolicy>
-class MyClass : public MyPolicy
+class MyHostClass : public MyPolicy
 {
 public:
 
@@ -900,5 +910,19 @@ public:
 	}
 };
 
-MyClass<PolicyA> objWithA;
-MyClass<PolicyB> objWithB;
+// ADVANCED PATTERN: Templated policy classes
+template <template <typename> class MyPolicy> 
+class MyHostClass : public MyPolicy<double> // optional
+{
+    void MyIntFunction(){ MyPolicy<int>().DoSomething(); }
+    void MyDoubleFunction(){ MyPolicy<double>().DoSomething(); }
+    void MyObjFunction(){ MyPolicy<MyClass>().DoSomething(); }
+};
+
+MyHostClass<PolicyClassA> objA;
+MyHostClass<PolicyClassB> objB; 
+
+objA.DoSomething();
+objB.DoSomething();
+objB.DoSomethingElse();
+

@@ -29,39 +29,16 @@ Base* myArray = new Derived[2];
 myArray[1] = *(myArray+1)
 delete [] myArray //delete [] also uses pointer arithmatic
 
-//FUNCTION ADDRESSES
-&MyClass::MyMethod //address of member function
-(void(MyClass::*)(double))&MyClass::MyMethod //address of overloaded function
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-//LAMBDAS
-/////////////////////////////////////////////////////////////////////////////////////////////
-//• Can't be templated
-//• Can't use auto with binding, must use std::function type
-//• If inside a class, may become friends
-
-//LAMBDA SYNTAX
-auto myLamda = [](int x) { return 3*2; } //if only one line, can omit trailing return
-auto myLamda = [](int x)->double { return 3*2; }
-auto myLamda = &MyFunction; //storing pointer to function
-auto myLamda = MyFunctor; //storing functor object
-
-//CONVERTING TO STD::FUNCTION
-//• Internal lambda type is different from std::function and a conversion is needed
-//• Only use std::function as return type if needed to pass lambda 
-std::function<double(int)> myLamda = [](int x){ return x+2.0; }
-
-//CAPTURING OUTSIDE VARIABLES
-//Can also capture member vars, functions etc.
-auto myLambda = [&myVar](int x){ myVar += 10; } //by reference
-auto myLambda = [myVar](int x){ myVar += 10; }  //by value
-auto myLambda = [&](int x){ myVar += 10; }      //use all vars in scope by ref
-auto myLambda = [=](int x){ myVar += 10; }      //use all vars in scope by val
-auto myLambda = [&](int x){ MyClassFunction(x); m_myMember += 1; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //FUNCTION OBJECTS
 /////////////////////////////////////////////////////////////////////////////////////////////
+
+//FUNCTION ADDRESSES
+&MyFunction;                                 // address of non-class function
+(void(*)(double))&MyFunction;                // address of non-class overloaded function
+&MyClass::MyMethod                           // address of class method
+(void(MyClass::*)(double))&MyClass::MyMethod // address of class overloaded function
 
 //FUNCTOR
 //Function with operator()
@@ -71,8 +48,9 @@ struct MyFunctor
 }
 
 //POINTER-TO-FUNCTION
-typedef bool(*MyFunctionPtr)(int, double); /*or*/
+typedef bool(*MyFunctionPtr)(int, double); /*or*/ 
 using MyFunctionPtr = bool(*)(int, double);
+
 MyFunctionPtr myFunction = &MyFunction;
 myFunction(5, 1.0);
 
@@ -80,19 +58,37 @@ myFunction(5, 1.0);
 class MyClass
 {
 public:
-    
-    typedef void(MyClass::*MyMethodFn)();
-    void MyMethod(){}
-    MyMethodFn m_myMethodFn;
-};
+    typedef void(MyClass::*MyMethodPtr)(); /*or*/ 
+    using MyMethodPtr = void(MyClass::*)(void);
 
-m_myMethodFn = &MyClass::MyMethodFn;
-(myObject.*m_myMethodFn)();
-(myObject->*m_myMethodFn)();
+    MyMethodPtr m_methodFn;
+};
+m_methodFn = &MyClass::MyMethod;
+(myObject.*m_methodFn)();
+(myObjectPtr->*m_methodFn)();
+
+//LAMBDAS
+//• Can't be templated
+//• Can't use auto with binding, must use std::function type
+//• If inside a class, may become friends to access/capture internals
+auto myLambda = [](int x)->double { return 3*2; }
+auto myLambda = [&myVar](int x){ myVar += 10; }  // capture only by reference
+auto myLambda = [=myVar](int x){ myVar += 10; }  // capture only by value, omitting the = also by-val
+auto myLambda = [&](int x){ m_myVar += 10; }     // use all vars in scope by ref
+auto myLambda = [=](int x){ m_myVar += 10; }     // use all vars in scope by val
+auto myLambda = [](int x) { return 3*2; }        // if only one line, can omit trailing return
+
+//CONVERTING TO STD::FUNCTION
+//• Allows all function objects to be stored in single type
+//• Internal lambda type is different from std::function and a conversion is needed
+//• Only use std::function as return type if needed to pass lambda 
+std::function<double(int)> myFn = [](int x){ return x+2.0; }
+std::function<double(int)> myFn = &MyFunction;
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //BINDING FUNCTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////
+// Creates functor by capturing address and variables
 
 using namespace std::placeholders; //for _1, _2...
 void MyFunction(int x, double y, float z);
@@ -251,8 +247,10 @@ int* pPointer = (int*)realloc(allocationSizeInBytes); //Reallocating memory
 /////////////////////////////////////////////////////////////////////////////////////////////
 #include <new>
 
-// creates a new object and puts in it the memory pointed to by buffer
+// ALLOCATING USING BUFFER ON STACK
+// Puts newed object into section of memory in stack
+// Auto deleted when goes out of scope
 char buffer[512];
 int* myArray = new (buffer) int[SIZE]; 
 MyClass* myObj = new (buffer) MyClass();
-myObj->~MyClass() // classes require destructor to be called explicitly instead of 'delete'
+myObj->~MyClass() // Classes require destructor to be called explicitly before goes out of scope

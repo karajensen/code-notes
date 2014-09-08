@@ -26,6 +26,7 @@ MyClass<int, double> obj;
 // To allow template class/methods to live in .cpp, for every use of template add an explicit instantiation to .cpp file
 template MyClass<int>; 
 template void MyFunction<int>(int x);
+template void MyFunction<int>(MyClass<int>& x);
 
 //EXPLICIT SPECIALISATION
 //Tells compiler to not use template; use a specialised function instead for the given types
@@ -46,6 +47,8 @@ template <typename T, typename S> void MyFunction(T t, S s){}
 template <typename T> void MyFunction(T t, float s){} // overloads MyFunction
 MyFunction(x, y); // uses overload resolution
 
+//FORWARD DECLARATION
+template <typename T> class MyClass;
 
 //////////////////////////////////////////////////////////////////////////////
 //TEMPLATE PARAMETERS
@@ -60,28 +63,29 @@ class MyClass
 };
 MyClass<double, 20> myObj;
 
-//TEMPLATE TEMPLATE PARAMETERS
-//Allows a parameter that is a template itself to be passed in as a type
-//Template type passed in must match template template signature
-//Used to implement the policy pattern
-
-template <typename T, template <typename> class B> class ClassA {}
-template <typename S> class ClassB {}; // signature of ClassB matches B
-ClassA<int, ClassB<double>> obj;
-
-template <template <typename, typename> class B> class ClassA {} 
-template <typename T, typename S> ClassB {}; // signature of ClassB matches B
-ClassA<ClassB<double, int>> obj;
-
-template<template<typename> class B, typename T> void MyFunction(C<T>& obj){}
-template <typename S> class ClassB {}; // signature of ClassB matches C
-Class2<double> obj;
-MyFunction(obj);
-
 //TRAILING RETURN TYPE
 //useful for template functions when return type isn't known
 template<typename T, typename C>
 auto MyFunction(T x, C y) -> decltype(x+y) { return x+y; }
+
+//TEMPLATE TEMPLATE PARAMETERS
+//Allows a parameter that is a template itself to be passed in as a type
+//Template type passed in must match template template signature
+
+// Template parameter with single parameter
+template <typename T, template <typename> class B> class ClassA {}
+template <typename S> class ClassB {}; // signature of ClassB matches B
+ClassA<int, ClassB<double>> obj;
+
+// Template parameter with multiple parameters
+template <template <typename, typename> class B> class ClassA {} 
+template <typename T, typename S> ClassB {}; // signature of ClassB matches B
+ClassA<ClassB<double, int>> obj;
+
+// Template parameter for functions
+template <template <typename> class B, typename T> void MyFunction(C<T>& obj){}
+template <typename S> class ClassB {}; // signature of ClassB matches B
+MyFunction(ClassB<double>());
 
 //////////////////////////////////////////////////////////////////////////////
 //TEMPLATE INHERITANCE
@@ -135,6 +139,23 @@ public:
 private
     typename Base<T>::Nested temp; //use typename 
     std::unique_ptr<typename C::MyValue> myPtr; //use typename
+};
+
+//////////////////////////////////////////////////////////////////////////////
+//TEMPLATE FRIENDS
+//////////////////////////////////////////////////////////////////////////////
+
+template <typename T> class MyClass; //forward dec
+template <typename S> void MyFn(MyClass<S>& x){}
+
+template <typename T> class MyClass
+{
+    // All instantiations of MyFn are friends with all instantiations of MyClass
+    // eg. template void MyFn<double>(MyClass<double>& x) is friends with MyClass<int>
+    template <typename S> friend void MyFn(MyClass<S>& x);
+
+    // Only T instantiation of MyFn is friends with T instantiation of MyClass
+    friend void MyFn<T>(MyClass<T>& x);
 };
 
 //////////////////////////////////////////////////////////////////////////////

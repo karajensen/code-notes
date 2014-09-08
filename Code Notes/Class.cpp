@@ -19,7 +19,9 @@ public:
     unsigned int MyClass::operator&();       // address operator
 
     //DESTRUCTOR
-    virtual ~MyClass(){} // virtual destructor required for inheritance
+    //Virtual destructor required for polymorphism
+    //To prevent polymorphism, put non-virtual destructor as protected
+    virtual ~MyClass(){} 
     delete this; // calls destructor
 
     //CONSTRUCTOR
@@ -207,16 +209,16 @@ void* operator new(std::size_t);                         //plain new
 void* operator new(std::size_t, std::nothrow_t) throw(); //nothrow new
 void* operator new(std::size_t, void*);                  //in-place new
 
-//USING FRIENDS COUPLED WITH OVERLOADED OPERATOR
-A = B * 2.0 /*->*/ A = B.operator*(2.0);
-const MyClass operator*(const double val) const;
+//OVERLOADING FOR A*B ONLY
+A * B /*->*/ A.operator*(B);
+const MyClass operator*(const MyClass& x) const;
 
-A = 2.0 * B /*->*/ A = operator*(2.0, B); 
-friend const MyClass operator*(const double val, const MyClass& obj) const;
+//OVERLOADING FOR A*B AND B*A
+B * A /*->*/ operator*(B, A); 
+friend const MyClass operator*(const MyClass& x1, const MyClass& x2) const;
 
 //OVERLFOADING STD::COUT 
-friend std::ostream & operator<<(std::ostream& os, const MyClass& obj); 
-std::ostream & TestClass::operator<<(std::ostream & os, const MyClass& obj)
+friend std::ostream & operator<<(std::ostream& os, const MyClass& obj)
 {
     os << obj.m_member;
     return os;
@@ -227,39 +229,23 @@ std::cout << obj;
 //FRIENDS
 /////////////////////////////////////////////////////////////////////////////////////
 
-//FRIEND FUNCTIONS
+// Doesn't matter where defined inside class (public/private/protected)
+// Allows method/class access to private/protected members of A
+// Are not inherited
 class A
 {
 public:
-    class B; //forward declaraction
-    friend void B::MyMethod(); 
-};
-
-class B
-{
-public:
-    void B::MyMethod(); //method can access privates of A
-};
-
-//FRIEND CLASSES
-class A
-{
-public:
-    //auto forward declares
-    //doesn't matter where defined- public/private/protected
-    friend class B; 
-};
-
-class B
-{
-public: //class can access privates of A
+    friend void B::MyMethod(); // friend only a method
+    friend class B; // friend a class, 'class' auto forward declares if needed
+    friend void MyFunction(const MyClass& x1, const MyClass& x2){} // create inline method
 };
 
 /////////////////////////////////////////////////////////////////////////////////////
-//COPY-SWAP IDIOM 
+//COPY-SWAP IDIOM
 /////////////////////////////////////////////////////////////////////////////////////
 
-//Using the copy-swap idiom for deep copying
+// Using the copy-swap idiom for deep copying and 
+// implementing assingment operator from copy constructor
 class Array
 {
 public:
@@ -319,7 +305,9 @@ public:
 };
 
 // PUBLIC INHERITANCE
-class Derived : public Base //compilier assumes private if public not specified
+// compilier assumes private if public not specified
+// sealed stops class from being further derived
+class Derived sealed : public Base 
 {
 public: 
 

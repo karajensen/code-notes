@@ -281,7 +281,7 @@ typedef _ULonglong uint64_t;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 assert(myPtr != nullptr); // break if myPtr is null
-static_assert(myPtr != nullptr, "myPtr shouldn't be null"); // must be constant string literal
+static_assert(myConstInt > 0, "MyMessage"); // must use constant values, asserts at compile time
 throw("Message goes here");
 exit(EXIT_FAILURE);
 

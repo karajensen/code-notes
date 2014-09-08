@@ -164,6 +164,13 @@ EXPANDING DOT PRODUCTS:
 c.(c + b) - a.(c + b) = 0
 c.c + b.c - a.c - a.b = 0
 
+POSITIVE ANGLES ONLY BETWEEN 2D VECTORS:
+deg = acos(â.b̂) * 180/∏ gives [0,180]
+
+NEGATIVE ANGLES BETWEEN 2D VECTORS:
+Distance formula n.(p1-p0) formula to determine whether b is to the left or right of a:
+deg = copysign(deg, n.b̂) where n is normal (aʸ,-aˣ) or (-aʸ,aˣ)
+
 =============================================================================
 NORMS
 =============================================================================
@@ -322,7 +329,15 @@ COPLANAR:
 if u.(v X w) = 0 then coplanar as u.(v X w) = volume of parralopied
     P₁-P₀ = u
     P₂-P₀ = v   
-    P₃-P₀ = w   
+    P₃-P₀ = w
+
+NORMAL TO LINE:
+(Pˣ,Pʸ) where n = (-Pʸ, Pˣ) or (Pʸ, -Pˣ)
+(P₁ˣ,P₁ʸ)(P₂ˣ,P₂ʸ) where n = (-(P₁ʸ-P₂ʸ),(P₁ˣ-P₂ˣ)) or ((P₁ʸ-P₂ʸ),-(P₁ˣ-P₂ˣ))
+
+NORMAL TO PLANE:
+plane with 3 points where n = (P₁-P₀) X (P₂-P₀)
+ax + by + c = 0 where n = (a,b)
 
 =============================================================================
 LINE PARAMETRIC EQUATION
