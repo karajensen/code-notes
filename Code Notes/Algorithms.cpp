@@ -10,7 +10,7 @@ auto sortLam = [](const MyClass& o1, const MyClass& o2) -> bool { return o1.myIn
 auto createLam = []() -> int { return rand()%10; }
 struct DelFunctor { template<typename T> void operator()(const T* ptr) const { delete ptr; ptr = nullptr; } };
 
-// ACCEPTED PREDICATES
+// ACCEPTED FUNCTION OBJECTS
 struct myFunctor { void operator()(int i){} };   // ..., myFunctor);
 std::plus<T> stdFunctor;                         // ..., stdFunctor); or ..., std::plus<T>());
 auto myLambda = [](int i) {};                    // ..., myLambda);

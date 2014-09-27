@@ -50,6 +50,9 @@ MyFunction(x, y); // uses overload resolution
 //FORWARD DECLARATION
 template <typename T> class MyClass;
 
+//TYPEDEF
+using myType = T;
+
 //////////////////////////////////////////////////////////////////////////////
 //TEMPLATE PARAMETERS
 //////////////////////////////////////////////////////////////////////////////
@@ -156,6 +159,9 @@ template <typename T> class MyClass
 
     // Only T instantiation of MyFn is friends with T instantiation of MyClass
     friend void MyFn<T>(MyClass<T>& x);
+
+    // Only specialisation of MyFn for MyClass is friends with MyClass
+    friend void MyFn <> (MyClass& x);
 };
 
 //////////////////////////////////////////////////////////////////////////////

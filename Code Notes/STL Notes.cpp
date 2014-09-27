@@ -25,7 +25,7 @@ atan2(-x,-y) = +angle [-90,-180)   |   atan2(+x,-y) = +angle [90,180]
 • All ranges are [Start, End) with End non-inclusive
 • Algorithms that copy over a range can be changed to insert with back/front insert iterators
 • Comparison lambdas should always return false for equal values
-• Functors used are passed by-val, should be a pure function
+• Functors used are passed by-val and copied
 • In-build functors are faster than passing lambdas/function pointers due to them being inlined
 
 SORT/SEARCHING

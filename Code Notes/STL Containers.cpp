@@ -20,8 +20,9 @@ string::npos //maximum allowable size for string; maximum value of unsigned int
 
 string str; //initialises to ""
 string str("str"); 
+string str(str2, 1, n) //from index 1 to 1+n, or until end. N default param is end (npos)
 string str(n,'a'); //fill n times with 'a'
-string str(char_array, n); //fill char_array of n size
+string str(char_array, n); //fill with char_array of n length
 wstring wstr(L"wstr");
 
 // Converting wstring and string
@@ -32,9 +33,9 @@ str[0]
 str.empty() //returns true/false if empty (faster than size)
 str.size() //number of elements
 str.length() //same as str.size()
-str.insert(4, "hello") //inserts substring one before index 4
-str.replace(4, 5, "hello") //replace over index 4 for 5 characteres
+str.replace(4, n, "hello") //replace over index 4 for n characteres
 str.c_str() //returns pointer to cstring with strings contents
+str.substr(2, n) //creates substring from index 2 with n characters
 str.clear() //removes all from container
 str.back() //returns reference to last element
 str.front() //returns reference to first element
@@ -45,12 +46,15 @@ str.max_size() //returns maximum possible size
 str.resize(x) //resizes container for x units
 str.capacity() //returns number of elements vector can contain before more memory needed
 str.reserve(100) //reserves 100 spots (but doesn't create any objects) of vector's type (doesn't affect size)
-str.insert(str.begin(),t) //Inserts a reference of t before iterator
-str.insert(str.begin(),n,t) //Inserts n references of t before iterator
-str.insert(str.begin(),str2.begin(),str2.end()) //Insert copies of elements in the range before iterator
+str.insert(4, "hello") //inserts before index 4
+str.insert(4, "hello", 1, n) //inserts 'ello' before index 4 where n is length of substring
+str.insert(4, n,'a') //Inserts n references of a before index 4
+str.insert(str.begin(), 'a') //Inserts a before iterator
+str.insert(str.begin(), n, 'a') //Inserts n references of a before iterator
+str.insert(str.begin(), str2.begin(), str2.end()) //Insert copies of elements in the range before iterator
 
-//returns index int
-str.find(chararray, 2)  //starts at position 2 and searches for the substring (cstring/string)
+//returns index int or if not found
+str.find(chararray, 2) //starts at position 2 and searches for the substring (cstring/string)
 str.find("hello", 2)  // returning first occurance's index or string::npos
 str.rfind() //finds last occurance of substring
 str.find_first_of("hello") //returns index of first occurance of ANY character in substring
@@ -317,16 +321,18 @@ std::advance(itr, n) //advance iterator by n; Random access iterators use +=/-= 
 std::distance(itr1, itr2) //returns int distance between 2 iterators, it2 must be after it1
 
 //Iterating over container
-for (vector<int>::iterator itr = scores.begin(); itr != scores.end(); ++itr)
+auto endItr = myVec.end(); // to prevent recomputing each iteration
+for (vector<int>::iterator itr = myVec.begin(); itr != endItr; ++itr)
     itr->myMethod();
 
-for (auto& item : myVector) //doesn't work with vs2010
+for (auto& item : myVec)
     int x = item;
 
-for each(auto& item in myVector)
+for each(auto& item in myVec)
     int x = item;
 
-for (vector<int>::reverse_iterator rItr = scores.rbegin(); rItr = scores.rend(); ++rItr)
+auto endItr = myVec.rend(); // to prevent recomputing each iteration
+for (vector<int>::reverse_iterator rItr = myVec.rbegin(); rItr = endItr; ++rItr)
     rItr->myMethod();
 
 //==================================================================================================

@@ -78,6 +78,12 @@ ORDER OF EXPRESSION EVALUATION
 • Order is left to right where right is only done if left is true: if(left && right)
 • Doesn't work with bitwise operators
 
+RESOURCE ACQUISITION IS INITIALIZATION (RAII)
+• Aquiring and owning a resource means cleaning that resource up properly
+• If an exception is thrown or return happens, 'delete' may never be called
+• Resource cleaning needs to be tied to the lifespace of objects for automatic allocation/deletion
+• Vital for exception and thread safe code
+
 ESCAPED CHARACTERS
 Newline = \n 
 Horizontal tab = \t
@@ -316,9 +322,26 @@ PARAMETRIC POLYMORPHISM: object types aren't defined, any object can be used
 3) CATCH BY REFERENCE
 • Catch reference as used to allow inheritance with exception types 
 
-EXCEPTION PATH
-If Exception type wasn't explicitly thrown: unexpected()->terminate()->abort()
-If Exception type was known but not caught: terminate()->abort()
+EXCEPTION SAFETY
+• Use RAII to auto cleanup resources
+• Only change state once any possible errors have been resolved
+• One class/function, on responsibility idiom
+• Destructor/deallocation/swap functions should never throw as impossible to safely cleanup
+
+===============================================================================
+THE ABRAHAMS GUARANTEES
+===============================================================================
+
+BASIC GUARANTEE
+• Failures/exceptions might alter program state
+• No leaks occur and affected objects are still usable but not in predictable state
+
+STRONG GUARANTEE
+• Failures/exceptions guarantee program state is unchanged
+• No leaks occur and objects and iterators not affected
+
+NOTHROW GUARANTEE
+• Failure and exceptions do not happen
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //BIT MANIPULATION

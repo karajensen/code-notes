@@ -8,10 +8,9 @@ std::swap   // swaps the value of two variables
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <typeinfo>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-//Requires RTTI turned on and virtual methods (type_info stored in v-table)
 
 typeid(myObject)    //returns type_info for object
-myTypeInfor.name()  //get unique string identifying the class type
+myTypeInfo.name()   //get "class MyClass" string identifying the class type
 
 // requires object, not pointer
 Base* myBasePointer = new Derived();
@@ -311,16 +310,15 @@ void myFunction() throw(const char*, std::exception&); //can throw string or std
 void myFunction() throw(); //DOESN'T THROW EXCEPTION
 
 //UNEXPECTED EXPECTION: 
-//Occurs when exception thrown that function doesn't expect to be thrown
-//calls unexpected() -> terminate() -> abort()
+//If Exception type wasn't explicitly thrown: unexpected()->terminate()->abort()
 set_unexpected(MyUnexpectedFn);
 void MyUnexpectedFn()
 {
     throw std::bad_exception(); //bad_exception is thrown
 }
 
-//UNCAUGHT EXCEPTION: Occurs when no matching handlers
-//calls terminate() -> abort()
+//UNCAUGHT EXCEPTION: 
+//If Exception type was known but not caught: terminate()->abort()
 set_terminate(MyQuitFn);
 void MyQuitFn()
 {

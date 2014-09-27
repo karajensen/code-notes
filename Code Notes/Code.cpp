@@ -31,11 +31,10 @@ int&y = x;              // Reference to x: use alongside x
 int&&y = std::move(x);  // R-value Reference to x, std::move only typecasts to x-value
 int y = std::move(x);   // Calls y move constructor, x is left in an undefined destructable state
 
-//TYPEDEF
-typedef int myType; //create alias for int
-typedef bool myType; //bool will use 4 bytes if typedefined to something else
-typedef decltype(x) myType; //can use decltype with typedef
-using myType T; //typedef for templates
+//TYPEDEF/ALIASES
+typedef int myType;   
+typedef decltype(x) myType;
+using myType = int;
 
 //VARIABLE SIZES
 sizeof(myInt) //gives size of myInt in bytes
@@ -207,16 +206,15 @@ unsigned long //Can have 32 (bytes) flags maximum
 //FOR LOOP
 //Never use unsigned int when looping backwards to 0
 //When decrementing past zero the unsigned int will cycle over
+//All except the initial assigment will recompute each iteration
 for (int i = 0; i < 5; ++i){}
+for (int i = 0, int j = 2; i < j; i = i + 15, j-- ){}
 
 //FOR EACH LOOP
 for (double x : myDoubleArray){ x += 1.0; }  //by-val
 for (double &x : myDoubleArray){ x += 1.0; } //by-ref
 for (auto x : myVectorArray){ DoSomething(x); } //with stl containers
 for (int x : {0,4,3,5,2,0}){ cout << x; } //using initialisation list
-
-//DOUBLE FOR LOOP
-for (int i = 0, int j = 2; i < j; i = i + 15, j-- ){}
 
 //WHILE LOOP
 while (name[i] != '\0') { i++; }

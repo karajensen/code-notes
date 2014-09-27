@@ -133,6 +133,15 @@ struct MyStruct /*doesn't require name*/
     float y;
 }; 
 
+//LOCAL CLASS/STRUCTURES
+//Cannot define static member variables
+//Can't access nonstatic local variables to MyFn
+void MyFn()
+{
+    class MyClass {};
+    MyClass myobj;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////
 //CREATING OBJECTS 
 /////////////////////////////////////////////////////////////////////////////////////
