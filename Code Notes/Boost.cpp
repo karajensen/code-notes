@@ -164,6 +164,10 @@ myThread.join();
 
 filesystem::path filePath("MyFile.txt");
 filesystem::exists(filePath)
+filesystem::remove(prevPath);          // Removing files
+filesystem::create_directory(dir)      // Create directory
+filesystem::rename(filePath,prevPath); // Renaming files
+filesystem::copy_file("a.txt","b.txt") // Copy files from path a to path b
 
 // Recurse backwards through parent directories
 filesystem::path directory("MyParentFolder/MyFolder");
@@ -177,18 +181,6 @@ while(!directory.string().empty())
     directory = directory.parent_path();
 }
 
-// Copy files
-boost::filesystem::copy_file("CopyFromPath.txt","CopyToPath.txt")
-
-// Removing files
-filesystem::remove(prevPath);
-
-// Create directory
-filesystem::create_directory(dir)
-
-// Renaming files
-filesystem::rename(filePath,prevPath);
-
 //////////////////////////////////////////////////////////////////////////////
 //INPUT/OUTPUT
 //////////////////////////////////////////////////////////////////////////////
@@ -196,48 +188,47 @@ filesystem::rename(filePath,prevPath);
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-<one>
+<root>
     <two>
-        <three>5</three>
+        <three>3</three>
+        <four x="0.0"></four>
     </two>
-</one>
+    <two>
+        <three>0</three>
+        <four x="4.0"></four>
+    </two>
+</root>
+
+property_tree::ptree tree;
+tree.size();                  // Size of direction children for a property tree
+tree.count("X");              // Number of direct children named X
+tree.get_child("X");          // Gets first direct child named X or throws if doesn't exist
+tree.get_child_optional("X"); // returns boost::optional<const ptree&> of first direct child
 
 //=======================================================================
 //READING XML
 //=======================================================================
 
-filesystem::path filePath("Meshes.xml");
-if(filesystem::exists(filePath))
-{
-    try
-    {
-        property_tree::ptree tree;
-        property_tree::xml_parser::read_xml(filePath.generic_string(), tree, 
-            boost::property_tree::xml_parser::trim_whitespace);
+filesystem::path myPath("myfile.xml");
+property_tree::ptree tree;
 
-        property_tree::ptree& root = tree.get_child("Meshes");
-        property_tree::ptree::iterator it;
-        for(it = root.begin(); it != root.end(); ++it)
-        {
-            std::string name = it->second.get_child("Name").data();
+// Throws const boost::filesystem::filesystem_error& if fails
+property_tree::xml_parser::read_xml(myPath.generic_string(), tree, property_tree::xml_parser::trim_whitespace);
+property_tree::ptree& root = tree.get_child("root");
 
-            //throws const boost::bad_lexical_cast& e
-            int number = lexical_cast<int>(it->second.get_child("Number").data()); 
-            
-            //throws const boost::property_tree::ptree_bad_data
-            int number = it->second.get<int>("Number");
-        }
-    }
-    catch(const boost::filesystem::filesystem_error& e)
-    {
-        LogError(e.what());
-        return false;
-    }
-}
-else
+// Creates a pair where first is name and second is ptree
+BOOST_FOREACH(boost::property_tree::ptree::value_type const& value, root)
 {
-    LogError("Could not find " + sm_assetsPath + "Meshes.xml");
-    return false;
+    if (boost::iequals(type.first, "two"))
+    {
+        //throws const boost::bad_lexical_cast& e, use e.what() to get more info
+        double x = lexical_cast<double>(type.second.get_child("three").data());
+        double x = lexical_cast<double>(type.second.get_child("four.<xmlattr>.x").data());
+
+        //throws const boost::property_tree::ptree_bad_data&, use e.what() to get more info
+        double x = type.second.get<double>("three").data();
+        double x = type.second.get<double>("four.<xmlattr>.x").data();
+    }
 }
 
 // Gets the correct value depending on if it exists in the tree
@@ -255,9 +246,6 @@ T GetValue(boost::property_tree::ptree::iterator& it, T defaultValue, char* node
     }
     return defaultValue;
 }
-
-tree.size(); // Size of direction children for a property tree
-tree.count("X"); // NUmber of direct children called X
 
 //=======================================================================
 //WRITING XML
