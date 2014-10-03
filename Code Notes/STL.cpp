@@ -30,6 +30,18 @@ std::is_assignable<A,B>::value //returns true if A==B is possible
 std::is_move_assignable<A>::value //returns true if A has a move assignment operator
 std::is_move_constructible<A>::value //returns true if A has a move constructor
 std::has_virtual_destructor<A>::value //returns true if A has a virtual destructor
+std::is_same<A,B>::value //returns true if A and B are of the same type and constness
+std::is_integral<A>::value //returns true if A is a variant of int, char or bool reguardless of constness
+std::is_void<A>::value //returns true if A is void reguardless of constness
+std::is_null_pointer<A>::value //returns true if A is nullptr reguardless of constness
+std::is_const<A>::value //returns true if A is const
+std::is_polymorphic<A>::value //returns true if A is a non-union class with at least 1 virtual function
+std::is_abstract<A>::value //returns true if A is a non-union class with a pure virtual function
+std::remove_cv<A>::type //returns A with any const or volitile or both modifiers removed
+std::remove_const<A>::type //returns A with any const modifiers removed
+std::remove_volatile<A>::type //returns A with any volitile modifiers removed
+std::remove_reference<A>::type //returns A with any reference removed
+std::remove_pointer<A>::type //returns A with any pointer removed
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <random>
@@ -284,7 +296,6 @@ static_assert(myConstInt > 0, "MyMessage"); // must use constant values, asserts
 throw("Message goes here");
 exit(EXIT_FAILURE);
 
-//TRY-CATCH BLOCK
 try 
 { 
     myFunction();
@@ -304,26 +315,26 @@ catch (...) //catches anything
 {
 }
 
+//NON-THROWING METHODS
+delete myPointer;
+delete[] myArray;
+
 //EXCEPTION THROWING
+//If exception type not on list is thrown, calls unexpected()
 void myFunction(); //can throw anything
-void myFunction() throw(const char*, std::exception&); //can throw string or std::exception
+void myFunction() throw(const char*, std::exception&); //can only throw string or std::exception
 void myFunction() throw(); //DOESN'T THROW EXCEPTION
 
-//UNEXPECTED EXPECTION: 
-//If Exception type wasn't explicitly thrown: unexpected()->terminate()->abort()
-set_unexpected(MyUnexpectedFn);
-void MyUnexpectedFn()
-{
-    throw std::bad_exception(); //bad_exception is thrown
-}
+//UNEXPECTED EXPECTION
+//If type wasn't explicitly thrown or on expected list: unexpected()->terminate()->abort()
+unexpected() //calls terminate()
+set_unexpected([](){}); //takes in void MyFunction()
 
-//UNCAUGHT EXCEPTION: 
-//If Exception type was known but not caught: terminate()->abort()
-set_terminate(MyQuitFn);
-void MyQuitFn()
-{
-}
-
+//UNCAUGHT EXCEPTION
+//If type was known but not caught: terminate()->abort()
+terminate() //calls abort()
+set_terminate([](){}); //takes in void MyFunction()
+ 
 //CREATING CUSTOM EXCEPTION
 class MyClass: public std::exception
 {

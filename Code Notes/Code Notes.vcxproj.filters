@@ -442,6 +442,27 @@
     <Image Include="Images\Code - Static and dynamic websites.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\MathsPhysics - Graph ex.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Graph lnx.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Graph Negative.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Graph Positive.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Graph x.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Graph x-1.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Graph x2.png">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Questions.txt" />

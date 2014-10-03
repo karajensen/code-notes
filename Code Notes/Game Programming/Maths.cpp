@@ -36,16 +36,27 @@ DERIVATIVES/ANTI-DIFFERENTIATION
 f(x) = axⁿ      f'(x) = axⁿ
 f'(x) = anx¯¹   f(x) = axⁿ⁺¹/n+1
 
-SOLVE QUADRATIC EQUATION
-ax² + bx + c = 0
-x = -b ± √(b² - 4ac) / 2a
+QUADRATIC EQUATIONS
+y = mx² + c
+ax² + bx + c = 0 where x = -b ± √(b² - 4ac) / 2a
 
-CIRCLES EQUATIONS
-where c = center of circle
-(x-cˣ)² + (y-cʸ)² = r²                = r² on the circle boundry
-(x-cˣ)² + (y-cʸ)² + (z-cᶻ)² = r²      > r² outside circle
-(P-c).(P-c) = r²                      < r² inside circle
-P.P - 2P.c + c.c = r²
+MODULUS
+7 % 3 = numerator remainder of 7/3 -> 5²/₃ = 2
+A % 2 = 0 if A is even
+A ≡ B if the remainder of A (A % N) = remainder of B (B % N)
+A + C ≡ B + C (%N)
+AC ≡ BC (%N)
+
+SQUARE ROOTS
+√(a) = a¯¹∕²
+√ₓ(a) = a¯¹∕ˣ
+√(a²) = ‖a‖
+√(ab) = √(a)√(b)
+√(a/b) = √(a) / √(b)
+√(aa) = √(a)√(a) = a
+√(aⁿ) = √(a)ⁿ
+√(a+b) ≠ √(a) + √(b) 
+a/√(b) = a/√(b) + √(b)/√(b) = a√(b)/b
 
 //////////////////////////////////////////////////////////////////////////////
 //TRIGONOMETRY
@@ -102,6 +113,25 @@ To get circular waves, use radius r as x
  t = time
  w = speed
  ɸ = initial shift of the wave
+
+//////////////////////////////////////////////////////////////////////////////
+//EXPONENTS AND LOGARITHMS
+//////////////////////////////////////////////////////////////////////////////
+ 
+ X° = 1
+ XᴬXᴮ = Xᴬ⁺ᴮ
+ Xᴬ/Xᴮ = Xᴬ⁻ᴮ
+ (Xᴬ)ᴮ = Xᴬᴮ
+ Xᴬ + Xᴬ = 2Xᴬ ≠ X²ᴬ
+
+ Common logarithm:  logB = log₁₀B
+ Natural logarithm: lnB = logₑB (e ≈ 2.718)
+ Base conversions:  logₓA = logᵥA / logᵥX 
+
+ logₓA = B if Xᴮ = A
+ logₓAB = logₓA + logₓB
+ logₓA/B = logₓA - logₓB
+ logₓAᴮ = BlogₓA
 
 //////////////////////////////////////////////////////////////////////////////
 //VECTORS
@@ -436,6 +466,20 @@ PLANE LINEAR EQUATION
   ---------------------- 
  | ax + by + cz + d = 0 | where d = -(ax₀ + by₀ + cz₀)
   ----------------------
+
+//////////////////////////////////////////////////////////////////////////////
+//CIRCLES
+//////////////////////////////////////////////////////////////////////////////
+
+where c = center of circle
+(x-cˣ)² + (y-cʸ)² = r²            
+(x-cˣ)² + (y-cʸ)² + (z-cᶻ)² = r²
+(P-c).(P-c) = r²                     
+P.P - 2P.c + c.c = r²
+
+= r² on the circle boundry
+> r² outside circle
+< r² inside circle
 
 //////////////////////////////////////////////////////////////////////////////
 //MATRICES
@@ -853,28 +897,6 @@ SOLUTIONS Has rows | 1 0 ... 0 | a | or | 0 0 ... 0 | 0 |
 -> EXACT: One solution with exact number of equations when R = N
 
 //////////////////////////////////////////////////////////////////////////////
-//PROBABILITY 
-//////////////////////////////////////////////////////////////////////////////
-
-LIMITING FREQUENCY: proportion of occurance of value after number of trials
-PROBABILITY: limiting frequence over infinate number of trials
-
-USED FOR: Imperfect information
-RISK AVERSE: Choose guaranteed payoff over the game if guaranteed payoff 
-             is ≤ expected value of game
-RISK TAKING: Choose guaranteed payoff over the game if guaranteed payoff is 
-             ≥ expected value of game
-RISK NEUTRAL: Always select strategy with highest expected payoff
-
-Pr[X & Y] = Pr[X|Y]Pr[Y]    Probability of Y and X occuring after Y
-Pr[X & Y] = Pr[X]Pr[Y]      Probability of X and Y together (in no order)
-Pr[X|Y]                     Probability of X occuring after Y
-
-ExpectedValue = Pr(x1)*v1 + Pr(x2)*v2 + ...
-Pr(x) = probability of x happening
-v = value recieved if x happens
-
-//////////////////////////////////////////////////////////////////////////////
 //IMAGINARY NUMBERS
 //////////////////////////////////////////////////////////////////////////////
 
@@ -1006,5 +1028,42 @@ simplifies to:
 | (2xy+2wz)    (1-2x²-2z²)  (2yz+2wx)      0 | 
 | (2xz-2wy)    (2yz-2wx)    (1-2x²-2y²)    0 |  
 |     0             0            0         1 | 
+
+//////////////////////////////////////////////////////////////////////////////
+//PROBABILITY 
+//////////////////////////////////////////////////////////////////////////////
+
+LIMITING FREQUENCY: proportion of occurance of value after number of trials
+PROBABILITY: limiting frequence over infinate number of trials
+
+USED FOR: Imperfect information
+RISK AVERSE: Choose guaranteed payoff over the game if guaranteed payoff 
+             is ≤ expected value of game
+RISK TAKING: Choose guaranteed payoff over the game if guaranteed payoff is 
+             ≥ expected value of game
+RISK NEUTRAL: Always select strategy with highest expected payoff
+
+Pr[X & Y] = Pr[X|Y]Pr[Y]    Probability of Y and X occuring after Y
+Pr[X & Y] = Pr[X]Pr[Y]      Probability of X and Y together (in no order)
+Pr[X|Y]                     Probability of X occuring after Y
+
+ExpectedValue = Pr(x1)*v1 + Pr(x2)*v2 + ...
+Pr(x) = probability of x happening
+v = value recieved if x happens
+ 
+//////////////////////////////////////////////////////////////////////////////
+//SERIES
+//////////////////////////////////////////////////////////////////////////////
+
+GEOMETRIC SERIES
+{ar°, ar¹, ar², ar³...arⁿ} where r ≥ 0
+
+SUM OF GEOMETRIC SERIES
+n-1                        
+ ∑(arᵏ) = a(1-rⁿ/1-r)     
+k=0                        
+
+k = starts at 0 and goes to n-1
+r = common ratio between terms
 
 */////////////////////////////////////////////////////////////////////////////

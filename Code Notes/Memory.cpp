@@ -23,12 +23,12 @@ int** myArrayPointer = &myArray;
 delete [] myArray; //free array
 *(myArray+3) /*or*/ myArray[3] /*or*/ 3[myArray] //to access elements
 
+//POINTER TO ARRAY OF POLYMORPHIC TYPES
 //Avoid as pointer arithmatic on base class arrays of derived objects
 //pointer arithmatic will use sizeof(Base) not sizeof(Derived)
 Base* myArray = new Derived[2];
-myArray[1] = *(myArray+1)
-delete [] myArray //delete [] also uses pointer arithmatic
-
+myArray[1] = *(myArray+1) //BAD
+delete [] myArray //ABAD lso uses pointer arithmatic
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //FUNCTION OBJECTS

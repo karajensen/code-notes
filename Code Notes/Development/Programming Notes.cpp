@@ -150,12 +150,14 @@ THE STACK
 • Contains memory address of next instruction to execute after the called function returns
 • Self manages memory; variables allocated and freed automatically, no fragmentation
 • Has limit on size, Fast access
+• Operations on objects are usually faster
 
 THE HEAP
 • Segment storing dynamically allocated reference-type variables
 • User allocates memory; memory may become fragmented
 • Larger size than stack though slower as it uses pointers to access
 • Doesn't actually use a heap structure, can be based off queue
+• Operations on objects are usually slower
 
 ===============================================================================
 CPU MEMORY LOCATIONS
@@ -237,7 +239,7 @@ FASTCALL CALLING CONVENTION
 //CLASSES
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-DESTRUCTOR: Called when out of scope, delete used or explicitly
+DESTRUCTOR: Called when out of scope, delete used or explicitly, should never throw exception
 FINALISER: Called when object is garbage collected
 
 AGGREGATE:
@@ -254,6 +256,10 @@ PLAIN-OLD-DATA (POD):
 • No user-declared assignment operator/destructor
 • Non-static members must be POD types
 • Non-static arrays/references/pointers must hold POD types
+
+TRAITS CLASS:
+• Encapsulates a set of types and functions necessary for use in templates 
+• Allow compile time decisions to be made on types
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //OBJECT ORIENTED PROGRAMMING

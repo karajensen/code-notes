@@ -212,6 +212,13 @@
     <Image Include="Images\MathsPhysics - Collision Sphere Algorithms.png" />
     <Image Include="Images\MathsPhysics - constraints.png" />
     <Image Include="Images\MathsPhysics - GJK Collision Detection.png" />
+    <Image Include="Images\MathsPhysics - Graph ex.png" />
+    <Image Include="Images\MathsPhysics - Graph lnx.png" />
+    <Image Include="Images\MathsPhysics - Graph Negative.png" />
+    <Image Include="Images\MathsPhysics - Graph Positive.png" />
+    <Image Include="Images\MathsPhysics - Graph x-1.png" />
+    <Image Include="Images\MathsPhysics - Graph x.png" />
+    <Image Include="Images\MathsPhysics - Graph x2.png" />
     <Image Include="Images\MathsPhysics - Integration.png" />
     <Image Include="Images\MathsPhysics - kinematics.png" />
     <Image Include="Images\MathsPhysics - plane equation.png" />

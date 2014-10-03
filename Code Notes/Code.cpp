@@ -23,14 +23,6 @@ auto x = 0  //automatically chooses 'int' for x
 decltype(y) myValue; //make myValue the same type as y
 decltype(myFnt(y)) myValue; //make myValue same type as return of myFnt(y)
 
-//MOVE SEMANTICS
-int x;          // L-VALUES: Persisting variable on left side of assignment expression    
-int x = 3 + 1;  // R-VALUES: Temporary variable on right side of assignment expression
-3 + 1;          // Temporary value on left side allowable but doesn't do anything
-int&y = x;              // Reference to x: use alongside x
-int&&y = std::move(x);  // R-value Reference to x, std::move only typecasts to x-value
-int y = std::move(x);   // Calls y move constructor, x is left in an undefined destructable state
-
 //TYPEDEF/ALIASES
 typedef int myType;   
 typedef decltype(x) myType;
@@ -50,6 +42,24 @@ b = a++    // use a and then increment it (after everything including assigment)
 i++ * ++i; // BAD: i is modified more than once
 i = ++i    // BAD: i is modified more than once
 ++i = 2;   // BAD: i is modified more than once
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//MOVE SEMANTICS
+//////////////////////////////////////////////////////////////////////////////////////////
+
+int x;          // L-VALUES: Persisting variable on left side of assignment expression    
+int x = 3 + 1;  // R-VALUES: Temporary variable on right side of assignment expression
+3 + 1;          // Temporary value on left side allowable but doesn't do anything
+
+int&y = x;              // Reference to x: use alongside x
+int&&y = std::move(x);  // R-value Reference to x, std::move only typecasts to x-value
+int y = std::move(x);   // Calls y move constructor, x is left in an undefined destructable state
+
+//AUTOMATIC USES
+//Occurs only if move constructor/assignment operator are not = delete
+MyFunction("str") => MyFunction(std::string str); 
+MyFunction(){ return "str"; } => std::string str = MyFunction();
+myVector.push_back(std::unique_ptr<MyClass>(new MyClass()));
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //C-STYLE ARRAYS/STRINGS

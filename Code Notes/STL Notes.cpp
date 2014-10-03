@@ -94,6 +94,8 @@ LIST/FORWARD LIST
 • Handles large, complex elements well
 
 STRING
+• Stored on the stack (SSO: short string optimization) if small or on the heap if large
+• If on the stack and string grows can be moved to the heap
 • Data for strings not guaranteed to be stored in continuous memory
 • Internal representation of string not guaranteed to end with null character
 

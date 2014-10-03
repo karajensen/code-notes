@@ -5,6 +5,7 @@
 /*------------------------------------------------------------------
 OPENGL: Column Major Matrix / Right Handed Coordinate System
 VERTEX WINDING ORDER: Anticlockwise 
+SCREEN ORIGIN: Lower Left
 ------------------------------------------------------------------
 Trans * Rot * Scale = LocalWorld
 ParentWorld * LocalWorld = World
@@ -66,11 +67,13 @@ glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 /*------------------------------------------------------------------
 DIRECTX: Row Major Matrix / Left Handed Coordinate System
 VERTEX WINDING ORDER: Clockwise 
+SCREEN ORIGIN: Top Left
 ------------------------------------------------------------------
 LocalWorld = Scale * Rot * Trans
 World = LocalWorld * ParentWorld
 Vertex in screenspace = Vertex * World * View * Proj
 Vertex in worldspace = InvProj * CameraWorld
+
 | Right.x  Right.y   Right.z  0 |   UP: +Y
 | Up.x     Up.y      Up.z     0 |   RIGHT: +X
 | For.x    For.y     For.z    0 |   FORWARD: +Z

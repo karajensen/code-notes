@@ -16,8 +16,10 @@ X▪          derivative                  ∏           pi
 tan¯¹()     trigonmetry                 ▲►▼◄        arrows
 ̅            conjugate                   ̿            double conjugate
 •           dot point                   ±           plusminus
+≠           doesn't equal               ≈           roughly equals
+%           modulus                     ≡           modulus congruant
 
-ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻᶿᵝᶲᴬᴮᴰᴱᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾᴿᵀᵁᵂ¯⁴⁵²³¹°⁶⁷⁸⁹⁺⁻⁼⁽⁾ 
+ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻᶿᵝᶲᴬᴮᴰᴱᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾᴿᵀᵁᵂ¯⁴⁵²³¹°⁶⁷⁸⁹⁺⁻⁼⁽⁾∕
 ₐₑᵢₒᵣᵤᵥₓᵦ₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎
 
 //////////////////////////////////////////////////////////////////////////////

@@ -2,9 +2,13 @@
 //TEMPLATES
 //////////////////////////////////////////////////////////////////////////////
 
+//- Only creates instantiation of template for objects used with the template
+//- Will force create version of template with explicit instantiation
+//- Only adds methods to template instantiation if object actually uses the method
+//- Keyword 'class' interchangable with 'typename'
+
 // IMPLICIT INSTANTIATION
 // Compiler determines what types require templates and creates versions for them only
-// keyword 'class' interchangable with 'typename'
 template <typename T> void MyFunction(T x) {} 
 MyFunction<int>(x) /*or*/ MyFunction(x)
 

@@ -1,18 +1,4 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-//MULTIPLE TYPED CONTAINERS
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//TUPLES
-std::tuple<int, double, std::string> myTuple = std::make_tuple(0,2.0,"hello");
-auto value = std::get<0>(myTuple); //Get value at index 0, must be const index
-std::tie(myInt, myDouble, std::ignore) = myTuple; //copies from tuple into variables 
-std::ignore //ignore copying of variable
-
-//PAIRS
-std::pair<int, double> myPair = std::make_pair(1,2.0);
-myPair.first / myPair.second //access members of pair
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <string>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -24,10 +10,6 @@ string str(str2, 1, n) //from index 1 to 1+n, or until end. N default param is e
 string str(n,'a'); //fill n times with 'a'
 string str(char_array, n); //fill with char_array of n length
 wstring wstr(L"wstr");
-
-// Converting wstring and string
-string str(wstr.begin(),  wstr.end());
-wstring wstr(str.begin(), str.end());
 
 str[0]
 str.empty() //returns true/false if empty (faster than size)
@@ -53,7 +35,8 @@ str.insert(str.begin(), 'a') //Inserts a before iterator
 str.insert(str.begin(), n, 'a') //Inserts n references of a before iterator
 str.insert(str.begin(), str2.begin(), str2.end()) //Insert copies of elements in the range before iterator
 
-//returns index int or if not found
+// FIND METHODS
+// returns index int or if not found
 str.find(chararray, 2) //starts at position 2 and searches for the substring (cstring/string)
 str.find("hello", 2)  // returning first occurance's index or string::npos
 str.rfind() //finds last occurance of substring
@@ -62,7 +45,11 @@ str.find_last_of("hello") //returns index of last occurance of ANY character in 
 str.find_first_not_of("hello") //returns index of first occurance of ANY character NOT in substring
 str.find_last_not_of("hello") //returns index of last occurance of ANY character NOT in substring
 
-//ITERATORS
+// CONVERTING WSTRING AND STRING
+string str(wstr.begin(),  wstr.end());
+wstring wstr(str.begin(), str.end());
+
+// ITERATORS
 begin()   end()   cbegin()   cend()
 rbegin()  rend()  crbegin()  crend()
 
@@ -310,6 +297,20 @@ mybits.flip(1)      // flips bit 1 to opposite
 mybits.count()      // returns number of true bits
 mybits.to_string()  // converts bitset to string
 mybits.to_ulong()   // converts bitset to unsigned long
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//MULTIPLE TYPED CONTAINERS
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//TUPLES
+std::tuple<int, double, std::string> myTuple = std::make_tuple(0,2.0,"hello");
+auto value = std::get<0>(myTuple); //Get value at index 0, must be const index
+std::tie(myInt, myDouble, std::ignore) = myTuple; //copies from tuple into variables 
+std::ignore //ignore copying of variable
+
+//PAIRS
+std::pair<int, double> myPair = std::make_pair(1,2.0);
+myPair.first / myPair.second //access members of pair
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <iterator>
