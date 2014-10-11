@@ -286,7 +286,9 @@ str.split(",")                    // returns array of string without seperator
 // ARRAYS
 myArray = new Array();
 myArray.length 
-myArray[0] = "myEntry1"; // auto resizes, zero-based          
+myArray[0] = "myEntry";
+myArray["one"] = 2.0;
+"one" in myArray        // returns true if 'one' is a key in myArray
 
 // CONVERSIONS
 myString = myInt.toString();

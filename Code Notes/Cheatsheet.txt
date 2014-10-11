@@ -81,6 +81,18 @@
 [25] Use auto for lambda return types as a conversion is needed to return as
      std::function. Only use std::function if needed to pass lambda.
 
+[26] Functions fully defined in .h can be templated, inline, static otherwise get linker error
+     If inlined, any static function members are shared between files including it
+     If static, any static function members are copied with each file having sole access
+
+[27] Variables defined in .h are static by default if const.
+     Variables defined in .h are extern by default if non-const.
+
+[28] Variables defined in .h with extern keyword reference global variable initialised 
+     in .cpp and cannot be initialised in .h or will throw linker error.
+     Variables defined in .h with static keyword are private and a copy of it is created 
+     for every use of the header. This increases memory usage during compilation.
+
 ////////////////////////////////////////////////////////////////////////////////////
 //STL CHEATSHEET
 ////////////////////////////////////////////////////////////////////////////////////
@@ -366,4 +378,28 @@ DESTRUCTOR INHERITANCE
 [CLI] Always virtual (from auto-inheriting System::Object)
 [C++] Only virtual if inheriting from base class with virtual destructor
 
+////////////////////////////////////////////////////////////////////////////////////
+//RENDERING TROUBLESHOOTING
+////////////////////////////////////////////////////////////////////////////////////
 
+Q: Mesh has shape but doesn't rotate/translate/scale properly with camera
+A: Check order of view, proj and world combination, check view and proj are accurate
+
+Q: Mesh doesn't have shape
+A: Check vertex input layout matches shader attribute inputs and are 
+   used in shader as these can be optimized out on compilation
+
+Q: Texture ordering is incorrect when accessed in shader
+A: Check all textures are used in shader as they can be optimised out, check order of 
+   declaration matches order of usage if not specifying buffer slot when sending texture
+
+Q: Final image has banding
+A: Check no loss of precision in shader (float converted to int), check render target
+   texture has accuracy (32-bit instead of 8-bit) if fading between 2 close values
+
+Q: Transparent mesh renders over other meshes (transparent and opaque) and hides them
+A: Check transparent mesh renders last and in order of furthest to closest
+
+Q: Transparent mesh part opaque part transparent is hiding some of the opaque triangles
+A: Mesh needs to be seperated in opaque/transparent or writing to depth buffer needs to be
+   disabled. If depth information is still needed a second pass just for this is required.

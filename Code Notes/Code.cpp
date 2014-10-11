@@ -2,8 +2,6 @@
 //VARIABLES
 //////////////////////////////////////////////////////////////////////////////////////////
 
-Edit.ConvertTabsToSpaces
-
 int local;
 static int localStatic; //Local static: keeps variable in memory even when function exits
 register int regInt; //may store variable in register not on stack: NO address, can't be global
@@ -12,11 +10,12 @@ mutable int mutInt; //value changes ignored for bitwise const checking; used to 
 const int constInt; //may store variable in read-only memory
 constexpr int myInt = 1.0 * constInt; //evaluates at compile time, will store in read-only memory
 
-//GLOBAL VARIABLES
-int myGlobalInt; //Global static: external linkage  (can be accessed via extern)
-static int myGlobalInt; //Global static: internal linkage (can't be accessed via extern)
-extern int myExternInt; //accesses global variables from another file
-::myGlobalInt; //accesses global variables when shadowed by local variables
+//GLOBAL (NON-MEMBER) VARIABLES
+const int myInt = 10; //Automatically global static or replaces with value
+static int myInt = 10; //Global static with internal linkage, if initialised in .h creates copy for every file
+int myInt = 10; //Global static with external linkage, can only be initialised in .cpp or linker error
+extern int myInt; //Allows access to above variable, defined in .h
+::myInt; //Allows access to global variables when shadowed by local variables
 
 //AUTO VARIABLES
 auto x = 0  //automatically chooses 'int' for x
@@ -297,13 +296,15 @@ int my2DArray[rows][cols];
 MyFunction(my2DArray, rows)
 
 //INLINE FUNCTIONS
-//function call is replaced by function body
-//compiler ultimately decides what is inlined
-inline void MyFunction(int x){ x += 2; }
+//Function call is replaced by function body
+//Compiler ultimately decides what is inlined
+//If in .h any internal static members are shared between files
+inline void MyFunction(int x){}
                                                   
-//PRIVATE (INTERNAL LINKAGE) FUNCTIONS
-//Functions have external linkage by default. Use static to change
-static int MyFunction(int& arg);
+//STATIC (PRIVATE) NON-MEMBER FUNCTIONS
+//Functions have external linkage by default, static makes it private to file
+//If in .h any internal static members are copied between files
+static void MyFunction(int x){}
 
 //FUNCTION OVERLOADING  
 void MyFunction(int & x, double y)

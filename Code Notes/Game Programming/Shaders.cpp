@@ -452,6 +452,7 @@ float4 PShader(VS_OUTPUT input) : SV_TARGET // SHADER MODEL 4.0+: can output onl
     return Texture;
 }
 
+// Directx 10- only
 technique MAIN
 {
     pass Pass0
@@ -544,7 +545,7 @@ isnan(x)                  // return true if not a number
 length(myVec)             // Length of a vector
 pow(1.0f, 3.0f)           // Calculates 1³
 normalize(myVec)          // Normalizes a vector
-mix(a,b,c)                // c == 0 ? a : b, interpolates for other values
+mix(a,b,c)                // linear interpolation, c == 0 ? a : b, interpolates for other values
 max(x,y)                  // returns maximum value
 min(x,y)                  // returns minimum value
 modf(x, intPart)          // returns fractional part, stores int part
