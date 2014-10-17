@@ -192,26 +192,32 @@ rbegin()  rend()  crbegin()  crend() // List only
 #include <map> / <unordered_map>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-typedef std::string KeyType;
-typedef std::string ObjType;
-typedef std::map<KeyType, ObjType> MyMap;
-typedef std::multi_map<KeyType, ObjType> MyMultiMap // can have multiple entries for the one key
+// ORDERED MAP
+// Every entry is sorted according to a compare function std::function<bool(const T&, const T&)
+std::map<Key, T> MyMap;
+std::map<Key, T, comparisonFn> MyMap(myFn); 
+std::multi_map<Key, T> MyMultiMap // can have multiple entries for the one key
+std::map<Key, T>::iterator itr;   // iterator for map
+std::map<Key, T>::value_type;     // typedef for std::pair<const Key, T>
 
-MyMap M;
-MyMap::iterator itr;
+// UNORDERED MAP (HASH TABLE)
+// Organized into buckets depending on hash values to allow for fast access using keys
+std::unordered_map<KeyType, ObjType> hashMap;
+std::unordered_multimap<KeyType, ObjType> hashMap;
 
-M.empty();          // returns true/false if empty (faster than size)
-M.size();           // number of element pairs
-M.count("MyKey")    // returns number of items that have that key
-M.find("MyKey")     // returns MyMap.end() if not found or iterator MyMap::iterator if found
-M.erase("MyKey")    // removes element with matching key, non-throwing if item doesn't exist
-itr->first          // returns key
-itr->second         // returns object
+// METHODS
+M.empty();      // returns true/false if empty (faster than size)
+M.size();       // number of element pairs
+M.count("Key")  // returns number of items that have that key
+M.erase("Key")  // removes element with matching key, non-throwing if item doesn't exist
+M.find("Key")   // returns MyMap.end() if not found or iterator MyMap::iterator if found
+M.at("Key")     // returns object at key or throws out_of_range exception if doesn't exist
+mymap["Key"]    // returns object if key exists or creates through default contructor if doesn't exist 
 
 // INSERTING ITEMS
 // More effecient to use insert; operator[] creates default object then assigns if object doesn't exist 
-M.insert(MyMap::value_type("Key","Object")); // value_type is typedef for maps pair
-M["MyKey"] = "MyObject"; // Adds entry if key doesn't exist otherwise overwrites
+M.insert(MyMap::value_type("Key",2.0)); // value_type is typedef for maps pair
+M["Key"] = 2.0; // Adds entry if key doesn't exist otherwise overwrites
 
 // ITERATING
 // value_type is std::pair<const KeyType, ObjType>
@@ -220,11 +226,6 @@ std::for_each(M.begin(), M.end(), [&](const MyMap::value_type& item){ item.secon
 //ITERATORS
 begin()   end()   cbegin()   cend() 
 rbegin()  rend()  crbegin()  crend()
-
-// UNORDERED MAP (HASH TABLE)
-// Organized into buckets depending on hash values to allow for fast access using keys
-std::unordered_map<KeyType, ObjType> hashMap;
-std::unordered_multimap<KeyType, ObjType> hashMap;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <set> / <unordered_set>

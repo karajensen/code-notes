@@ -3,14 +3,14 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 std::move   // moves the variable to another variable leaving the first in an undefined state
-std::swap   // swaps the value of two variables
+std::swap   // swaps the value of two variables, non-throwing on primitive types
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <typeinfo>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-typeid(myObject)    //returns type_info for object
-myTypeInfo.name()   //get "class MyClass" string identifying the class type
+typeid(myObject)         //returns type_info for object, cannot be stored as object
+typeid(myObject).name()  //get "class MyClass" string identifying the class type
 
 // requires object, not pointer
 Base* myBasePointer = new Derived();
@@ -316,8 +316,11 @@ catch (...) //catches anything
 }
 
 //NON-THROWING METHODS
-delete myPointer;
-delete[] myArray;
+//Note if objects they work on throw, undefined behaviour
+• delete myPointer;
+• delete[] myArray;
+• std::swap
+• All destructors in std library
 
 //EXCEPTION THROWING
 //If exception type not on list is thrown, calls unexpected()

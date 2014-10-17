@@ -351,13 +351,16 @@ class Derived : private Base
 };
 myDerived->MyMethod(); //cannot be called as seen as private with outside use
 
-// VIRTUAL FUNCTION OBJECTS: derived and base are objects of respective types
-derived.MyMethod()   // calls Derived::MyMethod()
-derived.MyVirtual()  // calls Derived::MyVirtual()
-base.MyMethod()      // calls Base::MyMethod()
-base.MyVirtual()     // calls Base::MyVirtual()
+// VIRTUAL FUNCTION OBJECTS
+//derived and base are objects of respective types
+//Note base class methods are hidden from derived objects
+derived.MyMethod(x)   // calls Derived::MyMethod()
+derived.MyVirtual(x)  // calls Derived::MyVirtual()
+base.MyMethod(x)      // calls Base::MyMethod()
+base.MyVirtual(x)     // calls Base::MyVirtual()
 
-// VIRTUAL FUNCTION POINTER/REFERENCES: derived and base both hold pointer to derived object
+// VIRTUAL FUNCTION POINTER/REFERENCES
+//derived and base both hold pointer to derived object
 derived->MyVirtual();          // calls Derived::MyVirtual()
 derived->MyMethod();           // calls Derived::MyMethod()
 derived->Base::MyVirtual();    // calls Base::MyVirtual()           
@@ -383,7 +386,8 @@ basePtr->MyMethod(); // Uses base class visility: Cannot call MyMethod()
 deriPtr->MyMethod() // Uses derived class visibility: Can call MyMethod()
 
 //INHERITING DEFAULT VALUES
-//Never redefine default values in derived as base class pointers will always use base value
+//Never redefine default values in derived as value chosen based 
+//on pointer type not underlying object
 class Base
 {
 public:

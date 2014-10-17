@@ -312,44 +312,6 @@ PARAMETRIC POLYMORPHISM: object types aren't defined, any object can be used
    pBase->MyVirtualFunction();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//EXCEPTIONS
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-1) THROW BY VALUE
-• When exception is thrown, copy of thrown variable is made as it needs it after function out of scope
-• Don't throw pointers, if absolutely needed, use a smart pointer
-
-2) STACK UNWINDS
-• Stack releases memory until reaching the corresponding try-catch block
-• Any destructors are called on way- if exception is called in destructor, 
-  it must resolve it otherwise two exceptions are occuring
-• Pointers are destroyed without calling delete. Solved through smart pointers
-
-3) CATCH BY REFERENCE
-• Catch reference as used to allow inheritance with exception types 
-
-EXCEPTION SAFETY
-• Use RAII to auto cleanup resources
-• Only change state once any possible errors have been resolved
-• One class/function, on responsibility idiom
-• Destructor/deallocation/swap functions should never throw as impossible to safely cleanup
-
-===============================================================================
-THE ABRAHAMS GUARANTEES
-===============================================================================
-
-BASIC GUARANTEE
-• Failures/exceptions might alter program state
-• No leaks occur and affected objects are still usable but not in predictable state
-
-STRONG GUARANTEE
-• Failures/exceptions guarantee program state is unchanged
-• No leaks occur and objects and iterators not affected
-
-NOTHROW GUARANTEE
-• Failure and exceptions do not happen
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
 //BIT MANIPULATION
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

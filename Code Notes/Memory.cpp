@@ -28,7 +28,7 @@ delete [] myArray; //free array
 //pointer arithmatic will use sizeof(Base) not sizeof(Derived)
 Base* myArray = new Derived[2];
 myArray[1] = *(myArray+1) //BAD
-delete [] myArray //ABAD lso uses pointer arithmatic
+delete [] myArray //BAD, also uses pointer arithmatic
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //FUNCTION OBJECTS

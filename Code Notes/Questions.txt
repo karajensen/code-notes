@@ -204,6 +204,17 @@ A: Balanced binary tree
 Q: What is the difference between myVector[0] and myVector.at(0)?
 A: at() does bounds checking and operator[] does not
 
+Q: What is the difference between myMap[0] and myMap.at(0)?
+A: at() checks if key exists and throws if not while operator[] will add the key through 
+   the default constructor if the item doesn't exist
+
+Q: What is the additional cost, if any, with passing functors to the standard algorithms?
+A: Functors are passed by-val for each element iterated over. If the functor is not POD then it could be costly.
+
+Q: Are the standard library containers exception safe and exception neutral?
+A: Yes. It has at least a basic guarantee where objects will be still usable but not in a predictable state
+   Many sections such as the containers generally have a strong guarantee.
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PERSONAL QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
