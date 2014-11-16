@@ -216,6 +216,8 @@ std::scientific           //uses scientific notation
 std::setprecision(2)      //will show trailing 0s, precision is number of digits to right
 std::right                //adjust output to right
 std::left                 //adjust output to right
+
+//FILEMODES
 std::ios_base::in         //Open file for reading.
 std::ios_base::out        //Open file for writing.
 std::ios_base::ate        //Seek to end-of-file upon opening file.
@@ -224,7 +226,6 @@ std::ios_base::trunc      //Wipe file if it exists.
 std::ios_base::binary     //open/create as Binary file
 std::ios_base::_Nocreate  //don't create file
 std::ios_base::_Noreplace //only create new files, existing will not open
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <ctime>

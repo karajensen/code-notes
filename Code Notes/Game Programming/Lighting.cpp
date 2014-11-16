@@ -135,7 +135,7 @@ RADIOSITY
 • Form factor used to generate the brightness of each patch taking into account diffuse/reflections/shadows
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//MATERIALS
+//MATERIALS / SURFACES
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 GOURAUD SHADING [DIFFUSE]: 
@@ -157,8 +157,9 @@ DIELECTRICS (non-metals)
 • Reflections are always white except when abosorption/transmission of light 
   occurs, tinting the light (ie. subsurface scattering)
  
-FRESNAL RULE
-• Gives the ratio of reflected/absorbed light for a surface
+FRESNAL SURFACES
+• Display one colour when viewed straight on and a different colour at side angles
+• Used to: fade out reflections towards edges, brighten edges, make edges more transparent, two tone colour mixing
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //HDR LIGHTING

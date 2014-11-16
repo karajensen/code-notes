@@ -24,10 +24,12 @@ boost::mutex::scoped_lock lock(myMutex);
 ///////////////////////////////////////////////////////////////////////////
 
 //ITERATE OVER CONTAINERS
-BOOST_FOREACH(Shader_Ptr shader, m_shaders)
+//Allows modification of object
+BOOST_FOREACH(MyClass& obj, myObjs){}
 
-//FILL A STD::VECTOR
-boost::assign::list_of<T>("one")("two"); //returns std::vector<T>
+//BOOST ASSIGN
+std::vector<std::string> myVec = boost::assign::list_of<std::string>("one")("two");
+std::map<std::string, MyClass> MyMap = boost::assign::map_list_of("one", MyClass(true));
 
 //BOOST BIMAP
 boost::bimap<a, b> myBiMap = boost::assign::list_of<boost::bimap<a, b>::relation>(objA1, objB1)(objA2, objB2);
@@ -188,78 +190,48 @@ while(!directory.string().empty())
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-<root>
+<one>
     <two>
         <three>3</three>
         <four x="0.0"></four>
     </two>
-    <two>
-        <three>0</three>
-        <four x="4.0"></four>
-    </two>
-</root>
+</one>
 
 property_tree::ptree tree;
-tree.size();                  // Size of direction children for a property tree
-tree.count("X");              // Number of direct children named X
-tree.get_child("X");          // Gets first direct child named X or throws if doesn't exist
-tree.get_child_optional("X"); // returns boost::optional<const ptree&> of first direct child
+tree.size();                    // Size of direction children for a property tree
+tree.count("one");              // Number of direct children named one
+tree.get_child("one");          // Returns const & to first direct child named one or throws if doesn't exist
+tree.get_child_optional("one"); // Returns boost::optional<const ptree&> of first direct child
+tree.begin();                   // get iterator pointing to first child
+tree.end();                     // iterator one after last child
 
-//=======================================================================
-//READING XML
-//=======================================================================
+// ITERATE OVER PTREE CHILDREN
+BOOST_FOREACH(boost::property_tree::ptree::value_type const& value, tree) 
+for(boost::property_tree::ptree::iterator itr = tree.begin(); itr != tree.end(); ++itr)
+value.first  /*or*/ itr->first     // std::string name
+value.second /*or*/ itr->second    // ptree object
 
+// GETTING VALUE OF PTREE
+// Use . to move through nodes where <xmlattr> is a child of four and holds child x
+lexical_cast<double>(tree.get_child("two.three").data()); //throws const boost::bad_lexical_cast&
+lexical_cast<double>(tree.get_child("two.four.<xmlattr>.x").data()); //throws const boost::bad_lexical_cast&
+tree.get<double>("two.three").data(); //throws const boost::property_tree::ptree_bad_data&
+tree.get<double>("two.four.<xmlattr>.x").data(); //throws const boost::property_tree::ptree_bad_data&
+
+// GET XML AS PTREE
+// Throws const boost::filesystem::filesystem_error& if fails
 filesystem::path myPath("myfile.xml");
 property_tree::ptree tree;
-
-// Throws const boost::filesystem::filesystem_error& if fails
 property_tree::xml_parser::read_xml(myPath.generic_string(), tree, property_tree::xml_parser::trim_whitespace);
-property_tree::ptree& root = tree.get_child("root");
 
-// Creates a pair where first is name and second is ptree
-BOOST_FOREACH(boost::property_tree::ptree::value_type const& value, root)
-{
-    if (boost::iequals(type.first, "two"))
-    {
-        //throws const boost::bad_lexical_cast& e, use e.what() to get more info
-        double x = lexical_cast<double>(type.second.get_child("three").data());
-        double x = lexical_cast<double>(type.second.get_child("four.<xmlattr>.x").data());
-
-        //throws const boost::property_tree::ptree_bad_data&, use e.what() to get more info
-        double x = type.second.get<double>("three").data();
-        double x = type.second.get<double>("four.<xmlattr>.x").data();
-    }
-}
-
-// Gets the correct value depending on if it exists in the tree
-template<typename T> 
-T GetValue(boost::property_tree::ptree::iterator& it, T defaultValue, char* node)
-{
-    int count = it->second.count(node);
-    if(count > 0)
-    {
-        if(count > 1)
-        {
-            Logger::LogInfo(std::string("Warning: node ") + node + " is duplicated");
-        }
-        return boost::lexical_cast<T>(it->second.get_child(node).data());
-    }
-    return defaultValue;
-}
-
-//=======================================================================
-//WRITING XML
-//=======================================================================
-
-// Adding nodes: Nodes added inside to outside
-ptree root;
-ptree one;
-ptree two;
-two.add("three",5);
+// ADDING NODES TO A PTREE
+// ANodes added inside to outside
+ptree one, two;
+two.add("three", 1.0);
+two.add("four.<xmlattr>.x",1.0)
 one.add_child("two",two);
-root.add_child("one",one);
 
-// Writing property tree to xml
+// WRITE PTREE AS XML
 property_tree::xml_parser::xml_writer_settings<char> settings('\t', 1);
 property_tree::write_xml(filePath.generic_string(), root, std::locale(), settings);
 
