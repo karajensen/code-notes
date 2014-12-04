@@ -247,10 +247,15 @@ int* pPointer = (int*)realloc(allocationSizeInBytes); //Reallocating memory
 /////////////////////////////////////////////////////////////////////////////////////////////
 #include <new>
 
-// ALLOCATING USING BUFFER ON STACK
-// Puts newed object into section of memory in stack
+// PLACING OBJECT IN EXISTING MEMORY
+// Puts newed object into section of memory given
 // Auto deleted when goes out of scope
-char buffer[512];
-int* myArray = new (buffer) int[SIZE]; 
-MyClass* myObj = new (buffer) MyClass();
-myObj->~MyClass() // Classes require destructor to be called explicitly before goes out of scope
+obj->~MyClass() // Classes require destructor to be called explicitly before goes out of scope
+
+// Any new/malloc memory is guaranteed to be properly aligned for the chosen type
+char* MyBuffer = new char[sizeof(MyClass)];
+auto* obj = new (MyBuffer) MyClass;
+
+// Buffers on stack have no guarantee and may not be aligned for MyClass
+char MyBuffer[sizeof(MyClass)];
+auto* obj = new (&MyBuffer[0]) MyClass; 
