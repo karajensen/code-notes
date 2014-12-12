@@ -146,7 +146,7 @@ sp.reset()     //decrements ref count to 0, deletes object
 
 //WEAK POINTER
 //observing a shared pointer
-std::weak_ptr<MyClass> sp1(new MyClass);
+std::weak_ptr<MyClass> wp(mySharedPtr);
 
 wp.use_count()  //get the current count
 wp.lock()       //returns a shared_ptr of same type, use instead of .get()
@@ -169,6 +169,16 @@ MyClass::~MyClass(){}
 //USING WITH POLYMORPHISM
 std::shared_ptr<Base> ptr(new Derived);
 std::shared_ptr<Derived> dptr = std::dynamic_pointer_cast<Base>(ptr) //returns null if unsuccessful
+
+// RESETTING SMART POINTERS
+// Changing the initial smart pointer does not change others
+std::shared_ptr<double> sp1(new double(2.0));
+std::shared_ptr<double> sp2(sp1);
+std::weak_ptr<double> wp(sp1);
+sp1.reset(new double(4.0));
+double value = *sp1;         // return 4.0
+double value = *sp2;         // return 2.0
+double value = *wp.lock();   // return 2.0
 
 //CYCLIC DEPENDENCIES
 class WeakClass;
