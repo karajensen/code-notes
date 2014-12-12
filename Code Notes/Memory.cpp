@@ -30,6 +30,16 @@ Base* myArray = new Derived[2];
 myArray[1] = *(myArray+1) //BAD
 delete [] myArray //BAD, also uses pointer arithmatic
 
+//ARRAY-TO-POINTER DECAY RULE
+const char myArray[] = "Array";  // note not the same type as const char*
+const char* pMyArray = myArray;  // character array decays to pointer
+const char rMyArray (&)[5] = myArray; // actual type of array
+
+//FUNCTION-TO-POINTER DECAY RULE
+void MyFunction(int);  // Not the same type as void(*)(int)
+void(*pMyFunction)(int) = MyFunction; // function decays to pointer
+void(&rMyFunction)(int) = MyFunction; // actual type of function
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 //FUNCTION OBJECTS
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,7 +78,6 @@ m_methodFn = &MyClass::MyMethod;
 (myObjectPtr->*m_methodFn)();
 
 //LAMBDAS
-//• Can't be templated
 //• Can't use auto with binding, must use std::function type
 //• If inside a class, may become friends to access/capture internals
 auto myLambda = [](int x)->double { return 3*2; }

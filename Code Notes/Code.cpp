@@ -17,10 +17,11 @@ int myInt = 10; //Global static with external linkage, can only be initialised i
 extern int myInt; //Allows access to above variable, defined in .h
 ::myInt; //Allows access to global variables when shadowed by local variables
 
-//AUTO VARIABLES
-auto x = 0  //automatically chooses 'int' for x
-decltype(y) myValue; //make myValue the same type as y
-decltype(myFnt(y)) myValue; //make myValue same type as return of myFnt(y)
+//INITIALISING VARIABLES
+int x = 5;
+int x(5);
+int x = { 5 }; // initializer_list<int> converts to int
+int x{ 5 };    // initializer_list<int> converts to int
 
 //TYPEDEF/ALIASES
 typedef int myType;   
@@ -46,18 +47,23 @@ i = ++i    // BAD: i is modified more than once
 //MOVE SEMANTICS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int x;          // L-VALUES: Persisting variable on left side of assignment expression    
-int x = 3 + 1;  // R-VALUES: Temporary variable on right side of assignment expression
-3 + 1;          // Temporary value on left side allowable but doesn't do anything
+int x;      // L-VALUES: Persisting variable on left side of assignment expression    
+int x = 3;  // R-VALUES: Temporary variable on right side of assignment expression
+int&& x     // UNIVERSAL REFERENCE: reference parameter that can bind to L and R values
+3 + 1;      // Temporary value on left side allowable but doesn't do anything
 
-int&y = x;              // Reference to x: use alongside x
-int&&y = std::move(x);  // R-value Reference to x, std::move only typecasts to x-value
-int y = std::move(x);   // Calls y move constructor, x is left in an undefined destructable state
+int& y = x;              // Reference to x: use alongside x
+int&& y = std::move(x);  // R-value Reference to x, std::move only typecasts to x-value
+int y = std::move(x);    // Calls y move constructor, x is left in an undefined destructable state
+
+void MyFn(const int& x)  // Can pass L-values and R-values
+void MyFn(int& x)        // Can only pass L-values
+void MyFn(int&& x)       // Can pass L-values (as int&) and R-values (as int&&)
 
 //AUTOMATIC USES
 //Occurs only if move constructor/assignment operator are not = delete
-MyFunction("str") => MyFunction(std::string str); 
-MyFunction(){ return "str"; } => std::string str = MyFunction();
+MyFn("str") /*using*/ void MyFn(std::string str); 
+MyFn(){ return "str"; } /*using*/ std::string str = MyFn();
 myVector.push_back(std::unique_ptr<MyClass>(new MyClass()));
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,12 +87,11 @@ auto* str = L"Wide-string literal"
 
 //ARRAYS
 //must be constant size input
-//initialises first two values, sets rest to 0
-int intarray[9] = { 1, 2 }; 
+int myArray[9] = { 1, 2 };  //initialises first two values, sets rest to 0
 
 //2D ARRAYS
 //creates an arrow with 2 rows, 4 columns
-int intarray[2][4] 
+int myArray[2][4] 
 {
     {94, 98, 87, 103}, // values for intarray[0]
     {98, 99, 91, 107}, // values for intarray[1]
@@ -286,6 +291,7 @@ int main(int argc, char* argv[]){ /*no return auto returns 0 (success)*/ }
 //pass array name (pointer to first member) and number of elements
 void MyFunction(const char* myCString, n);
 void MyFunction(const int myArray[], n);
+void MyFunction(const int myArray (&)[5]); // pass array of fixed size
 MyFunction(myArray, n);
 
 //PASSING 2D ARRAY

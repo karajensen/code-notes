@@ -1,11 +1,104 @@
 //////////////////////////////////////////////////////////////////////////////
-//TEMPLATES
+//GENERIC TYPE DEDUCTION
 //////////////////////////////////////////////////////////////////////////////
+
+//============================================================================
+//TEMPLATE TYPE DEDUCTION
+//============================================================================
+// References/pointer part is ignored and not part of T
+// Passing l-value to universal reference will always pass as T&
+// Const-ness auto becomes part of T except for passing by-val
+// Passing arrays/functions by-value will change the type to a pointer
+// Does not assume {} means std::initializer_list
+
+template<typename T> void Fn(T param);
+const int& y = x;      Fn(y);     // T/param is int as makes copy and const/reference ignored
+const char s[] = "s";  Fn(s);     // T/param is const char* due to array pointer decay rule
+void fn(int);          Fn(fn);    // T/param is void(*)(int) pointer to function
+                       Fn({2.0})  // CAN'T DO: requires std::initializer_list<T> as template type
+
+template<typename T> void Fn(T& param);
+int x = 1;             Fn(x);     // T is int, param is int&
+const int& y = x;      Fn(y);     // T is const int, param is const int& (reference ignored)
+const char s[] = "s";  Fn(s);     // T is const char [1], param is const char (&)[1]
+void fn(int);          Fn(fn);    // T/param is void(&)(int) reference to function
+
+template<typename T> void Fn(const T& param);
+int x = 1;             Fn(x);     // T is int, param is const int&
+const int& y = x;      Fn(y);     // T is const int, param is const int& (reference ignored)
+
+template<typename T> void Fn(T* param);
+int x = 1;             Fn(&x);    // T is int, param is int*
+const int* y = &x;     Fn(y);     // T is const int, param is const int* (pointer ignored)
+
+template<typename T> void Fn(T&& param); // Universal Reference
+int x = 1;             Fn(x);     // T is int&, param is int& (x is l-value)
+const int& y = x;      Fn(y);     // T is const int&, param is const int& (x is l-value)
+                       Fn(1);     // T is in, param is int&& (1 is r-value)
+
+//============================================================================
+//AUTO TYPE DEDUCTION
+//============================================================================
+//Uses same rules as template type deduction
+//Exception is auto assumes {} type is std::initializer_list
+
+auto x = 2.0;      // auto is type double
+auto x(2.0);       // auto is type double
+auto x = { 2.0 };  // auto is type std::initializer_list<double> with value { 2.0 }
+auto x{ 2.0 };     // auto is type std::initializer_list<double> with value { 2.0 }
+const auto& y = x; // auto is type double
+
+const char[n]
+auto arr2 = arr1;  // auto is type const char* (array-to-pointer decay)
+auto& arr2 = arr1; // auto is type const char&[n]
+
+void fn1(int);
+auto fn2 = fn1;    // auto is type void(*)(int) (function-to-pointer decay)
+auto& fn2 = fn1;   // auto is type void(&)(int) 
+
+//GENERIC LAMDAS
+//Auto in lambda param/return type uses pure template type deduction 
+//Can't convert {} to std::initializer_list
+auto MyFn = [](auto x) -> int { return 2; } /*or*/
+decltype(auto) MyFn = [](auto x) { return 2; }
+
+//RETURNING UNIVERSAL REFERENCES
+//Forward used to return universal references
+auto MyFn(T&& x) -> decltype(x) { return std::foward<T>(x); } /*or*/
+decltype(auto) MyFn(T&& x) { return std::foward<T>(x); }
+
+//============================================================================
+//DECL TYPE DEDUCTION
+//============================================================================
+//Unlike auto/template deduction, does not ignore const/references
+
+const int x = 1;
+const int& y = x;
+decltype(x) value;          // Value is int
+decltype(y) value;          // Value is const int&
+decltype(y+2.0) value;      // Value is double
+decltype(Fn(x)) value;      // Value is same return type of Fn 
+decltype(auto) value = y;   // Value is const int&, if using just auto value would be int
+
+//EXTRA BRACKETS PITFALL
+//Putting extra () around variable name can affect the type returned
+decltype((x)) value;                                 // Value is int&
+decltype(auto) MyFn = [](){ int x = 1; return (x); } // Is returning int&!
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//TEMPLATES
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 //- Only creates instantiation of template for objects used with the template
 //- Will force create version of template with explicit instantiation
 //- Only adds methods to template instantiation if object actually uses the method
 //- Keyword 'class' interchangable with 'typename'
+
+//FORWARD DECLARATION
+template <typename T> class MyClass;
+
+//TYPEDEF
+using myType = T;
 
 // IMPLICIT INSTANTIATION
 // Compiler determines what types require templates and creates versions for them only
@@ -51,15 +144,9 @@ template <typename T, typename S> void MyFunction(T t, S s){}
 template <typename T> void MyFunction(T t, float s){} // overloads MyFunction
 MyFunction(x, y); // uses overload resolution
 
-//FORWARD DECLARATION
-template <typename T> class MyClass;
-
-//TYPEDEF
-using myType = T;
-
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //TEMPLATE PARAMETERS
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // VALUE PARAMETERS
 // Forces a parameter to a type
@@ -69,11 +156,6 @@ class MyClass
     T[n] m_myArray;
 };
 MyClass<double, 20> myObj;
-
-//TRAILING RETURN TYPE
-//useful for template functions when return type isn't known
-template<typename T, typename C>
-auto MyFunction(T x, C y) -> decltype(x+y) { return x+y; }
 
 //TEMPLATE TEMPLATE PARAMETERS
 //Allows a parameter that is a template itself to be passed in as a type
@@ -94,9 +176,9 @@ template <template <typename> class B, typename T> void MyFunction(C<T>& obj){}
 template <typename S> class ClassB {}; // signature of ClassB matches B
 MyFunction(ClassB<double>());
 
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //TEMPLATE INHERITANCE
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 template <typename T> class Base
 {
@@ -148,9 +230,9 @@ private
     std::unique_ptr<typename C::MyValue> myPtr; //use typename
 };
 
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //TEMPLATE FRIENDS
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 template <typename T> class MyClass; //forward dec
 template <typename S> void MyFn(MyClass<S>& x){}
@@ -168,9 +250,9 @@ template <typename T> class MyClass
     friend void MyFn <> (MyClass& x);
 };
 
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //VARIADIC TEMPLATES
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //accept a variable number of arguments
 
 template<typename T, typename... Args> // Args is a template parameter pack
