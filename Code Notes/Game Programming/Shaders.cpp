@@ -50,8 +50,10 @@ SWIZZLING: Using x/y/z/w to refer to each component
 SWIZZLE MASK: Combining components (.xy, .xyz, .xx)
 TESSELLATION: Converts low-detail subdivision surfaces into higher-detail primitives
 
-DYNAMIC FLOW CONTROL/BRANCHING: Choose path based on dynamic variable that can change during execution
-STATIC FLOW CONTROL/BRANCHING: Choose path based on constant variable that cannot be modified during execution
+FLOW CONTROL: Use of branching instructions to change the flow of code execution
+STATIC FLOW CONTROL: Choose path based on constant variable that cannot be modified during execution
+DYNAMIC FLOW CONTROL: Choose path based on dynamic variable that can change during execution
+                      Costly as both branches may need to be evaluated and the unused one discarded
 
 */
 //////////////////////////////////////////////////////////////////////////////////////////////////////

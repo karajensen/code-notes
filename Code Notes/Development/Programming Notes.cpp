@@ -141,12 +141,16 @@ RANDOM ACCESS MEMORY (RAM)
 • Physical Main memory where everything is held for execution
 • Virtual memory is memory on hard drive extending RAM
 
-SEGMENTS
+SEGMENTS 
 • Sections of memory used for various purposes
 • Segmentation Fault: Attempt to access RAM location that the CPU cannot physically access
 
-INITIALIZED DATA SEGMENT
-• Contains global/static/constant data
+INITIALIZED DATA SEGMENT (GLOBAL/STATIC)
+• Contains global/static values that have storage allocated at startup
+
+INITIALIZED DATA SEGMENT (CONST DATA)
+• Contains const data and string literals whose values are known at compile time
+• All data read-only and modifying it is undefined behaviour due to optimizations
 
 UNINITIALIZED DATA SEGMENT (BSS)
 • Contains zero-initialised data
@@ -165,6 +169,8 @@ THE HEAP
 • Larger size than stack though slower as it uses pointers to access
 • Doesn't actually use a heap structure, can be based off queue
 • Operations on objects are usually slower
+• Heap used by malloc/free and placement new, Free store used by new/delete
+• Free Store may be the Heap or a seperated area so new/delete and malloc/free can't be interchanged
 
 ===============================================================================
 CPU MEMORY LOCATIONS

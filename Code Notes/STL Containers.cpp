@@ -78,8 +78,10 @@ rbegin()  rend()  crbegin()  crend()
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 vector<int> V;
-vector<int> V(number);
+vector<int> V(size);
 vector<int> V(O.begin(), O.end());
+vector<int> V = { 1 };
+vector<int> V{ 1 };
 
 V[i]                 // No bounds checking
 V.at(0)              // Bounds checking
@@ -112,6 +114,11 @@ rbegin()  rend()  crbegin()  crend()
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 deque<int> D;
+deque<int> D;
+deque<int> D(size);
+deque<int> D(O.begin(), O.end());
+deque<int> D = { 1 };
+deque<int> D{ 1 };
 
 D[i]
 D.empty()           // returns true/false if empty (faster than size)
