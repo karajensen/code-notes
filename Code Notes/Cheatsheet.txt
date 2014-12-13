@@ -144,6 +144,12 @@
 
 [15] Prefer '\n' to std::endl as std::endl also flushes the stream buffer
 
+[16] .size() returns size_type, not unsigned int. On 32-bit both unsigned and size_type
+     are the same. On 64-bit, unsigned is 32-bit and size_type is 64-bit
+
+[17] Map value_type is std::pair<const Key,T>. 
+     If iterating without the const Key will create temporary copy of pair.
+
 ////////////////////////////////////////////////////////////////////////////////////
 //C# CHEATSHEET
 ////////////////////////////////////////////////////////////////////////////////////

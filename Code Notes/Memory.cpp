@@ -35,11 +35,6 @@ const char myArray[] = "Array";  // note not the same type as const char*
 const char* pMyArray = myArray;  // character array decays to pointer
 const char rMyArray (&)[5] = myArray; // actual type of array
 
-//FUNCTION-TO-POINTER DECAY RULE
-void MyFunction(int);  // Not the same type as void(*)(int)
-void(*pMyFunction)(int) = MyFunction; // function decays to pointer
-void(&rMyFunction)(int) = MyFunction; // actual type of function
-
 /////////////////////////////////////////////////////////////////////////////////////////////
 //FUNCTION OBJECTS
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,6 +44,11 @@ void(&rMyFunction)(int) = MyFunction; // actual type of function
 (void(*)(double))&MyFunction;                // address of non-class overloaded function
 &MyClass::MyMethod                           // address of class method
 (void(MyClass::*)(double))&MyClass::MyMethod // address of class overloaded function
+
+//FUNCTION-TO-POINTER DECAY RULE
+void MyFunction(int);  // Not the same type as void(*)(int)
+void(*pMyFunction)(int) = MyFunction; // function decays to pointer
+void(&rMyFunction)(int) = MyFunction; // actual type of function
 
 //FUNCTOR
 //Function with operator()
@@ -87,10 +87,9 @@ auto myLambda = [&](int x){ m_myVar += 10; }     // use all vars in scope by ref
 auto myLambda = [=](int x){ m_myVar += 10; }     // use all vars in scope by val
 auto myLambda = [](int x) { return 3*2; }        // if only one line, can omit trailing return
 
-//CONVERTING TO STD::FUNCTION
+//STD::FUNCTION
 //• Allows all function objects to be stored in single type
-//• Internal lambda type is different from std::function and a conversion is needed
-//• Only use std::function as return type if needed to pass lambda 
+//• Slower and bigger than using actual function object types (lambda, functors, pointers)
 std::function<double(int)> myFn = [](int x){ return x+2.0; }
 std::function<double(int)> myFn = &MyFunction;
 

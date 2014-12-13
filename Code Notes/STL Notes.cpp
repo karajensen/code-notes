@@ -69,7 +69,7 @@ Iterating:       vector/deque        < list
 Destruction:     vector              < deque/list
 Random Access:   vector              < deque
 
-PERFORMANCE ISSUES:
+PERFORMANCE ISSUES
 • Cache Misses when searching/iterating: vector < deque < list
 • When a data is accessed, a line of data is fetched from the main memory to the cache
 • Some of this data is unneeded in lists/deque as they're not continuous
@@ -102,10 +102,11 @@ STRING
 VECTOR<BOOL>
 • Not a STL container and doesn't hold bools
 • Each element occupies single bit and represents bitfields
-• Can't create pointers/references to individual bits
-• To counter this returns a proxy object instead
+• Can't create pointers/references to individual bits so uses proxy
 • vector<bool>::iterator is not random-access, forward or bi-directional
 • deque<bool> actually contains bool; vector<bool> was an experiment
+• Saves space but slower as requires going through proxy object
+• Don't use auto when accessing members as type chosen is std::vector<bool>::reference
 
 ///////////////////////////////////////////////////////////////////////////////////////
 //CONTAINER ADAPTERS

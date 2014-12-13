@@ -198,12 +198,17 @@ std::map<Key, T> MyMap;
 std::map<Key, T, comparisonFn> MyMap(myFn); 
 std::multi_map<Key, T> MyMultiMap // can have multiple entries for the one key
 std::map<Key, T>::iterator itr;   // iterator for map
-std::map<Key, T>::value_type;     // typedef for std::pair<const Key, T>
 
 // UNORDERED MAP (HASH TABLE)
 // Organized into buckets depending on hash values to allow for fast access using keys
 std::unordered_map<KeyType, ObjType> hashMap;
 std::unordered_multimap<KeyType, ObjType> hashMap;
+
+// VALUE TYPE
+// const Key is important when iterating
+// If std::pair<Key,T> used will create temporary copy of pair
+std::map<Key, T>::value_type; /*or*/ std::pair<const Key, T>
+for (const std::pair<const Key, T>& p : M){}
 
 // METHODS
 M.empty();      // returns true/false if empty (faster than size)
@@ -212,7 +217,7 @@ M.count("Key")  // returns number of items that have that key
 M.erase("Key")  // removes element with matching key, non-throwing if item doesn't exist
 M.find("Key")   // returns MyMap.end() if not found or iterator MyMap::iterator if found
 M.at("Key")     // returns object at key or throws out_of_range exception if doesn't exist
-mymap["Key"]    // returns object if key exists or creates through default contructor if doesn't exist 
+M["Key"]        // returns object if key exists or creates through default contructor if doesn't exist 
 
 // INSERTING ITEMS
 // More effecient to use insert; operator[] creates default object then assigns if object doesn't exist 

@@ -143,11 +143,13 @@ boost::weak_ptr<MyClass> weakPtr(sharedPtr);
 //TYPE ID
 //////////////////////////////////////////////////////////////////////////////
 
+#include "boost/type_index.hpp"
+using boost::typeindex::type_id_with_cvr;
 
-
-
-
-
+// Doesn't remove const/references
+type_id_with_cvr<MyClass>().pretty_name();
+type_id_with_cvr<decltype(value)>().pretty_name();
+type_id_with_cvr<T>().pretty_name();
 
 //////////////////////////////////////////////////////////////////////////////
 //THREADING
