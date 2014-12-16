@@ -94,11 +94,8 @@ decltype(auto) MyFn = [](){ int x = 1; return (x); } // Is returning int&!
 //- Only adds methods to template instantiation if object actually uses the method
 //- Keyword 'class' interchangable with 'typename'
 
-//FORWARD DECLARATION
+// FORWARD DECLARATION
 template <typename T> class MyClass;
-
-//TYPEDEF
-using myType = T;
 
 // IMPLICIT INSTANTIATION
 // Compiler determines what types require templates and creates versions for them only
@@ -212,22 +209,42 @@ class A : public Base<A>
 {
 };
 
-//NESTED TYPES
-//Type MyClass::MySubClass seen as static member of class unless typename is used
-template<typename T, typename C>
-class Derived: public Base<T>::Nested //don't use typename
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//TEMPLATE ALIAS
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// NESTED TYPES
+// Type MyClass::MySubClass seen as static member of class unless typename is used
+template<typename T> 
+class MyClass: public Base<T>::Nested // doesn't require typename
 {
 public:          
 
-    explicit Derived(int x) : 
-        Base<T>::Nested(x)  //don't use typename
-    {}
+    explicit MyClass(int x) : 
+        Base<T>::Nested(x)  // doesn't require typename
+    {
+    }
 
-    void MyFunction(typename C::MyValue& myValue); //use typename
- 
-private
-    typename Base<T>::Nested temp; //use typename 
-    std::unique_ptr<typename C::MyValue> myPtr; //use typename
+    typename Base<T>::Nested myVar; // requires typename 
+};
+
+template<typename T>
+class MyClass
+{
+public:
+    void MyFunction(typename T::Nested& arg);   // requires typename
+    std::unique_ptr<typename T::Nested> myPtr;  // requires typename
+    typename T::Nested myValue;                 // requires typename
+};
+
+// ALIAS TEMPLATES
+// Cannot be typedefined but can use alias declaration
+template<typename T>
+class MyClass
+{
+public:
+    using MyAlias = typename T::Nested;
+    MyAlias myValue;  // doesn't require typename
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

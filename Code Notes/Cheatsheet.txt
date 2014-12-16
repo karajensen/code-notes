@@ -63,7 +63,7 @@
 [19] With #define f(x) make sure to include brackets around the x inside the
      defined body: ((x)+=2) in case x is an expression
 
-[20] Compiler sees these as function declarations
+[20] Most Vexing Parse Pitfall: compiler sees these as function declarations
      MyClass obj(MyClass2(value)); Fixed by MyClass obj((MyClass2(value)));
      MyClass obj(); Fixed by MyClass obj;
 
@@ -92,6 +92,16 @@
      in .cpp and cannot be initialised in .h or will throw linker error.
      Variables defined in .h with static keyword are private and a copy of it is created 
      for every use of the header. This increases memory usage during compilation.
+
+[29] Prefer nullptr to NULL and avoid pointer, int and long overload combinations.
+     NULL is either 0/0L and prefers int/long overloads to pointer ones when passed as argument.
+     nullptr will only take pointer overloads when passed as argument.
+
+[30] There are 3 types of generic type deduction:
+     Template type deduction ignores reference/pointer-ness; keeps const except for by-val passing.
+     Auto type deduction is same as template but assumes {} is std::initializer_list.
+     Decl type deduction does not ignore reference/poiner-ness; keeps const.
+     Lamda auto params/return use template type deduction, not auto type deduction.
 
 ////////////////////////////////////////////////////////////////////////////////////
 //STL CHEATSHEET
@@ -409,3 +419,6 @@ A: Check transparent mesh renders last and in order of furthest to closest
 Q: Transparent mesh part opaque part transparent is hiding some of the opaque triangles
 A: Mesh needs to be seperated in opaque/transparent or writing to depth buffer needs to be
    disabled. If depth information is still needed a second pass just for this is required.
+
+Q: Translucent meshes are flickering in front/behind each other at a distance
+A: Try stable sorting the meshes so the same distances stay in same relative place in the container.

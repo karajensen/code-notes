@@ -10,20 +10,26 @@ mutable int mutInt; //value changes ignored for bitwise const checking; used to 
 const int constInt; //may store variable in read-only memory
 constexpr int myInt = 1.0 * constInt; //evaluates at compile time, will store in read-only memory
 
-//GLOBAL (NON-MEMBER) VARIABLES
-const int myInt = 10; //Automatically global static or replaces with value
+//GLOBAL (NON-MEMBER, OUTSIDE SCOPE) VARIABLES
+const int myInt = 10; //Automatically global static or replaces usage with value
 static int myInt = 10; //Global static with internal linkage, if initialised in .h creates copy for every file
 int myInt = 10; //Global static with external linkage, can only be initialised in .cpp or linker error
 extern int myInt; //Allows access to above variable, defined in .h
 ::myInt; //Allows access to global variables when shadowed by local variables
 
-//INITIALISING VARIABLES
+//INITIALISING VARIABLE / OBJECTS
 int x = 5;
 int x(5);
-int x = { 5 }; // initializer_list<int> converts to int
-int x{ 5 };    // initializer_list<int> converts to int
+int x = { 5 };          // initializer_list<int> converts to int
+int x{ 5 };             // initializer_list<int> converts to int
+ClassA obj{ };          // uses default constructor, not initializer_list
+ClassA obj({});         // uses initializer_list constructor with empty list
+ClassA obj();           // BAD: 'Most vexing parse' seen as function declaration
+ClassA obj(ClassB(x));  // BAD: 'Most vexing parse' seen as function declaration
+ClassA obj((ClassB(x)); // extra () shows not function declaration
+ClassA obj(ClassB(1));  // using temp var shows not function declaration
 
-//TYPEDEF/ALIASES
+//TYPEDEF / ALIAS DECLARATION
 typedef int myType;   
 typedef decltype(x) myType;
 using myType = int;

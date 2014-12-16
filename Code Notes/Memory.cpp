@@ -2,6 +2,7 @@
 //POINTERS
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+int* myPoint = NULL; //0 or 0L which zeros out pointer
 int* myPointer = nullptr; //store null
 int* myPointer = &myInt;  //store address of variable
 int* myPointer = new int; //finds empty memory location on heap and allocates
@@ -50,13 +51,6 @@ void MyFunction(int);  // Not the same type as void(*)(int)
 void(*pMyFunction)(int) = MyFunction; // function decays to pointer
 void(&rMyFunction)(int) = MyFunction; // actual type of function
 
-//FUNCTOR
-//Function with operator()
-struct MyFunctor
-{
-    bool operator()(int x) { return x > 0; }
-}
-
 //POINTER-TO-FUNCTION
 typedef bool(*MyFunctionPtr)(int, double); /*or*/ 
 using MyFunctionPtr = bool(*)(int, double);
@@ -76,6 +70,13 @@ public:
 m_methodFn = &MyClass::MyMethod;
 (myObject.*m_methodFn)();
 (myObjectPtr->*m_methodFn)();
+
+//FUNCTOR
+//Function with operator()
+struct MyFunctor
+{
+    bool operator()(int x) { return x > 0; }
+}
 
 //LAMBDAS
 //• Can't use auto with binding, must use std::function type
