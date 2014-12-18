@@ -175,28 +175,34 @@ union MyColor
 //ENUMERATIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // compiler replaces name with integer value when encountering it
+// can have multiple names with the same values
 
 // UNNAMED ENUM
-// Used for constants
 enum { RED, ORANGE }
 
-// ENUM PLAIN
-enum MyEnum {RED, ORANGE = 100, YELLOW, GREEN = 0}; //red = 0, orange = 100, yellow = 101, green = 0
+// PLAIN ENUM
+enum MyEnum 
+{
+    RED,            // Value = 0
+    ORANGE = 100,   // Value = 100
+    YELLOW,         // Value = 101
+    GREEN = 0,      // Value = 0
+    BLUE            // Value = 1
+}; 
 MyEnum myEnum = RED;
 myEnum = static_cast<MyEnum>(2); // requires cast from int to enum
 int myInt = myEnum; // no cast from enum to int
 
-// ENUM CLASS
+// CLASS ENUM
 // enum class has operator=, operator==, operator<, can add own methods
-enum class MyClassEnum {RED, ORANGE};
+enum class MyClassEnum { RED };
 MyClassEnum myClassEnum = RED;
 myClassEnum = static_cast<MyClassEnum>(2); // requires cast from int to enum
 int myInt = static_cast<int>(myClassEnum) // requires cast from enum to int
 
 // SHARING SCOPE
-// when in same scope requires myenum1::red for usage
-enum MyEnum1 {RED, ORANGE};
-enum MyEnum2 {RED};
+enum MyEnum1 { ONE, TWO };
+enum MyEnum2 { ONE }; // when in same scope requires MyEnum1::ONE for usage
 
 //ENUM FOR BIT FLAGS
 enum MASKS
