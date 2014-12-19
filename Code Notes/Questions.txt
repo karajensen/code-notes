@@ -194,6 +194,29 @@ A: Const is used to prevent the exception from being modified and giving incorre
    Reference is used instead of pointer to reduce the need to manage any memory at the catch position
    Allocating memory for an exception through a pointer may not work if the exception is out of memory.
 
+Q: What are the 3 types of Generic Type Deduction?
+A: Template type deduction ignores reference/pointer-ness; keeps const except for by-val passing.
+   Auto type deduction is same as template but assumes {} is std::initializer_list.
+   Decl type deduction does not ignore reference/poiner-ness; keeps const.
+
+Q: What is the difference between scoped and unscoped enums?
+A: Unscoped enums have compiler dependent underlying type, pollute namespace and auto convert to int
+   Scoped enums have int underlying type, don't pollute namespace and require cast to int
+   Scoped enums may also define custom methods
+
+Q: What is the difference between const/non-const global variables defined in a header file?
+A: They are static by default if const and extern by default if non-const
+
+Q: What is the difference between static and extern variables defined in a header file?
+A: Variables defined in .h with extern keyword reference global variable initialised 
+   in .cpp and cannot be initialised in .h or will throw linker error.
+   Variables defined in .h with static keyword are private and a copy of it is created 
+   for every use of the header. This increases memory usage during compilation.
+
+Q: Why is =delete preferred over ommitting a definition for undersired methods?
+A: It gives a compile time error rather than a linker error
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //STL QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

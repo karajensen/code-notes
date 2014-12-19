@@ -85,23 +85,12 @@
      If inlined, any static function members are shared between files including it
      If static, any static function members are copied with each file having sole access
 
-[27] Variables defined in .h are static by default if const.
-     Variables defined in .h are extern by default if non-const.
-
-[28] Variables defined in .h with extern keyword reference global variable initialised 
-     in .cpp and cannot be initialised in .h or will throw linker error.
-     Variables defined in .h with static keyword are private and a copy of it is created 
-     for every use of the header. This increases memory usage during compilation.
-
-[29] Prefer nullptr to NULL and avoid pointer, int and long overload combinations.
+[27] Prefer nullptr to NULL and avoid pointer, int and long overload combinations.
      NULL is either 0/0L and prefers int/long overloads to pointer ones when passed as argument.
      nullptr will only take pointer overloads when passed as argument.
 
-[30] There are 3 types of generic type deduction:
-     Template type deduction ignores reference/pointer-ness; keeps const except for by-val passing.
-     Auto type deduction is same as template but assumes {} is std::initializer_list.
-     Decl type deduction does not ignore reference/poiner-ness; keeps const.
-     Lamda auto params/return use template type deduction, not auto type deduction.
+[28] Lamda auto params/return use template type deduction, not auto type deduction.
+     Use decltype(auto) when wanting to return a reference.
 
 ////////////////////////////////////////////////////////////////////////////////////
 //STL CHEATSHEET

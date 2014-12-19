@@ -119,8 +119,10 @@ public:
 
 private:
 
-    //Prevent copying, no declaration required
+    //PREVENT COPYING
     //Important if dynamic allocation occurs in class
+    //delete preferred over no definition as compiler error 
+    //occurs rather than linker error when trying to use the method
 	MyClass(const MyClass) = delete;
 	MyClass& operator=(const MyClass) = delete;
 };

@@ -174,37 +174,47 @@ union MyColor
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //ENUMERATIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // compiler replaces name with integer value when encountering it
 // can have multiple names with the same values
-
-// UNNAMED ENUM
-enum { RED, ORANGE }
-
-// PLAIN ENUM
-enum MyEnum 
+enum
 {
-    RED,            // Value = 0
-    ORANGE = 100,   // Value = 100
-    YELLOW,         // Value = 101
-    GREEN = 0,      // Value = 0
-    BLUE            // Value = 1
-}; 
-MyEnum myEnum = RED;
-myEnum = static_cast<MyEnum>(2); // requires cast from int to enum
-int myInt = myEnum; // no cast from enum to int
+    ONE,           // Value = 0
+    TWO = 100,     // Value = 100
+    THREE,         // Value = 101
+    FOUR = 0,      // Value = 0
+    FIVE           // Value = 1
+}
 
-// CLASS ENUM
-// enum class has operator=, operator==, operator<, can add own methods
-enum class MyClassEnum { RED };
-MyClassEnum myClassEnum = RED;
-myClassEnum = static_cast<MyClassEnum>(2); // requires cast from int to enum
-int myInt = static_cast<int>(myClassEnum) // requires cast from enum to int
+// UNSCOPED ENUM
+// Underlying type is dependent on what types used, chosen by compiler
+enum MyEnum { ONE, TWO }; 
+double ONE = 2.0; // CAN'T DO: Pollutes namespace
+MyEnum myEnum = static_cast<MyEnum>(myInt); // requires cast from int to enum
+int myInt = myEnum; // auto casts from enum to int
 
-// SHARING SCOPE
-enum MyEnum1 { ONE, TWO };
-enum MyEnum2 { ONE }; // when in same scope requires MyEnum1::ONE for usage
+// SCOPED (CLASS) ENUM
+// Underlying type always int
+// Has operator=, operator==, operator<, can add own methods
+enum class MyEnum { ONE, TWO };
+double ONE = 2.0; // CAN DO: Does not pollute namespace
+MyEnum myEnum = static_cast<MyEnum>(2); // requires cast from int to enum
+int myInt = static_cast<int>(myEnum) // requires cast from enum to int
 
-//ENUM FOR BIT FLAGS
+// UNDERLYING TYPE
+// Can change for both scoped/unscoped
+// Choose underlying type from #include <stdint.h>
+enum MyEnum : std::uint8_t { ONE };
+enum class MyEnum : std::uint32_t { ONE }; 
+
+// SHARING NAMES
+enum MyEnum1 { ONE };
+enum MyEnum2 { ONE };
+int x = MyEnum2::ONE; // Requires type only if enums clash
+
+// ENUM FOR BIT FLAGS
+// Operators work on bool/integers/chars
+// Amount of bytes minimally guaranteed determines amount of bit flags can be stored
 enum MASKS
 {
     NO_FLAG = 0,  // 0x000
@@ -217,13 +227,10 @@ enum MASKS
     MASK7 = 64,   // 0x040
     MASK8 = 128   // 0x080
 }
-
-//Operators work on bool/integers/chars
-//Amount of bytes minimally guaranteed determines amount of bit flags can be stored
-unsigned char //Can have 8 (bytes) flags maximum
-unsigned short //Can have 16 (bytes) flags maximum
-unsigned int //Can have 16 (bytes) flags maximum 
-unsigned long //Can have 32 (bytes) flags maximum
+unsigned char   // Can have 8 (bytes) flags maximum
+unsigned short  // Can have 16 (bytes) flags maximum
+unsigned int    // Can have 16 (bytes) flags maximum 
+unsigned long   // Can have 32 (bytes) flags maximum
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //LOOPING
