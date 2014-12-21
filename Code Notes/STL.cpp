@@ -324,18 +324,12 @@ catch (...) //catches anything
 {
 }
 
-//NON-THROWING METHODS
-//Note if objects they work on throw, undefined behaviour
-• delete myPointer;
-• delete[] myArray;
-• std::swap
-• All destructors in std library
-
-//EXCEPTION THROWING
+//EXCEPTION SPECIFICATIONS
 //If exception type not on list is thrown, calls unexpected()
-void myFunction(); //can throw anything
-void myFunction() throw(const char*, std::exception&); //can only throw string or std::exception
-void myFunction() throw(); //DOESN'T THROW EXCEPTION
+void MyFn(); //can throw anything
+void MyFn() throw(const char*, std::exception&); //can only throw string or std::exception
+void MyFn() throw(); //Doesn't throw excpetions, not optimized: keeps unwindable stack state always
+void MyFn() noexcept; //Doesn't throw exceptions, optimizes: doesn't keep unwindable stack state if exception propagates
 
 //UNEXPECTED EXPECTION
 //If type wasn't explicitly thrown or on expected list: unexpected()->terminate()->abort()

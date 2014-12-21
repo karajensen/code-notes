@@ -7,7 +7,7 @@ static int localStatic; //Local static: keeps variable in memory even when funct
 register int regInt; //may store variable in register not on stack: NO address, can't be global
 volatile int volInt; //don't cache value, check actual value each time its asked for
 mutable int mutInt; //value changes ignored for bitwise const checking; used to show internal synchronization
-const int constInt; //may store variable in read-only memory
+const int constInt; //may store variable in read-only memory, value may not be known at compile time
 constexpr int myInt = 1.0 * constInt; //evaluates at compile time, will store in read-only memory
 
 //GLOBAL (NON-MEMBER, OUTSIDE SCOPE) VARIABLES

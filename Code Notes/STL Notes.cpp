@@ -279,34 +279,38 @@ LIST/MAP/SET
 • Catch reference as used to allow inheritance with exception types 
 
 EXCEPTION SAFETY
-• Use RAII to auto cleanup resources if exceptionis thrown
+• Use RAII to auto cleanup resources if exception is thrown
 • Only change state once any possible errors have been resolved
 • Destructor/deallocation/swap functions should never throw as impossible to safely cleanup
 
 EXCEPTION NEUTRAL
 • Exceptions thrown should be propagated unchanged to the objects's caller
 
-STANDARD LIBRARY
-• Exception safe (some areas only give basic guarantee though) and exception neutral
+ABRAHAMS GUARANTEE: BASIC
+• Failures/exceptions might alter program state
+• No leaks occur and affected objects are still usable but not in predictable state
+
+ABRAHAMS GUARANTEE: STRONG
+• Failures/exceptions guarantee program state is unchanged
+• No leaks occur and objects and iterators not affected
+
+ABRAHAMS GUARANTEE: NOTHROW
+• Failure and exceptions do not happen
+
+NON-THROWING METHODS
+• If objects they work on throw, undefined behaviour
+• All destructors auto have noexcept keyword
+    - delete myPointer;
+    - delete[] myArray;
+    - std::swap
+    - All destructors in std library
+
+STANDARD LIBRARY EXCEPTIONS
+• Exception safe (some areas only give basic guarantee) and exception neutral
 • Have strong guarantee for all operations except two
 • Multi-range insert(begin,begin,end) has basic guarantee
 • Vector and Deque only: inserts or erases for multi or single objects are basic guarantee 
   if object constructor or assignment operator throws, otherwise strong guarantee
-
-===============================================================================
-THE ABRAHAMS GUARANTEES
-===============================================================================
-
-BASIC GUARANTEE
-• Failures/exceptions might alter program state
-• No leaks occur and affected objects are still usable but not in predictable state
-
-STRONG GUARANTEE
-• Failures/exceptions guarantee program state is unchanged
-• No leaks occur and objects and iterators not affected
-
-NOTHROW GUARANTEE
-• Failure and exceptions do not happen
 
 ///////////////////////////////////////////////////////////////////////////////////////
 //CONTAINER MEMORY ALLOCATION

@@ -19,8 +19,8 @@ public:
     unsigned int MyClass::operator&();       // address operator
 
     //DESTRUCTOR
-    //Virtual destructor required for polymorphism
-    //To prevent polymorphism, put non-virtual destructor as protected
+    //Virtual required for inheritance, to prevent put non-virtual destructor as protected
+    //Auto has noexcept keyword
     virtual ~MyClass(){} 
     delete this; // calls destructor
 
@@ -109,6 +109,10 @@ public:
     MyClass() = default;             //create a default constructor (no need for body)
     MyClass() = delete;              //don't create a default constructor
     void MyFunction(int x) = delete; //don't allow overload with this signature
+    
+    //REFERENCE QUALIFIERS
+    void MyFunction() &;    // used when calling object is an lvalue: myObj.MyFunction()
+    void MyFunction() &&;   // used when calling object is an rvalue: MyClass().MyFunction()
 
     //MEMBER INITIALISATION
     //Overridden by value set in initialisation lists
