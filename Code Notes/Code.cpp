@@ -28,6 +28,7 @@ ClassA obj();           // BAD: 'Most vexing parse' seen as function declaration
 ClassA obj(ClassB(x));  // BAD: 'Most vexing parse' seen as function declaration
 ClassA obj((ClassB(x)); // extra () shows not function declaration
 ClassA obj(ClassB(1));  // using temp var shows not function declaration
+5 + 1;                  // Temporary value on left side allowable but doesn't do anything
 
 //TYPEDEF / ALIAS DECLARATION
 typedef int myType;   
@@ -48,29 +49,6 @@ b = a++    // use a and then increment it (after everything including assigment)
 i++ * ++i; // BAD: i is modified more than once
 i = ++i    // BAD: i is modified more than once
 ++i = 2;   // BAD: i is modified more than once
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//MOVE SEMANTICS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-int x;      // L-VALUES: Persisting variable on left side of assignment expression    
-int x = 3;  // R-VALUES: Temporary variable on right side of assignment expression
-int&& x     // UNIVERSAL REFERENCE: reference parameter that can bind to L and R values
-3 + 1;      // Temporary value on left side allowable but doesn't do anything
-
-int& y = x;              // Reference to x: use alongside x
-int&& y = std::move(x);  // R-value Reference to x, std::move only typecasts to x-value
-int y = std::move(x);    // Calls y move constructor, x is left in an undefined destructable state
-
-void MyFn(const int& x)  // Can pass L-values and R-values
-void MyFn(int& x)        // Can only pass L-values
-void MyFn(int&& x)       // Can pass L-values (as int&) and R-values (as int&&)
-
-//AUTOMATIC USES
-//Occurs only if move constructor/assignment operator are not = delete
-MyFn("str") /*using*/ void MyFn(std::string str); 
-MyFn(){ return "str"; } /*using*/ std::string str = MyFn();
-myVector.push_back(std::unique_ptr<MyClass>(new MyClass()));
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //C-STYLE ARRAYS/STRINGS

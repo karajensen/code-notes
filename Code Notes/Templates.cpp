@@ -36,6 +36,11 @@ int x = 1;             Fn(x);     // T is int&, param is int& (x is l-value)
 const int& y = x;      Fn(y);     // T is const int&, param is const int& (x is l-value)
                        Fn(1);     // T is in, param is int&& (1 is r-value)
 
+//GENERIC LAMDAS
+//Auto in lambda param/return type uses pure template type deduction 
+auto MyFn = [](auto x) -> int { return 2; } /*or*/
+decltype(auto) MyFn = [](auto x) { return 2; }
+
 //============================================================================
 //AUTO TYPE DEDUCTION
 //============================================================================
@@ -55,17 +60,6 @@ auto& arr2 = arr1; // auto is type const char&[n]
 void fn1(int);
 auto fn2 = fn1;    // auto is type void(*)(int) (function-to-pointer decay)
 auto& fn2 = fn1;   // auto is type void(&)(int) 
-
-//GENERIC LAMDAS
-//Auto in lambda param/return type uses pure template type deduction 
-//Can't convert {} to std::initializer_list
-auto MyFn = [](auto x) -> int { return 2; } /*or*/
-decltype(auto) MyFn = [](auto x) { return 2; }
-
-//RETURNING UNIVERSAL REFERENCES
-//Forward used to return universal references
-auto MyFn(T&& x) -> decltype(x) { return std::foward<T>(x); } /*or*/
-decltype(auto) MyFn(T&& x) { return std::foward<T>(x); }
 
 //============================================================================
 //DECL TYPE DEDUCTION

@@ -2,7 +2,7 @@
 #include <utility>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-std::forward    // use on universal reference (MyClass&&) 
+std::forward    // 
 std::move       // 
 std::swap       // swaps the value of two variables, non-throwing on primitive types
 

@@ -34,8 +34,7 @@ MyClass::MyClass(const MyClass& obj)
 
 //MOVE CONSTRUCTOR
 //Doesn't take const objects as it modifies rvalue passed in
-//Will be used implicitly for returning values if exists
-MyClass(MyClass && obj):
+MyClass(MyClass&& obj):
     m_pointer(std::move(obj.myPointer),
     m_member(std::move(obj.m_member)
 {
@@ -54,7 +53,7 @@ MyClass& MyClass::operator=(const MyClass& obj)
 
 //MOVE ASSIGNMENT OPERATOR
 //Doesn't take const objects as it modifies rvalue passed in
-MyClass& operator=(MyClass && obj)
+MyClass& operator=(MyClass&& obj)
 {
     if(this == &obj)
     {
