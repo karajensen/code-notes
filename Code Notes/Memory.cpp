@@ -139,55 +139,66 @@ std::bind((void(MyClass::*)(double))&MyClass::MyMethod, this, _1);
 //SMART POINTERS
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-if(SmartPtr) //true if valid, false if null
-*SmartPtr    //dereference pointer
+if(myPtr) /*or*/ if(myPtr.get()) //true if valid, false if null
+*myPtr                           //dereference pointer
+
+//UNIQUE POINTER
+auto unique(std::make_unique<MyClass>());        // can't use custom deleter or {}
+std::unique_ptr<MyClass> unique(new MyClass());
 
 //SHARED POINTER
-//multiple objects have references
-std::shared_ptr<MyClass> sp(new MyClass);
-std::shared_ptr<MyClass> sp(myRawPointer);
-
-sp.get()       //gets a raw pointer or null
-sp.use_count() //get the current count
-sp.swap(sp2)   //swap sp1 and sp2
-sp.unique()    //returns true if ref count = 1, false otherwise
-sp.reset()     //decrements ref count to 0, deletes object
+auto shared(std::make_shared<MyClass>());        // creates a new control block, can't use custom deleter or {}
+std::shared_ptr<MyClass> shared(new MyClass());  // creates new control block
+std::shared_ptr<MyClass> shared(unique);         // creates new control block, unique_ptr becomes null
+std::shared_ptr<MyClass> shared(myRawPtr);       // creates new control block
+std::shared_ptr<MyClass> shared(shared2);        // shares control block
+std::shared_ptr<MyClass> shared(weak);           // shares control block, throws exception if weak_ptr expired
+shared.use_count()   // get the current count
+shared.swap(sp2)     // swap sp1 and sp2
+shared.unique()      // returns true if ref count = 1, false otherwise
+shared.reset()       // decrements ref count to 0, deletes object
 
 //WEAK POINTER
 //observing a shared pointer
-std::weak_ptr<MyClass> wp(mySharedPtr);
+std::weak_ptr<MyClass> weak(shared);
+weak.use_count()    //get the current count
+weak.lock()         //returns a shared_ptr, if expired then null
+weak.expired()      //returns true if object has been deleted, false if okay
 
-wp.use_count()  //get the current count
-wp.lock()       //returns a shared_ptr of same type, use instead of .get()
-wp.expired()    //returns true if object has been deleted, false if okay
-
-//UNIQUE POINTER
-//requires contructor/destructor even if empty implementation
-class MyClass
-{
-public:
-    class ForwardDec;
-    std::unique_ptr<ForwardDec> test;
-    MyClass();
-    ~MyClass();
-};
-#include "ForwardDec.h"
-MyClass::MyClass(){}
-MyClass::~MyClass(){}
-
-//USING WITH POLYMORPHISM
-std::shared_ptr<Base> ptr(new Derived);
+//CASTING SMART POINTERS
+std::shared_ptr<Base> ptr(new Derived());
 std::shared_ptr<Derived> dptr = std::dynamic_pointer_cast<Base>(ptr) //returns null if unsuccessful
 
 // RESETTING SMART POINTERS
 // Changing the initial smart pointer does not change others
-std::shared_ptr<double> sp1(new double(2.0));
-std::shared_ptr<double> sp2(sp1);
-std::weak_ptr<double> wp(sp1);
-sp1.reset(new double(4.0));
-double value = *sp1;         // return 4.0
-double value = *sp2;         // return 2.0
-double value = *wp.lock();   // return 2.0
+std::shared_ptr<double> shared1(new double(2.0));
+std::shared_ptr<double> shared2(shared1);
+std::weak_ptr<double> weak(shared1);
+shared1.reset(new double(4.0));
+double value = *shared1;         // return 4.0
+double value = *shared2;         // return 2.0
+double value = *weak.lock();     // return 2.0
+
+//CREATING CUSTOM DELETERS
+//Without a deleter, plain 'delete' is implicitely called
+//Deleter becomes part of type for unique_ptr
+auto Release = [](MyClass* obj){ obj->Release(); }
+std::shared_ptr<MyClass> shared(&myObject, Release);
+std::unique_ptr<MyClass, decltype(Release)> unique(&myObject, Release);
+
+//CALLING PRIVATE DESTRUCTOR WITH DELETER
+class MyClass
+{
+private:
+    ~MyClass(){}
+
+    class MyClassDeleter
+    {
+    public:
+        void Release();
+    };
+    friend class MyClassDeleter;
+};
 
 //CYCLIC DEPENDENCIES
 class WeakClass;
@@ -207,31 +218,18 @@ public:
     std::weak_ptr<SharedClass> wp;
 };
 
-//CREATING CUSTOM DELETERS
-//Without a deleter, plain 'delete' is implicitely called
-auto release = [](MyClass* obj)
+//CREATING SHARED_PTR FROM THIS
+//Used when storing this pointer both internally and externally as shared_ptr to prevent double deletion
+//Looks up control block for object in first shared_ptr, throws exception if one not found
+//Uses Curiously recurring template pattern (CRTP)
+class MyClass : public std::enable_shared_from_this<MyClass>
 {
-    if(obj)
+    std::vector<std::shared_ptr<MyClass>> sm_vector;
+    MyClass()
     {
-        obj->release();
+        sm_vector.emplace_back(shared_from_this());
     }
-};
-std::shared_ptr<MyClass> ptr(&myObject, release);
-std::unique_ptr<MyClass, decltype(release)> ptr(&myObject, release);
-
-//CALLING PRIVATE DESTRUCTOR
-class MyClass
-{
-private:
-    ~MyClass(){}
-
-    class MyClassDeleter
-    {
-    public:
-        void Release();
-    };
-    friend class MyClassDeleter;
-};
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //AUTO POINTER [DEPRECATED]

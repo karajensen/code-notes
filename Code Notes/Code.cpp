@@ -364,6 +364,13 @@ void MyMethod(int x = StaticFn());      // Static member function
 void MyMethod(int x = (global==0?1:2))  // Ternary expressions
 void MyMethod(int x = m_member)         // CANT DO: can't use non-static class members
 
+//CONTEXPR FUNCTIONS
+//All arguments constexpr then computed at compile time, else computed at runtime
+constexpr int MyFunction(int x){ return x; }
+MyFunction(2); //computed at compiletime
+MyFunction(y); //computed at runtime unless y is constexpr
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //NAMESPACES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

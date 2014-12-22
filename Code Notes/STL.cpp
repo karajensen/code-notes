@@ -2,8 +2,9 @@
 #include <utility>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-std::move   // moves the variable to another variable leaving the first in an undefined state
-std::swap   // swaps the value of two variables, non-throwing on primitive types
+std::forward    // use on universal reference (MyClass&&) 
+std::move       // 
+std::swap       // swaps the value of two variables, non-throwing on primitive types
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <typeinfo>
@@ -345,11 +346,9 @@ set_terminate([](){}); //takes in void MyFunction()
 class MyClass: public std::exception
 {
 public:
-    virtual const char* what() const override 
-    { 
-        return "bad arguments";
-    } 
+    virtual const char* what() const override { return "bad arguments"; } 
 };
+
 try 
 {
     throw MyClass();
@@ -372,6 +371,7 @@ std::thread thread(&MyFunction, arg1, arg2);
 thread.join(); //stop thread once function call is finished
 
 //MUTEX
+//Move-only object
 std::mutex myMutex;
 std::lock_guard<std::mutex> lock(myMutex); //scoped locking/unlocking
 if(myMutex.try_lock()) //doesn't block if can't lock

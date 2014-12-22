@@ -1,134 +1,138 @@
 /////////////////////////////////////////////////////////////////////////////////////
+//CLASS METHODS
+/////////////////////////////////////////////////////////////////////////////////////
+                              
+//IMPLICIT MEMBERS    
+//created inline in header file
+MyClass();                               // default constructor
+~MyClass();                              // default destructor
+MyClass(const MyClass& obj);             // copy constructor
+MyClass(MyClass&& obj);                  // move constructor
+MyClass& operator=(const MyClass& obj);  // copy assignnment operator
+MyClass& operator=(MyClass&& obj);       // move assignment operator
+unsigned int MyClass::operator&();       // address operator
+
+//DESTRUCTOR
+//All are implicitly noexcept
+//Derived are implicitly virtual if virtual base destructor
+virtual ~MyClass(){} 
+delete this; // calls destructor
+
+//CONSTRUCTOR
+//initialisation list must be in same order defined in class
+MyClass() :
+    m_constMember(0),
+    m_refMember(ref)
+{
+}
+
+//COPY CONSTRUCTOR
+MyClass::MyClass(const MyClass& obj)
+{
+    this.m_member = obj.m_member;
+}
+
+//MOVE CONSTRUCTOR
+//Doesn't take const objects as it modifies rvalue passed in
+//Will be used implicitly for returning values if exists
+MyClass(MyClass && obj):
+    m_pointer(std::move(obj.myPointer),
+    m_member(std::move(obj.m_member)
+{
+}
+
+//COPY ASSIGNMENT OPERATOR
+MyClass& MyClass::operator=(const MyClass& obj)
+{
+    if(&obj == this) //check not copying self
+    { 
+        return *this;
+    } 
+    this->m_member = obj.m_member; //copy over values
+    return *this;
+}
+
+//MOVE ASSIGNMENT OPERATOR
+//Doesn't take const objects as it modifies rvalue passed in
+MyClass& operator=(MyClass && obj)
+{
+    if(this == &obj)
+    {
+        return *this;
+    }
+    delete [] m_pointer; //delete any dynamic allocation for object
+    m_pointer = obj.m_pointer; //steal the address
+    obj.myPointer = nullptr; //set to null
+    return *this;
+}
+
+//CONSTEXPR CONSTRUCTOR
+//when members are known at compile time will create a literal object (can be used in constexpr functions)
+constexpr MyClass(int x = 0, int y = 0) : X(x), Y(x) {}
+
+//INITIALIZER LIST CONSTRUCTOR
+MyClass(std::initializer_list<double> list) 
+{
+    m_myVector.resize(list.size());
+    std::copy(list.begin(), list.end(), m_myVector);
+}
+
+//CONVERSION CONSTRUCTOR
+//single argument constructor
+//use explicit to stop implicit conversions from taking place
+//myObj = 4.3f; without explicit acts as cast operator
+explicit MyClass(float myFloat)
+{
+}
+
+//CAST OPERATOR
+//converts class type to another type
+explicit operator double() { return 2.0; } //definition: MyClass::operator double(){}
+double myDouble = obj; //called implicitly if explicit is not used
+double myDouble = double(obj); //called explicitly
+
+//STATIC METHODS
+//cannot use const keyword
+static void StaticMethod()  
+{
+    //only access static members and have friendship with class
+    sm_singleton->m_constMember = x;
+}
+
+//CLASS METHODS
+int MyMethod(){ return 0; }      // inline member
+void MyMethod(int x = 0);        // default values only needed in declaration, not definition
+void MyMethod() const;           // uses const 'this' pointer
+MyClass() = default;             // create a default constructor inline in .h
+MyClass::MyClass() = default;    // create a default constructor in .cpp (requires non default declaration in .h)
+MyClass() = delete;              // don't create a default constructor
+void MyFunction(int x) = delete; // don't allow overload with this signature
+    
+//REFERENCE QUALIFIERS
+void MyFunction() &;    // used when calling object is an lvalue: myObj.MyFunction()
+void MyFunction() &&;   // used when calling object is an rvalue: MyClass().MyFunction()
+
+//MEMBER INITIALISATION
+//Overridden by value set in initialisation lists
+float m_member = 3.0f;
+static float sm_member = 3.0f;
+const int m_constMember = 2; //If not initialised in-place, must be in initialisation list
+const int& m_refMember; //Must be in initialisation list
+
+//PREVENT COPYING
+//Important if dynamic allocation occurs in class
+//delete preferred over no definition as compiler error 
+//occurs rather than linker error when trying to use the method
+MyClass(const MyClass) = delete;
+MyClass& operator=(const MyClass) = delete;
+
+/////////////////////////////////////////////////////////////////////////////////////
 //CLASSES
 /////////////////////////////////////////////////////////////////////////////////////
 
 class MyClass /*doesn't require name*/
 {
 public:
-
-    int MyMethod(){ return 0; }  // inline member
-    void MyMethod() const;       // uses const 'this' pointer
-                                                
-    //IMPLICIT MEMBERS                          
-    MyClass();                               // default constructor
-    ~MyClass();                              // default destructor
-    MyClass(const MyClass& obj);             // copy constructor
-    MyClass(MyClass && obj);                 // move constructor
-    MyClass& operator=(const MyClass& obj);  // copy assignnment operator
-    MyClass& operator=(MyClass && obj);      // move assignment operator
-    unsigned int MyClass::operator&();       // address operator
-
-    //DESTRUCTOR
-    //Virtual required for inheritance, to prevent put non-virtual destructor as protected
-    //Auto has noexcept keyword
-    virtual ~MyClass(){} 
-    delete this; // calls destructor
-
-    //CONSTRUCTOR
-    //initialisation list must be in same order defined in class
-    MyClass() :
-        m_constMember(0),
-        m_refMember(ref)
-    {
-    }
-
-    //CONVERSION CONSTRUCTOR
-    //single argument constructor
-    //use explicit to stop implicit conversions from taking place
-    //myObj = 4.3f; without explicit acts as cast operator
-    explicit MyClass(float myFloat)
-    {
-    }
-
-    //INITIALIZER LIST CONSTRUCTOR
-    MyClass(std::initializer_list<double> list) 
-    {
-        m_myVector.resize(list.size());
-        std::copy(list.begin(), list.end(), m_myVector);
-    }
-
-    //MOVE CONSTRUCTOR
-    //Doesn't take const objects as it modifies rvalue passed in
-    //Will be used implicitly for returning values if exists
-    MyClass(MyClass && obj):
-        m_pointer(std::move(obj.myPointer),
-        m_member(std::move(obj.m_member)
-    {
-    }
-
-    //COPY CONSTRUCTOR
-    MyClass::MyClass(const MyClass& obj)
-    {
-        this.m_member = obj.m_member;
-    }
-
-    //COPY ASSIGNMENT OPERATOR
-    MyClass& MyClass::operator=(const MyClass& obj)
-    {
-        if(&obj == this) //check not copying self
-        { 
-            return *this;
-        } 
-        this->m_member = obj.m_member; //copy over values
-        return *this;
-    }
-
-    //MOVE ASSIGNMENT OPERATOR
-    //Doesn't take const objects as it modifies rvalue passed in
-    MyClass& operator=(MyClass && obj)
-    {
-        if(this == &obj)
-        {
-            return *this;
-        }
-        delete [] m_pointer; //delete any dynamic allocation for object
-        m_pointer = obj.m_pointer; //steal the address
-        obj.myPointer = nullptr; //set to null
-        return *this;
-    }
-
-    //STATIC METHODS
-    //cannot use const keyword
-    static void StaticMethod()  
-    {
-        //only access static members and have friendship with class
-        sm_singleton->m_constMember = x;
-    }
-
-    //CAST OPERATOR
-    //converts class type to another type
-	explicit operator double() { return 2.0; } //definition: MyClass::operator double(){}
-    double myDouble = obj; //called implicitly if explicit is not used
-    double myDouble = double(obj); //called explicitly
-
-    //DEFAULT VALUES
-    //Only needed in class member declaration, not definition
-    void MyMethod(int x = 0);
-
-    //METHOD MODIFIERS
-    MyClass() = default;             //create a default constructor (no need for body)
-    MyClass() = delete;              //don't create a default constructor
-    void MyFunction(int x) = delete; //don't allow overload with this signature
-    
-    //REFERENCE QUALIFIERS
-    void MyFunction() &;    // used when calling object is an lvalue: myObj.MyFunction()
-    void MyFunction() &&;   // used when calling object is an rvalue: MyClass().MyFunction()
-
-    //MEMBER INITIALISATION
-    //Overridden by value set in initialisation lists
-	float m_member = 3.0f;
-	static float sm_member = 3.0f;
-	const int m_constMember = 2; //If not initialised in-place, must be in initialisation list
-    const int& m_refMember; //Must be in initialisation list
-
-private:
-
-    //PREVENT COPYING
-    //Important if dynamic allocation occurs in class
-    //delete preferred over no definition as compiler error 
-    //occurs rather than linker error when trying to use the method
-	MyClass(const MyClass) = delete;
-	MyClass& operator=(const MyClass) = delete;
 };
 
 //STRUCTURES
@@ -147,10 +151,6 @@ void MyFn()
     class MyClass {};
     MyClass myobj;
 }
-
-/////////////////////////////////////////////////////////////////////////////////////
-//CLASS TYPES
-/////////////////////////////////////////////////////////////////////////////////////
 
 //AGGREGATES
 //NO: Constructors, virtual methods, private/protected non-static data members
