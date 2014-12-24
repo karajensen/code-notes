@@ -50,6 +50,15 @@ i++ * ++i; // BAD: i is modified more than once
 i = ++i    // BAD: i is modified more than once
 ++i = 2;   // BAD: i is modified more than once
 
+//MOVE SEMANTICS
+int x =         // L-VALUES: Persisting variable on left side of assignment expression    
+= 3;            // R-VALUES: Temporary variable on right side of assignment expression
+int& x = y;     // L-VALUE REFERENCE
+int&& x = y;    // R-VALUE REFERENCE
+auto&& x = y;   // UNIVERSAL REFERENCE: requires type deduction, can bind to both rvalues/lvalue references
+int&& MyFn()    // X-VALUE: R-Value reference function return
+int MyFn()      // PR-VALUE: Non-reference function return
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //C-STYLE ARRAYS/STRINGS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -314,13 +323,6 @@ void MyFunction(int & x, double y)
 void MyFunction(const int & x, double y)
 void MyFunction(int & x, short y)
 
-//TRAILING RETURN TYPE
-//shifts the return type to after the function arguments
-double MyFunction(int x, int y) {} /*or*/
-auto MyFunction(int x, int y) -> double {}
-auto MyFunction(int x, int y) -> decltype(x) {} // make return type same as x
-auto MyFunction(MyFn fn, int x) -> decltype(fn(x)) { return fn(x)); }
-
 //C-VARIADIC FUNCTION
 MyFunction("This is a %i %f test",2,3.0f);
 void MyFunction(char* text, ...)
@@ -348,6 +350,17 @@ constexpr int MyFunction(int x){ return x; }
 MyFunction(2); //computed at compiletime
 MyFunction(y); //computed at runtime unless y is constexpr
 
+//TRAILING RETURN TYPE
+//shifts the return type to after the function arguments
+double MyFunction(int x, int y) {} /*or*/
+auto MyFunction(int x, int y) -> double {}
+auto MyFunction(int x, int y) -> decltype(x) {} // make return type same as x
+auto MyFunction(MyFn fn, int x) -> decltype(fn(x)) { return fn(x)); }
+
+//RETURNING RVALUE REFERENCES BY-VAL
+//Returning by-value requires move or else copy occurs (If moving not supported, copy will occur)
+MyClass MyFn(MyClass&& x){ return std::move(x); }
+template<typename T> T MyFn(T&& x) { return std::foward(x); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //NAMESPACES

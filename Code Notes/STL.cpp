@@ -2,8 +2,8 @@
 #include <utility>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-std::forward    // 
-std::move       // 
+std::forward    // Casts to rvalue only if argument was initialized with an rvalue, compile time
+std::move       // Casts to rvalue no matter what type it is, compile time
 std::swap       // swaps the value of two variables, non-throwing on primitive types
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,7 +32,7 @@ std::is_move_assignable<A>::value //returns true if A has a move assignment oper
 std::is_move_constructible<A>::value //returns true if A has a move constructor
 std::has_virtual_destructor<A>::value //returns true if A has a virtual destructor
 std::is_same<A,B>::value //returns true if A and B are of the same type and constness
-std::is_integral<A>::value //returns true if A is a variant of int, char or bool reguardless of constness
+std::is_integral<A>::value //returns true if A is int/char/bool reguardless of constness, note if int& will be false
 std::is_void<A>::value //returns true if A is void reguardless of constness
 std::is_null_pointer<A>::value //returns true if A is nullptr reguardless of constness
 std::is_const<A>::value //returns true if A is const

@@ -31,13 +31,13 @@ template<typename T> void Fn(T* param);
 int x = 1;             Fn(&x);    // T is int, param is int*
 const int* y = &x;     Fn(y);     // T is const int, param is const int* (pointer ignored)
 
-template<typename T> void Fn(T&& param); // Universal Reference
+template<typename T> void Fn(T&& param);
 int x = 1;             Fn(x);     // T is int&, param is int& (x is l-value)
 const int& y = x;      Fn(y);     // T is const int&, param is const int& (x is l-value)
-                       Fn(1);     // T is in, param is int&& (1 is r-value)
+                       Fn(1);     // T is int, param is int&& (1 is r-value)
 
 //GENERIC LAMDAS
-//Auto in lambda param/return type uses pure template type deduction 
+//Auto in lambda param/return type use template, not auto, type deduction
 auto MyFn = [](auto x) -> int { return 2; } /*or*/
 decltype(auto) MyFn = [](auto x) { return 2; }
 
@@ -148,9 +148,15 @@ class MyClass
 };
 MyClass<double, 20> myObj;
 
-//TEMPLATE TEMPLATE PARAMETERS
-//Allows a parameter that is a template itself to be passed in as a type
-//Template type passed in must match template template signature
+// TAG DISPATCH
+// Uses tags std::false_type and std::true_type to force overload
+template<typename T> void MyFn(T x) { MyFn(x, std::is_integral<typename std::remove_reference<T>::type>()); }
+template<typename T> void MyFn(T x, std::false_type){}; // overload if a non-integral type
+template<typename T> void MyFn(T x, std::true_type){};  // overload if an integral type
+
+// TEMPLATE TEMPLATE PARAMETERS
+// Allows a parameter that is a template itself to be passed in as a type
+// Template type passed in must match template template signature
 
 // Template parameter with single parameter
 template <typename T, template <typename> class B> class ClassA {}
@@ -165,7 +171,7 @@ ClassA<ClassB<double, int>> obj;
 // Template parameter for functions
 template <template <typename> class B, typename T> void MyFunction(C<T>& obj){}
 template <typename S> class ClassB {}; // signature of ClassB matches B
-MyFunction(ClassB<double>());
+MyFunction(ClassB<double>()); 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //TEMPLATE INHERITANCE
@@ -264,17 +270,23 @@ template <typename T> class MyClass
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //VARIADIC TEMPLATES
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//accept a variable number of arguments
 
+//accept a variable number of arguments
 template<typename T, typename... Args> // Args is a template parameter pack
-void show_list(const T& value, const Args&... args) // args is a function parameter pack
+void MyFn(const T& value, const Args&... args) // args is a function parameter pack
 {
     //uses recursion to take first element from list
     //sends rest to next call of function
     cout << value << ",";
     show_list(args...);
 }
-
 //can use any number, order or type of arguments
-show_list(2.0,"hello",4*2,'c');
-show_list(1.0,'d',"astring");
+MyFn(2.0,"hello",4*2,'c');
+MyFn(1.0,'d',"astring");
+
+//VARIADIC PERFECT FORWARDING
+template<typename... T>
+void MyFn(T&&... args)
+{
+    MyFn2(std::foward<T>(args)...);
+}

@@ -92,6 +92,10 @@
 [28] Lamda auto params/return use template type deduction, not auto type deduction.
      Use decltype(auto) when wanting to return a reference.
 
+[29] Only use std::move/std::foward when returning rvalue references by-value to 
+     prevent a copy being made. Using otherwise may prevent Return Value 
+     Optimization from occuring.
+
 ////////////////////////////////////////////////////////////////////////////////////
 //STL CHEATSHEET
 ////////////////////////////////////////////////////////////////////////////////////

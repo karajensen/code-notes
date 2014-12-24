@@ -81,12 +81,14 @@ struct MyFunctor
 //LAMBDAS
 //• Can't use auto with binding, must use std::function type
 //• If inside a class, may become friends to access/capture internals
-auto myLambda = [](int x)->double { return 3*2; }
-auto myLambda = [&myVar](int x){ myVar += 10; }  // capture only by reference
-auto myLambda = [=myVar](int x){ myVar += 10; }  // capture only by value, omitting the = also by-val
-auto myLambda = [&](int x){ m_myVar += 10; }     // use all vars in scope by ref
-auto myLambda = [=](int x){ m_myVar += 10; }     // use all vars in scope by val
-auto myLambda = [](int x) { return 3*2; }        // if only one line, can omit trailing return
+//• Lamda creates a closure object
+auto myLambda = [](int x)->double {}      // specify return type, only need if multilined
+auto myLambda = [&myVar](int x){}         // capture only myVar by reference
+auto myLambda = [=myVar](int x){}         // capture only myVar by value
+auto myLambda = [myVar](int x){}          // capture only myVar by value, doesn't work on member vars
+auto myLambda = [&](int x){}              // capture all by ref
+auto myLambda = [=](int x){}              // capture all non-static local variables (including this) by-val
+auto myLambda = [myVar = myVar](int x){}  // Generalized capture: copy myVar into the closure, works on member vars
 
 //STD::FUNCTION
 //• Allows all function objects to be stored in single type
