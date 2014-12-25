@@ -271,22 +271,46 @@ template <typename T> class MyClass
 //VARIADIC TEMPLATES
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-//accept a variable number of arguments
+// accept a variable number of arguments
 template<typename T, typename... Args> // Args is a template parameter pack
 void MyFn(const T& value, const Args&... args) // args is a function parameter pack
 {
     //uses recursion to take first element from list
     //sends rest to next call of function
     cout << value << ",";
-    show_list(args...);
+    MyFn2(args...);
 }
+
+auto MyFn = [](const auto& value, const Args&... args)
+{
+    cout << value << ",";
+    MyFn2(args...);
+}
+
 //can use any number, order or type of arguments
 MyFn(2.0,"hello",4*2,'c');
 MyFn(1.0,'d',"astring");
 
-//VARIADIC PERFECT FORWARDING
-template<typename... T>
-void MyFn(T&&... args)
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//UNIVERSAL REFERENCES
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// Reference that can bind to rvalue and lvalue reference of form T&&
+// Arguments must be perfect fowarded as all params are lvalues even if initialised as rvalue
+
+template<typename T> void MyFn(T&& x) { MyFn2(std::foward<T>(x)); }   
+MyFn(myObj);              // initialised with lvalue reference, T/x = MyClass&
+MyFn(std::move(myObj));   // initialised with rvalue, T = MyClass, x = MyClass&&
+                                              
+auto MyFn = [](auto&& x){ MyFn2(std::foward<decltype(x)>(x)); };
+auto&& x = myObj;         // initialised with lvalue reference, T/x = MyClass&
+auto&& x = 3;             // initialised with rvalue, T = MyClass, x = MyClass&&
+
+// VARIADIC PERFECT FORWADING
+template<typename... T> void MyFn(T&&... args)
 {
     MyFn2(std::foward<T>(args)...);
+}
+auto MyFn = [](auto&&... x)
+{
+    MyFn2(std::foward<decltype(x)>(x)...);
 }

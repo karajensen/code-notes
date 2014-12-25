@@ -79,16 +79,21 @@ struct MyFunctor
 }
 
 //LAMBDAS
-//• Can't use auto with binding, must use std::function type
 //• If inside a class, may become friends to access/capture internals
-//• Lamda creates a closure object
-auto myLambda = [](int x)->double {}      // specify return type, only need if multilined
-auto myLambda = [&myVar](int x){}         // capture only myVar by reference
-auto myLambda = [=myVar](int x){}         // capture only myVar by value
-auto myLambda = [myVar](int x){}          // capture only myVar by value, doesn't work on member vars
-auto myLambda = [&](int x){}              // capture all by ref
-auto myLambda = [=](int x){}              // capture all non-static local variables (including this) by-val
-auto myLambda = [myVar = myVar](int x){}  // Generalized capture: copy myVar into the closure, works on member vars
+//• Lamda creates a closure object which holds captured vars
+auto myLambda = [](int x)->float {}  // specify return type, only need if multilined
+auto myLambda = [&var](int x){}      // capture only myVar by reference
+auto myLambda = [=var](int x){}      // capture only myVar by value
+auto myLambda = [var](int x){}       // capture only myVar by value, doesn't work on member vars
+auto myLambda = [&](int x){}         // capture all by ref
+auto myLambda = [=](int x){}         // capture all non-static local variables (including this) by-val
+
+//LAMBDA INIT/GENERALISED CAPTURE
+//• Allows creation of variables inside the closure
+auto myLambda = [var = myVar](){}           // create var and copy-assign to it, works on member vars
+auto myLambda = [var = MyClass()](){}       // create var of type MyClass
+auto myLambda = [var = std::move(obj)](){}  // move obj to be only used inside closure
+auto myLambda = [var = std::move(vec)](){}  // move vector of objects to use inside closure
 
 //STD::FUNCTION
 //• Allows all function objects to be stored in single type
@@ -99,7 +104,7 @@ std::function<double(int)> myFn = &MyFunction;
 /////////////////////////////////////////////////////////////////////////////////////////////
 //BINDING FUNCTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////
-// Creates functor by capturing address and variables
+// Creates functor by capturing address and variables (by-ref)
 
 using namespace std::placeholders; //for _1, _2...
 void MyFunction(int x, double y, float z);
@@ -136,6 +141,10 @@ memberFn(2) // object is bound with method
 void MyClass::MyMethod(int x);
 void MyClass::MyMethod(double x);
 std::bind((void(MyClass::*)(double))&MyClass::MyMethod, this, _1);
+
+//BINDING LAMBDAS
+std::bind([](int x){}, std::move(myInt)); // move construct myVar
+std::bind([](int x){}, myInt); // copy construct myVar
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //SMART POINTERS

@@ -83,24 +83,24 @@ vector<int> V(O.begin(), O.end());
 vector<int> V = { 1 };
 vector<int> V{ 1 };
 
-V[i]                 // No bounds checking
-V.at(0)              // Bounds checking
-V.empty()            // returns true/false if empty (faster than size)
-V.size()             // number of elements
-V.pop_back()         // Deletes the element at the end of a list.
-V.push_back(x)       // Adds an element to the end of a list.
-V.assign(n, value)   // assigns reference to value over first n elements
-V.clear()            // removes all from container
-V.back()             // returns reference to last element
-V.front()            // returns reference to first element
-V.swap(V2)           // swaps two of SAME containers around
-V.erase(itr1, itr2)  // Erases the elements in the range
-V.erase(itr)         // Erases at particular place
-V.max_size()         // returns maximum possible size
-V.resize(x)          // resizes container for x units
-V.capacity()         // returns number of elements vector can contain before more memory needed
-V.reserve(100)       // reserves 100 spots (but doesn't create any objects) of vector's type (doesn't affect size)
-
+V[i]                     // No bounds checking
+V.at(0)                  // Bounds checking
+V.empty()                // returns true/false if empty (faster than size)
+V.size()                 // number of elements
+V.assign(n, value)       // assigns reference to value over first n elements
+V.clear()                // removes all from container
+V.back()                 // returns reference to last element
+V.front()                // returns reference to first element
+V.swap(V2)               // swaps two of SAME containers around
+V.erase(itr1, itr2)      // Erases the elements in the range
+V.erase(itr)             // Erases at particular place
+V.max_size()             // returns maximum possible size
+V.resize(x)              // resizes container for x units
+V.capacity()             // returns number of elements vector can contain before more memory needed
+V.reserve(100)           // reserves 100 spots (but doesn't create any objects) of vector's type (doesn't affect size)
+V.pop_back()             // Deletes the element at the end of a list.
+V.push_back(x)           // Adds an element to the end of a list.
+V.emplace_back(2.0, 1)   // constructs directly into container; takes constructor arguments for type inside container
 V.insert(Begin(V),t)                   // Inserts a reference of t before iterator
 V.insert(Begin(V),n,t)                 // Inserts n references of t before iterator
 V.insert(Begin(V),V2.begin(),V2.end()) // Insert copies of elements in the range before iterator

@@ -50,7 +50,10 @@ i++ * ++i; // BAD: i is modified more than once
 i = ++i    // BAD: i is modified more than once
 ++i = 2;   // BAD: i is modified more than once
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //MOVE SEMANTICS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int x =         // L-VALUES: Persisting variable on left side of assignment expression    
 = 3;            // R-VALUES: Temporary variable on right side of assignment expression
 int& x = y;     // L-VALUE REFERENCE
@@ -58,6 +61,21 @@ int&& x = y;    // R-VALUE REFERENCE
 auto&& x = y;   // UNIVERSAL REFERENCE: requires type deduction, can bind to both rvalues/lvalue references
 int&& MyFn()    // X-VALUE: R-Value reference function return
 int MyFn()      // PR-VALUE: Non-reference function return
+
+// PASSING AS ARGUMENTS
+// Moving values should not be const or copy is made
+void MyFn(std::string&& str)
+{ 
+    // str becomes an lvalue as a function argument even if initialised as rvalue
+    // use std::move to convert to rvalue to pass on
+    myVec.push_back(std::move(str));
+}
+
+// AUTOMATIC USES
+MyFn("str");                            // Passing rvalue to by-val function argument
+std::string x = MyFn()                  // Returning local by-val unless Return Value Optimization occurs
+string MyFn(std::string x){ return x; } // Returning function argument by-val 
+myVec.emplace_back("str")               // Emplacing rvalue/unique_ptr into container
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //C-STYLE ARRAYS/STRINGS
