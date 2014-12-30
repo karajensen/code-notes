@@ -22,11 +22,46 @@ tan¯¹()     trigonmetry                 ▲►▼◄        arrows
 ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻᶿᵝᶲᴬᴮᴰᴱᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾᴿᵀᵁᵂ¯⁴⁵²³¹°⁶⁷⁸⁹⁺⁻⁼⁽⁾∕
 ₐₑᵢₒᵣᵤᵥₓᵦ₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎
 
+
+//////////////////////////////////////////////////////////////////////////////
+//MAYA
+//////////////////////////////////////////////////////////////////////////////
+
+Camera: Alt+LMB, Alt+RMB, ALT+MMB hold, MMB Wheel
+
+1,2,3       Smoothness for NURBS, Proxy for Polys
+4,5,6       Wireframe, solid, textured
+9           Toggle view backface
+F8          Toggle object/component mode
+z           Undo
+w           Move
+e           Rotate
+r           Scale
+g           Last tool used
+f           Focus
+a           Frame
+c           Snap to curve
+v           Snap to point
+x           Snap to grid
+b           Soft select
+g           Last tool used
+!           Invert selection
+CTRL+g      Group selected
+CTRL+h      Hide selected
+CTRL+H      Show last hidden
+CTRL+D      Duplicate
+ALT+b       Toggle dark/light background
+SPACE       Zoom
+
+SPACE+LMC [TOP]     Various layouts
+SPACE+LMC [BOT]     Various editors
+SPACE+LMC [MID]     Orthographic
+SHIFT+RMC           Polygon Editing Tools
+
 //////////////////////////////////////////////////////////////////////////////
 //3DS MAX
 //////////////////////////////////////////////////////////////////////////////
 
-MAX HOTKEYS:
 Top View                    t
 Bottom View                 b
 Left View                   l
@@ -45,53 +80,6 @@ Move                        w
 Rotate                      e
 Scale                       r
 Zoom viewports              [ or ]
-
-//////////////////////////////////////////////////////////////////////////////
-//MAYA
-//////////////////////////////////////////////////////////////////////////////
-
-1,2,3 = smoothness for NURBS, Proxy for Polys
-4,5,6 = Wireframe, solid, textured
-9 = Toggle view backface
-F8 = toggle object/component mode
-z = undo
-w = move
-e = rotate
-r = scale
-g = last tool used
-f = focus
-a = frame
-SPACE = zoom
-CTRL D = Duplicate
-
-c = snap to curve
-v = snap to point
-x = snap to grid
-
-SPACE LMC [TOP] = various layouts
-SPACE LMC [BOT] = various editors
-SPACE LMC [MID] = orthographic
-
-SHIFT RMC = Polygon editing
-RMC = components
-g = last tool used
-b = soft select
-alt b = toggle dark/light background
-! = invert selection
-CTRL e = extrude
-
-ALT a LMC = Animation Custom
-ALT f LMC = Dynamics selection mask
-ALT d LMC = Dynamics Custom
-ALT x LMC = General Tools
-ALT g LMC = Normal Selection mask
-ALT v LMC = Polymodelling
-ALT n LMC = NURBSmodelling
-ALT m LMC = Meshmodelling
-ALT c LMC = CurvesModelling
-ALT o LMC = Create Objects
-ALT j LMC = Render views
-ALT r LMC = Rigging
 
 //////////////////////////////////////////////////////////////////////////////
 //BLENDER
@@ -137,14 +125,3 @@ NUMPAD:
 VIEWS:
 CTRL UP = toggle view out of full screen
 CTRL DOWN = make view full screen 
-
-
-//////////////////////////////////////////////////////////////////////////////
-//MUDBOX
-//////////////////////////////////////////////////////////////////////////////
-
-Camera 2D PAN: Shift, Alt, LMB
-Camera 2D Rotate: Crtl, Alt, LMB
-Camera 2D Scale: Nothing
-Zoom: Z, LMB
-Rotate Around: Alt, LMB
