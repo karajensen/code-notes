@@ -64,21 +64,40 @@ for($i = 0; $i < $fileno; $i++)
     print($myFiles[$i] + " imported\n");
     file -import $myFiles[$i];
 }
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //EXPORT MULTIPLE FILES
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-string $loc = `workspace -rd -q`;
+string $loc = "C:\\Users\\Vatanij\\Desktop\\Reference\\Meshes\\";
 string $parent[] = `ls -sl -tr`;
 string $sel[] = `listRelatives -c $parent[0]`;
+
+if(size($sel) == 0)
+{
+    $sel[size($sel)] = $parent[0];
+}
 
 for($i = 0; $i < size($sel); $i++)
 {
     select -cl;
     select $sel[$i];
-    file -force -options "" -typ "OBJexport" -es ($loc + $sel[$i] + ".obj");
-}
-print(">>> " + $loc + " <<<");
+    
+    string $dupName = $sel[$i] + "_temp";
+    duplicate -name ($dupName);    
+    select -cl;
+    select $dupName;    
+    
+    CenterPivot;
+    FreezeTransformations;
+    file -force -options "groups=0;ptgroups=0;materials=0;smoothing=1;normals=1" -typ "OBJexport" -pr -es ($loc + $sel[$i] + ".obj");
+    print(">>> EXPORTING: " + $sel[$i] + " <<<\n");
+    
+    doDelete;
+}    
+
+select $parent[0];
+print(">>> " + $loc + " <<<\n");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //CONVERT ARRAY OF 16 FLOATS TO MATRIX

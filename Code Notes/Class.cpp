@@ -166,7 +166,7 @@ private:
     void privateFunction();
     static int privStaticMember;
 };
-Aggregate obj = {3}; //can be initialized with {}
+Aggregate obj = {3}; //can be auto initialized with {}
 
 //PLAIN OLD DATA (POD)
 //NO: Constructors, virtual methods, private/protected non-static data members
@@ -182,7 +182,7 @@ private:
     void privateFunction();
     static int privStaticMember;
 };
-POD obj = {3}; //can be initialized with {}
+POD obj = {3}; //can be auto initialized with {}
 
 /////////////////////////////////////////////////////////////////////////////////////
 //OPERATOR OVERLOADING
@@ -203,9 +203,8 @@ const MyClass operator+(const MyClass& x) const;
 const MyClass operator*(const MyClass& x) const;
 MyClass& operator[](const int i);
 const MyClass& operator[](const int i) const;
-void* operator new(std::size_t);                         //plain new
-void* operator new(std::size_t, std::nothrow_t) throw(); //nothrow new
-void* operator new(std::size_t, void*);                  //in-place new
+static void* operator new(std::size_t); //automatically static even without keyword
+static void operator delete(void*);     //automatically static even without keyword
 
 //OVERLOADING FOR A*B ONLY
 A * B /*->*/ A.operator*(B);

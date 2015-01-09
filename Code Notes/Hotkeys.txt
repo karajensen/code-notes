@@ -49,14 +49,23 @@ g           Last tool used
 CTRL+g      Group selected
 CTRL+h      Hide selected
 CTRL+H      Show last hidden
-CTRL+D      Duplicate
-ALT+b       Toggle dark/light background
-SPACE       Zoom
+CTRL+b      Duplicate
 
 SPACE+LMC [TOP]     Various layouts
 SPACE+LMC [BOT]     Various editors
 SPACE+LMC [MID]     Orthographic
 SHIFT+RMC           Polygon Editing Tools
+
+MAYA 2012 PYQT:
+- Install Python/PyQt
+- Copy PyQt4 folder and sip.pyd inside C:\Python26\Lib\site-packages
+- Paste into C:\Program Files (x86)\Autodesk\Maya2012\Python\lib\site-packages
+- Add to script __file__ = "C:\Users\Vatanij\Desktop\Reference\exporter.py"
+- Ensure script has no errors:
+
+from PyQt4 import *
+import maya.cmds as cmds
+print "Qt is working fine"
 
 //////////////////////////////////////////////////////////////////////////////
 //3DS MAX

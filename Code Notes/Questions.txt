@@ -213,8 +213,12 @@ A: Variables defined in .h with extern keyword reference global variable initial
    Variables defined in .h with static keyword are private and a copy of it is created 
    for every use of the header. This increases memory usage during compilation.
 
-Q: Why is =delete preferred over ommitting a definition for undersired methods?
+Q: Why is =delete preferred over ommitting a definition for undesired methods?
 A: It gives a compile time error rather than a linker error
+
+Q: What kinds of types cannot by used as members of unions?
+A: Objects with non-trivial constructors, destructor, assignment op, inheritance and virtual functions.
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

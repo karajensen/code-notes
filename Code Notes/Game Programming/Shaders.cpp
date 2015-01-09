@@ -28,16 +28,14 @@ OpenGL 4.3     430    Compute Shaders
 -----------------------------------------------------------------------------------------------------
 SHADER MODEL    ConstantReg.  TempReg.  InstructSlots  Textures
 -----------------------------------------------------------------------------------------------------
-HLSL vs1.0      96            12        128            -
-HLSL vs2.0      256           12        256            -
-HLSL vs3.0      256           32        512            
+HLSL vs2.0      256           12        256            16
+HLSL vs3.0      256           32        512            16
 HLSL vs4.0      65536         4096      4096           
 HLSL vs5.0      65536         4096      4096           
-HLSL ps1.0      8             2         12             4-6
 HLSL ps2.0      32            32        96             16
 HLSL ps3.0      224           32        512            16
-HLSL ps4.0      65536         4096      ∞              16
-HLSL ps5.0      65536         4096      ∞              16
+HLSL ps4.0      65536         4096      ∞              
+HLSL ps5.0      65536         4096      ∞              
 
 UNIFORM INPUT: Does not change per-vertex or per-pixel, readonly to shader
 VARYING INPUT: Change per-vertex/per-pixel

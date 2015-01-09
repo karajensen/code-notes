@@ -105,9 +105,9 @@ tan²Ɵ = (1-cos(2Ɵ)) / (1+cos(2Ɵ))
 SINE WAVES:
 To combine waves, just add each equation to each other
 To get circular waves, use radius r as x
- -------------------    
-| y = asin(kx-wt+ɸ) |
- -------------------
+ ----------------------  
+| y = a * sin(kx-wt+ɸ) |
+ ----------------------
  a = amplitude; height of sine wave
  k = angular wave number; number of wavelengths to reach 2∏
  t = time

@@ -159,10 +159,11 @@ auto* myPtr = const_cast<MyClass>(myPtr);
 //UNIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Only hold one var at a time; shares same memory location
-//the size of that spot is determined by the largest variable (ie. long)
-//can be used to access a variable in multiple ways (ie. for colors)
-//cannot use inheritance
+// Only hold one variable type at a time; shares same memory location
+// The size of that spot is determined by the largest variable
+// Can be used to access a variable in multiple ways
+// Cannot use inheritance, virtual functions
+// 
 union MyColor
 {
     MyColor() : color(0) //can have user defined constructor
