@@ -183,10 +183,11 @@ nth_element(S, M, E, sortLam) //puts M at the position it'd be if range was sort
 //REMOVING ALGORITHMS
 //=======================================================================================================
 
-//TRIMMING CONTAINERS
-//constructor creates temp container with mimimum capacity and swap this into old container
-vector<MyClass>(O).swap(O)
-string(str).swap(str)
+//CLEARING CONTAINERS
+//Reducing capactiy not needed for list, set, map as they don't reserve space
+obj.clear();                         // Make obj empty with current capacity
+std::vector<MyClass>().swap(obj);    // Make obj empty with minimal capacity
+std::vector<MyClass>(obj).swap(obj); // Make obj with minimal capacity
 
 //SEPERATE WANTED/UNWANTED ITEMS
 //Doesn't remove anything, only moves wanted items to start of range, overwriting values if needed

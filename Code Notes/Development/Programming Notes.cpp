@@ -27,6 +27,7 @@ VALUE TYPES: have automatic storage, stored on stack/register
 REFERENCE TYPES: have dynamic storage, stored on heap, accessed through references/pointers
 STATIC TYPES: have static storage, stored in fixed seperate memory/data segment
 OBJECTS: Instances of a class
+POD TYPES: primitive variables, pointers, unions, arrays of POD types, structs/classes of POD types
 
 LOCAL SCOPE: Variable defined in a block
 GLOBAL SCOPE: Variable defined outside a block, can be in a namespace
@@ -69,30 +70,22 @@ TYPE-CAST / EXPLICIT CONVERSION
 AUTOMATIC / IMPLICIT CONVERSION
 • Bool is converted to int internally
 • No data is lost, auto done by compiler
+• Can interfere with overload resolution and silently let incorrect code compile
 • derived -> base
 • short -> int -> long -> float -> double
 • signed -> unsigned
 
-ORDER OF EXPRESSION EVALUATION
-• Known as short-circuiting logical expressions
-• Order is left to right where right is only done if left is true: if(left && right)
-• Doesn't work with bitwise operators
-
-RESOURCE ACQUISITION IS INITIALIZATION (RAII)
-• Aquiring and owning a resource means cleaning that resource up properly
-• If an exception is thrown or return happens, 'delete' may never be called
-• Resource cleaning needs to be tied to the lifespace of objects for automatic allocation/deletion
-• Vital for exception and thread safe code
-
-ESCAPED CHARACTERS
-Newline = \n 
-Horizontal tab = \t
-Backspace = \b
-Backslash  = \\
-Single quote = \’
-Double quote = \”
-Return = \r
-Null character = \0
+OPERATORS / ESCAPED CHARACTERS
+%    Remainder whole number after how many x is in y
+::   Scope resolution operator
+\n   Newline
+\t   Horizontal tab
+\b   Backspace
+\\   Backslash
+\'   Single quote
+\"   Double quote
+\r   Return
+\0   Null character
 
 REGULAR EXPRESSIONS
 \w{2}      2 letters
@@ -100,6 +93,11 @@ REGULAR EXPRESSIONS
 \d{5}      5 digits
 //.*?\n    All between // and \n
 //.*?$     All between // and end
+
+ORDER OF EXPRESSION EVALUATION
+• Known as short-circuiting logical expressions
+• Order is left to right where right is only done if left is true: if(left && right)
+• Doesn't work with bitwise operators
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //PROGRAM EXECUTION
@@ -269,6 +267,7 @@ PLAIN-OLD-DATA (POD):
 • No user-declared assignment operator/destructor
 • Non-static members must be POD types
 • Non-static arrays/references/pointers must hold POD types
+• Can be initialized with {}
 
 TRAITS CLASS:
 • Encapsulates a set of types and functions necessary for use in templates 
@@ -293,13 +292,13 @@ CONTRAVARIANCE: Allows assigning MyClass or what MyClass derived from to MyClass
 INVARIANCE: Allows neither
 
 IS-A RELATIONSHIP
-Class inherits an interface + implementation for non pure virtual functions
-Eg. Public inheritance
+• Class inherits an interface + implementation for non pure virtual functions
+• Public inheritance
 
 HAS-A RELATIONSHIP
-Class acquires implementation without the interface 
-Interface can still be used within class methods, but not outside class
-Eg. Containment/Composition/Layering, Private/Protected inheritance
+• Class acquires implementation without the interface 
+• Interface can still be used within class methods, but not outside class
+• Containment/Composition/Layering, Private/Protected inheritance
 
 ===============================================================================
 POLYMORPHISM

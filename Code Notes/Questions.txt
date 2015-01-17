@@ -219,7 +219,9 @@ A: It gives a compile time error rather than a linker error
 Q: What kinds of types cannot by used as members of unions?
 A: Objects with non-trivial constructors, destructor, assignment op, inheritance and virtual functions.
 
-
+Q: What is a monolithic class and why is it bad?
+A: A class that tries to do too much- classes should have one responsibility
+   Discourages inheritance and extending the class and makes it complex to test and maintain
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //STL QUESTIONS

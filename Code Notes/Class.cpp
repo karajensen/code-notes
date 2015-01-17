@@ -203,8 +203,12 @@ const MyClass operator+(const MyClass& x) const;
 const MyClass operator*(const MyClass& x) const;
 MyClass& operator[](const int i);
 const MyClass& operator[](const int i) const;
-static void* operator new(std::size_t); //automatically static even without keyword
-static void operator delete(void*);     //automatically static even without keyword
+
+//NEW/DELETE OVERLOADING
+//User defined new/delete must be in done in pairs
+//Both automatically static even without keyword
+static void* operator new(std::size_t); 
+static void operator delete(void*);     
 
 //OVERLOADING FOR A*B ONLY
 A * B /*->*/ A.operator*(B);
@@ -308,8 +312,8 @@ class Derived sealed : public Base
 {
 public: 
 
-    //Default Base constructor used in initialisation list if not specified
-    Derived(int x, int y) : Base(x) {} 
+    Derived(int x, int y) : Base(x) 
+    {} 
 
     //Inheriting constructors, no need for constructor to specify base constructor
     using Base::Base;
@@ -318,11 +322,8 @@ public:
     //override and virtual are optional, final prevents further overriding
     virtual void MyMethod(int x) override final
     {
-        Base::MyMethod(x); 
+        Base::MyMethod(x); //Call base version
     }
-
-private:
-    Base m_myObject; //Containment
 };
 
 // PROTECTED INHERITANCE
