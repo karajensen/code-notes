@@ -20,15 +20,20 @@ extern int myInt; //Allows access to above variable, defined in .h
 //INITIALISING VARIABLE / OBJECTS
 int x = 5;
 int x(5);
-int x = { 5 };          // initializer_list<int> converts to int
-int x{ 5 };             // initializer_list<int> converts to int
-ClassA obj{ };          // uses default constructor, not initializer_list
-ClassA obj({});         // uses initializer_list constructor with empty list
-ClassA obj();           // BAD: 'Most vexing parse' seen as function declaration
-ClassA obj(ClassB(x));  // BAD: 'Most vexing parse' seen as function declaration
-ClassA obj((ClassB(x)); // extra () shows not function declaration
-ClassA obj(ClassB(1));  // using temp var shows not function declaration
-5 + 1;                  // Temporary value on left side allowable but doesn't do anything
+int x = { 5 };             // POD Types: initializer_list
+int x{ 5 };                // POD Types: initializer_list
+int x = int();             // POD Types: Auto initialises all members to 0
+int x = {};                // POD Types: Auto initialises all members to 0
+MyClass obj;               // Calls default constructor
+MyClass obj(obj1);         // Calls copy constructor
+MyClass obj = obj1;        // Calls copy constructor (not assignment operator)
+MyClass obj{};             // Uses default constructor, not initializer_list
+MyClass obj({});           // Uses initializer_list constructor with empty list
+MyClass obj();             // BAD: 'Most vexing parse' - seen as function declaration
+MyClass obj(MyClass2(x));  // BAD: 'Most vexing parse' - seen as function declaration
+MyClass obj((MyClass2(x)); // Extra () shows not function declaration
+MyClass obj(MyClass2(1));  // Using temp var shows not function declaration
+5 + 1;                     // Temporary value on left side allowable but doesn't do anything
 
 //TYPEDEF / ALIAS DECLARATION
 typedef int myType;   

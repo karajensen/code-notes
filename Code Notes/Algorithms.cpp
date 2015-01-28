@@ -54,6 +54,12 @@ inner_product(s1, E1, S2, value) //multiplies elements and accumulates: value +=
 adjacent_difference(S1, E1, S2) //for each C2 element: S2[i] = S1[i] - S1[i-1] with S2[0] = S1[0]
 adjacent_difference(S1, E1, S2, std::plus<T>()) //for each C2 element: S2[i] = S1[i] + S1[i-1] with S2[0] = S1[0]
 
+//FILLING
+fill(S, E, "A") //fill range with reference of value A
+fill_n(S, n, "A") //fill from S to n elements with reference of value A
+generate(S, E, createLam) //calls lamda and assigns return for each element
+generate_n(S, n, createLam) //calls lamda and assigns return for each element from S to n elements
+
 //=======================================================================================================
 //SEARCHING ALGORITHMS
 //=======================================================================================================
@@ -96,21 +102,6 @@ mismatch(S, E, S2, equalLam) //returns std::pair of iterators to first elements 
 equal(S, E, S2, equalLam) //returns true if both ranges are equal to each other including ordering
 is_permutation(S, E, S2, equalLam) //returns true if both ranges are equal to each other excluding ordering
 includes(S, E, S2, E2) //returns true if range 2 is in range 1; both ranges must be sorted in ascending order
-
-//=======================================================================================================
-//GENERATING ALGORITHMS
-//=======================================================================================================
-
-//FILLING
-fill(S, E, "A") //fill range with reference of value A
-fill_n(S, n, "A") //fill from S to n elements with reference of value A
-generate(S, E, createLam) //calls lamda and assigns return for each element
-generate_n(S, n, createLam) //calls lamda and assigns return for each element from S to n elements
-
-//ADDING ELEMENTS TO CONTAINERS
-O.resize(MAX_ELEMENTS);
-std::generate(O.begin(), O.end(), [&](){ return MyClassPtr(new MyClass()); });
-std::generate(O.begin(), O.end(), [&](){ return MyClass(); });
 
 //=======================================================================================================
 //MOVING ALGORITHMS

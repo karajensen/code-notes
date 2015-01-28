@@ -160,6 +160,7 @@ oDepth     // Output depth register: outputs a depth value used with testing
 //• NaN * 0 = 0 not NaN except with precise keyword
 //• Use of static keyword for global bools only evaluates the one path instead of both
 //• If missing components in vertex stream, auto sets z/y to 0.0 and w to 1.0
+//• Normalize normals in pixel shader as may not be still normalized after vertex shader interpolation
 
 //PACKING ARRAYS/VALUES AS FLOAT4
 //arrays are always packed as float4 even if only using a float
@@ -217,6 +218,50 @@ gl_FragColor = finalColour;
 //instead, use MAD, swizzling and constant container
 const float2 constants = float2(1.0, 0.0); 
 gl_FragColor = (myColor.xyzw * constants.xxxy) + constants.yyyx;
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//SHADING EQUATIONS
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//TANGENT SPACE NORMAL MAPPING (red/blue)
+float3 bump = bumpdepth*(tex2D(BumpSampler, uvs).rgb - 0.5);
+normal = normalize(normal + bump.x * tangent + bump.y * binormal);
+
+//OBJECT SPACE NORMAL MAPPING (rainbow)
+float3 bump = bumpdepth*((tex2D(BumpSampler, uvs).rgb * 2.0) - 1.0);
+normal = normalize(bump);             
+
+//ATTENUATION
+float d = length(lightPosition);                
+float attenuation = (1.0 / (att0 + att1*d + att2*d*d));  
+
+//DIFFUSE SHADING
+float3 diffuse = (dot(vertToLight, normal) + 1.0) * 0.5; 
+
+//SPECULAR PHONG
+//Size: Size of highlights (higher = smaller)
+//Brightness: Brightness of the highlights (higher = brighter)
+float3 reflection = normalize(reflect(-vertToLight, normal));
+float3 specular = intensity * colour * (pow(saturate(dot(reflection, vertToCamera)), size));
+                                        
+//SPECULAR BLINN-PHONG
+float3 halfVector = normalize(vertToLight + vertToCamera); 
+float3 specular = intensity * colour * (pow(saturate(dot(normal, halfVector)), size));   
+
+//REFRACTIONS
+float3 refraction = refract(-vertToCamera, normal, RI);
+float4 refract = texCUBE(EnvironmentSampler, refraction);
+
+//REFLECTIONSx
+//Schlick's Fresnal Approximation: max(0, min(1, bias + scale * pow(1.0 + dot(I,N))))
+//Bias should be small, power around 5
+float fresnal = saturate(bias + scale * pow(1.0 + dot(-vertToCamera, normal), power));
+float3 reflection = reflect(-vertToCamera, normal);
+float4 reflect = texCUBE(EnvironmentSampler, reflection) * intensity * fresnal;
+
+//FINAL COLOUR
+float4 colour = saturate((diffuse * attenuation) + (specular * attenuation) + reflect);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //HLSL
@@ -334,46 +379,6 @@ COLOR0     BLENDINDICES0    COLOR0
 TEXCOORD0  BLENDWEIGHT0     TEXCOORD0
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-//HLSL SHADING
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//TANGENT SPACE NORMAL MAPPING (red/blue)
-float3 bump = bumpdepth*(tex2D(BumpSampler, input.UV).rgb - 0.5)
-input.Normal = normalize(input.Normal + bump.x*input.Tangent + bump.y*input.Binormal);
-
-//OBJECT SPACE NORMAL MAPPING (rainbow)
-float3 bump = bumpdepth*((tex2D(BumpSampler, input.UV).rgb * 2.0) - 1.0);
-input.Normal = normalize(bump);             
-
-//ATTENUATION
-float d = length(LightPos);                
-float4 Attenuation = (1.0 / (att0 + att1*d + att2*d*d));  
-
-//DIFFUSE SHADING
-float4 diffuse = (dot(input.LightVector, input.Normal) + 1.0) * 0.5; 
-diffuse *= intensity * color * attenuation;   
-
-//SPECULAR PHONG
-//Size: Size of highlights (higher = smaller)
-//Brightness: Brightness of the highlights (higher = brighter)
-float3 reflectionVector = normalize(reflect(-input.LightVector, input.Normal));
-float3 specular = specularIntensity * specularColor * 
-                  (pow(saturate(dot(reflectionVector, input.CameraVector)), specularSize));
-                                        
-//SPECULAR BLINN-PHONG
-float3 halfVector = normalize(input.LightVector + input.CameraVector); 
-float3 specular = specularIntensity * specularColor * 
-                  (pow(saturate(dot(input.Normal.rbg, halfVector)), specularSize));   
-
-//REFLECTIONS
-float3 ReflectionVector = reflect(-input.CameraVector, input.Normal)
-float4 Reflection = texCUBE(EnvironSampler, ReflectionVector)       
-
-//REFRACTIONS
-float3 RefractionVector = refract(-input.CameraVector, input.Normal, RI)
-float4 Refractions = texCUBE(EnvironSampler, RefractionVector)
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
 //HLSL BODY
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -383,8 +388,8 @@ float myArray[100] //to save space, pack arrays as float4
 float4x4 World                  : World;
 float4x4 WorldViewProjection    : WorldViewProjection;
 float4x4 WorldInvTrans          : WorldInverseTranspose;
-float3 CameraPos;
-float3 LightPos;
+float3 CameraPosition;
+float3 LightPosition;
 
 //SHADER MODEL 4.0+ CONSTANTS
 //can be used by both vertex/pixel shader
@@ -410,16 +415,22 @@ sampler ColorSampler = sampler_state
     AddressV = WRAP; 
 };
 
+//SHADER MODEL 4.0+ SAMPLERS
+SamplerState Sampler;
+Texture2D DiffuseTexture;
+TextureCube EnvironmentTexture;
+
 struct VS_OUTPUT
 {
-    float4 Pos           : POSITION;    // SHADER MODEL 3.0-
-    float4 Pos           : SV_POSITION; // SHADER MODEL 4.0+
+    float4 Position      : POSITION;    // SHADER MODEL 3.0-
+    float4 Position      : SV_POSITION; // SHADER MODEL 4.0+
     float2 UV            : TEXCOORD0;
     float3 Normal        : TEXCOORD1;
-    float3 LightVector   : TEXCOORD2;
-    float3 CameraVector  : TEXCOORD3;
+    float3 VertToLight   : TEXCOORD2;
+    float3 VertToCamera  : TEXCOORD3;
     float3 Tangent       : TEXCOORD4;
     float3 Binormal      : TEXCOORD5;
+    float3 PositionWorld : TEXCOORD6;
     float4 Colour        : COLOR;
 };
 
@@ -430,13 +441,13 @@ VS_OUTPUT VShader(float4 inPos      : POSITION,
                   float3 inBinormal : BINORMAL0 )
 {
     VS_OUTPUT output = (VS_OUTPUT)0;
-    output.Pos = mul(inPos, WorldViewProjection); 
-    float3 PosWorld = mul(inPos, World); 
-    output.Normal = mul(inNormal,WorldInvTrans);
-    output.Tangent = mul(inTangent,WorldInvTrans);
-    output.Binormal = mul(inBinormal,WorldInvTrans);
-    output.LightVector = normalize(LightPos - PosWorld);
-    output.CameraVector = CameraPos - PosWorld;
+    output.Position = mul(inPos, WorldViewProjection); 
+    output.PositionWorld = mul(inPos, World); 
+    output.Normal = mul(inNormal, WorldInvTrans);
+    output.Tangent = mul(inTangent, WorldInvTrans);
+    output.Binormal = mul(inBinormal, WorldInvTrans);
+    output.VertToLight = LightPosition - output.PositionWorld;
+    output.VertToCamera = CameraPosition - output.PositionWorld;
     output.UV = inUV;
     return output;
 }
@@ -444,10 +455,11 @@ VS_OUTPUT VShader(float4 inPos      : POSITION,
 float4 PShader(VS_OUTPUT input) : COLOR0    // SHADER MODEL 3.0-
 float4 PShader(VS_OUTPUT input) : SV_TARGET // SHADER MODEL 4.0+: can output only float3
 { 
-    //Do in pixel shader as after intepolation, normal may not be normalised anymore
-    normalize(input.Normal);
+    float4 texture = tex2D(ColorSampler, input.UV); //SHADER MODEL 3.0-
+    float4 cubemap = texCUBE(EnvironmentSampler, reflection); //SHADER MODEL 3.0-
 
-    float4 Texture = tex2D(ColorSampler, input.UV); //SHADER MODEL 3.0-
+    float4 texture = DiffuseTexture.Sample(Sampler, input.UV); //SHADER MODEL 4.0+
+    float4 cubemap = EnvironmentTexture.Sample(Sampler, reflection); //SHADER MODEL 4.0+
 
     return Texture;
 }
@@ -608,29 +620,6 @@ samplerBuffer                       // access buffer texture
 texture2D(mySampler, uvs)           // Query from a texture, vec2 uvs
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-//GLSL SHADING
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//TEXTURING
-uniform sampler2D TextureSampler;
-vec4 Texture = texture2D(TextureSampler, gl_TexCoord[0].st);
-
-//TANGENT SPACE NORMAL MAPPING (red/blue)
-vec3 bump = bumpdepth*(texture2D(BumpSampler, gl_TexCoord[0].st).xyz - 0.5);
-vec3 normNormal = normalize(Normal + bump.x*Tangent + bump.y*Binormal);
-                        
-//SPECULAR BLINN-PHONG
-//Size: Size of highlights (higher = smaller)
-//Brightness: Brightness of the highlights (higher = brighter)
-vec3 halfVector = normalize(lightVector + normalize(-WorldViewPos));
-specular = pow(max(dot(normNormal, halfVector),0.0), specularSize); 
-specular *= gl_LightSource[i].specular * specularTexture * attenuation;
-
-//DIFFUSE SHADING
-vec4 diffuse = (dot(lightVector, normNormal) + 1.0) * 0.5;
-diffuse *= intensity * gl_LightSource[i].diffuse * attenuation; 
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
 //GLSL BODY
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -638,19 +627,22 @@ diffuse *= intensity * gl_LightSource[i].diffuse * attenuation;
 varying vec3 Normal;
 varying vec3 Binormal;
 varying vec3 Tangent;
-varying vec3 VertexNormal;
 varying vec3 WorldViewPos;
 
 //OPENGL CORE 3.0+ VERTEX SHADER
 in vec3 in_Position;
 in vec2 in_UVs;
 in vec3 in_Normal;
-out vec3 VertToLight;
-out vec3 Normal;
-uniform vec3 lightPosition;
-uniform mat4 world;
-uniform mat4 worldViewProjection;
-uniform mat4 worldViewInvTranpose;
+in vec3 in_Tangent;
+in vec3 in_Bitangent;
+out vec2 ex_UVs;
+out vec3 ex_PositionWorld;
+out vec3 ex_VertToCamera;
+out vec3 ex_Normal;
+uniform vec3 LightPosition;
+uniform mat4 World;
+uniform mat4 WorldViewProjection;
+uniform mat4 WorldViewInvTranpose;
 
 void main()
 {
@@ -663,12 +655,11 @@ void main()
     Binormal = gl_NormalMatrix * gl_MultiTexCoord2.xyz;
 
     //OPENGL CORE 3.0+
-	gl_Position = worldViewProjection * vec4(in_Position, 1.0);
-	Normal = (worldViewInvTranpose * vec4(in_Normal, 1.0)).xyz;
-	gl_TexCoord[0].st = in_UVs;
-    vec4 worldViewPos = world * vec4(in_Position, 1.0);
-	vec4 lightViewPos = worldViewInvTranpose * vec4(lightPosition, 1.0);
-	VertToLight = normalize((lightViewPos - worldViewPos).xyz);
+    gl_Position = worldViewProjection * in_Position;
+    ex_UVs = in_UVs;
+    ex_PositionWorld = in_Position.xyz;
+	ex_Normal = (worldViewInvTranpose * vec4(in_Normal, 1.0)).xyz;
+	ex_VertToCamera = CameraPosition - in_Position.xyz;
 }
 
 //OPENGL 2.0- FRAGMENT SHADER
@@ -679,19 +670,23 @@ varying vec3 Tangent;
 varying vec3 WorldViewPos;
 
 //OPENGL CORE 3.0+ FRAGMENT SHADER
-in vec3 Normal;
-in vec4 Color;
+in vec2 ex_UVs;
+in vec3 ex_PositionWorld;
+in vec3 ex_VertToCamera;
+in vec3 ex_Normal;
 out vec4 out_Color;
+uniform sampler2D DiffuseSampler;
+uniform samplerCube EnvironmentSampler;
 
 void main()
 {
-    //Do in pixel shader as after intepolation, normal may not be normalised anymore
-    normalize(Normal);
-
     //OPENGL 2.0-
-    gl_FragColor = texture2D(Sampler0, gl_TexCoord[0].st); 
+    float4 texture = texture2D(Sampler, gl_TexCoord[0].st); 
+    gl_FragColor = float4(1.0, 0.0, 0.0, 1.0);
 
     //OPENGL CORE 3.0+
-    out_Color = ex_Color;
+    float4 texture = texture(DiffuseSampler, ex_UVs);
+    float4 cubemap = texture(EnvironmentSampler, reflection);
+    out_Color = float4(1.0, 0.0, 0.0, 1.0);
 }
 
