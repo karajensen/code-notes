@@ -70,11 +70,15 @@ MyClass& operator=(MyClass&& obj)
 constexpr MyClass(int x = 0, int y = 0) : X(x), Y(x) {}
 
 //INITIALIZER LIST CONSTRUCTOR
-MyClass(std::initializer_list<double> list) 
+//• Take priority in overload when {} are used and implicit conversion can happen
+MyClass(std::initializer_list<double> x) 
 {
-    m_myVector.resize(list.size());
-    std::copy(list.begin(), list.end(), m_myVector);
+    m_myVector.resize(x.size());
+    std::copy(x.begin(), x.end(), m_myVector);
 }
+MyClass obj{1, true}    // Uses MyClass(std::initializer_list<double> x) and converts arguments
+MyClass obj{2.0L}       // Uses MyClass(double long x) as cannot convert implicitly
+MyClass obj(1, true)    // Uses MyClass(int x, bool y)
 
 //CONVERSION CONSTRUCTOR
 //single argument constructor
@@ -114,6 +118,7 @@ void MyFunction() &&;   // used when calling object is an rvalue: MyClass().MyFu
 //MEMBER INITIALISATION
 //Overridden by value set in initialisation lists
 float m_member = 3.0f;
+float m_member{ 3.0f };
 static float sm_member = 3.0f;
 const int m_constMember = 2; //If not initialised in-place, must be in initialisation list
 const int& m_refMember; //Must be in initialisation list

@@ -17,23 +17,23 @@ int myInt = 10; //Global static with external linkage, can only be initialised i
 extern int myInt; //Allows access to above variable, defined in .h
 ::myInt; //Allows access to global variables when shadowed by local variables
 
-//INITIALISING VARIABLE / OBJECTS
-int x = 5;
-int x(5);
-int x = { 5 };             // POD Types: initializer_list
-int x{ 5 };                // POD Types: initializer_list
-int x = int();             // POD Types: Auto initialises all members to 0
-int x = {};                // POD Types: Auto initialises all members to 0
-MyClass obj;               // Calls default constructor
-MyClass obj(obj1);         // Calls copy constructor
-MyClass obj = obj1;        // Calls copy constructor (not assignment operator)
-MyClass obj{};             // Uses default constructor, not initializer_list
-MyClass obj({});           // Uses initializer_list constructor with empty list
-MyClass obj();             // BAD: 'Most vexing parse' - seen as function declaration
-MyClass obj(MyClass2(x));  // BAD: 'Most vexing parse' - seen as function declaration
-MyClass obj((MyClass2(x)); // Extra () shows not function declaration
-MyClass obj(MyClass2(1));  // Using temp var shows not function declaration
-5 + 1;                     // Temporary value on left side allowable but doesn't do anything
+//INITIALISING VARIABLES
+Type x;             // Calls default constructor
+Type x(5);          // Calls constructor
+Type x(y);          // Calls copy constructor
+Type x = y;         // Calls copy constructor (not assignment operator)
+Type x = 5;         // Calls conversion constructor
+Type x{};           // Calls default constructor (not initializer_list)
+Type x({ });        // Calls default constructor (not initializer_list)
+Type x = { 5 };     // Calls initializer_list constructor or Type(5) if not possible
+Type x{ 5 };        // Calls initializer_list constructor or Type(5) if not possible
+Type x = {};        // Calls default constructor, POD Types only auto initialises all members to 0
+Type x = Type();    // Calls default constructor, POD Types only auto initialises all members to 0
+Type x();           // BAD: 'Most vexing parse' - seen as function declaration
+Type x(Type2(y));   // BAD: 'Most vexing parse' - seen as function declaration
+Type x((Type2(y))); // Extra () shows not function declaration
+Type x(Type2(1));   // Using temp var shows not function declaration
+5 + 1;              // Temporary value on left side allowable but doesn't do anything
 
 //TYPEDEF / ALIAS DECLARATION
 typedef int myType;   
@@ -117,9 +117,26 @@ int myArray[2][4]
 //CASTING
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-long(myInt)
-(int)myInt 
-float myFloat = static_cast<float>(myDouble)
+//C++ CAST                C-STYLE CAST
+std::dynamic_cast         No equalivant
+std::static_cast          (int)x   /*or*/ int(x)
+std::reinterpret_cast     (int*)&x
+std::const_cast           (int*)&cx
+
+//SAFE CASTING
+//only pointers/references of classes with virtual functions; slowest cast
+auto* myPtr = dynamic_cast<MyDerived>(myBasePtr) //returns 0 if fail
+auto& myObj = dynamic_cast<MyDerived&>(myBaseObj) //throws std::bad_cast if fail
+
+//UNSAFE CASTING
+auto* myPtr = reinterpret_cast<MyDerived>(myBasePtr) // only for pointers
+auto* myPtr = static_cast<MyDerived*>(myBasePtr)
+auto& myObj = static_cast<MyDerived&>(myBaseObject)
+
+//REMOVING CONST
+//converts const to non-const [only pointers]
+//bad if variable is stored in read-only memory- use only if underlying type is non-const
+auto* myPtr = const_cast<MyClass>(myPtr);
 
 // STRING TO NUMBER
 atoi("3") //converts cstring to int
@@ -145,21 +162,6 @@ std::sprintf(buf, "%u", myUint)
 std::sprintf(buf, "%f", myDbl) 
 std::sprintf(buf, "%f", myFloat) 
 
-//SAFE CASTING
-//only pointers/references of classes with virtual functions; slowest cast
-auto* myPtr = dynamic_cast<MyDerived>(myBasePtr) //returns 0 if fail
-auto& myObj = dynamic_cast<MyDerived&>(myBaseObj) //throws std::bad_cast if fail
-
-//UNSAFE CASTING
-auto* myPtr = reinterpret_cast<MyDerived>(myBasePtr) // only for pointers
-auto* myPtr = static_cast<MyDerived*>(myBasePtr)
-auto& myObj = static_cast<MyDerived&>(myBaseObject)
-
-//REMOVING CONST
-//converts const to non-const [only pointers]
-//bad if variable is stored in read-only memory- use only if underlying type is non-const
-auto* myPtr = const_cast<MyClass>(myPtr);
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //UNIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -168,7 +170,7 @@ auto* myPtr = const_cast<MyClass>(myPtr);
 // The size of that spot is determined by the largest variable
 // Can be used to access a variable in multiple ways
 // Cannot use inheritance, virtual functions
-// 
+
 union MyColor
 {
     MyColor() : color(0) //can have user defined constructor
@@ -242,6 +244,21 @@ unsigned char   // Can have 8 (bytes) flags maximum
 unsigned short  // Can have 16 (bytes) flags maximum
 unsigned int    // Can have 16 (bytes) flags maximum 
 unsigned long   // Can have 32 (bytes) flags maximum
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//BIT FIELDS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//• Can be tightly packed if declared together
+//• Type of a bit field can only be integral or enumeration type
+//• Cannot be a static member
+struct
+{
+    unsigned char x : 3;  // 3-bits, allowed values 2^3 (0-7)
+    unsigned char x : 6;  // 6-bits, allowed values 2^6 (0-31)
+    unsigned char : 2;    // nameless means next 2-bits are padding
+    unsigned char : 0;    // start a new byte (any remaining bits are padding)
+};
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //LOOPING

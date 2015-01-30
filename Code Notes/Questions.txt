@@ -5,6 +5,13 @@
 Q: Name a data structure that can replicate a cache and why
 A: Splay trees as they are designed to provide a faster access to the same piece of data for the second time
 
+Q: What is a monolithic class and why is it bad?
+A: A class that tries to do too much- classes should have one responsibility
+   Discourages inheritance and extending the class and makes it complex to test and maintain
+
+Q: Why is the worldview inverse transpose matrix used to transform normals?
+A: If a non-uniform scale or shear is used on the model the normals will be incorrect if just using the worldview matrix
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //C++ QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -219,9 +226,8 @@ A: It gives a compile time error rather than a linker error
 Q: What kinds of types cannot by used as members of unions?
 A: Objects with non-trivial constructors, destructor, assignment op, inheritance and virtual functions.
 
-Q: What is a monolithic class and why is it bad?
-A: A class that tries to do too much- classes should have one responsibility
-   Discourages inheritance and extending the class and makes it complex to test and maintain
+Q: Which C++ cast has no C-style equivalent?
+A: dynamic_cast
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //STL QUESTIONS

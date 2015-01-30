@@ -51,8 +51,8 @@ std::remove_pointer<A>::type //returns A with any pointer removed
 srand(time(0)); //choose a seed
 
 //USING RAND()
-int r = rand() % MAX_RANGE + 1; //for 1 to MAX_RANGE (not including maxrange) 
-int r = rand() % MAX_RANGE; //for 0 to MAX_RANGE (not including maxrange)
+int value = (rand() % (max - min)) + min;       // [min, max)
+int value = (rand() % (max - min + 1)) + min;   // [min, max]
 
 //USING DISTRIBUTION
 //create one generator per application
