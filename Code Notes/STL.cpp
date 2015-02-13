@@ -342,6 +342,16 @@ set_unexpected([](){}); //takes in void MyFunction()
 terminate() //calls abort()
 set_terminate([](){}); //takes in void MyFunction()
  
+//EXCEPTIONS IN CONSTRUCTORS
+MyClass::MyClass()
+try : A()
+    , B()
+{
+}
+catch (...) // can't access class members in catch block
+{
+}
+
 //CREATING CUSTOM EXCEPTION
 class MyClass: public std::exception
 {

@@ -142,12 +142,14 @@ HEAP
 //ASSOCIATIVE CONTAINERS
 ///////////////////////////////////////////////////////////////////////////////////////
 
+• Default sort function is operator< and is auto sorted when new key is inserted
+• Keys are const and should not be changed as this affects the sort order
+
 MAP
 • Based on balanced binary tree
 • Sorted from lowest to highest with their key
 • has a O(logN) lookup and insert time
 • Multi map can have multiple values to the one key
-• Map iterators point to pairs where key is const to prevent breaking sorted order
 
 UNORDERED MAP
 • Based on hash table
@@ -155,10 +157,9 @@ UNORDERED MAP
 • Fast for accessing individual elements by key
 
 SET
-• elements themselves are the keys
-• elements in a set are always sorted from lower to higher
-• multi set can have multiple values to the one key
-• If changing value in set using iterator, make sure set is resorted
+• Elements themselves are the keys
+• Elements in a set are always sorted from lower to higher
+• Multi set can have multiple values to the one key
 
 ///////////////////////////////////////////////////////////////////////////////////////
 //ITERATOR CATEGORIES

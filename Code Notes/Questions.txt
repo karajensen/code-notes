@@ -229,6 +229,12 @@ A: Objects with non-trivial constructors, destructor, assignment op, inheritance
 Q: Which C++ cast has no C-style equivalent?
 A: dynamic_cast
 
+Q: When does an objects lifetime begin/end?
+A: On full completion of constructor it begins, on start of destructor it ends
+
+Q: What happens when a constructor emits an exception?
+A: Construction has failed and the object never existed. The destructor does not need to be called.
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //STL QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

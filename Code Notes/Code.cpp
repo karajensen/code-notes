@@ -349,7 +349,6 @@ MyFunction(my2DArray, rows)
 
 //INLINE FUNCTIONS
 //Function call is replaced by function body
-//Compiler ultimately decides what is inlined
 //If in .h any internal static members are shared between files
 inline void MyFunction(int x){}
                                                   

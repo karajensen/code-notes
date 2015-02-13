@@ -107,7 +107,7 @@ int MyMethod(){ return 0; }      // inline member
 void MyMethod(int x = 0);        // default values only needed in declaration, not definition
 void MyMethod() const;           // uses const 'this' pointer
 MyClass() = default;             // create a default constructor inline in .h
-MyClass::MyClass() = default;    // create a default constructor in .cpp (requires non default declaration in .h)
+MyClass::MyClass() = default;    // create a default constructor in .cpp (requires normal declaration in .h)
 MyClass() = delete;              // don't create a default constructor
 void MyFunction(int x) = delete; // don't allow overload with this signature
     
