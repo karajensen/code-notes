@@ -12,6 +12,9 @@ A: A class that tries to do too much- classes should have one responsibility
 Q: Why is the worldview inverse transpose matrix used to transform normals?
 A: If a non-uniform scale or shear is used on the model the normals will be incorrect if just using the worldview matrix
 
+Q: What is recursion, and what would normally happen if recursion went too deep?
+A: Calling the function within the function. Will cause stack overflow if going too deep.
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //C++ QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,9 +40,6 @@ A: When multiple functions have the same name but differ by number/type of argum
 
 Q: What is a function pointer, and can you name a use?
 A: A pointer that holds the address of a function. Used for callbacks and passing with events.
-
-Q: What is recursion, and what would normally happen if recursion went too deep?
-A: Calling the function within the function. Will cause stack overflow if going too deep.
 
 Q: What kind of values can be used as a default value?
 A: Constant, ternary expressions, global and static variables, static and non-member functions
@@ -153,7 +153,7 @@ Q: Name two situations where you must use an initialisation list as opposed to a
 A: For const and reference members
 
 Q: Can the 'this' pointer be used inside a constructor?
-A: Yes however it is dangerous to do so for virtual method
+A: Yes however it is dangerous to do so for virtual methods
 
 Q: Will the compiler execute items in the initialiser list in the order that they appear in the list?
 A: No. They will execute in the order they appear in the class
@@ -234,6 +234,14 @@ A: On full completion of constructor it begins, on start of destructor it ends
 
 Q: What happens when a constructor emits an exception?
 A: Construction has failed and the object never existed. The destructor does not need to be called.
+
+Q: Why should destructors never throw?
+A: If the stack is unwinding because of an exception and a destructor throws there are 2 exceptions occuring
+   This is undefined behaviour and the program terminates
+
+Q: Why is it dangerous to store the this pointer in a shared_ptr
+A: Users of the object may also store it in a shared_ptr which means the memory is owned by two smart pointers
+   If one smart pointer deletes it, the other does not know about it
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //STL QUESTIONS

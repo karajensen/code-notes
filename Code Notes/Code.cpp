@@ -147,8 +147,7 @@ atof("3.0") //converts cstring to float
 to_string(value);
 to_wstring(value);
 
-// NUMBER TO STRING: STREAM
-// More control with formatting and types
+// NUMBER TO STRING STREAM
 // Superseeds std::strstream
 // operator<< returns std::ostream, str() part of std::ostringstream
 static_cast<std::ostringstream&>(std::ostringstream() << value).str()
@@ -424,7 +423,6 @@ namespace A
     void MyFn(int x);
     void MyFn(MyClass& x);
 }
-
 namespace B
 {
     void MyFn(int x){ MyFn(x); }                     // Will call itself as namespace A not in scope
@@ -433,7 +431,7 @@ namespace B
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//PREPROCESSOR MACROS (COMPILER SPECIFIC)
+//PREPROCESSOR MACROS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream> 
@@ -459,13 +457,7 @@ extern "C" { #include "header.h" }; //compile in C only
     do { 
         statement1; \
         statement2; \
-    } while (false) //intentially don't put ;
-
-//The ; gets added when using the macro
-if (whatever)
-    MYMACRO(foo, bar);
-else 
-    int x = 0;
+    } while (false) //intentially don't put ; so it can be used anywhere
 
 //CHANGING PACKING OF STRUCT
 //changes amount of bytes allocated at a time (ie, default 4 to 1)
@@ -478,12 +470,81 @@ struct CStruct
 };
 #pragma pack(pop)
 
-//PREPROCESSOR CONSTANTS
+//VISUAL STUDIO CONSTANTS
 _DEBUG
 _MANAGED
-
-//VISUAL STUDIO CONSTANTS
 __FILE__    //name of file
 __LINE__    //current line number
 __TIME__    //time file was compiled
 __DATE__    //date file was compiled
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//ERROR HANDLING
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+assert(myPtr != nullptr); // break if myPtr is null
+static_assert(myConstInt > 0, "MyMessage"); // must use constant values, asserts at compile time
+throw("Message goes here");
+exit(EXIT_FAILURE);
+
+try 
+{ 
+    myFunction();
+} 
+catch(const std::exception& e)
+{
+    // Always catch by const reference
+    // Reference is used instead of pointer to reduce the need to manage any memory at the catch position
+    // Allocating memory for an exception through a pointer may not work if the exception is out of memory.
+
+    cout << e.what() << endl;
+
+    throw e; // throws a copy of e, splices off any derived type
+    throw; //original exception is thrown again
+}
+catch (...) //catches anything
+{
+}
+
+//EXCEPTION SPECIFICATIONS
+//If exception type not on list is thrown, calls unexpected()
+void MyFn(); //can throw anything
+void MyFn() throw(const char*, std::exception&); //can only throw string or std::exception
+void MyFn() throw(); //Doesn't throw excpetions, not optimized: keeps unwindable stack state always
+void MyFn() noexcept; //Doesn't throw exceptions, optimizes: doesn't keep unwindable stack state if exception propagates
+
+//UNEXPECTED EXPECTION
+//If type wasn't explicitly thrown or on expected list: unexpected()->terminate()->abort()
+unexpected() //calls terminate()
+set_unexpected([](){}); //takes in void MyFunction()
+
+//UNCAUGHT EXCEPTION
+//If type was known but not caught: terminate()->abort()
+terminate() //calls abort()
+set_terminate([](){}); //takes in void MyFunction()
+ 
+//EXCEPTIONS IN CONSTRUCTORS
+MyClass::MyClass()
+try : A()
+    , B()
+{
+}
+catch (...) // can't access class members in catch block
+{
+}
+
+//CREATING CUSTOM EXCEPTION
+class MyClass: public std::exception
+{
+public:
+    virtual const char* what() const override { return "bad arguments"; } 
+};
+
+try 
+{
+    throw MyClass();
+}
+catch(const std::exception& e)
+{
+    cout << e.what() << endl;
+}

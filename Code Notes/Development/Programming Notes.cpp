@@ -250,7 +250,8 @@ FASTCALL CALLING CONVENTION
 //CLASSES
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-DESTRUCTOR: Called when out of scope, delete used or explicitly, should never throw exception
+CONSTRUCTOR: Object starts life after constructor complete
+DESTRUCTOR: Called when out of scope, delete used or explicitly, object ends life on call
 FINALISER: Called when object is garbage collected
 
 AGGREGATE:

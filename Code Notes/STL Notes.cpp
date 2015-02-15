@@ -268,57 +268,6 @@ LIST/MAP/SET
 • Erasure: Only the erased member is invalidated.
 
 ///////////////////////////////////////////////////////////////////////////////////////
-//EXCEPTIONS
-///////////////////////////////////////////////////////////////////////////////////////
-
-1) THROW BY VALUE
-• When exception is thrown, copy of thrown variable is made as it needs it after function out of scope
-• Don't throw pointers, if absolutely needed, use a smart pointer
-
-2) STACK UNWINDS
-• Stack releases memory until reaching the corresponding try-catch block
-• Any destructors are called on way- if exception is called in destructor, 
-  it must resolve it otherwise two exceptions are occuring
-• Pointers are destroyed without calling delete. Solved through smart pointers
-
-3) CATCH BY REFERENCE
-• Catch reference as used to allow inheritance with exception types 
-
-EXCEPTION SAFETY
-• Use RAII to auto cleanup resources if exception is thrown
-• Only change state once any possible errors have been resolved
-• Destructor/deallocation/swap functions should never throw as impossible to safely cleanup
-
-EXCEPTION NEUTRAL
-• Exceptions thrown should be propagated unchanged to the objects's caller
-
-ABRAHAMS GUARANTEE: BASIC
-• Failures/exceptions might alter program state
-• No leaks occur and affected objects are still usable but not in predictable state
-
-ABRAHAMS GUARANTEE: STRONG
-• Failures/exceptions guarantee program state is unchanged
-• No leaks occur and objects and iterators not affected
-
-ABRAHAMS GUARANTEE: NOTHROW
-• Failure and exceptions do not happen
-
-NON-THROWING METHODS
-• If objects they work on throw, undefined behaviour
-• All destructors auto have noexcept keyword
-    - delete myPointer;
-    - delete[] myArray;
-    - std::swap
-    - All destructors in std library
-
-STANDARD LIBRARY EXCEPTIONS
-• Exception safe (some areas only give basic guarantee) and exception neutral
-• Have strong guarantee for all operations except two
-• Multi-range insert(begin,begin,end) has basic guarantee
-• Vector and Deque only: inserts or erases for multi or single objects are basic guarantee 
-  if object constructor or assignment operator throws, otherwise strong guarantee
-
-///////////////////////////////////////////////////////////////////////////////////////
 //CONTAINER MEMORY ALLOCATION
 ///////////////////////////////////////////////////////////////////////////////////////
 
