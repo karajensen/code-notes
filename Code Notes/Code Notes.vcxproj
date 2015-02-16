@@ -87,7 +87,6 @@
   <ItemGroup>
     <ClCompile Include="Algorithms.cpp" />
     <ClCompile Include="Boost.cpp" />
-    <ClCompile Include="C# Notes.cpp" />
     <ClCompile Include="C++CLI.cpp" />
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Code Examples\Classes\camera.cpp" />
@@ -98,24 +97,24 @@
     <ClCompile Include="Code Examples\Example - Maya API Locator.cpp" />
     <ClCompile Include="Code Examples\Example - Maya API Node.cpp" />
     <ClCompile Include="Code Examples\Example - MEL Special Shatter.cpp" />
-    <ClCompile Include="Code Notes.cpp" />
+    <ClCompile Include="Code Notes.txt" />
     <ClCompile Include="Code.cpp" />
     <ClCompile Include="Development\Algorithms and Structures.cpp" />
     <ClCompile Include="Development\Databases.sql" />
     <ClCompile Include="Development\Design Patterns.cpp" />
-    <ClCompile Include="Development\Programming Notes.cpp" />
-    <ClCompile Include="Development\Software Development.cpp" />
+    <ClCompile Include="Development\Programming Notes.txt" />
+    <ClCompile Include="Development\Software Development.txt" />
     <ClCompile Include="Development\Web Development.cpp" />
-    <ClCompile Include="Game Programming\Collisions.cpp" />
+    <ClCompile Include="Game Programming\Collisions.txt" />
     <ClCompile Include="Game Programming\RenderEngines.cpp" />
-    <ClCompile Include="Game Programming\Lighting.cpp" />
-    <ClCompile Include="Game Programming\Maths.cpp" />
-    <ClCompile Include="Game Programming\Mental Ray.cpp" />
-    <ClCompile Include="Game Programming\Rendering.cpp" />
+    <ClCompile Include="Game Programming\Lighting.txt" />
+    <ClCompile Include="Game Programming\Maths.txt" />
+    <ClCompile Include="Game Programming\Mental Ray.txt" />
+    <ClCompile Include="Game Programming\Rendering.txt" />
     <ClCompile Include="Game Programming\Shaders.cpp" />
-    <ClCompile Include="Game Programming\Simulation.cpp" />
-    <ClCompile Include="Game Programming\Physics.cpp" />
-    <ClCompile Include="Game Programming\Texture.cpp" />
+    <ClCompile Include="Game Programming\Simulation.txt" />
+    <ClCompile Include="Game Programming\Physics.txt" />
+    <ClCompile Include="Game Programming\Texture.txt" />
     <ClCompile Include="Languages\Maxscript forms.cpp" />
     <ClCompile Include="Languages\Maxscript objects.cpp" />
     <ClCompile Include="Languages\Maxscript.cpp" />
@@ -130,7 +129,7 @@
     <ClCompile Include="Languages\Python.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="STL Containers.cpp" />
-    <ClCompile Include="STL Notes.cpp" />
+    <ClCompile Include="STL Notes.txt" />
     <ClCompile Include="STL.cpp" />
     <ClCompile Include="Templates.cpp" />
   </ItemGroup>
@@ -239,6 +238,7 @@
     <Image Include="Images\Shader - Texture Wrapping.png" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="C# Notes.txt" />
     <Text Include="Questions.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

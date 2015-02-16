@@ -1,7 +1,6 @@
 ﻿//////////////////////////////////////////////////////////////////////////////
 //INTEGRATION METHODS
 //////////////////////////////////////////////////////////////////////////////
-/*
 
 LINEAR INTERPOLATION: Line between two points used to approximate the curve 
 SPHERICAL INTERPOLATION: Smoothly interplates between two values 
@@ -494,6 +493,3 @@ PARTIAL PLANNING (Plan Space Search)
 
 CONDITIONAL PLANNING (Probability)
  - Probability is used when not all information is known about environment/other agents
-
-
-*/////////////////////////////////////////////////////////////////////////////

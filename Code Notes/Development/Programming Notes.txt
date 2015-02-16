@@ -1,7 +1,6 @@
 ﻿////////////////////////////////////////////////////////////////////////////////////////////////////
 //PROGRAMMING NOTES
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
 
 C++ VARIABLE               C# VARIABLE      BYTES     RANGE
 bool                       bool             1         true/false
@@ -193,12 +192,18 @@ CACHES
 • Cache Miss: Failed attempt to read/write to the cache resulting in RAM access
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//FUNCTIONS
+//CLASSES/STRUCTS/FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 FUNCTION DECLARATION/PROTOTYPE: Function header
 FUNCTION DEFINITION: Function including body
 
+STATIC BINDING: Uses pointer/ref type to determine function to call at compilation
+DYNAMIC BINDING: Uses internal held object type to determine function to call at runtime
+
+CONSTRUCTOR: Object starts life after constructor complete
+DESTRUCTOR: Called when out of scope, delete used or explicitly, object ends life on call
+FINALISER: Called when object is garbage collected
 AGGREGATE METHODS: Applies a function to each successive element
 PREDICATE: Function that returns bool
 PURE FUNCTION: Has no static variables, doesn't affect member variables
@@ -209,16 +214,33 @@ UNARY FUNCTION: called with one argument.
 BINARY FUNCTION: called with two arguments.
 FRIEND FUNCTION: can see a class's private parts
 
-STATIC BINDING: Uses pointer/ref type to determine function to call at compilation
-DYNAMIC BINDING: Uses internal held object type to determine function to call at runtime
+AGGREGATE:
+• Array/class/struct/union
+• No user-declared constructors
+• No private/protected non-static members
+• No Base classes or virtual functions
+• Array is an aggregate even it is an array of non-aggregate class type.
+• Can be initialized with {}
+• Doesn't matter what static members it has
 
-ARGUMENTS/PARAMETERS
-Actual Argument/Parameter = The value passed to the function 
-Formal Argument/Parameter = A variable that’s used to receive passed values
-Argument = used to denote Actual Argument/Parameter
-Parameter = used to denote Formal Argument/Parameter 
+PLAIN-OLD-DATA (POD):
+• Aggregate class with extra requirements
+• No user-declared assignment operator/destructor
+• Non-static members must be POD types
+• Non-static arrays/references/pointers must hold POD types
+• Can be initialized with {}
 
-FUNCTION CALLING
+TRAITS CLASS:
+• Encapsulates a set of types and functions necessary for use in templates 
+• Allow compile time decisions to be made on types
+
+ARGUMENTS / PARAMETERS:
+• Actual Argument/Parameter = The value passed to the function 
+• Formal Argument/Parameter = A variable that’s used to receive passed values
+• Argument = used to denote Actual Argument/Parameter
+• Parameter = used to denote Formal Argument/Parameter 
+
+FUNCTION CALLING:
 • Copy required registers/argments to the stack
 • Push the return address
 • Any variables used locally are placed on the stack
@@ -245,34 +267,6 @@ FASTCALL CALLING CONVENTION
 • First 2-3 small arguments are passed in registers
 • Additional/large arguments passed via stack. 
 • Calling function cleans the stack
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//CLASSES
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-CONSTRUCTOR: Object starts life after constructor complete
-DESTRUCTOR: Called when out of scope, delete used or explicitly, object ends life on call
-FINALISER: Called when object is garbage collected
-
-AGGREGATE:
-• Array/class/struct/union
-• No user-declared constructors
-• No private/protected non-static members
-• No Base classes or virtual functions
-• Array is an aggregate even it is an array of non-aggregate class type.
-• Can be initialized with {}
-• Doesn't matter what static members it has
-
-PLAIN-OLD-DATA (POD):
-• Aggregate class with extra requirements
-• No user-declared assignment operator/destructor
-• Non-static members must be POD types
-• Non-static arrays/references/pointers must hold POD types
-• Can be initialized with {}
-
-TRAITS CLASS:
-• Encapsulates a set of types and functions necessary for use in templates 
-• Allow compile time decisions to be made on types
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //OBJECT ORIENTED PROGRAMMING
@@ -393,6 +387,40 @@ Multiply by 2ˣ:   value <<= 3 is same as value *= 2³
 Divide by 2ˣ:     value >>= 3 is same as value /= 2³
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+//ERROR HANDLING/EXCEPTIONS
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+1) THROW BY VALUE
+• When exception is thrown, copy of thrown variable is made as it needs it after function out of scope
+
+2) STACK UNWINDS
+• Stack releases memory until reaching the corresponding try-catch block
+• Any destructors are called on way as objects go out of scope
+• Local pointers are destroyed without calling delete
+
+3) CATCH BY REFERENCE
+• Catch reference as used to allow inheritance with exception types 
+
+EXCEPTION SAFETY
+• Use RAII to auto cleanup resources if exception is thrown
+• Only change state once any possible errors have been resolved
+• Destructor/deallocation/swap functions should never throw as impossible to safely cleanup
+
+EXCEPTION NEUTRAL
+• Exceptions thrown should be propagated unchanged to the objects's caller
+
+ABRAHAMS GUARANTEE: BASIC
+• Failures/exceptions might alter program state
+• No leaks occur and affected objects are still usable but not in predictable state
+
+ABRAHAMS GUARANTEE: STRONG
+• Failures/exceptions guarantee program state is unchanged
+• No leaks occur and objects and iterators not affected
+
+ABRAHAMS GUARANTEE: NOTHROW
+• Failure and exceptions do not happen
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //MULTITHREADING
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -420,5 +448,3 @@ RACE CONDITION
 AMDAHLS LAW
 • Used to find the maximum expected improvement to an overall system when part of the system is improved
 • Used in parallel computing to predict the maximum speed increase using multiple processors
-
-*///////////////////////////////////////////////////////////////////////////////////////////////////

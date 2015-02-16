@@ -25,15 +25,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Game Programming\Collisions.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Programming\Maths.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Programming\Physics.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
     <ClCompile Include="Languages\Maxscript forms.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
@@ -76,9 +67,6 @@
     <ClCompile Include="Class.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Code Notes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Code.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -88,32 +76,14 @@
     <ClCompile Include="STL Containers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="STL Notes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="STL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Templates.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Simulation.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
     <ClCompile Include="Development\Algorithms and Structures.cpp">
       <Filter>Development</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Programming Notes.cpp">
-      <Filter>Development</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Software Development.cpp">
-      <Filter>Development</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Programming\Mental Ray.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Programming\Rendering.cpp">
-      <Filter>Game Programming</Filter>
     </ClCompile>
     <ClCompile Include="Code Examples\Classes\camera.cpp">
       <Filter>Development\Classes</Filter>
@@ -139,20 +109,11 @@
     <ClCompile Include="Code Examples\Example - Maya API Node.cpp">
       <Filter>Languages\Examples</Filter>
     </ClCompile>
-    <ClCompile Include="C# Notes.cpp">
-      <Filter>Languages</Filter>
-    </ClCompile>
     <ClCompile Include="C++CLI.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Texture.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
     <ClCompile Include="Languages\Python.cpp">
       <Filter>Languages</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Design Patterns.cpp">
-      <Filter>Development</Filter>
     </ClCompile>
     <ClCompile Include="Development\Databases.sql">
       <Filter>Development</Filter>
@@ -163,11 +124,47 @@
     <ClCompile Include="Game Programming\Shaders.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
+    <ClCompile Include="Code Notes.txt">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="STL Notes.txt">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Lighting.txt">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Maths.txt">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Mental Ray.txt">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Physics.txt">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Rendering.txt">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
     <ClCompile Include="Game Programming\RenderEngines.cpp">
       <Filter>Game Programming</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Lighting.cpp">
+    <ClCompile Include="Game Programming\Simulation.txt">
       <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Texture.txt">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Programming\Collisions.txt">
+      <Filter>Game Programming</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Programming Notes.txt">
+      <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Software Development.txt">
+      <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Design Patterns.cpp">
+      <Filter>Development</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -466,5 +463,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Questions.txt" />
+    <Text Include="C# Notes.txt">
+      <Filter>Languages</Filter>
+    </Text>
   </ItemGroup>
 </Project>

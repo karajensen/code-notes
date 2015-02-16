@@ -1,7 +1,6 @@
 ﻿////////////////////////////////////////////////////////////////////////////////////////
 //RENDERING
 ////////////////////////////////////////////////////////////////////////////////////////
-/*
 
 RAYTRACING      [PRE-RENDER]        Casts rays from light to scene to view
 RAYCASTING      [REALTIME-RENDER]   Casts rays from view to scene to light
@@ -453,5 +452,3 @@ CONCAVE POLYGONS: line between two points in polygon can cross border
 POLYHEDRA: three dimensional object with flat faces and straight edges
 POLYTOPES: convex hulls of finite points sets (line segments, triangles, polyhedra)
 QUADRICS: spheres, cones, cylinders
-
-*////////////////////////////////////////////////////////////////////////////////////////
