@@ -197,68 +197,25 @@ SrcAlphaSat    (f, f, f, 1) where f = min(Aˢ,1-Aᵈ)
 //STENCILING
 ////////////////////////////////////////////////////////////////////////////////////////
 
-FOR MAIN SCENE RENDER TARGET
-1) Render scene as normal with without portal/mirror geometry
-
-FOR PORTAL/MIRROR RENDER TARGET
-1) Clear stencil buffer to 0, color buffer to full alpha
-2) Disable writes to the depth and color buffer
-3) Render the portal/mirror geometry only from main scene
-4) Re-enable dpeth/color buffer writes
-5) Render the second scene using the stencil buffer tests with the new stencil
-
-POST-PROCESSING
-1) Take both textures rendered and blend together
-
-==============================================================================
-STENCIL COMPARISON
-==============================================================================
-Uses bit manipulation:
 if(ref & mask [operator] value & mask == true) { accept pixel }
 
-STENCIL REFERENCE VALUE:
-gd3dDevice->SetRenderState(D3DRS_STENCILREF, 0x1);
+NEVER:           Stencil test always fails
+ALWAYS:          Stencil test always succeeds
+LESS:            <
+EQUAL:           ==
+LESSEQUAL:       <=
+GREATER:         >
+NOTEQUAL:        !=
+GREATEREQUAL:    >=                     
 
-STENCIL MASK:
-Default is 0xffffffff which doesn't mask any bits
-gd3dDevice->SetRenderState(D3DRS_STENCILMASK, 0x0000ffff);
-
-COMPARISON OPERATION:
-D3DCMP_NEVER:           Stencil test always fails
-D3DCMP_ALWAYS:          Stencil test always succeeds
-D3DCMP_LESS:            <
-D3DCMP_EQUAL:           ==
-D3DCMP_LESSEQUAL:       <=
-D3DCMP_GREATER:         >
-D3DCMP_NOTEQUAL:        !=
-D3DCMP_GREATEREQUAL:    >=
-gd3dDevice->SetRenderState(D3DRS_STENCILFUNC, operation);                        
-
-==============================================================================
-STENCIL BUFFER WRITING/UPDATING
-==============================================================================
-
-//Operation to perform is Stencil test fails
-gd3dDevice->SetRenderState(D3DRS_STENCILFAIL, StencilOperation);
-
-//Operation to perform if Depth test fails
-gd3dDevice->SetRenderState(D3DRS_STENCILZFAIL, StencilOperation);
-
-//Operation to perform if Stencil test and Depth test passes
-gd3dDevice->SetRenderState(D3DRS_STENCILPASS, StencilOperation);
-
-D3DSTENCILOP_KEEP: Keep value currently in stencil buffer
-D3DSTENCILOP_ZERO: Specifies to set the stencil buffer entry to zero.
-D3DSTENCILOP_REPLACE: Replace the buffer entry with stencil-reference value
-D3DSTENCILOP_INCRSAT: Increment the stencil buffer entry, clamps to max
-D3DSTENCILOP_DECRSAT: Decrement the stencil buffer entry, clamps to 0
-D3DSTENCILOP_INVERT: Invert the bits of the buffer entry
-D3DSTENCILOP_INCR: Increment the buffer entry, wraps to 0 if goes over max 
-D3DSTENCILOP_DECR: Decrement the buffer entry, wraps to max if goes under 0
-
-//Stencil write mask
-gd3dDevice->SetRenderState(D3DRS_STENCILWRITEMASK, 0x0000ffff);
-NewValue = Value & WriteMask
+KEEP: Keep value currently in stencil buffer
+ZERO: Specifies to set the stencil buffer entry to zero.
+REPLACE: Replace the buffer entry with stencil-reference value
+INCRSAT: Increment the stencil buffer entry, clamps to max
+DECRSAT: Decrement the stencil buffer entry, clamps to 0
+INVERT: Invert the bits of the buffer entry
+INCR: Increment the buffer entry, wraps to 0 if goes over max 
+DECR: Decrement the buffer entry, wraps to max if goes under 0
 
 ////////////////////////////////////////////////////////////////////////////////////////
 //TRANSFORMATIONS
@@ -290,41 +247,13 @@ GIMBAL LOCK
 • If the middle gimbal is rotated greater than 90, the top and bottle gimbals 
   are aligned and in gimbal lock losing a degree of freedom. 
 
-==============================================================================
 VIEW MATRIX
-Inverse of the Camera World Matrix
-changes the world scene basis so the camera is at the origin
-==============================================================================
+• Inverse of the Camera World Matrix
+• changes the world scene basis so the camera is at the origin
 
-FLY-CAMERA
-Assumes orthogonality with view matrix
-matView._11 = right.x;    matView._12 = up.x;   matView._13 = forward.x;
-matView._21 = right.y;    matView._22 = up.y;   matView._23 = forward.y;
-matView._31 = right.z;    matView._32 = up.z;   matView._33 = forward.z; 
-matView._41 = -D3DXVec3Dot(&pos,&right); 
-matView._42 = -D3DXVec3Dot(&pos,&up);
-matView._43 = -D3DXVec3Dot(&pos,&forward);
-
-LOOKAT-CAMERA
-D3DXMatrixIdentity(&m_world);
-m_world._41 = pos.x;
-m_world._42 = pos.y;
-m_world._43 = pos.z;
-D3DXMATRIX matRX, matRY, matRZ;
-D3DXMatrixRotationX(&matRX, m_pitch); 
-D3DXMatrixRotationY(&matRY, m_yaw);
-D3DXMatrixRotationZ(&matRZ, m_roll);
-m_world *= matRZ * matRX * matRY;
-D3DXMatrixInverse(m_view.MatrixPtr(), nullptr, &m_world.GetMatrix());
-
-==OR==
-
-D3DXMatrixLookAtLH(&matView, &LookAtPosition, &Forward, &Up)
-
-==============================================================================
-PROJECTION MATRICES
-Projects the final scene onto the screen (Screen space)
-==============================================================================
+////////////////////////////////////////////////////////////////////////////////////////
+//PROJECTION
+////////////////////////////////////////////////////////////////////////////////////////
 
 VIEW FRUSTUM:
 Pyramid volume from camera to world, has near and front clipping planes

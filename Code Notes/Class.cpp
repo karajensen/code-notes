@@ -200,10 +200,10 @@ obj1[4]    /*->*/  obj1.operator[](4)
 obj1[0][1] /*->*/  (class1[0].operator[](1)).operator[0];
 
 //OVERLOAD DECLARATIONS
-MyClass& operator++(); //prefix
-MyClass& operator--(); //prefix
-MyClass operator++(int unused); //postfix
-MyClass operator--(int unused); //postfix
+MyClass operator++(int unused); //postfix, returns copy of value before increment
+MyClass operator--(int unused); //postfix, returns copy of value before decrement
+MyClass& operator++(); //prefix, returns reference to value before increment
+MyClass& operator--(); //prefix, returns reference to value before decrement
 const MyClass operator+(const MyClass& x) const;
 const MyClass operator*(const MyClass& x) const;
 MyClass& operator[](const int i);
@@ -430,7 +430,7 @@ Derived& operator=(const Base& obj);
 /////////////////////////////////////////////////////////////////////////////////////
 
 //MULTIPLE INHERITANCE
-//Call each inherited class in constructor
+//Call each inherited class in constructor in order of inheritance
 class One {};
 class Two {};
 class MI : public One, public Two {};

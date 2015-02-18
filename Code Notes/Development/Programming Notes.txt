@@ -398,8 +398,11 @@ Divide by 2ˣ:     value >>= 3 is same as value /= 2³
 • Any destructors are called on way as objects go out of scope
 • Local pointers are destroyed without calling delete
 
-3) CATCH BY REFERENCE
-• Catch reference as used to allow inheritance with exception types 
+3) CATCH BY CONST REFERENCE
+• Const is used to prevent the exception from being modified and giving incorrect crash information
+• Reference is used so the exception can be resolved polymorphically and so slicing does not happen
+• Reference is used instead of pointer to reduce the need to manage any memory at the catch position
+• Allocating memory for an exception through a pointer may not work if the exception is out of memory
 
 EXCEPTION SAFETY
 • Use RAII to auto cleanup resources if exception is thrown

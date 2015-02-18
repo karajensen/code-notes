@@ -24,7 +24,7 @@ atan2(-x,-y) = +angle [-90,-180)   |   atan2(+x,-y) = +angle [90,180]
 • All ranges are [Start, End) with End non-inclusive
 • Comparison lambdas should always return false for equal values
 • Functors used are passed by-val and copied
-• In-build functors are faster than passing lambdas/function pointers due to them being inlined
+• In-built functors are faster than passing lambdas/function pointers due to them being inlined
 
 CONDITION          UNSORTED      SORTED               SET/MAP         MULTI SET/MAP
 does obj exist     std::find     std::binary_search  .count()        .find()
@@ -74,7 +74,7 @@ Random Access:   vector              < deque
 
 PERFORMANCE ISSUES
 • Cache Misses when searching/iterating: vector < deque < list
-• When a data is accessed, a line of data is fetched from the main memory to the cache
+• When a container is accessed, a line of data is fetched from the main memory to the cache
 • Some of this data is unneeded in lists/deque as they're not continuous
 • Bigger the data size the more cache misses as elements don't fit in cache lines
 

@@ -2,13 +2,15 @@
 //C++ CHEATSHEET
 ////////////////////////////////////////////////////////////////////////////////////
 
-[1] Always use ++a as a++ returns a copy of the object; ++a returns a reference.
+[1] Always use ++a as a++ returns a copy of the object before it is incremented;
+    ++a returns a reference after it is incremented.
 
 [2] If you only need a pointer or reference to an object, forward declare
     the object to keep the namepsace clean. Use the #include in the .cpp
 
-[3] Move Constructor/Assignment operator are only created when none of the
-    implicit five methods are defined and they are needed.
+[3] Only use std::move/std::foward when returning rvalue references by-value to 
+    prevent a copy being made. Using otherwise may prevent Return Value 
+    Optimization from occuring.
 
 [4] All single argument constructors must be declared with 'explicit' to
     prevent unwanted casting to the single argument's type.
@@ -17,15 +19,17 @@
     virtually and call the shared base class in the initialization list alongside 
     them both. Both will not call their base class.
 
-[6] Constructor body called base->derived. Destructor body called derived->base
+[6] Prefer nullptr to NULL and avoid pointer, int and long overload combinations.
+    NULL is either 0/0L and prefers int/long overloads to pointer ones when passed as argument.
+    nullptr will only take pointer overloads when passed as argument.
 
 [7] Member variables initialized in order they appear in class declaration,
     not in intialization list. Always keep list in same order as class .h.
     Always initialise members in constructor initialisation list as it's
     must quicker than assigning in the body
 
-[8] sizeof on an int gives the size of the int. sizeof on an array gives the
-    size of the whole array.
+[8] sizeof on an int gives the size of the int. 
+    sizeof on an array gives the size of the whole array.
 
 [9] String literals are not constant but changing individual characters is.
     char * one = "one"; one = "two" can be done.
@@ -39,7 +43,7 @@
 [11] 'this' can be used in constructor except to call virtual functions 
       which is undefined behaviour. Base version will be called but dangerous
 
-[12] 'delete this' calls the destructor.
+[12] 'delete this' calls the destructor. Any member calls after is dangerous.
 
 [13] Assigning/Copying by-val from Derived to Base causes slicing where 
      the derived information is lost
@@ -64,37 +68,26 @@
      defined body: ((x)+=2) in case x is an expression
 
 [20] Most Vexing Parse Pitfall: compiler sees these as function declarations
-     MyClass obj(MyClass2(value)); Fixed by MyClass obj((MyClass2(value)));
-     MyClass obj(); Fixed by MyClass obj;
+     MyClass obj(MyClass2(value));
+     MyClass obj();
 
 [21] Between two sequence points a variable must not be modified more than once. 
      Eg. i = ++i is bad.
 
-[22] Using swap/= on a shared pointer removes it from the previous reference 
-     count and adds it onto the new reference count.
+[22] Destructors should never throw: if unwinding the stack from an 
+     exception and a destructor throws the program is terminated
 
 [23] Never use unsigned int when looping backwards to 0. When decrementing past
      zero the unsigned int will cycle over and the loop will not end
 
 [24] For pointer math a[i] is the same as i[a] as its converted to *(a + i)
 
-[25] Use auto for lambda return types as a conversion is needed to return as
-     std::function. Only use std::function if needed to pass lambda.
+[25] std::function is larger/slower than internal type of lambdas obtained through auto
+     only use std::function when necessary
 
-[26] Functions fully defined in .h can be templated, inline, static otherwise get linker error
+[26] Functions fully defined in .h can be templated, inline or static otherwise get linker error
      If inlined, any static function members are shared between files including it
      If static, any static function members are copied with each file having sole access
-
-[27] Prefer nullptr to NULL and avoid pointer, int and long overload combinations.
-     NULL is either 0/0L and prefers int/long overloads to pointer ones when passed as argument.
-     nullptr will only take pointer overloads when passed as argument.
-
-[28] Lamda auto params/return use template type deduction, not auto type deduction.
-     Use decltype(auto) when wanting to return a reference.
-
-[29] Only use std::move/std::foward when returning rvalue references by-value to 
-     prevent a copy being made. Using otherwise may prevent Return Value 
-     Optimization from occuring.
 
 ////////////////////////////////////////////////////////////////////////////////////
 //STL CHEATSHEET
@@ -112,17 +105,15 @@
 
 [4] myMap[key] = "something" will add an entry if the key doesn't exist
 
-[5] Use std::bitset/boost::dynamicbitset. vector<bool> is not a container and 
-    vector<bool>::iterator is not random-access, forward or bi-directional.
-    The bitset containers also have more flexibility in methods.
+[5] vector<bool> is not a container and vector<bool>::iterator is not random-access, 
+    forward or bi-directional. The bitset containers also have more flexibility in methods.
     
 [6] Never use auto_ptr with a container. Containers often copy and assign
     and create temporary copies of data in their methods. Copying the auto_ptr 
     passes ownership of memory and sets original auto_ptr to null. 
 
-[7] Inserting into a deque invalidates all iterators/references unless   
-    inserted member is at the front or back in which iterators are invalidated 
-    and references are not. 
+[7] Inserting into a deque invalidates all iterators/references unless inserted member 
+    is at the front or back in which iterators are invalidated and references are not. 
 
 [8] Erasing from a deque invalidates all iterators/references unless the erased member 
     is from the front or back in which only the erased member is invalidated.
@@ -157,24 +148,18 @@
 //C# CHEATSHEET
 ////////////////////////////////////////////////////////////////////////////////////
 
-[1] struct Derived : IBase1, IBase2 {} Inherit no classes, multiple interfaces
-    class Derived : Base, IBase {} Inherit one class, multiple interfaces
-    interface Derived : IBase1, IBase2 {} Extends multiple interfaces
-
-[2] Classes cannot be more visible than their base classes- base interfaces can have
+[1] Classes cannot be more visible than their base classes- base interfaces can have
     any visibility. Interfaces cannot be more visible than their base interfaces.
 
-[3] Calling a virtual/abstract function in constructor is undefined behaviour.
+[2] Calling a virtual/abstract function in constructor is undefined behaviour.
     Derived version will be called but dangerous.
 
-[4] Constructor body called base->derived. Destructor body called derived->base
+[3] Always override ToString() as all user definded objects inherit System.Object
 
-[5] Always override ToString() as all user definded objects inherit System.Object
-
-[6] Always initialise with the declaration unless the variable is to have the 
+[4] Always initialise with the declaration unless the variable is to have the 
     default value that's auto-assigned
 
-[7] Destructor is actually the Finaliser
+[5] Destructor is actually the Finaliser
 
 ////////////////////////////////////////////////////////////////////////////////////
 //C++/CLI CHEATSHEET

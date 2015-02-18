@@ -15,6 +15,9 @@ A: If a non-uniform scale or shear is used on the model the normals will be inco
 Q: What is recursion, and what would normally happen if recursion went too deep?
 A: Calling the function within the function. Will cause stack overflow if going too deep.
 
+Q: What is an orthogonal matrix?
+A: Matrix where rows/columns are unit length, determinant is 1 and the transpose equals the inverse
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //C++ QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,20 +68,14 @@ A: .       The membership operator
    sizeof  The sizeof operator
 
 Q: How are prefix and postfix versions of operator++() differentiated?
-A: Prefix returns a reference to the object incremented while postfix returns a copy incremented
+A: Prefix returns a reference to the object after incrementing
+   Postfix returns a copy to the object before incrementing
 
 Q: What is a conversion or cast operator, and provide an example where one might be useful?
 A: Allows casting the class object to a different variable type, useful for casting between user-defined types
 
 Q: Name a circumstance where the compiler will invisibly generate a temporary due to operator overloading.
 A: If there is no direct match for the given argument and a match where the compiler can implicitly cast.
-
-Q: Name the overloaded operator that is not inherited by derived classes.
-A: Assignment Operator
-
-Q: What does the static keyword mean when used on a local variable of a function?
-A: When the function is first called, the variable is initialised to the given value which 
-   is maintained between calls to that same function as its stored in a special memory segment
 
 Q: What common mistake when using static members will cause a linker error?
 A: Not initialising them in the cpp file
@@ -105,10 +102,9 @@ A: Used when the inheritance pattern is diamond shaped and allows inherited clas
    have the same base class to share that class.
 
 Q: What is the difference between public, protected and private inheritance?
-A:  - Public inheritance does not change the visibility of base members at all.
-    - Protected inheritance blocks outside use of base public members as they are seen as protected.
-    - Private inheritance blocks outside use of base public/protected members as they are seen as private.
-    - All inheritance internally within the immediate derived class does not change visibility
+A: Public: base public can be accessed by everything, base protected can be accessed by derived class hierarchy
+   Protected: base public/protected can only be accessed by derived class hierarchy
+   Private: base public/protected can only be accessed by first derived class
 
 Q: Why does changing the private members of a class cause recompilation of anything using the class?
 A: Private data members can change the size of the object and participate in function overload resolution
@@ -131,7 +127,7 @@ A: No as it calls the destructor. Any code in the function after the call may ca
 Q: What is a destructor, and what are two ways it is called?
 A: Explicitly through ~MyClass() or delete this or implicitly when the object goes out of scope
 
-Q: What is a default constructor, and when does the compiler automatically generate one? 
+Q: What is a default constructor and when does the compiler automatically generate one? 
 A: An implicitly created function that initialises the class. It is created when
      - A constructor is not explicitly defined
      - There are no members that cannot be assigned automatically (const, references)
@@ -142,8 +138,8 @@ A: A copy constructor is used to initialised a new object with the values of a g
    A copy assignment operator is used to equalise the object with the already constructed given object
 
 Q: When do you need to provide a copy constructor and assignment operator?
-A:   - When there are members that cannot be automatically copied (reference variables)
-     - When deep copying is required
+A: When there are members that cannot be automatically copied (reference variables)
+   When deep copying is required
 
 Q: What is a conversion constructor, and when does the compiler automatically call one? 
 A: A constructor with a single argument without the explicit keyword. 
@@ -259,10 +255,22 @@ A: at() checks if key exists and throws if not while operator[] will add the key
 
 Q: What is the additional cost, if any, with passing functors to the standard algorithms?
 A: Functors are passed by-val for each element iterated over. If the functor is not POD then it could be costly.
+   In-built functors however are faster than passing lambdas/function pointers due to them being inlined
 
 Q: Are the standard library containers exception safe and exception neutral?
 A: Yes. It has at least a basic guarantee where objects will be still usable but not in a predictable state
    Many sections such as the containers generally have a strong guarantee.
+
+Q: What are some of the performance issues with STL containers?
+A: Possible cache misses when searching/iterating. Some containers are not in continous memory 
+   Bigger the data size the more cache misses as elements don't fit in cache lines
+
+Q: What is the Short String Optimization?
+A: If the string capacity is <= 15 characters it is stored on the stack
+
+Q: Why are the associative container keys const?
+A: Sort order is determined by the key when a new member is inserted
+   If the keys are changed the order will be corrupted
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PERSONAL QUESTIONS

@@ -34,14 +34,14 @@ x² - abx - ab = 0
 
 DERIVATIVES/ANTI-DIFFERENTIATION
 f(x) = axⁿ      f'(x) = axⁿ
-f'(x) = anx¯¹   f(x) = axⁿ⁺¹/n+1
+f'(x) = anxⁿ¯¹   f(x) = axⁿ⁺¹/n+1
 
 QUADRATIC EQUATIONS
 y = mx² + c
 ax² + bx + c = 0 where x = -b ± √(b² - 4ac) / 2a
 
 MODULUS
-7 % 3 = numerator remainder of 7/3 -> 5²/₃ = 2
+17 % 3 = numerator remainder of 17/3 -> 5²/₃ = 2
 A % 2 = 0 if A is even
 A ≡ B if the remainder of A (A % N) = remainder of B (B % N)
 A + C ≡ B + C (%N)
@@ -64,7 +64,7 @@ a/√(b) = a/√(b) + √(b)/√(b) = a√(b)/b
 
        /|                /|       sinƟ = O/C = y/‖r‖
     r / |             C / |       cosƟ = A/C = x/‖r‖  
-     /  | ‖r‖sinƟ      /  | O     tanƟ = O/A = x/y
+     /  | ‖r‖sinƟ      /  | O     tanƟ = O/A = y/x
     /Ɵ  |             /Ɵ  |       cscƟ = C/O
     ----              ----        secƟ = C/A
    ‖r‖cosƟ              A         cotƟ = A/O

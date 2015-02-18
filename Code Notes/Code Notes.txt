@@ -364,7 +364,7 @@ RTTI                         No              Yes             No
 REQUIRES SIGNATURE DIFFERENCE
 • Type of parameters
 • Number of parameters
-• Const or non-const parameters
+• Const or non-const reference/pointers
 
 OVERLOAD RESOLUTION ORDER
 • Template functions never implicitly cast
