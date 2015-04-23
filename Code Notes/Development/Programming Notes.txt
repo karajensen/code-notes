@@ -363,12 +363,6 @@ BITWISE OPERATORS
 <<    left shift     Moves all bits to the left, drops the last 0 or 1 and adds 0 to the start
 >>    right shift    Moves all bits to the right, drops the first 0 or 1 and adds 0 to the end
 
-USING WITH BOOL
-bool ifBothAreTrue   = myBool1 & myBool2
-bool ifEitherAreTrue = myBool1 | myBool2 (either are true)
-bool ifEitherAreTrue = myBool1 ^ myBool2 (either are true but not both)
-bool failed = false; failed |= HasCallFailed()
-
 USING  WITH BITS
 Flipping bits:     ~00000011 = 11111100
 Checking bits on:  if 00000011 & 00000010 == 00000010 then on

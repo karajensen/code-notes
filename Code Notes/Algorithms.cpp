@@ -330,3 +330,9 @@ template <typename T> void SafeRelease(T** pObject)
         *pObject = nullptr;
     }
 }
+
+//BITWISE WITH BOOL
+bool ifBothAreTrue   = myBool1 & myBool2
+bool ifEitherAreTrue = myBool1 | myBool2  // either are true
+bool ifEitherAreTrue = myBool1 ^ myBool2  // either are true but not both
+bool success = true; success &= HasSucceeded(); // will lock in false if something fails

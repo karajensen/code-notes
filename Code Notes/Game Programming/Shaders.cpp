@@ -378,6 +378,33 @@ PSIZE0     TESSFACTOR0      FOG
 COLOR0     BLENDINDICES0    COLOR0
 TEXCOORD0  BLENDWEIGHT0     TEXCOORD0
 
+//SHADER MODEL 3.0- SAMPLERS
+Texture DiffuseTexture;
+sampler ColorSampler = sampler_state 
+{ 
+    texture = <DiffuseTexture>; 
+    magfilter = LINEAR; 
+    minfilter = LINEAR; 
+    mipfilter = LINEAR; 
+    AddressU = WRAP;  //can have CLAMP
+    AddressV = WRAP; 
+};
+
+//SHADER MODEL 4.0+ SAMPLERS
+SamplerState MySampler;
+Texture2D MyTexture;
+float4 value = MyTexture.Sample(MySampler, input.uvs);
+
+//SHADER MODEL 4.0+ MULTI-SAMPLERS
+Texture2DMS<float4,SAMPLES> MySampler : register(t0);
+int3 uvs = int3(input.uvs.x * WINDOW_WIDTH, input.uvs.y * WINDOW_HEIGHT, 0);
+float4 value = float4(0.0, 0.0, 0.0, 0.0);
+for (int i = 0; i < SAMPLES; ++i)
+{
+    value += MySampler.Load(uvs, i);
+}
+value *= (1.0 / SAMPLES);
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //HLSL BODY
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -403,23 +430,6 @@ cbuffer ConstantBuffer
     float myArray[10]; //always assigns full float4 for arrays with last entry only float 
 }
 
-//SHADER MODEL 3.0- SAMPLERS
-Texture DiffuseTexture;
-sampler ColorSampler = sampler_state 
-{ 
-    texture = <DiffuseTexture>; 
-    magfilter = LINEAR; 
-    minfilter = LINEAR; 
-    mipfilter = LINEAR; 
-    AddressU = WRAP;  //can have CLAMP
-    AddressV = WRAP; 
-};
-
-//SHADER MODEL 4.0+ SAMPLERS
-SamplerState Sampler;
-Texture2D DiffuseTexture;
-TextureCube EnvironmentTexture;
-
 struct VS_OUTPUT
 {
     float4 Position      : POSITION;    // SHADER MODEL 3.0-
@@ -432,6 +442,12 @@ struct VS_OUTPUT
     float3 Binormal      : TEXCOORD5;
     float3 PositionWorld : TEXCOORD6;
     float4 Colour        : COLOR;
+};
+
+struct PS_OUTPUT // Optional for multiple render targets
+{
+    float4 colour1 : SV_TARGET0;
+    float4 colour2 : SV_TARGET1;
 };
 
 VS_OUTPUT VShader(float4 inPos      : POSITION, 
@@ -453,7 +469,8 @@ VS_OUTPUT VShader(float4 inPos      : POSITION,
 }
 
 float4 PShader(VS_OUTPUT input) : COLOR0    // SHADER MODEL 3.0-
-float4 PShader(VS_OUTPUT input) : SV_TARGET // SHADER MODEL 4.0+: can output only float3
+float4 PShader(VS_OUTPUT input) : SV_TARGET // SHADER MODEL 4.0+
+PS_OUTPUT PShader(VS_OUTPUT input)          // SHADER MODEL 4.0+ MRT
 { 
     float4 texture = tex2D(ColorSampler, input.UV); //SHADER MODEL 3.0-
     float4 cubemap = texCUBE(EnvironmentSampler, reflection); //SHADER MODEL 3.0-
@@ -461,7 +478,11 @@ float4 PShader(VS_OUTPUT input) : SV_TARGET // SHADER MODEL 4.0+: can output onl
     float4 texture = DiffuseTexture.Sample(Sampler, input.UV); //SHADER MODEL 4.0+
     float4 cubemap = EnvironmentTexture.Sample(Sampler, reflection); //SHADER MODEL 4.0+
 
-    return Texture;
+    return texture;
+    /*or*/
+    PS_OUTPUT output;
+    output.colour = texture;
+    return output;
 }
 
 // Directx 10- only
@@ -611,17 +632,26 @@ gl_LightSource[i]
   float quadraticAttenuation;
 }
 
-//SAMPLERS
-sample1D, sampler2D, sampler3D      // access 1D, 2D, 3D texture
-samplerCube                         // access cube mapped texture
-sampler2DRect                       // access rectangular texture
-sampler1DArray, sampler2DArray      // access 1D, 2D array texture
-samplerBuffer                       // access buffer texture
-texture2D(mySampler, uvs)           // Query from a texture, vec2 uvs
+// 2D TEXTURES
+uniform sampler2D mySampler;
+float4 value = texture2D(mySampler, inUVs) // inUVs is vec2
+
+// 2D MULTI-SAMPLED TEXTURES
+uniform sampler2DMS mySampler;
+ivec2 uvs = ivec2(inUVs.x * WINDOW_WIDTH, inUVs.y * WINDOW_HEIGHT);
+float4 value = vec4(0.0, 0.0, 0.0, 0.0);
+for (int i = 0; i < SAMPLES; ++i)
+{
+    value += texelFetch(mySampler, uvs, i);
+}
+value *= (1.0 / SAMPLES);
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //GLSL BODY
 //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#version 150
 
 //OPENGL 2.0- VERTEX SHADER
 varying vec3 Normal;
@@ -674,7 +704,7 @@ in vec2 ex_UVs;
 in vec3 ex_PositionWorld;
 in vec3 ex_VertToCamera;
 in vec3 ex_Normal;
-out vec4 out_Color;
+out vec4 out_Color; /*or*/ out vec4 out_Color[1];
 uniform sampler2D DiffuseSampler;
 uniform samplerCube EnvironmentSampler;
 
@@ -687,6 +717,9 @@ void main()
     //OPENGL CORE 3.0+
     float4 texture = texture(DiffuseSampler, ex_UVs);
     float4 cubemap = texture(EnvironmentSampler, reflection);
-    out_Color = float4(1.0, 0.0, 0.0, 1.0);
+
+    out_Color = float4(1.0, 0.0, 0.0, 1.0); 
+    /*or*/
+    out_Color[0] = float4(1.0, 0.0, 0.0, 1.0); 
 }
 

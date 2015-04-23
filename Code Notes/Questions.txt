@@ -239,6 +239,17 @@ Q: Why is it dangerous to store the this pointer in a shared_ptr
 A: Users of the object may also store it in a shared_ptr which means the memory is owned by two smart pointers
    If one smart pointer deletes it, the other does not know about it
 
+Q: Can any arbitrary class be made exception safe without modifying its structure?
+A: No, exception safety affects the class design
+
+Q: What is design pattern that works on any class in order to give a near strong exception guarantee?
+A: Pimpl idiom allows a second object of the class to be constructed easily and then no-throw swap called on if no exceptions are thrown.
+   It is only a near guarantee as constructing a new member of the class may affect static or global variables.
+
+Q: What is multiple inheritance and what complication does it bring?
+A: The ability to inherit from more than one base class that isn't an interface.
+   Using it the class may end up with more than one of the same base class (ie. diamond shaped)
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //STL QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

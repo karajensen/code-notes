@@ -109,7 +109,7 @@ To get circular waves, use radius r as x
 | y = a * sin(kx-wt+ɸ) |
  ----------------------
  a = amplitude; height of sine wave
- k = angular wave number; number of wavelengths to reach 2∏
+ k = frequency; number of wavelengths to reach 2∏
  t = time
  w = speed
  ɸ = initial shift of the wave

@@ -306,8 +306,11 @@ class Base
 public: 
     Base(int x); //constructors can't be virtual
     virtual ~Base(); //put as virtual only if want to derive from it
-    virtual ~Base()=0; //used if needing abstract class but all methods implemented
-    virtual void MyMethod(int x)=0; //pure virtual method, no objects of Base can be created
+    virtual void MyMethod(int x) = 0; //pure virtual method, no objects of Base can be created
+
+    // Pure virtual functions can have a body and be called; they only stop the class from being instantiated
+    //If destructor is pure virtual, must always give a body otherwise will not call base destructor
+    virtual ~Base() = 0 {}
 };
 
 // PUBLIC INHERITANCE
