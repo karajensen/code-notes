@@ -109,9 +109,6 @@
     <ClCompile Include="Code Examples\Example - Maya API Node.cpp">
       <Filter>Languages\Examples</Filter>
     </ClCompile>
-    <ClCompile Include="C++CLI.cpp">
-      <Filter>Languages</Filter>
-    </ClCompile>
     <ClCompile Include="Languages\Python.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
@@ -166,6 +163,9 @@
     <ClCompile Include="Development\Design Patterns.cpp">
       <Filter>Development</Filter>
     </ClCompile>
+    <ClCompile Include="Languages\C++CLI.cpp">
+      <Filter>Languages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Cheatsheet.txt" />
@@ -183,16 +183,19 @@
     <None Include="Code Examples\Example - PyQt File Reader.pyw">
       <Filter>Languages\Examples</Filter>
     </None>
-    <None Include="C# .NET Framework.cs">
+    <None Include="Languages\C# .NET Framework.cs">
       <Filter>Languages</Filter>
     </None>
-    <None Include="C# Class.cs">
+    <None Include="Languages\C# Class.cs">
       <Filter>Languages</Filter>
     </None>
-    <None Include="C# Code.cs">
+    <None Include="Languages\C# Code.cs">
       <Filter>Languages</Filter>
     </None>
-    <None Include="C# Containers.cs">
+    <None Include="Languages\C# Containers.cs">
+      <Filter>Languages</Filter>
+    </None>
+    <None Include="Languages\C# Unity.cs">
       <Filter>Languages</Filter>
     </None>
   </ItemGroup>
@@ -463,7 +466,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Questions.txt" />
-    <Text Include="C# Notes.txt">
+    <Text Include="Languages\C# Notes.txt">
       <Filter>Languages</Filter>
     </Text>
   </ItemGroup>
