@@ -295,9 +295,7 @@ float value = myMat._11;      //from _11 to _44
 float2 value = myMat._11_22;
 
 //STRUCTURES
-struct MyStruct
-{
-};
+struct MyStruct {};
 
 //VARIABLE PREFIXES
 typedef float MyFloat;
@@ -370,13 +368,6 @@ tan(angle)          // Angle in radians
 acos(x)
 asin(x)
 atan(x/y) /*or*/ atan2(x,y)
-        
-//VERTEX INPUTS             VERTEX OUTPUTS   PIXEL INPUTS    PIXEL OUTPUTS
-POSITION0  TANGENT0         POSITION         COLOR0          COLOR0
-NORMAL0    BINORMAL0        PSIZE            TEXCOORD0       DEPTH
-PSIZE0     TESSFACTOR0      FOG
-COLOR0     BLENDINDICES0    COLOR0
-TEXCOORD0  BLENDWEIGHT0     TEXCOORD0
 
 //SHADER MODEL 3.0- SAMPLERS
 Texture DiffuseTexture;
@@ -645,7 +636,6 @@ for (int i = 0; i < SAMPLES; ++i)
     value += texelFetch(mySampler, uvs, i);
 }
 value *= (1.0 / SAMPLES);
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //GLSL BODY
