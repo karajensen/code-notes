@@ -59,29 +59,31 @@ Debug.Log(myInt)                 // Logs a message to the console
 Debug.LogError("Message")        // Logs an error to the console
 InvokeRepeating("FnName", 1, 1)  // Requires class to have function with name, invokes once every second
 
-// FINDING OBJECTS
-GameObject.FindWithTag("Player")          // Finds component with tag, null if cannot be found, slow
-GameObject.Find("Player")                 // Finds comonent with name, null if cannot be found, slow
-GetComponent<RigidBody>()                 // Gets rigid body of object script is attached to
-GetComponentsInChildren<ParticleSystem>() // Gets array of children of object script is attached to
+// GAME OBJECTS
+// Main base class for all objects
+// Each script inherits from Game Object attached to
+GameObject myGameObject
+GameObject.FindWithTag("Player")           // Finds component with tag, null if cannot be found, slow
+GameObject.Find("Player")                  // Finds comonent with name, null if cannot be found, slow
+myObj.transform                            // Gets the transform
+myObj.GetComponent<RigidBody>()            // Gets rigid body of object
+myObj.GetComponentsInChildren<Transform>() // Gets array of children of object 
+myObj.AddComponent<RigidBody>()            // Adds a component to the object
+
+// SELECTION
 Selection.activeTransform                 // returns transform of selected object
 Selection.transforms                      // returns [] of all selected objects transforms
 
 // MATHS
 Mathf.PI          
 Mathf.Epsilon
-Mathf.Clamp
-Mathf.Abs
-Mathf.Lerp(a,b,t)       // Interpolates between a and b by t
-Mathf.Atan2(y,x)        // Calculates tan(x/y), returns radians
-Mathf.Rad2Deg           // Value used to convert radians to degrees
-Mathf.Deg2Rad           // Value used to convert degrees to radianss
-Mathf.PerlinNoise(x,y)  // Return noise value at position
-
-// GAME OBJECTS
-// Main base class for all objects
-GameObject myGameObject
-myGameObject.transform    // Gets the transform
+Mathf.Clamp(a, min, max)    // Clamps between two values
+Mathf.Abs(a)                // Gets signed value from given value
+Mathf.Lerp(a,b,t)           // Interpolates between a and b by t
+Mathf.Atan2(y,x)            // Calculates tan(x/y), returns radians
+Mathf.Rad2Deg               // Value used to convert radians to degrees
+Mathf.Deg2Rad               // Value used to convert degrees to radianss
+Mathf.PerlinNoise(x,y)      // Return noise value at position
 
 // RIGID BODY
 Rigidbody2D myRigidBody2D;
@@ -92,15 +94,20 @@ myRigidBody.angularVelocity    // Sets/gets the angualar velocity
 // VECTOR
 Vector2 myVector;
 Vector3 myVector;
-Vector3.up            // Gets the up vector 0,1,0
-myVector.Set(x,y,z);  // Sets the vector
+Vector3.up              // Gets the up vector 0,1,0
+Vector3.Distance(a, b)  // Gets the length between two vectors
+Vector3.Dot(a, b)       // Dots both vectors
+myVector.Set(x,y,z);    // Sets the vector
 
 // TRANSFORM
 Transform myTransform
-myTransform.position      // Gets the position as a Vector3 as a copy
+myTransform.position      // Gets the position as a Vector3 as a copy, use = new Vector3 to set
+myTransform.localRotation // Get rotation of transform
+myTransform.localScale    // Get scale of transform
 myTransform.Rotate(vec)   // Rotates the transform by a Vector3
 myTransform.eulerAngles   // Sets/gets the euler angles as a Vector3
 myTransform.up            // Get up vector of transform
+myTransform.parent;       // Get/set the parent object
 
 //QUATERNION
 Quaternion myQuat;
@@ -147,6 +154,38 @@ Input.GetKey("space")       // Whether the key is currently being pressed/held
 Input.GetKeyDown("space")   // Whether the key is held down this tick
 Input.GetKeyDown(KeyCode.E) // Whether the key is held down this tick
 Input.GetKeyUp("space")     // Whether the key is released this tick
+
+// TEXTURES
+Texture2D myTex;
+texture.name;                               // Set/get the name of the texture
+texture.width;                              // Dimensions of the texture
+texture.height;                             // Dimensions of the texture    
+texture.GetPixels(0, 0, size, size)         // returns an array of pixels in dimensions
+texture.GetPixels32();                      // returns an array of pixels
+texture.SetPixels(0, 0, size, size, pixels) // sets an array of pixels
+texture.SetPixels32(pixels);                // sets an array of pixels
+texture.filterMode = FilterMode.Point       // sets the texture filter mode
+texture.wrapMode = TextureWrapMode.Clamp    // sets the texture wrap mode
+texture.Apply()                             // applys any pixel changes to the texture
+
+// SPRITE RENDERER
+SpriteRenderer myRenderer;
+myRenderer.name             // Get/set the name of the renderer
+renderer.color              // Get/set the tint colour of the sprite
+
+// SPRITE OBJECT
+Sprite mySprite;
+Sprite.Create(myTexture, bounds, pivot, pixelsPerUnit); // bounds is Rect, pivot is Vector2 from 0->1 each component
+mySprite.name;              // Set/get the name of the sprite
+mySprite.pixelsPerUnit;     // Scale of texture dimensions to game dimensions
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//UNITY ALGORITHMS
+////////////////////////////////////////////////////////////////////////////////////////////
+
+// Get world scale of sprite
+float scale = ((float)texture.width / sprite.pixelsPerUnit) * transform.localScale;
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //UNITY GUI
