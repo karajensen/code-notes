@@ -264,41 +264,107 @@ float4 reflect = texCUBE(EnvironmentSampler, reflection) * intensity * fresnal;
 float4 colour = saturate((diffuse * attenuation) + (specular * attenuation) + reflect);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-//HLSL
+//SHADER SYNTAX/LANGUAGES
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//VARIABLE TYPES
-bool myBool;
-int myInt;    //32-bit signed int
-half myFlt;   //16-bit float
-float myFlt;  //32-bit float
-double myDbl; //64-bit double
+//===================================================================================================
+//GLSL BASIC TYPES                  HLSL BASIC TYPES
+//===================================================================================================
+bool                                bool
+float                               float/float1            //32-bit float  
+mediump float                       half                    //16-bit float
+double                              double                  //64-bit double
+int                                 int                     //32-bit signed int
+uint                                uint                    //unsigned integer
+++myInt                             ++myInt                 //supports pre/post increment
+float(x)                            (float)x                //May copy instead of cast
+struct MyStruct {};                 struct MyStruct {};
 
-//VECTOR/ARRAY TYPES
-//Sections can be accessed via xyzw/rgba but not both
-//ps2.0- does not have support for chained swizzing
-float4 myFlt /*or*/ float myFlt[4] /*or*/ vector<float,4> myFlt /*or*/ vector myFlt
-bool3 myBool /*or*/ bool myBool[3] /*or*/ vector<bool,3> myBool
-int2 myint   /*or*/ int myInt[2]   /*or*/ vector<int,2> myInt
-float3 myFlt = { 1.0f, 2.0f, 3.0f };
-float4 myFlt = float4(myFlt3, 1.0f);
-float value = myFlt[0];
-float2 value = myFlt.xy;
+// VECTORS ------------------------------------------------------------------------------------------
+vec2 / vec3 / vec4                  float2 / float3 / float4
+ivec2 / ivec3 / ivec4               int2 / int3 / int4
+uvec2 / uvec3 / uvec4               uint2 / uint3 / uint4
+bvec2 / bvec3 / bvec4               bool2 / bool3 / bool4
+vec3 vec = vec3(0,0,0);             float3 vec = float3(0,0,0);
+----                                float3 vec = {0,0,0};
+vec4 vec = vec4(vec, 0);            float4 vec = float4(vec, 0);
 
-//MATRIX TYPES
-//float nxn where n=[1,4]
-float3x4 myMat; /*or*/ matrix<float,3,4>
-float2x2 myMat = { 1.0f, 2.0f, 3.0f, 4.0f };
-float value = myMat[0][1];    //from 0 to 3
-float value = myMat.m00;      //from m00 to m33
-float value = myMat._11;      //from _11 to _44
-float2 value = myMat._11_22;
+// ARRAYS -------------------------------------------------------------------------------------------
+float vec[3]; / float[3] vec;       float vec[3]; / vector<float,3> vec;
+float vec[3] = float[](0,0,0);      float vec[3] = {0,0,0};
+vec[0] = 0;                         vec[0] = 0;
+vec2 a = b.xy;                      float2 a = b.xy;  //sections can be accessed via xyzw/rgba/stpq but can't be mixed
 
-//STRUCTURES
-struct MyStruct {};
+// MATRICES -----------------------------------------------------------------------------------------
+mat3 / mat4 / mat3x4                float3x3 / float4x4 / float3x4 / matrix<float,3,4> mat;
+mat2x2 mat = mat2x2(0,0,0,0);       float2x2 mat = float2x2(0,0,0,0);
+----                                float2x2 mat = {0,0,0,0};
+float value = mat[0][1];            float value = mat[0][1];
+----                                float value = mat.m00;
+----                                float value = mat._11;
+----                                float2 value = mat._11_22;
 
+//===================================================================================================
+//GLSL INTRINSICS      HLSL INTRINSICS
+//===================================================================================================
+matrix * matrix       mul(matrix, matrix)
+vector * matrix       mul(vector, matrix)
+inversesqrt(x)        rsqrt(x)              // Returns 1 / sqrt(x)
+mix(x,y,s)            lerp(x,y,s)           // linear interpolation: x*(1-s) + y*s, s == 0 then x, s == 1 then y
+dFdx(x)               ddx(x)                // Returns the partial derivative of x with respect to the screen-space x-coordinate
+dFdy(x)               ddy(x)                // Returns the partial derivative of x with respect to the screen-space y-coordinate
+clamp(x, 0, 1)        saturate(x)           // clamps value between 0 and 1, HLSL version works on vectors
+-                     isfinite(x)           // returns true if x is a finite number
+-                     mad(a,b,c)            // Performs mad assembly operation: a * b + c (SM5)
+-                     abort()               // Terminates the current draw or dispatch call being executed (SM4+)
+roundEven(x)         -                      // rounds to nearest integer, 0.5 rounds to nearest even int
+
+//===================================================================================================
+//SHARED INTRINSICS
+//===================================================================================================
+abs(a)                  // magnitude of value
+all(v)                  // returns true if all components in vector are true
+any(v)                  // return true if any component is true
+cross(a,b)              // Crosses two vector
+clamp(x, min, max)      // returns clamped value
+ceil(x)                 // rounds upwards to nearest int
+determinant(mat)        // returns determinant of matrix
+degrees(rad)            // converts rad to degrees
+dot(a,b)                // dots two vectors
+distance(a,b)           // distance between two points
+floor(x)                // rounds downwards to nearest int
+fract(x)                // returns fractional part of x
+fwidth(a)               // Returns abs(ddx(x)) + abs(ddy(x))
+isinf(x)                // return true if pos or neg infinity
+isnan(x)                // return true if not a number
+inverse(mat)            // returns inverse of matrix
+length(x)               // Length of a vector
+max(x,y)                // returns maximum value
+min(x,y)                // returns minimum value
+modf(x, intPart)        // returns fractional part, stores int part
+normalize(x)            // Returns the normalized vector
+pow(1.0f, 3.0f)         // Calculates 1³
+radians(deg)            // converts degrees to radians
+reflect(x, norm)        // reflects vector along normal
+round(x)                // rounds to nearest integer
+sign(x)                 // Returns the sign of x
+step(a,b)               // a > b ? 0.0 : 1.0
+smoothstep(min,max,x)   // clamp((x-min)/(max-min), 0.0, 1.0)
+sqrt(x)                 // Square root
+trunc(x)                // removes the fractional part of x
+transpose(mat)          // creates transpose of matrix
+sin(angle)              // angle in radians
+cos(angle)              // angle in radians
+tan(angle)              // angle in radians
+asin(x)
+acos(x)
+atan(y,x) /*or*/ atan(y/x)
+
+//===================================================================================================
 //VARIABLE PREFIXES
-typedef float MyFloat;
+//===================================================================================================
+
+// HLSL PREFIXES
 float myGlobalFlt;       // global variable defaults to uniform/extern
 const float myFlt = 4;   // variable cannot be modified by shader (can be modfied by application if visible)
 static float myGlobal;   // outside main(): variable will not be exposed outside shader
@@ -308,66 +374,14 @@ uniform                  // Does not change per-vertex or per-pixel, links to ou
 shared                   // allows variable to be accessed accross mutliple .fx files
 volatile                 // hints that it will be modified often, only global variables
 
-//CASTING
-//Copies instead of converts
-float4x4 myMat = (float4x4)myFlt;
-float myFlt = (float)myInt;
+//GLSL PREFIXES
+const float myFlt = 4;  // variable cannot be modified
+uniform                 // Does not change per-vertex or per-pixel, links to outside application, readonly
+varying                 // Changes per-vertex/per-pixel
 
-//PREPROCESSOR
-#include "myshader.fx"
-#define MYDEFINE
-#undef MYDEFINE
-#ifdef MYDEFINE
-#ifndef MYDEFINE
-#elif MYDEFINE
-#else
-#endif
-
-//INTRINSICS
-abs(x)              // return absolute value
-all(vec)            // boolean, int, float vector, returns true if all components are true
-any(vec)            // boolean, int, float vector, returns true if any component is true
-abort()             // Terminates the current draw or dispatch call being executed (SM4+)
-cross(a,b)          // crosses two vectors
-clamp(x,min,max)    // returns clamped value
-ceil(x)             // rounds upwards to nearest int
-degrees(rad)        // converts rad to degrees
-determinant(mat)    // returns determinant of matrix
-dot(a,b)            // dots two vectors
-distance(a,b)       // returns distance between two points
-ddx(x)              // Returns the partial derivative of x with respect to the screen-space x-coordinate
-ddy(x)              // Returns the partial derivative of x with respect to the screen-space y-coordinate
-floor(x)            // rounds downwards to nearest int
-frac(x)             // returns fractional part of x
-fwidth(x)           // Returns abs(ddx(x)) + abs(ddy(x))
-isfinite(x)         // returns true if x is a finite number
-isinf(x)            // return true if pos or neg infinity
-isnan(x)            // return true if not a number
-length(a)           // return length of a vector
-lerp(x,y,s)         // linear interpolation: x*(1-s) + y*s
-max(x,y)            // Selects max of x and y
-min(x,y)            // Selects min of x and y
-mad(a,b,c)          // Performs mad assembly operation: a * b + c (SM5)
-modf(x, intPart)    // returns fractional part, stores int part
-mul(matA, matB)     // Matrix multiplication
-normalize(vec)      // Returns the normalized vector
-pow(1.0f, 3.0f)     // Calculates 1³
-radians(deg)        // converts degrees to rad
-reflect(vec, norm)  // reflects vector along the normal
-rsqrt(x)            // Returns 1 / sqrt(x)
-round(x)            // returns rounded to the nearest integer
-transpose(mat)      // creates transpose of matrix
-trunc(x)            // removes the fractional part of x
-saturate(x)         // clamps value between 0 and 1
-sqrt(x)             // Square root
-step(a,b)           // a > b ? 0.0 : 1.0
-sign(x)             // Returns the sign of x
-sin(angle)          // Calculates sine of an angle (in radians).
-cos(angle)          // Calculates cosine of an angle (in radians).
-tan(angle)          // Angle in radians
-acos(x)
-asin(x)
-atan(x/y) /*or*/ atan2(x,y)
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//HLSL SHADERS
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //SHADER MODEL 3.0- SAMPLERS
 Texture DiffuseTexture;
@@ -396,9 +410,9 @@ for (int i = 0; i < SAMPLES; ++i)
 }
 value *= (1.0 / SAMPLES);
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//HLSL BODY
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+//==============================================================================
+// SHADER BODY
+//==============================================================================
 
 //SHADER MODEL 3.0- CONSTANTS
 float myFloat; //each register is a float4 (float, float2 etc will take up whole register)
@@ -498,105 +512,23 @@ technique MAIN
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-//GLSL
+//GLSL SHADERS
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//VARIABLE TYPES
-bool myBool;
-int myInt;      //signed integer
-uint myInt;     //unsigned integer
-half myFlt;     //16-bit float
-float myFlt;    //32-bit float
-++myFlt;        //supports pre/post fix
+//INBUILT VERTEX VARIABLES
+vec4 gl_Colour                 //Input
+vec3 gl_Normal                 //Input
+vec4 gl_Vertex                 //Input
+vec4 gl_MultiTexCoord0         //Input from 0 to 7
+float gl_FogCoord              //Input
+vec4 gl_Position               //Output
+vec4 gl_TexCoord[]             //Output
+float gl_FogFragCoord;         //Output
+gl_ModelViewMatrix             // 4x4 world-view matrix.
+gl_ModelViewProjectionMatrix   // 4x4 world-view-projection matrix.
+gl_NormalMatrix                // 3x3 inverse transpose world-view matrix
 
-//VECTOR TYPES
-//Sections can be accessed via xyzw/rgba/stpq but can't be mixed
-vec2, vec3, vec4     //floating point vector
-bvec2, bvec3, bvec4  //boolean vector
-ivec2, ivec3, ivec4  //signed int vector
-uvec2, uvec3, uvec4  //unsigned int vector
-
-//ARRAYS
-float[3] myArray /*or*/ float myArray[3];
-myArray[0]
-
-//MATRIX TYPES
-mat2    //2x2 matrix
-mat3    //3x3 matrix
-mat4    //4x4 matrix
-matnxn  //where n=[2,4]
-
-//STRUCTURES
-struct MyStruct
-{
-};
-
-//VARIABLE PREFIXES
-const float myFlt = 4;  // variable cannot be modified
-uniform                 // Does not change per-vertex or per-pixel, links to outside application, readonly
-varying                 // Changes per-vertex/per-pixel
-
-//PREPROCESSOR
-#version 150  //shader model to use, must be before anything else
-#include "myshader.fx"
-#define MYDEFINE
-#undef MYDEFINE
-#ifdef MYDEFINE
-#ifndef MYDEFINE
-#elif MYDEFINE
-#else
-#endif
-
-//INTRINSICS
-abs(a)                    // magnitude of value
-all(boolVec)              // takes in boolean vec, return true if all components are true
-any(boolVec)              // takes in boolean vec, return true if any component is true
-cross(a,b)                // Crosses two vector
-clamp(x, min, max)        // returns clamped value
-ceil(x)                   // rounds upwards to nearest int
-determinant(mat)          // returns determinant of matrix
-distance(vecA, vecB)      // distance between two points
-dot(a,b)                  // Dots two vectors
-degrees(rad)              // converts radians to degrees
-dFdx(a)                   // derivative in x, a=float or vector, only in pixel shader
-dFdy(a)                   // derivative in y, a=float or vector, only in pixel shader
-floor(x)                  // rounds downwards to nearest int
-fract(x)                  // x - floor(x)
-fwidth(a)                 // return = abs(dFdx (p)) + abs(dFdy (p)), only in pixel shader
-inverse(mat)              // returns inverse of matrix
-isinf(x)                  // return true if pos or neg infinity
-isnan(x)                  // return true if not a number
-length(myVec)             // Length of a vector
-pow(1.0f, 3.0f)           // Calculates 1³
-normalize(myVec)          // Normalizes a vector
-mix(a,b,c)                // linear interpolation, c == 0 ? a : b, interpolates for other values
-max(x,y)                  // returns maximum value
-min(x,y)                  // returns minimum value
-modf(x, intPart)          // returns fractional part, stores int part
-reflect(vec, norm)        // reflects vector along normal
-round(x)                  // rounds to nearest integer
-roundEvent(x)             // rounds to nearest integer, 0.5 rounds to nearest even int
-radians(deg)              // converts degrees to radians
-step(a,b)                 // a > b ? 0.0 : 1.0
-transpose(mat)            // returns transposed matrix
-sin(angle)                // angle in radians
-cos(angle)                // angle in radians
-tan(angle)                // angle in radians
-asin(x)
-acos(x)
-atan(y,x) /*or*/ atan(y/x)
-
-//VERTEX VARIABLES
-vec4 gl_Colour            //Input
-vec3 gl_Normal            //Input
-vec4 gl_Vertex            //Input
-vec4 gl_MultiTexCoord0    //Input from 0 to 7
-float gl_FogCoord         //Input
-vec4 gl_Position          //Output
-vec4 gl_TexCoord[]        //Output
-float gl_FogFragCoord;    //Output
-
-//FRAGMENT VARIABLES
+//INBUILT FRAGMENT VARIABLES
 vec4 gl_FragCoord;        //Input
 bool gl_FrontFacing;      //Input
 float gl_ClipDistance[];  //Input
@@ -604,10 +536,7 @@ vec2 gl_PointCoord;       //Input
 vec4 gl_FragColor         //Output
 float gl_FragDepth        //Output
 
-//PRE-DEFINED VARIABLES
-gl_ModelViewMatrix             // 4x4 world-view matrix.
-gl_ModelViewProjectionMatrix   // 4x4 world-view-projection matrix.
-gl_NormalMatrix                // 3x3 inverse transpose world-view matrix
+//INBUILT PRE-DEFINED VARIABLES
 gl_LightSource[i]
 {
   vec4 ambient;             
@@ -637,9 +566,9 @@ for (int i = 0; i < SAMPLES; ++i)
 }
 value *= (1.0 / SAMPLES);
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//GLSL BODY
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+//==============================================================================
+// SHADER BODY
+//==============================================================================
 
 #version 150
 

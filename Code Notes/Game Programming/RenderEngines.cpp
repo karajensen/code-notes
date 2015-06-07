@@ -1,4 +1,34 @@
 ﻿//////////////////////////////////////////////////////////////////////////////
+//RENDER ENGINES
+//////////////////////////////////////////////////////////////////////////////
+
+/*==========================================================================
+OPENGL                          DIRECTX
+============================================================================
+GL_ZERO                         D3D11_BLEND_ZERO
+GL_ONE                          D3D11_BLEND_ONE
+GL_SRC_COLOR                    D3D11_BLEND_SRC_COLOR
+GL_ONE_MINUS_SRC_COLOR          D3D11_BLEND_INV_SRC_COLOR
+GL_SRC_ALPHA                    D3D11_BLEND_SRC_ALPHA
+GL_ONE_MINUS_SRC_ALPHA          D3D11_BLEND_INV_SRC_ALPHA
+GL_DST_ALPHA                    D3D11_BLEND_DEST_ALPHA
+GL_ONE_MINUS_DST_ALPHA          D3D11_BLEND_INV_DEST_ALPHA
+GL_DST_COLOR                    D3D11_BLEND_DEST_COLOR
+GL_ONE_MINUS_DST_COLOR          D3D11_BLEND_INV_DEST_COLOR
+GL_SRC_ALPHA_SATURATE           D3D11_BLEND_SRC_ALPHA_SAT
+GL_CONSTANT_COLOR               D3D11_BLEND_BLEND_FACTOR
+GL_ONE_MINUS_CONSTANT_COLOR     D3D11_BLEND_INV_BLEND_FACTOR
+GL_SRC1_COLOR                   D3D11_BLEND_SRC1_COLOR
+GL_ONE_MINUS_SRC1_COLOR         D3D11_BLEND_INV_SRC1_COLOR
+GL_SRC1_ALPHA                   D3D11_BLEND_SRC1_ALPHA
+GL_ONE_MINUS_SRC1_ALPHA         D3D11_BLEND_INV_SRC1_ALPHA
+GL_FUNC_ADD                     D3D11_BLEND_OP_ADD
+GL_FUNC_SUBTRACT                D3D11_BLEND_OP_SUBTRACT
+GL_FUNC_REVERSE_SUBTRACT        D3D11_BLEND_OP_REV_SUBTRACT
+GL_MIN                          D3D11_BLEND_OP_MIN
+GL_MAX                          D3D11_BLEND_OP_MAX 
+
+//////////////////////////////////////////////////////////////////////////////
 //OPENGL (R-)
 //////////////////////////////////////////////////////////////////////////////
 
