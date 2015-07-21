@@ -2,6 +2,8 @@
 //UNITY SCRIPTS
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+// • Preferences -> Editor -> Visible Meta Files for Source Control
+
 using UnityEngine;
 using UnityEditor; // For adding GUI items
 using System.Collections;

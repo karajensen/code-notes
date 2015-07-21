@@ -463,6 +463,9 @@
     <Image Include="Images\MathsPhysics - Graph x2.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Code - dotNET pipeline.png">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Questions.txt" />
