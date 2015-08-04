@@ -2,7 +2,9 @@
 //UNITY SCRIPTS
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-// • Preferences -> Editor -> Visible Meta Files for Source Control
+// • Before Starting: Preferences -> Editor -> Visible Meta Files for Source Control
+// • Statics are shared between scenes
+// • GameObjects are destroyed between scenes (including statics) unless specified not to
 
 using UnityEngine;
 using UnityEditor; // For adding GUI items
@@ -44,6 +46,11 @@ public class MyScript : MonoBehaviour
     void FixedUpdate()
     {
     }
+
+    // Post tick function
+    void LateUpdate()
+    {
+    }
 }
 
 // CLASS ATTRIBUTES
@@ -60,17 +67,24 @@ public class MyData
 Debug.Log(myInt)                 // Logs a message to the console
 Debug.LogError("Message")        // Logs an error to the console
 InvokeRepeating("FnName", 1, 1)  // Requires class to have function with name, invokes once every second
+GUILayout.Label("Message")       // Creates a message at the top corner of the game
 
 // GAME OBJECTS
 // Main base class for all objects
 // Each script inherits from Game Object attached to
+// Destroyed between scenes unless specified not to
 GameObject myGameObject
-GameObject.FindWithTag("Player")           // Finds component with tag, null if cannot be found, slow
-GameObject.Find("Player")                  // Finds comonent with name, null if cannot be found, slow
-myObj.transform                            // Gets the transform
-myObj.GetComponent<RigidBody>()            // Gets rigid body of object
-myObj.GetComponentsInChildren<Transform>() // Gets array of children of object 
-myObj.AddComponent<RigidBody>()            // Adds a component to the object
+GameObject.FindWithTag("Player")            // Finds component with tag, null if cannot be found, slow
+GameObject.Find("Player")                   // Finds comonent with name, null if cannot be found, slow
+GameOjbect.FindGameObjectWithTag("Player")  // Finds GameObject with tag
+GameObject.FindGameObjectsWithTag("Player") // Finds GameObject[] with tage
+myObj.transform                             // Gets the transform
+myObj.name                                  // Set/get the name
+myObj.GetComponent<RigidBody>()             // Gets rigid body of object
+myObj.GetComponentsInChildren<Transform>()  // Gets array of children of object 
+myObj.AddComponent<RigidBody>()             // Adds a component to the object
+FindObjectOfType<MyScript>()                // Returns first instance of MyScript found
+DontDestroyOnLoad(myGameObject)             // Don't destroy object between scenes
 
 // SELECTION
 Selection.activeTransform                 // returns transform of selected object
@@ -110,6 +124,7 @@ myTransform.Rotate(vec)   // Rotates the transform by a Vector3
 myTransform.eulerAngles   // Sets/gets the euler angles as a Vector3
 myTransform.up            // Get up vector of transform
 myTransform.parent;       // Get/set the parent object
+myTransform.gameObject;   // Get the associated game object for the transform
 
 //QUATERNION
 Quaternion myQuat;
@@ -173,13 +188,24 @@ texture.Apply()                             // applys any pixel changes to the t
 // SPRITE RENDERER
 SpriteRenderer myRenderer;
 myRenderer.name             // Get/set the name of the renderer
-renderer.color              // Get/set the tint colour of the sprite
+myRenderer.color            // Get/set the tint colour of the sprite
 
 // SPRITE OBJECT
 Sprite mySprite;
 Sprite.Create(myTexture, bounds, pivot, pixelsPerUnit); // bounds is Rect, pivot is Vector2 from 0->1 each component
 mySprite.name;              // Set/get the name of the sprite
 mySprite.pixelsPerUnit;     // Scale of texture dimensions to game dimensions
+
+// AUDIO SOURCE
+AudioSource myAudioSource;
+myAudioSource.Stop()        // Stop playing
+myAudioSource.Play()        // Start playing
+myAudioSource.isPlaying     // Get whether the audio is playing or not
+myAudioSource.volume        // Set/Get the volume
+
+// TEXT
+UnityEngine.UI.Text myText;
+myText.text = "text";
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //UNITY ALGORITHMS
