@@ -78,6 +78,7 @@ GameObject.FindWithTag("Player")            // Finds component with tag, null if
 GameObject.Find("Player")                   // Finds comonent with name, null if cannot be found, slow
 GameOjbect.FindGameObjectWithTag("Player")  // Finds GameObject with tag
 GameObject.FindGameObjectsWithTag("Player") // Finds GameObject[] with tage
+GameObject.Instantiate(myObj)               // Creates a new instance based on the obj
 myObj.transform                             // Gets the transform
 myObj.name                                  // Set/get the name
 myObj.GetComponent<RigidBody>()             // Gets rigid body of object
@@ -87,8 +88,8 @@ FindObjectOfType<MyScript>()                // Returns first instance of MyScrip
 DontDestroyOnLoad(myGameObject)             // Don't destroy object between scenes
 
 // SELECTION
-Selection.activeTransform                 // returns transform of selected object
-Selection.transforms                      // returns [] of all selected objects transforms
+Selection.activeTransform                   // returns transform of selected object
+Selection.transforms                        // returns [] of all selected objects transforms
 
 // MATHS
 Mathf.PI          

@@ -220,7 +220,7 @@ tree.end();                     // iterator one after last child
 // ITERATE OVER PTREE CHILDREN
 BOOST_FOREACH(boost::property_tree::ptree::value_type const& value, tree) 
 for(boost::property_tree::ptree::iterator itr = tree.begin(); itr != tree.end(); ++itr)
-value.first  /*or*/ itr->first     // std::string name
+value.first  /*or*/ itr->first     // std::string name, includes <xmlatr> of node
 value.second /*or*/ itr->second    // ptree object
 
 // GETTING VALUE OF PTREE

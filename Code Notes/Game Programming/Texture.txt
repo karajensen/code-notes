@@ -160,6 +160,28 @@ SRGB COLOR SPACE
 • sRGB format is gamma corrected color which produce incorrect results in linear space
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+//COLOUR BLENDING
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+Converting HSV/RGB: http://www.poynton.com/PDFs/coloureq.pdf p15
+Colour Blending: http://www.stuartdenman.com/improved-color-blending/
+
+• Linear blending loses saturation between colours
+• Blending must occur in polar coordinate space to maintain saturation
+• Polar coordinate space: HSV/HSB, CIE-Lab
+• Note add primary colour = 6 check to primary colour = 0 when blending hues
+
+--------------------------------------------------------------------------------------------
+Polar Coordinate Space Blending:
+--------------------------------------------------------------------------------------------
+diff = hue2 - hue1
+if (hue1 > hue2) then swap(hue1, hue2), diff = -diff, blendValue = 1 - blendValue
+if (diff > 180) then hue1 = hue1 + 360, hue = (hue1 + blendValue * (hue2 - hue1)) mod 360
+if (diff <= 180) then hue = hue1 + blendValue * difference
+where blendValue = [1,0] and hue/hue1/hue2 = [0,360]
+--------------------------------------------------------------------------------------------
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //COMPRESSION
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
