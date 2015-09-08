@@ -13,6 +13,10 @@ var myQuery = from item in myContainer
 var myQuery = from number in Enumerable.Range(0, 100)
               select item * 2.0;
 
+// FILLING A CONTAINER
+myContainer = (from i in Enumerable.Range(0, 100)
+               select new MyClass()).ToList();
+
 // NESTED QUERIES
 // second from is nested inside first from
 var myQuery = from x in Enumerable.Range(0, 100)

@@ -299,7 +299,7 @@ ANSWER STRUCTURE: Situation, Action, Response
 08) Give examples of ideas you've had or implemented.
 09) How did you handle meeting a tight deadline?
 10) Why do you want this job?
-11) What five words would be describe you?
+11) What five words would describe you?
 12) Do you prefer to work in a small, medium or large company?
 13) What are your goals for five years from now?
 14) Share an example of how you were able to motivate employees or co-workers.
@@ -313,3 +313,4 @@ ANSWER STRUCTURE: Situation, Action, Response
 22) What do you like and dislike about job we are discussing?
 23) Tell me about a time when you had to do something you really didn't like doing
 24) What are some technical books you have recently read?
+25) Do you have any further questions?
