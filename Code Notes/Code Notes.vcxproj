@@ -88,9 +88,6 @@
     <ClCompile Include="Algorithms.cpp" />
     <ClCompile Include="Boost.cpp" />
     <ClCompile Include="Class.cpp" />
-    <ClCompile Include="Code Examples\Classes\camera.cpp" />
-    <ClCompile Include="Code Examples\Classes\input.cpp" />
-    <ClCompile Include="Code Examples\Classes\logger.cpp" />
     <ClCompile Include="Code Examples\Classes\timer.cpp" />
     <ClCompile Include="Code Examples\Example - Maya API Command.cpp" />
     <ClCompile Include="Code Examples\Example - Maya API Locator.cpp" />
@@ -148,10 +145,6 @@
     <None Include="Languages\C# Unity.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Code Examples\Classes\camera.h" />
-    <ClInclude Include="Code Examples\Classes\color.h" />
-    <ClInclude Include="Code Examples\Classes\input.h" />
-    <ClInclude Include="Code Examples\Classes\logger.h" />
     <ClInclude Include="Code Examples\Classes\matrix.h" />
     <ClInclude Include="Code Examples\Classes\timer.h" />
     <ClInclude Include="Code Examples\Classes\vector3.h" />

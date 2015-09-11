@@ -2,19 +2,8 @@
 // Kara Jensen - mail@karajensen.com - timer.cpp
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <Windows.h>
 #include "timer.h"
-#include "diagnostic.h"
-
-Timer::Timer() :
-    m_frequency(0.0),
-    m_previousTime(0.0),
-    m_deltaTime(0.0),
-    m_deltaTimeCounter(0.0),
-    m_fps(0),
-    m_fpsCounter(0)
-{
-}
+#include <string>
 
 void Timer::StartTimer()
 {
@@ -26,7 +15,7 @@ void Timer::StartTimer()
     m_previousTime = static_cast<double>(m_timer.QuadPart);
 }
 
-double Timer::UpdateTimer()
+void Timer::UpdateTimer()
 {
     QueryPerformanceCounter(&m_timer);
     double currentTime = static_cast<double>(m_timer.QuadPart);
@@ -40,29 +29,29 @@ double Timer::UpdateTimer()
         m_fpsCounter = 0;
     }
 
-    if(Diagnostic::AllowText())
-    {
-        Diagnostic::Get().UpdateText("FramePerSec", Diagnostic::WHITE, StringCast(m_fps));
-        Diagnostic::Get().UpdateText("FramesCounter", Diagnostic::WHITE, StringCast(m_fpsCounter));
-        Diagnostic::Get().UpdateText("DeltaTime", Diagnostic::WHITE, StringCast(m_deltaTime));
-        Diagnostic::Get().UpdateText("DeltaTimeCounter", Diagnostic::WHITE, StringCast(m_deltaTimeCounter));
-    }
+    m_totalTime += m_deltaTime;
+    m_totalTime = _finite(m_totalTime) ? m_totalTime : 0.0f;
     
-    ++m_fpsCounter; //increment frame counter
+    ++m_fpsCounter; 
     m_previousTime = currentTime;
-
-    return m_deltaTime; 
 }
 
-    #ifdef _DEBUG
-    Diagnostic::Get().UpdateText("FramePerSec", Diagnostic::WHITE, StringCast(m_fps));
-    Diagnostic::Get().UpdateText("FramesCounter", Diagnostic::WHITE, StringCast(m_fpsCounter));
-    Diagnostic::Get().UpdateText("DeltaTime", Diagnostic::WHITE, StringCast(m_deltaTime));
-    Diagnostic::Get().UpdateText("DeltaTimeCounter", Diagnostic::WHITE, StringCast(m_deltaTimeCounter));
-    #endif
+float Timer::GetTotalTime() const
+{
+    return static_cast<float>(m_totalTime);
+}
 
-    ++m_fpsCounter; //increment frame counter
-    m_previousTime = currentTime;
+float Timer::GetDeltaTime() const 
+{ 
+    return static_cast<float>(m_deltaTime);
+}
 
-    return m_deltaTime; 
+int Timer::GetFPS() const
+{
+    return static_cast<int>(m_fps);
+}
+
+int Timer::GetCappedFPS() const
+{
+    return min(static_cast<int>(m_fps), 60);
 }

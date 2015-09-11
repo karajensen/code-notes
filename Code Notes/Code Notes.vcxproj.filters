@@ -85,15 +85,6 @@
     <ClCompile Include="Development\Algorithms and Structures.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Code Examples\Classes\camera.cpp">
-      <Filter>Development\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Code Examples\Classes\input.cpp">
-      <Filter>Development\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Code Examples\Classes\logger.cpp">
-      <Filter>Development\Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Code Examples\Classes\timer.cpp">
       <Filter>Development\Classes</Filter>
     </ClCompile>
@@ -200,18 +191,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Code Examples\Classes\camera.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Code Examples\Classes\color.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Code Examples\Classes\input.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Code Examples\Classes\logger.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Code Examples\Classes\matrix.h">
       <Filter>Development\Classes</Filter>
     </ClInclude>
