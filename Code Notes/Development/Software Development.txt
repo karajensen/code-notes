@@ -32,13 +32,18 @@ SCRUM
 • ASP.NET applications
 • Web Services
 
-FUSLOGVW.EXE
+FUSLOGVW.EXE:
 Displays details for failed assembly binds. Allows diagnosing why .NET framework
 cannot locate an assembly at runtime (TypeLoadException)
 
-DEPENDS.EXE
+DEPENDS.EXE:
 Dependency walker for 32/64 bit modules (dll,exe) and builds heirarchical tree
 diagrams of all dependent modules, shows exported functions
+
+VISUAL STUDIO ENVIRONMENT VARIABLES:
+$(SolutionDir)\
+$(ProjectName)
+$(Configuration)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 //MAC DEVELOPMENT

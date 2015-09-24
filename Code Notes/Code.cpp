@@ -123,9 +123,10 @@ std::reinterpret_cast     (int*)&x
 std::const_cast           (int*)&cx
 
 //SAFE CASTING
-//only pointers/references of classes with virtual functions; slowest cast
-auto* myPtr = dynamic_cast<MyDerived>(myBasePtr) //returns 0 if fail
+//dynamic_cast only pointers/references of classes with virtual functions; slowest cast
+auto* myPtr = dynamic_cast<MyDerived*>(myBasePtr) //returns 0 if fail
 auto& myObj = dynamic_cast<MyDerived&>(myBaseObj) //throws std::bad_cast if fail
+auto* myPtr = static_cast<MyClass*>(myVoidPtr)    //use static for void*
 
 //UNSAFE CASTING
 auto* myPtr = reinterpret_cast<MyDerived>(myBasePtr) // only for pointers
@@ -146,6 +147,13 @@ atof("3.0") //converts cstring to float
 // Gives large precision with no control
 to_string(value);
 to_wstring(value);
+
+// STD::STRING TO CHAR*:
+std::string str = "test";
+std::vector<char> vec(str.size() + 1);
+std::copy(str.begin(), str.end(), vec.begin());
+vec[vec.size()-1] = '\0';
+char* myCStr = &vec[0];
 
 // NUMBER TO STRING STREAM
 // Superseeds std::strstream

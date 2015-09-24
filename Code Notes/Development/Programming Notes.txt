@@ -191,6 +191,27 @@ CACHES
 • No processing on data- must be moved to registers if this is needed
 • Cache Miss: Failed attempt to read/write to the cache resulting in RAM access
 
+===============================================================================
+VISUAL STUDIO DEBUG MEMORY ALLOCATION
+===============================================================================
+
+• Debug uses more memory than release to store guard bytes/information about allocated memory
+• Guard bytes are used to detect buffer overruns/underruns
+• Freed memory is set to 0xDD (Dead Memory) to detect dangling pointers
+• Newly allocated memory is set to 0xCD (Clean Memory) to determine uninitalised variables
+
+0xABABABAB : Guard bytes used by HeapAlloc() after allocated heap memory
+0xFDFDFDFD : Guard bytes used by C++ Debugging Heap before and after allocated heap memory
+0xFEEEFEEE : Freed heap memory used by HeapFree()
+0xDDDDDDDD : Freed heap memory
+0xCCCCCCCC : Uninitialised stack memory, used by C++ debugging runtime library
+0xCDCDCDCD : Uninitialised heap memory, used by C++ debugging runtime library
+0xBAADF00D : Uninitialised heap memory, used by LocalAlloc(LMEM_FIXED)
+0xABADCAFE : A startup to this value to initialize all free memory to catch errant pointers
+0xBADCAB1E : Error Code returned to the debugger when connection is severed to the debugger
+0xBEEFCACE : Used by NET as a magic number in resource files
+0xDEADDEAD : Microsoft Windows STOP Error code used when the user manually initiates the crash
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //CLASSES/STRUCTS/FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////////////////////////
