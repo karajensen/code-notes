@@ -108,6 +108,7 @@ myObj.activeSelf                            // Whether the object is enabled/dis
 myObj.GetComponent<RigidBody>()             // Gets rigid body of object
 myObj.GetComponentsInChildren<Transform>()  // Gets array of children of object 
 myObj.AddComponent<RigidBody>()             // Adds a component to the object
+myObj.CompareTag("myTag")                   // Returns true if has this tag
 
 // TRANSFORM
 // Holds the parent-child hierarchy of gameobjects

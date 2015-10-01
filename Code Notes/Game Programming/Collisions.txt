@@ -15,7 +15,7 @@ AXIS ALIGNED BOUNDING BOX: Box sides are aligned with the world axis
 COLLISION DETECTION
 Once proxies are tested, to obtain greater accuracies, A/B are colliding if:
  ---------
-| u.n < 0 | angle Ɵ > 90
+| u.n < 0 | angle Ө > 90
  ---------
  u = relative velocity of vertex Pᵃ of A colliding with B
  n = normal to the plane of collsion
@@ -207,8 +207,8 @@ Collision occurs if both t₁ and t₂ are between 0 and 1
 
 P₁(0) + t₁d₁ = P₂(0) + t₂d₂
 
-⁂ P₁(0)x + t₁d₁x = P₂(0)x + t₂d₂x
-⁂ P₁(0)y + t₁d₁y = P₂(0)y + t₂d₂y
+► P₁(0)x + t₁d₁x = P₂(0)x + t₂d₂x
+► P₁(0)y + t₁d₁y = P₂(0)y + t₂d₂y
 
 and rearrange to solve for t₁ and t₂
 

@@ -17,7 +17,7 @@ Pᵂ POWER: Work done per second
 x  DISPLACEMENT
 d  DISTANCE
 ɸ  ANGULAR DISPLACEMENT
-Ɵ  ROTATION ANGLE: amount rotated around axis
+Ө  ROTATION ANGLE: amount rotated around axis
 
 v  LINEAR VELOCITY: Time rate of change of displacement
 w  ANGULAR VELOCITY: Speed at which object is rotating
@@ -81,10 +81,10 @@ FORCE(F)
 
 F = ma          forces acting on object
 Fᶜ = maᶜ        centripetal force
-N = mgcosƟ      force from surface onto object
+N = mgcosӨ      force from surface onto object
 Fr = µN         friction acting on object
 
-∑F = F + Fr + mgcosƟ
+∑F = F + Fr + mgcosӨ
 
 NEWTON'S LAWS
 1) Every body remains in a state of rest or uniform motion(constant velocity) 
@@ -116,9 +116,9 @@ Q = Energy due to heating of system
 
 ENERGY TRANSFER: WORK(W)
 Energy is transferred from the environment into the system
-W = τƟ
+W = τӨ
 W = F.d             when d is alligned with force
-W = ‖F‖‖d‖cosƟ      when d isn't alligned with force
+W = ‖F‖‖d‖cosӨ      when d isn't alligned with force
                     want component of force in direction of d
 
 W(overall) = ∆E
@@ -144,8 +144,8 @@ P = p₁ + p₂ + ...
 ∆P = ∆p₁ + ∆p₂ = 0 overall momentum in system doesn't change
 
 --------------------------------------------
-    P = Pᶠ = P° as ∆P = 0
-⁂  m₁v₁(f) + m₂v₂(f) = m₁v₁(0) + m₂v₂(0)
+   P = Pᶠ = P° as ∆P = 0
+   m₁v₁(f) + m₂v₂(f) = m₁v₁(0) + m₂v₂(0)
 --------------------------------------------
 
 EG(1):
@@ -174,8 +174,8 @@ IMPULSE(J)
 J = F.dt = dp = ∆p = pᶠ-p° = m∆v = m(vᶠ-v°)
 
     F = dp/dt
-⁂   dp = F.dt
-⁂   J = dp = ∆p
+►   dp = F.dt
+►   J = dp = ∆p
 
 =============================================================================
 TORQUE(τ)
@@ -204,12 +204,12 @@ torque is rate of change of angular momentum:
 ANGULAR VELOCITY(w) / ANGULAR ACCERLATION(α)
 =============================================================================
 s = speed of rotation
-Ɵ = amount rotated around axis
+Ө = amount rotated around axis
 n̂ = axis of rotation/normal to the area of the rotation
 
-ɸ = Ɵn̂
-w = sŵ = sn̂ = dƟ/dt
-α = dw/dt = d²Ɵ/dt²
+ɸ = Өn̂
+w = sŵ = sn̂ = dӨ/dt
+α = dw/dt = d²Ө/dt²
 
 /////////////////////////////////////////////////////////////////////////////////////////
 //POSITIONAL PHYSICS
@@ -220,9 +220,9 @@ MOTION
 =============================================================================
 For a block sliding down a hill with a pushing force:
   F = ma
-  N = mgcosƟ
+  N = mgcosӨ
   Fr = µN
-  where ∑F = F + mgsinƟ + Fr
+  where ∑F = F + mgsinӨ + Fr
 
 =============================================================================
 SPRINGS: HOOKE'S LAW
@@ -243,14 +243,14 @@ k: spring constant
 =============================================================================
 BALLISTICS/PROJECTILES
 =============================================================================
-A projectile is shot at angle Ɵ where up is positive j, right positive i
+A projectile is shot at angle Ө where up is positive j, right positive i
 No air resistance so i component of velocity doesn't change
 
   v = initial speed
   a = 0i - 9.8j
-  v(0) = vcosƟi + vsinƟj
-  v(f) = vcosƟi - vsinƟj
-  v(f/2) = vcosƟi + 0j
+  v(0) = vcosӨi + vsinӨj
+  v(f) = vcosӨi - vsinӨj
+  v(f/2) = vcosӨi + 0j
   d = dˣi + dʸj
 
   at t = 0 and t = f: dʸ = 0 as the projectile is on the ground
@@ -259,9 +259,9 @@ No air resistance so i component of velocity doesn't change
   d = v(0)t + (1/2)at²
     = t(v(0) + (1/2)at)  let d = 0 using y components
 
-  ⁂ 0 = t(vʸ(0) + (1/2)(-9.8)t)
-  ⁂ 0 = t /or/ 0 = vʸ(0) + (1/2)(-9.8)t
-  ⁂ t(0) = 0 /or/ t(f) = 2vʸ(0)/9.8
+  ► 0 = t(vʸ(0) + (1/2)(-9.8)t)
+  ► 0 = t /or/ 0 = vʸ(0) + (1/2)(-9.8)t
+  ► t(0) = 0 /or/ t(f) = 2vʸ(0)/9.8
 
   to find total distance travelled (dˣ) sub t(f) into:
   dˣ = v(0)ˣt + (1/2)aˣt² 

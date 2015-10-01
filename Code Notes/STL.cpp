@@ -110,9 +110,9 @@ round(4.5) //math round- to closest integer up/down with 0.5 going up
 cos(angle) //angle in radians
 sin(angle) //angle in radians
 tan(angle) //angle in radians
-acos(x/r) //cosƟ = A/C, returns radians
-asin(y/r) //sinƟ = O/C, returns radians
-atan(x/y) //tanƟ = O/A, returns radians
+acos(x/r) //cosӨ = A/C, returns radians
+asin(y/r) //sinӨ = O/C, returns radians
+atan(x/y) //tanӨ = O/A, returns radians
 atan2(x, y) //calculates tan(x/y), returns radians
 _finite(0.0) //returns whether its a valid (not infinite/undefined) double
 _chgsign(x) //returns x with its sign reversed

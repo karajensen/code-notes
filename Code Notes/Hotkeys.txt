@@ -2,25 +2,36 @@
 //SYMBOLS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
-X▪          derivative                  ∏           pi
-ʃ0-t{}      integral from 0 to t        '           prime
-µ           friction                    ̂            unit vector
-Ɵ           theta angle                 ∆           change in
-ɸ           phi angle                   ᵀ           transpose
-√()         square root                 τ           torque
-∞           infinite                    α           alpha
-∑           sum of                      ᶜ           centripetal
-‖ ‖         magnitude                   ⊗          tensor product
-⊥          perpendicular               ⁂          therefore
-¹/₂         half                        ≤≥          less/greater
-tan¯¹()     trigonmetry                 ▲►▼◄        arrows
-̅            conjugate                   ̿            double conjugate
-•           dot point                   ±           plusminus
-≠           doesn't equal               ≈           roughly equals
-%           modulus                     ≡           modulus congruant
 
-ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻᶿᵝᶲᴬᴮᴰᴱᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾᴿᵀᵁᵂ¯⁴⁵²³¹°⁶⁷⁸⁹⁺⁻⁼⁽⁾∕
-ₐₑᵢₒᵣᵤᵥₓᵦ₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎
+X▪            derivative                  
+∏             pi
+ʃ0-t{}        integral from 0 to t        
+'             prime
+µ             friction                   
+Ө             theta angle
+∆             change in
+ɸ             phi angle
+√()           square root
+τ             torque
+∞             infinite
+α             alpha
+∑             sum of
+‖ ‖           magnitude
+≤≥            less/greater
+tanˉ¹()       trigonmetry                
+▲►▼◄          arrows
+•             dot point                   
+±             plusminus
+≠             doesn't equal               
+≈             roughly equals
+%             modulus                     
+≡             modulus congruant
+âb̂ĉn̂          unit vector
+⊗            tensor product
+⊥            perpendicular
+
+ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻᶿᴬᴮᴰᴱᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾᴿᵀᵁᵂ⁴⁵°¹²³⁴⁶⁷⁸⁹⁺ˉ∕
+ₐₑᵢₒᵣᵤᵥₓᵦ₀₁₂₃₄₅₆₇₈₉
 
 
 //////////////////////////////////////////////////////////////////////////////

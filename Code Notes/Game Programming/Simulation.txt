@@ -18,8 +18,7 @@ EULER'S METHOD:
 INCREASING ACCURACY
 - Euler's method is accurate to ∆t
 - next largest term in Taylor's series is (∆t²/2) X▪▪(t)
-- ⁂ precision error is to the order of ∆t²; if step size is halfed, 
-  error is reduced by four
+- therefore precision error is to the order of ∆t²; if step size is halfed, error is reduced by four
 - To increase accuracy, get estimate of X▪▪(t) using Midpoint Method
 
 MIDPOINT METHOD
@@ -69,7 +68,7 @@ X(t + ∆t) = X(t) + X▪(t)∆t + (∆t²/2) X▪▪(t)
 X(t - ∆t) = X(t) - X▪(t)∆t + (∆t²/2) X▪▪(t)
 X(t + ∆t) + X(t - ∆t) = 2X(t) + ∆t²X▪▪(t)
 
-⁂ X(t + ∆t) = 2X(t) - X(t - ∆t) + ∆t²X▪▪(t)
+► X(t + ∆t) = 2X(t) - X(t - ∆t) + ∆t²X▪▪(t)
 
 ===========================================================================
 STIFF EQUATIONS
@@ -155,10 +154,10 @@ RELATING X and X▪:
 
     USING a(t) = -kx(t)/m - µv(t)/m + u(t)/m from springs
 
-⁂   X▪(t) = |  0    1   || x(t) | + |  0  |u(t) 
+►   X▪(t) = |  0    1   || x(t) | + |  0  |u(t) 
             |-k/m  -µ/m || v(t) |   | 1/m |
 
-⁂   X▪(t) = AX(t) + Mu(t)
+►   X▪(t) = AX(t) + Mu(t)
 
 
      For linear systems:
@@ -200,29 +199,29 @@ RELATING X and X▪:
 //////////////////////////////////////////////////////////////////////////////
 
 For state space model:
-X(t) = |Ɵ(t)|   X▪(t) = |w(t)|  
+X(t) = |Ө(t)|   X▪(t) = |w(t)|  
        |w(t)|           |α(t)|
 
 ∆T = timestep
-Ɵ'(t) = Desired angle
-Ɵ(t) = Current angle
+Ө'(t) = Desired angle
+Ө(t) = Current angle
 w'(t) = Desired angular velocity
 w(t) = Current angular velocity
 τ(t) = Torque
 
-Ɵ'(t)                 w'(t)                  τ(t)                   
-->|eᶿ(t)|->|POSITION  |->|eʷ(t)|->|VELOCITY  |->|INTEGRATE|->|INTEGRATE|->Ɵ(t)
+Ө'(t)                 w'(t)                  τ(t)                   
+->|eᶿ(t)|->|POSITION  |->|eʷ(t)|->|VELOCITY  |->|INTEGRATE|->|INTEGRATE|->Ө(t)
      ^     |CONTROLLER|     ^     |CONTROLLER|  |VELOCITY |  |POSITION |         
      |                      |                         |            |
      |                      |_w(t)____________________|            |
-     |_Ɵ(t)________________________________________________________|
+     |_Ө(t)________________________________________________________|
 
 ERRORS
-eᶿ(t) = Ɵ'(t) - Ɵ(t)
+eᶿ(t) = Ө'(t) - Ө(t)
 eʷ(t) = w'(t) - w(t) 
 
 INTEGRATE POSITION              INTEGRATE VELOCITY
-Ɵ(t+1) = Ɵ(t) + w(t)∆T          w(t+1) = w(t) + α(t)∆T
+Ө(t+1) = Ө(t) + w(t)∆T          w(t+1) = w(t) + α(t)∆T
 
 POSITION CONTROLLER             VELOCITY CONTROLLER
 w'(t) = Kᶿŵ                     τ(t) = Kʷ(t)ŵ
@@ -273,7 +272,7 @@ u(temp) = uᵗ/‖uᵗ‖
 f(t+∆t) = v(t+∆t)/‖(t+∆t)‖
 r(t+∆t) = f(t+∆t) X u(temp)
 u(t+∆t) = r(t+∆t) X f(t+∆t)
-B(t+∆t) = -sin¯¹(fˣ(t+∆t))  used for switching between external/local frame
+B(t+∆t) = -sinˉ¹(fˣ(t+∆t))  used for switching between external/local frame
 
 -----------------------------------------------------------------------
 USER INPUTS: v'(t)

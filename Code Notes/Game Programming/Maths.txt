@@ -5,9 +5,9 @@
 -------------------------------------------------------------------------
 UNITS
 -------------------------------------------------------------------------
-m = milli = 10¯³    k = kilo = 10³
-µ = micro = 10¯⁶    M = mega = 10⁶
-n = nano = 10¯⁹     G = giga = 10⁹
+m = milli = 10ˉ³    k = kilo = 10³
+µ = micro = 10ˉ⁶    M = mega = 10⁶
+n = nano = 10ˉ⁹     G = giga = 10⁹
 
 Degrees to radians:  (PI / 180) * degrees;
 Radians to degrees:  (180 / PI) * radians;
@@ -34,7 +34,7 @@ x² - abx - ab = 0
 
 DERIVATIVES/ANTI-DIFFERENTIATION
 f(x) = axⁿ      f'(x) = axⁿ
-f'(x) = anxⁿ¯¹   f(x) = axⁿ⁺¹/n+1
+f'(x) = anxⁿˉ¹   f(x) = axⁿ⁺¹/n+1
 
 QUADRATIC EQUATIONS
 y = mx² + c
@@ -48,8 +48,8 @@ A + C ≡ B + C (%N)
 AC ≡ BC (%N)
 
 SQUARE ROOTS
-√(a) = a¯¹∕²
-√ₓ(a) = a¯¹∕ˣ
+√(a) = aˉ¹∕²
+√ₓ(a) = aˉ¹∕ˣ
 √(a²) = ‖a‖
 √(ab) = √(a)√(b)
 √(a/b) = √(a) / √(b)
@@ -62,45 +62,45 @@ a/√(b) = a/√(b) + √(b)/√(b) = a√(b)/b
 //TRIGONOMETRY
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-       /|                /|       sinƟ = O/C = y/‖r‖
-    r / |             C / |       cosƟ = A/C = x/‖r‖  
-     /  | ‖r‖sinƟ      /  | O     tanƟ = O/A = y/x
-    /Ɵ  |             /Ɵ  |       cscƟ = C/O
-    ----              ----        secƟ = C/A
-   ‖r‖cosƟ              A         cotƟ = A/O
+       /|                /|       sinӨ = O/C = y/‖r‖
+    r / |             C / |       cosӨ = A/C = x/‖r‖  
+     /  | ‖r‖sinӨ      /  | O     tanӨ = O/A = y/x
+    /Ө  |             /Ө  |       cscӨ = C/O
+    ----              ----        secӨ = C/A
+   ‖r‖cosӨ              A         cotӨ = A/O
 
 IDENTITIES WHEN R = 1 (UNIT CIRCLE)
-sinƟ = y
-cosƟ = x
-tanƟ = sinƟ / cosƟ
-cotƟ = cosƟ / sinƟ
-cscƟ = 1 / sinƟ
-secƟ = 1 / cosƟ
-cotƟ = 1 / tanƟ
+sinӨ = y
+cosӨ = x
+tanӨ = sinӨ / cosӨ
+cotӨ = cosӨ / sinӨ
+cscӨ = 1 / sinӨ
+secӨ = 1 / cosӨ
+cotӨ = 1 / tanӨ
 
 PYTHAGOREAN THEOREM 
 a² + b² = c²
-sin²Ɵ + cos²Ɵ = 1
-tan²Ɵ + 1 = sec²Ɵ
-1 + cot²Ɵ = csc²Ɵ
+sin²Ө + cos²Ө = 1
+tan²Ө + 1 = sec²Ө
+1 + cot²Ө = csc²Ө
 
 DOUBLE ANGLE FORMULAS
-sin(2Ɵ) = 2sinƟcosƟ
-cos(2Ɵ) = cos²Ɵ-sin²Ɵ = 2cos²Ɵ-1 = 1-2sin²Ɵ
-tan(2Ɵ) = (2tanƟ)/(1-tan²Ɵ)
+sin(2Ө) = 2sinӨcosӨ
+cos(2Ө) = cos²Ө-sin²Ө = 2cos²Ө-1 = 1-2sin²Ө
+tan(2Ө) = (2tanӨ)/(1-tan²Ө)
 
 EVEN/ODD FOMULAS
-sin(-Ɵ) = -sinƟ
-cos(-Ɵ) = cosƟ
-tan(-Ɵ) = -tanƟ
-csc(-Ɵ) = -cscƟ
-sec(-Ɵ) = secƟ
-cot(-Ɵ) = -cotƟ
+sin(-Ө) = -sinӨ
+cos(-Ө) = cosӨ
+tan(-Ө) = -tanӨ
+csc(-Ө) = -cscӨ
+sec(-Ө) = secӨ
+cot(-Ө) = -cotӨ
 
 HALF ANGLE FORMULAS
-sin²Ɵ = ¹/₂(1-cos(2Ɵ))
-cos²Ɵ = ¹/₂(1+cos(2Ɵ))
-tan²Ɵ = (1-cos(2Ɵ)) / (1+cos(2Ɵ))
+sin²Ө = ¹/₂(1-cos(2Ө))
+cos²Ө = ¹/₂(1+cos(2Ө))
+tan²Ө = (1-cos(2Ө)) / (1+cos(2Ө))
 
 SINE WAVES:
 To combine waves, just add each equation to each other
@@ -120,7 +120,7 @@ To get circular waves, use radius r as x
  
  X° = 1
  XᴬXᴮ = Xᴬ⁺ᴮ
- Xᴬ/Xᴮ = Xᴬ⁻ᴮ
+ Xᴬ/Xᴮ = Xᴬˉᴮ
  (Xᴬ)ᴮ = Xᴬᴮ
  Xᴬ + Xᴬ = 2Xᴬ ≠ X²ᴬ
 
@@ -170,16 +170,16 @@ MULTIPLICATIVE INVERSE: k(1/k) = 1 scalar
 DOT/INNER PRODUCT
 =============================================================================
  -------------------
-| cosƟ = a.b/‖a‖‖b‖ |
+| cosӨ = a.b/‖a‖‖b‖ |
  --------------------------
 | a.b = aˣbˣ + aʸbʸ + aᶻbᶻ |
  --------------------------
-a.b > 0     Ɵ < 90 between both vectors
-a.b < 0     Ɵ > 90 between both vectors
-a.b = 0     Ɵ = 90 vectors are ⊥ to each other
+a.b > 0     Ө < 90 between both vectors
+a.b < 0     Ө > 90 between both vectors
+a.b = 0     Ө = 90 vectors are ⊥ to each other
 
  ▲           ▲▲          ▲
- | â.b̂=0     ||  â.b̂=1   |   â.b̂=-1
+ | â.b̂=0     ||  â.b̂=1   |   â.b̂=-1
  |           ||          |
   -----►                 ▼
 
@@ -248,7 +248,7 @@ TRIPLE PRODUCT
 =============================================================================
 VECTOR PROJECTION
 =============================================================================
-     /|                 compᵦa = a.b̂ = ‖a‖cosƟ
+     /|                 compᵦa = a.b̂ = ‖a‖cosӨ
     / |                 projᵦa = (a.b̂)b̂ = (compᵦa)b̂
  a /  | perpᵦa          perpᵦa = a - projᵦa
   /   | 
@@ -309,10 +309,10 @@ P = P₀ + a₁v₁ + a₂v₂ + ... + aⁿvⁿ
 eg(1)
   P = a₀P₀ + a₁P₁ + a₂P₂
   a₀ = 1 - a₁ - a₂
-  ⁂ P = (1 - a₁ - a₂)P₀ + a₁P₁ + a₂P₂
-  ⁂ P = P₀ - a₁P₀ - a₂P₀ + a₁P₁ + a₂P₂
-  ⁂ P = P₀ + a₁(P₁-P₀) + a₂(P₂-P₀)
-  ⁂ P = P₀ + a₁v₁ + a₂v₂
+  ► P = (1 - a₁ - a₂)P₀ + a₁P₁ + a₂P₂
+  ► P = P₀ - a₁P₀ - a₂P₀ + a₁P₁ + a₂P₂
+  ► P = P₀ + a₁(P₁-P₀) + a₂(P₂-P₀)
+  ► P = P₀ + a₁v₁ + a₂v₂
   where v₁ = P₁-P₀ and v₂ = P₂-P₀
 
 =============================================================================
@@ -325,11 +325,11 @@ POLAR COORDINATES
 FOR 3D: using elevation angle       FOR 2D:
 -----------------------------       ------------------
 ‖r‖ = √(x² + y² + z²)               r = √(x² + y²)
-Ɵ = tan¯¹(y/x)                      Ɵ = tan¯¹(y/x)
-ɸ = sin¯¹(z/‖r‖)
+Ө = tanˉ¹(y/x)                      Ө = tanˉ¹(y/x)
+ɸ = sinˉ¹(z/‖r‖)
                             
-x = ‖r‖cosɸcosƟ                     x = ‖r‖cosƟ 
-y = ‖r‖cosɸsinƟ                     y = ‖r‖sinƟ
+x = ‖r‖cosɸcosӨ                     x = ‖r‖cosӨ 
+y = ‖r‖cosɸsinӨ                     y = ‖r‖sinӨ
 z = ‖r‖sinɸ
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -487,7 +487,7 @@ P.P - 2P.c + c.c = r²
 
 MATRIX: Two dimensional array of numeric data
 
-DIAGONAL MATRIX                 IDENTITY MATRIX: (I¯¹ = Iᵀ = I)
+DIAGONAL MATRIX                 IDENTITY MATRIX: (Iˉ¹ = Iᵀ = I)
 | a 0 0 |                       | 1 0 0 | 
 | 0 b 0 |                       | 0 1 0 |
 | 0 0 c |                       | 0 0 1 |
@@ -504,7 +504,7 @@ UPPER TRIANGULAR MATRIX         LOWER TRIANGULAR MATRIX
 
 INVERSE MATRIX
  ----------
-| AA¯¹ = I |
+| AAˉ¹ = I |
  ----------
 
 ORTHOGONAL MATRIX
@@ -514,9 +514,9 @@ ORTHOGONAL MATRIX
 • Rows are orthogonal to each other
 • Columns are orthogonal to each other
 • Includes rotation and euler matrices
-• To test AAᵀ or AA¯¹ = I
+• To test AAᵀ or AAˉ¹ = I
  ----------
-| A¯¹ = Aᵀ |
+| Aˉ¹ = Aᵀ |
  ----------
 
 MATRIX RULES:
@@ -525,10 +525,10 @@ A-A = 0                 (A + B) + C = A + (B + C)
 A + B = B + A           (AB)C = A(BC)
 A(B + C) = AB + AC      a(AB) = aA(B) = A(aB)
 
-(A¯¹)¯¹ = A             det(AB) = det(A)det(B)
-(Aᵀ)¯¹ = (A¯¹)ᵀ         det(Aᵀ) = det(A)
-(AB)¯¹ = B¯¹A¯¹         det(A¯¹) = det(A)¯¹
-(cA)¯¹ = c¯¹A¯¹ 
+(Aˉ¹)ˉ¹ = A             det(AB) = det(A)det(B)
+(Aᵀ)ˉ¹ = (Aˉ¹)ᵀ         det(Aᵀ) = det(A)
+(AB)ˉ¹ = Bˉ¹Aˉ¹         det(Aˉ¹) = det(A)ˉ¹
+(cA)ˉ¹ = cˉ¹Aˉ¹ 
   
 
 ==============================================================================
@@ -538,7 +538,7 @@ VECTOR NOTATION
 B = |b₂| = |B₁| = column vector 
     |b₃|
 
-A = |a₁ a₂ a₃| = |A₍₁₎| = row vector
+A = |a₁ a₂ a₃| = |A₁| = row vector
 
 ==============================================================================
 MATRIX MULTIPLICATION
@@ -661,7 +661,7 @@ Using any row/column:
 INVERSE (CRAMER'S METHOD)
 ==============================================================================
  ------------------------
-| A¯¹ = (1/det(A))ADJ(A) |
+| Aˉ¹ = (1/det(A))ADJ(A) |
  ------------------------
 
        | c(a₁₁) c(a₁₂) c(a₁₃) |T
@@ -734,27 +734,27 @@ SCALING
 2D ROTATION
 ==============================================================================
      
-| cosƟ -sinƟ  0 || x |   | x' |
-| sinƟ  cosƟ  0 || y | = | y' |
+| cosӨ -sinӨ  0 || x |   | x' |
+| sinӨ  cosӨ  0 || y | = | y' |
 |  0     0    1 || 0 |   | 0  |
 
-x' = xcosƟ - ysinƟ
-y' = xsinƟ + ycosƟ
+x' = xcosӨ - ysinӨ
+y' = xsinӨ + ycosӨ
 
 ==============================================================================
 ROTATION
 ==============================================================================
 
      Z AXIS[LH]               X AXIS [LH]             Y AXIS [LH] 
-| cosƟ -sinƟ  0  0 |    |  1   0     0    0 |    | cosƟ  0  sinƟ  0 |
-| sinƟ  cosƟ  0  0 |    |  0  cosƟ -sinƟ  0 |    |  0    1   0    0 |
-|  0     0    1  0 |    |  0  sinƟ  cosƟ  0 |    |-sinƟ  0  cosƟ  0 |
+| cosӨ -sinӨ  0  0 |    |  1   0     0    0 |    | cosӨ  0  sinӨ  0 |
+| sinӨ  cosӨ  0  0 |    |  0  cosӨ -sinӨ  0 |    |  0    1   0    0 |
+|  0     0    1  0 |    |  0  sinӨ  cosӨ  0 |    |-sinӨ  0  cosӨ  0 |
 |  0     0    0  1 |    |  0   0     0    1 |    |  0    0   0    1 |
 
      Z AXIS[RH]               X AXIS [RH]             Y AXIS [RH] 
-|  cosƟ  sinƟ  0  0 |   |  1   0    0     0 |    | cosƟ  0 -sinƟ  0 |
-| -sinƟ  cosƟ  0  0 |   |  0  cosƟ  sinƟ  0 |    |  0    1   0    0 |
-|   0     0    1  0 |   |  0 -sinƟ  cosƟ  0 |    | sinƟ  0  cosƟ  0 |
+|  cosӨ  sinӨ  0  0 |   |  1   0    0     0 |    | cosӨ  0 -sinӨ  0 |
+| -sinӨ  cosӨ  0  0 |   |  0  cosӨ  sinӨ  0 |    |  0    1   0    0 |
+|   0     0    1  0 |   |  0 -sinӨ  cosӨ  0 |    | sinӨ  0  cosӨ  0 |
 |   0     0    0  1 |   |  0   0     0    1 |    |  0    0   0    1 |
 
 COMBINED ROTATION MATRIX
@@ -770,9 +770,9 @@ B = sin(pitch)  D = sin(yaw)  F = sin(roll)
 ROTATION AROUND ARBITARY AXIS
 ==============================================================================
 
-c = cos(Ɵ)
-s = sin(Ɵ)
-t = 1-cos(Ɵ)
+c = cos(Ө)
+s = sin(Ө)
+t = 1-cos(Ө)
 u = (x,y,z) = arbitary axis
 
               LEFT HANDED                       
@@ -789,7 +789,7 @@ u = (x,y,z) = arbitary axis
 
 
         ▲
-     u /  b               Rotate point P around arbitary axis u by Ɵ amount 
+     u /  b               Rotate point P around arbitary axis u by Ө amount 
       ▪-----►▪P(x,y,z)    
      /                    1) Create a basis B={â,b̂,ĉ} using u, b and u X b
   a /                           a = -projᵤw      a = norm(a)
@@ -800,11 +800,11 @@ u = (x,y,z) = arbitary axis
            ▼                    w = P - C = b + a = (wˣ,wʸ,wᶻ)
                                 wᵦ = ‖a‖̂a + ‖b‖̂b + 0̂c = (wᵦˣ,wᵦʸ,wᵦᶻ)
                                    
-  3) Rotate wᵦ around a by Ɵ using rotation matrix where wᵦ' is rotated vector
+  3) Rotate wᵦ around a by Ө using rotation matrix where wᵦ' is rotated vector
 
         |  1   0     0    0 || wᵦˣ |   | wᵦ'ˣ |
-        |  0  cosƟ -sinƟ  0 || wᵦʸ | = | wᵦ'ʸ | 
-        |  0  sinƟ  cosƟ  0 || wᵦᶻ |   | wᵦ'ᶻ |
+        |  0  cosӨ -sinӨ  0 || wᵦʸ | = | wᵦ'ʸ | 
+        |  0  sinӨ  cosӨ  0 || wᵦᶻ |   | wᵦ'ᶻ |
         |  0     0    0   1 || 0   |   |  0   | 
 
         wᵦ' = (wᵦ'ˣ,wᵦ'ʸ,wᵦ'ᶻ) = wᵦ'ˣ̂a + wᵦ'ʸ̂b + wᵦ'ᶻ̂c 
@@ -857,7 +857,7 @@ To transform into local space, use inverse matrix
 To transform into world space, use world matrix
 
 Vᵉˣᵗ = AVˡᵒᶜ    Express from local into external
-Vˡᵒᶜ = A¯¹Vᵉˣᵗ  Express from external into local
+Vˡᵒᶜ = Aˉ¹Vᵉˣᵗ  Express from external into local
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //SYSTEMS OF LINEAR EQUATIONS
@@ -870,7 +870,7 @@ ix + jy + kz = l    | i j k || z |   | l |
 
 We want v which is the intersection of all three equations
  ----------
-| v = A¯¹w |
+| v = Aˉ¹w |
  ----------
 
 ROW REDUCTION: Aim is to get Augmented matrix into Row/Row reduced Echelon form
@@ -955,19 +955,19 @@ COMPLEX RULES:
      (c² + d²)      (c² + d²)
   
 ====================================================================
-POLAR FORM [r(cosƟ + isinƟ)]
+POLAR FORM [r(cosӨ + isinӨ)]
 ====================================================================
 
 CONVERTING TO/FROM POLAR FORM:
 
     for v = x + yi:
     r = ‖v‖ = √(x² + y²)
-    x = ‖r‖cosƟ 
-    yi = i‖r‖sinƟ
+    x = ‖r‖cosӨ 
+    yi = i‖r‖sinӨ
 
-         -----------------------------------
-    ⁂  | x + yi = r(cosƟ + isinƟ) = r cis Ɵ |
-         -----------------------------------
+     -----------------------------------
+   | x + yi = r(cosӨ + isinӨ) = r cis Ө |
+     -----------------------------------
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //QUATERNIONS
@@ -1016,12 +1016,12 @@ of rotation to be added/subtracted from the rotation quarternion Q
 both quaternions should be unit and result in a unit quaternion
 
 CREATING THE LOCAL ROTATION
-    local_rotation.w  = cosf( Ɵ/2 )
-    local_rotation.x = axis.x * sinf( Ɵ/2 )
-    local_rotation.y = axis.y * sinf( Ɵ/2 )
-    local_rotation.z = axis.z * sinf( Ɵ/2 )
+    local_rotation.w  = cosf( Ө/2 )
+    local_rotation.x = axis.x * sinf( Ө/2 )
+    local_rotation.y = axis.y * sinf( Ө/2 )
+    local_rotation.z = axis.z * sinf( Ө/2 )
     where axis is a unit vector the rotation will occur around
-    Ɵ is the amount of rotation to occur
+    Ө is the amount of rotation to occur
     creates a unit quaternion
 
 GENERATE A MATRIX TO ROTATE POINTS
