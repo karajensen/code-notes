@@ -37,6 +37,7 @@ SORT/SEARCHING
 • Sorting Fastest-slowest: Partitions, partial_sort, sort, stable_sort
 • Require sort ascending, Search speed O(logN): binary_search, lower_bound, upper_bound, equal_range
 • Don't require sorting, Search speed O(N): count, count_if, find, find_if
+• std::sort must be any algorithm with O(NlogN), std::stable_sort must be stable with O(NlogN)
                     
 INSERTING
 • Algorithms that copy over a range can be changed to insert with back/front insert iterators

@@ -1,4 +1,27 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//INTERVIEW TOPICS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Algorithms/Structures:
+• Algorithm Complexity (Big-O)
+• Details of Quick Sort and Merge Sort
+• How to implement a Hash Table
+• Famous NP-complete problems: Traveling Salesman, Knapsack problem
+
+Trees:
+• Construction, implementation, traversal, manipulation algorithms
+• Binary Trees, n-ary Trees, Trie Trees, Red/Black Trees, Splay Trees
+• Difference between inorder, postorder, preorder
+
+Graphs:
+• 3 ways to represent in memory and pros and cons: objects/pointers, matrix, adjacency list
+• Breadth-First-Search and Depth-First-Search implementation and pros/cons
+
+Concurrency:
+• Locks, mutexes, semaphores, monitors and how they work
+• Know about deadlock and livelock and how to avoid them
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PROGRAMMING QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -10,13 +33,20 @@ A: A class that tries to do too much- classes should have one responsibility
    Discourages inheritance and extending the class and makes it complex to test and maintain
 
 Q: Why is the worldview inverse transpose matrix used to transform normals?
-A: If a non-uniform scale or shear is used on the model the normals will be incorrect if just using the worldview matrix
+A: If a non-uniform scale or shear is used on the model the normals 
+   will be incorrect if just using the worldview matrix
 
 Q: What is recursion, and what would normally happen if recursion went too deep?
 A: Calling the function within the function. Will cause stack overflow if going too deep.
 
 Q: What is an orthogonal matrix?
 A: Matrix where rows/columns are unit length, determinant is 1 and the transpose equals the inverse
+
+Q: Describe the difference between a breadth-first search and depth-first search?
+A: - BFS searches each row from left to right moving down to the children once the row has finished
+   - DFS searches down the parent-child heirarchy first and works its way back up
+   - BFS uses more memory than DFS as it has to keep track of children nodes
+   - BFS is less likely than DFS to get stuck in an infinite loop
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //C++ QUESTIONS
@@ -243,8 +273,9 @@ Q: Can any arbitrary class be made exception safe without modifying its structur
 A: No, exception safety affects the class design
 
 Q: What is design pattern that works on any class in order to give a near strong exception guarantee?
-A: Pimpl idiom allows a second object of the class to be constructed easily and then no-throw swap called on if no exceptions are thrown.
-   It is only a near guarantee as constructing a new member of the class may affect static or global variables.
+A: Pimpl idiom allows a second object of the class to be constructed easily and then no-throw swap 
+   called on if no exceptions are thrown. It is only a near guarantee as constructing a new member 
+   of the class may affect static or global variables.
 
 Q: What is multiple inheritance and what complication does it bring?
 A: The ability to inherit from more than one base class that isn't an interface.

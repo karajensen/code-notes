@@ -157,6 +157,9 @@
     <ClCompile Include="Languages\C++CLI.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
+    <ClCompile Include="Development\Interview Puzzles.txt">
+      <Filter>Development</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Cheatsheet.txt" />
@@ -367,9 +370,6 @@
     <Image Include="Images\Code - Amdahls Law.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Code - BigONotationGraph.png">
-      <Filter>Images</Filter>
-    </Image>
     <Image Include="Images\Code - Boxing.gif">
       <Filter>Images</Filter>
     </Image>
@@ -445,11 +445,28 @@
     <Image Include="Images\Code - dotNET pipeline.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Code - BigO Data Structures.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - BigO Graph Operations.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - BigO Heap Operations.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - BigO Notation Graph.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - BigO Sorting.png">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Questions.txt" />
     <Text Include="Languages\C# Notes.txt">
       <Filter>Languages</Filter>
+    </Text>
+    <Text Include="Development\Interview Questions.txt">
+      <Filter>Development</Filter>
     </Text>
   </ItemGroup>
 </Project>

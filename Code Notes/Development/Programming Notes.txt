@@ -98,6 +98,11 @@ ORDER OF EXPRESSION EVALUATION
 • Order is left to right where right is only done if left is true: if(left && right)
 • Doesn't work with bitwise operators
 
+CHARACTER ENCODING
+• ASCII Represents English characters as numbers from 0 to 127 in 1 byte
+• UTF-8 (Unicode) backward compatibly with ASCII and use 1 byte- other characters require 2-4 bytes
+• UTF-16 (Unicode) better when not using ASCII- can represent some characters with less memory than UTF-8
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //PROGRAM EXECUTION
 ////////////////////////////////////////////////////////////////////////////////////////////////////

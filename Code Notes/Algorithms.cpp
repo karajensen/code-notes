@@ -243,15 +243,6 @@ T ChangeRange(T value, T currentInner, T currentOuter, T newInner, T newOuter)
     return ((value-currentInner)*((newOuter-newInner)/(currentOuter-currentInner)))+newInner;
 }
 
-//CAP A VALUE
-template<typename T>T 
-CapValue(T value, T minValue, T maxValue)
-{
-    value = std::min(value, maxValue);
-    value = std::max(value, minValue);
-    return value;
-}
-
 //DEGREES/RADIANS CONVERSION
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -287,9 +278,6 @@ str1.size() == str2.size() &&
 std::equal(str1.begin(), str1.end(), str2.begin(), 
     [](char c1, char s2){ return toupper(c1) == toupper(c2); });
 
-//WINDOWS ERROR MESSAGE POPUP
-MessageBox(nullptr, TEXT(error), TEXT("ERROR"), MB_OK);
-
 //GET 1D INDEX FROM 2D COORD
 for(int x = 0; x < columns; ++x)
 {
@@ -319,6 +307,22 @@ int a = (color >> 24) & 0xFF;
 //copies into container: 1 1 2 3 5 8 13 21 34 55
 std::vector<int> v = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 std::adjacent_difference(v.begin(), v.end() - 1, v.begin() + 1, std::plus<int>());
+
+//GET FACTORIAL OF A NUMBER
+long FactorialRecursion(int n)
+{
+    return n == 0 ? 1 : n * FactorialRecursion(n-1);
+}
+
+long Factorial(int n)
+{
+    long result = 1;
+    for (int c = 1; c <= n; ++c)
+    {
+        result *= c;
+    }
+    return result;    
+}
 
 //SAFE RELEASE
 SafeRelease(&myPointer);

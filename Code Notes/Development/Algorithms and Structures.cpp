@@ -21,10 +21,10 @@ DISTRIBUTION SORT: Data is distributed to multiple intermediate structures
 ARRAY SORTING     AVG SPD     SPACE    DESCRIPTION
 ---------------------------------------------------------------------------------------------------------
 Quick Sort        O(NlogN)    O(N)     Comparison, Recursive, Unstable, Fastest average though can get worst speed of O(N²)
-Radix Sort        O(NK)       O(N+K)   Distribution, Can be stable, Works on arrays of numbers
-Bucket/Bin Sort   O(NK)       O(N+K)   Distribution, Can be stable, Partitions into buckets
 Heap Sort         O(NLogN)    O(1)     Comparison, In-place, Unstable, Removes top of heap and reconstructs
 Merge Sort        O(NlogN)    O(N)     Comparison, Recursive, Stable, Continually splits elements in half
+Radix Sort        O(NK)       O(N+K)   Distribution, Can be stable, Works on arrays of numbers
+Bucket/Bin Sort   O(NK)       O(N+K)   Distribution, Can be stable, Partitions into buckets
 Insertion Sort    O(N²)       O(1)     Comparison, In-place, Stable, Bad for large arrays
 Selection Sort    O(N²)       O(1)     Comparison, In-place, Can be stable, Bad for large arrays
 Bubble Sort       O(N²)       O(1)     Comparison, In-place, Stable, Swaps elements, Slowest of all sorts
@@ -75,55 +75,6 @@ void BubbleSort(std::vector<int>& values)
                 values[j + 1] = temporary;
             }
         }
-    }
-}
-
-/********************************************************************************
- RADIX SORT
- Sorts in ascending order
- 1) Find the maximum number
- 2) For each significant position in the maximum number (1, 10, 100...)
-    - Find the amount of occurances of each digit from the values and store in bucket
-    - Convert this amount to index positions for the sorted array
-    - Build the sorted array backwards changing the 
-      index position for a digit when a place is filled
-*********************************************************************************/
-void RadixSort(std::vector<int>& values)
-{
-    auto getDigit = [](int number, int position) { return number/position % 10; };
-
-    int max = *std::max_element(values.begin(), values.end());
-    std::array<int, 10> digitBucket;
-
-    // for each radix significant position in the maximum number (1, 10, 100...)
-    for (int position = 1; max/position > 0; position *= 10)
-    {
-        std::vector<int> sorted(values.size());
-        digitBucket.assign(0);
-
-        // Find amount of occurances of each digit
-        for (int i = 0; i < static_cast<int>(values.size()); ++i)
-        {
-            const int digit = getDigit(values[i], position);
-            digitBucket[digit]++;
-        }
-
-        // Convert this amount to index positions for the sorted array
-        for (int i = 1; i < static_cast<int>(digitBucket.size()); ++i)
-        {
-            digitBucket[i] += digitBucket[i - 1];
-        }
-        
-        // Build the sorted array backwards changing the index 
-        // position for a digit when a place is filled
-        for (int i = static_cast<int>(values.size())-1; i >= 0; --i)
-        {
-            const int digit = getDigit(values[i], position);
-            digitBucket[digit]--;
-            sorted[digitBucket[digit]] = values[i];
-        }
-        
-        std::copy(sorted.begin(), sorted.end(), values.begin());
     }
 }
 
@@ -481,5 +432,3 @@ A* [INFORMED SEARCH METHOD]
 - For all other direct nodes connected to this node, update its costs and move to the open list
 - Once all connected nodes are finished, add the parent node to the closed list
 - Continue until goal node or no solution is found 
-
-*////////////////////////////////////////////////////////////////////////////////////////////////////

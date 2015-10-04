@@ -98,6 +98,7 @@
     <ClCompile Include="Development\Algorithms and Structures.cpp" />
     <ClCompile Include="Development\Databases.sql" />
     <ClCompile Include="Development\Design Patterns.cpp" />
+    <ClCompile Include="Development\Interview Puzzles.txt" />
     <ClCompile Include="Development\Programming Notes.txt" />
     <ClCompile Include="Development\Software Development.txt" />
     <ClCompile Include="Development\Web Development.cpp" />
@@ -155,7 +156,11 @@
     <Image Include="Images\Code - Algorithms Sort Performance.png" />
     <Image Include="Images\Code - Algorithms Sort.png" />
     <Image Include="Images\Code - Amdahls Law.png" />
-    <Image Include="Images\Code - BigONotationGraph.png" />
+    <Image Include="Images\Code - BigO Data Structures.png" />
+    <Image Include="Images\Code - BigO Graph Operations.png" />
+    <Image Include="Images\Code - BigO Heap Operations.png" />
+    <Image Include="Images\Code - BigO Notation Graph.png" />
+    <Image Include="Images\Code - BigO Sorting.png" />
     <Image Include="Images\Code - Boxing.gif" />
     <Image Include="Images\Code - C# Operator Precedence.png" />
     <Image Include="Images\Code - C++ Operator Precedence.png" />
@@ -233,8 +238,8 @@
     <Image Include="Images\Shader - Texture Wrapping.png" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Development\Interview Questions.txt" />
     <Text Include="Languages\C# Notes.txt" />
-    <Text Include="Questions.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
