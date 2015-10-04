@@ -1,7 +1,7 @@
 ï»¿/////////////////////////////////////////////////////////////////////////////////////
 //CLASS METHODS
 /////////////////////////////////////////////////////////////////////////////////////
-                              
+
 //IMPLICIT MEMBERS    
 //created inline in header file
 MyClass();                               // default constructor
@@ -70,7 +70,7 @@ MyClass& operator=(MyClass&& obj)
 constexpr MyClass(int x = 0, int y = 0) : X(x), Y(x) {}
 
 //INITIALIZER LIST CONSTRUCTOR
-//• Take priority in overload when {} are used and implicit conversion can happen
+//ï¿½ Take priority in overload when {} are used and implicit conversion can happen
 MyClass(std::initializer_list<double> x) 
 {
     m_myVector.resize(x.size());
