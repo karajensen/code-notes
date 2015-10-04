@@ -70,7 +70,7 @@ MyClass& operator=(MyClass&& obj)
 constexpr MyClass(int x = 0, int y = 0) : X(x), Y(x) {}
 
 //INITIALIZER LIST CONSTRUCTOR
-//� Take priority in overload when {} are used and implicit conversion can happen
+//• Take priority in overload when {} are used and implicit conversion can happen
 MyClass(std::initializer_list<double> x) 
 {
     m_myVector.resize(x.size());
