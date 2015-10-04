@@ -1,30 +1,30 @@
-/////////////////////////////////////////////////////////////////////////////////////////////////
+ï»¿/////////////////////////////////////////////////////////////////////////////////////////////////
 //C++/CLI NOTES
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /*
 
 NATIVE/MANAGED
-• C# can see C++/CLI code, Pure C++ cannot and needs a native interface
-• C# include as reference, Pure C++ include native header and ensure dll is in exe directory
+â€¢ C# can see C++/CLI code, Pure C++ cannot and needs a native interface
+â€¢ C# include as reference, Pure C++ include native header and ensure dll is in exe directory
 
 VALUE-TYPES
-• Can be both class/struct, stored on stack/registers
-• Can't have user-defined destructors, constructors, ass.operators
-• Can't define default constructor- values zero-ed automatically
-• Auto inherits System::ValueType and cannot inherit any other base, can derive multiple interfaces
-• If using stack semantics, cannot be delegate, array or System::String
+â€¢ Can be both class/struct, stored on stack/registers
+â€¢ Can't have user-defined destructors, constructors, ass.operators
+â€¢ Can't define default constructor- values zero-ed automatically
+â€¢ Auto inherits System::ValueType and cannot inherit any other base, can derive multiple interfaces
+â€¢ If using stack semantics, cannot be delegate, array or System::String
 
 REFERENCE-TYPES
-• Can be both class/struct, stored on heap
-• Support all contructors including static constructors
-• Auto derives from System::object if no other base given, can derive multiple interfaces
+â€¢ Can be both class/struct, stored on heap
+â€¢ Support all contructors including static constructors
+â€¢ Auto derives from System::object if no other base given, can derive multiple interfaces
 
 CLASSES/STRUCTS
-• Can be both value-type and reference-type
-• Implicit members: default/static constructor, finaliser, System.Object members, operator==(Class Only)
-• Struct members default is public, Class members default is private, overall default visibility is internal
-• No friend functions allowed (includes c++ lambdas)
-• No support for Multiple Inheritance; use multiple interfaces instead
+â€¢ Can be both value-type and reference-type
+â€¢ Implicit members: default/static constructor, finaliser, System.Object members, operator==(Class Only)
+â€¢ Struct members default is public, Class members default is private, overall default visibility is internal
+â€¢ No friend functions allowed (includes c++ lambdas)
+â€¢ No support for Multiple Inheritance; use multiple interfaces instead
 
 CLASS OBJECT CREATION:
 1) Derived Initialisation List
@@ -35,32 +35,32 @@ CLASS OBJECT CREATION:
 6) Base Desctructor or Base Finaliser
 
 HANDLES
-• Can be used by native/managed code
-• Native equivalent is pointer (*)
-• Uses ^ to point to managed objects on CLI heap
-• Uses gcnew(), doesn't need delete as garbage collection takes care of it
-• If object is moved by garbage collection, address referred to is changed to stay with object
-• Can't convert to or from void^
-• No handle arithmatic
-• Dereferences using * and ->
+â€¢ Can be used by native/managed code
+â€¢ Native equivalent is pointer (*)
+â€¢ Uses ^ to point to managed objects on CLI heap
+â€¢ Uses gcnew(), doesn't need delete as garbage collection takes care of it
+â€¢ If object is moved by garbage collection, address referred to is changed to stay with object
+â€¢ Can't convert to or from void^
+â€¢ No handle arithmatic
+â€¢ Dereferences using * and ->
 
 TRACKING REFERENCES
-• Can be used by native code
-• Native equivalent is reference/address-of operator (&)
-• Uses % to refer to managed objects on CLI heap
-• Uses % to get address of the object to store into handle
-• If object is moved by garbage collection, address referred to is changed to stay with object
+â€¢ Can be used by native code
+â€¢ Native equivalent is reference/address-of operator (&)
+â€¢ Uses % to refer to managed objects on CLI heap
+â€¢ Uses % to get address of the object to store into handle
+â€¢ If object is moved by garbage collection, address referred to is changed to stay with object
 
 GCNEW
-• Returns handle ^ to newly created object on CLR heap
-• Has no array or placement form
-• Can't be overloaded
-• Throws System::OutOfMemoryException if can't allocate
-• If used on a value-type, will create object on stack, box it and return hangle to boxed object on heap
+â€¢ Returns handle ^ to newly created object on CLR heap
+â€¢ Has no array or placement form
+â€¢ Can't be overloaded
+â€¢ Throws System::OutOfMemoryException if can't allocate
+â€¢ If used on a value-type, will create object on stack, box it and return hangle to boxed object on heap
 
 STRINGS
-• System::String is equivalent to native wchar_t*
-• System::String is interned- for each occurrence of a particular string only occurs once
+â€¢ System::String is equivalent to native wchar_t*
+â€¢ System::String is interned- for each occurrence of a particular string only occurs once
   in memory and can be referenced by multiple variables. Dangerous to change the values of a 
   pointer to System::string as it might change other references
 

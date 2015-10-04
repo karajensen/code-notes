@@ -95,7 +95,6 @@
     <ClCompile Include="Code Examples\Example - MEL Special Shatter.cpp" />
     <ClCompile Include="Code Notes.txt" />
     <ClCompile Include="Code.cpp" />
-    <ClCompile Include="Development\Algorithms and Structures.cpp" />
     <ClCompile Include="Development\Databases.sql" />
     <ClCompile Include="Development\Design Patterns.cpp" />
     <ClCompile Include="Development\Interview Puzzles.txt" />
@@ -238,6 +237,7 @@
     <Image Include="Images\Shader - Texture Wrapping.png" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Development\Algorithms and Structures.txt" />
     <Text Include="Development\Interview Questions.txt" />
     <Text Include="Languages\C# Notes.txt" />
   </ItemGroup>

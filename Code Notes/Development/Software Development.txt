@@ -1,36 +1,36 @@
-/////////////////////////////////////////////////////////////////////////////////////////
+ï»¿/////////////////////////////////////////////////////////////////////////////////////////
 //SOFTWARE DEVELOPMENT
 /////////////////////////////////////////////////////////////////////////////////////////
 
 AGILE
-• Uses self-organizing teams
-• Uses time-boxed iterative approach
-• Encourages rapid and flexible response to change
-• Each iteration involves one team working on planning, design, coding and testing
-• At end of each iteration product is demonstrated to stakeholders
-• Goal is to have an available release at the end of each iteration
-• Have a daily standup or daily scrum meeting 
+â€¢ Uses self-organizing teams
+â€¢ Uses time-boxed iterative approach
+â€¢ Encourages rapid and flexible response to change
+â€¢ Each iteration involves one team working on planning, design, coding and testing
+â€¢ At end of each iteration product is demonstrated to stakeholders
+â€¢ Goal is to have an available release at the end of each iteration
+â€¢ Have a daily standup or daily scrum meeting 
 
 SCRUM
-• Product Owner: represents the stakeholders; ensures team delivers value to business
-• Product Owner writes user stories, prioritizes and adds them to the backlog
-• ScrumMaster: acts as buffer between team and any problems, not the team leader
-• Stakeholders: customers of the product
-• Scrum of scrums: team representitives have a 'standup' meeting
-• Retrospective to reflect on how the iteration went
+â€¢ Product Owner: represents the stakeholders; ensures team delivers value to business
+â€¢ Product Owner writes user stories, prioritizes and adds them to the backlog
+â€¢ ScrumMaster: acts as buffer between team and any problems, not the team leader
+â€¢ Stakeholders: customers of the product
+â€¢ Scrum of scrums: team representitives have a 'standup' meeting
+â€¢ Retrospective to reflect on how the iteration went
 
 /////////////////////////////////////////////////////////////////////////////////////////
 //WINDOWS DEVELOPMENT
 /////////////////////////////////////////////////////////////////////////////////////////
 
 4 APPLICATION TYPES:
-• Console applications
-• Windows applications
+â€¢ Console applications
+â€¢ Windows applications
     - Windows Forms
     - Win32 Applications
     - WPF Applications
-• ASP.NET applications
-• Web Services
+â€¢ ASP.NET applications
+â€¢ Web Services
 
 FUSLOGVW.EXE:
 Displays details for failed assembly binds. Allows diagnosing why .NET framework
@@ -49,16 +49,16 @@ $(Configuration)
 //MAC DEVELOPMENT
 /////////////////////////////////////////////////////////////////////////////////////////
 
-• Code in C++/Objective-C
-• Use Xcode for IDE and Cocoa for framework
-• Graphics API is OpenGL
+â€¢ Code in C++/Objective-C
+â€¢ Use Xcode for IDE and Cocoa for framework
+â€¢ Graphics API is OpenGL
 
 /////////////////////////////////////////////////////////////////////////////////////////
 //ANDRIOD DEVELOPMENT
 /////////////////////////////////////////////////////////////////////////////////////////
 
-• Code in Java (SDK) or C++ (NDK)
-• Graphics API is OpenGL ES (embedded)
+â€¢ Code in Java (SDK) or C++ (NDK)
+â€¢ Graphics API is OpenGL ES (embedded)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 //GIT SOURCE CONTROL

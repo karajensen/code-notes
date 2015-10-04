@@ -1,4 +1,4 @@
-/*/////////////////////////////////////////////////////////////////////////////////////////////////
+ï»¿/*/////////////////////////////////////////////////////////////////////////////////////////////////
 //DATABASES
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -11,27 +11,27 @@ SNAPSHOT: Read-only, static view of a database
 SUBQUERY: Connect one or more queries together; query more than one table at a time
 
 COLUMN TYPES
-• Raw data columns store specific data
-• Categorical columns classify/group the data
-• Identifier columns provide an ID 
-• Relational/referential columns create a link between tables
+â€¢ Raw data columns store specific data
+â€¢ Categorical columns classify/group the data
+â€¢ Identifier columns provide an ID 
+â€¢ Relational/referential columns create a link between tables
 
 FILEGROUP
-• Has primary, secondary and log files assigned to it
-• These files an be duplicated across multiple drives and accessed through the one filegroup
-• Can have multiple filegroups
+â€¢ Has primary, secondary and log files assigned to it
+â€¢ These files an be duplicated across multiple drives and accessed through the one filegroup
+â€¢ Can have multiple filegroups
 
 PRIMARY FILE (.MDF)
-• Contains the startup information for the database and points to the other files in the database
-• Can store user data and objects if secondary file not used
+â€¢ Contains the startup information for the database and points to the other files in the database
+â€¢ Can store user data and objects if secondary file not used
 
 SECDONARY FILE (.NDF)
-• Multiple, optional, user-defined and store user data and objects
+â€¢ Multiple, optional, user-defined and store user data and objects
 
 LOG FILE (.LDF)
-• Contain the information that is required to recover all transactions in the database
-• Allows recovery/rollback of the database to a stable state
-• Required for database mirroring
+â€¢ Contain the information that is required to recover all transactions in the database
+â€¢ Allows recovery/rollback of the database to a stable state
+â€¢ Required for database mirroring
 
 --------------------------------------------------------------------------------------------------
 DATABASE STATES
@@ -59,42 +59,42 @@ DEFUNCT             The file was dropped when it was not online
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 SQL SERVER
-• Database management system (DBMS) containing 5 system databases that are used to manage user-created databases
-• Maximum of 32,767 databases can be created on an instance of SQL Server
+â€¢ Database management system (DBMS) containing 5 system databases that are used to manage user-created databases
+â€¢ Maximum of 32,767 databases can be created on an instance of SQL Server
 
 MASTER DATABASE
-• Records all the system-level information for an instance of SQL Server
-• Logon accounts, endpoints, linked servers, system configuration settings
-• Records location of all other databases
+â€¢ Records all the system-level information for an instance of SQL Server
+â€¢ Logon accounts, endpoints, linked servers, system configuration settings
+â€¢ Records location of all other databases
 
 MODEL DATABASE
-• Template for all databases created
-• For any changes all databases created afterward will inherit those changes
+â€¢ Template for all databases created
+â€¢ For any changes all databases created afterward will inherit those changes
     
 MSDB DATABASE
-• Scheduling alerts, mail and jobs
+â€¢ Scheduling alerts, mail and jobs
 
 RESOURCE DATABASE
-• Read-only database that contains all the system objects
-• Makes upgrading to new version of SQL Server easier/faster
+â€¢ Read-only database that contains all the system objects
+â€¢ Makes upgrading to new version of SQL Server easier/faster
 
 TEMPDB
-• Global resource that is available to all users connected to the instance of SQL Server
-• Holds temporary objects such as global and local temporary tables and stored procedures
-• Recreated every time SQL Server starts
+â€¢ Global resource that is available to all users connected to the instance of SQL Server
+â€¢ Holds temporary objects such as global and local temporary tables and stored procedures
+â€¢ Recreated every time SQL Server starts
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //DATABASE DESIGN
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 DESIGN RULES
-• Each table should have an primary key column where each row has a unique value
-• A table should avoid nullable columns as they increase complexity of operations
+â€¢ Each table should have an primary key column where each row has a unique value
+â€¢ A table should avoid nullable columns as they increase complexity of operations
 
 DATA NORMALIZATION
-• Goal is to achieve several narrow tables with few columns by applying the normalization forms
-• Too much and number and complexity of joins will increase reducing performance
-• A good amount improves performance
+â€¢ Goal is to achieve several narrow tables with few columns by applying the normalization forms
+â€¢ Too much and number and complexity of joins will increase reducing performance
+â€¢ A good amount improves performance
     - Faster sorting and index creation
     - Fewer indexes per table improving performance of INSERT, UPDATE and DELETE statements
     - Fewer null values and less opportunity for inconsistency
@@ -104,31 +104,31 @@ DATA NORMALIZATION
 3RD NORMAL FORM: All non-key entries must depend only the primary key and not on another non-key entry
 
 DATA INTEGRITY
-• Entity integrity: enforces Identifier columns to have unique values within a table
-• Domain integrity: enforces particular data types for a column
-• User-defined integrity: user created column and table rules
-• Referential integrity: ensures relationship between tables remains constant
+â€¢ Entity integrity: enforces Identifier columns to have unique values within a table
+â€¢ Domain integrity: enforces particular data types for a column
+â€¢ User-defined integrity: user created column and table rules
+â€¢ Referential integrity: ensures relationship between tables remains constant
     - Cannot add entry to the child table with a foreign key unless the parent table has it
     - Prevents changing parent table values that will create orphaned rows in the child table 
     - Prevents deleting parent table rows that are in the child table
 
 DATABASE KEYS
-• Primary Key: One or more columns holding a unique id for the table, cannot be null
-• Foreign Key: Column used to create parent-child relationships between tables
-• Clustered Key: Sorts the rows by column with it, only one per table, defaults to primary key
-• Composite Key: When there are two primary keys
+â€¢ Primary Key: One or more columns holding a unique id for the table, cannot be null
+â€¢ Foreign Key: Column used to create parent-child relationships between tables
+â€¢ Clustered Key: Sorts the rows by column with it, only one per table, defaults to primary key
+â€¢ Composite Key: When there are two primary keys
 
 EXTENDED PROPERTIES
-• Should not contain sensitive information
-• Used for captions, input masks for querying data, formatting rules, size/window location for display
+â€¢ Should not contain sensitive information
+â€¢ Used for captions, input masks for querying data, formatting rules, size/window location for display
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //STRUCTURED QUERY LANGUAGE (SQL)
 //////////////////////////////////////////////////////////////////////////////////////////////////
-• Not case sensitive- use [] if using a name that's also a keyword
-• Data Definition Language (DDL): Used to define the database structure, cannot be undone
-• Data Manipulation Language (DML): Used to managing data, can be undone
-• Syntax chosen mostly from SQL server, other DBMS can have different
+â€¢ Not case sensitive- use [] if using a name that's also a keyword
+â€¢ Data Definition Language (DDL): Used to define the database structure, cannot be undone
+â€¢ Data Manipulation Language (DML): Used to managing data, can be undone
+â€¢ Syntax chosen mostly from SQL server, other DBMS can have different
 */
  
 /*TYPE		           BYTES     RANGE*/
@@ -212,9 +212,9 @@ DELETE FROM MyTable WHERE MyColumn=value;           /*delete entry if column hol
 .. WHERE .. ORDER BY .. /*after WHERE or standalone*/
 
 /*GROUPING*/
-/*• sort groups of data calculated by an aggregate function
-  • When using one or more aggregate function, must have group by
-  • All column names except names used in aggregate/alias must be in GROUP BY clause*/
+/*â€¢ sort groups of data calculated by an aggregate function
+  â€¢ When using one or more aggregate function, must have group by
+  â€¢ All column names except names used in aggregate/alias must be in GROUP BY clause*/
 SELECT Count(MyColumn1), MyColumn2 FROM MyTable GROUP BY MyColumn2
 
 /*GROUP FILTERING*/

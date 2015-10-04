@@ -1,25 +1,25 @@
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ï»¿/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INTERVIEW TOPICS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Algorithms/Structures:
-• Algorithm Complexity (Big-O)
-• Details of Quick Sort and Merge Sort
-• How to implement a Hash Table
-• Famous NP-complete problems: Traveling Salesman, Knapsack problem
+â€¢ Algorithm Complexity (Big-O)
+â€¢ Details of Quick Sort and Merge Sort
+â€¢ How to implement a Hash Table
+â€¢ Famous NP-complete problems: Traveling Salesman, Knapsack problem
 
 Trees:
-• Construction, implementation, traversal, manipulation algorithms
-• Binary Trees, n-ary Trees, Trie Trees, Red/Black Trees, Splay Trees
-• Difference between inorder, postorder, preorder
+â€¢ Construction, implementation, traversal, manipulation algorithms
+â€¢ Binary Trees, n-ary Trees, Trie Trees, Red/Black Trees, Splay Trees
+â€¢ Difference between inorder, postorder, preorder
 
 Graphs:
-• 3 ways to represent in memory and pros and cons: objects/pointers, matrix, adjacency list
-• Breadth-First-Search and Depth-First-Search implementation and pros/cons
+â€¢ 3 ways to represent in memory and pros and cons: objects/pointers, matrix, adjacency list
+â€¢ Breadth-First-Search and Depth-First-Search implementation and pros/cons
 
 Concurrency:
-• Locks, mutexes, semaphores, monitors and how they work
-• Know about deadlock and livelock and how to avoid them
+â€¢ Locks, mutexes, semaphores, monitors and how they work
+â€¢ Know about deadlock and livelock and how to avoid them
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PROGRAMMING QUESTIONS

@@ -1,10 +1,10 @@
-////////////////////////////////////////////////////////////////////////////////////////////
+ï»¿////////////////////////////////////////////////////////////////////////////////////////////
 //UNITY SCRIPTS
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-// • Before Starting: Preferences -> Editor -> Visible Meta Files for Source Control
-// • Statics are shared between scenes
-// • GameObjects are destroyed between scenes (including statics) unless specified not to
+// â€¢ Before Starting: Preferences -> Editor -> Visible Meta Files for Source Control
+// â€¢ Statics are shared between scenes
+// â€¢ GameObjects are destroyed between scenes (including statics) unless specified not to
 
 using UnityEngine;
 using UnityEditor; // For adding GUI items

@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////
+ï»¿////////////////////////////////////////////////////////////////////////////////////////////
 //IENUMERABLE
 ////////////////////////////////////////////////////////////////////////////////////////////
 // LINQ queries can be used on containers that supports IEnumerable<T> interface
@@ -140,10 +140,10 @@ myArrayList.Add("myObject")
 ////////////////////////////////////////////////////////////////////////////////////////////
 //LISTS
 ////////////////////////////////////////////////////////////////////////////////////////////
-//• Dynamically resizes, memory layout same as std::vector
-//• Inheritance: List<T> -> IList<T> -> ICollection<T> -> IEnumerable<T>
-//• Does not have virtual methods for Add/Remove as it was designed to be fast
-//• Inherit from ICollection<T> not IList<T> due to no virtual methods
+//â€¢ Dynamically resizes, memory layout same as std::vector
+//â€¢ Inheritance: List<T> -> IList<T> -> ICollection<T> -> IEnumerable<T>
+//â€¢ Does not have virtual methods for Add/Remove as it was designed to be fast
+//â€¢ Inherit from ICollection<T> not IList<T> due to no virtual methods
 
 List<int> myList = new List<int>();
 List<int> myList = new List<int>(20); //reserve space for 20 elements
@@ -172,10 +172,10 @@ myList.BinarySearch(myItem) //returns index of first element found or < 0 if not
 ////////////////////////////////////////////////////////////////////////////////////////////
 //DICTIONARY
 ////////////////////////////////////////////////////////////////////////////////////////////
-//• Dictionary<K,V> -> IDictionary<K,V> -> ICollection<KeyValuePair<K,V>> -> IEnumerable<KeyValuePair<K,V>>
-//• Relies on hash keys for fast lookup
-//• No duplicate keys, value can be multiple
-//• Faster, less storage used than sorted variations
+//â€¢ Dictionary<K,V> -> IDictionary<K,V> -> ICollection<KeyValuePair<K,V>> -> IEnumerable<KeyValuePair<K,V>>
+//â€¢ Relies on hash keys for fast lookup
+//â€¢ No duplicate keys, value can be multiple
+//â€¢ Faster, less storage used than sorted variations
 
 var myD = new Dictionary<key, value>()
 var myD = new Dictionary<key, value>(20) //gives capacity of 20 key/value pairs
@@ -202,13 +202,13 @@ myD.Remove(key) //returns true if key/value pair found and successfully removed
 myD.TryGetValue(key, out result) //if key exists uses value else default for type into result; returns true if key found
 
 //SORTED DICTIONARY
-//• Always remains sorted, doesn't use hash keys
-//• Inserting/removing inexpensive as using tree structure for sorting
+//â€¢ Always remains sorted, doesn't use hash keys
+//â€¢ Inserting/removing inexpensive as using tree structure for sorting
 var mySD = new SortedDictionary<key, value>()
 
 //SORTED LIST
-//• Always remains sorted, doesn't use hash keys
-//• Inserting/removing items expensive as have to update key/value lists
+//â€¢ Always remains sorted, doesn't use hash keys
+//â€¢ Inserting/removing items expensive as have to update key/value lists
 var mySL = new SortedList<key, value>()
 mySL.Keys //returns IList<K> with the keys sorted in ascending order
 mySL.Values //returns IList<V> with the values sorted in ascending order
@@ -216,9 +216,9 @@ mySL.Values //returns IList<V> with the values sorted in ascending order
 ////////////////////////////////////////////////////////////////////////////////////////////
 //LINKED LISTS
 ////////////////////////////////////////////////////////////////////////////////////////////
-//• Each node in list is a double-linked LinkedListNode<T>
-//• Memory seperated and each member has reference to next
-//• No random access
+//â€¢ Each node in list is a double-linked LinkedListNode<T>
+//â€¢ Memory seperated and each member has reference to next
+//â€¢ No random access
 
 var myList = new LinkedList<T>()
 
@@ -240,8 +240,8 @@ myList.RemoveLast() //removes last item from the list
 ////////////////////////////////////////////////////////////////////////////////////////////
 //SETS
 ////////////////////////////////////////////////////////////////////////////////////////////
-//• Inheritance: HashSet<T>/SortedSet<T> -> ISet<T> -> ICollection<T> -> IEnumerable<T>
-//• Dynamically resizes, memory layout same as std::vector
+//â€¢ Inheritance: HashSet<T>/SortedSet<T> -> ISet<T> -> ICollection<T> -> IEnumerable<T>
+//â€¢ Dynamically resizes, memory layout same as std::vector
 
 var myHS = new HashSet<T>() //uses hash based lookup, faster insertion
 var mySS = new SortedSet<T>() //values sorted in ascending order, slower insertion

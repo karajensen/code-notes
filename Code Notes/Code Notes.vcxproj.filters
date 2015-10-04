@@ -82,9 +82,6 @@
     <ClCompile Include="Templates.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Development\Algorithms and Structures.cpp">
-      <Filter>Development</Filter>
-    </ClCompile>
     <ClCompile Include="Code Examples\Classes\timer.cpp">
       <Filter>Development\Classes</Filter>
     </ClCompile>
@@ -466,6 +463,9 @@
       <Filter>Languages</Filter>
     </Text>
     <Text Include="Development\Interview Questions.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Algorithms and Structures.txt">
       <Filter>Development</Filter>
     </Text>
   </ItemGroup>

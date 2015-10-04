@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////
+ï»¿////////////////////////////////////////////////////////////////////////////////////////////
 //VARIABLESs
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -285,14 +285,14 @@ public class Base {}
 public class Derived : Base {}
 
 //COVARIANCE IN DELEGATES
-//• Allows delegate to accept a method which returns a higher derived type than delegate defines
+//â€¢ Allows delegate to accept a method which returns a higher derived type than delegate defines
 
 public delegate Base MyDelegate(); //Delegate signature
 public static void Derived MyFunction();
 MyDelegate myDel = MyFunction; //Accepts despite requiring return to be Base
 
 //CONTRAVARIANCE IN DELEGATES
-//• Allows delegate to accept a method which has parameters of a lower derived type than delegate defines
+//â€¢ Allows delegate to accept a method which has parameters of a lower derived type than delegate defines
 
 public delegate void MyDelegate(Derived d); //Delegate signature
 public static void MyFunction(Base b);

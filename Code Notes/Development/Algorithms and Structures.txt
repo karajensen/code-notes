@@ -1,16 +1,15 @@
 ﻿////////////////////////////////////////////////////////////////////////////////////////////////////
 //ALGORITHMS AND STRUCTURES
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
 
 BIG-O NOTATION:
-Used to describe the performance of algorithm based on item amount
-O(1) = constant time; doesn't depend on number of items
-O(N) = linear time; depends on nummber of items using a power-of curve
-O(logN) = logarithmic time; depends on the number of items using a log curve
-N = Elements/Vertices
-E = Edges connecting elements
-K = Algorithm implementation dependent constant
+• Used to describe the performance of algorithm based on item amount
+• O(1) = constant time; doesn't depend on number of items
+• O(N) = linear time; depends on nummber of items using a power-of curve
+• O(logN) = logarithmic time; depends on the number of items using a log curve
+• N = Elements/Vertices
+• E = Edges connecting elements
+• K = Algorithm implementation dependent constant
 
 IN-PLACE ALGORITHM: Transforms input using a data structure with a small, constant amount of storage space
 STABLE SORT: Maintains the original order of equal elements
@@ -55,12 +54,12 @@ B-Tree             O(logN)   O(logN)   O(logN)    O(logN)   Tree with more than 
 //SEARCH/SORT ALGORITHMS
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/********************************************************************************
- BUBBLE SORT
- Sorts in ascending order
- 1) Iterate through array once for every value
- 2) Each iteration, check two neighbouring values and swap largest to right
-*********************************************************************************/
+=====================================================================================================
+BUBBLE SORT
+Sorts in ascending order
+1) Iterate through array once for every value
+2) Each iteration, check two neighbouring values and swap largest to right
+=====================================================================================================
 void BubbleSort(std::vector<int>& values)
 {
     int temporary = 0;
@@ -78,12 +77,17 @@ void BubbleSort(std::vector<int>& values)
     }
 }
 
-/********************************************************************************
- QUICK SORT
- Sorts in ascending order
- 1) Partition the container to values lower than pivot and values higher
- 2) For each partition created, repeat step one if there are values
-*********************************************************************************/
+=====================================================================================================
+MERGE SORT
+=====================================================================================================
+
+
+=====================================================================================================
+QUICK SORT
+Sorts in ascending order
+1) Partition the container to values lower than pivot and values higher
+2) For each partition created, repeat step one if there are values
+=====================================================================================================
 void QuickSort(std::vector<int>& values, int minIndex, int maxIndex)
 {
     int p2MinIndex = minIndex;
@@ -124,13 +128,13 @@ void QuickSort(std::vector<int>& values, int minIndex, int maxIndex)
     }
 }
 
-/********************************************************************************
- BINARY SEARCH
- Requires ascending sort. Swap end/start assignment in loop for descending sort.
- 1) Look at middle value and check if required value
- 2) If target is higher, get middle value of upper section
- 3) If target is lower, get middle value of lower section
-*********************************************************************************/
+=====================================================================================================
+BINARY SEARCH
+Requires ascending sort. Swap end/start assignment in loop for descending sort.
+1) Look at middle value and check if required value
+2) If target is higher, get middle value of upper section
+3) If target is lower, get middle value of lower section
+=====================================================================================================
 bool BinarySearch(std::vector<int>& values, int searchvalue)
 {
     int start = 0;
@@ -156,15 +160,15 @@ bool BinarySearch(std::vector<int>& values, int searchvalue)
     return false;
 }
 
-/********************************************************************************
- BREADTH FIRST SEARCH
- 1) Add root to a queue
- 2) While the queue is not empty:
-    - Pop the front of the queue and check if goal node
-    - If not, add all children to the end of the queue
- Advantage: Less likely to get stuck in infinite loop
- Disadvantage: Slower, all nodes kept in memory
-*********************************************************************************/
+=====================================================================================================
+BREADTH FIRST SEARCH
+1) Add root to a queue
+2) While the queue is not empty:
+   - Pop the front of the queue and check if goal node
+   - If not, add all children to the end of the queue
+Advantage: Less likely to get stuck in infinite loop
+Disadvantage: Slower, all nodes kept in memory
+=====================================================================================================
 bool BreadthFirstSearch(Node& root, int searchvalue)
 {
     std::queue<const Node*> searchqueue;
@@ -190,15 +194,15 @@ bool BreadthFirstSearch(Node& root, int searchvalue)
     return false;
 }
 
-/********************************************************************************
- DEPTH FIRST SEARCH
- 1) Add root to a stack
- 2) While the stack is not empty:
-    - Pop the top of the stack and check if goal node
-    - If not, add all children to the top of the stack
- Advantage: Faster, less nodes kept in memory
- Disadvantage: Possibility of getting into an infinite loop 
-*********************************************************************************/
+=====================================================================================================
+DEPTH FIRST SEARCH
+1) Add root to a stack
+2) While the stack is not empty:
+   - Pop the top of the stack and check if goal node
+   - If not, add all children to the top of the stack
+Advantage: Faster, less nodes kept in memory
+Disadvantage: Possibility of getting into an infinite loop 
+=====================================================================================================
 bool DepthFirstSearch(Node& root, int searchvalue)
 {
     std::stack<const Node*> searchstack;
@@ -227,7 +231,7 @@ bool DepthFirstSearch(Node& root, int searchvalue)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //HASH TABLES
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
+
 • Expensive to expand- all object's IDs must be changed
 • Objects inside cannot be ordered easily
 • Copying table is slow
