@@ -1,13 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Game Programming">
-      <UniqueIdentifier>{56332ae5-5b17-4582-8cae-a2112a12f7df}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Languages">
       <UniqueIdentifier>{89a625b0-f51a-450f-b16f-c2724f0b99a1}</UniqueIdentifier>
     </Filter>
@@ -17,14 +10,17 @@
     <Filter Include="Images">
       <UniqueIdentifier>{d5246f57-2735-4357-a353-33eb12eb8d89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Languages\Examples">
-      <UniqueIdentifier>{d7791879-ac81-42b7-8093-357ed87496f9}</UniqueIdentifier>
+    <Filter Include="Examples">
+      <UniqueIdentifier>{3fc63a6a-8dd1-4823-b8af-1607ad736d4e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Development\Classes">
-      <UniqueIdentifier>{e36ef539-6dea-4f46-8d29-475cf275745e}</UniqueIdentifier>
+    <Filter Include="Code">
+      <UniqueIdentifier>{068b9dfb-1996-436b-875b-3f0b8de9ad44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Languages\C++CLI.cpp">
+      <Filter>Languages</Filter>
+    </ClCompile>
     <ClCompile Include="Languages\Maxscript forms.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
@@ -58,122 +54,60 @@
     <ClCompile Include="Languages\Python modules.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
-    <ClCompile Include="Algorithms.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Boost.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Class.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Code.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Memory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="STL Containers.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="STL.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Templates.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Code Examples\Classes\timer.cpp">
-      <Filter>Development\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Code Examples\Example - MEL Special Shatter.cpp">
-      <Filter>Languages\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Code Examples\Example - Maya API Command.cpp">
-      <Filter>Languages\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Code Examples\Example - Maya API Locator.cpp">
-      <Filter>Languages\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Code Examples\Example - Maya API Node.cpp">
-      <Filter>Languages\Examples</Filter>
-    </ClCompile>
     <ClCompile Include="Languages\Python.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
-    <ClCompile Include="Development\Databases.sql">
+    <ClCompile Include="Examples\Example - Maya API Command.cpp">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\Example - Maya API Locator.cpp">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\Example - Maya API Node.cpp">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\Example - MEL Special Shatter.cpp">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Design Patterns.cpp">
+      <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="Development\Shaders.cpp">
       <Filter>Development</Filter>
     </ClCompile>
     <ClCompile Include="Development\Web Development.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Shaders.cpp">
-      <Filter>Game Programming</Filter>
+    <ClCompile Include="Code\Algorithms.cpp">
+      <Filter>Code</Filter>
     </ClCompile>
-    <ClCompile Include="Code Notes.txt">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Code\Boost.cpp">
+      <Filter>Code</Filter>
     </ClCompile>
-    <ClCompile Include="STL Notes.txt">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Code\Class.cpp">
+      <Filter>Code</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Lighting.txt">
-      <Filter>Game Programming</Filter>
+    <ClCompile Include="Code\Code.cpp">
+      <Filter>Code</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Maths.txt">
-      <Filter>Game Programming</Filter>
+    <ClCompile Include="Code\Memory.cpp">
+      <Filter>Code</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Mental Ray.txt">
-      <Filter>Game Programming</Filter>
+    <ClCompile Include="Code\STL Containers.cpp">
+      <Filter>Code</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Physics.txt">
-      <Filter>Game Programming</Filter>
+    <ClCompile Include="Code\STL.cpp">
+      <Filter>Code</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\Rendering.txt">
-      <Filter>Game Programming</Filter>
+    <ClCompile Include="Code\Templates.cpp">
+      <Filter>Code</Filter>
     </ClCompile>
-    <ClCompile Include="Game Programming\RenderEngines.cpp">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Programming\Simulation.txt">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Programming\Texture.txt">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Programming\Collisions.txt">
-      <Filter>Game Programming</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Programming Notes.txt">
-      <Filter>Development</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Software Development.txt">
-      <Filter>Development</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Design Patterns.cpp">
-      <Filter>Development</Filter>
-    </ClCompile>
-    <ClCompile Include="Languages\C++CLI.cpp">
-      <Filter>Languages</Filter>
-    </ClCompile>
-    <ClCompile Include="Development\Interview Puzzles.txt">
+    <ClCompile Include="Development\Render Engines.cpp">
       <Filter>Development</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Cheatsheet.txt" />
-    <None Include="Hotkeys.txt" />
     <None Include="..\.gitignore" />
-    <None Include="Code Examples\Example - Maxscript Convex Hull.ms">
-      <Filter>Languages\Examples</Filter>
-    </None>
-    <None Include="Code Examples\Example - PyQt Creating Window in Designer.py">
-      <Filter>Languages\Examples</Filter>
-    </None>
-    <None Include="Code Examples\Example - PyQt Creating Window In Maya.py">
-      <Filter>Languages\Examples</Filter>
-    </None>
-    <None Include="Code Examples\Example - PyQt File Reader.pyw">
-      <Filter>Languages\Examples</Filter>
-    </None>
     <None Include="Languages\C# .NET Framework.cs">
       <Filter>Languages</Filter>
     </None>
@@ -189,17 +123,21 @@
     <None Include="Languages\C# Unity.cs">
       <Filter>Languages</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Code Examples\Classes\matrix.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Code Examples\Classes\timer.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Code Examples\Classes\vector3.h">
-      <Filter>Development\Classes</Filter>
-    </ClInclude>
+    <None Include="Examples\Example - Maxscript Convex Hull.ms">
+      <Filter>Examples</Filter>
+    </None>
+    <None Include="Examples\Example - PyQt Creating Window in Designer.py">
+      <Filter>Examples</Filter>
+    </None>
+    <None Include="Examples\Example - PyQt Creating Window In Maya.py">
+      <Filter>Examples</Filter>
+    </None>
+    <None Include="Examples\Example - PyQt File Reader.pyw">
+      <Filter>Examples</Filter>
+    </None>
+    <None Include="Development\Databases.sql">
+      <Filter>Development</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\Graphics - Backface Culling.png">
@@ -462,11 +400,48 @@
     <Text Include="Languages\C# Notes.txt">
       <Filter>Languages</Filter>
     </Text>
-    <Text Include="Development\Interview Questions.txt">
-      <Filter>Development</Filter>
-    </Text>
     <Text Include="Development\Algorithms and Structures.txt">
       <Filter>Development</Filter>
     </Text>
+    <Text Include="Development\Collisions.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Lighting.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Maths.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Mental Ray.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Physics.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Programming Notes.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Rendering.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Simulation.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Software Development.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Texture.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Code\Code Notes.txt">
+      <Filter>Code</Filter>
+    </Text>
+    <Text Include="Code\STL Notes.txt">
+      <Filter>Code</Filter>
+    </Text>
+    <Text Include="Cheatsheet.txt" />
+    <Text Include="Hotkeys.txt" />
+    <Text Include="Interview Puzzles.txt" />
+    <Text Include="Interview Questions.txt" />
   </ItemGroup>
 </Project>

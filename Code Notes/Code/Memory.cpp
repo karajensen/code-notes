@@ -79,8 +79,8 @@ struct MyFunctor
 }
 
 //LAMBDAS
-//• If inside a class, may become friends to access/capture internals
-//• Lamda creates a closure object which holds captured vars
+//â€¢ If inside a class, may become friends to access/capture internals
+//â€¢ Lamda creates a closure object which holds captured vars
 auto myLambda = [](int x)->float {}  // specify return type, only need if multilined
 auto myLambda = [&var](int x){}      // capture only myVar by reference
 auto myLambda = [=var](int x){}      // capture only myVar by value
@@ -89,15 +89,15 @@ auto myLambda = [&](int x){}         // capture all by ref
 auto myLambda = [=](int x){}         // capture all non-static local variables (including this) by-val
 
 //LAMBDA INIT/GENERALISED CAPTURE
-//• Allows creation of variables inside the closure
+//â€¢ Allows creation of variables inside the closure
 auto myLambda = [var = myVar](){}           // create var and copy-assign to it, works on member vars
 auto myLambda = [var = MyClass()](){}       // create var of type MyClass
 auto myLambda = [var = std::move(obj)](){}  // move obj to be only used inside closure
 auto myLambda = [var = std::move(vec)](){}  // move vector of objects to use inside closure
 
 //STD::FUNCTION
-//• Allows all function objects to be stored in single type
-//• Slower and bigger than using actual function object types (lambda, functors, pointers)
+//â€¢ Allows all function objects to be stored in single type
+//â€¢ Slower and bigger than using actual function object types (lambda, functors, pointers)
 std::function<double(int)> myFn = [](int x){ return x+2.0; }
 std::function<double(int)> myFn = &MyFunction;
 
@@ -253,10 +253,10 @@ auto_ptr<double> ap(new double) //only use for new
 *ap = 3.2;                      
 
 //LIMITATIONS
-auto_ptr<int> pia(new int[20]); //can’t point to arrays due to it 
+auto_ptr<int> pia(new int[20]); //can't point to arrays due to it 
                                 //calling delete and not delete []
 int rigue = 7; 
-auto_ptr<int> pr(&rigue); //can’t point to memory on the stack
+auto_ptr<int> pr(&rigue); //can't point to memory on the stack
 
 auto_ptr<int> p1(p2); //ownership is passed to p1 and p2 is set to nullptr
 
