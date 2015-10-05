@@ -36,6 +36,10 @@ const char myArray[] = "Array";  // note not the same type as const char*
 const char* pMyArray = myArray;  // character array decays to pointer
 const char rMyArray (&)[5] = myArray; // actual type of array
 
+//DISPLAY MEMORY LOCATION
+std::stringstream ss;
+ss << std::hex << &myVariable;
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 //FUNCTION OBJECTS
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -176,6 +180,10 @@ std::weak_ptr<MyClass> weak(shared);
 weak.use_count()    //get the current count
 weak.lock()         //returns a shared_ptr, if expired then null
 weak.expired()      //returns true if object has been deleted, false if okay
+
+//SMART POINTER ARRAYS
+//can only by unique_ptr
+std::unique_ptr<int[]> p(new int[10]);
 
 //CASTING SMART POINTERS
 std::shared_ptr<Base> ptr(new Derived());

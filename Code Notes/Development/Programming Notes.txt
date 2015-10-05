@@ -75,7 +75,6 @@ AUTOMATIC / IMPLICIT CONVERSION
 • signed -> unsigned
 
 OPERATORS / ESCAPED CHARACTERS
-%    Remainder whole number after how many x is in y
 ::   Scope resolution operator
 \n   Newline
 \t   Horizontal tab
@@ -216,6 +215,7 @@ VISUAL STUDIO DEBUG MEMORY ALLOCATION
 0xBADCAB1E : Error Code returned to the debugger when connection is severed to the debugger
 0xBEEFCACE : Used by NET as a magic number in resource files
 0xDEADDEAD : Microsoft Windows STOP Error code used when the user manually initiates the crash
+0xc0000005 : Exception Code Access Violation, accessing an null pointer
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //CLASSES/STRUCTS/FUNCTIONS

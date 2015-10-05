@@ -2,7 +2,6 @@
 //INTERVIEW PUZZLES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-============================================================================================================
 Q: Write a function that computes the factorial of a number. Now write it again without using recursion.
 A: Note that n cannot be negative and factorial of 0 is 1:
 
@@ -21,7 +20,38 @@ long Factorial(int n)
     return result;    
 }
 
-============================================================================================================
+==============================================================================================================
+
+Q: Reverse a linked list
+A: Called by ReverseList(root) or ReverseListRecursive(root, nullptr)
+
+Node* ReverseList(Node* node)
+{
+    Node* temp = nullptr;
+    Node* previous = nullptr;
+    while(node != nullptr) 
+    {
+        temp = node->next;
+        node->next = previous;
+        previous = node;
+        node = temp;
+    }
+    return previous;
+}
+
+Node* ReverseListRecursive(Node* node, Node* previous)
+{
+    if (node != nullptr)
+    {
+        Node* temp = node->next;
+        node->next = previous;
+        return ReverseListRecursive(temp, node);
+    }
+    return previous;
+}
+
+==============================================================================================================
+
 Q: You have two identical eggs. Standing in front of a 100 floor building, you wonder what is the 
    maximum number of floors from which the egg can be dropped without breaking it. What is the 
    minimum number of tries needed to find out the solution?
@@ -46,6 +76,31 @@ A: By dropping one egg on each floor until it breaks you can easily find the max
 
    Minimum Tries = (100 / n) + (n - 1)
    Minimum Tries is 19 by going up with an interval of 8-13
+
+==============================================================================================================
+
+Q: Write a method to generate a random number between 1 and 7, 
+   given a method that generates a random number between 1 and 5
+A: If a result of 0 is ignored, there is an equal amount of chance to get a value from 1-7 from the array:
+
+int GetRand7()
+{
+    int values[5][5] = 
+    {
+        { 1, 2, 3, 4, 5 },
+        { 6, 7, 1, 2, 3 },
+        { 4, 5, 6, 7, 1 },
+        { 2, 3, 4, 5, 6 },
+        { 7, 0, 0, 0, 0 }
+    };
+
+    int result = 0;
+    while (result == 0)
+    {
+        result = values[GetRand5()-1][GetRand5()-1];
+    }
+    return result;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //NP-COMPLETE/HARD PROBLEMS
