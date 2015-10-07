@@ -54,6 +54,7 @@ Node* ReverseListRecursive(Node* node, Node* previous)
 
 Q: Write a method to generate a random number between 1 and 7, 
    given a method that generates a random number between 1 and 5
+
 A: If a result of 0 is ignored, there is an equal amount of chance to get a value from 1-7 from the array:
 
 int GetRand7()
@@ -79,6 +80,7 @@ int GetRand7()
 
 Q: You are given an array with integers (both positive and negative) in any random order. 
    Find the sub-array with the largest sum.
+
 A: For a non-continuous sub-array:
 
     std::sort(arr.begin(), arr.end(), std::greater<int>());
@@ -150,6 +152,7 @@ Q: Four people need to cross a rickety bridge at night. Unfortunately, they have
    bridge is too dangerous to cross without one. The bridge is only strong enough to support two people at 
    a time. Not all people take the same time to cross the bridge. Times for each person: 1m, 2m, 7m, 10m. 
    What is the shortest time needed for all four of them to cross the bridge?
+
 A: 1m and 2m go across the bridge = 2m
    1m goes back and passes over the torch = 1m
    7m and 10m goes across the bridge = 10m
@@ -161,6 +164,7 @@ A: 1m and 2m go across the bridge = 2m
 
 Q: How would you cut a rectangular cake into two equal pieces when a rectangular piece has already been cut 
    out of it? The cut piece can be of any size and orientation. You are only allowed to make one straight cut.
+
 A: Assuming a uniform cake, and the piece cut-out was to the height of the cake, cut horizonally across.
    For a non-uniform cake, cut a line intersecting both the center of the cake and center of the cut-out piece.
 
@@ -170,6 +174,7 @@ Q: A duck that is being chased by a fox saves itself by sitting at the center of
    The duck can fly from land but cannot fly from the water. Furthermore, the fox cannot swim. The fox is 
    four times faster than the duck. Assuming that the duck and fox are perfectly smart, is it possible for 
    the duck to ever reach the edge of the pond and fly away to its escape from the ground?
+
 A: If the duck tries to travel directly in the opposite vector to the duck-to-fox, it will take the fox one
    half circumference of the circle in distance to reach the point the duck will be at the pond edge.
 
@@ -177,8 +182,9 @@ A: If the duck tries to travel directly in the opposite vector to the duck-to-fo
    Duck Distance = 4r
    As πr < 4r the fox would catch the duck
 
-   If the duck however 
-
+   If the duck however swims in circles at a radius of < r/4 the fox is continuously trying to catch up
+   When the duck reaches a distance of r + 1/4r from the fox it only has to cover 3/4r to reach the edge
+   In this case πr > 4 * (3/4r) and the duck would escape
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INTERVIEW PROBABILITY PUZZLES
@@ -187,6 +193,7 @@ A: If the duck tries to travel directly in the opposite vector to the duck-to-fo
 Q: In a country where everyone wants a boy, each family continues having babies till they have a boy. 
    After some time, what is the proportion of boys to girls in the country? 
    (Assuming probability of having a boy or a girl is the same)
+
 A: There are n couples so therefore n boys
    ExpectedValue = Pr(x1)*v1 + Pr(x2)*v2 + ...
    Number of Girls = 0*(Pr(0 girls)) + 1*(Pr(1 girl)) + 2*(Pr(2 girls) + ...
