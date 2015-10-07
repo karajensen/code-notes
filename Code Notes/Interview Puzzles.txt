@@ -102,6 +102,46 @@ int GetRand7()
     return result;
 }
 
+==============================================================================================================
+
+Q: You are given an array with integers (both positive and negative) in any random order. 
+   Find the sub-array with the largest sum.
+A: For a non-continuous sub-array:
+
+    std::sort(arr.begin(), arr.end(), std::greater<int>());
+    std::vector<int> subArray;
+    for each(int value in arr)
+    {
+        if (!subArray.empty() && value < 0)
+        {
+            break;
+        }
+        subArray.push_back(value);
+    }
+
+    For a continuous sub-array use Kadane's Algorithm:
+
+    int maximumSum = -INT_MAX;
+    int currentSum = 0;
+    int currentStart = 0;
+    int start = 0;
+    int end = 0;
+    for(int i = 0; i < arr.size(); ++i) 
+    {
+        currentSum += arr[i];
+        if (currentSum > maximumSum) 
+        {
+            maximumSum = currentSum;
+            start = currentStart;
+            end = i;
+        }
+        if(currentSum < 0) 
+        {
+            currentSum = 0;
+            currentStart = i + 1;
+        }
+    }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //NP-COMPLETE/HARD PROBLEMS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
