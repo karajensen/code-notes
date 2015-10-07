@@ -1,5 +1,5 @@
 ﻿/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//INTERVIEW PUZZLES
+//INTERVIEW ALGORITHM PUZZLES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Q: Write a function that computes the factorial of a number. Now write it again without using recursion.
@@ -49,33 +49,6 @@ Node* ReverseListRecursive(Node* node, Node* previous)
     }
     return previous;
 }
-
-==============================================================================================================
-
-Q: You have two identical eggs. Standing in front of a 100 floor building, you wonder what is the 
-   maximum number of floors from which the egg can be dropped without breaking it. What is the 
-   minimum number of tries needed to find out the solution?
-
-A: By dropping one egg on each floor until it breaks you can easily find the maximum floors. The maximum
-   floors is 100 if it doesn't break until the last floor. The minimum tries can be found by by going up 
-   floors by intervals and if the first egg breaks, test the second egg in between the interval:
-
-   Interval of 2:  100 / 2 = 50  with Maximum tries = 50 + 1 = 51
-   Interval of 3:  100 / 3 = 33  with Maximum tries = 33 + 2 = 35
-   Interval of 4:  100 / 4 = 25  with Maximum tries = 25 + 3 = 28
-   Interval of 5:  100 / 5 = 20  with Maximum tries = 20 + 4 = 24
-   Interval of 6:  100 / 6 = 16  with Maximum tries = 16 + 5 = 21
-   Interval of 7:  100 / 7 = 14  with Maximum tries = 14 + 6 = 20
-   Interval of 8:  100 / 8 = 12  with Maximum tries = 12 + 7 = 19
-   Interval of 9:  100 / 9 = 11  with Maximum tries = 11 + 8 = 19
-   Interval of 10: 100 / 10 = 10 with Maximum tries = 10 + 9 = 19
-   Interval of 11: 100 / 11 = 9 with Maximum tries = 9 + 10 = 19
-   Interval of 12: 100 / 12 = 8 with Maximum tries = 8 + 11 = 19
-   Interval of 13: 100 / 13 = 7 with Maximum tries = 16 + 12 = 19
-   Interval of 14: 100 / 14 = 7 with Maximum tries = 7 + 13 = 20
-
-   Minimum Tries = (100 / n) + (n - 1)
-   Minimum Tries is 19 by going up with an interval of 8-13
 
 ==============================================================================================================
 
@@ -141,6 +114,85 @@ A: For a non-continuous sub-array:
             currentStart = i + 1;
         }
     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//INTERVIEW LOGIC PUZZLES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Q: You have two identical eggs. Standing in front of a 100 floor building, you wonder what is the 
+   maximum number of floors from which the egg can be dropped without breaking it. What is the 
+   minimum number of tries needed to find out the solution?
+
+A: By dropping one egg on each floor until it breaks you can easily find the maximum floors. The maximum
+   floors is 100 if it doesn't break until the last floor. The minimum tries can be found by by going up 
+   floors by intervals and if the first egg breaks, test the second egg in between the interval:
+
+   Interval of 2:  100 / 2 = 50  with Maximum tries = 50 + 1 = 51
+   Interval of 3:  100 / 3 = 33  with Maximum tries = 33 + 2 = 35
+   Interval of 4:  100 / 4 = 25  with Maximum tries = 25 + 3 = 28
+   Interval of 5:  100 / 5 = 20  with Maximum tries = 20 + 4 = 24
+   Interval of 6:  100 / 6 = 16  with Maximum tries = 16 + 5 = 21
+   Interval of 7:  100 / 7 = 14  with Maximum tries = 14 + 6 = 20
+   Interval of 8:  100 / 8 = 12  with Maximum tries = 12 + 7 = 19
+   Interval of 9:  100 / 9 = 11  with Maximum tries = 11 + 8 = 19
+   Interval of 10: 100 / 10 = 10 with Maximum tries = 10 + 9 = 19
+   Interval of 11: 100 / 11 = 9 with Maximum tries = 9 + 10 = 19
+   Interval of 12: 100 / 12 = 8 with Maximum tries = 8 + 11 = 19
+   Interval of 13: 100 / 13 = 7 with Maximum tries = 16 + 12 = 19
+   Interval of 14: 100 / 14 = 7 with Maximum tries = 7 + 13 = 20
+
+   Minimum Tries = (100 / n) + (n - 1)
+   Minimum Tries is 19 by going up with an interval of 8-13
+
+==============================================================================================================
+
+Q: Four people need to cross a rickety bridge at night. Unfortunately, they have only one torch and the 
+   bridge is too dangerous to cross without one. The bridge is only strong enough to support two people at 
+   a time. Not all people take the same time to cross the bridge. Times for each person: 1m, 2m, 7m, 10m. 
+   What is the shortest time needed for all four of them to cross the bridge?
+A: 1m and 2m go across the bridge = 2m
+   1m goes back and passes over the torch = 1m
+   7m and 10m goes across the bridge = 10m
+   2m goes back with the torch = 2m
+   1m and 2m go across the bridge = 2m
+   Total: 17m
+
+==============================================================================================================
+
+Q: How would you cut a rectangular cake into two equal pieces when a rectangular piece has already been cut 
+   out of it? The cut piece can be of any size and orientation. You are only allowed to make one straight cut.
+A: Assuming a uniform cake, and the piece cut-out was to the height of the cake, cut horizonally across.
+   For a non-uniform cake, cut a line intersecting both the center of the cake and center of the cut-out piece.
+
+==============================================================================================================
+
+Q: A duck that is being chased by a fox saves itself by sitting at the center of circular pond of radius r. 
+   The duck can fly from land but cannot fly from the water. Furthermore, the fox cannot swim. The fox is 
+   four times faster than the duck. Assuming that the duck and fox are perfectly smart, is it possible for 
+   the duck to ever reach the edge of the pond and fly away to its escape from the ground?
+A: If the duck tries to travel directly in the opposite vector to the duck-to-fox, it will take the fox one
+   half circumference of the circle in distance to reach the point the duck will be at the pond edge.
+
+   Fox Distance = πr
+   Duck Distance = 4r
+   As πr < 4r the fox would catch the duck
+
+   If the duck however 
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//INTERVIEW PROBABILITY PUZZLES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Q: In a country where everyone wants a boy, each family continues having babies till they have a boy. 
+   After some time, what is the proportion of boys to girls in the country? 
+   (Assuming probability of having a boy or a girl is the same)
+A: There are n couples so therefore n boys
+   ExpectedValue = Pr(x1)*v1 + Pr(x2)*v2 + ...
+   Number of Girls = 0*(Pr(0 girls)) + 1*(Pr(1 girl)) + 2*(Pr(2 girls) + ...
+   Number of Girls = 0*(n*0.5) + 1*(n*0.25) + 2*(n*0.125) + ...
+   Number of Girls = n (after summing 4-5 children and beyond)
+   Proportion = 1:1
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //NP-COMPLETE/HARD PROBLEMS

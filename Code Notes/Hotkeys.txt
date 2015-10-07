@@ -4,7 +4,7 @@
 /*
 
 X▪            derivative                  
-∏             pi
+π             pi
 ʃ0-t{}        integral from 0 to t        
 '             prime
 µ             friction                   

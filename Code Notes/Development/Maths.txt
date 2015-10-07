@@ -9,8 +9,8 @@ m = milli = 10ˉ³    k = kilo = 10³
 µ = micro = 10ˉ⁶    M = mega = 10⁶
 n = nano = 10ˉ⁹     G = giga = 10⁹
 
-Degrees to radians:  (PI / 180) * degrees;
-Radians to degrees:  (180 / PI) * radians;
+Degrees to radians:  (π / 180) * degrees;
+Radians to degrees:  (180 / π) * radians;
 
 --------------------------------------------------------------------------
 COORDINATES
@@ -22,6 +22,13 @@ COORDINATES
   /  RH COODINATE     /  LH COODINATE     Thumb = Z
  ▼   SYSTEM          ▼   SYSTEM
 X                   Y
+
+--------------------------------------------------------------------------
+GEOMETRY
+--------------------------------------------------------------------------
+
+Circle Area = πr²
+Circle Circumference: 2πr
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //ALGEBRA
@@ -114,7 +121,7 @@ To get circular waves, use radius r as x
 | y = a * sin(kx-wt+ɸ) |
  ----------------------
  a = amplitude; height of sine wave
- k = frequency; number of wavelengths to reach 2∏
+ k = frequency; number of wavelengths to reach 2π
  t = time
  w = speed
  ɸ = initial shift of the wave
@@ -200,7 +207,7 @@ c.(c + b) - a.(c + b) = 0
 c.c + b.c - a.c - a.b = 0
 
 POSITIVE ANGLES ONLY BETWEEN 2D VECTORS:
-deg = acos(â.b̂) * 180/∏ gives [0,180]
+deg = acos(â.b̂) * 180/π gives [0,180]
 
 NEGATIVE ANGLES BETWEEN 2D VECTORS:
 Distance formula n.(p1-p0) formula to determine whether b is to the left or right of a:
@@ -324,7 +331,7 @@ eg(1)
 POLAR COORDINATES
 =============================================================================
  ---------------------------
-| radians x 180/∏ = degrees |
+| radians x 180/π = degrees |
  ---------------------------
 
 FOR 3D: using elevation angle       FOR 2D:
