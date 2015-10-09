@@ -112,6 +112,8 @@ CHARACTER ENCODING
 
 2) COMPILER
 • Accepts Source code, Outputs machine/assembly/object code
+• Mangles C++ function names as it has function overloading
+  using extern "C" or compiling in C will prevent the mangling
 
 3) LINKER
 • Accepts machine code, Outputs machine code in form of executable

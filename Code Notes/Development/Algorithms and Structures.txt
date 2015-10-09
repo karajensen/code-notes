@@ -85,8 +85,60 @@ void BubbleSort(std::vector<int>& values)
 
 =====================================================================================================
 MERGE SORT
+Sorts in ascending order
+1) Container is divided into sublists having 1 element
+2) Adjacent lists are repeatedly merged together until completely sorted
 =====================================================================================================
+MergeSort(&values[0], 1, &values[0]+1, values.size()-1);
+void MergeSort(int* a, int lengthA, int* b, int lengthB)
+{
+    if (lengthA > 1)
+    {
+        int midA = lengthA / 2;
+        MergeSort(a, midA, a + midA, lengthA - midA);
+    }
+    if (lengthB > 1)
+    {
+        int midB = lengthB / 2;
+        MergeSort(b, midB, b + midB, lengthB - midB);
+    }
 
+    int i = 0;
+    int currentA = 0;
+    int currentB = 0;
+    std::vector<int> sortedArray(lengthA + lengthB);
+
+    while (currentA < lengthA && currentB < lengthB)
+    {
+        if (a[currentA] <= b[currentB])
+        {
+            sortedArray[i] = a[currentA];
+            ++currentA;
+        }
+        else
+        {
+            sortedArray[i] = b[currentB];
+            ++currentB;
+        }
+        ++i;
+    }
+    while (currentA < lengthA)
+    {
+        sortedArray[i] = a[currentA];
+        ++currentA;
+        ++i;
+    }
+    while (currentB < lengthB)
+    {
+        sortedArray[i] = b[currentB];
+        ++currentB;
+        ++i;
+    }
+    for (unsigned int j = 0; j < sortedArray.size(); ++j)
+    {
+        a[j] = sortedArray[j];
+    }
+}
 
 =====================================================================================================
 QUICK SORT
@@ -94,6 +146,7 @@ Sorts in ascending order
 1) Partition the container to values lower than pivot and values higher
 2) For each partition created, repeat step one if there are values
 =====================================================================================================
+QuickSort(values, 0, values.size()-1);
 void QuickSort(std::vector<int>& values, int minIndex, int maxIndex)
 {
     int p2MinIndex = minIndex;
@@ -141,6 +194,7 @@ Requires ascending sort. Swap end/start assignment in loop for descending sort.
 2) If target is higher, get middle value of upper section
 3) If target is lower, get middle value of lower section
 =====================================================================================================
+BinarySearch(values, values.size()/2);
 bool BinarySearch(std::vector<int>& values, int searchvalue)
 {
     int start = 0;
