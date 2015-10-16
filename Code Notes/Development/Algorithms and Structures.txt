@@ -55,7 +55,6 @@ BS Trees         O(logN)   O(logN)   O(logN)    O(logN)   2 children per node, n
 Heap             ---       O(N)      O(logN)    O(logN)   Weakly ordered binary tree where root is highest value
 B-Tree           O(logN)   O(logN)   O(logN)    O(logN)   Tree with more than 2 children per node
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //SEARCH/SORT ALGORITHMS
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -292,17 +291,65 @@ bool DepthFirstSearch(Node& root, int searchvalue)
 //HASH TABLES
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
+• Fixed size list of records organized according to a unique key
+• Object is hashed into an integer (key) using the hash function
+• If this key is within hash tables bounds its added to the correct bucket
+• If a collision occurs with another object already having that key use chaining
+
+CHAINING: 
+• Chaining allows a key (bucket) to store multiple entries
+• Solves collisions when a new entry is added which has the same key as a previous entry
+• Search and Erase become O(k) where k is the number of elements in a bucket
+
+ADVANTAGES:
+• Fast insertion: O(1)
+• Fast search/deletion: O(1) without chaining, O(k) with chaining
+
+DISADVANTAGES:
 • Expensive to expand- all object's IDs must be changed
 • Objects inside cannot be ordered easily
-• Copying table is slow
 • Can create cache misses as memory is all over the place
-• Load Factor: ratio of number of items to the size of the array
 • Suffer from collisions/clustering of elements
+• Buckets can be empty which wastes space
 
-1) Object is hashed into an integer using the hash function
-2) This interger is within hash table's bounds; used as the object's key
-3) If a collision occurs with another object already having that key,
-   use open addressing/seperate chaining
+=====================================================================================================
+class HashMap 
+{
+public:
+
+    const int TABLE_SIZE = 128;
+    typedef std::pair<int, int> HashEntry;
+
+    HashMap()
+    {
+        m_table.resize(TABLE_SIZE);
+    }
+     
+    int Get(int key) const
+    {
+        int hash = (key % TABLE_SIZE);
+        while (m_table[hash] != nullptr && m_table[hash]->first != key)
+        {
+            hash = (hash + 1) % TABLE_SIZE;
+        }
+        return m_table[hash] ? m_table[hash]->second : -1;
+    }
+
+    void Add(int key, int value)
+    {
+        int hash = (key % TABLE_SIZE);
+        while (m_table[hash] != nullptr && m_table[hash]->first != key)
+        {
+            hash = (hash + 1) % TABLE_SIZE;
+        }
+        m_table[hash] = std::make_unique<HashEntry>(std::make_pair(key, value));
+    } 
+
+private:
+
+    std::vector<std::unique_ptr<HashEntry>> m_table;
+};
+=====================================================================================================
 
 COALESCED HASHING: Hybrid of open addressing and seperate chaining
 ROBIN-HOOD HASHING: Variation of double hashing
@@ -347,11 +394,17 @@ TRIE: Node key is constructed from position in tree combining parents
 SPACIAL PARTITIONING SCHEME: subdivide a space into partitions
 OBJECT PARTITIONING SCHEME: subdivide an object into partitions
 
+TREE TRAVERSAL:
+• Order in which to trace the nodes of a tree
+• In-Order: Left -> Root -> Right, O(N) to obtain from Pre-Order, Sorts values ascending
+• Pre-Order: Root -> Left -> Right, Default way of storing trees
+• Post-Order: Left -> Right -> Root, Depth First Search
+
 =====================================================================================================
 BINARY TREES
 =====================================================================================================
 
-BINARY SEARCH TREE:
+BINARY SEARCH TREE
 • The left subtree of a node contains only nodes with values less
 • The right subtree of a node contains only nodes with values greater
 • The left and right subtree each must also be a binary search tree.

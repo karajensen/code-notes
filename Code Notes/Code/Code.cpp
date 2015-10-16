@@ -86,6 +86,7 @@ myVec.emplace_back("str")               // Emplacing rvalue/unique_ptr into cont
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //CSTRINGS
+//Can change individual characters in string
 char cstring = 'C'; //single character; can read/write
 char cstring[256]; //character buffer, can read/write
 char cstring[] = "mystring" //the \0 is done automatically
@@ -93,6 +94,7 @@ char cstring[] = {'v','a','t','a','n','i','\0'};
 
 //STRING LITERALS
 //Constant string literal, read only, \0 automatic
+//Cannot change individual characters in string
 char* str = "mystring"
 auto* str = R"(Raw string literal)" //anything between the() doesn't need to be escaped
 auto* str = u8"UTF-8 string literal"

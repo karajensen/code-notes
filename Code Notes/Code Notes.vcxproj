@@ -129,6 +129,24 @@
     <None Include="Languages\C# Unity.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Cheatsheet.txt" />
+    <Text Include="Code\Code Notes.txt" />
+    <Text Include="Code\STL Notes.txt" />
+    <Text Include="Development\Algorithms and Structures.txt" />
+    <Text Include="Development\Collisions.txt" />
+    <Text Include="Development\Maths.txt" />
+    <Text Include="Development\Mental Ray.txt" />
+    <Text Include="Development\Physics.txt" />
+    <Text Include="Development\Programming Notes.txt" />
+    <Text Include="Development\Rendering.txt" />
+    <Text Include="Development\Simulation.txt" />
+    <Text Include="Development\Software Development.txt" />
+    <Text Include="Hotkeys.txt" />
+    <Text Include="Interview Puzzles.txt" />
+    <Text Include="Interview Questions.txt" />
+    <Text Include="Languages\C# Notes.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <Image Include="Images\Code - Agile Lifecycle.png" />
     <Image Include="Images\Code - Algorithms Search.png" />
     <Image Include="Images\Code - Algorithms Sort Performance.png" />
@@ -139,10 +157,11 @@
     <Image Include="Images\Code - BigO Heap Operations.png" />
     <Image Include="Images\Code - BigO Notation Graph.png" />
     <Image Include="Images\Code - BigO Sorting.png" />
-    <Image Include="Images\Code - Boxing.gif" />
+    <Image Include="Images\Code - Boxing.png" />
     <Image Include="Images\Code - C# Operator Precedence.png" />
     <Image Include="Images\Code - C++ Operator Precedence.png" />
     <Image Include="Images\Code - Database Normalization.png" />
+    <Image Include="Images\Code - Debug Memory Allocation.png" />
     <Image Include="Images\Code - Design Patterns.png" />
     <Image Include="Images\Code - dotNET pipeline.png" />
     <Image Include="Images\Code - Entity Relationship Diagram.png" />
@@ -152,6 +171,7 @@
     <Image Include="Images\Code - Iterators.png" />
     <Image Include="Images\Code - Static and dynamic websites.png" />
     <Image Include="Images\Code - STL container performance.PNG" />
+    <Image Include="Images\Code - Tree Traversal.png" />
     <Image Include="Images\Code - Trees Partitioning.png" />
     <Image Include="Images\Code - Trees.png" />
     <Image Include="Images\Code - Trie.png" />
@@ -159,8 +179,9 @@
     <Image Include="Images\Code - Web server.png" />
     <Image Include="Images\Graphics - Backface Culling.png" />
     <Image Include="Images\Graphics - Bottleneck chart.png" />
-    <Image Include="Images\Graphics - Deferred Rendering (with transparency).jpg" />
-    <Image Include="Images\Graphics - Deferred Rendering.jpg" />
+    <Image Include="Images\Graphics - Colour Blending.PNG" />
+    <Image Include="Images\Graphics - Deferred Rendering (with transparency).png" />
+    <Image Include="Images\Graphics - Deferred Rendering.png" />
     <Image Include="Images\Graphics - Depth Buffer Testing.png" />
     <Image Include="Images\Graphics - DirectX Surfaces.png" />
     <Image Include="Images\Graphics - DOF theory and 3 Point Lighting.png" />
@@ -171,17 +192,16 @@
     <Image Include="Images\Graphics - Irradiance Particles.png" />
     <Image Include="Images\Graphics - Occulsion Culling.png" />
     <Image Include="Images\Graphics - Portals.png" />
-    <Image Include="Images\Graphics - Primitives.jpg" />
+    <Image Include="Images\Graphics - Primitives.png" />
     <Image Include="Images\Graphics - Projection Matrix.PNG" />
     <Image Include="Images\Graphics - Projection Matrix2.PNG" />
     <Image Include="Images\Graphics - RayTracing.png" />
     <Image Include="Images\Graphics - Rendering Pipeline Diagram.png" />
     <Image Include="Images\Graphics - Rendering Pipeline.png" />
     <Image Include="Images\Graphics - Shadow Volume Stencil Testing.png" />
-    <Image Include="Images\Graphics - Skybox.bmp" />
+    <Image Include="Images\Graphics - Skybox.png" />
     <Image Include="Images\Graphics - Subsurface Scattering.png" />
     <Image Include="Images\Graphics - Terrain Clipmapping.png" />
-    <Image Include="Images\Graphics - View Frustum.gif" />
     <Image Include="Images\Graphics - View Frustum.png" />
     <Image Include="Images\MathsPhysics - Barycentric coordinates.png" />
     <Image Include="Images\MathsPhysics - Changing frame of reference.png" />
@@ -205,7 +225,7 @@
     <Image Include="Images\Shader - Bump Mapping Normals.png" />
     <Image Include="Images\Shader - Colors.png" />
     <Image Include="Images\Shader - Inverse Square Attenuation.png" />
-    <Image Include="Images\Shader - Lighting Models Diagram.jpg" />
+    <Image Include="Images\Shader - Lighting Models Diagram.png" />
     <Image Include="Images\Shader - Material Effects.png" />
     <Image Include="Images\Shader - Material Types.png" />
     <Image Include="Images\Shader - PerVertex and PerPixel lighting.png" />
@@ -214,26 +234,6 @@
     <Image Include="Images\Shader - Texture Filter types.png" />
     <Image Include="Images\Shader - Texture Mapping.png" />
     <Image Include="Images\Shader - Texture Wrapping.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Cheatsheet.txt" />
-    <Text Include="Code\Code Notes.txt" />
-    <Text Include="Code\STL Notes.txt" />
-    <Text Include="Development\Algorithms and Structures.txt" />
-    <Text Include="Development\Collisions.txt" />
-    <Text Include="Development\Lighting.txt" />
-    <Text Include="Development\Maths.txt" />
-    <Text Include="Development\Mental Ray.txt" />
-    <Text Include="Development\Physics.txt" />
-    <Text Include="Development\Programming Notes.txt" />
-    <Text Include="Development\Rendering.txt" />
-    <Text Include="Development\Simulation.txt" />
-    <Text Include="Development\Software Development.txt" />
-    <Text Include="Development\Texture.txt" />
-    <Text Include="Hotkeys.txt" />
-    <Text Include="Interview Puzzles.txt" />
-    <Text Include="Interview Questions.txt" />
-    <Text Include="Languages\C# Notes.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

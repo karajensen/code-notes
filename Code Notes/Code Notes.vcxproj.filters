@@ -140,16 +140,151 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Languages\C# Notes.txt">
+      <Filter>Languages</Filter>
+    </Text>
+    <Text Include="Development\Algorithms and Structures.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Collisions.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Maths.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Mental Ray.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Physics.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Programming Notes.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Rendering.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Simulation.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Software Development.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Code\Code Notes.txt">
+      <Filter>Code</Filter>
+    </Text>
+    <Text Include="Code\STL Notes.txt">
+      <Filter>Code</Filter>
+    </Text>
+    <Text Include="Cheatsheet.txt" />
+    <Text Include="Hotkeys.txt" />
+    <Text Include="Interview Puzzles.txt" />
+    <Text Include="Interview Questions.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\Code - Agile Lifecycle.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Algorithms Search.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Algorithms Sort Performance.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Algorithms Sort.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Amdahls Law.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - BigO Data Structures.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - BigO Graph Operations.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - BigO Heap Operations.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - BigO Notation Graph.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - BigO Sorting.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Boxing.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - C# Operator Precedence.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - C++ Operator Precedence.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Database Normalization.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Debug Memory Allocation.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Design Patterns.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - dotNET pipeline.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Entity Relationship Diagram.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Execution Environment.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Hex Converting.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - HTML Element.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Iterators.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Static and dynamic websites.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - STL container performance.PNG">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Tree Traversal.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Trees Partitioning.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Trees.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Trie.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - UML Diagrams.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Web server.png">
+      <Filter>Images</Filter>
+    </Image>
     <Image Include="Images\Graphics - Backface Culling.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Bottleneck chart.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Graphics - Deferred Rendering (with transparency).jpg">
+    <Image Include="Images\Graphics - Colour Blending.PNG">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Graphics - Deferred Rendering.jpg">
+    <Image Include="Images\Graphics - Deferred Rendering (with transparency).png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Deferred Rendering.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Depth Buffer Testing.png">
@@ -182,7 +317,7 @@
     <Image Include="Images\Graphics - Portals.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Graphics - Primitives.jpg">
+    <Image Include="Images\Graphics - Primitives.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Projection Matrix.PNG">
@@ -203,16 +338,13 @@
     <Image Include="Images\Graphics - Shadow Volume Stencil Testing.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Graphics - Skybox.bmp">
+    <Image Include="Images\Graphics - Skybox.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Subsurface Scattering.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Terrain Clipmapping.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - View Frustum.gif">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - View Frustum.png">
@@ -234,6 +366,27 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\MathsPhysics - GJK Collision Detection.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Graph ex.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Graph lnx.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Graph Negative.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Graph Positive.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Graph x.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Graph x-1.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\MathsPhysics - Graph x2.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\MathsPhysics - Integration.png">
@@ -263,7 +416,7 @@
     <Image Include="Images\Shader - Inverse Square Attenuation.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Shader - Lighting Models Diagram.jpg">
+    <Image Include="Images\Shader - Lighting Models Diagram.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Shader - Material Effects.png">
@@ -290,158 +443,5 @@
     <Image Include="Images\Shader - Texture Wrapping.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Code - Agile Lifecycle.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Algorithms Search.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Algorithms Sort Performance.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Algorithms Sort.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Amdahls Law.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Boxing.gif">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - C# Operator Precedence.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - C++ Operator Precedence.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Database Normalization.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Design Patterns.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Entity Relationship Diagram.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Execution Environment.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Hex Converting.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - HTML Element.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Iterators.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - STL container performance.PNG">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Trees Partitioning.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Trees.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Trie.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - UML Diagrams.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Web server.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Static and dynamic websites.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - Graph ex.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - Graph lnx.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - Graph Negative.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - Graph Positive.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - Graph x.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - Graph x-1.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - Graph x2.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - dotNET pipeline.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - BigO Data Structures.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - BigO Graph Operations.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - BigO Heap Operations.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - BigO Notation Graph.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - BigO Sorting.png">
-      <Filter>Images</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Languages\C# Notes.txt">
-      <Filter>Languages</Filter>
-    </Text>
-    <Text Include="Development\Algorithms and Structures.txt">
-      <Filter>Development</Filter>
-    </Text>
-    <Text Include="Development\Collisions.txt">
-      <Filter>Development</Filter>
-    </Text>
-    <Text Include="Development\Lighting.txt">
-      <Filter>Development</Filter>
-    </Text>
-    <Text Include="Development\Maths.txt">
-      <Filter>Development</Filter>
-    </Text>
-    <Text Include="Development\Mental Ray.txt">
-      <Filter>Development</Filter>
-    </Text>
-    <Text Include="Development\Physics.txt">
-      <Filter>Development</Filter>
-    </Text>
-    <Text Include="Development\Programming Notes.txt">
-      <Filter>Development</Filter>
-    </Text>
-    <Text Include="Development\Rendering.txt">
-      <Filter>Development</Filter>
-    </Text>
-    <Text Include="Development\Simulation.txt">
-      <Filter>Development</Filter>
-    </Text>
-    <Text Include="Development\Software Development.txt">
-      <Filter>Development</Filter>
-    </Text>
-    <Text Include="Development\Texture.txt">
-      <Filter>Development</Filter>
-    </Text>
-    <Text Include="Code\Code Notes.txt">
-      <Filter>Code</Filter>
-    </Text>
-    <Text Include="Code\STL Notes.txt">
-      <Filter>Code</Filter>
-    </Text>
-    <Text Include="Cheatsheet.txt" />
-    <Text Include="Hotkeys.txt" />
-    <Text Include="Interview Puzzles.txt" />
-    <Text Include="Interview Questions.txt" />
   </ItemGroup>
 </Project>

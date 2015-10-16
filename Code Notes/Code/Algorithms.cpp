@@ -255,20 +255,6 @@ template<typename T> T RadToDeg(T radians)
     return static_cast<T>(180.0/M_PI)*radians;
 }
 
-//CSTRING: REVERSE LETTERS
-char test[] = "this is a test";
-char saved = ' ';
-int len = strlen(test);
-for(int i = 0; i < l/2; ++i)
-{
-    saved = test[i];
-    test[i] = test[len-i-1];
-    test[len-i-1] = saved;
-}
-
-//STRING: REVERSE LETTERS
-std::reverse(str.begin(), str.end());
-
 //STRING: MAKE UPPER/LOWER CASE
 std::transform(str.begin(), str.end(), str.begin(), &std::toupper);
 std::transform(str.begin(), str.end(), str.begin(), &std::tolower);

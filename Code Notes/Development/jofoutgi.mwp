@@ -7,17 +7,17 @@ UMBRA: Region that is completely in shadow and fully occluded
 PENUMBRA: Area outside the umbra that gradually softens with distance
 
 3 POINT LIGHTING SETUP
-KEY LIGHT: Light source the scheme is built around; main provider of light
-FILL LIGHT: Helps control contrast by filling in dark shadows created by key light
-BACK LIGHT: Defines the edge around the subject and seperates them from background
+• KEY LIGHT: Light source the scheme is built around; main provider of light
+• FILL LIGHT: Helps control contrast by filling in dark shadows created by key light
+• BACK LIGHT: Defines the edge around the subject and seperates them from background
 
 DEPTH OF FIELD
-Smaller iris opening in camera = less exposure and light entering = more depth of field
-Larger iris opening in camera = more exposure and light entering = less depth of field
-Wide angle/short focal length lens = greater DOF
-Narrow angle/long focal length lens = smaller DOF
-Subject far away = greater DOF
-Subject up close = smaller DOF
+• Smaller iris opening in camera = less exposure and light entering = more depth of field
+• Larger iris opening in camera = more exposure and light entering = less depth of field
+• Wide angle/short focal length lens = greater DOF
+• Narrow angle/long focal length lens = smaller DOF
+• Subject far away = greater DOF
+• Subject up close = smaller DOF
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //LIGHT TYPES

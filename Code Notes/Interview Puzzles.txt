@@ -54,8 +54,8 @@ Node* ReverseListRecursive(Node* node, Node* previous)
 
 Q: Write a method to generate a random number between 1 and 7, 
    given a method that generates a random number between 1 and 5
-
-A: If a result of 0 is ignored, there is an equal amount of chance to get a value from 1-7 from the array:
+A: If a result of 0 is ignored, there is an equal amount of 
+   chance to get a value from 1-7 from the array:
 
 int GetRand7()
 {
@@ -80,42 +80,137 @@ int GetRand7()
 
 Q: You are given an array with integers (both positive and negative) in any random order. 
    Find the sub-array with the largest sum.
-
 A: For a non-continuous sub-array:
 
-    std::sort(arr.begin(), arr.end(), std::greater<int>());
-    std::vector<int> subArray;
-    for each(int value in arr)
+std::sort(arr.begin(), arr.end(), std::greater<int>());
+std::vector<int> subArray;
+for each(int value in arr)
+{
+    if (!subArray.empty() && value < 0)
     {
-        if (!subArray.empty() && value < 0)
+        break;
+    }
+    subArray.push_back(value);
+}
+
+For a continuous sub-array use Kadane's Algorithm:
+
+int maximumSum = -INT_MAX;
+int currentSum = 0;
+int currentStart = 0;
+int start = 0;
+int end = 0;
+for(int i = 0; i < arr.size(); ++i) 
+{
+    currentSum += arr[i];
+    if (currentSum > maximumSum) 
+    {
+        maximumSum = currentSum;
+        start = currentStart;
+        end = i;
+    }
+    if(currentSum < 0) 
+    {
+        currentSum = 0;
+        currentStart = i + 1;
+    }
+}
+
+==============================================================================================================
+
+Q: Implement an algorithm to determine if a string has all unique characters. 
+   What if you can not use additional data structures?
+A: Set will automatically remove any duplicates but requires an extra structure
+   Sorting may use space depending on how std::sort is implemented (usually a quick sort)
+   If no sorting is allowed, must check every character against the others in O(N²)
+
+bool HasUniqueCharacters(std::string str)
+{
+    std::set<char> characters(str.begin(), str.end());
+    return characters.size() == str.size();
+}
+
+bool HasUniqueCharactersNoContainer(std::string str)
+{
+    if (str.size() >= 2)
+    {
+        std::sort(str.begin(), str.end(), std::less<char>());
+        for (int i = 1; i < str.size(); ++i)
         {
-            break;
+            if (str[i] == str[i-1])
+            {
+                return false;
+            }
         }
-        subArray.push_back(value);
+    }
+    return true;
+}
+
+==============================================================================================================
+
+Q: Write code to reverse a C-Style String
+A: For string literal (char* str = "x") characters cannot be changed. For c-string:
+
+char test[] = "this is a test";
+char saved = ' ';
+int len = strlen(test);
+for(int i = 0; i < len/2; ++i)
+{
+    saved = test[i];
+    test[i] = test[len-i-1];
+    test[len-i-1] = saved;
+}
+
+For std::string:
+
+std::reverse(str.begin(), str.end());
+
+==============================================================================================================
+
+Q: Implement a stack using either a linked list or dynamic array and justify your decision
+A: Stack is a last-in-first-out structure. Dynamic arrays allow for random access which isn't required for
+   a stack. They also need to resize if getting too large which can cause unecessary copying. A linked list
+   doesn't require this copying although a disadvantage is the memory between elements can become fragmented.
+
+template <typename T> class Stack
+{
+public:
+
+    Stack() = default;
+
+    void Push(T data)
+    {
+        auto entry = std::make_unique<Entry>();
+        entry->data = data;
+        entry->next = std::move(m_root);
+        m_root = std::move(entry);
     }
 
-    For a continuous sub-array use Kadane's Algorithm:
-
-    int maximumSum = -INT_MAX;
-    int currentSum = 0;
-    int currentStart = 0;
-    int start = 0;
-    int end = 0;
-    for(int i = 0; i < arr.size(); ++i) 
+    T Pop()
     {
-        currentSum += arr[i];
-        if (currentSum > maximumSum) 
+        if (!m_root)
         {
-            maximumSum = currentSum;
-            start = currentStart;
-            end = i;
+            throw std::exception("Tried to pop empty stack");
         }
-        if(currentSum < 0) 
-        {
-            currentSum = 0;
-            currentStart = i + 1;
-        }
+
+        T data = m_root->data;
+        m_root = std::move(m_root->next);
+        return data;
     }
+
+private:
+
+    Stack(const Stack&) = delete;
+    Stack& operator=(const Stack&) = delete;
+
+    struct Entry
+    {
+        T data;
+        std::unique_ptr<Entry> next;
+    };
+
+    std::unique_ptr<Entry> m_root;
+};
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INTERVIEW LOGIC PUZZLES

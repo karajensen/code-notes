@@ -2,22 +2,29 @@
 //INTERVIEW TOPICS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Algorithms/Structures:
+PROGRAMMING:
+• How primitive types/strings are represented in memory
+• Bit manipulation
+• Pimpl, Singleton and Factory design patterns
+• Stack vs Heap
+
+ALGORITHMS/STRUCTURES:
 • Algorithm Complexity (Big-O)
-• Details of Quick Sort and Merge Sort
-• How to implement a Hash Table
+• Merge Sort, Quick Sort, Binary Search
+• Hash Table implementation
+• Linked list traversal and manipulation
 • Famous NP-complete problems: Traveling Salesman, Knapsack problem
 
-Trees:
+TREES:
 • Construction, implementation, traversal, manipulation algorithms
-• Binary Trees, n-ary Trees, Trie Trees, Red/Black Trees, Splay Trees
+• Binary Trees, n-ary Trees, Tries, Red/Black Trees, Splay Trees
 • Difference between inorder, postorder, preorder
 
-Graphs:
+GRAPHS:
 • 3 ways to represent in memory and pros and cons: objects/pointers, matrix, adjacency list
 • Breadth-First-Search and Depth-First-Search implementation and pros/cons
 
-Concurrency:
+CONCURRENCY:
 • Locks, mutexes, semaphores, monitors and how they work
 • Know about deadlock and livelock and how to avoid them
 
