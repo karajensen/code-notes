@@ -473,3 +473,30 @@ RACE CONDITION
 AMDAHLS LAW
 • Used to find the maximum expected improvement to an overall system when part of the system is improved
 • Used in parallel computing to predict the maximum speed increase using multiple processors
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//NETWORKING
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+NETWORK: Requires common language (protocol) and link (wireless or physical)
+ROUTER: Directs network traffic along the correct route
+CLIENT: Computer that initiates an exchange between another computer, connects only when required
+SERVER: Computer that receives the connection from another computer, runs continuous listening program
+
+TCP (TRANSMISSION CONTROL PROTOCOL): Packets guaranteed, delivered in order, slower
+UDP (USER DATAGRAM PROTOCOL): Not guaranteed, may not arrive in order, faster
+LATENCY: Time taken for packets to travel from the client -> server -> client, measured by ping
+
+                 -----------------------------------------------------------------------------
+                 |   ADVANTAGES                    |   DISADVANTAGES                         |
+----------------------------------------------------------------------------------------------
+| PEER-TO-PEER   |   No single point of failure    |   Large amounts of traffic              |
+|                |   Reduced latency as don't      |   Have to talk to all peers             |
+|                |   have to wait on server        |   Easier to cheat                       |
+|                |                                 |   No single world state in control      |
+----------------------------------------------------------------------------------------------
+| CLIENT-SERVER  |   Central point of failure      |   Smaller amounts of traffic            |
+|                |   Greater latency               |   Client only has to talk with server   |
+|                |                                 |   Harder to cheat                       |
+|                |                                 |   Single world state in control         |
+----------------------------------------------------------------------------------------------

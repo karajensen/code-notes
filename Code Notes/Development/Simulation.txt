@@ -492,3 +492,10 @@ PARTIAL PLANNING (Plan Space Search)
 
 CONDITIONAL PLANNING (Probability)
  - Probability is used when not all information is known about environment/other agents
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//PREDICTIVE SYSTEMS: DEAD RECKONING
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+• Based off the two most recent position messages we can predict the players velocity
+• Using the predicted velocity we can predict their current position

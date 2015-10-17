@@ -32,7 +32,7 @@ PATH TRACING [RAY TRACING]
 • Takes into account indirect lighting/global illumination 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-RENDER PIPELINE
+//RENDER PIPELINE
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 TEXEL: One unit of a texture
@@ -335,6 +335,43 @@ OPTIMIZATION TIPS
 • Render a depth-only pass before color pass to reduce pixel shader use
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+//COLOUR
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+8bit   RGB:  Only 256 colors to use
+24bit  RGB:  Each channel has 8bits (256 colors)
+32bit  ARGB: Each channel has 8bits (256 colors) including 8bit alpha channel
+
+HSB (Hue/Saturation/Brightness)        Cylindrical colour representation
+CMYK (Cyan/Magenta/Yellow/Key[Black])  Subtractive colour model
+RGB (Red/Green/Blue)                   Additive colour model
+
+HUE = Particular colour in rainbow
+SATURATION = How rich a colour is
+VALUE = How much Black/White a colour has
+TINTS = Saturation decreases
+SHADES = Value decreases
+TONES = Saturation/Value decreases
+
+Converting HSV/RGB: http://www.poynton.com/PDFs/coloureq.pdf p15
+Colour Blending: http://www.stuartdenman.com/improved-color-blending/
+
+• Linear blending loses saturation between colours
+• Blending must occur in polar coordinate space to maintain saturation
+• Polar coordinate space: HSV/HSB, CIE-Lab
+• Note add primary colour = 6 check to primary colour = 0 when blending hues
+
+--------------------------------------------------------------------------------------------
+Polar Coordinate Space Blending:
+--------------------------------------------------------------------------------------------
+diff = hue2 - hue1
+if (hue1 > hue2) then swap(hue1, hue2), diff = -diff, blendValue = 1 - blendValue
+if (diff > 180) then hue1 = hue1 + 360, hue = (hue1 + blendValue * (hue2 - hue1)) mod 360
+if (diff <= 180) then hue = hue1 + blendValue * difference
+where blendValue = [1,0] and hue/hue1/hue2 = [0,360]
+--------------------------------------------------------------------------------------------
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //TEXTURES
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -344,12 +381,9 @@ JPEG = Joint Photography Experts Group
 BMP = Bitmap
 GIF = Graphics Interchange Format
 
-8bit   RGB:  Only 256 colors to use
-24bit  RGB:  Each channel has 8bits (256 colors)
-32bit  ARGB: Each channel has 8bits (256 colors) including 8bit alpha channel
-
 SANS-SERIF FONT: rounded edges of characters
 SERIF FONT: little lines on edges of characters
+
 TEXTURE MAPPING: UV coordinates for 2D image
 CUBE MAPPING: UVW coordinates for 3D cube image
 MINFILTER: Texture filter used when shrinking textures
@@ -495,39 +529,6 @@ RANDOM SAMPLING:
 
 POISSON DISC SAMPLING: 
 • Random sampling with additional checks to whether samples are too close to each other
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//COLOUR BLENDING
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-HSB (Hue/Saturation/Brightness)        Cylindrical colour representation
-CMYK (Cyan/Magenta/Yellow/Key[Black])  Subtractive colour model
-RGB (Red/Green/Blue)                   Additive colour model
-
-HUE = Particular colour in rainbow
-SATURATION = How rich a colour is
-VALUE = How much Black/White a colour has
-TINTS = Saturation decreases
-SHADES = Value decreases
-TONES = Saturation/Value decreases
-
-Converting HSV/RGB: http://www.poynton.com/PDFs/coloureq.pdf p15
-Colour Blending: http://www.stuartdenman.com/improved-color-blending/
-
-• Linear blending loses saturation between colours
-• Blending must occur in polar coordinate space to maintain saturation
-• Polar coordinate space: HSV/HSB, CIE-Lab
-• Note add primary colour = 6 check to primary colour = 0 when blending hues
-
---------------------------------------------------------------------------------------------
-Polar Coordinate Space Blending:
---------------------------------------------------------------------------------------------
-diff = hue2 - hue1
-if (hue1 > hue2) then swap(hue1, hue2), diff = -diff, blendValue = 1 - blendValue
-if (diff > 180) then hue1 = hue1 + 360, hue = (hue1 + blendValue * (hue2 - hue1)) mod 360
-if (diff <= 180) then hue = hue1 + blendValue * difference
-where blendValue = [1,0] and hue/hue1/hue2 = [0,360]
---------------------------------------------------------------------------------------------
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //LIGHTS
@@ -808,7 +809,7 @@ FAULT FORMATION ALGORITHM
 • More passes = rougher terrain
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//ANIMATION
+//ANIMATION / VIDEO
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 PAL:  25fps     576 pixel lines  720 × 576

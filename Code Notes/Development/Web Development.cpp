@@ -2,14 +2,10 @@
 //WEB DEVELOPMENT
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
-NETWORK: Requires common language (protocol) and link (wireless or physical)
-ROUTER: Directs network traffic along the correct route
+
 TCP/IP: Network protocol that the internet uses for exchange of packets
 IP ADDRESS: Internet Protocol address, four-byte unique number for every computer connected to net
 DOMAIN NAME SYSTEM: Translates domain names (web addresses) into IP addresses
-
-CLIENT: Computer that initiates an exchange between another computer, connects only when required
-SERVER: Computer that receives the connection from another computer, runs continuous listening program
 CLIENT-SIDE SCRIPT: Javascript that runs on client computer in a static web site
 SERVER-SIDE SCRIPT: ASP.NET, PHP, Ruby on Rails that run on a web server and create a dynamic web site
 
