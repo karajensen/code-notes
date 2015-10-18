@@ -127,10 +127,10 @@ swap_ranges(S, E, S2) //exchange values of two ranges, returns iterato to E2
 iter_swap(it1, it2) //swap what each iterator points to but not underlying objects
 
 //REPLACING
-replace(S, E, "A", "B") //replaces over range any values that are A with value B
-replace_if(S, E, boolLam, "A") //replaces element with A if lambda returns true
-replace_copy(S, E, S2, "A", "B") //copies S to S2 and replaces in range 2 any A with B
-replace_copy_if(S, E, S2, boolLam, "A") //copies S to S2, replaces with A if lambda returns true in range 2 
+replace(S, E, 'A', 'B') //replaces over range any values that are A with value B
+replace_if(S, E, boolLam, 'A') //replaces element with A if lambda returns true
+replace_copy(S, E, S2, 'A', 'B') //copies S to S2 and replaces in range 2 any A with B
+replace_copy_if(S, E, S2, boolLam, 'A') //copies S to S2, replaces with A if lambda returns true in range 2 
 
 //MERGING
 //Only used on sorted ranges, all elements remain in sorted ascending order
@@ -293,22 +293,6 @@ int a = (color >> 24) & 0xFF;
 //copies into container: 1 1 2 3 5 8 13 21 34 55
 std::vector<int> v = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 std::adjacent_difference(v.begin(), v.end() - 1, v.begin() + 1, std::plus<int>());
-
-//GET FACTORIAL OF A NUMBER
-long FactorialRecursion(int n)
-{
-    return n == 0 ? 1 : n * FactorialRecursion(n-1);
-}
-
-long Factorial(int n)
-{
-    long result = 1;
-    for (int c = 1; c <= n; ++c)
-    {
-        result *= c;
-    }
-    return result;    
-}
 
 //SAFE RELEASE
 SafeRelease(&myPointer);

@@ -443,5 +443,8 @@
     <Image Include="Images\Shader - Texture Wrapping.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Code - Networking.png">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
 </Project>

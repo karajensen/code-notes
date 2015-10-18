@@ -167,6 +167,37 @@ std::reverse(str.begin(), str.end());
 
 ==============================================================================================================
 
+Q: Implement an algorithm to remove all duplicates from a string without using any additional buffer
+A: Erase-remove idiom, erase all instances after the current character at index i:
+
+for (int i = 0; i < str.size()-1; ++i)
+{
+    str.erase(std::remove(str.begin()+i+1, str.end(), str[i]), str.end());
+}
+
+==============================================================================================================
+
+Q: Implement an algorithm to determine if two strings are anagrams of each other
+A: Use std::is_permutation, otherwise sort and check equality of strings
+
+bool isAnagram = s1.size() == s2.size() && std::is_permutation(s1.begin(), s1.end(), s2.begin());
+
+==============================================================================================================
+
+Q: Implement an algorithm to replace all spaces in a string with %20
+A: boost::ireplace_all if boost is available, otherwise:
+
+for (int i = 0; i < str.size(); ++i)
+{
+    if (str[i] == ' ')
+    {
+        str[i] = '%';
+        str.insert(i + 1, "20");
+    }
+}
+
+==============================================================================================================
+
 Q: Implement a stack using either a linked list or dynamic array and justify your decision
 A: Stack is a last-in-first-out structure. Dynamic arrays allow for random access which isn't required for
    a stack. They also need to resize if getting too large which can cause unecessary copying. A linked list
@@ -295,6 +326,20 @@ A: There are n couples so therefore n boys
    Number of Girls = 0*(n*0.5) + 1*(n*0.25) + 2*(n*0.125) + ...
    Number of Girls = n (after summing 4-5 children and beyond)
    Proportion = 1:1
+
+==============================================================================================================
+
+Q: A line of 100 airline passengers is waiting to board a plane. They each hold a ticket to one 
+   of the 100 seats on that flight. Unfortunately, the first person in line is crazy, and will 
+   ignore the seat number on their ticket, picking a random seat to occupy. All of the other 
+   passengers are quite normal, and will go to their proper seat unless it is already occupied. 
+   If it is occupied, they will then find a free seat to sit in, at random. 
+   What is the probability that the last (100th) person to board the plane will sit in their proper seat?
+
+A: If any passenger before the last sits in the first passenger's seat, the last passenger gets their 
+   own seat.  If any passenger before the last sits in the last passenger's seat, the last passenger does 
+   not get their own seat.  Because the passengers are choosing their seats uniformly at random, these 
+   outcomes are equally likely, and so the probability that the last passenger gets their own seat is one half.
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //NP-COMPLETE/HARD PROBLEMS
