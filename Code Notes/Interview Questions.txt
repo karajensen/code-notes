@@ -55,6 +55,15 @@ A: - BFS searches each row from left to right moving down to the children once t
    - BFS uses more memory than DFS as it has to keep track of children nodes
    - BFS is less likely than DFS to get stuck in an infinite loop
 
+Q: Describe how you could use a single array to implement three stacks
+A: Approach 1: Divide the array into 3 equal sections and have a max allowed size for the stack
+   Approach 2: Each stack node keeps track of the one below it. 
+               Need to also keep track of which array indexes have a node and which are free.
+
+Q: How would you design a stack which has push, pop and min value methods all with O(1) time?
+A: Pop and push are already O(1) with a stack. For minimum, each node in the stack keeps track of 
+   the minimum beneath itself. To get the overall minimum, get the minimum stored on the stack top
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //C++ QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -264,20 +264,13 @@ str1.size() == str2.size() &&
 std::equal(str1.begin(), str1.end(), str2.begin(), 
     [](char c1, char s2){ return toupper(c1) == toupper(c2); });
 
-//GET 1D INDEX FROM 2D COORD
-for(int x = 0; x < columns; ++x)
-{
-    for(int z = 0; z < rows; ++z)
-    {
-        int index = (columns*z)+x;
-    }
-}
+//GET 1D INDEX FROM 2D COORD (UNIFORM GRID)
+int index = rows * x + z;
+int x = index / rows;
+int z = index % rows;
 
 //WHETHER NUMBER IS EVEN
-if(x % 2)
-{
-    //x is odd
-}
+bool isOdd = x % 2;
 
 //GET DIGIT AT RADIX SIGNIFICANT POSITION (1, 10, 100..)
 int digit = number/position % 10;

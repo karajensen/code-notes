@@ -22,36 +22,6 @@ long Factorial(int n)
 
 ==============================================================================================================
 
-Q: Reverse a linked list
-A: Called by ReverseList(root) or ReverseListRecursive(root, nullptr)
-
-Node* ReverseList(Node* node)
-{
-    Node* temp = nullptr;
-    Node* previous = nullptr;
-    while(node != nullptr) 
-    {
-        temp = node->next;
-        node->next = previous;
-        previous = node;
-        node = temp;
-    }
-    return previous;
-}
-
-Node* ReverseListRecursive(Node* node, Node* previous)
-{
-    if (node != nullptr)
-    {
-        Node* temp = node->next;
-        node->next = previous;
-        return ReverseListRecursive(temp, node);
-    }
-    return previous;
-}
-
-==============================================================================================================
-
 Q: Write a method to generate a random number between 1 and 7, 
    given a method that generates a random number between 1 and 5
 A: If a result of 0 is ignored, there is an equal amount of 
@@ -116,7 +86,9 @@ for(int i = 0; i < arr.size(); ++i)
     }
 }
 
-==============================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//INTERVIEW STRING PUZZLES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Q: Implement an algorithm to determine if a string has all unique characters. 
    What if you can not use additional data structures?
@@ -196,7 +168,133 @@ for (int i = 0; i < str.size(); ++i)
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//INTERVIEW LINKED LIST PUZZLES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Q: Reverse a linked list
+A: Called by ReverseList(root) or ReverseListRecursive(root, nullptr)
+
+Node* ReverseList(Node* node)
+{
+    Node* temp = nullptr;
+    Node* previous = nullptr;
+    while(node != nullptr) 
+    {
+        temp = node->next;
+        node->next = previous;
+        previous = node;
+        node = temp;
+    }
+    return previous;
+}
+
+Node* ReverseListRecursive(Node* node, Node* previous)
+{
+    if (node != nullptr)
+    {
+        Node* temp = node->next;
+        node->next = previous;
+        return ReverseListRecursive(temp, node);
+    }
+    return previous;
+}
+
 ==============================================================================================================
+
+Q: Write code to remove duplicates from an unsorted linked list
+   How would you solve this if temporary buffers are not allowed?
+
+A: Using temporary buffer:
+
+Node* previous = n;
+std::vector<int> results;
+while (n->next != nullptr)
+{
+    if (std::count(results.begin(), results.end(), n->value) > 0)
+    {
+        previous->next = n->next;
+        delete n;
+        n = previous->next;
+    }
+    else
+    {
+        results.push_back(n->value);
+        previous = n;
+        n = n->next;
+    }
+}
+
+Without temporary buffer:
+
+while (n->next != nullptr)
+{
+    Node* previous = n;
+    Node* tosearch = n->next;
+    while (tosearch != nullptr)
+    {
+        if (tosearch->value == n->value)
+        {
+            previous->next = tosearch->next;
+            delete tosearch;
+            tosearch = previous->next;
+        }
+        else
+        {
+            previous = tosearch;
+            tosearch = tosearch->next;
+        }
+    }
+    n = n->next;
+}
+
+==============================================================================================================
+
+Q: Implement an algorithm to delete a node in the middle of a single linked list given only access to that node
+A: The node to delete cannot have its memory location removed as the previous node will point to it
+   Actually delete the node after it and copy its data into the node delete is requested for
+
+void DeleteNode(Node* n)
+{
+    if (n->next == nullptr)
+    {
+        throw std::exception("Cannot delete last node");
+    }
+
+    Node* toDelete = n->next;
+    n->value = toDelete->value;
+    n->next = toDelete->next;
+    delete toDelete;
+}
+
+==============================================================================================================
+
+Q: Given a linked list where one node circles back to itself somewhere, 
+   implement an algorithm which returns the node at the beginning of the circular loop
+A: Address is a unique identifier of a node:
+
+Node* FindStartOfLoop(Node* n)
+{
+    Node* previous = nullptr;
+    std::vector<Node*> nodes;
+
+    while (n != nullptr)
+    {
+        if (std::find(nodes.begin(), nodes.end(), n) != nodes.end())
+        {
+            return previous;
+        }
+        nodes.push_back(n);
+        previous = n;
+        n = n->next;
+    }
+
+    return nullptr;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//INTERVIEW STACK PUZZLES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Q: Implement a stack using either a linked list or dynamic array and justify your decision
 A: Stack is a last-in-first-out structure. Dynamic arrays allow for random access which isn't required for
@@ -312,9 +410,7 @@ A: If the duck tries to travel directly in the opposite vector to the duck-to-fo
    When the duck reaches a distance of r + 1/4r from the fox it only has to cover 3/4r to reach the edge
    In this case πr > 4 * (3/4r) and the duck would escape
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//INTERVIEW PROBABILITY PUZZLES
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+==============================================================================================================
 
 Q: In a country where everyone wants a boy, each family continues having babies till they have a boy. 
    After some time, what is the proportion of boys to girls in the country? 
