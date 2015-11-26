@@ -176,12 +176,16 @@ myThread.join();
 
 #include <boost/filesystem.hpp>
 
-filesystem::path filePath("MyFile.txt");
-filesystem::exists(filePath)
-filesystem::remove(prevPath);          // Removing files
+filesystem::exists(path)
+filesystem::remove(path);              // Removing files
 filesystem::create_directory(dir)      // Create directory
-filesystem::rename(filePath,prevPath); // Renaming files
+filesystem::rename(path, prevPath);    // Renaming files
 filesystem::copy_file("a.txt","b.txt") // Copy files from path a to path b
+
+filesystem::path path("MyFile.txt");
+path.string()
+path.extension().string()  // includes '.'
+path.filename().string()   // includes extension
 
 // Recurse backwards through parent directories
 filesystem::path directory("MyParentFolder/MyFolder");
@@ -193,6 +197,16 @@ while(!directory.string().empty())
         return filepath;
     }
     directory = directory.parent_path();
+}
+
+// Iterate over all files in folde
+boost::filesystem::path targetDir("C://MyFolder"); 
+boost::filesystem::directory_iterator it(targetDir), eod;
+BOOST_FOREACH(boost::filesystem::path const& path, std::make_pair(it, eod))   
+{ 
+    if(is_regular_file(path))
+    {
+    } 
 }
 
 //////////////////////////////////////////////////////////////////////////////
