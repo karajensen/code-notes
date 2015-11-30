@@ -29,13 +29,13 @@ Selection Sort    O(N²)       O(1)     Comparison, In-place, Can be stable, Bad
 Bubble Sort       O(N²)       O(1)     Comparison, In-place, Stable, Swaps elements, Slowest of all sorts
 
 =====================================================================================================
-SEARCHING              AVG SPD   SPACE   STRUCTURE    DESCRIPTION
+SEARCHING              AVG SPD   SPACE   TYPE    DESCRIPTION
 =====================================================================================================
-Binary Search          O(logN)   O(1)    Array        Sorted arrays, compares the value with the middle element
-Linear Search          O(N)      O(1)    Array        Unsorted arrays, Brute force checking
-Breadth-First Search   O(N+E)    O(N)    Graph/Tree   Traverses to all children before moving down a level
-Depth-First Search     O(N+E)    O(N)    Graph/Tree   Traverses graph to the greatest depth before backtracking
-A*                     O(E)      O(N)    Graph/Tree   Pathfinding using heuristics to traverse
+Binary Search          O(logN)   O(1)    Array   Sorted arrays, compares the value with the middle element
+Linear Search          O(N)      O(1)    Array   Unsorted arrays, Brute force checking
+Breadth-First Search   O(N+E)    O(N)    Graph   Traverses to all children before moving down a level
+Depth-First Search     O(N+E)    O(N)    Graph   Traverses graph to the greatest depth before backtracking
+A*                     O(E)      O(N)    Graph   Pathfinding using heuristics to traverse
 
 =====================================================================================================
 DYNAMIC PROGRAMMING    AVG SPD    DESCRIPTION
@@ -396,9 +396,10 @@ OBJECT PARTITIONING SCHEME: subdivide an object into partitions
 
 TREE TRAVERSAL:
 • Order in which to trace the nodes of a tree
-• In-Order: Left -> Root -> Right, O(N) to obtain from Pre-Order, Sorts values ascending
-• Pre-Order: Root -> Left -> Right, Default way of storing trees
-• Post-Order: Left -> Right -> Root, Depth First Search
+• BigO affected by type of tree, whether balanced, height
+• In-Order: Left->Root->Right, O(N) to obtain from Pre-Order, Sorts values ascending, used by binary search trees
+• Pre-Order: Root->Left->Right, Default way of storing trees
+• Post-Order: Left->Right->Root, Depth First Search
 
 =====================================================================================================
 BINARY TREES
