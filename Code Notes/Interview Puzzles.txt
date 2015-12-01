@@ -397,6 +397,37 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//INTERVIEW TREE PUZZLES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Q: Implement a function to check if a tree is balanced-
+   No two leaf nodes differ in distance from the root by more than one
+A: Difference in min and max depth from the root to a leaf node should not differ by one:
+
+int MaxDepth(Node* n)
+{
+    if (n == nullptr)
+    {
+        return 0;
+    }
+    return 1 + std::max(MaxDepth(n->left), MaxDepth(n->right));
+}
+
+int MinDepth(Node* n)
+{
+    if (n == nullptr)
+    {
+        return 0;
+    }
+    return 1 + std::min(MinDepth(n->left), MinDepth(n->right));
+}
+
+bool IsBalanced(Node* root)
+{
+    return MaxDepth(root) - MinDepth(root) <= 1;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INTERVIEW LOGIC PUZZLES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

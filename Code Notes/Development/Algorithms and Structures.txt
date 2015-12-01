@@ -393,6 +393,9 @@ B-TREES: Tree with more than two children
 TRIE: Node key is constructed from position in tree combining parents
 SPACIAL PARTITIONING SCHEME: subdivide a space into partitions
 OBJECT PARTITIONING SCHEME: subdivide an object into partitions
+DEPTH: number of edges from root to leaf node, tree is balanced when both min/max depth are roughly the same
+MINIMUM DEPTH: shortest number of edges from a root to a leaf node
+MAXIMUM DEPTH: largest number of edges from a root to a leaf node
 
 TREE TRAVERSAL:
 • Order in which to trace the nodes of a tree
