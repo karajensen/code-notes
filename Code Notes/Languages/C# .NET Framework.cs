@@ -144,6 +144,13 @@ file.WriteEndElement();
 file.WriteEndDocument();
 file.Close();
 
+//FILESYSTEM
+Path.GetDirectoryName(path);
+Path.GetFileNameWithoutExtension(path);
+Path.GetFileName(path);
+Path.HasExtension(path)
+Path.IsPathRooted(path) //whether absolute or relative path
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 //WINDOWS FORMS
 ////////////////////////////////////////////////////////////////////////////////////////////
