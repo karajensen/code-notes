@@ -35,7 +35,7 @@ CHAIN OF RESP   Passes a command through series of objects until handled    Even
 COMMAND         Holds a method and anything needed to call that method      Functors/lambdas
 STATE           Alters an objects behavior when its state changes           Multiple states/behaviours
 STRATEGY        Implements from interchangable algorithms                   Switching algorithms
-POLICY          Implements from templated inherited classes					Creating class with multiple implementations		
+POLICY          Implements from templated inherited classes                 Creating class with multiple implementations
 TEMPLATE        Algorithm with only function calls to other classes         Object algorithm variations
 MEMENTO         Allows capture and restore an objects internal state        Undo/Redo
 ITERATOR        Allows movement over range of elements in a container       Containers
@@ -881,7 +881,7 @@ public:
 class PolicyClassA
 {
 public:
-	void DoSomething(){}
+    void DoSomething(){}
 protected:
     ~PolicyClassA(){} // protected non-virtual destructor prevents polymorphism
 };
@@ -889,7 +889,7 @@ protected:
 class PolicyClassB
 {
 public:
-	void DoSomething(){}
+    void DoSomething(){}
 
     // can define extra functions to use outside host cass
     // require specialisation if using in host class
@@ -904,10 +904,10 @@ class MyHostClass : public MyPolicy
 {
 public:
 
-	void MyFunction()
-	{
-		MyPolicy::DoSomething();
-	}
+    void MyFunction()
+    {
+        MyPolicy::DoSomething();
+    }
 };
 
 // ADVANCED PATTERN: Templated policy classes

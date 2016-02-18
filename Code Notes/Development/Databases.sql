@@ -131,15 +131,15 @@ EXTENDED PROPERTIES
 • Syntax chosen mostly from SQL server, other DBMS can have different
 */
  
-/*TYPE		           BYTES     RANGE*/
+/*TYPE                   BYTES    RANGE*/
 bigint                   8       -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
 int                      4       -2,147,483,648 to 2,147,483,647
 smallint                 2       -32,768 to 32,767
 tinyint                  1        0 to 255
 money                    8       -922,337,203,685,477.5808 to 922,337,203,685,477.5807 /*uses currency symbol*/
 smallmoney               4       -214,748.3648 to 214,748.3647 /*uses currency symbol*/
-bit				         1        1,0,NULL /*up to 8 bit variables in table will be store in the 1 byte*/
-real                     4        3.40E +/- 38			  
+bit                      1        1,0,NULL /*up to 8 bit variables in table will be store in the 1 byte*/
+real                     4        3.40E +/- 38              
 float(1-24)              4        7 digits /*equivalent to float*/
 float(25-53)             8        15 digits /*equivalent to double*/
 decimal/numeric(1-9)     5        10.0E +/- precision
@@ -150,10 +150,10 @@ char(n)                  n        non-unicode character set where n = [0,8000] /
 varchar(n/max)           n        non-unicode character set where n = [0,8000] /*size is length of input string*/
 nchar(n)                 2xn      unicode character set where n = [0,4000] /*size is fixed n bytes*/
 nvarchar(n/max)          2xn      unicode character set where n = [0,4000] /*size is length of input string*/
-binary(n)		         n        1 to 8000 /*size is fixed n bytes*/
+binary(n)                n        1 to 8000 /*size is fixed n bytes*/
 varbinary(n/max)         n        1 to 8000 /*size is length of input values*/
-				  		 
-/*DATE/TIME*/	  		 
+                           
+/*DATE/TIME*/               
 date              3      0001-01-01 to 9999-12-31, January 1, 1 A.D. to December 31, 9999 A.D.
 time              5      00:00:00.0000000 to 23:59:59.9999999
 datetimeoffset    10     0001-01-01 to 9999-12-31, January 1,1 A.D. to December 31, 9999 A.D, 00:00:00 to 23:59:59.9999999
@@ -172,7 +172,7 @@ SELECT MyCol AS MyAlias FROM MyTable;             /*display column under a diffe
 SELECT (MyCol+1.0) AS MyAlias FROM MyTable;       /*Adding values to columns, use alias as auto assigns name*/
 SELECT (MyCol1-MyCol2) AS MyAlias FROM MyTable;   /*Difference of two value columns*/
 SELECT (MyCol & 'temp') AS MyAlias FROM MyTable;  /*strings, can also use + for symbol*/
-SELECT MyTable.MyColumn FROM MyTable;			  /*qualification of column names*/
+SELECT MyTable.MyColumn FROM MyTable;              /*qualification of column names*/
 SELECT MyCol1, (MyCol2+MyCol3) AS MyAlias FROM MyTable;
 
 /*INSERT*/

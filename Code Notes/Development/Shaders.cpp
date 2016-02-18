@@ -6,7 +6,7 @@
 GLSL SHADER               HLSL SHADER    DESCRIPTION
 -----------------------------------------------------------------------------------------------------
 Vertex                    Vertex         Outputs data for each vertex in mesh
-Tessellation Control  	  Hull           Outputs control point data for surfaces
+Tessellation Control      Hull           Outputs control point data for surfaces
 Tessellation Evaluation   Domain         Outputs vertex data from tessellation generator/control points
 Geometry                  Geometry       Takes in single primitive, outputs none or more primitives
 Fragment                  Pixel          Outputs data for each pixel mesh may contribute to
@@ -607,8 +607,8 @@ void main()
     gl_Position = worldViewProjection * in_Position;
     ex_UVs = in_UVs;
     ex_PositionWorld = in_Position.xyz;
-	ex_Normal = (worldViewInvTranpose * vec4(in_Normal, 1.0)).xyz;
-	ex_VertToCamera = CameraPosition - in_Position.xyz;
+    ex_Normal = (worldViewInvTranpose * vec4(in_Normal, 1.0)).xyz;
+    ex_VertToCamera = CameraPosition - in_Position.xyz;
 }
 
 //OPENGL 2.0- FRAGMENT SHADER
