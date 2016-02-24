@@ -203,6 +203,7 @@ rbegin()  rend()  crbegin()  crend() // List only
 // Every entry is sorted according to a compare function std::function<bool(const T&, const T&)
 std::map<Key, T> MyMap;
 std::map<Key, T, comparisonFn> MyMap(myFn); 
+std::map<Key, T, comparisonFunctor> MyMap;
 std::multi_map<Key, T> MyMultiMap // can have multiple entries for the one key
 std::map<Key, T>::iterator itr;   // iterator for map
 
