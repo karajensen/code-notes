@@ -370,6 +370,8 @@ OVERLOAD RESOLUTION ORDER
 • Template functions never implicitly cast
 • Prefer exact non-template type over template
 • Implicit casting always last priority, never explicitly casts
+• Uses SFINAE: substitution failure is not an error where the compilier 
+  can reject template types without throwing any errors
 
 FN(1.0F, 1.0F)
 1) Non-template Exact type                        void Fn(float x, float y)

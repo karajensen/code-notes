@@ -26,6 +26,7 @@ if(typeid(Derived) == typeid(Base))              { /* returns false */ }
 #include <type_traits>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+std::is_arithmetic<T>::value //Whether a numeric type
 std::is_base_of<A,B>::value //returns true if A is a base class of B
 std::is_assignable<A,B>::value //returns true if A==B is possible
 std::is_move_assignable<A>::value //returns true if A has a move assignment operator

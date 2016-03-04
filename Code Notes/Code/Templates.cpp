@@ -116,24 +116,31 @@ template MyClass<int>;
 template void MyFunction<int>(int x);
 template void MyFunction<int>(MyClass<int>& x);
 
-//EXPLICIT SPECIALISATION
-//Tells compiler to not use template; use a specialised function instead for the given types
+// EXPLICIT SPECIALISATION
+// Tells compiler to not use template; use a specialised function instead for the given types
 template <> void MyFunction(int x); 
 template <> MyClass<int>::MyFunction();
 
-//CLASSES: PARTIAL SPECIALIZATION
-//Can only partially specialize at class level, not member functions
+// CLASSES: PARTIAL SPECIALIZATION
+// Can only partially specialize at class level, not member functions
 template <typename T, typename S> class MyClass {}; 
 template <typename T> class MyClassSpec <T, int> {}; // Set S as int
 template <typename S> class MyClassSpec <S, S> {}; // Set T as S
 template <typename T> void MyClass<T, int>::MyFunction(); // Cannot be done
 MyClassSpec<float> obj;
 
-//FUNCTIONS: PARTIAL SPECIALIZATION
-//Functions can't be partially specialised- overloaded instead
+// FUNCTIONS: PARTIAL SPECIALIZATION
+// Functions can't be partially specialised- overloaded instead
 template <typename T, typename S> void MyFunction(T t, S s){}
 template <typename T> void MyFunction(T t, float s){} // overloads MyFunction
 MyFunction(x, y); // uses overload resolution
+
+// TEMPLATE EXCLUSION
+// Will fail to instantiate for non-arithmetic types
+// Don't use with nested templates
+template <typename T>
+typename enable_if<is_arithmetic<T>::value, T>::type
+MyFunction(T t) {}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //TEMPLATE PARAMETERS
