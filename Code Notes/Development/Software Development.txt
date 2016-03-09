@@ -140,3 +140,53 @@ git push origin --delete old_branch
 
 SHOW REMOTE BRANCH OF LOCAL
 git remote show origin
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//VISUAL STUDIO MSBUILD
+/////////////////////////////////////////////////////////////////////////////////////////
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+
+<!-- PROPERTY GROUPS -->
+<!-- Can exist inside/outside targets -->
+<!-- Usage: $(MyProperty)
+<PropertyGroup>
+  <MyProperty>MyPropertyValue</MyProperty>
+</PropertyGroup>
+
+<!-- ITEM GROUPS -->
+<!-- Can have multiple identities -->
+<!-- Access through %(SampleItem.Identity) and %(SampleItem.Id)
+<ItemGroup>
+  <SampleItem Include="one">
+    <Id>1a</Id>
+  </SampleItem>
+  <SampleItem Include="one">
+    <Id>1b</Id>
+  </SampleItem>
+  <SampleItem Include="two">
+    <Id>2</Id>
+  </SampleItem>
+</ItemGroup>
+
+<!-- TARGETS -->
+<!-- Done in order of DependsOnTargets -->
+<Target Name="Deploy" DependsOnTargets="BatchExample;Build">
+</Target>
+<Target Name="Build">
+</Target>
+
+<!-- BATCH TARGET -->
+<!-- Will loop through each item in ItemGroup SampleItem -->
+<Target Name="BatchExample">
+  <Message Text="SampleItem.Identity: %(SampleItem.Identity)"/>
+  <Message Text="SampleItem.Identity: %(SampleItem.Id)"/>
+</Target>
+
+<!-- MULTIPLE BATCH TARGETS -->
+<!-- Using multiple batches requires merging groups -->
+<Target Name="MultiBatchExample">
+
+</Target>
+
+</Project>
