@@ -31,9 +31,9 @@ greater_equal<T> op // (const T& x, const T& y) const {return x>=y;}
 greater<T> op       // (const T& x, const T& y) const {return x>y;}
 equal_to<T> op      // (const T& x, const T& y) const {return x==y;}
 
-//=======================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 //ITERATIVE ALGORITHMS
-//=======================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //ITERATIVE
 for_each(S, E, doLam) //Non-modifying; Sends const dereferenced object into lambda for each element
@@ -60,9 +60,9 @@ fill_n(S, n, "A") //fill from S to n elements with reference of value A
 generate(S, E, createLam) //calls lamda and assigns return for each element
 generate_n(S, n, createLam) //calls lamda and assigns return for each element from S to n elements
 
-//=======================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 //SEARCHING ALGORITHMS
-//=======================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //ELEMENT EXISTANCE
 count(S, E, myObj) //returns int on number of items of myObj in container
@@ -103,9 +103,9 @@ equal(S, E, S2, equalLam) //returns true if both ranges are equal to each other 
 is_permutation(S, E, S2, equalLam) //returns true if both ranges are equal to each other excluding ordering
 includes(S, E, S2, E2) //returns true if range 2 is in range 1; both ranges must be sorted in ascending order
 
-//=======================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 //MOVING ALGORITHMS
-//=======================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //COPYING
 copy(S, E, S2) //copies O into O2, returns iterator to E2
@@ -140,9 +140,9 @@ set_intersection(S, E, S2, E2, S3) //copies elements in 1 that are also in 2 int
 set_difference(S, E, S2, E2, S3) //copies elements in 1 that are not in 2 into 3
 set_symmetric_difference(S, E, S2, E2, S3) //copies elements in 1 that don't exist in 2 and vice versa into 3
 
-//=======================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 //SORTING ALGORITHMS
-//=======================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //CHANGE ORDER
 reverse(S, E) //reverses order of elements
@@ -170,9 +170,9 @@ is_sorted(S, E, sortLam) //returns false if not sorted in ascending order, stop 
 is_sorted_until(S, E, sortLam) //Returns itr to first element which does not follow an ascending order else returns E
 nth_element(S, M, E, sortLam) //puts M at the position it'd be if range was sorted, elements before are less/after are more (in any order)
 
-//=======================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 //REMOVING ALGORITHMS
-//=======================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //CLEARING CONTAINERS
 //Reducing capactiy not needed for list, set, map as they don't reserve space
@@ -214,9 +214,9 @@ for(map<T>::iterator it = O.begin(); it != O.end(); ) //remove_if
     else { ++it; }
 }
 
-//=======================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 //CONVERSION ALGORITHMS
-//=======================================================================================================
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //CONVERT TO C-STYLE CONTAINERS
 //modifying c-style version cannot change number of elements
@@ -231,75 +231,3 @@ is_heap(S, E, sortLam) //returns true if range is a heap
 push_heap(S, E) //push any values not already in heap structure in range to the heap
 pop_heap(S, E) //pop highest value on heap off heap (doesn't remove from container though)
 myContainer.front() //get highest value on the heap
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-//CUSTOM ALGORITHMS
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//CHANGE RANGE OF A VALUE
-template<typename T> 
-T ChangeRange(T value, T currentInner, T currentOuter, T newInner, T newOuter)
-{
-    return ((value-currentInner)*((newOuter-newInner)/(currentOuter-currentInner)))+newInner;
-}
-
-//DEGREES/RADIANS CONVERSION
-#define _USE_MATH_DEFINES
-#include <math.h>
-template<typename T> T DegToRad(T degrees)
-{
-    return static_cast<T>(M_PI/180.0)*degrees;
-}
-template<typename T> T RadToDeg(T radians)
-{
-    return static_cast<T>(180.0/M_PI)*radians;
-}
-
-//STRING: MAKE UPPER/LOWER CASE
-std::transform(str.begin(), str.end(), str.begin(), &std::toupper);
-std::transform(str.begin(), str.end(), str.begin(), &std::tolower);
-
-//STRING: CASE INSENSITIVE COMPARISON
-str1.size() == str2.size() &&
-std::equal(str1.begin(), str1.end(), str2.begin(), 
-    [](char c1, char s2){ return toupper(c1) == toupper(c2); });
-
-//GET 1D INDEX FROM 2D COORD (UNIFORM GRID)
-int index = rows * x + z;
-int x = index / rows;
-int z = index % rows;
-
-//WHETHER NUMBER IS EVEN
-bool isOdd = x % 2;
-
-//GET DIGIT AT RADIX SIGNIFICANT POSITION (1, 10, 100..)
-int digit = number/position % 10;
-
-//GETTING COLOR COMPONENTS VIA BIT SHIFTING
-unsigned int color;
-int r = color & 0xFF;
-int g = (color >> 8) & 0xFF;
-int b = (color >> 16) & 0xFF;
-int a = (color >> 24) & 0xFF;
-
-//GENERATE FIBONACCI NUMBERS
-//copies into container: 1 1 2 3 5 8 13 21 34 55
-std::vector<int> v = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-std::adjacent_difference(v.begin(), v.end() - 1, v.begin() + 1, std::plus<int>());
-
-//SAFE RELEASE
-SafeRelease(&myPointer);
-template <typename T> void SafeRelease(T** pObject)
-{
-    if(*pObject)
-    {
-        (*pObject)->Release();
-        *pObject = nullptr;
-    }
-}
-
-//BITWISE WITH BOOL
-bool ifBothAreTrue   = myBool1 & myBool2
-bool ifEitherAreTrue = myBool1 | myBool2  // either are true
-bool ifEitherAreTrue = myBool1 ^ myBool2  // either are true but not both
-bool success = true; success &= HasSucceeded(); // will lock in false if something fails

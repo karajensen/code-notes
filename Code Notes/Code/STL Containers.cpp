@@ -10,6 +10,7 @@ string str(str2, 1, n) //from index 1 to 1+n, or until end. N default param is e
 string str(n,'a'); //fill n times with 'a'
 string str(char_array, n); //fill with char_array of n length
 wstring wstr(L"wstr");
+auto str = "str"s; //creates a std::string rather than literal string
 
 str[0]
 str.empty() //returns true/false if empty (faster than size)

@@ -85,11 +85,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Code\Algorithms.cpp" />
     <ClCompile Include="Code\Boost.cpp" />
     <ClCompile Include="Code\Class.cpp" />
     <ClCompile Include="Code\Code.cpp" />
     <ClCompile Include="Code\Memory.cpp" />
+    <ClCompile Include="Code\STL Algorithms.cpp" />
     <ClCompile Include="Code\STL Containers.cpp" />
     <ClCompile Include="Code\STL.cpp" />
     <ClCompile Include="Code\Templates.cpp" />
@@ -132,7 +132,8 @@
     <Text Include="Cheatsheet.txt" />
     <Text Include="Code\Code Notes.txt" />
     <Text Include="Code\STL Notes.txt" />
-    <Text Include="Development\Algorithms and Structures.txt" />
+    <Text Include="Development\Algorithms Notes.txt" />
+    <Text Include="Development\Algorithms.cpp" />
     <Text Include="Development\Collisions.txt" />
     <Text Include="Development\Maths.txt" />
     <Text Include="Development\Mental Ray.txt" />
@@ -148,7 +149,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\Code - Agile Lifecycle.png" />
-    <Image Include="Images\Code - Algorithms Search.png" />
     <Image Include="Images\Code - Algorithms Sort Performance.png" />
     <Image Include="Images\Code - Algorithms Sort.png" />
     <Image Include="Images\Code - Amdahls Law.png" />
@@ -157,6 +157,7 @@
     <Image Include="Images\Code - BigO Heap Operations.png" />
     <Image Include="Images\Code - BigO Notation Graph.png" />
     <Image Include="Images\Code - BigO Sorting.png" />
+    <Image Include="Images\Code - Binary Search.png" />
     <Image Include="Images\Code - Boxing.png" />
     <Image Include="Images\Code - C# Operator Precedence.png" />
     <Image Include="Images\Code - C++ Operator Precedence.png" />
@@ -181,7 +182,6 @@
     <Image Include="Images\Graphics - Backface Culling.png" />
     <Image Include="Images\Graphics - Bottleneck chart.png" />
     <Image Include="Images\Graphics - Colour Blending.PNG" />
-    <Image Include="Images\Graphics - Deferred Rendering (with transparency).png" />
     <Image Include="Images\Graphics - Deferred Rendering.png" />
     <Image Include="Images\Graphics - Depth Buffer Testing.png" />
     <Image Include="Images\Graphics - DirectX Surfaces.png" />
@@ -199,6 +199,7 @@
     <Image Include="Images\Graphics - RayTracing.png" />
     <Image Include="Images\Graphics - Rendering Pipeline Diagram.png" />
     <Image Include="Images\Graphics - Rendering Pipeline.png" />
+    <Image Include="Images\Graphics - Sampling.png" />
     <Image Include="Images\Graphics - Shadow Volume Stencil Testing.png" />
     <Image Include="Images\Graphics - Skybox.png" />
     <Image Include="Images\Graphics - Subsurface Scattering.png" />

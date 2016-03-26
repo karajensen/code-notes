@@ -13,14 +13,6 @@ long long             ---         long long int / signed long long / signed long
 unsigned long long    DWORD       unsigned long long int
 float                 FLOAT       ---
 
-VALUE-TYPE VARIABLES
-• Any variable stored on stack, includes pointer/reference to another variable
-• Memory managed by stack and deleted when out of scope
-
-REFERENCE-TYPE VARIABLES
-• Any variable stored on heap, requires new to create
-• Memory managed by heap, requires user to delete if not referenced counted
-
 STATIC VARIABLES
 • Static typed variables: class members, local or global variables
 • Global variables: don't require static keyword to be static typed (keyword determines linkage)
@@ -47,7 +39,7 @@ CONST VARIABLES
 AUTO-INITIALISATION
 • Static class POD types auto-initialised to 0 before main() called
 • Static global/local POD types auto-initialized to 0 before first use
-• POD types after default constructor is called; requires () or {}
+• POD types after default constructor is called
     - MyPOD obj = {};
     - MyPOD[2] array = {};
     - MyPOD* obj = new MyPOD{};
@@ -176,7 +168,7 @@ ARRAY POINTERS
 • boost shared_array; Array ownership shared among multiple pointers.
 
 SMART POINTER DESTRUCTION
-• Calls delete by default on loss of scope/reference count 0
+• Calls delete by default (unless deleter given) on loss of scope/reference count 0
 • If local in a noexcept function which throws may not be destroyed
 • If std::abort, std::exit, std::quick_exit is called will not be destroyed
 

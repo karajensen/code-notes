@@ -324,7 +324,7 @@ CLIPPING
 OCCLUSION CULLING
 • Identifies parts of the scene visible/not visible to the viewer
 • Objects behind other objects are discarded
-• Can use a plane to represent occluder *similar to frustum culling)
+• Can use a plane to represent occluder (similar to frustum culling)
 • Can use Potential Visible Sets for indoor scenes
 
 OPTIMIZATION TIPS
@@ -414,7 +414,7 @@ MIPMAP:
 MIPFILTER:
 • None disables mipmapping
 • Point chooses mipmap level that is closest in size to geometry and filter
-• Linear shooses Two mipmap levels that are closest in size to geometry then
+• Linear chooses Two mipmap levels that are closest in size to geometry then
   filter both and lineraly combine them
 
 PROJECTIVE TEXTURING:
@@ -476,10 +476,10 @@ OBJECT SPACE MAPPING: Map is unique to specific object (rainbow)
 TANGENT SPACE MAPPING: Map can be reused (purple/blue/red)
 
 BUMP MAP
-• Created from height map/grayscale image (no additional geometry)
+• Created from height map/grayscale image
 
 NORMAL MAP
-• Created from difference of high/low res mesh (no additional geometry)
+• Created from difference of high/low resolution mesh
 
 PARALLAX MAP
 • Creates illusion of depth by displacing UV coordinates
@@ -499,7 +499,7 @@ DISPLACEMENT MAP
  -------------------------------------------------------------
 
 ===========================================================================
-SUPERSAMPLING TECHNIQUES
+TECHNIQUES
 ===========================================================================
 
 DOWNSAMPLING/FULL SCENE ANTIALIASING (FSAA): 
@@ -515,7 +515,7 @@ MULTISAMPLING
 • Downside is edges of alpha objects are still aliased
 
 ===========================================================================
-ANTIALIASING SAMPLING PATTERNS
+SAMPLING PATTERNS
 ===========================================================================
 
 ADAPTIVE SAMPLING: 

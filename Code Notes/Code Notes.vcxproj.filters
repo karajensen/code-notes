@@ -78,9 +78,6 @@
     <ClCompile Include="Development\Web Development.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Code\Algorithms.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
     <ClCompile Include="Code\Boost.cpp">
       <Filter>Code</Filter>
     </ClCompile>
@@ -104,6 +101,9 @@
     </ClCompile>
     <ClCompile Include="Development\Render Engines.cpp">
       <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\STL Algorithms.cpp">
+      <Filter>Code</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,9 +143,6 @@
     <Text Include="Languages\C# Notes.txt">
       <Filter>Languages</Filter>
     </Text>
-    <Text Include="Development\Algorithms and Structures.txt">
-      <Filter>Development</Filter>
-    </Text>
     <Text Include="Development\Collisions.txt">
       <Filter>Development</Filter>
     </Text>
@@ -180,12 +177,15 @@
     <Text Include="Hotkeys.txt" />
     <Text Include="Interview Puzzles.txt" />
     <Text Include="Interview Questions.txt" />
+    <Text Include="Development\Algorithms Notes.txt">
+      <Filter>Development</Filter>
+    </Text>
+    <Text Include="Development\Algorithms.cpp">
+      <Filter>Development</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\Code - Agile Lifecycle.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Algorithms Search.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Code - Algorithms Sort Performance.png">
@@ -210,6 +210,9 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Code - BigO Sorting.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Binary Search.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Code - Boxing.png">
@@ -248,6 +251,9 @@
     <Image Include="Images\Code - Iterators.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Code - Networking.png">
+      <Filter>Images</Filter>
+    </Image>
     <Image Include="Images\Code - Static and dynamic websites.png">
       <Filter>Images</Filter>
     </Image>
@@ -279,9 +285,6 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Colour Blending.PNG">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Deferred Rendering (with transparency).png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Deferred Rendering.png">
@@ -333,6 +336,9 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Rendering Pipeline.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Sampling.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Shadow Volume Stencil Testing.png">
@@ -441,9 +447,6 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Shader - Texture Wrapping.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Networking.png">
       <Filter>Images</Filter>
     </Image>
   </ItemGroup>
