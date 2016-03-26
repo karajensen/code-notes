@@ -1,37 +1,4 @@
 ﻿///////////////////////////////////////////////////////////////////////////////////////////////////
-//RENDERING
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-RAYTRACING      [PRE-RENDER]        Casts rays from light to scene to view
-RAYCASTING      [REALTIME-RENDER]   Casts rays from view to scene to light
-RASTERIZATION   [REALTIME-RENDER]   Projects to plane using proj matrix
-
-FORWARD RAY-TRACING [RAY TRACING]
-• Rays traced from light into 3D scene
-• Calculates new direction of rays when hitting surface
-• Ideal for reflections/refractions
-• Quality increases with more rays
-• Disadvantage: hard to optimise, not possible in real time
-• Disadvantage: lots of wasted rays that won't hit objects
-
-BACKWARD RAY-TRACING [RAY CASTING]
-• Rays traced from camera into 3D scene
-• Does not compute new direction a ray takes after reflections/refractions
-• Ray sent for each pixel; number of rays depends on screen resolution
-• Every pixel will always be shaded; less rays/faster than raytracing
-
-SCANLINE RENDERING [RASTERIZATION]
-• Algorithm for determining which models are visible. 
-• It goes row by row for pixels rather than look at each polygon.
-• Polygons are sorted by their y coordinate and then intersected with a scanline
-• Polygons obstructed by others are discards as the line advances down the image
-• Only vertices needed for current scanline are worked on, speeding up process
-
-PATH TRACING [RAY TRACING]
-• Extends rays tracing where new rays are created/traced for object intersection points
-• Takes into account indirect lighting/global illumination 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
 //RENDER PIPELINE
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -66,20 +33,22 @@ HOMOGENEOUS CLIP SPACE: Screen space multiplied by 'w' component
 14) OUTPUT MERGER: Gets shaded pixels from PS, does alpha blending and writes them back to the backbuffer.
 15) TRANSPARENCY: If translucent objects, render after all opaque meshes in back to front order
 
-==============================================================================
+=============================================================================================
 FORWARD SHADING
-==============================================================================
+=============================================================================================
+• Renders lighting with diffuse pass
 • Easy to render transparency
 • Expensive to do post effects
 • Are limited in amount of lights
 
-1) Render the scene with any lights that affect it to a single color buffer
-2) Render the scene again outputting any information needed for post effects
+1) Render the scene with any lights that affect it to a color buffer
+2) Render the scene again for additional information or output to additional buffers in color pass
 3) Perform any post effects and present final image to the back buffer
 
-==============================================================================
+=============================================================================================
 DEFERRED SHADING
-==============================================================================
+=============================================================================================
+• Defers lighting to its own pass
 • Difficult to render transparecy
 • Cheap to do post effects
 • Can have many multiple lights
@@ -353,23 +322,11 @@ TINTS = Saturation decreases
 SHADES = Value decreases
 TONES = Saturation/Value decreases
 
-Converting HSV/RGB: http://www.poynton.com/PDFs/coloureq.pdf p15
-Colour Blending: http://www.stuartdenman.com/improved-color-blending/
-
+COLOUR BLENDING
 • Linear blending loses saturation between colours
 • Blending must occur in polar coordinate space to maintain saturation
 • Polar coordinate space: HSV/HSB, CIE-Lab
 • Note add primary colour = 6 check to primary colour = 0 when blending hues
-
---------------------------------------------------------------------------------------------
-Polar Coordinate Space Blending:
---------------------------------------------------------------------------------------------
-diff = hue2 - hue1
-if (hue1 > hue2) then swap(hue1, hue2), diff = -diff, blendValue = 1 - blendValue
-if (diff > 180) then hue1 = hue1 + 360, hue = (hue1 + blendValue * (hue2 - hue1)) mod 360
-if (diff <= 180) then hue = hue1 + blendValue * difference
-where blendValue = [1,0] and hue/hue1/hue2 = [0,360]
---------------------------------------------------------------------------------------------
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //TEXTURES
