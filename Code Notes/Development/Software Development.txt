@@ -169,24 +169,63 @@ git remote show origin
   </SampleItem>
 </ItemGroup>
 
-<!-- TARGETS -->
-<!-- Done in order of DependsOnTargets -->
+<!-- TARGET -->
+<!-- Will execute DependsOnTargets -->
 <Target Name="Deploy" DependsOnTargets="BatchExample;Build">
 </Target>
 <Target Name="Build">
 </Target>
 
-<!-- BATCH TARGET -->
+<!-- TARGET: BATCH GROUP -->
 <!-- Will loop through each item in ItemGroup SampleItem -->
 <Target Name="BatchExample">
   <Message Text="SampleItem.Identity: %(SampleItem.Identity)"/>
   <Message Text="SampleItem.Identity: %(SampleItem.Id)"/>
 </Target>
 
-<!-- MULTIPLE BATCH TARGETS -->
-<!-- Using multiple batches requires merging groups -->
-<Target Name="MultiBatchExample">
-
+<!-- TARGET: CALL EXE -->
+<!-- Will only call exe if output/input are different ->
+<Target Name="CallExe" Inputs="$(MYDIRECTORY)\MyFile.txt" Outputs="$(MYDIRECTORY)\MyFile.txt">
+  <Exec Command="$(MYDIRECTORY)\MyExe.exe" WorkingDirectory="$(MYDIRECTORY)" />
 </Target>
 
+<!-- TARGET: REMOVE DIRECTORY -->
+<Target Name="RemoveDir">
+  <ItemGroup>
+    <DirectoriesToRemove Include="$(MYDIRECTORY);$(MYDIRECTORY2)" Condition="$(ShouldRemove) == 'True'"/>
+  </ItemGroup>
+  <RemoveDir Directories="@(DirectoriesToRemove)" />
+</Target>
+
+<!-- TARGET: RECURSIVE COPY -->
+<!-- For each item in the group copy input to output -->
+<Target Name="RecursiveCopy" Outputs="%(MyGroup.Identity);%(MyGroup.Id)">
+  <PropertyGroup>
+    <Identity>%(MyGroup.Identity)</Identity>
+    <Id>%(MyGroup.Id)</Id>
+    <InputDir>$(MYDIRECTORY)\$(Identity)\$(Id)</InputDir>
+    <OutputDir>$(MYDIRECTORY)</OutputDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <FilesToCopy Include="$(InputDir)\**" />
+  </ItemGroup>
+  <Error Condition="!Exists('$(InputDir)')"  Text="Directory '$(InputDir)' does not exist" />
+  <Error Condition="!Exists('$(OutputDir)')" Text="Directory '$(OutputDir)' does not exist" />
+  <Copy SourceFiles="@(FilesToCopy)"
+        DestinationFolder="$(OutputDir)\%(RecursiveDir)"
+        SkipUnchangedFiles="true" />
+</Target>
+
+<!-- TARGET: BATCH MULTIPLE GROUPS -->
+<!-- Using multiple batches requires merging groups -->
+<Target Name="BatchingMultiGroup">
+  <ItemGroup>
+    <Combined Include="@(MyGroupOne)">
+      <GroupTwo>%(MyGroupTwo.Identity)</GroupTwo>
+      <GroupTwoId>%(MyGroupTwo.Id)</GroupTwoId>
+    </Combined>
+  </ItemGroup>
+  <Message Text="%(Combined.Identity) %(Combined.Id) %(Combined.GroupTwo) %(Combined.GroupTwoId) " />
+</Target>
+  
 </Project>
