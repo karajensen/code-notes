@@ -93,6 +93,7 @@
     <ClCompile Include="Code\STL Containers.cpp" />
     <ClCompile Include="Code\STL.cpp" />
     <ClCompile Include="Code\Templates.cpp" />
+    <ClCompile Include="Development\Concurrency.cpp" />
     <ClCompile Include="Development\Design Patterns.cpp" />
     <ClCompile Include="Development\Render Engines.cpp" />
     <ClCompile Include="Development\Shaders.cpp" />
@@ -134,7 +135,6 @@
     <Text Include="Development\Algorithms Notes.txt" />
     <Text Include="Development\Algorithms.cpp" />
     <Text Include="Development\Collisions.txt" />
-    <Text Include="Development\Concurrency.txt" />
     <Text Include="Development\Maths.txt" />
     <Text Include="Development\Mental Ray.txt" />
     <Text Include="Development\Physics.txt" />
