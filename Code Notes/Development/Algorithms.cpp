@@ -280,10 +280,149 @@ bool DepthFirstSearch(Node& root, int searchvalue)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-//RGB-HSV COLOUR CONVERSION
+//RGB-HSV COLOUR BLENDING
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/// <summary>
+/// Converting RGB-HSV: http://www.poynton.com/PDFs/coloureq.pdf p15
+/// Where rgb is [0,1]
+/// </summary>
+private HSV ConvertColour(RGB rgb)
+{
+    HSV hsv = new HSV();
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-//HSV COLOUR BLENDING
-///////////////////////////////////////////////////////////////////////////////////////////////////////
+    double min = Math.Min(Math.Min(rgb.Red, rgb.Blue), rgb.Green);
+    double max = Math.Max(Math.Max(rgb.Red, rgb.Blue), rgb.Green);
+    hsv.Saturation = max == 0.0f ? 0.0f : (max - min) / max;
+    hsv.Value = max;
+
+    double red = (max - rgb.Red) / (max - min);
+    double green = (max - rgb.Green) / (max - min);
+    double blue = (max - rgb.Blue) / (max - min);
+
+    if (hsv.Saturation != 0)
+    {
+        if (rgb.Red == max && rgb.Green == min)
+        {
+            hsv.Hue = 5.0f + blue;
+        }
+        else if (rgb.Red == max && rgb.Green != min)
+        {
+            hsv.Hue = 1.0f - green;
+        }
+        else if (rgb.Green == max && rgb.Blue == min)
+        {
+            hsv.Hue = 1.0f + red;
+        }
+        else if (rgb.Green == max && rgb.Blue != min)
+        {
+            hsv.Hue = 3.0f - blue;
+        }
+        else if (rgb.Red == max || rgb.Red == min)
+        {
+            hsv.Hue = 3.0f + green;
+        }
+        else
+        {
+            hsv.Hue = 5.0f - red;
+        }
+    }
+
+    hsv.Hue *= 60.0f;
+    return hsv;
+}
+
+/// <summary>
+/// Converting HSV-RGB: http://www.poynton.com/PDFs/coloureq.pdf p15
+/// Where h is [0,360] and sv is [0,1]
+/// </summary>
+private RGB ConvertColour(HSV hsv)
+{
+    RGB rgb = new RGB();
+
+    double hex = hsv.Hue / 60.0f;
+    int primary = (int)Math.Floor(hex);
+    double secondary = hex - primary;
+    double a = (1.0f - hsv.Saturation) * hsv.Value;
+    double b = (1.0f - (hsv.Saturation * secondary)) * hsv.Value;
+    double c = (1.0f - (hsv.Saturation * (1.0f - secondary))) * hsv.Value;
+
+    switch (primary)
+    {
+    case 0:
+        rgb.Red = hsv.Value;
+        rgb.Green = c;
+        rgb.Blue = a;
+        break;
+    case 1:
+        rgb.Red = b;
+        rgb.Green = hsv.Value;
+        rgb.Blue = a;
+        break;
+    case 2:
+        rgb.Red = a;
+        rgb.Green = hsv.Value;
+        rgb.Blue = c;
+        break;
+    case 3:
+        rgb.Red = a;
+        rgb.Green = b;
+        rgb.Blue = hsv.Value;
+        break;
+    case 4:
+        rgb.Red = c;
+        rgb.Green = a;
+        rgb.Blue = hsv.Value;
+        break;
+    case 5:
+        rgb.Red = hsv.Value;
+        rgb.Green = a;
+        rgb.Blue = b;
+        break;
+    case 6:
+        rgb.Red = hsv.Value;
+        rgb.Green = c;
+        rgb.Blue = a;
+        break;
+    }
+
+    return rgb;
+}
+
+/// <summary>
+/// Colour Blending: http://www.stuartdenman.com/improved-color-blending/
+/// Where blend value is [0-1]
+/// </summary>
+private HSV BlendColour(HSV one, HSV two, double blendvalue)
+{
+    HSV blend = new HSV();
+
+    double invBlendValue = 1.0f - blendvalue;
+    blend.Saturation = (one.Saturation * invBlendValue) + (two.Saturation * blendvalue);
+    blend.Value = (one.Value * invBlendValue) + (two.Value * blendvalue);
+
+    double hue1 = one.Hue;
+    double hue2 = two.Hue;
+    double difference = hue2 - hue1;
+
+    if (hue1 > hue2)
+    {
+        hue2 = one.Hue;
+        hue1 = two.Hue;
+
+        blendvalue = invBlendValue;
+        difference = -difference;
+    }
+
+    if (difference > 180)
+    {
+        hue1 += 360.0f;
+        blend.Hue = ((int)(hue1 + (blendvalue * (hue2 - hue1)))) % 360;
+    }
+    else
+    {
+        blend.Hue = hue1 + (blendvalue * difference);
+    }
+
+    return blend;
+}

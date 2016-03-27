@@ -170,9 +170,6 @@
     <Text Include="Code\Code Notes.txt">
       <Filter>Code</Filter>
     </Text>
-    <Text Include="Code\STL Notes.txt">
-      <Filter>Code</Filter>
-    </Text>
     <Text Include="Cheatsheet.txt" />
     <Text Include="Hotkeys.txt" />
     <Text Include="Interview Puzzles.txt" />
