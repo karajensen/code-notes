@@ -66,10 +66,22 @@ QUICK SORT
 • Sorts in ascending order
 1) Partition the container to values lower than pivot and values higher
 2) For each partition created, repeat step one if there are values
+                   
+1   7   5   9  [6]  8   3   6   2        Choose Median as Pivot = 6
+                         
+1  (7)  5   9  [6]  8   3   6  (2)       7 >= pivot >= 2
+---->i                         j<-       Swap(7, 2) and continue
 
+1   2   5  (9) [6]  8   3  (6)  7        9 >= pivot >= 6
+------------>i             j<----        Swap(9, 2) and continue
 
+1   2   5   6  [6]  8  (3)  9   7        6 >= pivot >= 3
+---------------->i      j<-------        Swap(6, 3) and continue
 
+1   2   5   6  [3]  8   6   9   7        i > j, stop and split at pivot
+-------------------><------------        
 
+[1   2   5   6   3]  [8   6   9   7]     Run again on each partition until sorted
 
 --------------------------------------------------------------------------------------
 MERGE SORT
@@ -199,11 +211,17 @@ PARTITIONING TREE: Subdivide a space/object into partitions
 MINIMAX TREE: Game tree for a 2-player game alternating between lowest/highest choice
 
 =====================================================================================================
-SEARCHING
+OPERATIONS
 =====================================================================================================
+
+NODE INSERTION
+• Start at root node and move through tree to find correct placement depending on tree
+• Heap requires nodes to be shifted down once position found
+• Binary Search Tree make new node a leaf node keeping other nodes in place
 
 TREE TRAVERSAL
 • Start left and move down to outline each node in the graph
+• Traversal can be stopped early to make it a search
 
  Pre-Order (DFS)      In-Order          Post-Order
  Root-Left-Right   Left-Root-Right    Left-Right-Root

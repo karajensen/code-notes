@@ -233,7 +233,7 @@ INLINING FUNCTIONS
 CLASS LIFETIME
 =====================================================================================
 • References must be initialised through the initialisation list
-• Don't call virtual methods in constructor; undefined behaviour; calls Base version
+• Don't call virtual methods in constructor/destructor; undefined behaviour; calls Base version
 • Initialisation list doesn't reflect order of construction
 • Static member variables initialised before program begins
 
@@ -378,19 +378,16 @@ OVERLOAD RESOLUTION ORDER
 
 FN(1.0F, 1.0F)
 1) Non-template Exact type                        void Fn(float x, float y)
-2) Template Overloads with Exact type             template <typename T> void Fn(T x, float y)
-3) Template Explicit Specialization Exact type    template <> void Fn(float x, float y)
-4) Template Overload                              template <typename T> void Fn(T x, T y)
+2) Template Explicit Specialization Exact type    template <> void Fn(float x, float y) [requires 3]
+3) Template Overloads with Exact type             template <typename T> void Fn(T x, float y)
+   OR Template Overload                           template <typename T> void Fn(T x, T y)
 5) Primary Template                               template <typename T, typename S> void Fn(T x, S y)
 6) Non-template with Implicit conversion          void Fn(float x, double y)
 
 FN<FLOAT>(1.0F, 1.0F)
-1) Template Explicit Specialization Exact type    template <> void Fn(float x, float y)
-
-FN<FLOAT,FLOAT>(1.0F, 1.0F)
-1) Primary Template                               template <typename T, typename S> void Fn(T x, S y)
-2) Template Overloads with Exact type             template <typename T> void Fn(T x, float y) 
-OR Template Overload                              template <typename T> void Fn(T x, T y)
+1) Template Explicit Specialization Exact type    template <> void Fn(float x, float y) [requires 2]
+2) Template Overloads with Exact type             template <typename T> void Fn(T x, float y)
+   OR Template Overload                           template <typename T> void Fn(T x, T y)
 3) Primary Template                               template <typename T, typename S> void Fn(T x, S y)
 
 OPERATOR OVERLOADING RESTRICTIONS
