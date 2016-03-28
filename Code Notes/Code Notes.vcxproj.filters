@@ -278,13 +278,25 @@
     <Image Include="Images\Code - Web server.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Graphics - 3 Point Lighting.png">
+      <Filter>Images</Filter>
+    </Image>
     <Image Include="Images\Graphics - Backface Culling.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Bottleneck chart.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Graphics - Bump Mapping Normals.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Colors.png">
+      <Filter>Images</Filter>
+    </Image>
     <Image Include="Images\Graphics - Colour Blending.PNG">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Conductors vs Dielectrics.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Deferred Rendering.png">
@@ -296,25 +308,22 @@
     <Image Include="Images\Graphics - DirectX Surfaces.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Graphics - DOF theory and 3 Point Lighting.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Final Gathering.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Global Illumination.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Importons.png">
-      <Filter>Images</Filter>
-    </Image>
     <Image Include="Images\Graphics - Incremental Convex Hull Algorithm.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Graphics - Irradiance Particles.png">
+    <Image Include="Images\Graphics - Indirect Lighting.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Inverse Square Light Falloff.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Material Types.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Occulsion Culling.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - PerVertex and PerPixel lighting.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Portals.png">
@@ -326,10 +335,13 @@
     <Image Include="Images\Graphics - Projection Matrix.PNG">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Graphics - Projection Matrix2.PNG">
+    <Image Include="Images\Graphics - RayTracing.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Graphics - RayTracing.png">
+    <Image Include="Images\Graphics - Reflection Selective.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Reflection.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Rendering Pipeline Diagram.png">
@@ -347,10 +359,31 @@
     <Image Include="Images\Graphics - Skybox.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Graphics - Specular Shader.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Spot Light.png">
+      <Filter>Images</Filter>
+    </Image>
     <Image Include="Images\Graphics - Subsurface Scattering.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Terrain Clipmapping.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Texture Filter types.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Texture Mapping.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Texture Wrapping.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Transmission Selective.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Transmission.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - View Frustum.png">
@@ -413,41 +446,19 @@
     <Image Include="Images\MathsPhysics - Trigonometry.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Shader - Bump Mapping Normals.png">
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Images\Code - Quick Sort.mp4">
       <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Colors.png">
+    </Media>
+    <Media Include="Images\Code - Traveling Salesman Problem.mp4">
       <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Inverse Square Attenuation.png">
+    </Media>
+    <Media Include="Images\Graphics - 3 Point Lighting.mp4">
       <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Lighting Models Diagram.png">
+    </Media>
+    <Media Include="Images\Graphics - Histogram.mp4">
       <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Material Effects.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Material Types.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - PerVertex and PerPixel lighting.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Specular Models.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Spot Light.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Texture Filter types.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Texture Mapping.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Shader - Texture Wrapping.png">
-      <Filter>Images</Filter>
-    </Image>
+    </Media>
   </ItemGroup>
 </Project>

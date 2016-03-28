@@ -1,34 +1,4 @@
 ﻿/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//INTERVIEW TOPICS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-PROGRAMMING:
-• How primitive types/strings are represented in memory
-• Bit manipulation
-• Pimpl, Singleton and Factory design patterns
-• Stack vs Heap
-
-ALGORITHMS/STRUCTURES:
-• Algorithm Complexity (Big-O)
-• Merge Sort, Quick Sort, Binary Search
-• Hash Table implementation
-• Linked list traversal and manipulation
-• Famous NP-complete problems: Traveling Salesman, Knapsack problem
-
-TREES:
-• Construction, implementation, traversal, manipulation algorithms
-• Binary Trees, n-ary Trees, Tries, Red/Black Trees, Splay Trees
-• Difference between inorder, postorder, preorder
-
-GRAPHS:
-• 3 ways to represent in memory and pros and cons: objects/pointers, matrix, adjacency list
-• Breadth-First-Search and Depth-First-Search implementation and pros/cons
-
-CONCURRENCY:
-• Locks, mutexes, semaphores, monitors and how they work
-• Know about deadlock and livelock and how to avoid them
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PROGRAMMING QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -333,35 +303,3 @@ A: If the string capacity is <= 15 characters it is stored on the stack
 Q: Why are the associative container keys const?
 A: Sort order is determined by the key when a new member is inserted
    If the keys are changed the order will be corrupted
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//PERSONAL QUESTIONS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-ANSWER STRUCTURE: Situation, Action, Response
-
-01) What do you know about the company or position?
-02) Have you ever dealt with company policy you weren't in agreement with?
-03) Why did you leave your last job?
-04) What is the most difficult thing about working with you?
-05) Time when you had to make an important decision?
-06) Tell me about your strengths?
-07) What is your greatest failure and what did you learn from it?
-08) Give examples of ideas you've had or implemented.
-09) How did you handle meeting a tight deadline?
-10) Why do you want this job?
-11) What five words would describe you?
-12) Do you prefer to work in a small, medium or large company?
-13) What are your goals for five years from now?
-14) Share an example of how you were able to motivate employees or co-workers.
-15) Tell me about your work experience and how it has prepared you for a career at this company
-16) How do you handle stress and pressure?
-17) Give an example of an important goal that you set in the past.
-18) What do you like and dislike about job we are discussing?
-19) How important is it for you to have a career at this company?
-20) What do you think you can bring to this position?
-21) How do you reach a decision if you don't have all the facts?
-22) What do you like and dislike about job we are discussing?
-23) Tell me about a time when you had to do something you really didn't like doing
-24) What are some technical books you have recently read?
-25) Do you have any further questions?

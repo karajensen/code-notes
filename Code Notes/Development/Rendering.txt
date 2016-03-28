@@ -488,7 +488,7 @@ POISSON DISC SAMPLING:
 • Random sampling with additional checks to whether samples are too close to each other
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//LIGHTS
+//LIGHT TYPES
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 DIRECTIONAL LIGHTS 
@@ -525,120 +525,88 @@ LIGHT SHAFTS
 • As polygon's vertices become more distant from light they become more transparent
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//DIRECT LIGHTING
+//LIGHTING
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-EMISSIVE
-• How much light is emitted from object
+DIRECT LIGHTING
+• Rays from a light that hit a surface directly
+• Approximated by Shader Materials
 
-ATTENUATION
-• How much light fades into distance
-• Multiply by Specular/Diffuse models
+INDIRECT LIGHTING
+• Rays from a light that hit a surface indirectly, recieved from another surface
+• Approximated by Ambient Lighting, Ambient Occlusion, Global Illumination etc
 
-LUMINANCE
-• Intensity of light per unit area of its source
+SURFACE MATERIALS
+• When a photon hits a surface it can either go through:
+    - Reflection
+    - Transmission
+    - Absorption
+• Percentage of Reflection, Transmission and Absorption determined by:
+    - Angle the light hits the surface
+    - Index of Refraction (IOR) of the material
+    - Type of material: Conductive Material (metal) or Dielectric (non-metal)
 
-DIFFUSE
-• The amount of light hitting a given point on a surface depends on the position
-  of the lights around the surface and the direction the surface is facing.
+REFLECTION
+• Types of reflection:
+    - Specular/Surface reflection (very smooth surfaces)
+        - Isotropic: evenly distributed
+        - Anisotropic: stretched out perpendicular to the grooves in the surface
+    - Diffuse/Subsurface reflection (rough surfaces)
+• Selective reflection can be either specular or diffuse and tints the surface
+    
+TRANSMISSION
+• Types of transmission:
+    - Direct transmission (transparent)
+    - Diffuse transmission (translucent)
+• Selective transmission can be either direct or diffuse and tints the surface
+• Diffuse reflection is actually transmission where the entry/exit points are almost identical
+• Can cause Refraction:
+    - Bending of light rays can occur when rays move in/out the surface
+    - Amount of refraction determined by the Index of Refraction (IOR) of material
+• Can cause Subsurface Scattering:
+    - Light enters the material and bounces inside before leaving a different location
+    - Some light is absorbed so leaves dimmer and slightly tinted
 
-SPECULAR
-• Light reflecting near/exactly in the opposite direction of incoming light
+CONDUCTIVE MATERIALS (METALS)                   
+• No diffuse reflection, only specular reflection 
+• Can only have selective specular reflection
+• Very minimal transmission
 
-REFLECTION:
-• Rasterization uses reflection vector as set of coordinates to get colour from cube map. 
-• Ray tracing uses primary ray which is reflected and used to trace the scene to see what the ray hits. 
-• Colour chosen is combined with color of original object that was reflected
+DIELECTRICS (NON-METALS)
+• Both diffuse and specular reflection
+• Can only have selective diffuse reflection
+• Light that hits straight on most likely to go through transmission
+• Light that hits at a glancing angle likely to go through reflection
 
-REFRACTION:
-• When light passes through two different materials of different densities the light direction changes. 
-• RI = Refractive index of material passing into
+BIDIRECTIONAL REFLECTANCE DISTRIBUTION FUNCTION (BRDF) 
+• Describes how the material reflects or absorbs light from different angles
+• Modelled by shaders (Lambert, Blinn, Phong, Ward etc)
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//INDIRECT LIGHTING
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-GLOBAL ILLUMINATION (INDIRECT LIGHTING): 
-• Surfaces illuminated by light reflected off other surfaces
-• Often stored in light maps due to being expensive to calculate
-
-==================================================================================================
-INDIRECT LIGHTING EFFECTS FROM MATERIALS
-==================================================================================================
-
-• If a light bounces off a diffuse surface a color-bleeding happens.
-• If a light bounces off a specular surface a caustics reflection happens. 
-• If a light travels through a refracted surface a refracted caustics happens.
-• If a light is absorbed by a surface and leaves from opposite direction, subsurface scattering happens
-
-COLOR/LIGHT BLEEDING: 
-• Light that has reflected off one surface to another bringing
-  with it some of its color which is seen on the second surface
-
-CAUSTICS: 
-• Reflection of light off a shiny object or focusing of light through a 
-  transparent object to produce bright highlights on another object
-
-SUBSURFACE SCATTERING: 
-• Light enters, scatters around and leaves at a different point
-
-AMBIENT LIGHTING:
-• Light spread equally in all directions without falloff, constant value
-
-==================================================================================================
-AMBIENT OCCLUSION
-==================================================================================================
-
-• Used to define the occlusion amount of a point in the scene (vertex or pixel depending on precision)
-• Each point sends multiple rays into the scene and tests for intersection against
-  all geometry or can send out rays to test against itself for self shadowing
-• Ratio of hits/misses is added and average float is found for that point
-• Average multiplied by ambient light
-
-==================================================================================================
-RADIOSITY
-==================================================================================================
-
-• Considers everything a light source, and every surface can potentially light another surface
-• Scene divided up into patches and view factor/form factor is computed for each patch compared to others
-• Form factor describes how well patches can see each other; far away or obstructed means smaller factor
-• Form factor used to generate the brightness of each patch taking into account diffuse/reflections/shadows
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//MATERIALS / SURFACES
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-GOURAUD SHADING [DIFFUSE]: 
-• Per-vertex diffuse lighting using linear interpolation of colour between verts
-
-BLINN-PHONG SHADING [SPECULAR]: 
-• Uses half-vector for specular calcuation
-
-PHONG SHADING [SPECULAR]: 
-• Uses reflection-vector for specular calcuation
-
-BIDIRECTIONAL REFLECTANCE DISTRIBUTION FUNCTION (BRDF):
-• Describes how an object reflects/absorbs light from different angles
-
-CONDUCTIVE MATERIALS (metals)                    
-• Reflections are tinted
-
-DIELECTRICS (non-metals)
-• Reflections are always white except when abosorption/transmission of light 
-  occurs, tinting the light (ie. subsurface scattering)
- 
 FRESNAL SURFACES
 • Display one colour when viewed straight on and a different colour at side angles
-• Used to: fade out reflections towards edges, brighten edges, make edges more transparent, two tone colour mixing
+• Used for: 
+    - Water shaders
+    - Fade out reflections towards edges
+    - Brighten edges
+    - Make edges more transparent
+    - Two tone colour mixing
+
+INVERSE-SQUARE LIGHT FALLOFF (ATTENUATION): 
+• Doubling the distance between the light and object results in 1/4 of the light hitting the object
+• More distant the light is the less obvious the inverse-square light falloff
+• Not used for sunlight as sun is too far away for noticable effect
+• As light moves closer to specular reflection of an object the highlights appear bigger but not brighter
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//HDR LIGHTING
+//HIGH DYNAMIC RANGE (HDR) LIGHTING
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+LUMINANCE
+Intensity of light per unit area of its source
 
 TONE MAPPING
 Maps the high dynamic range (HDR) of luminance values of real world lighting
 to the limited range of the screen by dividing scene into set of zones.
-
   • Zone: range of luminance values
   • Middle gray: middle brightness region of the scene
   • Dynamic range: ratio of the highest scene luminance to the lowest scene luminance
