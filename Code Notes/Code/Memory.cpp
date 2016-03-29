@@ -1,5 +1,5 @@
 ﻿/////////////////////////////////////////////////////////////////////////////////////////////
-//POINTERS
+//POINTERS/REFERENCES
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 int* myPoint = NULL; //0 or 0L which zeros out pointer
@@ -7,16 +7,18 @@ int* myPointer = nullptr; //store null
 int* myPointer = &myInt;  //store address of variable
 int* myPointer = new int; //finds empty memory location on heap and allocates
 int* myPointer = (int*)0xB8000000; //explicitly store memory address
+int& myInt = myInt2; //cannot be reassigned, cannot be null
 
 *myPointer = 4; //dereferencing accesses variable
 &myPointer; //gives address of pointer
 myPointer->member; //access member if object
 delete myPointer; //frees the block of memory
 
-//CONST POINTERS
+//CONST POINTERS/REFERENCES
 const int* ptr = &value; //Pointer to a constant int (can't change value)
 int* const ptr = &value; //Constant int pointer (can't change what ptr points to)
 const int* const ptr = &value //can't change value or what pointer points to
+int& const ref = myInt; //Redundant as references automatically & const as cannot be reassigned
 
 //POINTER TO ARRAYS
 int* myArray = new int[SIZE]; 

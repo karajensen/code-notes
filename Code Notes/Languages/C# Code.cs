@@ -106,6 +106,7 @@ Object obj = myClass as Object
 
 //Converting to string
 string myString = myDouble.ToString(); //returns number as string
+string myString = myDouble.ToString("0.00"); //returns number as string with precision
 string myString = myBool.ToString(); //returns "True" or "False"
 
 //Converting from string

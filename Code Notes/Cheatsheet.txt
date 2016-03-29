@@ -89,6 +89,9 @@
      If inlined, any static function members are shared between files including it
      If static, any static function members are copied with each file having sole access
 
+[27] Read pointer types backwards from first *
+     const int * is the same as int const *
+
 ////////////////////////////////////////////////////////////////////////////////////
 //STL CHEATSHEET
 ////////////////////////////////////////////////////////////////////////////////////
@@ -133,6 +136,7 @@
 
 [13] Data for strings not guaranteed to be stored in continuous memory
      Internal representation of string not guaranteed to end with null character
+     Strings < 15 characters can use Short String Optimization and are stored on the stack
 
 [14] Prefer != for iterators to < as < only works with random access iterators
 
