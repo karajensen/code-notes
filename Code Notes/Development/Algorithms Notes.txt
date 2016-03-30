@@ -293,8 +293,8 @@ BINARY TREES
 =====================================================================================================
 
 BINARY SEARCH TREE
-• The left subtree of a node contains only nodes with values less
-• The right subtree of a node contains only nodes with values greater
+• The left subtree of a node contains only nodes with values less than the node
+• The right subtree of a node contains only nodes with values greater than the node
 • The left and right subtree each must also be a binary search tree.
 • There must be no duplicate nodes
 • Used for sets, maps and dictionarys
@@ -305,7 +305,7 @@ BINARY SEARCH TREE
     /   \
    4     8 
   / \   / \ 
- 1   3 2   9 
+ 1   5 7   9 
 
  HEAPS
 • Weakly ordered Binary Tree that keeps node with largest or smallest key as root node
