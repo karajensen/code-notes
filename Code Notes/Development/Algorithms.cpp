@@ -64,12 +64,6 @@ template <typename T> void SafeRelease(T** pObject)
     }
 }
 
-//BITWISE WITH BOOL
-bool ifBothAreTrue   = myBool1 & myBool2
-bool ifEitherAreTrue = myBool1 | myBool2  // either are true
-bool ifEitherAreTrue = myBool1 ^ myBool2  // either are true but not both
-bool success = true; success &= HasSucceeded(); // will lock in false if something fails
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //BUBBLE SORT
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -426,3 +420,44 @@ private HSV BlendColour(HSV one, HSV two, double blendvalue)
 
     return blend;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//HASH MAP
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class HashMap 
+{
+public:
+
+    const int TABLE_SIZE = 128;
+    typedef std::pair<int, int> HashEntry;
+
+    HashMap()
+    {
+        m_table.resize(TABLE_SIZE);
+    }
+     
+    int Get(int key) const
+    {
+        int hash = (key % TABLE_SIZE);
+        while (m_table[hash] != nullptr && m_table[hash]->first != key)
+        {
+            hash = (hash + 1) % TABLE_SIZE;
+        }
+        return m_table[hash] ? m_table[hash]->second : -1;
+    }
+
+    void Add(int key, int value)
+    {
+        int hash = (key % TABLE_SIZE);
+        while (m_table[hash] != nullptr && m_table[hash]->first != key)
+        {
+            hash = (hash + 1) % TABLE_SIZE;
+        }
+        m_table[hash] = std::make_unique<HashEntry>(std::make_pair(key, value));
+    } 
+
+private:
+
+    std::vector<std::unique_ptr<HashEntry>> m_table;
+};

@@ -211,84 +211,6 @@ PARTITIONING TREE: Subdivide a space/object into partitions
 MINIMAX TREE: Game tree for a 2-player game alternating between lowest/highest choice
 
 =====================================================================================================
-OPERATIONS
-=====================================================================================================
-
-NODE INSERTION
-• Start at root node and move through tree to find correct placement depending on tree
-• Heap requires nodes to be shifted down once position found
-• Binary Search Tree make new node a leaf node keeping other nodes in place
-
-TREE TRAVERSAL
-• Start left and move down to outline each node in the graph
-• Traversal can be stopped early to make it a search
-
- Pre-Order (DFS)      In-Order          Post-Order
- Root-Left-Right   Left-Root-Right    Left-Right-Root
-  1 2 4 5 3 6 7     4 2 5 1 6 3 7      4 5 2 6 7 3 1
-
-     •1                  1                   1• 
-     / \                /•\                 / \
-    /   \              /   \               /   \
-  •2    •3            2     3             2•    3•
-  / \   / \          /•\   /•\           / \   / \ 
-•4  •5•6  •7        4   5 6   7         4•  5•6•  7• 
-                    •   • •   •
-
-BREADTH FIRST SEARCH
-• Advantage: Less likely to get stuck in infinite loop for graphs
-• Disadvantage: More nodes kept in memory
-1) Add root to a queue
-2) While the queue is not empty:
-3) Pop the front of the queue and check if goal node
-4) If not, add all children to the end of the queue
-
-      1 
-     / \
-    /   \
-   2     3 
-  / \   / \ 
- 4   5 6   7 
-
-DEPTH FIRST SEARCH
-• Pre-order Tree Traversal
-• Advantage: Less nodes kept in memory
-• Disadvantage: Possibility of getting into an infinite loop for graphs
-1) Add root to a stack
-2) While the stack is not empty:
-3) Pop the top of the stack and check if goal node
-4) If not, add all children to the top of the stack
-
-      1 
-     / \
-    /   \
-   2     5 
-  / \   / \ 
- 3   4 6   7 
-
-DIJKSTRA PATHFINDING
-• Uninformed Search Method
-• Searches graphs for shortest path
-• Chooses nodes with lowest cost so far value
-• Searches entire graph, less effecient than A*
-
-A* PATHFINDING
-• Informed Search Method
-• Searches weighted graph with heuristics for shortest path
-• Chooses node with lowest estimated total cost
-• Less nodes considered and more effeciant than Dijkstra
-• Most ideal to use priority queue with iteration for Open/Closed lists
-• std::priority_queue has no iteration; best to use sorted vector
-• 2D Heuristic formula: |Goalʸ-Nodeʸ|+|Goalˣ-Nodeˣ|
-1) Create two lists: open/closed
-2) Add start pole to the open list
-3) While there are nodes in the open list, get the node with the smallest total estimate cost
-4) Check if this node is the goal
-5) For all other direct nodes connected to this node, update its costs and move to the open list
-6) Once all connected nodes are finished, add the parent node to the closed list
-7) Continue until goal node or no solution is found 
-
-=====================================================================================================
 BINARY TREES
 =====================================================================================================
 
@@ -416,3 +338,103 @@ W of +inf: Game is won
 Anything less than highest choice (α) for player doesn't need to be looked at
 Anything more than lowest choice (β) for opponent doesn't need to be looked 
 Values searched are in range [min->max] [α->β] ([-INF,INF] initially)
+
+=====================================================================================================
+GRAPH / TREE OPERATIONS
+=====================================================================================================
+
+HEAP NODE INSERTION | O(logN)
+• Insert node in the fartest right location of the lowest depth level
+• If level is full, move to next depth level
+• Swap the inserted node up the tree depending on whether min/max heap
+
+HEAP REMOVE MAX | O(logN)
+• Replace the value in the root with the rightmost leaf at at the lowest depth level
+• Swap the new root down the tree
+
+BINARY SEARCH TREE INSERTION | O(logN)
+• Start at root, if less than root travel down left subtree, if greater, down right subtree
+• Compare with each new node and continue to travel left or right until becoming a new leaf
+
+BINARY SEARCH TREE SEARCH | O(logN)
+• Start at root, if less than root travel down left subtree, if greater, down right subtree
+• Continue until finding value
+
+BINARY SEARCH TREE DELETION | O(logN)
+• Deleting a leaf node: Doesn't affect the tree
+• Deleting a node with 1 child: The child moves up with its subtree to take its place
+• Deleting a node with 2 children: Travel down the left of the right subtree until 
+  finding the lowest value greater than the deleted node. This node takes its place.
+
+TREE TRAVERSAL | O(N)
+• Start left and move down to outline each node in the graph
+• Traversal can be stopped early to make it a search
+
+ Pre-Order (DFS)      In-Order          Post-Order
+ Root-Left-Right   Left-Root-Right    Left-Right-Root
+  1 2 4 5 3 6 7     4 2 5 1 6 3 7      4 5 2 6 7 3 1
+
+     •1                  1                   1• 
+     / \                /•\                 / \
+    /   \              /   \               /   \
+  •2    •3            2     3             2•    3•
+  / \   / \          /•\   /•\           / \   / \ 
+•4  •5•6  •7        4   5 6   7         4•  5•6•  7• 
+                    •   • •   •
+
+BREADTH FIRST SEARCH | O(N+E)
+• Traverses to all children before moving down a level
+• Uses a std::queue
+• Advantage: Less likely to get stuck in infinite loop for graphs
+• Disadvantage: More nodes kept in memory
+1) Add root to a queue
+2) While the queue is not empty:
+3) Pop the front of the queue and check if goal node
+4) If not, add all children to the end of the queue
+
+      1 
+     / \
+    /   \
+   2     3 
+  / \   / \ 
+ 4   5 6   7 
+
+DEPTH FIRST SEARCH | O(N+E)
+• Traverses graph to the greatest depth before backtracking
+• Uses a std::stack
+• Pre-order Tree Traversal
+• Advantage: Less nodes kept in memory
+• Disadvantage: Possibility of getting into an infinite loop for graphs
+1) Add root to a stack
+2) While the stack is not empty:
+3) Pop the top of the stack and check if goal node
+4) If not, add all children to the top of the stack
+
+      1 
+     / \
+    /   \
+   2     5 
+  / \   / \ 
+ 3   4 6   7 
+
+DIJKSTRA PATHFINDING
+• Uninformed Search Method
+• Searches graphs for shortest path
+• Chooses nodes with lowest cost so far value
+• Searches entire graph, less effecient than A*
+
+A* PATHFINDING
+• Informed Search Method
+• Searches weighted graph with heuristics for shortest path
+• Chooses node with lowest estimated total cost
+• Less nodes considered and more effeciant than Dijkstra
+• Most ideal to use priority queue with iteration for Open/Closed lists
+• std::priority_queue has no iteration; best to use sorted vector
+• 2D Heuristic formula: |Goalʸ-Nodeʸ|+|Goalˣ-Nodeˣ|
+1) Create two lists: open/closed
+2) Add start pole to the open list
+3) While there are nodes in the open list, get the node with the smallest total estimate cost
+4) Check if this node is the goal
+5) For all other direct nodes connected to this node, update its costs and move to the open list
+6) Once all connected nodes are finished, add the parent node to the closed list
+7) Continue until goal node or no solution is found 

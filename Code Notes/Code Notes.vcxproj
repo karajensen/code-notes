@@ -123,6 +123,7 @@
     <None Include="Examples\Example - PyQt Creating Window in Designer.py" />
     <None Include="Examples\Example - PyQt Creating Window In Maya.py" />
     <None Include="Examples\Example - PyQt File Reader.pyw" />
+    <None Include="Images\Graphics - Rendering Pipeline Diagram.psd" />
     <None Include="Languages\C# .NET Framework.cs" />
     <None Include="Languages\C# Class.cs" />
     <None Include="Languages\C# Code.cs" />
@@ -167,6 +168,7 @@
     <Image Include="Images\Code - dotNET pipeline.png" />
     <Image Include="Images\Code - Entity Relationship Diagram.png" />
     <Image Include="Images\Code - Execution Environment.png" />
+    <Image Include="Images\Code - Heap Operations.png" />
     <Image Include="Images\Code - Hex Converting.png" />
     <Image Include="Images\Code - HTML Element.png" />
     <Image Include="Images\Code - Iterators.png" />
@@ -181,6 +183,7 @@
     <Image Include="Images\Code - Web server.png" />
     <Image Include="Images\Graphics - 3 Point Lighting.png" />
     <Image Include="Images\Graphics - Backface Culling.png" />
+    <Image Include="Images\Graphics - Binary Search Tree Insertion.png" />
     <Image Include="Images\Graphics - Bottleneck chart.png" />
     <Image Include="Images\Graphics - Bump Mapping Normals.png" />
     <Image Include="Images\Graphics - Colors.png" />
@@ -237,6 +240,7 @@
     <Image Include="Images\MathsPhysics - Trigonometry.png" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="Images\Code - Binary Search Trees.mp4" />
     <Media Include="Images\Code - Quick Sort.mp4" />
     <Media Include="Images\Code - Traveling Salesman Problem.mp4" />
     <Media Include="Images\Graphics - 3 Point Lighting.mp4" />

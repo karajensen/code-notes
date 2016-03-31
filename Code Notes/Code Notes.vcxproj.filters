@@ -141,6 +141,9 @@
     <None Include="Development\Databases.sql">
       <Filter>Development</Filter>
     </None>
+    <None Include="Images\Graphics - Rendering Pipeline Diagram.psd">
+      <Filter>Images</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Languages\C# Notes.txt">
@@ -242,6 +245,9 @@
     <Image Include="Images\Code - Execution Environment.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Code - Heap Operations.png">
+      <Filter>Images</Filter>
+    </Image>
     <Image Include="Images\Code - Hex Converting.png">
       <Filter>Images</Filter>
     </Image>
@@ -282,6 +288,9 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Backface Culling.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Binary Search Tree Insertion.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Bottleneck chart.png">
@@ -448,6 +457,9 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
+    <Media Include="Images\Code - Binary Search Trees.mp4">
+      <Filter>Images</Filter>
+    </Media>
     <Media Include="Images\Code - Quick Sort.mp4">
       <Filter>Images</Filter>
     </Media>

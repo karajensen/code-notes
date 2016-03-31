@@ -408,6 +408,13 @@ Test if masked:   if value & MASK1 == MASK1 then has mask
 Multiply by 2ˣ:   value <<= 3 is same as value *= 2³
 Divide by 2ˣ:     value >>= 3 is same as value /= 2³
 
+BITWISE WITH BOOL
+bool ifBothAreTrue   = myBool1 & myBool2    Both are true
+bool ifEitherAreTrue = myBool1 | myBool2    Either are true
+bool ifEitherAreTrue = myBool1 ^ myBool2    Either are true but not both
+bool success = true; 
+success &= HasSucceeded();                  Will lock in false if something fails
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //ERROR HANDLING/EXCEPTIONS
 ///////////////////////////////////////////////////////////////////////////////////////////////////
