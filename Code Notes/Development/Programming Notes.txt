@@ -373,47 +373,43 @@ HEX-TO-DECIMAL: A3F = 10x16² + 3x16¹ + 15x16° = 2623
 HEX-TO-BINARY: 0xC2 = binaryC binary2 = 1100 0010 = 11000010 (use image table)
 BINARY-TO-HEX: 11000010 = 1100 0010 = 0xC2 (use image table)
 
-TWOS COMPLEMENT
-• Standard way of representing negative integers in binary
-• −x is defined as ∼x + 1
-  Start:    0001  (decimal 1)
-  Invert:   1110
-  Add One:  1111  (decimal -1)
-
 BITWISE OPERATORS
 • Can be used with boolean, intergers and char
 • Bools are converted to ints holding true: 0x00000001, 0001, 1 and false: 0x00000000, 0000, 0
 
-~     bitwise NOT    Returns all bits flipped
-|     bitwise OR     Returns 1/true if either or both are 1/true
-&     bitwise AND    Returns 1/true if both are 1/true
-^     bitwise XOR    Returns 1/true if either but not both are 1/true
-<<    left shift     Moves all bits to the left, drops the last 0 or 1 and adds 0 to the start
->>    right shift    Moves all bits to the right, drops the first 0 or 1 and adds 0 to the end
+~   bitwise NOT   Flips every bit                                   ~00000011 = 11111100
+|   bitwise OR    For every bit if a or b have 1 then use 1         00000011 | 00000100 = 00000111
+&   bitwise AND   For every bit if a and b have 1 then use 1        00000011 & 11111101 = 00000001
+^   bitwise XOR   If a or b (but not both) have 1 then use 1        00000011 ^ 00000001 = 00000010
+<<  left shift    Moves all bits to the left, adds 0 to the start   10000011 << 3 = 00011000
+>>  right shift   Moves all bits to the right, adds 0 to the end    10000011 >> 3 = 00010000
 
-USING  WITH BITS
-Flipping bits:     ~00000011 = 11111100
-Checking bits on:  if 00000011 & 00000010 == 00000010 then on
-Turning bits on:   00000011 | 00000100 = 00000111 turning bit 2 on
-Turning bits off:  00000011 & 11111101 = 00000001 turning bit 1 off
-Toggling bits:     00000011 ^ 00000001 = 00000010 and back to 000000011 if called again
-Shifting left:     10000011 << 3 = 00011000 (new values may not be zeroed)
-Shifting right:    10000011 >> 3 = 00010000 (new values may not be zeroed)
+TWOS COMPLEMENT
+• Standard way of representing negative integers in binary
+• −x = ∼x + 1
+Start:    0001  (decimal 1)
+Invert:   1110
+Add One:  1111  (decimal -1)
 
-USING WITH VALUES/MASKS 
-Adding two masks: value = MASK1 | MASK2 
-Turn off a mask:  value &= ~MASK1
-Add a mask:       value |= MASK1
-Test if masked:   if value & MASK1 == MASK1 then has mask
-Multiply by 2ˣ:   value <<= 3 is same as value *= 2³
-Divide by 2ˣ:     value >>= 3 is same as value /= 2³
+GETTING BITS
+• where bit, to->from are [0, total bits available]
+• returns 0 if bit is off 1 if bit is on
+(n & (((1 << (to - from + 1)) - 1) << from)) >> from;
+(n & (1 << bit)) >> bit
+
+USING WITH MASKS
+value = Mask1 | Mask2             Adding two masks
+value &= ~Mask1                   Removing a mask
+value |= Mask1                    Adding a mask
+(value & Mask1) == Mask1          If true then has the mask
+value <<= 3                       Multiply value by 2³
+value >>= 3                       Divide value by 2³
 
 BITWISE WITH BOOL
-bool ifBothAreTrue   = myBool1 & myBool2    Both are true
-bool ifEitherAreTrue = myBool1 | myBool2    Either are true
-bool ifEitherAreTrue = myBool1 ^ myBool2    Either are true but not both
-bool success = true; 
-success &= HasSucceeded();                  Will lock in false if something fails
+bool value = myBool1 & myBool2    Both are true
+bool value = myBool1 | myBool2    Either are true
+bool value = myBool1 ^ myBool2    Either are true but not both 
+success &= HasSucceeded();        Init success to true, will lock in false if something fails
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //ERROR HANDLING/EXCEPTIONS

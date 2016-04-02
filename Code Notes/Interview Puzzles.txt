@@ -5,20 +5,7 @@
 Q: Write a function that computes the factorial of a number. Now write it again without using recursion.
 A: Note that n cannot be negative and factorial of 0 is 1:
 
-long FactorialRecursion(int n)
-{
-    return n == 0 ? 1 : n * FactorialRecursion(n-1);
-}
-   
-long Factorial(int n)
-{
-    long result = 1;
-    for (int c = 1; c <= n; ++c)
-    {
-        result *= c;
-    }
-    return result;    
-}
+[See Algorithms.cpp for code]
 
 ==============================================================================================================
 
@@ -65,26 +52,7 @@ for each(int value in arr)
 
 For a continuous sub-array use Kadane's Algorithm:
 
-int maximumSum = -INT_MAX;
-int currentSum = 0;
-int currentStart = 0;
-int start = 0;
-int end = 0;
-for(int i = 0; i < arr.size(); ++i) 
-{
-    currentSum += arr[i];
-    if (currentSum > maximumSum) 
-    {
-        maximumSum = currentSum;
-        start = currentStart;
-        end = i;
-    }
-    if(currentSum < 0) 
-    {
-        currentSum = 0;
-        currentStart = i + 1;
-    }
-}
+[See Algorithms.cpp for code]
 
 ==============================================================================================================
 
@@ -355,46 +323,8 @@ Q: Implement a stack using either a linked list or dynamic array and justify you
 A: Stack is a last-in-first-out structure. Dynamic arrays allow for random access which isn't required for
    a stack. They also need to resize if getting too large which can cause unecessary copying. A linked list
    doesn't require this copying although a disadvantage is the memory between elements can become fragmented.
-
-template <typename T> class Stack
-{
-public:
-
-    Stack() = default;
-
-    void Push(T data)
-    {
-        auto entry = std::make_unique<Entry>();
-        entry->data = data;
-        entry->next = std::move(m_root);
-        m_root = std::move(entry);
-    }
-
-    T Pop()
-    {
-        if (!m_root)
-        {
-            throw std::exception("Tried to pop empty stack");
-        }
-
-        T data = m_root->data;
-        m_root = std::move(m_root->next);
-        return data;
-    }
-
-private:
-
-    Stack(const Stack&) = delete;
-    Stack& operator=(const Stack&) = delete;
-
-    struct Entry
-    {
-        T data;
-        std::unique_ptr<Entry> next;
-    };
-
-    std::unique_ptr<Entry> m_root;
-};
+   
+   [See Algorithms.cpp for code]
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //INTERVIEW TREE PUZZLES

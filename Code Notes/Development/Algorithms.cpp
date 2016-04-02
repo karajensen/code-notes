@@ -64,6 +64,21 @@ template <typename T> void SafeRelease(T** pObject)
     }
 }
 
+//FACTORIAL OF A NUMBER
+long FactorialRecursion(int n)
+{
+    return n == 0 ? 1 : n * FactorialRecursion(n - 1);
+}
+long Factorial(int n)
+{
+    long result = 1;
+    for (int c = 1; c <= n; ++c)
+    {
+        result *= c;
+    }
+    return result;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //BUBBLE SORT
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -274,6 +289,31 @@ bool DepthFirstSearch(Node& root, int searchvalue)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+//KADANE'S ALGORITHM
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int maximumSum = -INT_MAX;
+int currentSum = 0;
+int currentStart = 0;
+int start = 0;
+int end = 0;
+for (int i = 0; i < arr.size(); ++i)
+{
+    currentSum += arr[i];
+    if (currentSum > maximumSum)
+    {
+        maximumSum = currentSum;
+        start = currentStart;
+        end = i;
+    }
+    if (currentSum < 0)
+    {
+        currentSum = 0;
+        currentStart = i + 1;
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 //RGB-HSV COLOUR BLENDING
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -422,6 +462,50 @@ private HSV BlendColour(HSV one, HSV two, double blendvalue)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+//STACK
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template <typename T> class Stack
+{
+public:
+
+    Stack() = default;
+
+    void Push(T data)
+    {
+        auto entry = std::make_unique<Entry>();
+        entry->data = data;
+        entry->next = std::move(m_root);
+        m_root = std::move(entry);
+    }
+
+    T Pop()
+    {
+        if (!m_root)
+        {
+            throw std::exception("Tried to pop empty stack");
+        }
+
+        T data = m_root->data;
+        m_root = std::move(m_root->next);
+        return data;
+    }
+
+private:
+
+    Stack(const Stack&) = delete;
+    Stack& operator=(const Stack&) = delete;
+
+    struct Entry
+    {
+        T data;
+        std::unique_ptr<Entry> next;
+    };
+
+    std::unique_ptr<Entry> m_root;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 //HASH MAP
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -461,3 +545,15 @@ private:
 
     std::vector<std::unique_ptr<HashEntry>> m_table;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//TREE STRUCTURE
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct Node
+{
+    int value;
+    Node* left;
+    Node* right;
+};
+

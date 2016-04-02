@@ -369,18 +369,19 @@ BINARY SEARCH TREE DELETION | O(logN)
 TREE TRAVERSAL | O(N)
 • Start left and move down to outline each node in the graph
 • Traversal can be stopped early to make it a search
-
- Pre-Order (DFS)      In-Order          Post-Order
- Root-Left-Right   Left-Root-Right    Left-Right-Root
-  1 2 4 5 3 6 7     4 2 5 1 6 3 7      4 5 2 6 7 3 1
-
-     •1                  1                   1• 
-     / \                /•\                 / \
-    /   \              /   \               /   \
-  •2    •3            2     3             2•    3•
-  / \   / \          /•\   /•\           / \   / \ 
-•4  •5•6  •7        4   5 6   7         4•  5•6•  7• 
-                    •   • •   •
+                                        
+   PRE-ORDER            IN-ORDER            POST-ORDER
+Work done on node   Work done on node    Work done on node
+ Root-Left-Right     Left-Root-Right      Left-Right-Root
+  1 2 4 5 3 6 7       4 2 5 1 6 3 7        4 5 2 6 7 3 1
+                                        
+     •1                    1                     1• 
+     / \                  /•\                   / \
+    /   \                /   \                 /   \
+  •2    •3              2     3               2•    3•
+  / \   / \            /•\   /•\             / \   / \ 
+•4  •5•6  •7          4   5 6   7           4•  5•6•  7• 
+                      •   • •   •       
 
 BREADTH FIRST SEARCH | O(N+E)
 • Traverses to all children before moving down a level

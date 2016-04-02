@@ -292,8 +292,8 @@ while (name[i] != '\0') { i++; }
 do { cin << n;}
 while (n != 7);
 
-break; //stops the loop
-continue; //skips rest of loop and starts the next iteration
+break;    //stops the loop
+continue; //jumps to loop conditional- while, for etc.
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //BRANCHING/LOGIC
@@ -342,12 +342,18 @@ label:  //do something
 //must be called main or winmain
 int main(int argc, char* argv[]){ /*no return auto returns 0 (success)*/ }
 
-//PASSING ARRAYS/C-STRING
-//pass array name (pointer to first member) and number of elements
-void MyFunction(const char* myCString, n);
-void MyFunction(const int myArray[], n);
-void MyFunction(const int myArray (&)[5]); // pass array of fixed size
-MyFunction(myArray, n);
+//PASSING C-STRING
+//Use strlen to get the length of string up to '\0'
+void MyFn(const char* str);
+
+//PASSING C-ARRAYS
+// int arr[x] is a suggestion, the x isn't enforced and arr[3] could be passed to an arr[6]
+// Use pass-by-ref to enforce array size, otherwise require size to be parameter
+// if arr[] decays to a int*, sizeof(arr) gives size of the pointer, not array
+void MyFn(int arr[6])    /*==*/  void MyFn(int arr[])
+void MyFn(int arr[2][3]) /*==*/  void MyFn(int arr[][])
+void MyFn(int(&ref)[6])  /*OR*/  void MyFn(int ref(&)[6])
+void MyFn(int* arr)
 
 //PASSING 2D ARRAY
 //my2DArray points to first element which points to array of col ints
@@ -359,21 +365,16 @@ MyFunction(my2DArray, rows)
 //INLINE FUNCTIONS
 //Function call is replaced by function body
 //If in .h any internal static members are shared between files
-inline void MyFunction(int x){}
+inline void MyFn(int x){}
                                                   
 //STATIC (PRIVATE) NON-MEMBER FUNCTIONS
 //Functions have external linkage by default, static makes it private to file
 //If in .h any internal static members are copied between files
-static void MyFunction(int x){}
-
-//FUNCTION OVERLOADING  
-void MyFunction(int & x, double y)
-void MyFunction(const int & x, double y)
-void MyFunction(int & x, short y)
+static void MyFn(int x){}
 
 //C-VARIADIC FUNCTION
-MyFunction("This is a %i %f test",2,3.0f);
-void MyFunction(char* text, ...)
+MyFn("This is a %i %f test",2,3.0f);
+void MyFn(char* text, ...)
 {
     char buffer[256];
     va_list arguments;
@@ -384,26 +385,26 @@ void MyFunction(char* text, ...)
 }
 
 //DEFAULT VALUES
-void MyMethod(int x, int y = 0);        // constant, parameters must be right to left
-void MyMethod(int x = Fn(5));           // Non-member function with constant arguments
-void MyMethod(int x = Fn(global));      // Non-member function with global variable
-void MyMethod(int x = Fn(m_static));    // Non-member function with static member variable
-void MyMethod(int x = StaticFn());      // Static member function
-void MyMethod(int x = (global==0?1:2))  // Ternary expressions
-void MyMethod(int x = m_member)         // CANT DO: can't use non-static class members
+void MyFn(int x, int y = 0);        // constant, parameters must be right to left
+void MyFn(int x = Fn(5));           // Non-member function with constant arguments
+void MyFn(int x = Fn(global));      // Non-member function with global variable
+void MyFn(int x = Fn(m_static));    // Non-member function with static member variable
+void MyFn(int x = StaticFn());      // Static member function
+void MyFn(int x = (global==0?1:2))  // Ternary expressions
+void MyFn(int x = m_member)         // CANT DO: can't use non-static class members
 
 //CONTEXPR FUNCTIONS
 //All arguments constexpr then computed at compile time, else computed at runtime
-constexpr int MyFunction(int x){ return x; }
-MyFunction(2); //computed at compiletime
-MyFunction(y); //computed at runtime unless y is constexpr
+constexpr int MyFn(int x){ return x; }
+MyFn(2); //computed at compiletime
+MyFn(y); //computed at runtime unless y is constexpr
 
 //TRAILING RETURN TYPE
 //shifts the return type to after the function arguments
-double MyFunction(int x, int y) {} /*or*/
-auto MyFunction(int x, int y) -> double {}
-auto MyFunction(int x, int y) -> decltype(x) {} // make return type same as x
-auto MyFunction(MyFn fn, int x) -> decltype(fn(x)) { return fn(x)); }
+double MyFn(int x, int y) {} /*or*/
+auto MyFn(int x, int y) -> double {}
+auto MyFn(int x, int y) -> decltype(x) {} // make return type same as x
+auto MyFn(MyCallback fn, int x) -> decltype(fn(x)) { return fn(x)); }
 
 //RETURNING RVALUE REFERENCES BY-VAL
 //Returning by-value requires move or else copy occurs (If moving not supported, copy will occur)

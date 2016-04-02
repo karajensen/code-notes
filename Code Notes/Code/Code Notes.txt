@@ -109,6 +109,12 @@ NEW AND DELETE
 • Use delete (no brackets) if you used new to allocate a single entity.
 • It’s safe to apply delete to the null pointer (nothing happens).
 
+MEMSET
+• memset used to zero out memory or wipe sensitive data
+• Can be optimised out by compilier if deemed not affecting program
+• Dangerous to use on non-POD types due to wiping hidden members (vptr etc)
+• memset_s never optimised
+
 RESOURCE ACQUISITION IS INITIALIZATION (RAII)
 • Aquiring and owning a resource means cleaning that resource up properly
 • If an exception is thrown or return happens, 'delete' may never be called

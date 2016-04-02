@@ -271,15 +271,15 @@ auto_ptr<int> pr(&rigue); //can't point to memory on the stack
 auto_ptr<int> p1(p2); //ownership is passed to p1 and p2 is set to nullptr
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-//C-STYLE MEMORY ALLOCATION
+//C-STYLE MEMORY MANIPULATION
 /////////////////////////////////////////////////////////////////////////////////////////////
 #include <malloc.h>
 
-int* pPointer = (int*)malloc(allocationSizeInBytes); //Allocating memory
-free(pPointer); //Freeing memory
-int* pPointer = (int*)realloc(pPointer,numberOfExtraElements); //Resizing memory
-int* pDestination = (int*)memmove(pDestination,pSource,SizeInBytes); //Moving memory
-int* pPointer = (int*)realloc(allocationSizeInBytes); //Reallocating memory
+int* pPointer = (int*)malloc(allocationSizeInBytes);                 // Allocating memory
+free(pPointer);                                                      // Freeing memory
+int* pPointer = (int*)realloc(pPointer,numberOfExtraElements);       // Resizing memory
+int* pDestination = (int*)memmove(pDestination,pSource,SizeInBytes); // Moving memory
+int* pPointer = (int*)realloc(allocationSizeInBytes);                // Reallocating memory
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //PLACEMENT NEW

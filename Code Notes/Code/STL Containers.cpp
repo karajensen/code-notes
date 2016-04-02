@@ -304,7 +304,7 @@ mybits.size()       // size of array
 mybits.any()        // returns true if any bit is set to true
 mybits.none()       // returns true if no bits are set to true
 mybits.set()        // sets all to true
-mybits.set(1)       // set bit 1 to true
+mybits.set(1,true)  // set bit 1 to true, starts at 0
 mybits.reset()      // sets all to false
 mybits.reset(1)     // set bit 1 to false
 mybits.flip()       // flips all bits to opposite value

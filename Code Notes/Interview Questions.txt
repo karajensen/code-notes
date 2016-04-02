@@ -54,12 +54,15 @@ A: When the variable may be null or not exist or when you require pointer arithm
 Q: What obstacles preventing use of const correct interfaces in new classes that are being written? 
 A: If the class wraps or uses a class that does not use it
 
-Q: What is the difference between const char* and char *const?
-A: const char* is a pointer to a const char variable while char *const is a constant pointer to a char variable
+Q: What is the difference between const char*, char const* and char* const?
+A: const char* and char const* are both a pointer to a constant char. The pointer can be
+   changed to point to another const char. char* const is a constant pointer to a char
+   and cannot be changed to point to another char.
 
 Q: What is function overloading?
 A: When multiple functions have the same name but differ by number/type of arguments and 
-   for pointer/reference arguments only whether const or non-const
+   for pointer/reference arguments only whether const or non-const. It is a type of
+   Polymorphism.
 
 Q: What is a function pointer, and can you name a use?
 A: A pointer that holds the address of a function. Used for callbacks and passing with events.

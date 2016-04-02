@@ -20,7 +20,9 @@ delete this; // calls destructor
 
 //CONSTRUCTOR
 //initialisation list must be in same order defined in class
+//Cannot be called explicitly unless in initialisation list
 MyClass() :
+    MyClass(x), // call another constructor (Delegating Constructor)
     m_constMember(0),
     m_refMember(ref)
 {
