@@ -92,6 +92,10 @@
 [27] Read pointer types backwards from first *
      const int * is the same as int const *
 
+[28] void MyFn(int arr[2]) is the same as void MyFn(int arr[]), the number is 
+     only a suggestion and an array of any size can be passed in. Make the paramter
+     a reference to enforce size: void MyFn(int (&arr) [2])
+
 ////////////////////////////////////////////////////////////////////////////////////
 //STL CHEATSHEET
 ////////////////////////////////////////////////////////////////////////////////////
