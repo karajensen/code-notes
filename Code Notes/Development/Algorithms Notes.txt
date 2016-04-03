@@ -38,11 +38,6 @@ Depth-First Search     O(N+E)    O(N)    Graph/Tree   Traverses graph to the gre
 A*                     O(E)      O(N)    Graph/Tree   Pathfinding using heuristics to traverse
 
 =====================================================================================================
-DYNAMIC PROGRAMMING    AVG SPD  TYPE    DESCRIPTION
-=====================================================================================================
-Kadane's Algorithm     O(N)     Array   For finding the maximum continuous subsequence in an array
-
-=====================================================================================================
 STRUCTURES       ACCESS    SEARCH    INSERT     REMOVE    DESCRIPTION
 =====================================================================================================
 Array            O(1)      O(N)      O(N)       O(N)      Block of continuous memory
@@ -54,6 +49,12 @@ Hash Table       O(1)      O(1)      O(1)       O(1)      Maps keys to values wh
 BS Trees         O(logN)   O(logN)   O(logN)    O(logN)   Binary Tree where left child is lower and right higher
 Heap             ---       O(N)      O(logN)    O(logN)   Weakly ordered binary tree where root is highest value
 B-Tree           O(logN)   O(logN)   O(logN)    O(logN)   Tree with more than 2 children per node
+
+=====================================================================================================
+ALGORITHM            SPD   INPUT   DESCRIPTION
+=====================================================================================================
+Kadane's Algorithm   O(N)  Array   Find the maximum continuous subsequence in an array
+Euclid's Algorithm   O(N)  2 ints  Find the largest integer that divides 2 integers
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //ARRAY ALGORITHMS

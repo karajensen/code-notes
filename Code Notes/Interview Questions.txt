@@ -1,5 +1,5 @@
 ﻿/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//PROGRAMMING QUESTIONS
+//INTERVIEW PROGRAMMING QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Q: Name a data structure that can replicate a cache and why
@@ -39,7 +39,7 @@ A: The graphics pipeline can take advantage of optimizations related to efficien
    working with powers of two: dividing, multiplying, generation and usage of mipmaps
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//C++ QUESTIONS
+//INTERVIEW C++ QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Q: What is the difference between a pointer and a reference?
@@ -114,8 +114,8 @@ A: On startup, they are initialised to 0 or the value given to them for inialisa
    They are destructed when the program exits.
 
 Q: What determines the construction order for global objects and static members, and why could it be a problem?
-A: Global and static members are initialised before the application but there is no guarantee of initialisation order.
-   This can be a problem is some global or static members rely on others for initialisation.
+A: Global and static members are initialised before the application but there is no guarantee of initialisation 
+   order. This can be a problem is some global or static members rely on others for initialisation.
 
 Q: When should you use multiple inheritance?
 A: When a class needs functionality from multiple classes
@@ -275,7 +275,7 @@ A: The ability to inherit from more than one base class that isn't an interface.
    Using it the class may end up with more than one of the same base class (ie. diamond shaped)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//STL QUESTIONS
+//INTERVIEW STL QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Q: What is the underlying type of std::map?
@@ -306,3 +306,316 @@ A: If the string capacity is <= 15 characters it is stored on the stack
 Q: Why are the associative container keys const?
 A: Sort order is determined by the key when a new member is inserted
    If the keys are changed the order will be corrupted
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//INTERVIEW ALGORITHM PUZZLES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Q: Write a method to generate a random number between 1 and 7, 
+   given a method that generates a random number between 1 and 5
+A: If a result of 0 is ignored, there is an equal amount of 
+   chance to get a value from 1-7 from the array:
+
+int GetRand7()
+{
+    int values[5][5] = 
+    {
+        { 1, 2, 3, 4, 5 },
+        { 6, 7, 1, 2, 3 },
+        { 4, 5, 6, 7, 1 },
+        { 2, 3, 4, 5, 6 },
+        { 7, 0, 0, 0, 0 }
+    };
+
+    int result = 0;
+    while (result == 0)
+    {
+        result = values[GetRand5()-1][GetRand5()-1];
+    }
+    return result;
+}
+
+==============================================================================================================
+
+Q: Write an algorithm to solve a Tower of Hanoi with 3 rods and N disks using Stacks
+A:
+           _|_         |          |
+          __|__        |          |
+         ___|___       |          |
+        ____|____  ____|____  ____|____
+ 
+            |          |          |
+          __|__        |          |
+         ___|___      _|_         |
+        ____|____  ____|____  ____|____ (A -> B)
+
+            |          |          |
+            |          |          |
+         ___|___      _|_       __|__
+        ____|____  ____|____  ____|____ (A -> C)
+
+            |          |          |
+            |          |         _|_
+         ___|___       |        __|__
+        ____|____  ____|____  ____|____ (A -> C)
+
+            |          |          |
+            |          |         _|_
+            |       ___|___     __|__
+        ____|____  ____|____  ____|____ (A -> B)
+
+            |          |          |
+            |          |          |
+           _|_      ___|___     __|__
+        ____|____  ____|____  ____|____ (C -> A)
+
+            |          |          |
+            |        __|__        |
+           _|_      ___|___       |
+        ____|____  ____|____  ____|____ (C -> B)
+
+            |         _|_         |
+            |        __|__        |
+            |       ___|___       |
+        ____|____  ____|____  ____|____ (A -> B)
+
+void Hanoi(int n, std::stack<int>& a, std::stack<int>& b, std::stack<int>& c)
+{
+    if(n != 0)
+    {
+        Hanoi(n-1, a, c, b);
+        c.push(a.top());
+        a.pop();
+        Hanoi(n-1, b, a, c);
+    }
+}
+
+==============================================================================================================
+
+Q: You are given an array with integers (both positive and negative) in any random order. 
+   Find the continuous sub-array with the largest sum.
+A: See Kadane's Algorithm in Algorithms.cpp for code
+
+==============================================================================================================
+
+Q: Write a function that computes the factorial of a number. 
+   Now write it again without using recursion.
+A: See General Algorithms in Algorithms.cpp for code
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//INTERVIEW STRING PUZZLES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Q: Implement an algorithm to determine if a string has all unique characters. 
+   What if you can not use additional data structures?
+A: Set will automatically remove any duplicates but requires an extra structure
+   Sorting may use space depending on how std::sort is implemented (usually a quick sort)
+   If no sorting is allowed, must check every character against the others in O(N²)
+
+bool HasUniqueCharacters(std::string str)
+{
+    std::set<char> characters(str.begin(), str.end());
+    return characters.size() == str.size();
+}
+
+bool HasUniqueCharactersNoContainer(std::string str)
+{
+    if (str.size() >= 2)
+    {
+        std::sort(str.begin(), str.end(), std::less<char>());
+        for (int i = 1; i < str.size(); ++i)
+        {
+            if (str[i] == str[i-1])
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+==============================================================================================================
+
+Q: Write code to reverse a C-Style String
+A: For string literal (char* str = "x") characters cannot be changed so use char[]
+   See String Algorithms in Algorithms.cpp for code
+
+==============================================================================================================
+
+Q: Implement an algorithm to remove all duplicates from a string without using any additional buffer
+A: Erase-remove idiom, erase all instances after the current character at index i
+   See String Algorithms in Algorithms.cpp for code
+
+==============================================================================================================
+
+Q: Implement an algorithm to determine if two strings are anagrams of each other
+A: Use std::is_permutation, otherwise sort and check equality of strings
+   See String Algorithms in Algorithms.cpp for code
+
+==============================================================================================================
+
+Q: Implement an algorithm to replace all spaces in a string with %20
+A: boost::ireplace_all if boost is available, otherwise iterate
+   See String Algorithms in Algorithms.cpp for code
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//INTERVIEW LINKED LIST PUZZLES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Q: Reverse a linked list
+A: See Linked List Algorithms in Algorithms.cpp for code
+
+==============================================================================================================
+
+Q: Write code to remove duplicates from an unsorted linked list
+   How would you solve this if temporary buffers are not allowed?
+A: See Linked List Algorithms in Algorithms.cpp for code
+
+==============================================================================================================
+
+Q: Implement an algorithm to delete a node in the middle of a single linked list given only access to that node
+A: The node to delete cannot have its memory location removed as the previous node will point to it
+   Actually delete the node after it and copy its data into the node delete is requested for
+   See Linked List Algorithms in Algorithms.cpp for code
+
+==============================================================================================================
+
+Q: Given a linked list where one node circles back to itself somewhere, 
+   implement an algorithm which returns the node at the beginning of the circular loop
+A: Compare address as its an unique identifier of a node
+   See Linked List Algorithms in Algorithms.cpp for code
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//INTERVIEW STACK PUZZLES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Q: Implement a stack using either a linked list or dynamic array and justify your decision
+A: Stack is a last-in-first-out structure. Dynamic arrays allow for random access which isn't required for
+   a stack. They also need to resize if getting too large which can cause unecessary copying. A linked list
+   doesn't require this copying although a disadvantage is the memory between elements can become fragmented.
+   See Stack Algorithms in Algorithms.cpp for code.
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//INTERVIEW TREE PUZZLES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Q: Implement a function to check if a tree is balanced-
+   No two leaf nodes differ in distance from the root by more than one
+A: Find min/max depth of tree and difference should be <=1 to be balanced
+   See Tree Algorithms in Algorithms.cpp for code
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//INTERVIEW LOGIC PUZZLES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Q: You have two identical eggs. Standing in front of a 100 floor building, you wonder what is the 
+   maximum number of floors from which the egg can be dropped without breaking it. What is the 
+   minimum number of tries needed to find out the solution?
+
+A: By dropping one egg on each floor until it breaks you can easily find the maximum floors. The maximum
+   floors is 100 if it doesn't break until the last floor. The minimum tries can be found by by going up 
+   floors by intervals and if the first egg breaks, test the second egg in between the interval:
+
+   Interval of 2:  100 / 2 = 50  with Maximum tries = 50 + 1 = 51
+   Interval of 3:  100 / 3 = 33  with Maximum tries = 33 + 2 = 35
+   Interval of 4:  100 / 4 = 25  with Maximum tries = 25 + 3 = 28
+   Interval of 5:  100 / 5 = 20  with Maximum tries = 20 + 4 = 24
+   Interval of 6:  100 / 6 = 16  with Maximum tries = 16 + 5 = 21
+   Interval of 7:  100 / 7 = 14  with Maximum tries = 14 + 6 = 20
+   Interval of 8:  100 / 8 = 12  with Maximum tries = 12 + 7 = 19
+   Interval of 9:  100 / 9 = 11  with Maximum tries = 11 + 8 = 19
+   Interval of 10: 100 / 10 = 10 with Maximum tries = 10 + 9 = 19
+   Interval of 11: 100 / 11 = 9 with Maximum tries = 9 + 10 = 19
+   Interval of 12: 100 / 12 = 8 with Maximum tries = 8 + 11 = 19
+   Interval of 13: 100 / 13 = 7 with Maximum tries = 16 + 12 = 19
+   Interval of 14: 100 / 14 = 7 with Maximum tries = 7 + 13 = 20
+
+   Minimum Tries = (100 / n) + (n - 1)
+   Minimum Tries is 19 by going up with an interval of 8-13
+
+==============================================================================================================
+
+Q: Four people need to cross a rickety bridge at night. Unfortunately, they have only one torch and the 
+   bridge is too dangerous to cross without one. The bridge is only strong enough to support two people at 
+   a time. Not all people take the same time to cross the bridge. Times for each person: 1m, 2m, 7m, 10m. 
+   What is the shortest time needed for all four of them to cross the bridge?
+
+A: 1m and 2m go across the bridge = 2m
+   1m goes back and passes over the torch = 1m
+   7m and 10m goes across the bridge = 10m
+   2m goes back with the torch = 2m
+   1m and 2m go across the bridge = 2m
+   Total: 17m
+
+==============================================================================================================
+
+Q: How would you cut a rectangular cake into two equal pieces when a rectangular piece has already been cut 
+   out of it? The cut piece can be of any size and orientation. You are only allowed to make one straight cut.
+
+A: Assuming a uniform cake, and the piece cut-out was to the height of the cake, cut horizonally across.
+   For a non-uniform cake, cut a line intersecting both the center of the cake and center of the cut-out piece.
+
+==============================================================================================================
+
+Q: A duck that is being chased by a fox saves itself by sitting at the center of circular pond of radius r. 
+   The duck can fly from land but cannot fly from the water. Furthermore, the fox cannot swim. The fox is 
+   four times faster than the duck. Assuming that the duck and fox are perfectly smart, is it possible for 
+   the duck to ever reach the edge of the pond and fly away to its escape from the ground?
+
+A: If the duck tries to travel directly in the opposite vector to the duck-to-fox, it will take the fox one
+   half circumference of the circle in distance to reach the point the duck will be at the pond edge.
+
+   Fox Distance = πr
+   Duck Distance = 4r
+   As πr < 4r the fox would catch the duck
+
+   If the duck however swims in circles at a radius of < r/4 the fox is continuously trying to catch up
+   When the duck reaches a distance of r + 1/4r from the fox it only has to cover 3/4r to reach the edge
+   In this case πr > 4 * (3/4r) and the duck would escape
+
+==============================================================================================================
+
+Q: In a country where everyone wants a boy, each family continues having babies till they have a boy. 
+   After some time, what is the proportion of boys to girls in the country? 
+   (Assuming probability of having a boy or a girl is the same)
+
+A: There are n couples so therefore n boys
+   ExpectedValue = Pr(x1)*v1 + Pr(x2)*v2 + ...
+   Number of Girls = 0*(Pr(0 girls)) + 1*(Pr(1 girl)) + 2*(Pr(2 girls) + ...
+   Number of Girls = 0*(n*0.5) + 1*(n*0.25) + 2*(n*0.125) + ...
+   Number of Girls = n (after summing 4-5 children and beyond)
+   Proportion = 1:1
+
+==============================================================================================================
+
+Q: A line of 100 airline passengers is waiting to board a plane. They each hold a ticket to one 
+   of the 100 seats on that flight. Unfortunately, the first person in line is crazy, and will 
+   ignore the seat number on their ticket, picking a random seat to occupy. All of the other 
+   passengers are quite normal, and will go to their proper seat unless it is already occupied. 
+   If it is occupied, they will then find a free seat to sit in, at random. 
+   What is the probability that the last (100th) person to board the plane will sit in their proper seat?
+
+A: If any passenger before the last sits in the first passenger's seat, the last passenger gets their 
+   own seat.  If any passenger before the last sits in the last passenger's seat, the last passenger does 
+   not get their own seat.  Because the passengers are choosing their seats uniformly at random, these 
+   outcomes are equally likely, and so the probability that the last passenger gets their own seat is one half.
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//NP-COMPLETE/HARD PROBLEMS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+• Exercises in heuristics and approximation
+• Time required to solve the problem using any currently known 
+  algorithm increases very quickly as the size of the problem grows
+
+TRAVELLING SALESMAN PROBLEM
+Q: Given a number of cities and the costs of travelling from any city to any other city, what is the 
+   least-cost round-trip route that visits each city exactly once and then returns to the starting city? 
+
+KNAPSACK PROBLEM
+Q: Given a set of items, each with a mass and a value, determine the number of each item to include in a 
+   collection so that the total weight is less than or equal to a given limit and the total value is as 
+   large as possible.
+
+
+

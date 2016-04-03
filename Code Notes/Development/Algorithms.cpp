@@ -2,14 +2,18 @@
 //GENERAL ALGORITHMS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//CHANGE RANGE OF A VALUE
+/**
+* Change range of a value
+*/
 template<typename T> 
 T ChangeRange(T value, T currentInner, T currentOuter, T newInner, T newOuter)
 {
     return ((value-currentInner)*((newOuter-newInner)/(currentOuter-currentInner)))+newInner;
 }
 
-//DEGREES/RADIANS CONVERSION
+/**
+* Convert degrees and radians
+*/
 #define _USE_MATH_DEFINES
 #include <math.h>
 template<typename T> T DegToRad(T degrees)
@@ -21,50 +25,36 @@ template<typename T> T RadToDeg(T radians)
     return static_cast<T>(180.0/M_PI)*radians;
 }
 
-//STRING: MAKE UPPER/LOWER CASE
-std::transform(str.begin(), str.end(), str.begin(), &std::toupper);
-std::transform(str.begin(), str.end(), str.begin(), &std::tolower);
-
-//STRING: CASE INSENSITIVE COMPARISON
-str1.size() == str2.size() &&
-std::equal(str1.begin(), str1.end(), str2.begin(), 
-    [](char c1, char s2){ return toupper(c1) == toupper(c2); });
-
-//GET 1D INDEX FROM 2D COORD (UNIFORM GRID)
+/**
+* Get 1D index from 2D coord 
+* Requires uniform grid
+*/
 int index = rows * x + z;
 int x = index / rows;
 int z = index % rows;
 
-//WHETHER NUMBER IS EVEN
+/**
+* Check whether a number is odd
+*/
 bool isOdd = x % 2;
 
-//GET DIGIT AT RADIX SIGNIFICANT POSITION (1, 10, 100..)
+/**
+* Get digit at radix significant position (1, 10, 100..)
+* Eg. 234 at position 100 = 2, position 10 = 3, position 1 = 4
+*/
 int digit = number/position % 10;
 
-//GETTING COLOR COMPONENTS VIA BIT SHIFTING
-unsigned int color;
-int r = color & 0xFF;
-int g = (color >> 8) & 0xFF;
-int b = (color >> 16) & 0xFF;
-int a = (color >> 24) & 0xFF;
-
-//GENERATE FIBONACCI NUMBERS
-//copies into container: 1 1 2 3 5 8 13 21 34 55
+/**
+* Generate Fibonacci Numbers
+* Copies into container: 1 1 2 3 5 8 13 21 34 55
+*/
 std::vector<int> v = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 std::adjacent_difference(v.begin(), v.end() - 1, v.begin() + 1, std::plus<int>());
 
-//SAFE RELEASE
-SafeRelease(&myPointer);
-template <typename T> void SafeRelease(T** pObject)
-{
-    if(*pObject)
-    {
-        (*pObject)->Release();
-        *pObject = nullptr;
-    }
-}
-
-//FACTORIAL OF A NUMBER
+/**
+* Get Factorial n! of a number
+* n cannot be negative and factorial of 0 is 1
+*/
 long FactorialRecursion(int n)
 {
     return n == 0 ? 1 : n * FactorialRecursion(n - 1);
@@ -77,6 +67,73 @@ long Factorial(int n)
         result *= c;
     }
     return result;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//STRING ALGORITHMS
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+* Make string upper or lower case
+*/
+std::transform(str.begin(), str.end(), str.begin(), &std::toupper);
+std::transform(str.begin(), str.end(), str.begin(), &std::tolower);
+
+/**
+* Case insensitive compare
+*/
+str1.size() == str2.size() &&
+std::equal(str1.begin(), str1.end(), str2.begin(),
+    [](char c1, char s2) { return toupper(c1) == toupper(c2); });
+
+/**
+* Remove duplicate characters (with additional buffer)
+*/
+std::set<char> characters(str.begin(), str.end());
+
+/**
+* Remove duplicate characters (no additional buffer)
+* Erase-remove idiom, erase all instances after the current character at index i
+*/
+for (int i = 0; i < str.size() - 1; ++i)
+{
+    str.erase(std::remove(str.begin() + i + 1, str.end(), str[i]), str.end());
+}
+
+/**
+* Reverse a C-String
+*/
+char test[] = "this is a test";
+char saved = ' ';
+int len = strlen(test);
+for (int i = 0; i < len / 2; ++i)
+{
+    saved = test[i];
+    test[i] = test[len - i - 1];
+    test[len - i - 1] = saved;
+}
+
+/**
+* Reverse a std::string
+*/
+std::reverse(str.begin(), str.end());
+
+/**
+* Determine if 2 strings are anagrams
+*/
+bool isAnagram = s1.size() == s2.size() && 
+    std::is_permutation(s1.begin(), s1.end(), s2.begin());
+
+/**
+* Replace all spaces with %20
+*/
+for (int i = 0; i < str.size(); ++i)
+{
+    if (str[i] == ' ')
+    {
+        str[i] = '%';
+        str.insert(i + 1, "20");
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -292,6 +349,9 @@ bool DepthFirstSearch(Node& root, int searchvalue)
 //KADANE'S ALGORITHM
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+* Finding the maximum continuous subsequence in an array
+*/
 int maximumSum = -INT_MAX;
 int currentSum = 0;
 int currentStart = 0;
@@ -314,13 +374,305 @@ for (int i = 0; i < arr.size(); ++i)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-//RGB-HSV COLOUR BLENDING
+//EUCLID'S ALGORITHM
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/// <summary>
-/// Converting RGB-HSV: http://www.poynton.com/PDFs/coloureq.pdf p15
-/// Where rgb is [0,1]
-/// </summary>
+/**
+* Finding the largest integer that divides 2 integers
+*/
+int GetLowestDivisor(int m, int n)
+{
+    while (n != 0)
+    {
+        int mod = m % n;
+        m = n;
+        n = mod;
+    }
+    return m;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//STACK ALGORITHMS
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template <typename T> class Stack
+{
+public:
+
+    Stack() = default;
+
+    void Push(T data)
+    {
+        auto entry = std::make_unique<Entry>();
+        entry->data = data;
+        entry->next = std::move(m_root);
+        m_root = std::move(entry);
+    }
+
+    T Pop()
+    {
+        if (!m_root)
+        {
+            throw std::exception("Tried to pop empty stack");
+        }
+
+        T data = m_root->data;
+        m_root = std::move(m_root->next);
+        return data;
+    }
+
+private:
+
+    Stack(const Stack&) = delete;
+    Stack& operator=(const Stack&) = delete;
+
+    struct Entry
+    {
+        T data;
+        std::unique_ptr<Entry> next;
+    };
+
+    std::unique_ptr<Entry> m_root;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//HASH MAP ALGORITHMS
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class HashMap 
+{
+public:
+
+    const int TABLE_SIZE = 128;
+    typedef std::pair<int, int> HashEntry;
+
+    HashMap()
+    {
+        m_table.resize(TABLE_SIZE);
+    }
+     
+    int Get(int key) const
+    {
+        int hash = (key % TABLE_SIZE);
+        while (m_table[hash] != nullptr && m_table[hash]->first != key)
+        {
+            hash = (hash + 1) % TABLE_SIZE;
+        }
+        return m_table[hash] ? m_table[hash]->second : -1;
+    }
+
+    void Add(int key, int value)
+    {
+        int hash = (key % TABLE_SIZE);
+        while (m_table[hash] != nullptr && m_table[hash]->first != key)
+        {
+            hash = (hash + 1) % TABLE_SIZE;
+        }
+        m_table[hash] = std::make_unique<HashEntry>(std::make_pair(key, value));
+    } 
+
+private:
+
+    std::vector<std::unique_ptr<HashEntry>> m_table;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//BINARY TREE ALGORITHMS
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct Node
+{
+    int value;
+    Node* left;
+    Node* right;
+};
+
+/**
+* Get maximum depth for tree
+*/
+int MaxDepth(Node* n)
+{
+    if (n == nullptr)
+    {
+        return 0;
+    }
+    return 1 + std::max(MaxDepth(n->left), MaxDepth(n->right));
+}
+
+/**
+* Get minimum depth for tree
+*/
+int MinDepth(Node* n)
+{
+    if (n == nullptr)
+    {
+        return 0;
+    }
+    return 1 + std::min(MinDepth(n->left), MinDepth(n->right));
+}
+
+/**
+* Check if tree is balanced
+*/
+bool IsBalanced(Node* root)
+{
+    return MaxDepth(root) - MinDepth(root) <= 1;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//LINKED LIST ALGORITHMS
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+* Reverse a linked list
+* Call ReverseList(root)
+*/
+Node* ReverseList(Node* node)
+{
+    Node* temp = nullptr;
+    Node* previous = nullptr;
+    while (node != nullptr)
+    {
+        temp = node->next;
+        node->next = previous;
+        previous = node;
+        node = temp;
+    }
+    return previous;
+}
+
+/**
+* Reverse a linked list recursively
+* Call ReverseListRecursive(root, nullptr)
+*/
+Node* ReverseListRecursive(Node* node, Node* previous)
+{
+    if (node != nullptr)
+    {
+        Node* temp = node->next;
+        node->next = previous;
+        return ReverseListRecursive(temp, node);
+    }
+    return previous;
+}
+
+/**
+* Remove duplicates using a temporary buffer
+*/
+Node* previous = n;
+std::vector<int> results;
+while (n->next != nullptr)
+{
+    if (std::count(results.begin(), results.end(), n->value) > 0)
+    {
+        previous->next = n->next;
+        delete n;
+        n = previous->next;
+    }
+    else
+    {
+        results.push_back(n->value);
+        previous = n;
+        n = n->next;
+    }
+}
+
+/**
+* Remove duplicates without using a temporary buffer
+*/
+while (n->next != nullptr)
+{
+    Node* previous = n;
+    Node* tosearch = n->next;
+    while (tosearch != nullptr)
+    {
+        if (tosearch->value == n->value)
+        {
+            previous->next = tosearch->next;
+            delete tosearch;
+            tosearch = previous->next;
+        }
+        else
+        {
+            previous = tosearch;
+            tosearch = tosearch->next;
+        }
+    }
+    n = n->next;
+}
+
+/**
+* Delete a linked list node
+*/
+void DeleteNode(Node* n)
+{
+    if (n->next == nullptr)
+    {
+        throw std::exception("Cannot delete last node");
+    }
+
+    Node* toDelete = n->next;
+    n->value = toDelete->value;
+    n->next = toDelete->next;
+    delete toDelete;
+}
+
+/**
+* Find the start of a circular loop if one exists
+*/
+Node* FindStartOfLoop(Node* n)
+{
+    Node* previous = nullptr;
+    std::vector<Node*> nodes;
+
+    while (n != nullptr)
+    {
+        if (std::find(nodes.begin(), nodes.end(), n) != nodes.end())
+        {
+            return previous;
+        }
+        nodes.push_back(n);
+        previous = n;
+        n = n->next;
+    }
+
+    return nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//COLOUR ALGORITHMS
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+* Get four components of colour
+*/
+unsigned int color;
+int r = color & 0xFF;
+int g = (color >> 8) & 0xFF;
+int b = (color >> 16) & 0xFF;
+int a = (color >> 24) & 0xFF;
+
+/**
+* Representing colour
+*/
+union Color
+{
+    Color() :
+        color(0)
+    {
+    }
+
+    unsigned int color;
+    struct
+    {
+        unsigned char r, g, b, a;
+    };
+};
+
+/**
+* Converting RGB-HSV: http://www.poynton.com/PDFs/coloureq.pdf p15
+* Where rgb is [0,1]
+*/
 private HSV ConvertColour(RGB rgb)
 {
     HSV hsv = new HSV();
@@ -366,10 +718,10 @@ private HSV ConvertColour(RGB rgb)
     return hsv;
 }
 
-/// <summary>
-/// Converting HSV-RGB: http://www.poynton.com/PDFs/coloureq.pdf p15
-/// Where h is [0,360] and sv is [0,1]
-/// </summary>
+/**
+* Converting HSV-RGB: http://www.poynton.com/PDFs/coloureq.pdf p15
+* Where h is [0,360] and sv is [0,1]
+*/
 private RGB ConvertColour(HSV hsv)
 {
     RGB rgb = new RGB();
@@ -423,10 +775,10 @@ private RGB ConvertColour(HSV hsv)
     return rgb;
 }
 
-/// <summary>
-/// Colour Blending: http://www.stuartdenman.com/improved-color-blending/
-/// Where blend value is [0-1]
-/// </summary>
+/**
+* Colour Blending: http://www.stuartdenman.com/improved-color-blending/
+* Where blend value is [0-1]
+*/
 private HSV BlendColour(HSV one, HSV two, double blendvalue)
 {
     HSV blend = new HSV();
@@ -460,100 +812,3 @@ private HSV BlendColour(HSV one, HSV two, double blendvalue)
 
     return blend;
 }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-//STACK
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-template <typename T> class Stack
-{
-public:
-
-    Stack() = default;
-
-    void Push(T data)
-    {
-        auto entry = std::make_unique<Entry>();
-        entry->data = data;
-        entry->next = std::move(m_root);
-        m_root = std::move(entry);
-    }
-
-    T Pop()
-    {
-        if (!m_root)
-        {
-            throw std::exception("Tried to pop empty stack");
-        }
-
-        T data = m_root->data;
-        m_root = std::move(m_root->next);
-        return data;
-    }
-
-private:
-
-    Stack(const Stack&) = delete;
-    Stack& operator=(const Stack&) = delete;
-
-    struct Entry
-    {
-        T data;
-        std::unique_ptr<Entry> next;
-    };
-
-    std::unique_ptr<Entry> m_root;
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-//HASH MAP
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class HashMap 
-{
-public:
-
-    const int TABLE_SIZE = 128;
-    typedef std::pair<int, int> HashEntry;
-
-    HashMap()
-    {
-        m_table.resize(TABLE_SIZE);
-    }
-     
-    int Get(int key) const
-    {
-        int hash = (key % TABLE_SIZE);
-        while (m_table[hash] != nullptr && m_table[hash]->first != key)
-        {
-            hash = (hash + 1) % TABLE_SIZE;
-        }
-        return m_table[hash] ? m_table[hash]->second : -1;
-    }
-
-    void Add(int key, int value)
-    {
-        int hash = (key % TABLE_SIZE);
-        while (m_table[hash] != nullptr && m_table[hash]->first != key)
-        {
-            hash = (hash + 1) % TABLE_SIZE;
-        }
-        m_table[hash] = std::make_unique<HashEntry>(std::make_pair(key, value));
-    } 
-
-private:
-
-    std::vector<std::unique_ptr<HashEntry>> m_table;
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-//TREE STRUCTURE
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-struct Node
-{
-    int value;
-    Node* left;
-    Node* right;
-};
-

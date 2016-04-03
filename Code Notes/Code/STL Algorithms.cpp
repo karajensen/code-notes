@@ -181,10 +181,11 @@ std::vector<MyClass>().swap(obj);    // Make obj empty with minimal capacity
 std::vector<MyClass>(obj).swap(obj); // Make obj with minimal capacity
 
 //SEPERATE WANTED/UNWANTED ITEMS
+//Only on sequence containers, requires Erase remove idiom to actually remove
 //Doesn't remove anything, only moves wanted items to start of range, overwriting values if needed
-remove(S, E,"A") //moves all items that aren't A to front of range; returns iterator to end of this range [SEQUENCE]
-remove_if(S, E, boolLam) ///moves all items that return false to front of range; returns iterator to end of this range [SEQUENCE]
-unique(S, E) //moves all unique items to front of range; returns iterator to end of this range [SEQUENCE]
+remove(S, E,"A") //moves all items that aren't A to front of range; returns iterator to end of this range
+remove_if(S, E, boolLam) ///moves all items that return false to front of range; returns iterator to end of this range
+unique(S, E) //moves all unique items to front of range; returns iterator to end of this range, requires sorting
 
 //REMOVE WITH COPY
 unique_copy(S, E, S2) //copies into 2 and removes double values, returns iterator in 2 to new end

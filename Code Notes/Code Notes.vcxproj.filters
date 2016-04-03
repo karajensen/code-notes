@@ -178,7 +178,6 @@
     </Text>
     <Text Include="Cheatsheet.txt" />
     <Text Include="Hotkeys.txt" />
-    <Text Include="Interview Puzzles.txt" />
     <Text Include="Interview Questions.txt" />
     <Text Include="Development\Algorithms Notes.txt">
       <Filter>Development</Filter>

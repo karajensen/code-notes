@@ -144,7 +144,6 @@
     <Text Include="Development\Simulation.txt" />
     <Text Include="Development\Software Development.txt" />
     <Text Include="Hotkeys.txt" />
-    <Text Include="Interview Puzzles.txt" />
     <Text Include="Interview Questions.txt" />
     <Text Include="Languages\C# Notes.txt" />
   </ItemGroup>

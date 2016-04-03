@@ -179,17 +179,14 @@ std::sprintf(buf, "%f", myFloat)
 // Can be used to access a variable in multiple ways
 // Cannot use inheritance, virtual functions
 
-union MyColor
+union MyUnion
 {
-    MyColor() : color(0) //can have user defined constructor
+    MyUnion() : myInt(0) //can have user defined constructor
     {
     }
 
-    unsigned int color;
-    struct
-    {
-        unsigned char r, g, b, a;
-    };
+    unsigned int myInt;
+    double myDouble;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
