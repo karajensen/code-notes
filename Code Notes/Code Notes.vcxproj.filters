@@ -214,6 +214,9 @@
     <Image Include="Images\Code - BigO Sorting.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Code - Binary Search Tree Insertion.png">
+      <Filter>Images</Filter>
+    </Image>
     <Image Include="Images\Code - Binary Search.png">
       <Filter>Images</Filter>
     </Image>
@@ -244,9 +247,6 @@
     <Image Include="Images\Code - Execution Environment.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Code - Heap Operations.png">
-      <Filter>Images</Filter>
-    </Image>
     <Image Include="Images\Code - Hex Converting.png">
       <Filter>Images</Filter>
     </Image>
@@ -263,6 +263,9 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Code - STL container performance.PNG">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Tree Heap Operations.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Code - Tree Traversal.png">
@@ -287,9 +290,6 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Backface Culling.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Graphics - Binary Search Tree Insertion.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Bottleneck chart.png">

@@ -107,11 +107,12 @@ auto* str = L"Wide-string literal"
 int myArray[9] = { 1, 2 };  //initialises first two values, sets rest to 0
 
 //2D ARRAYS
-//creates an arrow with 2 rows, 4 columns
-int myArray[2][4] 
+//creates an arrow with 2 rows, 2 columns
+//memory layout is row-major: [1 | 2 | 3 | 4] in continuous block
+int myArray[2][2] 
 {
-    {94, 98, 87, 103}, // values for intarray[0]
-    {98, 99, 91, 107}, // values for intarray[1]
+    {1, 2},
+    {3, 4}
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

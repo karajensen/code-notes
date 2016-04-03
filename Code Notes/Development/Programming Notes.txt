@@ -196,6 +196,7 @@ CACHES
 • Physical Temporary storage for frequently accessed data for rapid access, sends to registers
 • No processing on data- must be moved to registers if this is needed
 • Cache Miss: Failed attempt to read/write to the cache resulting in RAM access
+• Cache line size typically 32 or 64 bytes
 
 ===============================================================================
 VISUAL STUDIO DEBUG MEMORY ALLOCATION
