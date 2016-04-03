@@ -397,6 +397,12 @@ GETTING BITS
 (n & (((1 << (to - from + 1)) - 1) << from)) >> from;
 (n & (1 << bit)) >> bit
 
+BITWISE WITH BOOL
+bool value = myBool1 & myBool2    Both are true
+bool value = myBool1 | myBool2    Either are true
+bool value = myBool1 ^ myBool2    Either are true but not both 
+success &= HasSucceeded();        Init success to true, will lock in false if something fails
+
 USING WITH MASKS
 value = Mask1 | Mask2             Adding two masks
 value &= ~Mask1                   Removing a mask
@@ -405,11 +411,21 @@ value |= Mask1                    Adding a mask
 value <<= 3                       Multiply value by 2³
 value >>= 3                       Divide value by 2³
 
-BITWISE WITH BOOL
-bool value = myBool1 & myBool2    Both are true
-bool value = myBool1 | myBool2    Either are true
-bool value = myBool1 ^ myBool2    Either are true but not both 
-success &= HasSucceeded();        Init success to true, will lock in false if something fails
+BITMASKS/FLAGS
+NoMask = 0     0x000
+Mask1  = 1     0x001
+Mask2  = 2     0x002
+Mask3  = 4     0x004
+Mask4  = 8     0x008
+Mask5  = 16    0x010
+Mask6  = 32    0x020
+Mask7  = 64    0x040
+Mask8  = 128   0x080
+
+unsigned char    Can have 8  (bytes) flags maximum
+unsigned short   Can have 16 (bytes) flags maximum
+unsigned int     Can have 16 (bytes) flags maximum 
+unsigned long    Can have 32 (bytes) flags maximum
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //ERROR HANDLING/EXCEPTIONS

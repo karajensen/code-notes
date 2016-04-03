@@ -51,10 +51,10 @@ Heap             ---       O(N)      O(logN)    O(logN)   Weakly ordered binary 
 B-Tree           O(logN)   O(logN)   O(logN)    O(logN)   Tree with more than 2 children per node
 
 =====================================================================================================
-ALGORITHM            SPD   INPUT   DESCRIPTION
+ALGORITHM            INPUT    DESCRIPTION
 =====================================================================================================
-Kadane's Algorithm   O(N)  Array   Find the maximum continuous subsequence in an array
-Euclid's Algorithm   O(N)  2 ints  Find the largest integer that divides 2 integers
+Kadane's Algorithm   Array    Find the maximum continuous subsequence in an array
+Euclid's Algorithm   2 ints   Find the largest integer that divides 2 integers
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //ARRAY ALGORITHMS

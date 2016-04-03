@@ -230,26 +230,6 @@ enum MyEnum1 { ONE };
 enum MyEnum2 { ONE };
 int x = MyEnum2::ONE; // Requires type only if enums clash
 
-// ENUM FOR BIT FLAGS
-// Operators work on bool/integers/chars
-// Amount of bytes minimally guaranteed determines amount of bit flags can be stored
-enum MASKS
-{
-    NO_FLAG = 0,  // 0x000
-    MASK1 = 1,    // 0x001
-    MASK2 = 2,    // 0x002
-    MASK3 = 4,    // 0x004
-    MASK4 = 8,    // 0x008
-    MASK5 = 16,   // 0x010
-    MASK6 = 32,   // 0x020
-    MASK7 = 64,   // 0x040
-    MASK8 = 128   // 0x080
-}
-unsigned char   // Can have 8 (bytes) flags maximum
-unsigned short  // Can have 16 (bytes) flags maximum
-unsigned int    // Can have 16 (bytes) flags maximum 
-unsigned long   // Can have 32 (bytes) flags maximum
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //BIT FIELDS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
