@@ -39,6 +39,13 @@ int z = index % rows;
 bool isOdd = x % 2;
 
 /**
+* Swap two integers without using a temporary variable
+*/
+a ^= b;
+b ^= a;
+a ^= b;
+
+/**
 * Get digit at radix significant position (1, 10, 100..)
 * Eg. 234 at position 100 = 2, position 10 = 3, position 1 = 4
 */

@@ -85,24 +85,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Code\Boost.cpp" />
-    <ClCompile Include="Code\Class.cpp" />
-    <ClCompile Include="Code\Code.cpp" />
-    <ClCompile Include="Code\Memory.cpp" />
-    <ClCompile Include="Code\STL Algorithms.cpp" />
-    <ClCompile Include="Code\STL Containers.cpp" />
-    <ClCompile Include="Code\STL.cpp" />
-    <ClCompile Include="Code\Templates.cpp" />
     <ClCompile Include="Development\Concurrency.cpp" />
     <ClCompile Include="Development\Design Patterns.cpp" />
     <ClCompile Include="Development\Render Engines.cpp" />
     <ClCompile Include="Development\Shaders.cpp" />
     <ClCompile Include="Development\Web Development.cpp" />
-    <ClCompile Include="Examples\Example - Maya API Command.cpp" />
-    <ClCompile Include="Examples\Example - Maya API Locator.cpp" />
-    <ClCompile Include="Examples\Example - Maya API Node.cpp" />
-    <ClCompile Include="Examples\Example - MEL Special Shatter.cpp" />
+    <ClCompile Include="Languages\C++ Boost.cpp" />
+    <ClCompile Include="Languages\C++ Class.cpp" />
+    <ClCompile Include="Languages\C++ Code.cpp" />
+    <ClCompile Include="Languages\C++ Memory.cpp" />
+    <ClCompile Include="Languages\C++ STL Containers.cpp" />
+    <ClCompile Include="Languages\C++ STL.cpp" />
+    <ClCompile Include="Languages\C++ Templates.cpp" />
     <ClCompile Include="Languages\C++CLI.cpp" />
+    <ClCompile Include="Languages\Examples\Example - Maya API Command.cpp" />
+    <ClCompile Include="Languages\Examples\Example - Maya API Locator.cpp" />
+    <ClCompile Include="Languages\Examples\Example - Maya API Node.cpp" />
+    <ClCompile Include="Languages\Examples\Example - MEL Special Shatter.cpp" />
     <ClCompile Include="Languages\Maxscript forms.cpp" />
     <ClCompile Include="Languages\Maxscript objects.cpp" />
     <ClCompile Include="Languages\Maxscript.cpp" />
@@ -119,20 +118,19 @@
   <ItemGroup>
     <None Include="..\.gitignore" />
     <None Include="Development\Databases.sql" />
-    <None Include="Examples\Example - Maxscript Convex Hull.ms" />
-    <None Include="Examples\Example - PyQt Creating Window in Designer.py" />
-    <None Include="Examples\Example - PyQt Creating Window In Maya.py" />
-    <None Include="Examples\Example - PyQt File Reader.pyw" />
     <None Include="Images\Graphics - Rendering Pipeline Diagram.psd" />
     <None Include="Languages\C# .NET Framework.cs" />
     <None Include="Languages\C# Class.cs" />
     <None Include="Languages\C# Code.cs" />
     <None Include="Languages\C# Containers.cs" />
     <None Include="Languages\C# Unity.cs" />
+    <None Include="Languages\Examples\Example - Maxscript Convex Hull.ms" />
+    <None Include="Languages\Examples\Example - PyQt Creating Window in Designer.py" />
+    <None Include="Languages\Examples\Example - PyQt Creating Window In Maya.py" />
+    <None Include="Languages\Examples\Example - PyQt File Reader.pyw" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Cheatsheet.txt" />
-    <Text Include="Code\Code Notes.txt" />
     <Text Include="Development\Algorithms Notes.txt" />
     <Text Include="Development\Algorithms.cpp" />
     <Text Include="Development\Collisions.txt" />
@@ -146,6 +144,7 @@
     <Text Include="Hotkeys.txt" />
     <Text Include="Interview Questions.txt" />
     <Text Include="Languages\C# Notes.txt" />
+    <Text Include="Languages\C++ Notes.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\Code - Agile Lifecycle.png" />

@@ -10,11 +10,8 @@
     <Filter Include="Images">
       <UniqueIdentifier>{d5246f57-2735-4357-a353-33eb12eb8d89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Examples">
-      <UniqueIdentifier>{3fc63a6a-8dd1-4823-b8af-1607ad736d4e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Code">
-      <UniqueIdentifier>{068b9dfb-1996-436b-875b-3f0b8de9ad44}</UniqueIdentifier>
+    <Filter Include="Languages\Examples">
+      <UniqueIdentifier>{3e4f8266-357f-4995-8d03-b919c2002ce5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -57,18 +54,6 @@
     <ClCompile Include="Languages\Python.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
-    <ClCompile Include="Examples\Example - Maya API Command.cpp">
-      <Filter>Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Examples\Example - Maya API Locator.cpp">
-      <Filter>Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Examples\Example - Maya API Node.cpp">
-      <Filter>Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Examples\Example - MEL Special Shatter.cpp">
-      <Filter>Examples</Filter>
-    </ClCompile>
     <ClCompile Include="Development\Design Patterns.cpp">
       <Filter>Development</Filter>
     </ClCompile>
@@ -78,35 +63,44 @@
     <ClCompile Include="Development\Web Development.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Code\Boost.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\Class.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\Code.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\Memory.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\STL Containers.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\STL.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\Templates.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
     <ClCompile Include="Development\Render Engines.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Code\STL Algorithms.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
     <ClCompile Include="Development\Concurrency.cpp">
       <Filter>Development</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\Examples\Example - Maya API Command.cpp">
+      <Filter>Languages\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\Examples\Example - Maya API Locator.cpp">
+      <Filter>Languages\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\Examples\Example - Maya API Node.cpp">
+      <Filter>Languages\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\Examples\Example - MEL Special Shatter.cpp">
+      <Filter>Languages\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\C++ Boost.cpp">
+      <Filter>Languages</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\C++ Class.cpp">
+      <Filter>Languages</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\C++ Code.cpp">
+      <Filter>Languages</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\C++ Memory.cpp">
+      <Filter>Languages</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\C++ STL Containers.cpp">
+      <Filter>Languages</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\C++ STL.cpp">
+      <Filter>Languages</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\C++ Templates.cpp">
+      <Filter>Languages</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -126,23 +120,23 @@
     <None Include="Languages\C# Unity.cs">
       <Filter>Languages</Filter>
     </None>
-    <None Include="Examples\Example - Maxscript Convex Hull.ms">
-      <Filter>Examples</Filter>
-    </None>
-    <None Include="Examples\Example - PyQt Creating Window in Designer.py">
-      <Filter>Examples</Filter>
-    </None>
-    <None Include="Examples\Example - PyQt Creating Window In Maya.py">
-      <Filter>Examples</Filter>
-    </None>
-    <None Include="Examples\Example - PyQt File Reader.pyw">
-      <Filter>Examples</Filter>
-    </None>
     <None Include="Development\Databases.sql">
       <Filter>Development</Filter>
     </None>
     <None Include="Images\Graphics - Rendering Pipeline Diagram.psd">
       <Filter>Images</Filter>
+    </None>
+    <None Include="Languages\Examples\Example - Maxscript Convex Hull.ms">
+      <Filter>Languages\Examples</Filter>
+    </None>
+    <None Include="Languages\Examples\Example - PyQt Creating Window in Designer.py">
+      <Filter>Languages\Examples</Filter>
+    </None>
+    <None Include="Languages\Examples\Example - PyQt Creating Window In Maya.py">
+      <Filter>Languages\Examples</Filter>
+    </None>
+    <None Include="Languages\Examples\Example - PyQt File Reader.pyw">
+      <Filter>Languages\Examples</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -173,9 +167,6 @@
     <Text Include="Development\Software Development.txt">
       <Filter>Development</Filter>
     </Text>
-    <Text Include="Code\Code Notes.txt">
-      <Filter>Code</Filter>
-    </Text>
     <Text Include="Cheatsheet.txt" />
     <Text Include="Hotkeys.txt" />
     <Text Include="Interview Questions.txt" />
@@ -184,6 +175,9 @@
     </Text>
     <Text Include="Development\Algorithms.cpp">
       <Filter>Development</Filter>
+    </Text>
+    <Text Include="Languages\C++ Notes.txt">
+      <Filter>Languages</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
