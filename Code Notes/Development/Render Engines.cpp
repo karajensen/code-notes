@@ -1,38 +1,27 @@
-﻿//////////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////////////
 //RENDER ENGINES
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 /**
-============================================================================
-OPENGL: Column Major Matrix / Right Handed Coordinate System
-VERTEX WINDING ORDER: Anticlockwise 
-SCREEN ORIGIN: Lower Left
-Trans * Rot * Scale = LocalWorld
-ParentWorld * LocalWorld = World
-Proj * Veiw * World * Vertex = FinalVertex in screenspace
+                ===================================================================
+                |           DirectX               |           OpenGL              |
+===================================================================================
+| Screen Origin |           Top Left              |         Lower Left            |
+| Winding Order |           Clockwise             |        Anticlockwise          |
+| Z Axis        |            +Z Axis              |          -Z Axis              |
+| ---------------------------------------------------------------------------------
+| Transform     |      Scale * Rot * Trans        |      Trans * Rot * Scale      |
+| Order         |  Vertex * World * View * Proj   |  Proj * Veiw * World * Vertex |
+|----------------------------------------------------------------------------------
+| Coordinate    |      Row Major Left Handed      |  Column Major Right Handed    |
+| System        |  Right.x  Right.y   Right.z  0  |  Right.x  Up.x  For.x  Pos.x  |
+|               |  Up.x     Up.y      Up.z     0  |  Right.y  Up.y  For.y  Pos.y  |
+|               |  For.x    For.y     For.z    0  |  Right.z  Up.z  For.z  Pos.z  |
+|               |  Pos.x    Pos.y     Pos.z    1  |    0       0       0     1    |
+===================================================================================
 
-| Right.x  Up.x  For.x  Pos.x |    UP: +Y
-| Right.y  Up.y  For.y  Pos.y |    RIGHT: +X
-| Right.z  Up.z  For.z  Pos.z |    FORWARD: -Z
-|   0       0       0     1   |
-============================================================================
-============================================================================
-DIRECTX: Row Major Matrix / Left Handed Coordinate System
-VERTEX WINDING ORDER: Clockwise 
-SCREEN ORIGIN: Top Left
-LocalWorld = Scale * Rot * Trans
-World = LocalWorld * ParentWorld
-Vertex in screenspace = Vertex * World * View * Proj
-Vertex in worldspace = InvProj * CameraWorld
-
-| Right.x  Right.y   Right.z  0 |   UP: +Y
-| Up.x     Up.y      Up.z     0 |   RIGHT: +X
-| For.x    For.y     For.z    0 |   FORWARD: +Z
-| Pos.x    Pos.y     Pos.z    1 |
-============================================================================
-
-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
 OPENGL                          DIRECTX
-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
 GL_ZERO                         D3D11_BLEND_ZERO
 GL_ONE                          D3D11_BLEND_ONE
 GL_SRC_COLOR                    D3D11_BLEND_SRC_COLOR
@@ -57,9 +46,9 @@ GL_MIN                          D3D11_BLEND_OP_MIN
 GL_MAX                          D3D11_BLEND_OP_MAX 
 
 */
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 //OPENGL
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 // TEXTURE TO PIXEL ARRAY
 unsigned int* pixels = new unsigned int[width*height];
@@ -104,9 +93,9 @@ glDisable(GL_MULTISAMPLE);
 glDisable(GL_DEPTH_TEST);
 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-////////////////////////////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////////////////////////////////
 //DIRECTX
-//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 RIGHT:    D3DXVECTOR3(m_matrix._11, m_matrix._12, m_matrix._13)
 UP:       D3DXVECTOR3(m_matrix._21, m_matrix._22, m_matrix._23)
