@@ -214,7 +214,7 @@ QUATERNIONS:
 
 GIMBAL LOCK
 • A set of three gimbals mounted together to allow three degrees of freedom
-• If the middle gimbal is rotated greater than 90, the top and bottle gimbals 
+• If the middle gimbal is rotated greater than 90, the top and bottom gimbals 
   are aligned and in gimbal lock losing a degree of freedom. 
 
 VIEW MATRIX

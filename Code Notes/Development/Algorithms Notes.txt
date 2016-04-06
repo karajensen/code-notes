@@ -12,6 +12,7 @@ BIG-O NOTATION:
 • K = Algorithm implementation dependent constant
 
 IN-PLACE ALGORITHM: Transforms input using a data structure with a small, constant amount of storage space
+GREEDY ALGORITHM: Takes the best/highest value first and moves to the lower values
 STABLE SORT: Maintains the original order of equal elements
 COMPARISON SORT: Examines data only by comparing two elements with operator
 DISTRIBUTION SORT: Data is distributed to multiple intermediate structures
