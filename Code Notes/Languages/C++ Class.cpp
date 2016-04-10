@@ -53,6 +53,15 @@ MyClass& MyClass::operator=(const MyClass& obj)
     return *this;
 }
 
+// COPY-SWAP ASSIGNMENT OPERATOR
+// Use the copy-swap idiom for deep copying
+// Take parameter by-val to use copy constructor
+Array& operator=(const Array other)
+{
+    std::swap(*this, other);
+    return *this;
+}
+
 //MOVE ASSIGNMENT OPERATOR
 //Doesn't take const objects as it modifies rvalue passed in
 MyClass& operator=(MyClass&& obj)
@@ -248,56 +257,6 @@ public:
     friend void B::MyMethod(); // friend only a method
     friend class B; // friend a class, 'class' auto forward declares if needed
     friend void MyFunction(const MyClass& x1, const MyClass& x2){} // create inline method
-};
-
-/////////////////////////////////////////////////////////////////////////////////////
-//COPY-SWAP IDIOM
-/////////////////////////////////////////////////////////////////////////////////////
-
-// Using the copy-swap idiom for deep copying and 
-// implementing assingment operator from copy constructor
-class Array
-{
-public:
-
-    int* arr;
-    int size;
-
-    //CONSTRUCTOR
-    Array(int x = 0) 
-      : size(x), 
-        arr(new int[size]())
-    {}
-
-    //COPY-CONSTRUCTOR
-    Array(const Array& other)
-      : size(other.size),
-        arr(new int[other.size]())
-    {
-        //Non-throwing due to type used
-        std::copy(other.arr, other.arr + other.size, arr);
-    }
-
-    //DESTRUCTOR
-    ~Array()
-    {
-        delete [] arr;
-    }
-
-    //SWAP FUNCTION
-    friend void Swap(Array& first, Array& second)
-    {
-        std::swap(first.size, second.size); 
-        std::swap(first.arr, second.arr);
-    }
-
-    //ASSIGNMENT OPERATOR
-    //take parameter by-val to use copy constructor
-    Array& operator=(const Array other)
-    {
-        Swap(*this, other);
-        return *this;
-    } 
 };
 
 /////////////////////////////////////////////////////////////////////////////////////
