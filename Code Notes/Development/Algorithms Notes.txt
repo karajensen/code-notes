@@ -2,8 +2,12 @@
 //ALGORITHMS AND STRUCTURES
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-IN-PLACE ALGORITHM: Transforms input using a data structure with a small, constant amount of storage space
 GREEDY ALGORITHM: Takes the best/highest value first and moves to the lower values
+DIVIDE AND CONQUER: Smaller problems solved recursively and pulled together to form overall solution
+DYNAMIC PROGRAMMING: Smaller problems solved and stored and pulled together to form overall solution
+BACKTRACKING ALGORITHM: Builds and abandons candidates when determined one cannot be completed to a valid solution
+
+IN-PLACE ALGORITHM: Transforms input using a data structure with a small, constant amount of storage space
 STABLE SORT: Maintains the original order of equal elements
 COMPARISON SORT: Examines data only by comparing two elements with operator
 DISTRIBUTION SORT: Data is distributed to multiple intermediate structures
@@ -362,34 +366,34 @@ Anything less than highest choice (α) for player doesn't need to be looked at
 Anything more than lowest choice (β) for opponent doesn't need to be looked 
 Values searched are in range [min->max] [α->β] ([-INF,INF] initially)
 
-=====================================================================================================
-GRAPH / TREE OPERATIONS
-=====================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//GRAPH/TREE ALGORITHMS
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
-HEAP NODE INSERTION | O(logN)
+HEAP NODE INSERTION
 • Insert node in the fartest right location of the lowest depth level
 • If level is full, move to next depth level
 • Swap the inserted node up the tree depending on whether min/max heap
 
-HEAP REMOVE MAX | O(logN)
+HEAP REMOVE MAX
 • Replace the value in the root with the rightmost leaf at at the lowest depth level
 • Swap the new root down the tree
 
-BINARY SEARCH TREE INSERTION | O(logN)
+BINARY SEARCH TREE INSERTION
 • Start at root, if less than root travel down left subtree, if greater, down right subtree
 • Compare with each new node and continue to travel left or right until becoming a new leaf
 
-BINARY SEARCH TREE SEARCH | O(logN)
+BINARY SEARCH TREE SEARCH
 • Start at root, if less than root travel down left subtree, if greater, down right subtree
 • Continue until finding value
 
-BINARY SEARCH TREE DELETION | O(logN)
+BINARY SEARCH TREE DELETION
 • Deleting a leaf node: Doesn't affect the tree
 • Deleting a node with 1 child: The child moves up with its subtree to take its place
 • Deleting a node with 2 children: Travel down the left of the right subtree until 
   finding the lowest value greater than the deleted node. This node takes its place.
 
-TREE TRAVERSAL | O(N)
+TREE TRAVERSAL
 • Start left and move down to outline each node in the graph
 • Traversal can be stopped early to make it a search
                                         
@@ -406,7 +410,7 @@ Work done on node   Work done on node    Work done on node
 •4  •5•6  •7          4   5 6   7           4•  5•6•  7• 
                       •   • •   •       
 
-BREADTH FIRST SEARCH | O(N+E)
+BREADTH FIRST SEARCH
 • Traverses to all children before moving down a level
 • Uses a std::queue
 • Advantage: Less likely to get stuck in infinite loop for graphs
@@ -423,7 +427,7 @@ BREADTH FIRST SEARCH | O(N+E)
   / \   / \ 
  4   5 6   7 
 
-DEPTH FIRST SEARCH | O(N+E)
+DEPTH FIRST SEARCH
 • Traverses graph to the greatest depth before backtracking
 • Uses a std::stack
 • Pre-order Tree Traversal

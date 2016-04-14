@@ -65,10 +65,13 @@ DEFERRED SHADING
 //GRAPHICS BUFFERS
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-FORMAT: Describes the layout of the resource’s data in memory
-PAGE FLIPPING: Double buffering to prevent tearing
-FRAMEBUFFER/RASTER: Array of memory addresses representing pixels
-DEFAULT BACK/FRONT BUFFERS: 32bit color buffer
+DOUBLE/TRIPLE BUFFERING
+• Double Buffering: Back Buffer is rendered to and copied to the Frame Buffer 
+• Tearing can occur if monitor refreshes during this copy
+• VSync prevents tearing by preventing the copy until after a refresh
+• For higher fps than refresh rate, caps copying to refresh rate
+• For lower fps than refresh rate, lowers the fps to a multiple of the refresh rate
+• Triple Buffering: Uses an additional buffer and fixes additional lowering of fps due to VSync
 
 DEPTH/Z BUFFER
 • Saves projected depths of models from viewer (0.0->1.0)

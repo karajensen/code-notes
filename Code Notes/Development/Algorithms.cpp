@@ -50,6 +50,11 @@ a ^= b;
 * Eg. 234 at position 100 = 2, position 10 = 3, position 1 = 4
 */
 int digit = number/position % 10;
+while (number != 0) 
+{
+    auto digit = number % 10;
+    number /= 10;
+}
 
 /**
 * Generate Fibonacci Numbers
@@ -469,45 +474,22 @@ private:
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-//HASH MAP ALGORITHMS
+//HASH ALGORITHMS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class HashMap 
+/**
+* Get a hash key from a string
+* 37 or 31 good values for generating unique keys
+*/
+unsigned int GetKey(const std::string& str)
 {
-public:
-
-    const int TABLE_SIZE = 128;
-    typedef std::pair<int, int> HashEntry;
-
-    HashMap()
+    unsigned int key = 0;
+    for (char ch : str)
     {
-        m_table.resize(TABLE_SIZE);
+        key = 37 * key + ch;
     }
-     
-    int Get(int key) const
-    {
-        int hash = (key % TABLE_SIZE);
-        while (m_table[hash] != nullptr && m_table[hash]->first != key)
-        {
-            hash = (hash + 1) % TABLE_SIZE;
-        }
-        return m_table[hash] ? m_table[hash]->second : -1;
-    }
-
-    void Add(int key, int value)
-    {
-        int hash = (key % TABLE_SIZE);
-        while (m_table[hash] != nullptr && m_table[hash]->first != key)
-        {
-            hash = (hash + 1) % TABLE_SIZE;
-        }
-        m_table[hash] = std::make_unique<HashEntry>(std::make_pair(key, value));
-    } 
-
-private:
-
-    std::vector<std::unique_ptr<HashEntry>> m_table;
-};
+    return key % tableSize;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //BINARY TREE ALGORITHMS
@@ -550,6 +532,95 @@ int MinDepth(Node* n)
 bool IsBalanced(Node* root)
 {
     return MaxDepth(root) - MinDepth(root) <= 1;
+}
+
+/**
+* Binary Search Tree Insert value
+*/
+void Insert(int value, Node*& node)
+{
+    if (node == nullptr)
+    {
+        node = new Node(value);
+    }
+    else if (value < node->value)
+    {
+        Insert(value, node->left);
+    }
+    else if (value > node->value)
+    {
+        Insert(value, node->right);
+    }
+}
+
+/**
+* Binary Search Tree Find Minimum value
+*/
+Node* FindMin(Node* node)
+{
+    if (node->left == nullptr)
+    {
+        return node;
+    }
+    else
+    {
+        return FindMin(node->left);
+    }
+}
+
+/**
+* Binary Search Tree Find value
+*/
+bool Find(int value, Node* node)
+{
+    if (node == nullptr)
+    {
+        return false;
+    }
+    else if (value < node->value)
+    {
+        return Find(value, node->left);
+    }
+    else if (value > node->value)
+    {
+        return Find(value, node->right);
+    }
+    return true;
+}
+
+/**
+* Binary Search Tree Remove value
+*/
+bool Remove(int value, Node*& node)
+{
+    if (node == nullptr)
+    {
+        return false;
+    }
+    else if (value < node->value)
+    {
+        return Remove(value, node->left);
+    }
+    else if (value > node->value)
+    {
+        return Remove(value, node->right);
+    }
+    else // Found value to remove
+    {
+        if (node->left != nullptr && node->right != nullptr)
+        {
+            // Have 2 children: Replace with right subtree lowest value
+            node->value = FindMin(node->right)->value;
+            Remove(node->value, node->right);
+        }
+        else
+        {
+            Node* toDelete = node;
+            node = node->left != nullptr ? node->left : node->right;
+            delete toDelete;
+        }
+        return true;
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
