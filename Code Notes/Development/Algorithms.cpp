@@ -8,7 +8,8 @@
 template<typename T> 
 T ChangeRange(T value, T currentInner, T currentOuter, T newInner, T newOuter)
 {
-    return ((value-currentInner)*((newOuter-newInner)/(currentOuter-currentInner)))+newInner;
+    return ((value-currentInner)*((newOuter-newInner)/
+        (currentOuter-currentInner)))+newInner;
 }
 
 /**
@@ -80,6 +81,26 @@ long Factorial(int n)
     }
     return result;
 }
+
+/**
+* Euclid's algorithm: 
+* Finding the largest integer that divides 2 integers
+*/
+int GetLowestDivisor(int m, int n)
+{
+    while (n != 0)
+    {
+        int mod = m % n;
+        m = n;
+        n = mod;
+    }
+    return m;
+}
+
+/**
+* Get bit value at position n = [0, total bits-1]
+*/
+int value = (n & (1 << bit)) >> bit;
 
 /**
 * Get four components of colour
@@ -173,6 +194,44 @@ for (int i = 0; i < str.size(); ++i)
         str.insert(i + 1, "20");
     }
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//ARRAY ALGORITHMS
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+* Kadane's Algorithm:
+* Finding the maximum continuous subsequence in an array
+*/
+int maximumSum = -INT_MAX;
+int currentSum = 0;
+int currentStart = 0;
+int start = 0;
+int end = 0;
+for (int i = 0; i < arr.size(); ++i)
+{
+    currentSum += arr[i];
+    if (currentSum > maximumSum)
+    {
+        maximumSum = currentSum;
+        start = currentStart;
+        end = i;
+    }
+    if (currentSum < 0)
+    {
+        currentSum = 0;
+        currentStart = i + 1;
+    }
+}
+
+/**
+* Finding the missing number from an array of integers
+*/
+std::vector<int> baseline = { 1, 4, 2, 11, 56 };
+std::vector<int> actual = { 1, 11, 56, 4 };
+const auto baseSum = std::accumulate(baseline.begin(), baseline.end(), 0);
+const auto actualSum = std::accumulate(actual.begin(), actual.end(), 0);
+int missingValue = baseSum ^ actualSum;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //BUBBLE SORT
@@ -384,52 +443,6 @@ bool DepthFirstSearch(Node& root, int searchvalue)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-//KADANE'S ALGORITHM
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/**
-* Finding the maximum continuous subsequence in an array
-*/
-int maximumSum = -INT_MAX;
-int currentSum = 0;
-int currentStart = 0;
-int start = 0;
-int end = 0;
-for (int i = 0; i < arr.size(); ++i)
-{
-    currentSum += arr[i];
-    if (currentSum > maximumSum)
-    {
-        maximumSum = currentSum;
-        start = currentStart;
-        end = i;
-    }
-    if (currentSum < 0)
-    {
-        currentSum = 0;
-        currentStart = i + 1;
-    }
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-//EUCLID'S ALGORITHM
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/**
-* Finding the largest integer that divides 2 integers
-*/
-int GetLowestDivisor(int m, int n)
-{
-    while (n != 0)
-    {
-        int mod = m % n;
-        m = n;
-        n = mod;
-    }
-    return m;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
 //STACK ALGORITHMS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -532,6 +545,21 @@ int MinDepth(Node* n)
 bool IsBalanced(Node* root)
 {
     return MaxDepth(root) - MinDepth(root) <= 1;
+}
+
+/**
+* Binary Tree Traversal
+*/
+void Traverse(Node* node)
+{
+    if (node != nullptr)
+    {
+        PreOrderWork(node);
+        Traverse(node->left);
+        InOrderWork(node);
+        Traverse(node->right);
+        PostOrderWork(node);
+    }
 }
 
 /**

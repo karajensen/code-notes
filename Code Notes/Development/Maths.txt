@@ -2,51 +2,18 @@
 //MATHS
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
--------------------------------------------------------------------------
 UNITS
--------------------------------------------------------------------------
 m = milli = 10ˉ³    k = kilo = 10³
 µ = micro = 10ˉ⁶    M = mega = 10⁶
-n = nano = 10ˉ⁹     G = giga = 10⁹
-
+n = nano =  10ˉ⁹    G = giga = 10⁹
 Degrees to radians:  (π / 180) * degrees;
 Radians to degrees:  (180 / π) * radians;
 
---------------------------------------------------------------------------
-COORDINATES
---------------------------------------------------------------------------
-   Z                   Z
-   ▲                   ▲                  3 FINGER RULE:
-   |                   |                  Second Finger = X
-   ▪----► Y            ▪----► X           Middle Finger = Y
-  /  RH COODINATE     /  LH COODINATE     Thumb = Z
- ▼   SYSTEM          ▼   SYSTEM
-X                   Y
-
---------------------------------------------------------------------------
-GEOMETRY
---------------------------------------------------------------------------
-
-Circle Area = πr²
-Circle Circumference: 2πr
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-//ALGEBRA
-////////////////////////////////////////////////////////////////////////////////////////////////
-
 EXPANDING BRACKETS
 (x - a)(x + b) = 0                  
-x(x + b) - a(x + b) = 0          
+x(x + b) - a(x + b) = 0
 x² + bx - ax - ab = 0
 x² + x(b - a) - ab = 0
-
-DERIVATIVES/ANTI-DIFFERENTIATION
-f(x) = axⁿ      f'(x) = axⁿ
-f'(x) = anxⁿˉ¹   f(x) = axⁿ⁺¹/n+1
-
-QUADRATIC EQUATIONS
-y = mx² + c
-ax² + bx + c = 0 where x = -b ± √(b² - 4ac) / 2a
 
 MODULUS
 17 % 3 = numerator remainder of 17/3 -> 5²/₃ = 2
@@ -70,6 +37,102 @@ FACTORIAL
 F = 1*2*3*4....n
 if n < 0 then F does not exist
 if n == 0, F = 1
+
+EXPONENTS
+X° = 1
+XᴬXᴮ = Xᴬ⁺ᴮ
+Xᴬ/Xᴮ = Xᴬˉᴮ
+(Xᴬ)ᴮ = Xᴬᴮ
+Xᴬ + Xᴬ = 2Xᴬ ≠ X²ᴬ
+
+LOGARITHMS
+Common logarithm:  logB = log₁₀B
+Natural logarithm: lnB = logₑB (e ≈ 2.718)
+Base conversions:  logₓA = logᵥA / logᵥX 
+logₓA = B if Xᴮ = A
+logₓAB = logₓA + logₓB
+logₓA/B = logₓA - logₓB
+logₓAᴮ = BlogₓA
+
+GEOMETRIC SERIES
+{ar°, ar¹, ar², ar³...arⁿ} where r ≥ 0
+
+SUM OF GEOMETRIC SERIES
+    n-1                        
+     ∑(arᵏ) = a(1-rⁿ/1-r)
+    k=0                        
+k = starts at 0 and goes to n-1
+r = common ratio between terms
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//GEOMETRY
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+TRIANGLES
+• Triangle Area: base X height / 2
+• Triangle 3 angles always add to 180ᵒ
+• Angle between 2 points on the same line add to 180ᵒ
+• Trigonometry and Pythagoras true for right angled triangles
+
+CIRCLES
+• Circle Area: πr²
+• Circle Circumference: 2πr
+• Segment Area: ¹/₂ r²(Ө - sinӨ)
+• Sector Area: ¹/₂ r²Ө
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//GRAPHS / CALCULUS
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+COORDINATE SYSTEMS
+   Z                   Z
+   ▲                   ▲                  3 FINGER RULE:
+   |                   |                  Second Finger = X
+   ▪----► Y            ▪----► X           Middle Finger = Y
+  /  RH COODINATE     /  LH COODINATE     Thumb = Z
+ ▼   SYSTEM          ▼   SYSTEM
+X                   Y
+
+DERIVATIVES      ANTI-DIFFERENTIATION
+f(x) = axⁿ       f'(x) = axⁿ
+f'(x) = anxⁿˉ¹   f(x) = axⁿ⁺¹/n+1
+
+=============================================================================
+QUADRATIC FUNCTIONS
+=============================================================================
+
+y = ax² + bx + c
+ax² + bx + c = 0 where x = -b ± √(b² - 4ac) / 2a
+
+VERTEX FORM: y = a(x-h)² + k where (h,k) is the vertex
+AXIS OF SYMMETRY: x = -b/2a
+
+=============================================================================
+CIRCLES
+=============================================================================
+(x-cˣ)² + (y-cʸ)² = r²            
+(x-cˣ)² + (y-cʸ)² + (z-cᶻ)² = r²
+(P-c).(P-c) = r²                     
+P.P - 2P.c + c.c = r²
+
+where c = center of circle
+= r² on the circle boundry
+> r² outside circle
+< r² inside circle
+
+=============================================================================
+SINE WAVES
+=============================================================================
+To combine waves, just add each equation to each other
+To get circular waves, use radius r as x
+ ----------------------  
+| y = a * sin(kx-wt+ɸ) |
+ ----------------------
+ a = amplitude; height of sine wave
+ k = frequency; number of wavelengths to reach 2π
+ t = time
+ w = speed
+ ɸ = initial shift of the wave
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //TRIGONOMETRY
@@ -114,37 +177,6 @@ HALF ANGLE FORMULAS
 sin²Ө = ¹/₂(1-cos(2Ө))
 cos²Ө = ¹/₂(1+cos(2Ө))
 tan²Ө = (1-cos(2Ө)) / (1+cos(2Ө))
-
-SINE WAVES:
-To combine waves, just add each equation to each other
-To get circular waves, use radius r as x
- ----------------------  
-| y = a * sin(kx-wt+ɸ) |
- ----------------------
- a = amplitude; height of sine wave
- k = frequency; number of wavelengths to reach 2π
- t = time
- w = speed
- ɸ = initial shift of the wave
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-//EXPONENTS AND LOGARITHMS
-////////////////////////////////////////////////////////////////////////////////////////////////
- 
- X° = 1
- XᴬXᴮ = Xᴬ⁺ᴮ
- Xᴬ/Xᴮ = Xᴬˉᴮ
- (Xᴬ)ᴮ = Xᴬᴮ
- Xᴬ + Xᴬ = 2Xᴬ ≠ X²ᴬ
-
- Common logarithm:  logB = log₁₀B
- Natural logarithm: lnB = logₑB (e ≈ 2.718)
- Base conversions:  logₓA = logᵥA / logᵥX 
-
- logₓA = B if Xᴮ = A
- logₓAB = logₓA + logₓB
- logₓA/B = logₓA - logₓB
- logₓAᴮ = BlogₓA
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //VECTORS
@@ -476,20 +508,6 @@ PLANE LINEAR EQUATION
   ---------------------- 
  | ax + by + cz + d = 0 | where d = -(ax₀ + by₀ + cz₀)
   ----------------------
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-//CIRCLES
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-where c = center of circle
-(x-cˣ)² + (y-cʸ)² = r²            
-(x-cˣ)² + (y-cʸ)² + (z-cᶻ)² = r²
-(P-c).(P-c) = r²                     
-P.P - 2P.c + c.c = r²
-
-= r² on the circle boundry
-> r² outside circle
-< r² inside circle
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //MATRICES
@@ -1069,17 +1087,3 @@ ExpectedValue = Pr(x1)*v1 + Pr(x2)*v2 + ...
 Pr(x) = probability of x happening
 v = value recieved if x happens
  
-////////////////////////////////////////////////////////////////////////////////////////////////
-//SERIES
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-GEOMETRIC SERIES
-{ar°, ar¹, ar², ar³...arⁿ} where r ≥ 0
-
-SUM OF GEOMETRIC SERIES
-n-1                        
- ∑(arᵏ) = a(1-rⁿ/1-r)     
-k=0                        
-
-k = starts at 0 and goes to n-1
-r = common ratio between terms

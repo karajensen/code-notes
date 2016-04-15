@@ -393,10 +393,16 @@ Invert:   1110
 Add One:  1111  (decimal -1)
 
 GETTING BITS
-• where bit, to->from are [0, total bits available]
+• where bit, to->from are [0, total bits available-1]
 • returns 0 if bit is off 1 if bit is on
 (n & (((1 << (to - from + 1)) - 1) << from)) >> from;
 (n & (1 << bit)) >> bit
+
+XOR PROPERTIES
+• Allows swapping two values without a temporary value
+a ^ b = c
+c ^ a = b
+c ^ b = a
 
 BITWISE WITH BOOL
 bool value = myBool1 & myBool2    Both are true
