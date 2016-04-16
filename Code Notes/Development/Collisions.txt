@@ -2,6 +2,7 @@
 //COLLISIONS
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+COLLISION ALGORITHM REFERENCE: http://www.realtimerendering.com/intersections.html
 PERFECTLY ELASTIC COLLISION: collision with no loss of energy
 COLLISION DETECTION: Detection/prediction of collision of objects
 COLLISION RESOLUTION: Physics rules applied to the colliding objects as a result of the event
@@ -12,11 +13,11 @@ OBJECT ALIGNED BOUNDING BOX: Box rotates with object and aligned to its axis
 AXIS ALIGNED BOUNDING BOX: Box sides are aligned with the world axis
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//PROXY COLLISIONS
+//PROXY STATIC INTERSECTIONS
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 ==================================================================================================
-LINE-LINE COLLISION
+LINE-LINE INTERSECTION
 ==================================================================================================
 • Line equations: y₀ = m₀x₀ + c₀ and y₁ = m₁x₁ + c₁
 • Find the common point where y₀ = y₁ and x₀ = x₁ through m₀x₀ + c = m₁x₁ + c₁ and solve for x
@@ -24,7 +25,7 @@ LINE-LINE COLLISION
 • Lines coincident (same) if x cancels out and gives a true statement (eg. 1 = 1)
 
 ==================================================================================================
-LINE-PLANE COLLISION
+LINE-PLANE INTERSECTION
 ==================================================================================================
                   • Plane equation: (P-P₀).n = 0
   ___\_______     • Line equation: L = L₀ + td
@@ -34,7 +35,7 @@ LINE-PLANE COLLISION
                   • t = (P₀ - L₀).n / d.n
 
 ==================================================================================================
-POINT-LINE/PLANE COLLISIONS
+POINT-LINE/PLANE INTERSECTION
 ==================================================================================================
 
 DISTANCE TO LINE/PLANE
@@ -82,7 +83,7 @@ BOUNDED PLANES
         point is inside plane
 
 ==================================================================================================
-SPHERE-POINT / CIRCLE-POINT COLLISION
+SPHERE-POINT / CIRCLE-POINT INTERSECTION
 ==================================================================================================
 • Point inside sphere if distance from sphere center to point is less than radius
     
@@ -93,7 +94,7 @@ o     ----o           collision occured
    ᴼ o ᴼ                                           
 
 ==================================================================================================
-SPHERE-SPHERE / CIRCLE-CIRCLE COLLISION
+SPHERE-SPHERE / CIRCLE-CIRCLE INTERSECTION
 ==================================================================================================
 • Two spheres colliding when distance between centers is less than combined radius
                         
@@ -103,8 +104,20 @@ SPHERE-SPHERE / CIRCLE-CIRCLE COLLISION
   o       o    o       o        collision occured                
     ᴼ o ᴼ        ᴼ o ᴼ                                            
 
+CIRCLE-CIRCLE AREA OF INTERSECTION
+• Overlapping area forms a segment on each circle
+• Use the segment area equation ¹/₂ r²(Ө - sinӨ)
+• Add both segment areas found
+                                           ₀ o ° o ₀   
+   ₀ o ₀   ₀ o ₀           ₀ o ₀         •  |\       o  
+ o       •       o       •|      o      •   | \       o
+o       • •       o     • |       o     •   | Ө•      o
+ o       •       o       •|      o      •   | /       o
+   ᴼ o ᴼ   ᴼ o ᴼ           ᴼ o ᴼ         •  |/       o     
+                                           ᴼ o ₀ o ᴼ       
+                                        
 ==================================================================================================
-SPHERE-RAY / CIRCLE-RAY COLLISION
+SPHERE-RAY / CIRCLE-RAY INTERSECTION
 ==================================================================================================
 • Sphere equation: (P-c).(P-c) = r²
 • P.(P-c) - c.(P-c) = r²
@@ -118,61 +131,61 @@ SPHERE-RAY / CIRCLE-RAY COLLISION
 • t = -b ± √(b² - 4ac) / 2a where t >= 0 to hit the sphere
 
 ==================================================================================================
-CIRCLE-SQUARE COLLISION
+SPHERE-CUBE INTERSECTION
 ==================================================================================================
+• Reference: Graphics Gems p335
 
-
+    radiusSqr = radius * radius
+    distanceSqr = 0
+    if (center.X < min.X) 
+        distanceSqr += (center.X - min.X)²
+    else if (center.X > max.X) 
+        distanceSqr += (center.X - max.X)²
+    if (center.Y < min.Y) 
+        distanceSqr += (center.Y - min.Y)²
+    else if (center.Y > max.Y) 
+        distanceSqr += (center.Y - max.Y)²
+    if (center.Z < min.Z) 
+        distanceSqr += (center.Z - min.Z)²
+    else if (center.Z > max.Z) 
+        distanceSqr += (center.Z - max.Z)²
+    return distanceSqr <= radiusSqr
 
 ==================================================================================================
-SPHERE-CUBE COLLISION
-==================================================================================================
-
-
-
-==================================================================================================
-CUBE-CUBE / SQUARE-SQUARE COLLISION
+CUBE-CUBE / SQUARE-SQUARE INTERSECTION
 ==================================================================================================
 • Min is bottom left corner of box
 • Max is top right corner of box
 • AABB is aligned to the x,y,z axis with no rotation
 
-CLOSEST POINT TO AABB
+           aMax
+    •-------•           bMax    if aMaxX < bMinX || aMinX > bMaxX  
+   /|      /|    •-------•          no collision                   
+  / |     / |   /|      /|      if aMaxY < bMinY || aMinY > bMaxY  
+ •--|----•  |  / |     / |          no collision                   
+ |  •----|--• •--|----•  |      if aMaxz < bMinZ || aMinZ > bMaxZ  
+ | /     | /  |  •----|--•          no collision                   
+ •-------•    | /     | /       else                               
+aMin          •-------•             collision    
+           bMin
+                         
+SQUARE-SQUARE AREA OF INTERSECTION
+   -----------aMax        
+   |          |           intMaxX = min(aMaxX, bMaxX)          
+   |   -------|---bMax    intMinX = max(aMinX, bMinX)
+   |   |      |   |       intMaxY = min(aMaxY, bMaxY)
+aMin---|-------   |       intMinY = max(aMinY, bMinY)
+       |          |       intWidth =  max(0, intMaxX - intMinX)
+    bMin-----------       intHeight = max(0, intMaxY - intMinY)
+
+CLOSEST POINT TO CUBE
 • Pushes P(x,y) into the box, if inside, returns original point
 x = min(max(x, minX), maxX)
 y = min(max(y, minY), maxY)
 z = min(max(z, minZ), maxZ)
 
-CUBE-CUBE COLLISION
-
-   o-------o
-  /|      /|      o-------o
- / |     / |     /|      /|
-o--|----o  |    / |     / |
-|  o----|--o   o--|----o  |
-| /     | /    |  o----|--o
-o-------o      | /     | /
-               o-------o
-
-SQUARE-SQUARE COLLISION        
-                          if aMaxX < bMinX || aMinX > bMaxX              
-   -----------aMax            no collision                      
-   |          |           if aMaxY < bMinY || aMinY > bMaxY     
-   |   -------|---bMax        no collision                      
-   |   |      |   |       if aMaxz < bMinZ || aMinZ > bMaxZ     
-aMin---|-------   |           no collision                      
-       |          |       else                                  
-    bMin-----------           collision    
-                                                 
-SQUARE-SQUARE INTERSECTION AREA                     
-intMaxX = min(aMaxX, bMaxX)          
-intMinX = max(aMinX, bMinX)
-intMaxY = min(aMaxY, bMaxY)
-intMinY = max(aMinY, bMinY)
-intWidth =  max(0, intMaxX - intMinX)
-intHeight = max(0, intMaxY - intMinY)
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//COMPLEX COLLISIONS
+//CONCAVE/CONVEX STATIC INTERSECTION
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 ==================================================================================================
