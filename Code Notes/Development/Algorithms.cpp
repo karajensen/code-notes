@@ -233,6 +233,29 @@ const auto baseSum = std::accumulate(baseline.begin(), baseline.end(), 0);
 const auto actualSum = std::accumulate(actual.begin(), actual.end(), 0);
 int missingValue = baseSum ^ actualSum;
 
+/**
+* Find number of unique integers in an array
+* Use bitset as hash table, fast, high memory use
+*/
+const int maxValues = INT_MAX + 1; // need more if accepting negative
+std::unique_ptr<std::bitset<maxValues>> values(new std::bitset<maxValues>());
+for (int i = 0; i < size; ++i)
+{
+    values.set(arr[i]); // once bit is set will not go back to zero
+}
+int uniqueInts = values.count();
+
+/**
+* Find number of unique integers in an array
+* Use set to cull duplicates, slow, low memory use
+*/
+std::stack<int> values;
+for (int i = 0; i < size; ++i)
+{
+    values.insert(arr[i]);
+}
+int uniqueInts = values.size();
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //BUBBLE SORT
 ///////////////////////////////////////////////////////////////////////////////////////////////////////

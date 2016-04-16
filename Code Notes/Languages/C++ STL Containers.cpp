@@ -309,20 +309,23 @@ S.pop()     // removes the element at top of stack
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <bitset>
 
-bitset<numberOfbits> mb; //creates array with n bits; initialised to false
+bitset<n> mybits;        // Fills container with n zeroed bits, n must be constant, zero-based index
+bitset<n> mybits(value)  // Takes integer type and flips required bits
+bitset<n> mybits(std::string("110101"))
 
-mybits[i]           // access bit
+mybits[1]           // access bit
+mybits.test(1)      // returns true if bit 1 is set, does index bounds checking on n
 mybits.size()       // size of array
 mybits.any()        // returns true if any bit is set to true
 mybits.none()       // returns true if no bits are set to true
 mybits.set()        // sets all to true
-mybits.set(1,true)  // set bit 1 to true, starts at 0
+mybits.set(1,true)  // set bit 1 to true
+myBits.set(1)       // set bit 1 to true
 mybits.reset()      // sets all to false
 mybits.reset(1)     // set bit 1 to false
 mybits.flip()       // flips all bits to opposite value
 mybits.flip(1)      // flips bit 1 to opposite
 mybits.count()      // returns number of true bits
-mybits.to_string()  // converts bitset to string
 mybits.to_ulong()   // converts bitset to unsigned long
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

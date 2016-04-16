@@ -374,16 +374,19 @@ HEX-TO-DECIMAL: A3F = 10x16² + 3x16¹ + 15x16° = 2623
 HEX-TO-BINARY: 0xC2 = binaryC binary2 = 1100 0010 = 11000010 (use image table)
 BINARY-TO-HEX: 11000010 = 1100 0010 = 0xC2 (use image table)
 
+-----------------------------------------------------------------------------------------------
 BITWISE OPERATORS
-• Can be used with boolean, intergers and char
-• Bools are converted to ints holding true: 0x00000001, 0001, 1 and false: 0x00000000, 0000, 0
-
+-----------------------------------------------------------------------------------------------
 ~   bitwise NOT   Flips every bit                                   ~00000011 = 11111100
 |   bitwise OR    For every bit if a or b have 1 then use 1         00000011 | 00000100 = 00000111
 &   bitwise AND   For every bit if a and b have 1 then use 1        00000011 & 11111101 = 00000001
 ^   bitwise XOR   If a or b (but not both) have 1 then use 1        00000011 ^ 00000001 = 00000010
 <<  left shift    Moves all bits to the left, adds 0 to the start   10000011 << 3 = 00011000
 >>  right shift   Moves all bits to the right, adds 0 to the end    10000011 >> 3 = 00010000
+
+-----------------------------------------------------------------------------------------------
+BIT MANIPULATION
+-----------------------------------------------------------------------------------------------
 
 TWOS COMPLEMENT
 • Standard way of representing negative integers in binary
@@ -404,21 +407,29 @@ a ^ b = c
 c ^ a = b
 c ^ b = a
 
+BIT SHIFTING
+1u<<3                        Gives 2³
+value <<= 3                  Multiply value by 2³
+value >>= 3                  Divide value by 2³
+
+PACKING BITS
+int i = (s1 << 16) | s2      Storing 2 shorts in an int
+short s1 = i >> 16           Retrieve short 1
+short s2 = i & 0xFFFF        Retrieve short 2
+
 BITWISE WITH BOOL
-bool value = myBool1 & myBool2    Both are true
-bool value = myBool1 | myBool2    Either are true
-bool value = myBool1 ^ myBool2    Either are true but not both 
-success &= HasSucceeded();        Init success to true, will lock in false if something fails
+bool b = bool1 & bool2       Both are true
+bool b = bool1 | bool2       Either are true
+bool b = bool1 ^ bool2       Either are true but not both 
+success &= HasSucceeded();   Init success to true, will lock in false if something fails
 
-USING WITH MASKS
-value = Mask1 | Mask2             Adding two masks
-value &= ~Mask1                   Removing a mask
-value |= Mask1                    Adding a mask
-(value & Mask1) == Mask1          If true then has the mask
-value <<= 3                       Multiply value by 2³
-value >>= 3                       Divide value by 2³
+BIT MASKING
+value = Mask1 | Mask2       Adding two masks
+value &= ~Mask1             Removing a mask
+value |= Mask1              Adding a mask
+(value & Mask1) == Mask1    If true then has the mask
 
-BITMASKS/FLAGS
+BIT MASK VALUES
 NoMask = 0     0x000
 Mask1  = 1     0x001
 Mask2  = 2     0x002
@@ -428,11 +439,6 @@ Mask5  = 16    0x010
 Mask6  = 32    0x020
 Mask7  = 64    0x040
 Mask8  = 128   0x080
-
-unsigned char    Can have 8  (bytes) flags maximum
-unsigned short   Can have 16 (bytes) flags maximum
-unsigned int     Can have 16 (bytes) flags maximum 
-unsigned long    Can have 32 (bytes) flags maximum
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //ERROR HANDLING/EXCEPTIONS

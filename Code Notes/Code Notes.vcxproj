@@ -221,8 +221,6 @@
     <Image Include="Images\MathsPhysics - Barycentric coordinates.png" />
     <Image Include="Images\MathsPhysics - Changing frame of reference.png" />
     <Image Include="Images\MathsPhysics - Circle Geometry.png" />
-    <Image Include="Images\MathsPhysics - Collision Box Algorithms.png" />
-    <Image Include="Images\MathsPhysics - Collision Sphere Algorithms.png" />
     <Image Include="Images\MathsPhysics - constraints.png" />
     <Image Include="Images\MathsPhysics - GJK Collision Detection.png" />
     <Image Include="Images\MathsPhysics - Graph ex.png" />

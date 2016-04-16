@@ -410,12 +410,6 @@
     <Image Include="Images\MathsPhysics - Circle Geometry.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - Collision Box Algorithms.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\MathsPhysics - Collision Sphere Algorithms.png">
-      <Filter>Images</Filter>
-    </Image>
     <Image Include="Images\MathsPhysics - constraints.png">
       <Filter>Images</Filter>
     </Image>

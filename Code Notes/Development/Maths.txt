@@ -33,11 +33,6 @@ SQUARE ROOTS
 √(a+b) ≠ √(a) + √(b) 
 a/√(b) = a/√(b) + √(b)/√(b) = a√(b)/b
 
-FACTORIAL
-F = 1*2*3*4....n
-if n < 0 then F does not exist
-if n == 0, F = 1
-
 EXPONENTS
 X° = 1
 XᴬXᴮ = Xᴬ⁺ᴮ
@@ -54,6 +49,11 @@ logₓAB = logₓA + logₓB
 logₓA/B = logₓA - logₓB
 logₓAᴮ = BlogₓA
 
+FACTORIAL
+F = 1*2*3*4....n
+if n < 0 then F does not exist
+if n == 0, F = 1
+
 GEOMETRIC SERIES
 {ar°, ar¹, ar², ar³...arⁿ} where r ≥ 0
 
@@ -68,20 +68,19 @@ r = common ratio between terms
 //GEOMETRY
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-TRIANGLES
-• Triangle Area: base X height / 2
-• Triangle 3 angles always add to 180ᵒ
-• Angle between 2 points on the same line add to 180ᵒ
-• Trigonometry and Pythagoras true for right angled triangles
+      /|     TRIANGLES
+     / |     • Triangle Area: base X height / 2
+    /  |     • Triangle 3 angles always add to 180ᵒ
+   /___|     • Trigonometry and Pythagoras true for right angled triangles
 
-CIRCLES
-• Circle Area: πr²
-• Circle Circumference: 2πr
-• Segment Area: ¹/₂ r²(Ө - sinӨ)
-• Sector Area: ¹/₂ r²Ө
+   ₀ o ₀     CIRCLES
+ o       o   • Circle Area: πr²
+o         o  • Circle Circumference: 2πr
+ o       o   • Segment Area: ¹/₂ r²(Ө - sinӨ)
+   ᴼ o ᴼ     • Sector Area: ¹/₂ r²Ө
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-//GRAPHS / CALCULUS
+//GRAPHING AND FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 COORDINATE SYSTEMS
@@ -93,16 +92,38 @@ COORDINATE SYSTEMS
  ▼   SYSTEM          ▼   SYSTEM
 X                   Y
 
-DERIVATIVES      ANTI-DIFFERENTIATION
+DERIVATIVE       ANTI-DIFFERENTIATION
 f(x) = axⁿ       f'(x) = axⁿ
 f'(x) = anxⁿˉ¹   f(x) = axⁿ⁺¹/n+1
 
 =============================================================================
-QUADRATIC FUNCTIONS
+LINEAR EQUATION
 =============================================================================
+   
+     ‖ /       ------------
+ ‗‗‗‗‖/‗‗‗‗   | y = mx + c |  
+    /‖         ------------
+   / ‖         c = y axis intersection (x, c)
+               m = gradient = rise/run = dx/dy
 
-y = ax² + bx + c
-ax² + bx + c = 0 where x = -b ± √(b² - 4ac) / 2a
+=============================================================================
+QUADRATIC EQUATION
+=============================================================================
+                        
+    |   ‖   |      ------------------              
+ ‗‗‗|‗‗‗‖‗‗‗|‗‗‗  | y = ax² + bx + c |                 
+     \__‖__/       ------------------                     
+        ‖                                         
+
+QUADRATIC FORMULA:                               
+ ------------------   ---------------------------
+| ax² + bx + c = 0 | | x = -b ± √(b² - 4ac) / 2a |
+ ------------------   ---------------------------
+• Quadratic graph intersects x axis when y = 0
+• When the Discriminant b² - 4ac is:
+    + there are 2 real solutions
+    0 there is 1 real solution
+    - there are 2 complex solutions
 
 VERTEX FORM: y = a(x-h)² + k where (h,k) is the vertex
 AXIS OF SYMMETRY: x = -b/2a
@@ -110,15 +131,16 @@ AXIS OF SYMMETRY: x = -b/2a
 =============================================================================
 CIRCLES
 =============================================================================
-(x-cˣ)² + (y-cʸ)² = r²            
-(x-cˣ)² + (y-cʸ)² + (z-cᶻ)² = r²
-(P-c).(P-c) = r²                     
-P.P - 2P.c + c.c = r²
-
+ ------------------------
+| (x-cˣ)² + (y-cʸ)² = r² |
+ ----------------------------------
+| (x-cˣ)² + (y-cʸ)² + (z-cᶻ)² = r² |
+ ----------------------------------
 where c = center of circle
-= r² on the circle boundry
-> r² outside circle
-< r² inside circle
+When inputting x,y,z if:
+    = r² on the circle boundry
+    > r² outside circle
+    < r² inside circle
 
 =============================================================================
 SINE WAVES
@@ -184,27 +206,30 @@ tan²Ө = (1-cos(2Ө)) / (1+cos(2Ө))
 
 SET: Collection of elements selected based on common properties
 VECTOR: quantity with magnitude and direction (no position)
-
-VECTOR BASIS: 
-Set of linerly independent vectors which spans/creates a vector space
+VECTOR BASIS: Set of linerly independent vectors which spans/creates a vector space
 
 VECTOR SPACE: 
-Set of all vectors created by linear combinations of the vector basis
-Contains: Zero vector, Sum of any two vectors (closure), Additive inverse of any vector
-          Scalar multiplication of any vector (multiplicative closure)
+• Set of all vectors created by linear combinations of the vector basis
+• Contains: 
+    - Zero vector, 
+    - Sum of any two vectors (closure)
+    - Additive inverse of any vector
+    - Scalar multiplication of any vector (multiplicative closure)
 
 LINEAR INDEPENDENCE: 
-Obtained if a vector cannot be written in terms of other vectors in the set    
-Basis Vectors               S = {v₀,v₁,V₂...vⁿ}
-Resulting/Spanned Vectors   T = {V₀,V₁,V₂...Vⁿ}
-Where                       V = a₀v₀ + a₁v₁ + a₂v₂ + ... + aⁿvⁿ
+• Obtained if a vector cannot be written in terms of other vectors in the set    
+    Basis Vectors               S = {v₀,v₁,V₂...vⁿ}
+    Resulting/Spanned Vectors   T = {V₀,V₁,V₂...Vⁿ}
+    Where                       V = a₀v₀ + a₁v₁ + a₂v₂ + ... + aⁿvⁿ
 
 LINEAR SPACE: Vector space with inner/dot product and norm
 EUCLIDEAN SPACE: Linear space using real numbers for scalars
-STANDARD EUCLIDEAN SPACE: Basis set {i,j,k} with extra features
-                            - Orthonormal (dot product=0 between all vectors)
-                            - Unit length
-                            - Linearly independent
+
+STANDARD EUCLIDEAN SPACE: 
+• Basis set {i,j,k} with extra features
+    - Orthonormal (dot product=0 between all vectors)
+    - Unit length
+    - Linearly independent
 
 VECTOR IDENTITY ELEMENT = 0 vector
 SCALAR IDENTITY ELEMENT = 1 scalar
@@ -305,6 +330,19 @@ VECTOR PROJECTION
  for â.b̂ the number (-1->1) gives the % along b the perpᵦa reaches
  for a.b̂ the number gives the distance along b the perpᵦa reaches
 
+=============================================================================
+POLAR COORDINATES
+=============================================================================
+
+3D POLAR COORDINATES           2D POLAR COORDINATES     ‖    • (x,y)
+Using elevation angle          r = √(x² + y²)           ‖   /⁞ 
+‖r‖ = √(x² + y² + z²)          Ө = tanˉ¹(y/x)           ‖  / ⁞ 
+Ө = tanˉ¹(y/x)                 x = ‖r‖cosӨ              ‖ /  ⁞ 
+ɸ = sinˉ¹(z/‖r‖)               y = ‖r‖sinӨ              ‖/Ө‗‗⁞‗‗‗‗‗
+x = ‖r‖cosɸcosӨ                   
+y = ‖r‖cosɸsinӨ                   
+z = ‖r‖sinɸ
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //POINTS
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -359,20 +397,6 @@ eg(1)
   ► P = P₀ + a₁(P₁-P₀) + a₂(P₂-P₀)
   ► P = P₀ + a₁v₁ + a₂v₂
   where v₁ = P₁-P₀ and v₂ = P₂-P₀
-
-=============================================================================
-POLAR COORDINATES
-=============================================================================
-
-FOR 3D: using elevation angle       FOR 2D:
------------------------------       ------------------
-‖r‖ = √(x² + y² + z²)               r = √(x² + y²)
-Ө = tanˉ¹(y/x)                      Ө = tanˉ¹(y/x)
-ɸ = sinˉ¹(z/‖r‖)
-                            
-x = ‖r‖cosɸcosӨ                     x = ‖r‖cosӨ 
-y = ‖r‖cosɸsinӨ                     y = ‖r‖sinӨ
-z = ‖r‖sinɸ
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //LINES/PLANES
