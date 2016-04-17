@@ -116,9 +116,9 @@ QUADRATIC EQUATION
         ‖                                         
 
 QUADRATIC FORMULA:                               
- ------------------   ---------------------------
-| ax² + bx + c = 0 | | x = -b ± √(b² - 4ac) / 2a |
- ------------------   ---------------------------
+ ------------------   -----------------------------
+| ax² + bx + c = 0 | | x = (-b ± √(b² - 4ac)) / 2a |
+ ------------------   -----------------------------
 • Quadratic graph intersects x axis when y = 0
 • When the Discriminant b² - 4ac is:
     + there are 2 real solutions

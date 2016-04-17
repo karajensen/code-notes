@@ -138,11 +138,11 @@
     <None Include="Languages\Examples\Example - PyQt File Reader.pyw">
       <Filter>Languages\Examples</Filter>
     </None>
-    <None Include="Images\Graphics - Rendering Pipeline Diagram.psd">
-      <Filter>Images</Filter>
-    </None>
     <None Include="Interviews\Math Questions.odt">
       <Filter>Interviews</Filter>
+    </None>
+    <None Include="Images\Graphics - Rendering Pipeline Diagram.psd">
+      <Filter>Images</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -401,58 +401,58 @@
     <Image Include="Images\Graphics - View Frustum.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - Barycentric coordinates.png">
+    <Image Include="Images\Maths - Barycentric coordinates.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - Changing frame of reference.png">
+    <Image Include="Images\Maths - Changing frame of reference.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - Circle Geometry.png">
+    <Image Include="Images\Maths - Circle Geometry.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - constraints.png">
+    <Image Include="Images\Maths - Constraints.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - GJK Collision Detection.png">
+    <Image Include="Images\Maths - GJK Collision Detection.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - Graph ex.png">
+    <Image Include="Images\Maths - Graph ex.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - Graph lnx.png">
+    <Image Include="Images\Maths - Graph lnx.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - Graph Negative.png">
+    <Image Include="Images\Maths - Graph Negative.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - Graph Positive.png">
+    <Image Include="Images\Maths - Graph Positive.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - Graph x.png">
+    <Image Include="Images\Maths - Graph x.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - Graph x-1.png">
+    <Image Include="Images\Maths - Graph x-1.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - Graph x2.png">
+    <Image Include="Images\Maths - Graph x2.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - Integration.png">
+    <Image Include="Images\Maths - Integration.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - kinematics.png">
+    <Image Include="Images\Maths - Kinematics.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - plane equation.png">
+    <Image Include="Images\Maths - Plane equation.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - polar coordinates.png">
+    <Image Include="Images\Maths - Polar coordinates.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - Rotation around arbitrary axis.png">
+    <Image Include="Images\Maths - Rotation around arbitrary axis.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\MathsPhysics - Trigonometry.png">
+    <Image Include="Images\Maths - Unit circle.png">
       <Filter>Images</Filter>
     </Image>
   </ItemGroup>
