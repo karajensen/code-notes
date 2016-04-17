@@ -73,11 +73,11 @@ r = common ratio between terms
     /  |     • Triangle 3 angles always add to 180ᵒ
    /___|     • Trigonometry and Pythagoras true for right angled triangles
 
-   ₀ o ₀     CIRCLES
+   o o o     CIRCLES
  o       o   • Circle Area: πr²
 o         o  • Circle Circumference: 2πr
  o       o   • Segment Area: ¹/₂ r²(Ө - sinӨ)
-   ᴼ o ᴼ     • Sector Area: ¹/₂ r²Ө
+   o o o     • Sector Area: ¹/₂ r²Ө
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //GRAPHING AND FUNCTIONS
@@ -335,10 +335,10 @@ POLAR COORDINATES
 =============================================================================
 
 3D POLAR COORDINATES           2D POLAR COORDINATES     ‖    • (x,y)
-Using elevation angle          r = √(x² + y²)           ‖   /⁞ 
-‖r‖ = √(x² + y² + z²)          Ө = tanˉ¹(y/x)           ‖  / ⁞ 
-Ө = tanˉ¹(y/x)                 x = ‖r‖cosӨ              ‖ /  ⁞ 
-ɸ = sinˉ¹(z/‖r‖)               y = ‖r‖sinӨ              ‖/Ө‗‗⁞‗‗‗‗‗
+Using elevation angle          r = √(x² + y²)           ‖   /| 
+‖r‖ = √(x² + y² + z²)          Ө = tanˉ¹(y/x)           ‖  / | 
+Ө = tanˉ¹(y/x)                 x = ‖r‖cosӨ              ‖ /  | 
+ɸ = sinˉ¹(z/‖r‖)               y = ‖r‖sinӨ              ‖/Ө‗‗|‗‗‗‗‗
 x = ‖r‖cosɸcosӨ                   
 y = ‖r‖cosɸsinӨ                   
 z = ‖r‖sinɸ

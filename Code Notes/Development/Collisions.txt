@@ -19,44 +19,44 @@ AXIS ALIGNED BOUNDING BOX: Box sides are aligned with the world axis
 ==================================================================================================
 LINE-LINE INTERSECTION
 ==================================================================================================
-• Line equations: y₀ = m₀x₀ + c₀ and y₁ = m₁x₁ + c₁
-• Find the common point where y₀ = y₁ and x₀ = x₁ through m₀x₀ + c = m₁x₁ + c₁ and solve for x
+• Line equations: yo = moxo + co and y₁ = m₁x₁ + c₁
+• Find the common point where yo = y₁ and xo = x₁ through moxo + c = m₁x₁ + c₁ and solve for x
 • Lines parallel if x cancels out and gives a false statement (eg. 0 = 1)
 • Lines coincident (same) if x cancels out and gives a true statement (eg. 1 = 1)
 
 ==================================================================================================
 LINE-PLANE INTERSECTION
 ==================================================================================================
-                  • Plane equation: (P-P₀).n = 0
-  ___\_______     • Line equation: L = L₀ + td
+                  • Plane equation: (P-Po).n = 0
+  ___\_______     • Line equation: L = Lo + td
  /    \     /     • Intersection point when L = P
-/__________/      • (L₀ + td - P₀).n = 0     expand out the dot:
-        \         • td.n + (L₀ - P₀).n = 0   solve for t:
-                  • t = (P₀ - L₀).n / d.n
+/__________/      • (Lo + td - Po).n = 0     expand out the dot:
+        \         • td.n + (Lo - Po).n = 0   solve for t:
+                  • t = (Po - Lo).n / d.n
 
 ==================================================================================================
 POINT-LINE/PLANE INTERSECTION
 ==================================================================================================
 
 DISTANCE TO LINE/PLANE
-• n̂.(P-P₀) = distance where P is point and P₀ is a point on the line or plane
+• n̂.(P-Po) = distance where P is point and Po is a point on the line or plane
 • Normal to line (x,y) is (-y,x) or (y,-x)
 • Normal to plane is u X v or (a,b) for plane equation ax + by + c = 0
 • Distance may be negative depending on side the point is on to the normal
 • Point C is the closest point to P on the plane (will = P if distance is 0)
                                       
-    Q = P-P₀                                       •P
+    Q = P-Po                                       •P
     distance = dot(n, Q)                          ▲
     if distance == 0                             / 
         point on the plane                      / n
     else if distance > 0                     Q /  ▲
         point is on normal side          _____/___|_______
     else if distance < 0                /    /    |      /
-        point is away from normal      /    •P₀---•C    / 
-    C = (P-P₀) - (distance * n)       /________________/
+        point is away from normal      /    •Po---•C    / 
+    C = (P-Po) - (distance * n)       /________________/
                                        
 BOUNDED LINES   
-• P = P₀ + td line equation can be rearranged to Q = td as Q = P-P₀
+• P = Po + td line equation can be rearranged to Q = td as Q = P-Po
 • d is the vector of the ray to its full length
 • Dot by d to get Q.d = td.d
 • Rearrange to get t = Q.d / d.d
@@ -65,7 +65,7 @@ BOUNDED LINES
 BOUNDED PLANES
 • To check if inside bounds convert point world coordinates to barycentric coordinates
 • u and v are the length of the bounding area
-• P = P₀ + su + tv plane equation can be rearranged to Q = su + tv as Q = P-P₀
+• P = Po + su + tv plane equation can be rearranged to Q = su + tv as Q = P-Po
 • Dot by u/v to get Q.v = (su + tv).v and Q.u = (su + tv).u
 • Rearrange to get s = (Q.v - t(v.v)) / (u.v) and t = (Q.u - s(u.u)) / (u.v)
 • Substitute each one into the other and find barycentric (s, t)
@@ -87,34 +87,34 @@ SPHERE-POINT / CIRCLE-POINT INTERSECTION
 ==================================================================================================
 • Point inside sphere if distance from sphere center to point is less than radius
     
-   ₀ o ₀          distance = length(center - point)   
+   o o o          distance = length(center - point)   
  o    ___o___•P   if distance < radius                
 o     ----o           collision occured               
  o       o                                         
-   ᴼ o ᴼ                                           
+   o o o                                           
 
 ==================================================================================================
 SPHERE-SPHERE / CIRCLE-CIRCLE INTERSECTION
 ==================================================================================================
 • Two spheres colliding when distance between centers is less than combined radius
                         
-    ₀ o ₀        ₀ o ₀      distance = length(centerA - centerB) 
+    o o o        o o o      distance = length(centerA - centerB) 
   o    ___o____o___    o    radius = radiusA + radiusB           
  o     ----o  o----     o   if distance < radius                 
   o       o    o       o        collision occured                
-    ᴼ o ᴼ        ᴼ o ᴼ                                            
+    o o o        o o o                                            
 
 CIRCLE-CIRCLE AREA OF INTERSECTION
 • Overlapping area forms a segment on each circle
 • Use the segment area equation ¹/₂ r²(Ө - sinӨ)
-• Add both segment areas found
-                                           ₀ o ° o ₀   
-   ₀ o ₀   ₀ o ₀           ₀ o ₀         •  |\       o  
+• Add both segment areas found              
+                                           o o o o o   
+   o o o   o o o           o o o         •  |\       o  
  o       •       o       •|      o      •   | \       o
 o       • •       o     • |       o     •   | Ө•      o
  o       •       o       •|      o      •   | /       o
-   ᴼ o ᴼ   ᴼ o ᴼ           ᴼ o ᴼ         •  |/       o     
-                                           ᴼ o ₀ o ᴼ       
+   o o o   o o o           o o o         •  |/       o     
+                                           o o o o o       
                                         
 ==================================================================================================
 SPHERE-RAY / CIRCLE-RAY INTERSECTION
@@ -122,11 +122,11 @@ SPHERE-RAY / CIRCLE-RAY INTERSECTION
 • Sphere equation: (P-c).(P-c) = r²
 • P.(P-c) - c.(P-c) = r²
 • P.P - 2P.c + c.c = r²
-• Substitute Line equation: P = P₀ + td
-• (P₀ + td).(P₀ + td) - 2(P₀ + td).c + c.c = r²
-• P₀.P₀ + 2tP₀.d + t²d.d - 2P₀.c - 2td.c + c.c = r²
-• t²d.d + t(2P₀.d - 2d.c) + P₀.P₀ - 2P₀.c + c.c = r²
-• (d.d)t² + 2(P₀ - c).dt + (P₀ - c).(P₀ - c) - r² = 0
+• Substitute Line equation: P = Po + td
+• (Po + td).(Po + td) - 2(Po + td).c + c.c = r²
+• Po.Po + 2tPo.d + t²d.d - 2Po.c - 2td.c + c.c = r²
+• t²d.d + t(2Po.d - 2d.c) + Po.Po - 2Po.c + c.c = r²
+• (d.d)t² + 2(Po - c).dt + (Po - c).(Po - c) - r² = 0
 • Using quadratic formula: at² + bt + c = 0 
 • t = -b ± √(b² - 4ac) / 2a where t >= 0 to hit the sphere
 
