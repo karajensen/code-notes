@@ -303,8 +303,9 @@ OPTIMIZATION TIPS
 • Don't allocate stencil if you don’t use it
 • R5G6B5 color sufficient for dynamic reflection maps
 • Use low resolution (<256x256) 8-bit normalization cube-maps
-• Use half instead of float where strict precision isn't important
-• Render a depth-only pass before color pass to reduce pixel shader use
+• Render a depth-only pass before color pass to reduce overdraw
+• Use power of 2 allocations to reduce fragmentation (trade off can be wasted allocation space)
+• Alpha tested only objects don't need to be sorted by depth
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //COLOUR

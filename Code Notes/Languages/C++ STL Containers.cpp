@@ -309,9 +309,10 @@ S.pop()     // removes the element at top of stack
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <bitset>
 
-bitset<n> mybits;        // Fills container with n zeroed bits, n must be constant, zero-based index
-bitset<n> mybits(value)  // Takes integer type and flips required bits
-bitset<n> mybits(std::string("110101"))
+bitset<n> mybits;          // Fills container with n zeroed bits, n must be constant, zero-based index
+bitset<n> mybits(value)    // Takes integer type and flips required bits
+bitset<n> mybits(0x080)    // Takes hex value and flips required bits
+bitset<n> mybits("110101") // Takes binary string and flips requied bits starting from bit 0
 
 mybits[1]           // access bit
 mybits.test(1)      // returns true if bit 1 is set, does index bounds checking on n
@@ -327,6 +328,7 @@ mybits.flip()       // flips all bits to opposite value
 mybits.flip(1)      // flips bit 1 to opposite
 mybits.count()      // returns number of true bits
 mybits.to_ulong()   // converts bitset to unsigned long
+mybits.to_string()  // returns a string representation (1101101)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //MULTIPLE TYPED CONTAINERS

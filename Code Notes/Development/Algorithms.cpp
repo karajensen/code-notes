@@ -38,6 +38,7 @@ int z = index % rows;
 * Check whether a number is odd
 */
 bool isOdd = x % 2;
+bool isOdd = x & 1;
 
 /**
 * Swap two integers without using a temporary variable
@@ -98,9 +99,26 @@ int GetLowestDivisor(int m, int n)
 }
 
 /**
-* Get bit value at position n = [0, total bits-1]
+* Difference between n x n array diagonals
 */
-int value = (n & (1 << bit)) >> bit;
+int primary = 0;
+int secondary = 0;
+for (int i = 0, j = n - 1; i < n; ++i, --j)
+{
+    primary += arr[i][i];
+    secondary += arr[j][i];
+}
+int difference = abs(primary - secondary);
+
+/**
+* Find single integer value in an array of paired integers
+*/
+unsigned int values = 0;
+for (unsigned int i = 0; i < arr.size(); ++i)
+{
+    values ^= a[i];
+}
+int singleInteger = values;
 
 /**
 * Get four components of colour

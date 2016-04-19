@@ -125,16 +125,6 @@ RUN TIME: Action performed during program execution
 OPCODE: single executable machine language instruction
 OPERANDS: arguments given after the opcode
 MNEMONICS: set to equal an opcode or a series of opcodes/operands
-ENDIAN-NESS: Ordering of bytes in memory of a data object
-
-LITTLE ENDIAN (BACKWARDS)
-• multi-byte values are written least significant byte first
-• used by x86 architecture
-• 0x12345678 is written in memory as 78 56 34 12    
-
-BIG ENDIAN (FORWARDS)
-• multi-byte values are written most significant byte first
-• 0x12345678 is written in memory as 12 34 56 78
 
 ===============================================================================
 RAM MEMORY LOCATIONS
@@ -373,6 +363,15 @@ BINARY-TO-DECIMAL: 1101 = 1x2³ + 1x2² + 0x2¹ + 1x2° = 13
 HEX-TO-DECIMAL: A3F = 10x16² + 3x16¹ + 15x16° = 2623
 HEX-TO-BINARY: 0xC2 = binaryC binary2 = 1100 0010 = 11000010 (use image table)
 BINARY-TO-HEX: 11000010 = 1100 0010 = 0xC2 (use image table)
+ENDIAN-NESS: Ordering of bytes in memory of a data object
+
+LITTLE ENDIAN
+• multi-byte values are written least significant byte first
+• 0x12345678 is written in memory as 78 56 34 12    
+
+BIG ENDIAN
+• multi-byte values are written most significant byte first
+• 0x12345678 is written in memory as 12 34 56 78
 
 -----------------------------------------------------------------------------------------------
 BITWISE OPERATORS
@@ -387,28 +386,26 @@ BITWISE OPERATORS
 -----------------------------------------------------------------------------------------------
 BIT MANIPULATION
 -----------------------------------------------------------------------------------------------
+• Bits accessed where n = [0, total bits-1]
+• Bits go from least significant (b0) to most significant (bn-1)
+• Bits read from left to right (little endian)
+• Signed integers use most significant bit for +/-
 
-TWOS COMPLEMENT
-• Standard way of representing negative integers in binary
-• −x = ∼x + 1
-Start:    0001  (decimal 1)
-Invert:   1110
-Add One:  1111  (decimal -1)
-
-GETTING BITS
-• where bit, to->from are [0, total bits available-1]
-• returns 0 if bit is off 1 if bit is on
-(n & (((1 << (to - from + 1)) - 1) << from)) >> from;
-(n & (1 << bit)) >> bit
+x = ∼x + 1                   Negate a number (two's component)
+on = x & (1 << n)            Test if nth bit is on
+x = x | (1 << n)             Set the nth bit on
+x = x & ~(1 << n)            Set the nth bit off
+x = x ^ (1 << n)             Toggle the nth bit on/off
+odd = x & 1                  Test if x is even or odd number
+pow2 = x && !(x & (x - 1))   Test if x is a power of 2 number
 
 XOR PROPERTIES
-• Allows swapping two values without a temporary value
 a ^ b = c
-c ^ a = b
-c ^ b = a
+c ^ a = b                    Get access to b again
+c ^ b = a                    Get access to a again
 
 BIT SHIFTING
-1u<<3                        Gives 2³
+1 << 3                       Gives 2³
 value <<= 3                  Multiply value by 2³
 value >>= 3                  Divide value by 2³
 
@@ -424,21 +421,21 @@ bool b = bool1 ^ bool2       Either are true but not both
 success &= HasSucceeded();   Init success to true, will lock in false if something fails
 
 BIT MASKING
-value = Mask1 | Mask2       Adding two masks
-value &= ~Mask1             Removing a mask
-value |= Mask1              Adding a mask
-(value & Mask1) == Mask1    If true then has the mask
+value = Mask1 | Mask2        Adding two masks
+value &= ~Mask1              Removing a mask
+value |= Mask1               Adding a mask
+(value & Mask1) == Mask1     If true then has the mask
 
 BIT MASK VALUES
-NoMask = 0     0x000
-Mask1  = 1     0x001
-Mask2  = 2     0x002
-Mask3  = 4     0x004
-Mask4  = 8     0x008
-Mask5  = 16    0x010
-Mask6  = 32    0x020
-Mask7  = 64    0x040
-Mask8  = 128   0x080
+NoMask = 0     0x000    0x00000000    00000000
+Mask1  = 1     0x001    0x00000001    00000001
+Mask2  = 2     0x002    0x00000002    00000010
+Mask3  = 4     0x004    0x00000004    00000100
+Mask4  = 8     0x008    0x00000008    00001000
+Mask5  = 16    0x010    0x00000010    00010000
+Mask6  = 32    0x020    0x00000020    00100000
+Mask7  = 64    0x040    0x00000040    01000000
+Mask8  = 128   0x080    0x00000080    10000000
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //ERROR HANDLING/EXCEPTIONS

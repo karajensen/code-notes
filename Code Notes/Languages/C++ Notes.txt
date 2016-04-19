@@ -14,9 +14,13 @@ unsigned long long    DWORD       unsigned long long int
 float                 FLOAT       ---
 
 STATIC VARIABLES
-• Static typed variables: class members, local or global variables
-• Global variables: don't require static keyword to be static typed (keyword determines linkage)
-• Static const variables: if type is known may be replaced throughout program as macro
+• Const variables: Require keyword, may be replaced as macro if POD type
+• Global variables: External linkage without keyword, Internal linkage with
+• Class member variables: Require keyword
+• Local variables: Require keyword
+• All static variables zero-initialisated or initialised to constant before main() called
+• If dynamic initialisation is required, can be initialised any time between main() and
+  first use of variable (or object if class member)
 
 TEMPORARY VARIABLES
 • Move semantics reduces creation of temp variables
@@ -36,9 +40,8 @@ CONST VARIABLES
 • Cons: Hard to tell if variable is const stored in seperate memory or just const casted
 • Cons: Cannot use move operations on them
 
-AUTO-INITIALISATION
-• Static class POD types auto-initialised to 0 before main() called
-• Static global/local POD types auto-initialized to 0 before first use
+ZERO-INITIALISATION
+• All Static variables before main()
 • POD types after default constructor is called
     - MyPOD obj = {};
     - MyPOD[2] array = {};

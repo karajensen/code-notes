@@ -156,11 +156,14 @@ oDepth     // Output depth register: outputs a depth value used with testing
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //• Floats faster for calculations, integers faster for indexing
+// • Use half instead of float where strict precision isn't important
 //• Compiler may optimize isnan() and isfinite() calls
 //• NaN * 0 = 0 not NaN except with precise keyword
 //• Use of static keyword for global bools only evaluates the one path instead of both
 //• If missing components in vertex stream, auto sets z/y to 0.0 and w to 1.0
 //• Normalize normals in pixel shader as may not be still normalized after vertex shader interpolation
+//• Texture read is fastest when accessing adjacent pixels due to cache
+//• Code that doesn't rely on texture read can be auto moved by compilier in front of a read to parallelize
 
 //PACKING ARRAYS/VALUES AS FLOAT4
 //arrays are always packed as float4 even if only using a float

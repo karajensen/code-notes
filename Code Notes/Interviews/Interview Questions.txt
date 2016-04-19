@@ -37,6 +37,7 @@ A: Pop and push are already O(1) with a stack. For minimum, each node in the sta
 Q: Why are textures power of 2?
 A: The graphics pipeline can take advantage of optimizations related to efficiencies in 
    working with powers of two: dividing, multiplying, generation and usage of mipmaps
+   Can also reduce fragmentation of memory
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //C++ QUESTIONS

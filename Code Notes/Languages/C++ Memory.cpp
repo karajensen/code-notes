@@ -65,6 +65,7 @@ MyFunctionPtr myFunction = &MyFunction;
 myFunction(5, 1.0);
 
 //POINTER-TO-MEMBER FUNCTION
+//• Cannot cast to pointer-to-function as can be much larger storing inheritance information
 class MyClass
 {
 public:
@@ -274,6 +275,8 @@ auto_ptr<int> p1(p2); //ownership is passed to p1 and p2 is set to nullptr
 //C-STYLE MEMORY MANIPULATION
 /////////////////////////////////////////////////////////////////////////////////////////////
 #include <malloc.h>
+
+memcpy(dest, src, n) // Binary copy of data from src to dest over n bytes
 
 int* pPointer = (int*)malloc(allocationSizeInBytes);                 // Allocating memory
 free(pPointer);                                                      // Freeing memory
