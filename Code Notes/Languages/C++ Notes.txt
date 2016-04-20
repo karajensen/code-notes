@@ -14,13 +14,32 @@ unsigned long long    DWORD       unsigned long long int
 float                 FLOAT       ---
 
 STATIC VARIABLES
-• Const variables: Require keyword, may be replaced as macro if POD type
-• Global variables: External linkage without keyword, Internal linkage with
-• Class member variables: Require keyword
-• Local variables: Require keyword
+• Variables with static storage duration:
+    - Global variables: Doesn't require 'static' keyword
+    - Class member variables: Require 'static' keyword
+    - Local variables: Require 'static' keyword
 • All static variables zero-initialisated or initialised to constant before main() called
 • If dynamic initialisation is required, can be initialised any time between main() and
   first use of variable (or object if class member)
+
+GLOBAL VARIABLES
+• Defined outside function or class scope
+• Have static storage duration
+• Automatically has 'static' keyword unless 'extern' keyword is used, can't have both
+• If same named non-extern static and extern variable exist then error
+          -------------------------------------------
+          | static int x      |                     |
+          | int x             | extern int x        |
+-----------------------------------------------------
+|         | creates copy for  | References extern   |
+| .H      | every #include    | version in .cpp     |
+|         |                   |                     |
+| .CPP    | creates only one  | Definition for any  |
+|         | for .cpp use      | .h extern versions  |
+|         |                   |                     |
+| Linkage | Internal          | External            |
+|         | Single use        | Shared use          |
+-----------------------------------------------------
 
 TEMPORARY VARIABLES
 • Move semantics reduces creation of temp variables

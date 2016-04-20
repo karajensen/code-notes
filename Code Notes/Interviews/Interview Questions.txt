@@ -404,15 +404,6 @@ A: See General Algorithms in Algorithms.cpp for code
 Q: What is the number of right trailing 0 bits in a 32-bit unsigned integer?
 A: Obtain the value of the bit from position 0 to 31 and break if not a 0
 
-int count = 0;
-for (; count < 32; ++count)
-{
-    if (((n & (1 << count)) >> count) > 0)
-    {
-        break;
-    }
-}
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //STRING PUZZLES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
