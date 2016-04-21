@@ -274,6 +274,38 @@ for (int i = 0; i < size; ++i)
 }
 int uniqueInts = values.size();
 
+/**
+* Copy a section of a nxn array at coordinates x,y to a larger nxn array
+*/
+void Blit(std::vector<int>& arrA, const std::vector<int>& arrB, int x, int y)
+{
+    const int aSize = std::sqrt(arrA.size());
+    const int bSize = std::sqrt(arrB.size());
+    const int endX = std::min(x + bSize, aSize);
+    const int endY = std::min(y + bSize, aSize);
+    const int maxWidth = endX - x;
+    const int maxHeight = endY - y;
+
+    // Safe and Slow loop
+    for (int i = 0; i < maxWidth; ++i)
+    {
+        for (int j = 0; j < maxHeight; ++j)
+        {
+            const int aIndex = (y + j) * aSize + (x + i);
+            const int bIndex = j * bSize + i;
+            arrA[aIndex] = arrB[bIndex];
+        }
+    }
+
+    // Unsafe and fast loop
+    for (int i = 0; i < maxHeight; ++i)
+    {
+        const int aIndex = (y + i) * aSize + x;
+        const int bIndex = i * bSize;
+        memcpy(&arrA[aIndex], &arrB[bIndex], sizeof(int)*maxWidth);
+    }
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //BUBBLE SORT
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
