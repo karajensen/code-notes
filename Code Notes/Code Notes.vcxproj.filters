@@ -167,9 +167,6 @@
     <Text Include="Development\Rendering.txt">
       <Filter>Development</Filter>
     </Text>
-    <Text Include="Development\Simulation.txt">
-      <Filter>Development</Filter>
-    </Text>
     <Text Include="Development\Software Development.txt">
       <Filter>Development</Filter>
     </Text>

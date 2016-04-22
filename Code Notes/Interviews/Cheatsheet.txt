@@ -96,6 +96,8 @@
      only a suggestion and an array of any size can be passed in. Make the paramter
      a reference to enforce size: void MyFn(int (&arr) [2])
 
+[29] unsigned int overflow wraps to 0, signed int overflow is undefined
+
 ////////////////////////////////////////////////////////////////////////////////////
 //STL CHEATSHEET
 ////////////////////////////////////////////////////////////////////////////////////

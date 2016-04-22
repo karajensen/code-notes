@@ -1,6 +1,6 @@
-﻿///////////////////////////////////////////////////////////////////////////////////////
+﻿//////////////////////////////////////////////////////////////////////////////////////////////
 //C++ NOTES
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 unsigned char         BYTE        ---
 short                 ---         short int / signed short / signed short int
@@ -19,8 +19,8 @@ STATIC VARIABLES
     - Class member variables: Require 'static' keyword
     - Local variables: Require 'static' keyword
 • All static variables zero-initialisated or initialised to constant before main() called
-• If dynamic initialisation is required, can be initialised any time between main() and
-  first use of variable (or object if class member)
+• If dynamic initialisation is required, can be initialised any time between main() 
+  and first use of variable (or object if class member)
 
 GLOBAL VARIABLES
 • Defined outside function or class scope
@@ -50,14 +50,11 @@ TEMPORARY VARIABLES
    - function passing/returning if no move constructor
 
 CONST VARIABLES
-• If type is known and only used as a literal variable, replaced as a macro at compile time
+• String constants and floating point constants are stored in static memory in optimized code
+• Integer constants are usually included as part of the instruction code
 • If type unknown or is refered to, may be stored in fixed seperate memory/data segment
 • Variable const-casted remains in same location but cannot change values
-• Pros: Using const allows both const and non-const objects to use a method
-• Pros: Using const protects you against accidently editing data
-• Cons: Usage must be maintained otherwise useless
-• Cons: Hard to tell if variable is const stored in seperate memory or just const casted
-• Cons: Cannot use move operations on them
+• Cannot use move operations on const variables
 
 ZERO-INITIALISATION
 • All Static variables before main()
@@ -83,9 +80,9 @@ SEQUENCE POINTS
 &&      x && y 
 ?:      x ? y : 0 
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 //MOVE SEMANTICS
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 • Allows resources to transfer between objects rather than copying
 • Automatically done if object has a valid move assignment/constructor
@@ -109,9 +106,9 @@ REFERENCE COLLAPSING
 • When lvalue reference is passed to T&&, creates type MyClass& && which collapses to MyClass&
 • Only compiler can create type T& && for collapsing, otherwise error
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 //MEMORY ALLOCATION
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 VARIABLES/OBJECTS: &name gives address of object
 C-STYLE ARRAY: name gives address of first element
@@ -154,9 +151,9 @@ MEMORY POOL ALLOCATOR
 • Requests by container are from the pool and returned to the pool
 • Pool is deallocated when lifetime of container ends
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 //SMART POINTERS
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 UNIQUE/SCOPED POINTER
 • Has sole ownership of memory allocated, can only be moved
@@ -211,9 +208,9 @@ SMART POINTER DESTRUCTION
 • If local in a noexcept function which throws may not be destroyed
 • If std::abort, std::exit, std::quick_exit is called will not be destroyed
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 //CLASSES/STRUCTS/FUNCTIONS
-/////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ORDER OF ARGUMENT EVALUATION
 Order that function parameters are evaluated is up to the complier.
@@ -310,9 +307,9 @@ MOVE METHOD REQUIREMENTS:
 • Create if no destructor, copy-assignment, copy constructor defined
 • Will NOT create if one needed and matching move method is user-defined
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 //INHERITANCE
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 --------------------------------------------------------
 FUNCTION      INHERITED    IMPLICIT  VIRTUAL  RETURNS
@@ -388,9 +385,9 @@ Multiple Inheritance         Yes             Yes             No
 Virtual Base Classes         Yes             Yes             No 
 RTTI                         No              Yes             No 
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 //FUNCTION OVERLOADING
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 REQUIRES SIGNATURE DIFFERENCE
 • Type of parameters
@@ -445,9 +442,9 @@ CAN BE OVERLOADED
 ||      ++      --      ,       ->*     ->
 ()      []      new     delete  new[]   delete[]
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 //EXCEPTIONS
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 NOEXCEPT FUNCTIONS
 • If objects they work on throw, undefined behaviour
@@ -472,9 +469,33 @@ STANDARD LIBRARY EXCEPTIONS
 • Vector and Deque only: inserts or erases for multi or single objects are basic guarantee 
   if object constructor or assignment operator throws, otherwise strong guarantee
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+//OPTIMIZATION
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+• A compiler may reorder instructions for the sake of parallel execution
+• Compiler will always select the most efficient integer size if you declare an int
+• Unsigned is faster than signed when you divide or % with a constant
+• char, short, bool slightly less efficient as can be converted to int when doing calculations
+• << quicker than multiplying and >> quicker than dividing for power of two values
+• Signed/Unsigned int conversion costless, Int/Floating Point conversion expensive
+• In most cases, double calculations take no more time than floats but don't mix the two
+• Floating point division by a constant should be done by multiplying with the reciprocal
+• Switch statements with incrementing labels effecient as implemented as jump target table
+• Faster to use memset, memcpy and cstring methods though unsafe
+• Avoid multiple inheritance and virtual functions
+• Reorder class members so the data aligns without extra padding
+• Constant expressions eg. 2.0/3.0 replaced by their results at compile time
+• Common maths functions (sin, pow, sqrt) not always replaced at compile time
+• std::function larger/slower than internal type of lambda
+• STL container empty() is always O(1), size() may be O(n) depending on container
+• Store dynamic objects in arrays to reduce heap fragmentation and cache misses
+• 2D arrays should always have outer loop rows, inner loop columns where arr[row][column]
+  as the data cache is optimized for accessing arrays forwards, not backwards
+
+//////////////////////////////////////////////////////////////////////////////////////////////
 //STL ALGORITHMS
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 ATAN-ATAN2 DIFFERENCES:
 ATAN2: Looks at 4 quadrants
@@ -514,9 +535,9 @@ INSERTING
 • Emplacing is always as (if not more) effecient as insert/push
 • Never emplace arguments allocating memory through new in case of memory exception; use push/insert
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 //STL CONTAINERS
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 ======================================================================================
 SEQUENCE CONTAINERS
@@ -555,12 +576,6 @@ VECTOR<BOOL>
 • deque<bool> actually contains bool; vector<bool> was an experiment
 • Saves space but slower as requires going through proxy object
 • Don't use auto when accessing members as type chosen is std::vector<bool>::reference
-
-PERFORMANCE ISSUES
-• Cache Misses when searching/iterating: vector < deque < list
-• When a container is accessed, a line of data is fetched from the main memory to the cache
-• Some of this data is unneeded in lists/deque as they're not continuous
-• Bigger the data size the more cache misses as elements don't fit in cache lines
 
 --------------------------------------------------------------------------
 SINGLE DATA:
@@ -635,9 +650,9 @@ SET
 • Elements in a set are always sorted from lower to higher
 • Multi set can have multiple values to the one key
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 //ITERATORS
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 INPUT ITERATOR
 • iterator that a program can use to read only
@@ -741,9 +756,9 @@ LIST/MAP/SET
 • Inerstion: All unaffected.
 • Erasure: Only the erased member is invalidated.
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 //FILE MANAGEMENT
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 BUFFER
 • Bloack of memory for storage/transfer of information

@@ -187,6 +187,10 @@ CACHES
 • No processing on data- must be moved to registers if this is needed
 • Cache Miss: Failed attempt to read/write to the cache resulting in RAM access
 • Cache line size typically 32 or 64 bytes
+• Number of cache lines depends on kb size of cache
+• Cache lines organised into sets with each set having a set number of assigned lines
+• Cache thrashing can occur when data is accessed in a pattern (eg. large power of 2 arrays)
+  that leads to competing for the same cache lines resulting in excessive writing/flushing
 
 ===============================================================================
 VISUAL STUDIO DEBUG MEMORY ALLOCATION

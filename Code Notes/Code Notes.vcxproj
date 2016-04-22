@@ -139,7 +139,6 @@
     <Text Include="Development\Physics.txt" />
     <Text Include="Development\Programming Notes.txt" />
     <Text Include="Development\Rendering.txt" />
-    <Text Include="Development\Simulation.txt" />
     <Text Include="Development\Software Development.txt" />
     <Text Include="Hotkeys.txt" />
     <Text Include="Interviews\Cheatsheet.txt" />

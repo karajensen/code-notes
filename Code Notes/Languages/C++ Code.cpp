@@ -2,20 +2,14 @@
 //VARIABLES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int local;
-static int localStatic; //Local static: keeps variable in memory even when function exits
-register int regInt; //may store variable in register not on stack: NO address, can't be global
-volatile int volInt; //don't cache value, check actual value each time its asked for
-mutable int mutInt; //value changes ignored for bitwise const checking; used to show internal synchronization
-const int constInt; //may store variable in read-only memory, value may not be known at compile time
-constexpr int myInt = 1.0 * constInt; //evaluates at compile time, will store in read-only memory
-
-//GLOBAL (NON-MEMBER, OUTSIDE SCOPE) VARIABLES
-const int myInt = 10; //Automatically global static or replaces usage with value
-static int myInt = 10; //Global static with internal linkage, if initialised in .h creates copy for every file
-int myInt = 10; //Global static with external linkage, can only be initialised in .cpp or linker error
-extern int myInt; //Allows access to above variable, defined in .h
-::myInt; //Allows access to global variables when shadowed by local variables
+static      // Makes static storage, can be used on local, global or class member variable
+extern      // References (in .h) or declares (in .cpp) an externally linked global variable
+register    // May store variable in register, not on stack, no address and can't be global
+volatile    // Don't cache or optimize value, can prevent cache race conditions
+mutable     // Value changes ignored for bitwise const checking; used to show internal synchronization
+const       // Can store variable in read-only memory or value repaced at compile time
+constexpr   // Evaluates at compile time, will store in read-only memory
+::myInt     // Allows access to global variables when shadowed by local variables
 
 //INITIALISING VARIABLES
 Type x;                         // Default constructor
