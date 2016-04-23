@@ -144,6 +144,7 @@ INITIALIZED DATA SEGMENT (GLOBAL/STATIC)
 INITIALIZED DATA SEGMENT (CONST DATA)
 • Contains const data and string literals whose values are known at compile time
 • All data read-only and modifying it is undefined behaviour due to optimizations
+• Segmentation fault caused if trying to write to const data
 
 UNINITIALIZED DATA SEGMENT (BSS)
 • Contains zero-initialised data
@@ -155,6 +156,7 @@ THE STACK
 • Self manages memory; variables allocated and freed automatically, no fragmentation
 • Has limit on size, Fast access
 • Operations on objects are usually faster
+• Stack overflow caused if large stack allocation or recursion gone wrong
 
 THE HEAP
 • Segment storing dynamically allocated reference-type variables
@@ -164,6 +166,7 @@ THE HEAP
 • Operations on objects are usually slower
 • Heap used by malloc/free and placement new, Free store used by new/delete
 • Free Store may be the Heap or a seperated area so new/delete and malloc/free can't be interchanged
+• Segmentation fault caused if accessing memory after its deleted
 
 ===============================================================================
 CPU MEMORY LOCATIONS

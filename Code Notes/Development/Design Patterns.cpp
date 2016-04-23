@@ -36,7 +36,7 @@ COMMAND         Holds a method and anything needed to call that method      Func
 STATE           Alters an objects behavior when its state changes           Multiple states/behaviours
 STRATEGY        Implements from interchangable algorithms                   Switching algorithms
 POLICY          Implements from templated inherited classes                 Creating class with multiple implementations
-TEMPLATE        Algorithm with only function calls to other classes         Object algorithm variations
+TEMPLATE        Algorithm with some steps as pure virtual functions         Base class/skeleton algorithms
 MEMENTO         Allows capture and restore an objects internal state        Undo/Redo
 ITERATOR        Allows movement over range of elements in a container       Containers
 INTERPRETER     Decodes each symbol in a string for a particular meaning    Compilers
@@ -874,7 +874,7 @@ public:
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//POLICY PATTERN
+//POLICY BASED DESIGN
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // BASIC PATTERN: Host class inherits from one policy class

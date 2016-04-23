@@ -229,6 +229,7 @@
     <Image Include="Images\Maths - Graph x-1.png" />
     <Image Include="Images\Maths - Graph x.png" />
     <Image Include="Images\Maths - Graph x2.png" />
+    <Image Include="Images\Maths - Integrals.png" />
     <Image Include="Images\Maths - Integration.png" />
     <Image Include="Images\Maths - Kinematics.png" />
     <Image Include="Images\Maths - Plane equation.png" />
@@ -241,6 +242,7 @@
     <Media Include="Images\Code - Traveling Salesman Problem.mp4" />
     <Media Include="Images\Graphics - 3 Point Lighting.mp4" />
     <Media Include="Images\Graphics - Histogram.mp4" />
+    <Media Include="Images\Maths - Integration.mp4" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

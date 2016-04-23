@@ -268,12 +268,12 @@ class Base
 {
 public: 
     Base(int x); //constructors can't be virtual
-    virtual ~Base(); //put as virtual only if want to derive from it
-    virtual void MyMethod(int x) = 0; //pure virtual method, no objects of Base can be created
-
-    // Pure virtual functions can have a body and be called; they only stop the class from being instantiated
-    //If destructor is pure virtual, must always give a body otherwise will not call base destructor
-    virtual ~Base() = 0 {}
+    virtual void MyMethod() = 0; //pure virtual method, no objects of Base can be created
+    virtual void MyMethod() = 0 {} //pure virtual method with body, no objects of Base can be created
+    virtual ~Base(); //virtual destructor required is we want polymorphic inheritance
+    virtual ~Base() = 0 {} //if destructor pure virtual must have body
+protected:
+    ~Base() {} // non-virtual protected destructor prevents polymorphic inheritance
 };
 
 // PUBLIC INHERITANCE
@@ -283,8 +283,7 @@ class Derived sealed : public Base
 {
 public: 
 
-    Derived(int x, int y) : Base(x) 
-    {} 
+    Derived(int x, int y) : Base(x) {} 
 
     //Inheriting constructors, no need for constructor to specify base constructor
     using Base::Base;
@@ -312,15 +311,15 @@ class Derived : private Base
 myDerived->MyMethod(); //cannot be called as seen as private with outside use
 
 // VIRTUAL FUNCTION OBJECTS
-//derived and base are objects of respective types
-//Note base class methods are hidden from derived objects
+// Nerived and base are objects of respective types
+// Note base class methods are hidden from derived objects
 derived.MyMethod(x)   // calls Derived::MyMethod()
 derived.MyVirtual(x)  // calls Derived::MyVirtual()
 base.MyMethod(x)      // calls Base::MyMethod()
 base.MyVirtual(x)     // calls Base::MyVirtual()
 
 // VIRTUAL FUNCTION POINTER/REFERENCES
-//derived and base both hold pointer to derived object
+// Derived and base both hold pointer to derived object
 derived->MyVirtual();          // calls Derived::MyVirtual()
 derived->MyMethod();           // calls Derived::MyMethod()
 derived->Base::MyVirtual();    // calls Base::MyVirtual()           

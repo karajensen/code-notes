@@ -452,6 +452,9 @@
     <Image Include="Images\Maths - Unit circle.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Maths - Integrals.png">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Images\Code - Binary Search Trees.mp4">
@@ -464,6 +467,9 @@
       <Filter>Images</Filter>
     </Media>
     <Media Include="Images\Graphics - Histogram.mp4">
+      <Filter>Images</Filter>
+    </Media>
+    <Media Include="Images\Maths - Integration.mp4">
       <Filter>Images</Filter>
     </Media>
   </ItemGroup>

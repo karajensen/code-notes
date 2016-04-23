@@ -227,6 +227,9 @@ gl_FragColor = (myColor.xyzw * constants.xxxy) + constants.yyyx;
 //SHADING EQUATIONS
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
+vertToLight     // vector from vertex to position (point light) or light direction (direction light)
+vertToCamera    // vector from vertex to camera position
+
 //TANGENT SPACE NORMAL MAPPING (red/blue)
 float3 bump = bumpdepth*(tex2D(BumpSampler, uvs).rgb - 0.5);
 normal = normalize(normal + bump.x * tangent + bump.y * binormal);
@@ -256,7 +259,7 @@ float3 specular = intensity * colour * (pow(saturate(dot(normal, halfVector)), s
 float3 refraction = refract(-vertToCamera, normal, RI);
 float4 refract = texCUBE(EnvironmentSampler, refraction);
 
-//REFLECTIONSx
+//REFLECTIONS
 //Schlick's Fresnal Approximation: max(0, min(1, bias + scale * pow(1.0 + dot(I,N))))
 //Bias should be small, power around 5
 float fresnal = saturate(bias + scale * pow(1.0 + dot(-vertToCamera, normal), power));

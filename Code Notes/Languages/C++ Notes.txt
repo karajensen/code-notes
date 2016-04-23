@@ -341,7 +341,10 @@ PRIVATE INHERITANCE
 
 VIRTUAL FUNCTIONS:
 • Function that can be redefined in a derived class to provide a different implementation
-• For pointers/references calls virtual functions based on underlying object type
+• Pointers/references will call virtual functions based on underlying object type stored
+• Pointers/references will call non-virtual functions based on the type of pointer
+• Virtual destructor required if using base pointer holding derived type else base destructor not called
+• Protected non-virtual destructor prevents deleting base pointer holding derived type 
 • Slower than normal functions as additional requirement to access vtbl/compiler cannot optimize (eg. inline)
 • Can't be a template function as once the run-time system figured out it would need to call a templatized 
   virtual function, compilation is all done and the compiler cannot generate the appropriate instance anymore
