@@ -278,8 +278,8 @@ protected:
 
 // PUBLIC INHERITANCE
 // compilier assumes private if public not specified
-// sealed stops class from being further derived
-class Derived sealed : public Base 
+// final stops class from being further derived
+class Derived final : public Base 
 {
 public: 
 
