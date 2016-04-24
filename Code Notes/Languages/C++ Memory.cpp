@@ -2,40 +2,40 @@
 //POINTERS/REFERENCES
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-int* myPoint = NULL; //0 or 0L which zeros out pointer
-int* myPointer = nullptr; //store null
-int* myPointer = &myInt;  //store address of variable
-int* myPointer = new int; //finds empty memory location on heap and allocates
-int* myPointer = (int*)0xB8000000; //explicitly store memory address
-int& myInt = myInt2; //cannot be reassigned, cannot be null
+int* myPoint = NULL;                //0 or 0L which zeros out pointer
+int* myPointer = nullptr;           //store null
+int* myPointer = &myInt;            //store address of variable
+int* myPointer = new int;           //finds empty memory location on heap and allocates
+int* myPointer = (int*)0xB8000000;  //explicitly store memory address
+int& myInt = myInt2;                //cannot be reassigned, cannot be null
 
-*myPointer = 4; //dereferencing accesses variable
-&myPointer; //gives address of pointer
-myPointer->member; //access member if object
-delete myPointer; //frees the block of memory
+*myPointer = 4;     //dereferencing accesses variable
+&myPointer;         //gives address of pointer
+myPointer->member;  //access member if object
+delete myPointer;   //frees the block of memory
 
 //CONST POINTERS/REFERENCES
-const int* ptr = &value; //Pointer to a constant int (can't change value)
-int* const ptr = &value; //Constant int pointer (can't change what ptr points to)
+const int* ptr = &value;      //Pointer to a constant int (can't change value)
+int* const ptr = &value;      //Constant int pointer (can't change what ptr points to)
 const int* const ptr = &value //can't change value or what pointer points to
-int& const ref = myInt; //Redundant as references automatically & const as cannot be reassigned
+int& const ref = myInt;       //Redundant as references automatically & const as cannot be reassigned
 
 //POINTER TO ARRAYS
 int* myArray = new int[SIZE]; 
 int** myArrayPointer = &myArray;
-delete [] myArray; //free array
-*(myArray+3) /*or*/ myArray[3] /*or*/ 3[myArray] //to access elements
+delete [] myArray;
+*(myArray+3) /*or*/ myArray[3] /*or*/ 3[myArray]
 
 //POINTER TO ARRAY OF POLYMORPHIC TYPES
 //Avoid as pointer arithmatic on base class arrays of derived objects
 //pointer arithmatic will use sizeof(Base) not sizeof(Derived)
 Base* myArray = new Derived[2];
 myArray[1] = *(myArray+1) //BAD
-delete [] myArray //BAD, also uses pointer arithmatic
+delete [] myArray         //BAD, also uses pointer arithmatic
 
 //ARRAY-TO-POINTER DECAY RULE
-const char myArray[] = "Array";  // note not the same type as const char*
-const char* pMyArray = myArray;  // character array decays to pointer
+const char myArray[] = "Array";       // note not the same type as const char*
+const char* pMyArray = myArray;       // character array decays to pointer
 const char rMyArray (&)[5] = myArray; // actual type of array
 
 //DISPLAY MEMORY LOCATION
@@ -53,7 +53,7 @@ ss << std::hex << &myVariable;
 (void(MyClass::*)(double))&MyClass::MyMethod // address of class overloaded function
 
 //FUNCTION-TO-POINTER DECAY RULE
-void MyFunction(int);  // Not the same type as void(*)(int)
+void MyFunction(int);                 // Not the same type as void(*)(int)
 void(*pMyFunction)(int) = MyFunction; // function decays to pointer
 void(&rMyFunction)(int) = MyFunction; // actual type of function
 
@@ -258,18 +258,14 @@ class MyClass : public std::enable_shared_from_this<MyClass>
 //AUTO POINTER [DEPRECATED]
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+//LIMITATIONS
+//can't point to arrays due to it calling delete and not delete []
+//can't point to memory on the stack
 //pass auto pointers by reference otherwise takes ownership and sets to null
+
 #include <memory>
 auto_ptr<double> ap(new double) //only use for new
 *ap = 3.2;                      
-
-//LIMITATIONS
-auto_ptr<int> pia(new int[20]); //can't point to arrays due to it 
-                                //calling delete and not delete []
-int rigue = 7; 
-auto_ptr<int> pr(&rigue); //can't point to memory on the stack
-
-auto_ptr<int> p1(p2); //ownership is passed to p1 and p2 is set to nullptr
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //C-STYLE MEMORY MANIPULATION
