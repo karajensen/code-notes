@@ -134,14 +134,9 @@ auto orderChangedFn = std::bind(&MyFunction, _3, _1, _2); //rearranges order of 
 orderChangedFn(1,10.0,2.0); //becomes MyFunction(2.0,1,10.0)
 
 //BINDING CLASS FUNCTIONS
-typedef std::function<void(int)> MyFn;
 auto memberFn = std::bind(&MyClass::MyMethod, _1, _2); //_1 is always object
-memberFn(&myObject, 2);
-
-//BINDING CLASS OBJECT TO CLASS FUNCTION
-typedef std::function<void(int)> MyFn;
 auto memberFn = std::bind(&MyClass::MyMethod, this, _1);
-auto memberFn = std::bind(&MyClass::MyMethod, &myObject, _1);
+memberFn(&myObject, 2);
 memberFn(2) // object is bound with method
 
 //BINDING OVERLOADED FUNCTIONS
