@@ -377,7 +377,7 @@ MI::MI() :
 {
 }
 
-//VIRTUAL BASE CLASSES
+//VIRTUAL INHERITANCE
 //Use when inherited classes have same base class
 class Base {};
 class One: virtual public Base {}; //doesn't matter order of virtual/public
