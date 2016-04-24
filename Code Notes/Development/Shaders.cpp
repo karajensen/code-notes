@@ -58,11 +58,10 @@ DYNAMIC FLOW CONTROL: Choose path based on dynamic variable that can change duri
 //SHADER ASSEMBLY
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Reference: Learn vertex and pixel shader programming with DX9
-GPUShaderAnalyzer.exe ./Input.hlsl -I ./Output.txt -ASIC D3D -profile vs_4_0 -function VShader
-GPUShaderAnalyzer.exe ./Input.hlsl -I ./Output.txt -ASIC D3D -profile ps_4_0 -function PShader
-GPUShaderAnalyzer.exe ./Input.vert -I ./Output.txt -ASIC IL -profile glsl_vs -function main
-GPUShaderAnalyzer.exe ./Input.frag -I ./Output.txt -ASIC IL -profile glsl_fs -function main
+GPUShaderAnalyzer.exe . / Input.hlsl - I . / Output.txt - ASIC D3D - profile vs_4_0 - function VShader
+GPUShaderAnalyzer.exe . / Input.hlsl - I . / Output.txt - ASIC D3D - profile ps_4_0 - function PShader
+GPUShaderAnalyzer.exe . / Input.vert - I . / Output.txt - ASIC IL - profile glsl_vs - function main
+GPUShaderAnalyzer.exe . / Input.frag - I . / Output.txt - ASIC IL - profile glsl_fs - function main
 
 _gt // a > b
 _ge // a >= b
@@ -150,78 +149,6 @@ s0-s15     // Sampler register: readonly, stores texture file to sample
 //PIXEL OUTPUT REGISTERS
 oC0-3      // Output color register: determines which render target color outputs to
 oDepth     // Output depth register: outputs a depth value used with testing
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//SHADER OPTIMIZATIONS
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//• Floats faster for calculations, integers faster for indexing
-// • Use half instead of float where strict precision isn't important
-//• Compiler may optimize isnan() and isfinite() calls
-//• NaN * 0 = 0 not NaN except with precise keyword
-//• Use of static keyword for global bools only evaluates the one path instead of both
-//• If missing components in vertex stream, auto sets z/y to 0.0 and w to 1.0
-//• Normalize normals in pixel shader as may not be still normalized after vertex shader interpolation
-//• Texture read is fastest when accessing adjacent pixels due to cache
-//• Code that doesn't rely on texture read can be auto moved by compilier in front of a read to parallelize
-
-//PACKING ARRAYS/VALUES AS FLOAT4
-//arrays are always packed as float4 even if only using a float
-//saves space but can have instruction cost accessing members
-float4 myArray[25]; //float myARray[100];
-float value = myArray[index/4][index%4];  //Accessing through computation
-float value = myArray[index>>2][index&3];
-float myArr[100] = (float[100])myArray;   //Does not cast: copies and ineffeciant!
-const float4 constants = float4(1.0, 0.0, 0.5, 0.2) //commonly used constants can be cached
-
-//VECTORISE OPERATIONS
-float a,b,c,d;
-a = x + 1;            
-b = x + 2;     =>     float4 vec;
-c = x + 3;            vec = x + float4(1,2,3,4)
-d = x + 4;
-
-//SUMMING VECTOR COMPONENTS
-float sum = a + b + c + d; //inefficient
-float sum = myFlt.x + myFlt.y + myFlt.z + myFlt.w; //inefficient
-float sum = dot(myFlt4, vec4(1.0)); //faster to use dot to sum
-float sum = dot(myFlt3, vec4(1.0).xyz);
-float sum = dot(vec4(a,b,c,d), vec4(1.0));
-
-//SETTING VECTOR LENGTH
-50.0 * normalize(vec)  =>  vec * (50.0 * rsqrt(dot(vec, vec))) //uses less instructions
-
-//MAD (MULTIPLY THEN ADD)
-//usually single-cyle and fast
-(x / 2.0) + 1.0        =>  (x * 0.5) + 1.0 //divide may not be optimized, use multiply if possible
-x * (1.0 - x)          =>  -(x * x) + x //expand out brackets that require add before mul
-(x + a) / b            =>  x * (1.0 / b) + (a / b) //expand out brackets
-x += (a * b) + (c * d) =>  x += a * b; x += c * b //move to seperate lines
-
-//BUILT-IN-FUNCTIONS
-a / (x * b)       =>  rcp(x) * a / b //a / b implemented as a * rcp(b) but not always.
-(x + a) / x       =>  a * rcp(x) + 1 //Check if explicitly using rcp gives better results
-1.0 / sqrt(x)     =>  rsqrt(x) //1.0/sqrt(x) maps to rcp(sqrt(x)): instead use single instruction
-abs(x * y)        =>  abs(x) * abs(y)  //use abs() on input or it forces an extra MOV 
--(x * y)          =>  -x * y //use - on input or it forces an extra MOV 
-1.0 - saturate(x) =>  saturate(1.0 - x) //use saturate() on output or it forces an extra MOV
-min(x) or max(x)  =>  saturate(x) //saturate() cheaper than min or max
-step() or sign()  =>  if {} else {} //conditional assigment faster
-
-//SWIZZLE MASKS
-gl_Position.x = in_pos.x; 
-gl_Position.y = in_pos.y;
-gl_Position.xy = in_pos.xy; //faster than adding both seperately
-
-//SETTING INDIVIDUAL COMPONENTS
-//uses temporary float4
-float4 finalColour = myColor; 
-finalColour.a = 1.0;
-gl_FragColor = finalColour; 
-//instead, use MAD, swizzling and constant container
-const float2 constants = float2(1.0, 0.0); 
-gl_FragColor = (myColor.xyzw * constants.xxxy) + constants.yyyx;
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //SHADING EQUATIONS

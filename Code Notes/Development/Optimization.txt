@@ -1,0 +1,179 @@
+﻿///////////////////////////////////////////////////////////////////////////////////////////////////
+//PROGRAMMING OPTIMIZATION
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+• A compiler may reorder instructions for the sake of parallel execution
+• Compiler will always select the most efficient integer size if you declare an int
+• Unsigned is faster than signed when you divide or % with a constant
+• char, short, bool slightly less efficient as can be converted to int when doing calculations
+• << quicker than multiplying and >> quicker than dividing for power of two values
+• Signed/Unsigned int conversion costless, Int/Floating Point conversion expensive
+• In most cases, double calculations take no more time than floats but don't mix the two
+• Floating point division by a constant should be done by multiplying with the reciprocal
+• Switch statements with incrementing labels effecient as implemented as jump target table
+• Faster to use memset, memcpy and cstring methods though unsafe
+• Virtual functions can induce cache misses during look up if function is not called often
+• Branches are often predicted before evaluated, hard to predict branches can be costly
+• Constant expressions eg. 2.0/3.0 replaced by their results at compile time
+• Common maths functions (sin, pow, sqrt) with constants not always replaced at compile time
+• std::function larger/slower than internal type of lambda
+• STL container empty() is always O(1), size() may be O(n) depending on container
+• 2D arrays should always have outer loop rows, inner loop columns where arr[row][column]
+• Loop conditions are evaluated each iteration, evaluate any constants before loop starts
+
+PERFORMANCE HITS
+• Cache misses where data needs to be fetched from RAM
+• Cache thrashing where data competes for same cache lines
+• Fragmentation of heap means more cache misses
+
+-------------------------------------------------------------------------------------------
+MEMORY ALLOCATORS
+-------------------------------------------------------------------------------------------
+• May improve performance/memory usage and reduce fragmentation of heap
+• Handle requests for allocation and deallocation of memory for a container
+• Useful if lots of small allocations for associative containers as default is slow
+
+MEMORY POOL ALLOCATOR
+• Custom allocator design where large block of memory is allocated beforehand
+• Requests by container are from the pool and returned to the pool
+• Pool is deallocated when lifetime of container ends
+
+-------------------------------------------------------------------------------------------
+SYMMETRIC INSTRUCTION IN MULTIPLE DATA (SIMD)
+-------------------------------------------------------------------------------------------
+• Same intructions done in parallel on multiple data objects
+• Registers (XMM, MMX, YMM) optimized for doing same work on vectorized floats and/or ints
+• Auto-used by compilier if 4 floats/ints aligned together in memory
+• Best used on rendering algorithms and math libaries
+• Best used when data members don't rely on outcome of previous member calculations
+
+LINEAR SUM OF ARRAY
+float arr[100]
+for(int i = 0; i < 100; ++i)
+    sum += arr[i]
+
+SIMD SUM OF ARRAY
+float arr[100]
+for(int i = 0; i < 100; i+=4)
+    s0 += arr[i]
+    s1 += arr[i+1]
+    s2 += arr[i+2]
+    s3 += arr[i+3]
+sum = s0 + s1 + s2 + s3
+
+-------------------------------------------------------------------------------------------
+CACHE-FRIENDLY PROGRAMMING
+-------------------------------------------------------------------------------------------
+
+TEMPORAL LOCALITY
+• When memory location is accessed its likely the same location will be acessed again in the future
+
+SPATIAL LOCALITY
+• Cache will read chunk of memory and closer together dat may mean less cache fetches
+• Arrays/vectors more cache friendly than lists or deques due to spacial locality
+• Reorder class members so the data aligns without extra padding to reduce amount of data fetched
+
+2D ARRAYS
+• Better to access row first rather than column first as cache optimized for reading arrays forwards
+• Column First: 2 cache hits, 2 memory accesses:
+    M[0][0] (memory) + M[0][1] (cached) + M[1][0] (memory) + M[1][1] (cached) = 1 + 2 + 3 + 4
+• Row First: 0 cache hits, 4 memory accesses:
+    M[0][0] (memory) + M[1][0] (memory) + M[0][1] (memory) + M[1][1] (memory) = 1 + 3 + 2 + 4
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//RENDERING OPTIMIZATION
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+• Don't allocate stencil if you don't use it
+• R5G6B5 color sufficient for dynamic reflection maps
+• Use low resolution (<256x256) 8-bit normalization cube-maps
+• Render a depth-only pass before color pass to reduce overdraw
+• Use power of 2 allocations to reduce fragmentation (trade off can be wasted allocation space)
+• Alpha tested only objects don't need to be sorted by depth
+
+FARPLANE CULLING
+• Any objects past the farplane are culled
+• Limitation is if plane is too close objects seen disappearing
+• This can be fixed by using fog to hide far distances
+
+FRUSTUM CULLING
+• Only objects in frustum are drawn. 
+• If Polygon outside it's not visible and hence discarded
+• If partially inside its clipped so outside parts are removed
+
+FRONT/BACKFACE CULLING
+• Winding order of vertices indicates which way polygon is facing
+
+CLIPPING
+• Any screen space coordinates outside [–1,–1,0] to [1,1,1] culled
+
+OCCLUSION CULLING
+• Identifies parts of the scene visible/not visible to the viewer
+• Objects behind other objects are discarded
+• Can use a plane to represent occluder (similar to frustum culling)
+• Can use Potential Visible Sets for indoor scenes
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//SHADER OPTIMIZATION
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+• Floats faster for calculations, integers faster for indexing
+• Use half instead of float where strict precision isn't important
+• Compiler may optimize isnan() and isfinite() calls
+• NaN * 0 = 0 not NaN except with precise keyword
+• Use of static keyword for global bools only evaluates the one path instead of both
+• If missing components in vertex stream, auto sets z/y to 0.0 and w to 1.0
+• Normalize normals in pixel shader as may not be still normalized after vertex shader interpolation
+• Texture read is fastest when accessing adjacent pixels due to cache
+• Code that doesn't rely on texture read can be auto moved by compilier in front of a read to parallelize
+
+CACHE COMMONLY USED CONSTANTS
+const float4 constants = float4(1.0, 0.0, 0.5, 0.2);
+
+VECTORISE OPERATIONS
+float a,b,c,d;
+a = x + 1;    
+b = x + 2; => float4 vec;
+c = x + 3;    vec = x + float4(1,2,3,4)
+d = x + 4;
+
+SUMMING VECTOR COMPONENTS
+float sum = a + b + c + d;                           Inefficient
+float sum = myFlt.x + myFlt.y + myFlt.z + myFlt.w;   Inefficient
+float sum = dot(myFlt4, vec4(1.0));                  Faster to use dot to sum
+float sum = dot(myFlt3, vec4(1.0).xyz);
+float sum = dot(vec4(a,b,c,d), vec4(1.0));
+
+SETTING VECTOR LENGTH
+• Uses less instructions
+50.0 * normalize(vec)  =>  vec * (50.0 * rsqrt(dot(vec, vec)))
+
+MAD (MULTIPLY THEN ADD)
+• Usually single-cyle and fast
+(x / 2.0) + 1.0        =>  (x * 0.5) + 1.0          Divide may not be optimized, use multiply if possible
+x * (1.0 - x)          =>  -(x * x) + x             Expand out brackets that require add before mul
+(x + a) / b            =>  x * (1.0 / b) + (a / b)  Expand out brackets
+x += (a * b) + (c * d) =>  x += a * b; x += c * b   Move to seperate lines
+
+BUILT-IN-FUNCTIONS
+a / (x * b)       =>  rcp(x) * a / b      a / b implemented as a * rcp(b) but not always.
+(x + a) / x       =>  a * rcp(x) + 1      Check if explicitly using rcp gives better results
+1.0 / sqrt(x)     =>  rsqrt(x)            1.0/sqrt(x) maps to rcp(sqrt(x)): instead use single instruction
+abs(x * y)        =>  abs(x) * abs(y)     Use abs() on input or it forces an extra MOV 
+-(x * y)          =>  -x * y              Use - on input or it forces an extra MOV 
+1.0 - saturate(x) =>  saturate(1.0 - x)   Use saturate() on output or it forces an extra MOV
+min(x) or max(x)  =>  saturate(x)         Saturate() cheaper than min or max
+step() or sign()  =>  if {} else {}       Conditional assigment faster
+
+SWIZZLE MASKS
+• Faster than adding both seperately
+gl_Position.x = in_pos.x; 
+gl_Position.y = in_pos.y;
+gl_Position.xy = in_pos.xy;
+
+PACKING ARRAYS/VALUES AS FLOAT4
+• Arrays are always packed as float4 even if only using a float
+• Packing as float4 saves space but can have instruction cost accessing members
+float4 myArray[25];                          Rather than float myARray[100]
+float value = myArray[index/4][index%4];     To access values
+float myArr[100] = (float[100])myArray;      Does not cast: copies and ineffeciant!

@@ -140,17 +140,6 @@ RESOURCE ACQUISITION IS INITIALIZATION (RAII)
 • Resource cleaning needs to be tied to the lifespace of objects for automatic allocation/deletion
 • Vital for exception and thread safe code
 
-ALLOCATORS
-• Handle requests for allocation and deallocation of memory for a container
-• Default ones use operator new/malloc for allocation
-• Custom ones may improve performance/memory usage
-• Useful if lots of small allocations for associative containers as default is slow
-
-MEMORY POOL ALLOCATOR
-• Custom allocator design where large block of memory is allocated beforehand
-• Requests by container are from the pool and returned to the pool
-• Pool is deallocated when lifetime of container ends
-
 //////////////////////////////////////////////////////////////////////////////////////////////
 //SMART POINTERS
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -471,30 +460,6 @@ STANDARD LIBRARY EXCEPTIONS
 • Multi-range insert(begin,begin,end) has basic guarantee
 • Vector and Deque only: inserts or erases for multi or single objects are basic guarantee 
   if object constructor or assignment operator throws, otherwise strong guarantee
-
-//////////////////////////////////////////////////////////////////////////////////////////////
-//OPTIMIZATION
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-• A compiler may reorder instructions for the sake of parallel execution
-• Compiler will always select the most efficient integer size if you declare an int
-• Unsigned is faster than signed when you divide or % with a constant
-• char, short, bool slightly less efficient as can be converted to int when doing calculations
-• << quicker than multiplying and >> quicker than dividing for power of two values
-• Signed/Unsigned int conversion costless, Int/Floating Point conversion expensive
-• In most cases, double calculations take no more time than floats but don't mix the two
-• Floating point division by a constant should be done by multiplying with the reciprocal
-• Switch statements with incrementing labels effecient as implemented as jump target table
-• Faster to use memset, memcpy and cstring methods though unsafe
-• Avoid multiple inheritance and virtual functions
-• Reorder class members so the data aligns without extra padding
-• Constant expressions eg. 2.0/3.0 replaced by their results at compile time
-• Common maths functions (sin, pow, sqrt) not always replaced at compile time
-• std::function larger/slower than internal type of lambda
-• STL container empty() is always O(1), size() may be O(n) depending on container
-• Store dynamic objects in arrays to reduce heap fragmentation and cache misses
-• 2D arrays should always have outer loop rows, inner loop columns where arr[row][column]
-  as the data cache is optimized for accessing arrays forwards, not backwards
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //STL ALGORITHMS

@@ -274,40 +274,6 @@ To get final coordinate, divide by w (which is screen space z)
  --------------------------------------
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//OPTIMISATION
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-FARPLANE CULLING
-• Any objects past the farplane are culled
-• Limitation is if plane is too close objects seen disappearing
-• This can be fixed by using fog to hide far distances
-
-FRUSTUM CULLING
-• Only objects in frustum are drawn. 
-• If Polygon outside it's not visible and hence discarded
-• If partially inside its clipped so outside parts are removed
-
-FRONT/BACKFACE CULLING
-• Winding order of vertices indicates which way polygon is facing
-
-CLIPPING
-• Any screen space coordinates outside [–1,–1,0] to [1,1,1] culled
-
-OCCLUSION CULLING
-• Identifies parts of the scene visible/not visible to the viewer
-• Objects behind other objects are discarded
-• Can use a plane to represent occluder (similar to frustum culling)
-• Can use Potential Visible Sets for indoor scenes
-
-OPTIMIZATION TIPS
-• Don't allocate stencil if you don’t use it
-• R5G6B5 color sufficient for dynamic reflection maps
-• Use low resolution (<256x256) 8-bit normalization cube-maps
-• Render a depth-only pass before color pass to reduce overdraw
-• Use power of 2 allocations to reduce fragmentation (trade off can be wasted allocation space)
-• Alpha tested only objects don't need to be sorted by depth
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
 //COLOUR
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -399,6 +399,7 @@ BIT MANIPULATION
 • Signed integers use most significant bit for +/-
 
 x = ∼x + 1                   Negate a number (two's component)
+x = ~x                       Flip all bits in a number
 on = x & (1 << n)            Test if nth bit is on
 x = x | (1 << n)             Set the nth bit on
 x = x & ~(1 << n)            Set the nth bit off

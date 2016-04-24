@@ -136,6 +136,7 @@
     <Text Include="Development\Collisions.txt" />
     <Text Include="Development\Maths.txt" />
     <Text Include="Development\Mental Ray.txt" />
+    <Text Include="Development\Optimization.txt" />
     <Text Include="Development\Physics.txt" />
     <Text Include="Development\Programming Notes.txt" />
     <Text Include="Development\Rendering.txt" />
@@ -171,6 +172,7 @@
     <Image Include="Images\Code - HTML Element.png" />
     <Image Include="Images\Code - Iterators.png" />
     <Image Include="Images\Code - Networking.png" />
+    <Image Include="Images\Code - SIMD.png" />
     <Image Include="Images\Code - Static and dynamic websites.png" />
     <Image Include="Images\Code - STL container performance.PNG" />
     <Image Include="Images\Code - Tree Heap Operations.png" />

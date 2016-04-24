@@ -186,6 +186,9 @@
     <Text Include="Interviews\Interview Questions.txt">
       <Filter>Interviews</Filter>
     </Text>
+    <Text Include="Development\Optimization.txt">
+      <Filter>Development</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\Code - Agile Lifecycle.png">
@@ -453,6 +456,9 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Maths - Integrals.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - SIMD.png">
       <Filter>Images</Filter>
     </Image>
   </ItemGroup>
