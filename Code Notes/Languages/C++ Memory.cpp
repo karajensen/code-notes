@@ -1,28 +1,26 @@
-﻿/////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 //POINTERS/REFERENCES
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-int* myPoint = NULL;                //0 or 0L which zeros out pointer
-int* myPointer = nullptr;           //store null
-int* myPointer = &myInt;            //store address of variable
-int* myPointer = new int;           //finds empty memory location on heap and allocates
-int* myPointer = (int*)0xB8000000;  //explicitly store memory address
-int& myInt = myInt2;                //cannot be reassigned, cannot be null
+int* ptr = NULL;                 //0 or 0L which zeros out pointer
+int* ptr = nullptr;              //store null
+int* ptr = &myInt;               //store address of variable
+int* ptr = new int;              //finds empty memory location on heap and allocates
+int* ptr = (int*)0xB8000000;     //explicitly store memory address
+int* const ptr = &value;         //Constant int pointer (can't change what ptr points to)
+const int* ptr = &value;         //Pointer to a constant int (can't change value)
+const int* const ptr = &value    //can't change value or what pointer points to
+int** ptr = &ptr2;               //pointer to pointer
+int& ref = myInt;                //cannot be reassigned, cannot be null
+int& const ref = myInt;          //Redundant as references automatically & const as cannot be reassigned
 
-*myPointer = 4;     //dereferencing accesses variable
-&myPointer;         //gives address of pointer
-myPointer->member;  //access member if object
-delete myPointer;   //frees the block of memory
-
-//CONST POINTERS/REFERENCES
-const int* ptr = &value;      //Pointer to a constant int (can't change value)
-int* const ptr = &value;      //Constant int pointer (can't change what ptr points to)
-const int* const ptr = &value //can't change value or what pointer points to
-int& const ref = myInt;       //Redundant as references automatically & const as cannot be reassigned
+*myPointer = 4;                   //dereferencing accesses variable
+myPointer->member;                //access member of object
+(*myPointer)->member;             //access pointer to pointer
+delete myPointer;                 //frees the block of memory
 
 //POINTER TO ARRAYS
-int* myArray = new int[SIZE]; 
-int** myArrayPointer = &myArray;
+int* myArray = new int[SIZE];
 delete [] myArray;
 *(myArray+3) /*or*/ myArray[3] /*or*/ 3[myArray]
 
@@ -60,12 +58,11 @@ void(&rMyFunction)(int) = MyFunction; // actual type of function
 //POINTER-TO-FUNCTION
 typedef bool(*MyFunctionPtr)(int, double); /*or*/ 
 using MyFunctionPtr = bool(*)(int, double);
-
 MyFunctionPtr myFunction = &MyFunction;
 myFunction(5, 1.0);
 
 //POINTER-TO-MEMBER FUNCTION
-//• Cannot cast to pointer-to-function as can be much larger storing inheritance information
+//Cannot cast to pointer-to-function as can be much larger storing inheritance information
 class MyClass
 {
 public:
@@ -79,15 +76,15 @@ m_methodFn = &MyClass::MyMethod;
 (myObjectPtr->*m_methodFn)();
 
 //FUNCTOR
-//Function with operator()
+//class with operator()
 struct MyFunctor
 {
     bool operator()(int x) { return x > 0; }
 }
 
 //LAMBDAS
-//• If inside a class, may become friends to access/capture internals
-//• Lamda creates a closure object which holds captured vars
+//If inside a class, may become friends to access/capture internals
+//Lamda creates a closure object which holds captured vars
 auto myLambda = [](int x)->float {}  // specify return type, only need if multilined
 auto myLambda = [&var](int x){}      // capture only myVar by reference
 auto myLambda = [=var](int x){}      // capture only myVar by value
@@ -96,15 +93,15 @@ auto myLambda = [&](int x){}         // capture all by ref
 auto myLambda = [=](int x){}         // capture all non-static local variables (including this) by-val
 
 //LAMBDA INIT/GENERALISED CAPTURE
-//• Allows creation of variables inside the closure
+//Allows creation of variables inside the closure
 auto myLambda = [var = myVar](){}           // create var and copy-assign to it, works on member vars
 auto myLambda = [var = MyClass()](){}       // create var of type MyClass
 auto myLambda = [var = std::move(obj)](){}  // move obj to be only used inside closure
 auto myLambda = [var = std::move(vec)](){}  // move vector of objects to use inside closure
 
 //STD::FUNCTION
-//• Allows all function objects to be stored in single type
-//• Slower and bigger than using actual function object types (lambda, functors, pointers)
+//Allows all function objects to be stored in single type
+//Slower and bigger than using actual function object types (lambda, functors, pointers)
 std::function<double(int)> myFn = [](int x){ return x+2.0; }
 std::function<double(int)> myFn = &MyFunction;
 
@@ -113,8 +110,7 @@ std::function<double(int)> myFn = &MyFunction;
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Creates functor by capturing address and variables (by-ref)
 
-using namespace std::placeholders; //for _1, _2...
-void MyFunction(int x, double y, float z);
+using namespace std::placeholders; //for _1, _2..
 
 //SETTING ALL ARGUMENTS
 auto fullFn = std::bind(&MyFunction, 1, 10.0, 2.0);
@@ -158,37 +154,27 @@ if(myPtr) /*or*/ if(myPtr.get()) //true if valid, false if null
 //UNIQUE POINTER
 auto unique(std::make_unique<MyClass>());        // can't use custom deleter or {}
 std::unique_ptr<MyClass> unique(new MyClass());
-std::unique_ptr<int[]> p(new int[10]);
+std::unique_ptr<int[]> p(new int[10]);           // arrays only supported by unique_ptr
 
 //SHARED POINTER
 auto shared(std::make_shared<MyClass>());        // creates a new control block, can't use custom deleter or {}
 std::shared_ptr<MyClass> shared(new MyClass());  // creates new control block
 std::shared_ptr<MyClass> shared(unique);         // creates new control block, unique_ptr becomes null
-std::shared_ptr<MyClass> shared(myRawPtr);       // creates new control block
 std::shared_ptr<MyClass> shared(shared2);        // shares control block
 std::shared_ptr<MyClass> shared(weak);           // shares control block, throws exception if weak_ptr expired
-shared.use_count()   // get the current count
-shared.swap(sp2)     // swap sp1 and sp2
-shared.unique()      // returns true if ref count = 1, false otherwise
-shared.reset()       // decrements ref count to 0, deletes object
+shared.use_count()                               // get the current count
+shared.swap(shared2)                             // swap what the shared_ptr look at
+shared.unique()                                  // returns true if ref count = 1, false otherwise
+shared.reset()                                   // decrements ref count
 
 //WEAK POINTER
-//observing a shared pointer
-std::weak_ptr<MyClass> weak(shared);
-weak.use_count()    //get the current count
-weak.lock()         //returns a shared_ptr, if expired then null
-weak.expired()      //returns true if object has been deleted, false if okay
-
-//SMART POINTER ARRAYS
-//can only by unique_ptr
-std::unique_ptr<int[]> p(new int[10]);
-
-//CASTING SMART POINTERS
-std::shared_ptr<Base> ptr(new Derived());
-std::shared_ptr<Derived> dptr = std::dynamic_pointer_cast<Base>(ptr) //returns null if unsuccessful
+std::weak_ptr<MyClass> weak(shared);             // observing a shared pointer control block
+weak.use_count()                                 // get the current count
+weak.lock()                                      // returns a shared_ptr, if expired then null
+weak.expired()                                   // returns true if object has been deleted, false if okay
 
 // RESETTING SMART POINTERS
-// Changing the initial smart pointer does not change others
+// Changing the initial smart pointer does not change others, only decrements count
 std::shared_ptr<double> shared1(new double(2.0));
 std::shared_ptr<double> shared2(shared1);
 std::weak_ptr<double> weak(shared1);
@@ -203,20 +189,6 @@ double value = *weak.lock();     // return 2.0
 auto Release = [](MyClass* obj){ obj->Release(); }
 std::shared_ptr<MyClass> shared(&myObject, Release);
 std::unique_ptr<MyClass, decltype(Release)> unique(&myObject, Release);
-
-//CALLING PRIVATE DESTRUCTOR WITH DELETER
-class MyClass
-{
-private:
-    ~MyClass(){}
-
-    class MyClassDeleter
-    {
-    public:
-        void Release();
-    };
-    friend class MyClassDeleter;
-};
 
 //CYCLIC DEPENDENCIES
 class WeakClass;
@@ -236,7 +208,7 @@ public:
     std::weak_ptr<SharedClass> wp;
 };
 
-//CREATING SHARED_PTR FROM THIS
+//SHARED THIS
 //Used when storing this pointer both internally and externally as shared_ptr to prevent double deletion
 //Looks up control block for object in first shared_ptr, throws exception if one not found
 //Uses Curiously recurring template pattern (CRTP)
@@ -282,8 +254,6 @@ int* pPointer = (int*)realloc(allocationSizeInBytes);                // Realloca
 
 // PLACING OBJECT IN EXISTING MEMORY
 // Puts newed object into section of memory given
-// Auto deleted when goes out of scope
-obj->~MyClass() // Classes require destructor to be called explicitly before goes out of scope
 
 // Any new/malloc memory is guaranteed to be properly aligned for the chosen type
 char* MyBuffer = new char[sizeof(MyClass)];
@@ -292,3 +262,8 @@ auto* obj = new (MyBuffer) MyClass;
 // Buffers on stack have no guarantee and may not be aligned for MyClass
 char MyBuffer[sizeof(MyClass)];
 auto* obj = new (&MyBuffer[0]) MyClass; 
+
+// DESTROYING
+// Auto calls delete when out of scope
+// Classes require destructor to be called explicitly before goes out of scope
+obj->~MyClass()
