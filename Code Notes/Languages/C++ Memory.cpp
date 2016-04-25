@@ -28,8 +28,8 @@ delete [] myArray;
 //Avoid as pointer arithmatic on base class arrays of derived objects
 //pointer arithmatic will use sizeof(Base) not sizeof(Derived)
 Base* myArray = new Derived[2];
-myArray[1] = *(myArray+1) //BAD
-delete [] myArray         //BAD, also uses pointer arithmatic
+myArray[1] = *(myArray+1)        //BAD
+delete [] myArray                //BAD, also uses pointer arithmatic
 
 //ARRAY-TO-POINTER DECAY RULE
 const char myArray[] = "Array";       // note not the same type as const char*
@@ -153,7 +153,7 @@ if(myPtr) /*or*/ if(myPtr.get()) //true if valid, false if null
 
 //UNIQUE POINTER
 auto unique(std::make_unique<MyClass>());        // can't use custom deleter or {}
-std::unique_ptr<MyClass> unique(new MyClass());
+std::unique_ptr<MyClass> unique(new MyClass());  // has specialisation which calls delete[]
 std::unique_ptr<int[]> p(new int[10]);           // arrays only supported by unique_ptr
 
 //SHARED POINTER
