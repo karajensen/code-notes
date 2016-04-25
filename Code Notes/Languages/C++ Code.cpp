@@ -28,17 +28,16 @@ Type x((Type2(y)));             // Extra () shows not function declaration
 Type x(Type2(5));               // Using temp var shows not function declaration
 5 + 1;                          // Temporary value on left side allowable but doesn't do anything
 
-//TYPEDEF / ALIAS DECLARATION
+//ALIAS DECLARATION
 typedef int myType;   
 typedef decltype(x) myType;
 using myType = int;
 
 //VARIABLE SIZES
-sizeof(myInt) //gives size of myInt in bytes
-sizeof(myArray) //gives size of whole array rather than first element
-sizeof(myCString) //size of whole char array
-sizeof(myPointer) //Gives the size of the pointer
-sizeof(MyClass::myMember); //Gives size of the type
+sizeof(myInt)       // gives size of myInt in bytes
+sizeof(myArray)     // gives size of whole array rather than first element
+sizeof(myCString)   // size of whole char array
+sizeof(myPointer)   // Gives the size of the pointer
 
 //VARIABLE INCREMENTING
 b = ++a    // increment a and then use it (before anything else)
@@ -47,6 +46,37 @@ b = a++    // use a and then increment it (after everything including assigment)
 i++ * ++i; // BAD: i is modified more than once
 i = ++i    // BAD: i is modified more than once
 ++i = 2;   // BAD: i is modified more than once
+
+//CSTRINGS
+//Can change individual chars
+char cstring = 'C';               // single character; can read/write
+char cstring[256];                // character buffer, can read/write
+char cstring[] = "mystring"       // the \0 is done automatically
+char cstring[] = {'h','i','\0'};
+
+//STRING LITERALS
+//Constant string literal, read only, \0 automatic
+//Cannot change individual chars
+char* str = "mystring"
+auto* str = R"(Raw string literal)" //anything between the() doesn't need to be escaped
+auto* str = u8"UTF-8 string literal"
+auto* str = u"UTF-16 string literal"
+auto* str = U"UTF-32 string literal"
+auto* str = L"Wide-string literal"
+
+//ARRAYS
+//must be constant size input
+//initialises first two values, sets rest to 0
+int myArray[9] = { 1, 2 };
+
+//2D ARRAYS
+//creates an arrow with 2 rows, 2 columns
+//memory layout is row-major: [1 | 2 | 3 | 4] in continuous block
+int myArray[2][2] 
+{
+    {1, 2},
+    {3, 4}
+};
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //MOVE SEMANTICS
@@ -76,41 +106,7 @@ string MyFn(std::string x){ return x; } // Returning function argument by-val
 myVec.emplace_back("str")               // Emplacing rvalue/unique_ptr into container
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//C-STYLE ARRAYS/STRINGS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//CSTRINGS
-//Can change individual characters in string
-char cstring = 'C'; //single character; can read/write
-char cstring[256]; //character buffer, can read/write
-char cstring[] = "mystring" //the \0 is done automatically
-char cstring[] = {'v','a','t','a','n','i','\0'};
-
-//STRING LITERALS
-//Constant string literal, read only, \0 automatic
-//Cannot change individual characters in string
-char* str = "mystring"
-auto* str = R"(Raw string literal)" //anything between the() doesn't need to be escaped
-auto* str = u8"UTF-8 string literal"
-auto* str = u"UTF-16 string literal"
-auto* str = U"UTF-32 string literal"
-auto* str = L"Wide-string literal"
-
-//ARRAYS
-//must be constant size input
-int myArray[9] = { 1, 2 };  //initialises first two values, sets rest to 0
-
-//2D ARRAYS
-//creates an arrow with 2 rows, 2 columns
-//memory layout is row-major: [1 | 2 | 3 | 4] in continuous block
-int myArray[2][2] 
-{
-    {1, 2},
-    {3, 4}
-};
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//CASTING
+//CONVERSIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //C++ CAST                C-STYLE CAST
@@ -121,9 +117,9 @@ std::const_cast           (int*)&cx
 
 //SAFE CASTING
 //dynamic_cast only pointers/references of classes with virtual functions; slowest cast
-auto* myPtr = dynamic_cast<MyDerived*>(myBasePtr) //returns 0 if fail
-auto& myObj = dynamic_cast<MyDerived&>(myBaseObj) //throws std::bad_cast if fail
-auto* myPtr = static_cast<MyClass*>(myVoidPtr)    //use static for void*
+auto* myPtr = dynamic_cast<MyDerived*>(myBasePtr) // returns 0 if fail
+auto& myObj = dynamic_cast<MyDerived&>(myBaseObj) // throws std::bad_cast if fail
+auto* myPtr = static_cast<MyClass*>(myVoidPtr)    // use static for void*
 
 //UNSAFE CASTING
 auto* myPtr = reinterpret_cast<MyDerived>(myBasePtr) // only for pointers
@@ -136,7 +132,7 @@ auto& myObj = static_cast<MyDerived&>(myBaseObject)
 auto* myPtr = const_cast<MyClass>(myPtr);
 
 // STRING TO NUMBER
-atoi("3") //converts cstring to int
+atoi("3")   //converts cstring to int
 atof("3.0") //converts cstring to float
 
 // NUMBER TO STRING
@@ -145,18 +141,6 @@ atof("3.0") //converts cstring to float
 to_string(value);
 to_wstring(value);
 
-// STD::STRING TO CHAR*:
-std::string str = "test";
-std::vector<char> vec(str.size() + 1);
-std::copy(str.begin(), str.end(), vec.begin());
-vec[vec.size()-1] = '\0';
-char* myCStr = &vec[0];
-
-// NUMBER TO STRING STREAM
-// Superseeds std::strstream
-// operator<< returns std::ostream, str() part of std::ostringstream
-static_cast<std::ostringstream&>(std::ostringstream() << value).str()
-
 // NUMBER TO STRING: PRINTF/WPRINTF
 // Can have buffer overruns, difficult to use with templates
 char buffer[256];
@@ -164,6 +148,13 @@ std::sprintf(buf, "%d", myInt)
 std::sprintf(buf, "%u", myUint) 
 std::sprintf(buf, "%f", myDbl) 
 std::sprintf(buf, "%f", myFloat) 
+
+// STD::STRING TO CHAR*:
+std::string str = "test";
+std::vector<char> vec(str.size() + 1);
+std::copy(str.begin(), str.end(), vec.begin());
+vec[vec.size()-1] = '\0';
+char* myCStr = &vec[0];
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //UNIONS
@@ -189,8 +180,7 @@ union MyUnion
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // compiler replaces name with integer value when encountering it
-// can have multiple names with the same values
-enum
+enum class MyEnum
 {
     ONE,           // Value = 0
     TWO = 100,     // Value = 100
@@ -200,19 +190,18 @@ enum
 }
 
 // UNSCOPED ENUM
-// Underlying type is dependent on what types used, chosen by compiler
-enum MyEnum { ONE, TWO }; 
-double ONE = 2.0; // CAN'T DO: Pollutes namespace
+// Underlying type chosen by compiler
+double ONE = 2.0;                           // CAN'T DO: Pollutes namespace
 MyEnum myEnum = static_cast<MyEnum>(myInt); // requires cast from int to enum
-int myInt = myEnum; // auto casts from enum to int
+int myInt = myEnum;                         // auto casts from enum to int
 
 // SCOPED (CLASS) ENUM
 // Underlying type always int
-// Has operator=, operator==, operator<, can add own methods
-enum class MyEnum { ONE, TWO };
-double ONE = 2.0; // CAN DO: Does not pollute namespace
-MyEnum myEnum = static_cast<MyEnum>(2); // requires cast from int to enum
-int myInt = static_cast<int>(myEnum) // requires cast from enum to int
+// Has operator=, operator==, operator<
+// can add own methods
+double ONE = 2.0;                           // CAN DO: Does not pollute namespace
+MyEnum myEnum = static_cast<MyEnum>(2);     // requires cast from int to enum
+int myInt = static_cast<int>(myEnum)        // requires cast from enum to int
 
 // UNDERLYING TYPE
 // Can change for both scoped/unscoped
@@ -252,17 +241,16 @@ for (int i = 0; i < 5; ++i){}
 for (int i = 0, int j = 2; i < j; i = i + 15, j-- ){}
 
 //FOR EACH LOOP
-for (double x : myDoubleArray){ x += 1.0; }  //by-val
-for (double &x : myDoubleArray){ x += 1.0; } //by-ref
+for (double x : myDoubleArray){ x += 1.0; }     //by-val
+for (double &x : myDoubleArray){ x += 1.0; }    //by-ref
 for (auto x : myVectorArray){ DoSomething(x); } //with stl containers
-for (int x : {0,4,3,5,2,0}){ cout << x; } //using initialisation list
+for (int x : {0,4,3,5,2,0}){ cout << x; }       //using initialisation list
 
 //WHILE LOOP
 while (name[i] != '\0') { i++; }
 
 //DO WHILE LOOP
-do { cin << n;}
-while (n != 7);
+do { cin << n;} while (n != 7);
 
 break;    //stops the loop
 continue; //jumps to loop conditional- while, for etc.
@@ -327,22 +315,10 @@ void MyFn(int arr[2][3]) /*==*/  void MyFn(int arr[][])
 void MyFn(int(&ref)[6])  /*OR*/  void MyFn(int ref(&)[6])
 void MyFn(int* arr)
 
-//PASSING 2D ARRAY
-//my2DArray points to first element which points to array of col ints
-//Only pass number of rows, passing pointer to a pointer
-void MyFunction(int my2DArray[][cols],rows);
-int my2DArray[rows][cols];
-MyFunction(my2DArray, rows)
-
 //INLINE FUNCTIONS
 //Function call is replaced by function body
 //If in .h any internal static members are shared between files
 inline void MyFn(int x){}
-                                                  
-//STATIC (PRIVATE) NON-MEMBER FUNCTIONS
-//Functions have external linkage by default, static makes it private to file
-//If in .h any internal static members are copied between files
-static void MyFn(int x){}
 
 //C-VARIADIC FUNCTION
 MyFn("This is a %i %f test",2,3.0f);
@@ -378,17 +354,12 @@ auto MyFn(int x, int y) -> double {}
 auto MyFn(int x, int y) -> decltype(x) {} // make return type same as x
 auto MyFn(MyCallback fn, int x) -> decltype(fn(x)) { return fn(x)); }
 
-//RETURNING RVALUE REFERENCES BY-VAL
-//Returning by-value requires move or else copy occurs (If moving not supported, copy will occur)
-MyClass MyFn(MyClass&& x){ return std::move(x); }
-template<typename T> T MyFn(T&& x) { return std::foward(x); }
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //NAMESPACES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 namespace /*anon*/ {}
-namespace MySpace  { using std::cout; /*namespace definitions*/ }
+namespace MySpace {}
 
 MySpace::MyVariable = 3;
 using namespace MySpace;

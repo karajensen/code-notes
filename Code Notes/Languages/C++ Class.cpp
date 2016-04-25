@@ -156,8 +156,6 @@ public:
 //Class with members public by default
 struct MyStruct /*doesn't require name*/
 {
-    float x;
-    float y;
 }; 
 
 //LOCAL CLASS/STRUCTURES
@@ -210,7 +208,7 @@ POD obj = {3}; //can be auto initialized with {}
 obj1*obj2  /*->*/  obj1.operator*(obj2);
 obj1+obj2  /*->*/  obj1.operator+(obj2);
 obj1[4]    /*->*/  obj1.operator[](4) 
-obj1[0][1] /*->*/  (class1[0].operator[](1)).operator[0];
+obj1[0][1] /*->*/  (obj1[0].operator[](1)).operator[0];
 
 //OVERLOAD DECLARATIONS
 MyClass operator++(int unused); //postfix, returns copy of value before increment
@@ -270,16 +268,15 @@ public:
     Base(int x); //constructors can't be virtual
     virtual void MyMethod() = 0; //pure virtual method, no objects of Base can be created
     virtual void MyMethod() = 0 {} //pure virtual method with body, no objects of Base can be created
-    virtual ~Base(); //virtual destructor required is we want polymorphic inheritance
+    virtual ~Base(); //virtual destructor required if we want polymorphic inheritance
     virtual ~Base() = 0 {} //if destructor pure virtual must have body
 protected:
     ~Base() {} // non-virtual protected destructor prevents polymorphic inheritance and plain Base objects
 };
 
 // PUBLIC INHERITANCE
-// compilier assumes private if public not specified
-// sealed stops class from being further derived
-class Derived sealed : public Base 
+// final stops class from being further derived
+class Derived final : public Base 
 {
 public: 
 
@@ -288,8 +285,7 @@ public:
     //Inheriting constructors, no need for constructor to specify base constructor
     using Base::Base;
 
-    //Only requires signature to match virtual base method
-    //override and virtual are optional, final prevents further overriding
+    //Only requires signature to match virtual base method- override, virtual, final optional
     virtual void MyMethod(int x) override final
     {
         Base::MyMethod(x); //Call base version
@@ -311,7 +307,7 @@ class Derived : private Base
 myDerived->MyMethod(); //cannot be called as seen as private with outside use
 
 // VIRTUAL FUNCTION OBJECTS
-// Nerived and base are objects of respective types
+// Derived and base are objects of respective types
 // Note base class methods are hidden from derived objects
 derived.MyMethod(x)   // calls Derived::MyMethod()
 derived.MyVirtual(x)  // calls Derived::MyVirtual()
@@ -328,7 +324,6 @@ base->MyMethod();              // calls Base::MyMethod()
 base->Derived::MyDerived();    // ERROR!
 
 // NON-VIRTUAL INTERFACE IDIOM
-// Visibility of virtual functions in derived/base don't have to match
 // Visibility determined by type of pointer used, not type of object pointed to
 class Base
 {
@@ -345,8 +340,7 @@ basePtr->MyMethod(); // Uses base class visility: Cannot call MyMethod()
 deriPtr->MyMethod() // Uses derived class visibility: Can call MyMethod()
 
 //INHERITING DEFAULT VALUES
-//Never redefine default values in derived as value chosen based 
-//on pointer type not underlying object
+//Default value used determined by type of pointer used, not type of object pointed to
 class Base
 {
 public:
@@ -357,62 +351,38 @@ class Derived : public Base
 public:
     virtual void MyMethod(int x = 2);
 };
-basePtr->MyMethod(0);   //calls derived method
 basePtr->MyMethod();    //calls derived method but uses base class default value
 derivedPtr->MyMethod(); //calls derived method and uses derived default value
 
-/////////////////////////////////////////////////////////////////////////////////////
-//BASE-DERIVED CONVERSION
-/////////////////////////////////////////////////////////////////////////////////////
-
-Derived* derived = dynamic_cast<Derived*>(base); //returns nullptr if cannot be converted
-Derived& derived = dynamic_cast<Derived&>(base); //throw bad_cast if cannot be converted
-
 //CASTING DERIVED TO BASE
-//can assign derived object to baseclass without typecast
-Base& rBase = derivedObj 
-Base* pBase = &derivedObj 
+Base& base = derivedObj 
+Base* base = &derivedObj
+Base base = derived; // causes slicing
 
 //CASTING BASE TO DERIVED
-//only possible with typecast
-Derived& rDerived = Derived(baseObj) 
-Derived* pDerived = (Derived*)&baseObj
-
-//ASSIGN/COPY DERIVED TO BASE
-//implicitly converted
-Base obj = derivedObj //sliced: loses derived information by-val
-Base& obj = derivedObj //keeps derived information
-
-//ASSIGN/COPY BASE TO DERIVED
-//no implicit conversion; use single argument constructor/ass.op
-Derived obj = BaseObj //conversion determined by derived class
-Derived& obj = BaseObj //conversion determined by derived class
-Derived(const Base& obj); 
-Derived& operator=(const Base& obj); 
-
-/////////////////////////////////////////////////////////////////////////////////////
-//MULTIPLE INHERITANCE
-/////////////////////////////////////////////////////////////////////////////////////
+Derived* derived = dynamic_cast<Derived*>(base); //returns nullptr if cannot be converted
+Derived& derived = dynamic_cast<Derived&>(base); //throw bad_cast if cannot be converted
+Derived& derived = Derived(baseObj) 
+Derived* derived = (Derived*)&base
+Derived derived = base; // only possible if derived has copy constructor for Base&
 
 //MULTIPLE INHERITANCE
 //Call each inherited class in constructor in order of inheritance
 class One {};
 class Two {};
 class MI : public One, public Two {};
-
 MI::MI() :
     One(), 
     Two()
 {
 }
 
-//VIRTUAL BASE CLASSES
+//VIRTUAL INHERITANCE
 //Use when inherited classes have same base class
 class Base {};
 class One: virtual public Base {}; //doesn't matter order of virtual/public
 class Two: public virtual Base {};
 class MI : public One, public Two {};
-
 MI::MI() :
     One(), 
     Two(),
