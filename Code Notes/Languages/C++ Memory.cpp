@@ -173,8 +173,15 @@ weak.use_count()                                 // get the current count
 weak.lock()                                      // returns a shared_ptr, if expired then null
 weak.expired()                                   // returns true if object has been deleted, false if okay
 
-// RESETTING SMART POINTERS
-// Changing the initial smart pointer does not change others, only decrements count
+//AUTO POINTER
+//deprecated smart pointer
+//can't point to arrays due to it calling delete and not delete []
+//pass auto pointers by reference otherwise copied version takes ownership and sets original to null
+auto_ptr<double> ap(new double) //only use for new
+*ap = 3.2;      
+
+//RESETTING SMART POINTERS
+//Changing the initial smart pointer does not change others, only decrements count
 std::shared_ptr<double> shared1(new double(2.0));
 std::shared_ptr<double> shared2(shared1);
 std::weak_ptr<double> weak(shared1);
@@ -219,20 +226,7 @@ class MyClass : public std::enable_shared_from_this<MyClass>
     {
         sm_vector.emplace_back(shared_from_this());
     }
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-//AUTO POINTER [DEPRECATED]
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-//LIMITATIONS
-//can't point to arrays due to it calling delete and not delete []
-//can't point to memory on the stack
-//pass auto pointers by reference otherwise takes ownership and sets to null
-
-#include <memory>
-auto_ptr<double> ap(new double) //only use for new
-*ap = 3.2;                      
+}                
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //C-STYLE MEMORY MANIPULATION
