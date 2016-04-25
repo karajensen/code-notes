@@ -226,7 +226,7 @@ class MyClass : public std::enable_shared_from_this<MyClass>
     {
         sm_vector.emplace_back(shared_from_this());
     }
-}                
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //C-STYLE MEMORY MANIPULATION
