@@ -273,7 +273,7 @@ public:
     virtual ~Base(); //virtual destructor required is we want polymorphic inheritance
     virtual ~Base() = 0 {} //if destructor pure virtual must have body
 protected:
-    ~Base() {} // non-virtual protected destructor prevents polymorphic inheritance
+    ~Base() {} // non-virtual protected destructor prevents polymorphic inheritance and plain Base objects
 };
 
 // PUBLIC INHERITANCE

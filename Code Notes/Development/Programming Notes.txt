@@ -411,6 +411,9 @@ XOR PROPERTIES
 a ^ b = c
 c ^ a = b                    Get access to b again
 c ^ b = a                    Get access to a again
+a ^ a = 0
+a ^ 0 = a
+a ^ b ^ a = b
 
 BIT SHIFTING
 1 << 3                       Gives 2³
