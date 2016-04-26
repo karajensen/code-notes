@@ -153,8 +153,8 @@ if(myPtr) /*or*/ if(myPtr.get()) //true if valid, false if null
 
 //UNIQUE POINTER
 auto unique(std::make_unique<MyClass>());        // can't use custom deleter or {}
-std::unique_ptr<MyClass> unique(new MyClass());  // has specialisation which calls delete[]
-std::unique_ptr<int[]> p(new int[10]);           // arrays only supported by unique_ptr
+std::unique_ptr<MyClass> unique(new MyClass());
+std::unique_ptr<int[]> p(new int[10]);           // arrays only supported by unique_ptr, calls delete[]
 
 //SHARED POINTER
 auto shared(std::make_shared<MyClass>());        // creates a new control block, can't use custom deleter or {}
