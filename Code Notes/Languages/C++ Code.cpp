@@ -34,10 +34,14 @@ typedef decltype(x) myType;
 using myType = int;
 
 //VARIABLE SIZES
-sizeof(myInt)       // gives size of myInt in bytes
-sizeof(myArray)     // gives size of whole array rather than first element
-sizeof(myCString)   // size of whole char array
-sizeof(myPointer)   // Gives the size of the pointer
+sizeof(myInt)                 // gives size of myInt in bytes
+sizeof(myObj)                 // gives size of class in bytes
+sizeof(myArray)               // gives number of elements for array
+sizeof(myCString)             // gives numbers of characters for string
+sizeof(myPointer)             // gives size of the pointer in bytes
+sizeof(myRef)                 // gives size of object referenced in bytes
+extent<int[3]>::value         // gives number of elements 3
+extent<decltype(arr)>::value  // gives number of elements for array
 
 //VARIABLE INCREMENTING
 b = ++a    // increment a and then use it (before anything else)
@@ -259,6 +263,7 @@ continue; //jumps to loop conditional- while, for etc.
 //BRANCHING/LOGIC
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+SHORT CIRCUITING EVALUATION
 if(myObj && myObj.Fn() == 2) // checks first and only checks next if first is true
 if(myObj || myObj.Fn() == 2) // checks first, if not true will check second else not check second
 
