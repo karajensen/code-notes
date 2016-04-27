@@ -208,7 +208,7 @@ rbegin()  rend()  crbegin()  crend() // List only
 #include <unordered_map>
 
 // ORDERED MAP
-// Every entry is sorted according to a compare function std::function<bool(const T&, const T&)
+// Every entry is sorted according to a compare function std::function<bool(const T&, const T&)>
 std::map<Key, T> MyMap;
 std::map<key, T, std::function<bool(const T&, const T&)>> myMap(comparisonFn);
 std::map<Key, T, comparisonFunctor> MyMap;
@@ -355,20 +355,17 @@ std::begin(O) //iterator pointing at beginning of container object
 std::advance(itr, n) //advance iterator by n; Random access iterators use +=/-= else ++/-- 
 std::distance(itr1, itr2) //returns int distance between 2 iterators, it2 must be after it1
 
-//Iterating over container
+//ITERATING OVER CONTAINER
 auto endItr = myVec.end(); // to prevent recomputing each iteration
 for (vector<int>::iterator itr = myVec.begin(); itr != endItr; ++itr)
     itr->myMethod();
 
+auto endItr = myVec.rend(); // to prevent recomputing each iteration
+for (vector<int>::reverse_iterator itr = myVec.rbegin(); itr = endItr; ++itr)
+    itr->myMethod();
+
 for (auto& item : myVec)
     int x = item;
-
-for each(auto& item in myVec)
-    int x = item;
-
-auto endItr = myVec.rend(); // to prevent recomputing each iteration
-for (vector<int>::reverse_iterator rItr = myVec.rbegin(); rItr = endItr; ++rItr)
-    rItr->myMethod();
 
 //================================================================================================================
 //CONTAINER ITERATORS
@@ -387,7 +384,7 @@ O.erase(++rItr).base()); //erase element rIt holds
 //CONST ITERATOR
 vector<int>::const_iterator cItr;
 
-//converting between given cItr to itr
+//CONVERTING CONST ITR TO ITR
 vector<int>::iterator itr(myVec.begin());
 std::advance(itr, std::distance<vector<int>::const_iterator>(itr, cItr)); //move itr to where const itr is
 

@@ -150,10 +150,12 @@ SETTING VECTOR LENGTH
 
 MAD (MULTIPLY THEN ADD)
 • Usually single-cyle and fast
-(x / 2.0) + 1.0        =>  (x * 0.5) + 1.0          Divide may not be optimized, use multiply if possible
-x * (1.0 - x)          =>  -(x * x) + x             Expand out brackets that require add before mul
+x * (1.0 - x)          =>  x - (x * x)              Expand out brackets
+x * (y + 1.0)          =>  (x * y) + x              Expand out brackets
+(x + c) * (x - c)      =>  x * x + (-c * c)         Expand out brackets
 (x + a) / b            =>  x * (1.0 / b) + (a / b)  Expand out brackets
-x += (a * b) + (c * d) =>  x += a * b; x += c * b   Move to seperate lines
+(x / 2.0) + 1.0        =>  (x * 0.5) + 1.0          Divide may not be optimized, convert to multiply
+x += a * b + c * d     =>  x += a * b; x += c * b   Move to seperate lines
 
 BUILT-IN-FUNCTIONS
 a / (x * b)       =>  rcp(x) * a / b      a / b implemented as a * rcp(b) but not always.

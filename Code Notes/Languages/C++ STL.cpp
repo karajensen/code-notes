@@ -249,12 +249,15 @@ while ((clock() - start) < delay) // calculate the difference
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //works on character arrays and string temp/literals
 
-strlen(cstring) //gives the length of the string array minus the null character
-strcpy(cstring1, cstring2) //copy cstring2 to cstring1
-strncpy(cstring1, cstring2, 3) //copy 3 members of cstring2 to cstring1, must do cstring1[4] = '\0' after
-strcat(cstring1, cstring2) //append contents of cstring2 to cstring1
-strcmp(cstring1, cstring2) //returns 0 if same, < 0 if first < second, > 0 value if first > second
-strchr(cstring1, ch) //returns address of first occurance of char chosen, or nullptr if not there
+strlen(str) //gives the length of the string array minus the null character
+strcpy(str1, str2) //copy cstring2 to cstring1 including '\0'
+strncpy(str1, str2, 3) //copy 3 members of cstring2 to cstring1, must do cstring1[4] = '\0' after
+strcat(str1, str2) //append contents of cstring2 to cstring1
+strcmp(str1, str2) //checks each char until reaching a '\0', returns 0 if same or < or > 0 if 1 < or > 2
+strchr(str, ch) //returns ptr to first occurance of char chosen, or null if not there
+strrchr(str, ch) //returns ptr to last occurance of char chosen, or null if not there
+strpbrk(str1, str2) //returns ptr to first occurance of any character in str2 or null if none
+strtok(str, delim) //removes token from str and returns it using deliminators
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <cctype>
