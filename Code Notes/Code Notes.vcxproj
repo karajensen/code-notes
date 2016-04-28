@@ -175,6 +175,7 @@
     <Image Include="Images\Code - SIMD.png" />
     <Image Include="Images\Code - Static and dynamic websites.png" />
     <Image Include="Images\Code - STL container performance.PNG" />
+    <Image Include="Images\Code - Threading issues.png" />
     <Image Include="Images\Code - Tree Heap Operations.png" />
     <Image Include="Images\Code - Tree Traversal.png" />
     <Image Include="Images\Code - Trees Partitioning.png" />

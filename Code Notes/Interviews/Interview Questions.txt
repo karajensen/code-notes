@@ -1,13 +1,9 @@
 ﻿/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//PROGRAMMING QUESTIONS
+//INTERVIEW QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Q: Name a data structure that can replicate a cache and why
 A: Splay trees as they are designed to provide a faster access to the same piece of data for the second time
-
-Q: What is a monolithic class and why is it bad?
-A: A class that tries to do too much- classes should have one responsibility
-   Discourages inheritance and extending the class and makes it complex to test and maintain
 
 Q: Why is the worldview inverse transpose matrix used to transform normals?
 A: If a non-uniform scale or shear is used on the model the normals 
@@ -39,21 +35,12 @@ A: The graphics pipeline can take advantage of optimizations related to efficien
    working with powers of two: dividing, multiplying, generation and usage of mipmaps
    Can also reduce fragmentation of memory
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//C++ QUESTIONS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 Q: What is the difference between a pointer and a reference?
 A:  - pointers hold a memory address for the variable, references are another name for the variable
     - pointers must be dereferenced to use the variable
     - pointers can change what they point to, references cannot
     - pointers can be null, references cannot
-
-Q: What are some circumstances where using a pointer is preferable to using a reference?
-A: When the variable may be null or not exist or when you require pointer arithmatic
-
-Q: What obstacles preventing use of const correct interfaces in new classes that are being written? 
-A: If the class wraps or uses a class that does not use it
+    - pointers can use pointer arithmatic while references cannot
 
 Q: What is the difference between const char*, char const* and char* const?
 A: const char* and char const* are both a pointer to a constant char. The pointer can be
@@ -71,18 +58,12 @@ A: A pointer that holds the address of a function. Used for callbacks and passin
 Q: What kind of values can be used as a default value?
 A: Constant, ternary expressions, global and static variables, static and non-member functions
 
-Q: What the two operators used for de-referencing pointers to member functions? 
-A: ->* and .*
-
 Q: How do you take the address of an overloaded function?
 A: You need to cast it to the overload you require: (void(MyClass::*)(double))&MyClass::MyMethod
 
 Q: Is there a way to inline a function without using the inline keyword?
 A: The compiler will ultimately determine what is inlined or not. By giving the function 
    declaration a body in the header file this suggests inlining without the inline keyword.
-
-Q: Describe any circumstances where the inline keyword would not inline a function.
-A: If the compiler decides the function is not optimized by doing so
 
 Q: What are the five operators that cannot be overloaded.
 A: .       The membership operator
@@ -101,29 +82,12 @@ A: Allows casting the class object to a different variable type, useful for cast
 Q: Name a circumstance where the compiler will invisibly generate a temporary due to operator overloading.
 A: If there is no direct match for the given argument and a match where the compiler can implicitly cast.
 
-Q: What common mistake when using static members will cause a linker error?
-A: Not initialising them in the cpp file
-
 Q: What is the purpose of the extern keyword?
 A: For global variables it allows external access accross multiple files
-
-Q: When are static local variables in functions constructed?
-A: On startup, initialised to 0 and then re-initialised to the given value when the function is first called
-
-Q: When are global objects and static member objects constructed and destructed?
-A: On startup, they are initialised to 0 or the value given to them for inialisation. 
-   They are destructed when the program exits.
 
 Q: What determines the construction order for global objects and static members, and why could it be a problem?
 A: Global and static members are initialised before the application but there is no guarantee of initialisation 
    order. This can be a problem is some global or static members rely on others for initialisation.
-
-Q: When should you use multiple inheritance?
-A: When a class needs functionality from multiple classes
-
-Q: What is virtual inheritance and when should it be used?
-A: Used when the inheritance pattern is diamond shaped and allows inherited classes that 
-   have the same base class to share that class.
 
 Q: What is the difference between public, protected and private inheritance?
 A: Public: base public can be accessed by everything, base protected can be accessed by derived class hierarchy
@@ -135,21 +99,6 @@ A: Private data members can change the size of the object and participate in fun
 
 Q: What is the difference between a structure and class?
 A: Structure members/inheritance public by default, class members/inheritance private by default
-
-Q: When is using friend functions a good idea?
-A: For obtaining the opposite operator overloading calling order ie. x * obj
-
-Q: When is using friend classes a good idea?
-A: When there is tight coupling and a close relationship between the two classes ie. Visitor pattern
-
-Q: How can the using keyword be used in a class?
-A: To define a namespace within the class or prevent data hiding of base class members
-
-Q: Is it ever a good idea to use "delete this" in a member function?
-A: No as it calls the destructor. Any code in the function after the call may cause an exception.
-
-Q: What is a destructor, and what are two ways it is called?
-A: Explicitly through ~MyClass() or delete this or implicitly when the object goes out of scope
 
 Q: What is a default constructor and when does the compiler automatically generate one? 
 A: An implicitly created function that initialises the class. It is created when
@@ -230,15 +179,6 @@ Q: What is the difference between scoped and unscoped enums?
 A: Unscoped enums have compiler dependent underlying type, pollute namespace and auto convert to int
    Scoped enums have int underlying type, don't pollute namespace and require cast to int
    Scoped enums may also define custom methods
-
-Q: What is the difference between const/non-const global variables defined in a header file?
-A: They are static by default if const and extern by default if non-const
-
-Q: What is the difference between static and extern variables defined in a header file?
-A: Variables defined in .h with extern keyword reference global variable initialised 
-   in .cpp and cannot be initialised in .h or will throw linker error.
-   Variables defined in .h with static keyword are private and a copy of it is created 
-   for every use of the header. This increases memory usage during compilation.
 
 Q: Why is =delete preferred over ommitting a definition for undesired methods?
 A: It gives a compile time error rather than a linker error
@@ -601,23 +541,5 @@ A: If any passenger before the last sits in the first passenger's seat, the last
    own seat.  If any passenger before the last sits in the last passenger's seat, the last passenger does 
    not get their own seat.  Because the passengers are choosing their seats uniformly at random, these 
    outcomes are equally likely, and so the probability that the last passenger gets their own seat is one half.
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//NP-COMPLETE/HARD PROBLEMS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-• Exercises in heuristics and approximation
-• Time required to solve the problem using any currently known 
-  algorithm increases very quickly as the size of the problem grows
-
-TRAVELLING SALESMAN PROBLEM
-Q: Given a number of cities and the costs of travelling from any city to any other city, what is the 
-   least-cost round-trip route that visits each city exactly once and then returns to the starting city? 
-
-KNAPSACK PROBLEM
-Q: Given a set of items, each with a mass and a value, determine the number of each item to include in a 
-   collection so that the total weight is less than or equal to a given limit and the total value is as 
-   large as possible.
-
 
 

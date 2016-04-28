@@ -461,6 +461,9 @@
     <Image Include="Images\Code - SIMD.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Code - Threading issues.png">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Images\Code - Binary Search Trees.mp4">

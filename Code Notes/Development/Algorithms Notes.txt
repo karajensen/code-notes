@@ -466,3 +466,20 @@ A* PATHFINDING
 5) For all other direct nodes connected to this node, update its costs and move to the open list
 6) Once all connected nodes are finished, add the parent node to the closed list
 7) Continue until goal node or no solution is found 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//NP-COMPLETE/HARD PROBLEMS
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+• Exercises in heuristics and approximation
+• Time required to solve the problem using any currently known 
+  algorithm increases very quickly as the size of the problem grows
+
+TRAVELLING SALESMAN PROBLEM
+Q: Given a number of cities and the costs of travelling from any city to any other city, what is the 
+   least-cost round-trip route that visits each city exactly once and then returns to the starting city? 
+
+KNAPSACK PROBLEM
+Q: Given a set of items, each with a mass and a value, determine the number of each item to include in a 
+   collection so that the total weight is less than or equal to a given limit and the total value is as 
+   large as possible.
