@@ -1,19 +1,9 @@
 ﻿/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//INTERVIEW QUESTIONS
+//ALGORITHM QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Q: Name a data structure that can replicate a cache and why
-A: Splay trees as they are designed to provide a faster access to the same piece of data for the second time
-
-Q: Why is the worldview inverse transpose matrix used to transform normals?
-A: If a non-uniform scale or shear is used on the model the normals 
-   will be incorrect if just using the worldview matrix
-
-Q: What is recursion, and what would normally happen if recursion went too deep?
-A: Calling the function within the function. Will cause stack overflow if going too deep.
-
-Q: What is an orthogonal matrix?
-A: Matrix where rows/columns are unit length, determinant is 1 and the transpose equals the inverse
+A: Splay trees as they are designed to provide a faster access to the same piece of data for the second time.
 
 Q: Describe the difference between a breadth-first search and depth-first search?
 A: - BFS searches each row from left to right moving down to the children once the row has finished
@@ -28,12 +18,131 @@ A: Approach 1: Divide the array into 3 equal sections and have a max allowed siz
 
 Q: How would you design a stack which has push, pop and min value methods all with O(1) time?
 A: Pop and push are already O(1) with a stack. For minimum, each node in the stack keeps track of 
-   the minimum beneath itself. To get the overall minimum, get the minimum stored on the stack top
+   the minimum beneath itself. To get the overall minimum, get the minimum stored on the stack top.
+
+Q: What is recursion, and what would normally happen if recursion went too deep?
+A: Calling the function within the function. Will cause stack overflow if going too deep.
+
+Q: Out of Quick Sort, Heap Sort and Merge Sort what are their differences and which one should you choose?
+A: Quick Sort is generally the fastest overall though is not stable and can get the worst case time of O(N²)
+   Merge Sort is stable and Heap Sort has O(1) Space requirements. All three are O(NlogN) in speed.
+   You should start by using std::sort and if its a bottleneck then look at all three sorts and profile
+   to find the best one for your data. Each one can perform better than the others in different situations.
+
+Q: What is the difference between divide and conquer and dynamic programming?
+A: Both split the problem into smaller problems and solve them to form the overall solution
+   Divide and Conquer uses recursion to do this and Dynamic Programming can use a loop / stores solutions
+
+Q: What is the BigO for Binary search and why?
+A: O(logN) because it doesn't need to visit every member and can discard large chunks at a time
+
+Q: What is the advantages and disadvantages of a Hash table?
+A: Advantages: Has O(1) insert, remove, search and access
+   Disadvantages: Can have costly key collisions, expensive to expand, can waste space
+
+Q: What is chaining for Hash tables and what does it solve? What problem does it introduce?
+A: It allows multiple elements to share a key and solves key collisions
+   Searching now because O(K) where K is the number of elements in the bucket
+
+Q: What is the difference between a Graph and a Tree?
+A: A tree is a graph but one which is acyclic and directional
+
+Q: What makes a tree balanced and what advantage does a balanced tree have?
+A: When the max and minimum depth (number of edges from the root) is roughly equal
+   It is faster to search a balanced tree
+
+Q: What properties does a Binary Search Tree have?
+    - Left subtree has members all less than a node
+    - Right subtree has members all greater than a node
+    - Left and right subtrees must also be Binary Search Trees
+    - Maximum of two children per node
+    - Cannot have duplicate nodes
+
+Q: What properites does a Heap Tree have?
+    - Weakly ordered Binary Tree
+    - Maximum/Minimum value is at the root if a max/min heap 
+
+Q: Describe the algorithm for removing a node from a Binary Search Tree?
+   There are 3 possible cases when removing a node
+   1: Node has no children, just remove it
+   2: Node has one child, remove the node and move the child up to its place
+   3: Node has two children, travel down the left of the right subtree until finding 
+      the lowest value greater than the node to delete. This node takes its place.
+   
+Q: What is the difference between pre-order, in-order and post-order?
+A: They all are ways to traverse a binary tree
+   Pre-Order:  Work is done in the order Node, Left, Right
+   In-Order:   Work is done in the order Left, Node, Right
+   Post-Order: Work is done in the order Left, Right, Node
+
+Q: What are two ways to find if a number is odd?
+A: number % 2 and number & 1
+
+Q: What does EPA mean and what is it used for?
+A: Expanding Polytope Algorithm. It uses the simplex the GJK convex hull collision
+   algorithm ends up with to determine the penetration depth of the two hulls
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//GRAPHICS QUESTIONS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Q: Why is the worldview inverse transpose matrix used to transform normals?
+A: If a non-uniform scale or shear is used on the model the normals 
+   will be incorrect if just using the worldview matrix
+
+Q: What is an orthogonal matrix?
+A: Matrix where rows/columns are unit length, determinant is 1 and the transpose equals the inverse
 
 Q: Why are textures power of 2?
 A: The graphics pipeline can take advantage of optimizations related to efficiencies in 
    working with powers of two: dividing, multiplying, generation and usage of mipmaps
-   Can also reduce fragmentation of memory
+   Can also reduce fragmentation of memory.
+
+Q: Describe the Render Pipeline
+A: Frustum Culling- Scene list generated on what can be seen
+   Input Assembler- Reads data of each mesh
+   Vertex Shader- Converts local vertex to homogenous clip space
+   Tesselation Shaders / Geometry Shaders optionally called
+   Backface Culling- Based on winding order of vertices
+   Clipping- Vertices removed that are outside the screen
+   Screen Mapping- Homogenous clip space changed to screen space
+   Rasterization- 2D shape fitted into potential pixels and interpolated
+   Pixel Shader- Perform calculations on potential pixels
+   Composition- Depth testing, Alpha testing, Alpha blending
+   Outputs to Back Buffer which is copied to the Front Buffer in Double Buffering
+
+Q: What is the difference between forward and deferred shading?
+A: Forward shading renders a limited amount of lights in the diffuse pass
+   Deferred shading renders the lighting information to a seperate buffer and can use alot more lights
+
+Q: What are the advantages and disadvantages of Triple Buffering?
+A: Advantages: Prevents the fps drop due to using vsync with Double Buffering
+   Disadvantages: Requires more copying and space for the extra buffer
+
+Q: What is Z fighting?
+A: Z fighting occurs when two polygons are seen has having the same depth in the depth buffer
+   They flicker on top of each other depending on which is rendered first.
+   Its caused because of the limited precision of the depth buffer especially at 
+   large distances as the buffer has more precision at close distances.
+
+Q: What is an Attribute Buffer?
+A: It stores information on what polygon belongs to what submesh for a mesh
+
+Q: What is Alpha to Coverage?
+A: Multisamping for bilboards with transparency
+
+Q: What is Gimbal Lock?
+A: When you lose a degree of freedom. 
+   You can get into gimbal lock when using Euler Angles for rotations.
+   It can be prevented by using Quaternions.
+
+Q: What is the difference between Orthogonal and Perspective Projection?
+A: Orthogonal the size of the mesh stays the same regardless of distance. Used for 2D rendering.
+   Perspective the size of the mesh changes due to distance. Used for 3D rendering.
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//C++ QUESTIONS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Q: What is the difference between a pointer and a reference?
 A:  - pointers hold a memory address for the variable, references are another name for the variable

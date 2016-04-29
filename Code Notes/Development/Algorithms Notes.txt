@@ -170,7 +170,6 @@ ADVANTAGES:
 DISADVANTAGES:
 • Expensive to expand- all object's IDs must be changed
 • Objects inside cannot be ordered easily
-• Can create cache misses as memory is all over the place
 • Suffer from collisions/clustering of elements
 • Buckets can be empty which wastes space
 
@@ -412,7 +411,7 @@ Work done on node   Work done on node    Work done on node
 
 BREADTH FIRST SEARCH
 • Traverses to all children before moving down a level
-• Uses a std::queue
+• Uses a queue structure
 • Advantage: Less likely to get stuck in infinite loop for graphs
 • Disadvantage: More nodes kept in memory
 1) Add root to a queue
@@ -429,7 +428,6 @@ BREADTH FIRST SEARCH
 
 DEPTH FIRST SEARCH
 • Traverses graph to the greatest depth before backtracking
-• Uses a std::stack
 • Pre-order Tree Traversal
 • Advantage: Less nodes kept in memory
 • Disadvantage: Possibility of getting into an infinite loop for graphs

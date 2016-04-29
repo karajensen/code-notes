@@ -263,10 +263,16 @@
     <Image Include="Images\Code - Networking.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Code - SIMD.png">
+      <Filter>Images</Filter>
+    </Image>
     <Image Include="Images\Code - Static and dynamic websites.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Code - STL container performance.PNG">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Threading issues.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Code - Tree Heap Operations.png">
@@ -365,7 +371,10 @@
     <Image Include="Images\Graphics - Sampling.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Graphics - Shadow Volume Stencil Testing.png">
+    <Image Include="Images\Graphics - Shadow Mapping.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Shadow Volumes.png">
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Skybox.png">
@@ -437,6 +446,9 @@
     <Image Include="Images\Maths - Graph x2.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Maths - Integrals.png">
+      <Filter>Images</Filter>
+    </Image>
     <Image Include="Images\Maths - Integration.png">
       <Filter>Images</Filter>
     </Image>
@@ -453,15 +465,6 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Maths - Unit circle.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Maths - Integrals.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - SIMD.png">
-      <Filter>Images</Filter>
-    </Image>
-    <Image Include="Images\Code - Threading issues.png">
       <Filter>Images</Filter>
     </Image>
   </ItemGroup>

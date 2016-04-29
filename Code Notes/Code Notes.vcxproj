@@ -208,7 +208,8 @@
     <Image Include="Images\Graphics - Rendering Pipeline Diagram.png" />
     <Image Include="Images\Graphics - Rendering Pipeline.png" />
     <Image Include="Images\Graphics - Sampling.png" />
-    <Image Include="Images\Graphics - Shadow Volume Stencil Testing.png" />
+    <Image Include="Images\Graphics - Shadow Mapping.png" />
+    <Image Include="Images\Graphics - Shadow Volumes.png" />
     <Image Include="Images\Graphics - Skybox.png" />
     <Image Include="Images\Graphics - Specular Shader.png" />
     <Image Include="Images\Graphics - Spot Light.png" />
