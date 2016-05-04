@@ -379,13 +379,14 @@ MI::MI() :
 
 //VIRTUAL INHERITANCE
 //Use when inherited classes have same base class
+//Any class inherited virtually become part of most derived class initialisation list
 class Base {};
-class One: virtual public Base {}; //doesn't matter order of virtual/public
-class Two: public virtual Base {};
+class One: virtual public Base {}; //Base is inherited virtually
+class Two: public virtual Base {}; //doesn't matter order of virtual/public
 class MI : public One, public Two {};
 MI::MI() :
     One(), 
     Two(),
-    Base() //base must be explicitly called as One/Two cannot call theirs
+    Base() //Base constructor called implicitly by MI
 {
 }

@@ -140,6 +140,43 @@ Q: What is the difference between Orthogonal and Perspective Projection?
 A: Orthogonal the size of the mesh stays the same regardless of distance. Used for 2D rendering.
    Perspective the size of the mesh changes due to distance. Used for 3D rendering.
 
+Q: What are the major differences between DirectX and OpenGL?
+A:	- DirectX is a Left Handed Row Major coordinate system, OpenGL is a Right Handed Column Major coordinate system
+	- DirectX order of transforms is Scale, Rotate, Translate, OpenGL is Translate, Rotate, Scale
+	- DirectX screen space coordinates start at the top left, OpenGL start at the bottom left
+	- DirectX is clockwise vertex winding order, OpenGL is anticlockwise vertex winding order
+	- DirectX has a +Z axis, OpenGL has a -Z axis
+	- DirectX is Windows only, OpenGL is both Windows and MAC
+
+Q: What is a mipmap?
+A: 'Mip' means 'many things in a small place'
+   It's a series of power of 2 texture created from an original texture.
+
+Q: What is the difference between indirect and direct lighting?
+A: Direct lighting is rays that hit an object directly and is simulated by material shaders eg. Lambert
+   Indirect lighting is rays that hit an object indirectly from another object and is simulated by 
+   ambient lighting, global illumination etc.
+
+Q: What are fresnal surfaces?
+A: Surfaces that display one colour when viewed straight on and a different colour at side angles
+   
+Q: What is the Inverse Square Light Falloff?
+A: When the distance between an object and a light is doubled the intensity is dimmed by four times.
+   Also known as attenuation, it isn't used when simulating sun as the distance to the sun is very large.
+
+Q: What are 3 types of shadow techniques?
+A: Shadow Mapping: Creates a depth map from the light's perspective, can suffer from artifacts/aliasing
+   Shadow Projection: Object is projected onto the ground and rendered again, can suffer from z-fighting
+   Shadow Volumes: Project outline of object to create new geometry, requires generation of new models at runtime
+
+Q: What is the difference between varying and uniform input to a shader?
+A: varying allows the variable to differ per vertex/per pixel
+   uniform allows the variable to differ per mesh and is readonly to the shader
+
+Q: What is the difference between Phong and Blinn-Phong?
+A: Both are specular shaders. Phong uses reflection while Blinn-Phong uses the half-vector which is the
+   normalized combination of the camera and light vectors.
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //C++ QUESTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

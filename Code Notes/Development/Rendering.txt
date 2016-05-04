@@ -630,9 +630,9 @@ ADVANTAGES:
 • Shadows can be created out of any object or an imposter can be used
 
 DISADVANTAGES:  
-• Doesn’t work well on specular surfaces 
+• Doesn't work well on specular surfaces 
 • Difficult with non-flat surfaces, stencil buffer fixes this
-• Can’t render self shadows
+• Can't render self shadows
 • Difficult to make into soft shadows
 • Not a good representation of object
 • z-fighting: 
