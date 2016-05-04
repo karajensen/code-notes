@@ -48,7 +48,7 @@ SEMAPHORE:
 MUTEX: Provides mutual exclusion to a variable/section of code
 MONITOR: Provides mutual exclusion to an object
 RECURSIVE LOCK: Allows one thread to lock multiple times, requires releasing same number of times
-SPIN LOCK: A spin lock polls its lock condition repeatedly rather than block
+SPIN LOCK: A lock that causes the thread trying to aquire it to loop and poll for it
 
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////
