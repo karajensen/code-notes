@@ -157,11 +157,11 @@ ORTHOGONAL PROJECTION MATRIX:
 
 PERSPECTIVE PROJECTION MATRIX:
 • Objects different sizes according to depth, uses horizon as vanishing point 
-• Takes:
-	- Field of view (α)
-	- Aspect ratio width/height (R)
-	- Z-value of near plane (n)
-	- Z-value of far plane (f)
+• Constructed from:
+    - Field of view (α)
+    - Aspect ratio width/height (R)
+    - Z-value of near plane (n)
+    - Z-value of far plane (f)
 
 USING PERSPECTIVE PROJECTION MATRIX:
 • For vertex view space coordinates x,y positions need to be between [-1,1]
