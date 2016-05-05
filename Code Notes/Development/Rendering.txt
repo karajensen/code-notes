@@ -426,9 +426,10 @@ MULTISAMPLING / MULTISAMPLE ANTI-ALIASING (MSAA)
 • Coverage-sampled anti-aliasing (CSAA): Nvidia MSAA 
 • Custom-filter anti-aliasing (CFAA): AMD MSAA
 
-POST PROCESSING ANTI-ALIASING / MORPHOLOGICAL ANTI-ALIASING (MLAA)
+POST PROCESSING ANTI-ALIASING
 • Looks at final pixels and smoothes edges including alpha billboards
 • Fast Approximate anti-aliasing (FXAA)
+• Morphological anti-aliasing (MLAA)
 • Enhanced Subpixel Morphological anti-aliasing (SMAA): less blurry than FXAA
 
 ADAPTIVE SAMPLING PATTERN: 
