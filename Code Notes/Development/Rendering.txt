@@ -431,6 +431,7 @@ POST PROCESSING ANTI-ALIASING
 • Fast Approximate anti-aliasing (FXAA)
 • Morphological anti-aliasing (MLAA)
 • Enhanced Subpixel Morphological anti-aliasing (SMAA): less blurry than FXAA
+• Temporal anti-aliasing (TXAA): reduces flickering in motion
 
 ADAPTIVE SAMPLING PATTERN: 
 • Each pixel is averaged with the pixel's around it
