@@ -431,7 +431,8 @@ MULTISAMPLE ANTI-ALIASING (MSAA)
 
 POST PROCESSING ANTI-ALIASING
 • Looks at final pixels and smoothes edges including alpha billboards
-• Fast Approximate Anti-Aliasing (FXAA) is a technique
+• Fast Approximate Anti-Aliasing (FXAA)
+• Enhanced Subpixel Morphological Antialiasing (SMAA): less blurry than FXAA
 • Cheapest
 
 ADAPTIVE SAMPLING PATTERN: 
