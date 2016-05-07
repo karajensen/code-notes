@@ -1,4 +1,4 @@
-﻿///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //RENDER PIPELINE
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -157,11 +157,11 @@ ORTHOGONAL PROJECTION MATRIX:
 
 PERSPECTIVE PROJECTION MATRIX:
 • Objects different sizes according to depth, uses horizon as vanishing point 
-• Takes:
-	- Field of view (α)
-	- Aspect ratio width/height (R)
-	- Z-value of near plane (n)
-	- Z-value of far plane (f)
+• Constructed from:
+    - Field of view (α)
+    - Aspect ratio width/height (R)
+    - Z-value of near plane (n)
+    - Z-value of far plane (f)
 
 USING PERSPECTIVE PROJECTION MATRIX:
 • For vertex view space coordinates x,y positions need to be between [-1,1]
@@ -415,25 +415,23 @@ DECR: Decrement the buffer entry, wraps to max if goes under 0
 //ANTI-ALIASING
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-SUPERSAMPLING 
-SUPERSAMPLE ANTI-ALIASING (SSAA) 
-FULL SCENE ANTI-ALIASING (FSAA)
+SUPERSAMPLING / SUPERSAMPLE ANTI-ALIASING (SSAA) / FULL SCENE ANTI-ALIASING (FSAA)
 • Anti aliases whole scene including alpha billboards
 • Renders image at higher resolution and size and down samples with a filter
-• Expensive
 
-MULTISAMPLING
-MULTISAMPLE ANTI-ALIASING (MSAA)
+MULTISAMPLING / MULTISAMPLE ANTI-ALIASING (MSAA)
 • Anti aliases only polygon edges, area between edges/textures not smoothed
 • Requires adaptive version to anti-alias alpha billboards
 • Renders image at same resolution on a larger surface
-• Cheaper with many variations
+• Coverage-sampled anti-aliasing (CSAA): Nvidia MSAA 
+• Custom-filter anti-aliasing (CFAA): AMD MSAA
 
 POST PROCESSING ANTI-ALIASING
 • Looks at final pixels and smoothes edges including alpha billboards
-• Fast Approximate Anti-Aliasing (FXAA)
-• Enhanced Subpixel Morphological Antialiasing (SMAA): less blurry than FXAA
-• Cheapest
+• Fast Approximate anti-aliasing (FXAA)
+• Morphological anti-aliasing (MLAA)
+• Enhanced Subpixel Morphological anti-aliasing (SMAA): less blurry than FXAA
+• Temporal anti-aliasing (TXAA): reduces flickering in motion
 
 ADAPTIVE SAMPLING PATTERN: 
 • Each pixel is averaged with the pixel's around it
