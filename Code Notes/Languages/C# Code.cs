@@ -134,10 +134,15 @@ public enum MyEnum //defaults to int
     ZERO = 0,
     ONE = 1,
     TWO = 5,
-    THREE //will equal 6
+    THREE = 5,
+    FOUR //will equal 6
 }
-int x = (int)MyEnum.ONE;
-string zero = MyEnum.ZERO.ToString() //gives ZERO
+
+(int)MyEnum.ONE                             // Convert to int
+MyEnum.ZERO.ToString()                      // Get string description
+System.Enum.GetName(typeof(MyEnum), 1)      // Get string description from value (ONE) or null
+System.Enum.GetNames(typeof(MyEnum)).Length // Get name count (5)
+System.Enum.GetValues(typeof(MyEnum)).Cast<MyEnum>().Distinct().Count(); // Get value count (4)
 
 //32-BIT FLAGS, maximum 32 flags
 [System.Flags]

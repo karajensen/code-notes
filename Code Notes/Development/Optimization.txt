@@ -3,32 +3,73 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 • A compiler may reorder instructions for the sake of parallel execution
+• Branches are often predicted before evaluated, hard to predict branches can be costly
 • Compiler will always select the most efficient integer size if you declare an int
 • Unsigned is faster than signed when you divide or % with a constant
 • char, short, bool slightly less efficient as can be converted to int when doing calculations
 • << quicker than multiplying and >> quicker than dividing for power of two values
 • Signed/Unsigned int conversion costless, Int/Floating Point conversion expensive
+• Constant expressions eg. 2.0/3.0 replaced by their results at compile time
 • In most cases, double calculations take no more time than floats but don't mix the two
 • Floating point division by a constant should be done by multiplying with the reciprocal
 • Switch statements with incrementing labels effecient as implemented as jump target table
 • Faster to use memset, memcpy and cstring methods though unsafe
-• Virtual functions can induce cache misses during look up if function is not called often
-• Branches are often predicted before evaluated, hard to predict branches can be costly
-• Constant expressions eg. 2.0/3.0 replaced by their results at compile time
+• std::string if > 15 characters (short string optimization) can cause a heap allocation
 • Common maths functions (sin, pow, sqrt) with constants not always replaced at compile time
 • std::function larger/slower than internal type of lambda
 • STL container empty() is always O(1), size() may be O(n) depending on container
-• 2D arrays should always have outer loop rows, inner loop columns where arr[row][column]
 • Loop conditions are evaluated each iteration, evaluate any constants before loop starts
 
-PERFORMANCE HITS
-• Cache misses where data needs to be fetched from RAM
-• Cache thrashing where data competes for same cache lines
+===================================================================================================
+CACHE-FRIENDLY PROGRAMMING
+===================================================================================================
+
+• Cache misses are where data needs to be fetched from RAM
+• Memory stored together is fetched together: whole cache line is taken even if only a byte is required
+• Virtual functions can induce cache misses during look up if function is not called often
+• Data can complete for same cache lines (large pow of 2 arrays) resulting in excessive writing/flushing 
 • Fragmentation of heap means more cache misses
 
--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+ARRAYS
+--------------------------------------------------------------------------------------------
+• Linear arrays are cache-friendly
+• Hardware can pre-fetch elements if traversal is forwards/backwards in predictable way
+• 2D arrays should always have outer loop rows, inner loop columns where arr[row][column]
+	- Other row members are part of cache line when fetched and fast to traverse
+	- Column members cause a cache miss
+
+--------------------------------------------------------------------------------------------
+OBJECTS
+--------------------------------------------------------------------------------------------
+• Object is aligned in memory so if single member is used often chunk of object will be cached
+• Reorder class members so the data aligns without extra padding to reduce amount of data fetched
+• Store any frequently accessed booleans in seperate array
+
+--------------------------------------------------------------------------------------------
+FALSE SHARING
+--------------------------------------------------------------------------------------------
+• Seperate cores have same data cached and one writes to it with synchronisation:
+	- Entire cache line is invalidated
+	- Entire cache line is fetched again
+	- This includes memory that may not be related to the data written to
+	- Can affect globals/statics/arrays as they are often allocated together
+
+int result[n];
+for (int i = 0; i < n; ++i) 
+{
+	RunThread([i]()
+	{
+		// Every write to result will invalidate other threads if on seperate cores
+		// Minimise amount of times result[] is written to by using a temp var
+		for(auto obj : objs) { /*if calculations then*/ result[i] += x; }
+	});
+}
+
+===================================================================================================
 MEMORY ALLOCATORS
--------------------------------------------------------------------------------------------
+===================================================================================================
+
 • May improve performance/memory usage and reduce fragmentation of heap
 • Handle requests for allocation and deallocation of memory for a container
 • Useful if lots of small allocations for associative containers as default is slow
@@ -38,9 +79,10 @@ MEMORY POOL ALLOCATOR
 • Requests by container are from the pool and returned to the pool
 • Pool is deallocated when lifetime of container ends
 
--------------------------------------------------------------------------------------------
+===================================================================================================
 SYMMETRIC INSTRUCTION IN MULTIPLE DATA (SIMD)
--------------------------------------------------------------------------------------------
+===================================================================================================
+
 • Same intructions done in parallel on multiple data objects
 • Registers (XMM, MMX, YMM) optimized for doing same work on vectorized floats and/or ints
 • Auto-used by compilier if 4 floats/ints aligned together in memory
@@ -60,25 +102,6 @@ for(int i = 0; i < 100; i+=4)
     s2 += arr[i+2]
     s3 += arr[i+3]
 sum = s0 + s1 + s2 + s3
-
--------------------------------------------------------------------------------------------
-CACHE-FRIENDLY PROGRAMMING
--------------------------------------------------------------------------------------------
-
-TEMPORAL LOCALITY
-• When memory location is accessed its likely the same location will be acessed again in the future
-
-SPATIAL LOCALITY
-• Cache will read chunk of memory and closer together dat may mean less cache fetches
-• Arrays/vectors more cache friendly than lists or deques due to spacial locality
-• Reorder class members so the data aligns without extra padding to reduce amount of data fetched
-
-2D ARRAYS
-• Better to access row first rather than column first as cache optimized for reading arrays forwards
-• Column First: 2 cache hits, 2 memory accesses:
-    M[0][0] (memory) + M[0][1] (cached) + M[1][0] (memory) + M[1][1] (cached) = 1 + 2 + 3 + 4
-• Row First: 0 cache hits, 4 memory accesses:
-    M[0][0] (memory) + M[1][0] (memory) + M[0][1] (memory) + M[1][1] (memory) = 1 + 3 + 2 + 4
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //RENDERING OPTIMIZATION

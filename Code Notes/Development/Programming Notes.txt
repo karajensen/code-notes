@@ -127,12 +127,45 @@ OPERANDS: arguments given after the opcode
 MNEMONICS: set to equal an opcode or a series of opcodes/operands
 
 ===============================================================================
-RAM MEMORY LOCATIONS
+CPU MEMORY LOCATIONS
 ===============================================================================
+
+REGISTERS
+• Physical Temporary storage for processing data/calculations taken from cache
+• ESP: STACK POINTER REGISTER: Always points to the top of the stack
+• EBP: STACK BASE POINTER REGISTER: Pointer to data on the stack. 
+• EAX: ACCUMULATOR REGISTER: Primarly used for mathematical operations
+• EBX: BASE REGISTER: Pointer to data in a segment register
+• ECX: COUNTER REGISTER: Counter for string and loop operations
+• EDX: DATA REGISTER: Used in arithmetic operations and I/O operations
+• ESI: SOURCE REGISTER: Used as a pointer to a source in stream operations
+• EDI: DESTINATION REGISTER: Used as a pointer to a destination in stream operations
+• FLAGS REGISTER: Reports on the status of the program being executed
+• IP (INTRUCTION POINTER) REGISTER: Contains a pointer to the next intruction to be executed
+
+CACHES
+• Physical Temporary storage for frequently accessed data for rapid access taken from RAM
+• No processing on data- must be moved to registers if this is needed
+• Cache Miss: Failed attempt to read/write to the cache resulting in RAM access
+• Organised into levels L1, L2, L3 in order of decreasing speed and increasing size
+• When data is requested, a whole cache line is fetched
+• Cache line size typically 32 or 64 bytes, number of cache lines depends on kb size of cache
+• Cache lines organised into sets with each set having a set number of assigned lines
+• Doesn't always remove oldest data- memory locations can compete for same cache lines
+• Temporal Locality: Memory faster to access again once fetched into cache
+• Spatial Locality: Memory stored together is fetched together reducing amount of fetches
+• Three common types:
+	- Data (D-cache) caches data
+	- Instruction (I-cache) caches instructions
+	- Translation lookaside buffer caches virtual -> real address translations
 
 RANDOM ACCESS MEMORY (RAM)
 • Physical Main memory where everything is held for execution
 • Virtual memory is memory on hard drive extending RAM
+
+===============================================================================
+RAM MEMORY LOCATIONS
+===============================================================================
 
 SEGMENTS 
 • Sections of memory used for various purposes
@@ -167,33 +200,6 @@ THE HEAP
 • Heap used by malloc/free and placement new, Free store used by new/delete
 • Free Store may be the Heap or a seperated area so new/delete and malloc/free can't be interchanged
 • Segmentation fault caused if accessing memory after its deleted
-
-===============================================================================
-CPU MEMORY LOCATIONS
-===============================================================================
-
-REGISTERS
-• Physical Temporary storage for processing data/calculations taken from cache
-• ESP: STACK POINTER REGISTER: Always points to the top of the stack
-• EBP: STACK BASE POINTER REGISTER: Pointer to data on the stack. 
-• EAX: ACCUMULATOR REGISTER: Primarly used for mathematical operations
-• EBX: BASE REGISTER: Pointer to data in a segment register
-• ECX: COUNTER REGISTER: Counter for string and loop operations
-• EDX: DATA REGISTER: Used in arithmetic operations and I/O operations
-• ESI: SOURCE REGISTER: Used as a pointer to a source in stream operations
-• EDI: DESTINATION REGISTER: Used as a pointer to a destination in stream operations
-• FLAGS REGISTER: Reports on the status of the program being executed
-• IP (INTRUCTION POINTER) REGISTER: Contains a pointer to the next intruction to be executed
-
-CACHES
-• Physical Temporary storage for frequently accessed data for rapid access, sends to registers
-• No processing on data- must be moved to registers if this is needed
-• Cache Miss: Failed attempt to read/write to the cache resulting in RAM access
-• Cache line size typically 32 or 64 bytes
-• Number of cache lines depends on kb size of cache
-• Cache lines organised into sets with each set having a set number of assigned lines
-• Cache thrashing can occur when data is accessed in a pattern (eg. large power of 2 arrays)
-  that leads to competing for the same cache lines resulting in excessive writing/flushing
 
 ===============================================================================
 VISUAL STUDIO DEBUG MEMORY ALLOCATION

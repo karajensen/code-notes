@@ -162,6 +162,7 @@
     <Image Include="Images\Code - Boxing.png" />
     <Image Include="Images\Code - C# Operator Precedence.png" />
     <Image Include="Images\Code - C++ Operator Precedence.png" />
+    <Image Include="Images\Code - Cache Hierarchy.png" />
     <Image Include="Images\Code - Database Normalization.png" />
     <Image Include="Images\Code - Debug Memory Allocation.png" />
     <Image Include="Images\Code - Design Patterns.png" />
@@ -184,6 +185,8 @@
     <Image Include="Images\Code - UML Diagrams.png" />
     <Image Include="Images\Code - Web server.png" />
     <Image Include="Images\Graphics - 3 Point Lighting.png" />
+    <Image Include="Images\Graphics - Anti aliasing sampling Patterns.png" />
+    <Image Include="Images\Graphics - Antialiasing Techniques.png" />
     <Image Include="Images\Graphics - Backface Culling.png" />
     <Image Include="Images\Graphics - Bottleneck chart.png" />
     <Image Include="Images\Graphics - Bump Mapping Normals.png" />

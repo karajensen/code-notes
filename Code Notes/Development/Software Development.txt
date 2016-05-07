@@ -40,11 +40,6 @@ DEPENDS.EXE:
 Dependency walker for 32/64 bit modules (dll,exe) and builds heirarchical tree
 diagrams of all dependent modules, shows exported functions
 
-VISUAL STUDIO ENVIRONMENT VARIABLES:
-$(SolutionDir)\
-$(ProjectName)
-$(Configuration)
-
 /////////////////////////////////////////////////////////////////////////////////////////
 //MAC DEVELOPMENT
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -142,7 +137,24 @@ SHOW REMOTE BRANCH OF LOCAL
 git remote show origin
 
 /////////////////////////////////////////////////////////////////////////////////////////
-//VISUAL STUDIO MSBUILD
+//VISUAL STUDIO
+/////////////////////////////////////////////////////////////////////////////////////////
+
+ENVIRONMENT VARIABLES:
+$(SolutionDir)\
+$(ProjectName)
+$(Configuration)
+
+COMPILIER OPTIONS:
+/GS			  Prevent returning after a function has trashed the stack						
+/NXCOMPAT	  Makes the data in the heap/stack non-executable
+/DYNAMICBASE  Extra security with no run time cost
+/ZI			  Program Database for Edit And Continue, disables /Zo
+/Zi			  Program Data, enables /Zo for VS2015
+/Zo			  Generate enhanced debug information for release builds (PBDs get larger)
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//MSBUILD
 /////////////////////////////////////////////////////////////////////////////////////////
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">

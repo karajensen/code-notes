@@ -467,6 +467,15 @@
     <Image Include="Images\Maths - Unit circle.png">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="Images\Code - Cache Hierarchy.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Anti aliasing sampling Patterns.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Graphics - Antialiasing Techniques.png">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Images\Code - Binary Search Trees.mp4">
