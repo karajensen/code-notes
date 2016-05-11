@@ -222,7 +222,7 @@ tan²Ө = (1-cos(2Ө)) / (1+cos(2Ө))
 
 SET: Collection of elements selected based on common properties
 VECTOR: quantity with magnitude and direction (no position)
-VECTOR BASIS: Set of linerly independent vectors which spans/creates a vector space
+VECTOR BASIS: Set of linearly independent vectors which spans/creates a vector space
 
 VECTOR SPACE: 
 • Set of all vectors created by linear combinations of the vector basis
@@ -303,33 +303,30 @@ NORMS
 CROSS/OUTER PRODUCT
 ============================================================================================
  ----------------------------------------------------------
-| u X v = (uʸvᶻ - uᶻvʸ)i - (uˣvᶻ - uᶻvˣ)j + (uˣvʸ - uʸvˣ)k |
+| a X b = (aʸbᶻ - aᶻbʸ)i - (aˣbᶻ - aᶻbˣ)j + (aˣbʸ - aʸbˣ)k |
  ----------------------------------------------------------
-| ‖u X v‖ = ‖u‖‖v‖sin0 = square area between u and v |
+| ‖a X b‖ = ‖a‖‖b‖sinӨ = square area between a and b |
  -----------------------------------------------------
 
 CROSS PRODUCT RULES:
-  u.(u X v) = v.(u X v) = 0         u X u = 0
-  (u+v) X w = (u X w) + (v X w)     u X v = -v X u
-  a(u X w) = au X w = u X aw        u X 0 = 0 X u = 0
+  a.(a X b) = b.(a X b) = 0         a X a = 0
+  (a+b) X w = (a X w) + (b X w)     a X b = -b X a
+  a(a X w) = aa X w = a X aw        a X 0 = 0 X a = 0
 
 COLLINEAR POINTS: cross product = 0
 PARALLEL VECTORS: cross product = 0
 
 3 FINGER RULE:
-  Second Finger = u
-  Middle Finger = v
-  Thumb = u X v
+  Second Finger = a
+  Middle Finger = b
+  Thumb = a X b
 
 ============================================================================================
 TRIPLE PRODUCT
 ============================================================================================
- -----------------------------------
-| u.(v X w) = volume of parallopied |
- -----------------------------------
-  a X (b X c) = b(a.c) - c(a.b)
- -a X (b X c) = c(a.b) - b(a.c)
-
+ ------------------------------------------------------
+| ‖a X b‖‖c‖cosӨ = ‖(a X b).c‖ = volume of parallopied |
+ ------------------------------------------------------
 
 ============================================================================================
 VECTOR PROJECTION
@@ -363,12 +360,10 @@ z = ‖r‖sinɸ
 //POINTS
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-POINT: element of a set where the value depends on the coordinate system 
-       relative to a fixed member in the set
+POINT: element of a set where the value depends on the coordinate system relative to a fixed member in the set
 ORIGIN: fixed member in the set
 COORDINATE SYSTEM: System with basis vector/origin
-AFFINE SPACE: Vector space with a set of points where every pair of points 
-              has a unique vector
+AFFINE SPACE: Vector space with a set of points where every pair of points has a unique vector
  
  ------------        -----------
 |v = P₀ - P₁ |      | v = Q - P |
@@ -699,8 +694,9 @@ det = volume(V) = a.(b X c) = | bˣ bʸ bᶻ |
 DETERMINANT
 =============================================================================================
 
-• For a set of basis vectors, the determinant of the matrix of those vectors
-  determines handedness: +det = right-handed, -det = left-handed
+> 0		right-handed matrix
+< 0		left-handed matrix
+= 0		matrix cannot be inverted
 
 2X2 DETERMINANT
  ----------------------------
@@ -711,7 +707,6 @@ DETERMINANT
  det = area of rectangle formed from both vectors
  | aˣ aʸ |   
  | bˣ bʸ |
-
 
 3X3 DETERMINANT: LAPLACE EXPANSION METHOD
 | a₁₁ a₁₂ a₁₃ |

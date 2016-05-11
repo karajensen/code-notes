@@ -15,9 +15,7 @@
 [4] All single argument constructors must be declared with 'explicit' to
     prevent unwanted casting to the single argument's type.
 
-[5] If multiple inheritance and both classes inherited share a base, inherit each 
-    virtually and call the shared base class in the initialization list alongside 
-    them both. Both will not call their base class.
+[5] unsigned int overflow wraps to 0, signed int overflow is undefined
 
 [6] Prefer nullptr to NULL and avoid pointer, int and long overload combinations.
     NULL is either 0/0L and prefers int/long overloads to pointer ones when passed as argument.
@@ -43,7 +41,9 @@
 [11] 'this' can be used in constructor except to call virtual functions 
       which is undefined behaviour. Base version will be called but dangerous
 
-[12] 'delete this' calls the destructor. Any member calls after is dangerous.
+[12] void MyFn(int arr[2]) is the same as void MyFn(int arr[]), the number is 
+     only a suggestion and an array of any size can be passed in. Make the paramter
+     a reference to enforce size: void MyFn(int (&arr) [2])
 
 [13] Assigning/Copying by-val from Derived to Base causes slicing where 
      the derived information is lost
@@ -85,18 +85,8 @@
 [25] std::function is larger/slower than internal type of lambdas obtained through auto
      only use std::function when necessary
 
-[26] Functions fully defined in .h can be templated, inline or static otherwise get linker error
-     If inlined, any static function members are shared between files including it
-     If static, any static function members are copied with each file having sole access
-
-[27] Read pointer types backwards from first *
+[26] Read pointer types backwards from first *
      const int * is the same as int const *
-
-[28] void MyFn(int arr[2]) is the same as void MyFn(int arr[]), the number is 
-     only a suggestion and an array of any size can be passed in. Make the paramter
-     a reference to enforce size: void MyFn(int (&arr) [2])
-
-[29] unsigned int overflow wraps to 0, signed int overflow is undefined
 
 ////////////////////////////////////////////////////////////////////////////////////
 //STL CHEATSHEET

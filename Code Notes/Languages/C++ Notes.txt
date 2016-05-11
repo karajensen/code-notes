@@ -352,7 +352,7 @@ NON-VIRTUAL INTERFACE IDIOM:
 V-TABLE VIRTUAL FUNCTION TABLE:
 • Vtbl is array of function addresses for a class that has virtual functions in the static data segment
 • Usually stored as a static array at compile-time though exact implementation compiler specific
-• Hidden pointer to vtbl stored in every class that has virtual function
+• One hidden vptr per class hierarchy is created
 • When virtual function called, vtble used to find the correct address
 • Stores the classes's type_info object used for RTTI
 
@@ -366,8 +366,8 @@ PURE VIRTUAL CLASS/ABSTRACT BASE CLASS
 
 VIRTUAL BASE CLASS
 • Creates a shared base class if more than two of the same base class exist
-• Hidden pointer member points to this shared base class
-• Stops inherited classes from calling their shared base class constructor
+• Number of times virtual inheritance is used in hierarchy is number of hidden pointers created
+• Constructor of virtual base classes called by most derived class first
 
 -----------------------------------------------------------------------------
                          +Object size    +Class size    Prevents inlining

@@ -90,9 +90,6 @@ Q: Why is the worldview inverse transpose matrix used to transform normals?
 A: If a non-uniform scale or shear is used on the model the normals 
    will be incorrect if just using the worldview matrix
 
-Q: What is an orthogonal matrix?
-A: Matrix where rows/columns are unit length, determinant is 1 and the transpose equals the inverse
-
 Q: Why are textures power of 2?
 A: The graphics pipeline can take advantage of optimizations related to efficiencies in 
    working with powers of two: dividing, multiplying, generation and usage of mipmaps
@@ -176,6 +173,41 @@ A: varying allows the variable to differ per vertex/per pixel
 Q: What is the difference between Phong and Blinn-Phong?
 A: Both are specular shaders. Phong uses reflection while Blinn-Phong uses the half-vector which is the
    normalized combination of the camera and light vectors.
+
+Q: What is a vector?
+A: Quantity with magnitude and direction
+
+Q: What is a vector basis?
+A: Set of linearly independent vectors which creates a vector space
+   Linearly independent means each one cannot be formed from the combinations of any others
+   Vector spaces is a set of all possible vectors created
+
+Q: What is a unit vector?
+A: A vector that has divided by its length to become unit length
+
+Q: What is the dot product used for?
+A: To show the angle relationship between two vectors
+   If the dot product is > 0 then the vectors are < 90 degrees
+   If the dot product is < 0 then the vectors are > 90 degrees
+   If the dot product is 0 then the vectors are perpendicular
+
+Q: What is the cross product used for?
+   To create a vector perpendicular to two vectors, for example, when creating a normal
+   Its magnitude can be used to find the rectangle area between two vectors
+
+Q: What is the triple produce used for?
+   To find the volume of a parallopied
+
+Q: What are barycentric coordinates?
+A: Coordinates in relation to a simplex. A simplex is a set of points with affine independence.
+   Points have affine independence if the vectors between them are linearly independent.
+
+Q: What is the determinant of a matrix used for?
+A: Used to help generate the inverse of a matrix.
+   It can also tell the handed-ness of the matrix where < 0 is left handed and > 0 is right handed
+
+Q: What is an orthogonal matrix?
+A: Matrix where rows/columns are unit length, determinant is 1 and the transpose equals the inverse
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //C++ QUESTIONS

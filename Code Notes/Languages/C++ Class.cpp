@@ -380,13 +380,15 @@ MI::MI() :
 //VIRTUAL INHERITANCE
 //Use when inherited classes have same base class
 //Any class inherited virtually become part of most derived class initialisation list
+//Doesn't matter order of virtual/public
+//Number of times virtual is used in hierarchy is number of hidden pointers created
 class Base {};
-class One: virtual public Base {}; //Base is inherited virtually
-class Two: public virtual Base {}; //doesn't matter order of virtual/public
+class One: virtual public Base {}; // adds +1 hidden pointer to hierarchy
+class Two: public virtual Base {}; // adds +1 hidden pointer to hierarchy
 class MI : public One, public Two {};
 MI::MI() :
+    Base(), //Base constructor called implicitly by MI first
     One(), 
-    Two(),
-    Base() //Base constructor called implicitly by MI
+    Two()
 {
 }

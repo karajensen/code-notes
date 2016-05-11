@@ -172,6 +172,7 @@
     <Image Include="Images\Code - Hex Converting.png" />
     <Image Include="Images\Code - HTML Element.png" />
     <Image Include="Images\Code - Iterators.png" />
+    <Image Include="Images\Code - Memory architecture.png" />
     <Image Include="Images\Code - Networking.png" />
     <Image Include="Images\Code - SIMD.png" />
     <Image Include="Images\Code - Static and dynamic websites.png" />
@@ -196,7 +197,6 @@
     <Image Include="Images\Graphics - Deferred Rendering.png" />
     <Image Include="Images\Graphics - Depth Buffer Testing.png" />
     <Image Include="Images\Graphics - DirectX Surfaces.png" />
-    <Image Include="Images\Graphics - Incremental Convex Hull Algorithm.png" />
     <Image Include="Images\Graphics - Indirect Lighting.png" />
     <Image Include="Images\Graphics - Inverse Square Light Falloff.png" />
     <Image Include="Images\Graphics - Material Types.png" />
@@ -239,10 +239,12 @@
     <Image Include="Images\Maths - Integrals.png" />
     <Image Include="Images\Maths - Integration.png" />
     <Image Include="Images\Maths - Kinematics.png" />
+    <Image Include="Images\Maths - Matrix Multiplication.png" />
     <Image Include="Images\Maths - Plane equation.png" />
     <Image Include="Images\Maths - Polar coordinates.png" />
     <Image Include="Images\Maths - Rotation around arbitrary axis.png" />
     <Image Include="Images\Maths - Unit circle.png" />
+    <Image Include="Images\Maths - Vector Product.png" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Images\Code - Binary Search Trees.mp4" />

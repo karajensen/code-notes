@@ -326,9 +326,6 @@
     <Image Include="Images\Graphics - DirectX Surfaces.png">
       <Filter>Images</Filter>
     </Image>
-    <Image Include="Images\Graphics - Incremental Convex Hull Algorithm.png">
-      <Filter>Images</Filter>
-    </Image>
     <Image Include="Images\Graphics - Indirect Lighting.png">
       <Filter>Images</Filter>
     </Image>
@@ -474,6 +471,15 @@
       <Filter>Images</Filter>
     </Image>
     <Image Include="Images\Graphics - Antialiasing Techniques.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Code - Memory architecture.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Maths - Matrix Multiplication.png">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\Maths - Vector Product.png">
       <Filter>Images</Filter>
     </Image>
   </ItemGroup>

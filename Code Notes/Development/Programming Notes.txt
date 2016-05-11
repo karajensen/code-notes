@@ -151,7 +151,7 @@ CACHES
 • When data is requested, a whole cache line is fetched
 • Cache line size typically 32 or 64 bytes, number of cache lines depends on kb size of cache
 • Cache lines organised into sets with each set having a set number of assigned lines
-• Doesn't always remove oldest data- memory locations can compete for same cache lines
+• Each cache line knows what physical memory addresses it corresponds to
 • Temporal Locality: Memory faster to access again once fetched into cache
 • Spatial Locality: Memory stored together is fetched together reducing amount of fetches
 • Three common types:
