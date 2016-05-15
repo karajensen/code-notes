@@ -155,9 +155,9 @@ CACHES
 • Temporal Locality: Memory faster to access again once fetched into cache
 • Spatial Locality: Memory stored together is fetched together reducing amount of fetches
 • Three common types:
-	- Data (D-cache) caches data
-	- Instruction (I-cache) caches instructions
-	- Translation lookaside buffer caches virtual -> real address translations
+	- Data (D-cache): caches data
+	- Instruction (I-cache): caches instructions
+	- Translation lookaside buffer (TLB): improves virtual address translation speed
 
 RANDOM ACCESS MEMORY (RAM)
 • Physical Main memory where everything is held for execution

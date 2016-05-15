@@ -42,6 +42,15 @@ MyClass(MyClass&& obj):
 {
 }
 
+// COPY-SWAP ASSIGNMENT OPERATOR
+// Use the copy-swap idiom for deep copying
+// Take parameter by-val to use copy constructor
+MyClass& MyClass::operator=(const MyClass obj)
+{
+    std::swap(*this, obj);
+    return *this;
+}
+
 //COPY ASSIGNMENT OPERATOR
 MyClass& MyClass::operator=(const MyClass& obj)
 {
@@ -49,16 +58,9 @@ MyClass& MyClass::operator=(const MyClass& obj)
     { 
         return *this;
     } 
-    this->m_member = obj.m_member; //copy over values
-    return *this;
-}
-
-// COPY-SWAP ASSIGNMENT OPERATOR
-// Use the copy-swap idiom for deep copying
-// Take parameter by-val to use copy constructor
-Array& operator=(const Array other)
-{
-    std::swap(*this, other);
+    delete[] m_pointer; //delete any dynamic allocation for object
+    m_pointer = new int(); //allocate new memory for deep copy
+    *m_pointer = *obj.m_pointer; //copy over values
     return *this;
 }
 
@@ -211,10 +213,10 @@ obj1[4]    /*->*/  obj1.operator[](4)
 obj1[0][1] /*->*/  (obj1[0].operator[](1)).operator[0];
 
 //OVERLOAD DECLARATIONS
-MyClass operator++(int unused); //postfix, returns copy of value before increment
-MyClass operator--(int unused); //postfix, returns copy of value before decrement
-MyClass& operator++(); //prefix, returns reference to value before increment
-MyClass& operator--(); //prefix, returns reference to value before decrement
+MyClass operator++(int unused); //postfix: returns copy of value, then increments
+MyClass operator--(int unused); //postfix: returns copy of value, then decrements
+MyClass& operator++(); //prefix: increments, then returns reference to value
+MyClass& operator--(); //prefix: decrements, then returns reference to value
 const MyClass operator+(const MyClass& x) const;
 const MyClass operator*(const MyClass& x) const;
 MyClass& operator[](const int i);

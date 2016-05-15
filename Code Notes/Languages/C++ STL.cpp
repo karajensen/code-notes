@@ -51,16 +51,16 @@ std::remove_pointer<A>::type //returns A with any pointer removed
 
 srand(time(0)); //choose a seed
 
-//USING RAND()
-int value = (rand() % (max - min)) + min;       // [min, max)
-int value = (rand() % (max - min + 1)) + min;   // [min, max]
+//RAND
+rand()                              // returns int between [0, RAND_MAX]
+(rand() % (max - min)) + min;       // [min, max)
+(rand() % (max - min + 1)) + min;   // [min, max]
 
-//USING DISTRIBUTION
+//DISTRIBUTION
 //create one generator per application
 std::default_random_engine generator;
 std::uniform_int_distribution<int> dist(lower, upper); //integer distribution
 std::uniform_real_distribution<float> dist(lower, upper); //real distribution
-
 auto getRand = [&]() ->int { return dist(generator); } //Generates number in the range [lower,upper]
 auto getRand = std::bind(dist, generator); //Bind and use as function object
 

@@ -205,6 +205,8 @@ A: Coordinates in relation to a simplex. A simplex is a set of points with affin
 Q: What is the determinant of a matrix used for?
 A: Used to help generate the inverse of a matrix.
    It can also tell the handed-ness of the matrix where < 0 is left handed and > 0 is right handed
+   A determinant of 0 means a matrix cannot be inverted
+   A determinant of 1 means a matrix is orthogonal
 
 Q: What is an orthogonal matrix?
 A: Matrix where rows/columns are unit length, determinant is 1 and the transpose equals the inverse

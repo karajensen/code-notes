@@ -263,7 +263,7 @@ continue; //jumps to loop conditional- while, for etc.
 //BRANCHING/LOGIC
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SHORT CIRCUITING EVALUATION
+//SHORT CIRCUITING EVALUATION
 if(myObj && myObj.Fn() == 2) // checks first and only checks next if first is true
 if(myObj || myObj.Fn() == 2) // checks first, if not true will check second else not check second
 

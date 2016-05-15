@@ -32,7 +32,7 @@ DERIVATIVE RELATIONSHIPS
 v = dx/dt    Velocity = rate of change of displacement
 a = dv/dt    Acceleration = rate of change of velocity
 ω = dɸ/dt    Angular Velocity = rate of change of angular displacement
-α = dw/dt    Angular Acceleration = rate of change of angular velocity
+α = dω/dt    Angular Acceleration = rate of change of angular velocity
 F = dp/dt    Force = rate of change of momentum
 τ = dL/dt    Torque = rate of change of angular momentum
 

@@ -305,10 +305,10 @@ FUNCTION      INHERITED    IMPLICIT  VIRTUAL  RETURNS
 --------------------------------------------------------
 Constructors  No           Yes        No      No
 Destructor    No           Yes        Yes     No
-As.Operator   No           Yes        Yes     Yes
+Operator=     No           Yes        Yes     Yes
 Operator&     Yes          Yes        Yes     Yes
 Operator[]    Yes          No         Yes     Yes
-Conversion    Yes          No         Yes     No (Yes)
+Conversion    Yes          No         Yes     Yes
 Friends       No           No         Yes     -
             
 PUBLIC INHERITANCE
