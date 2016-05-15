@@ -233,31 +233,31 @@ class MyClass : public std::enable_shared_from_this<MyClass>
 /////////////////////////////////////////////////////////////////////////////////////////////
 #include <malloc.h>
 
-memcpy(dest, src, n) // Binary copy of data from src to dest over n bytes
+// Will not call object constructor- if needed must use new or placement new
+// Will not call object destructor- call explicitly
+// Cannot mix malloc/free and new/delete
 
-int* pPointer = (int*)malloc(allocationSizeInBytes);                 // Allocating memory
-free(pPointer);                                                      // Freeing memory
-int* pPointer = (int*)realloc(pPointer,numberOfExtraElements);       // Resizing memory
-int* pDestination = (int*)memmove(pDestination,pSource,SizeInBytes); // Moving memory
-int* pPointer = (int*)realloc(allocationSizeInBytes);                // Reallocating memory
+memcpy(dest, src, bytes)          // Binary copy of data from src to dest over n bytes
+memmove(dest, src, bytes)         // Moves memory from src to dest over n bytes
+void* ptr = alloca(bytes)         // Allocate n bytes on the stack, returns void*
+void* ptr = malloc(bytes)         // Allocate n bytes on the heap, returns void*
+void* ptr = malloc(n*sizeof(int)) // Allocate array of n ints
+free(ptr);                        // Free any memory from malloc
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //PLACEMENT NEW
 /////////////////////////////////////////////////////////////////////////////////////////////
 #include <new>
 
-// PLACING OBJECT IN EXISTING MEMORY
-// Puts newed object into section of memory given
+// Won't allocate memory- only puts newed object into section of memory given
+// Classes require destructor to be called explicitly before deletion
+// Any allocated memory given to it must also be cleaned up
 
-// Any new/malloc memory is guaranteed to be properly aligned for the chosen type
-char* MyBuffer = new char[sizeof(MyClass)];
-auto* obj = new (MyBuffer) MyClass;
+char* buffer = new char[sizeof(MyClass)];
+MyClass* obj = new (buffer) MyClass;
+obj->~MyClass();
+delete [] buffer;
 
-// Buffers on stack have no guarantee and may not be aligned for MyClass
-char MyBuffer[sizeof(MyClass)];
-auto* obj = new (&MyBuffer[0]) MyClass; 
 
-// DESTROYING
-// Auto calls delete when out of scope
-// Classes require destructor to be called explicitly before goes out of scope
-obj->~MyClass()
+
+
