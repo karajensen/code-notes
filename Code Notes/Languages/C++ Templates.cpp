@@ -87,6 +87,7 @@ decltype(auto) MyFn = [](){ int x = 1; return (x); } // Is returning int&!
 //- Will force create version of template with explicit instantiation
 //- Only adds methods to template instantiation if object actually uses the method
 //- Keyword 'class' interchangable with 'typename'
+//- Definition must be in header unless explicit instantiation is used
 
 // FORWARD DECLARATION
 template <typename T> class MyClass;
@@ -100,10 +101,10 @@ template <typename T, typename S = int> //int = default type, only one allowed o
 class MyClass
 {
 public:
-    MyClass<T>() : m_member(S()) {} //<T> optional, initialise templated member to default
-    MyClass<T>& operator=(const MyClass<T> & o);
-    MyClass(const MyClass<T> & c);
-    friend void MyFunction(T& value); ///< friends to all possible instantiations 
+    MyClass<T>() :     //<T> optional
+        m_member(S())  //initialise templated member to default
+    {
+    } 
 private:
     S m_member;
 };
@@ -111,7 +112,6 @@ MyClass<int, double> obj;
 
 // EXPLICIT INSTANTIATION
 // Tells compiler to create a version of the template for the type
-// To allow template class/methods to live in .cpp, for every use of template add an explicit instantiation to .cpp file
 template MyClass<int>; 
 template void MyFunction<int>(int x);
 template void MyFunction<int>(MyClass<int>& x);
@@ -121,7 +121,7 @@ template void MyFunction<int>(MyClass<int>& x);
 template <> void MyFunction(int x); 
 template <> MyClass<int>::MyFunction();
 
-// CLASSES: PARTIAL SPECIALIZATION
+// PARTIAL SPECIALIZATION (CLASSES)
 // Can only partially specialize at class level, not member functions
 template <typename T, typename S> class MyClass {}; 
 template <typename T> class MyClassSpec <T, int> {}; // Set S as int
@@ -129,18 +129,24 @@ template <typename S> class MyClassSpec <S, S> {}; // Set T as S
 template <typename T> void MyClass<T, int>::MyFunction(); // Cannot be done
 MyClassSpec<float> obj;
 
-// FUNCTIONS: PARTIAL SPECIALIZATION
+// PARTIAL SPECIALIZATION (FUNCTIONS)
 // Functions can't be partially specialised- overloaded instead
 template <typename T, typename S> void MyFunction(T t, S s){}
 template <typename T> void MyFunction(T t, float s){} // overloads MyFunction
 MyFunction(x, y); // uses overload resolution
 
-// TEMPLATE EXCLUSION
-// Will fail to instantiate for non-arithmetic types
-// Don't use with nested templates
-template <typename T>
-typename enable_if<is_arithmetic<T>::value, T>::type
-MyFunction(T t) {}
+// TEMPLATES IN CPP
+// In Header File:
+template<typename T> class MyClass
+{
+public:
+    MyClass();
+};
+// In Cpp File:
+template MyClass<int>; // for every use of template add an explicit instantiation to .cpp file
+template<typename T> MyClass<T>::MyClass()
+{
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //TEMPLATE PARAMETERS

@@ -10,17 +10,15 @@ std::swap       // swaps the value of two variables, non-throwing on primitive t
 #include <typeinfo>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-typeid(myObject)         //returns type_info for object, cannot be stored as object
-typeid(myObject).name()  //get "class MyClass" string identifying the class type
+typeid(myObject)               //returns const type_info& for object
+typeid(MyClass)                //returns const type_info& for class
+typeid(*myBasePtr)             //will use most derived type as works on object
+typeid(*this)                  //if done in constructor/destructor will use actual type, not most derived type
+typeid(T) == typeid(const T)   //cv qualifiers ignored
 
-// requires object, not pointer
-Base* myBasePointer = new Derived();
-Derived* myDerivedPointer = new Derived();
-if(typeid(Derived) == typeid(*myBasePointer))    { /* returns true */ }
-if(typeid(Derived) == typeid(*myDerivedPointer)) { /* returns true */ }
-if(typeid(Base) == typeid(*myBasePointer))       { /* returns false */ }
-if(typeid(Base) == typeid(*myDerivedPointer))    { /* returns false */ }
-if(typeid(Derived) == typeid(Base))              { /* returns false */ }
+// String identifying class type, compilier dependent
+// Visual Studio: class MyNamespace::MyClass
+typeid(myObject).name()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <type_traits>
