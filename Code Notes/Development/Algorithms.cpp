@@ -30,9 +30,9 @@ template<typename T> T RadToDeg(T radians)
 * Get 1D index from 2D coord 
 * Requires uniform grid
 */
-int index = rows * x + z;
-int x = index / rows;
-int z = index % rows;
+const int index = r * size + c;
+int r = index / size;
+int c = index % size;
 
 /**
 * Check whether a number is odd
@@ -291,8 +291,8 @@ void Blit(std::vector<int>& arrA, const std::vector<int>& arrB, int x, int y)
     {
         for (int j = 0; j < maxHeight; ++j)
         {
-            const int aIndex = (y + j) * aSize + (x + i);
-            const int bIndex = j * bSize + i;
+            const int aIndex = (x + i) * aSize + (j + y);
+            const int bIndex = i * bSize + j;
             arrA[aIndex] = arrB[bIndex];
         }
     }

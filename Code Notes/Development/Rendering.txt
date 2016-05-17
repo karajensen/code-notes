@@ -8,17 +8,12 @@ FRAGMENT: Potential pixel. Each fragment has a pixel location, a depth value, co
 HOMOGENEOUS CLIP SPACE: Screen space multiplied by 'w' component
 
 01) FRUSTUM CULLING: Culls and creates list of meshes based on view frustum
-02) INPUT ASSEMBLER: Reads index/vertex data of each mesh
-03) VERTEX SHADER: Gets input vertex data, converts to homogenous clip space
-04) HULL SHADER: Inputs patch primitives, writes patch control points
-05) TESSELLATOR STAGE: Creates vertices and connectivity for tessellated lines or triangles.
-06) DOMAIN SHADER: Takes shaded control points and outputs vertices
-07) GEOMETRY SHADER: Inputs primitives optionally with adjacency information, then outputs different primitives
-08) STREAM-OUT: Writes Geometry shader output to buffer in memory
-09) BACKFACE CULLING: Face culling occurs depending on vert winding order
-10) CLIPPING: Clips any vertices outside the visible screen (If x,y is in range [-w,w] and z is in range [0,w] then okay)
-11) SCREEN MAPPING: Homogenous clip space transformed into screen space
-12) RASTERIZATION: 2D shape fitted into pixels
+02) VERTEX SHADER: Gets input vertex data, converts to homogenous clip space
+03) GEOMETRY SHADER: Hull shader, Tessellator shader, Geometry shader
+04) BACKFACE CULLING: Face culling occurs depending on vert winding order
+05) CLIPPING: Clips any vertices outside the visible screen (If x,y is in range [-w,w] and z is in range [0,w] then okay)
+06) SCREEN MAPPING: Homogenous clip space transformed into screen space
+07) RASTERIZATION: 2D shape fitted into pixels
 
     TRIANGLE TRAVERSAL:
      • If the center of pixel is enclosed in shape, pixel is fully filled. 
@@ -29,9 +24,9 @@ HOMOGENEOUS CLIP SPACE: Screen space multiplied by 'w' component
     • Every pixel covered by shape is a Fragment. 
     • Fragment values are interpolated from the 2D triangles they're made up of
 
-13) PIXEL SHADING: Gets interpolated vertex data as fragments, outputs pixel colors
-14) OUTPUT MERGER: Gets shaded pixels from PS, does alpha blending and writes them back to the backbuffer.
-15) TRANSPARENCY: If translucent objects, render after all opaque meshes in back to front order
+08) PIXEL SHADING: Gets interpolated vertex data as fragments, outputs pixel colors
+09) COMPOSITION: Depth testing, Stencil testing, Alpha testing, Alpha blending
+10) FINAL SCENE: Back buffer is switched with front buffer and presented
 
 =============================================================================================
 FORWARD SHADING
