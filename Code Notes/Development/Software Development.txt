@@ -146,12 +146,12 @@ $(ProjectName)
 $(Configuration)
 
 COMPILIER OPTIONS:
-/GS			  Prevent returning after a function has trashed the stack						
-/NXCOMPAT	  Makes the data in the heap/stack non-executable
+/GS              Prevent returning after a function has trashed the stack                        
+/NXCOMPAT      Makes the data in the heap/stack non-executable
 /DYNAMICBASE  Extra security with no run time cost
-/ZI			  Program Database for Edit And Continue, disables /Zo
-/Zi			  Program Data, enables /Zo for VS2015
-/Zo			  Generate enhanced debug information for release builds (PBDs get larger)
+/ZI              Program Database for Edit And Continue, disables /Zo
+/Zi              Program Data, enables /Zo for VS2015
+/Zo              Generate enhanced debug information for release builds (PBDs get larger)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 //MSBUILD

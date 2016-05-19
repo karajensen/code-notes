@@ -694,10 +694,10 @@ det = volume(V) = a.(b X c) = | bˣ bʸ bᶻ |
 DETERMINANT
 =============================================================================================
 
-> 0		right-handed matrix
-< 0		left-handed matrix
-= 0		matrix cannot be inverted
-= 1		orthogonal matrix
+> 0        right-handed matrix
+< 0        left-handed matrix
+= 0        matrix cannot be inverted
+= 1        orthogonal matrix
 
 2X2 DETERMINANT
  ----------------------------

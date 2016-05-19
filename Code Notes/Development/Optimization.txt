@@ -36,8 +36,8 @@ ARRAYS
 • Linear arrays are cache-friendly
 • Hardware can pre-fetch elements if traversal is forwards/backwards in predictable way
 • 2D arrays should always have outer loop rows, inner loop columns where arr[row][column]
-	- Other row members are part of cache line when fetched and fast to traverse
-	- Column members cause a cache miss
+    - Other row members are part of cache line when fetched and fast to traverse
+    - Column members cause a cache miss
 
 --------------------------------------------------------------------------------------------
 OBJECTS
@@ -50,20 +50,20 @@ OBJECTS
 FALSE SHARING
 --------------------------------------------------------------------------------------------
 • Seperate cores have same data cached and one writes to it with synchronisation:
-	- Entire cache line is invalidated
-	- Entire cache line is fetched again
-	- This includes memory that may not be related to the data written to
-	- Can affect globals/statics/arrays as they are often allocated together
+    - Entire cache line is invalidated
+    - Entire cache line is fetched again
+    - This includes memory that may not be related to the data written to
+    - Can affect globals/statics/arrays as they are often allocated together
 
 int result[n];
 for (int i = 0; i < n; ++i) 
 {
-	RunThread([i]()
-	{
-		// Every write to result will invalidate other threads if on seperate cores
-		// Minimise amount of times result[] is written to by using a temp var
-		for(auto obj : objs) { /*if calculations then*/ result[i] += x; }
-	});
+    RunThread([i]()
+    {
+        // Every write to result will invalidate other threads if on seperate cores
+        // Minimise amount of times result[] is written to by using a temp var
+        for(auto obj : objs) { /*if calculations then*/ result[i] += x; }
+    });
 }
 
 ===================================================================================================

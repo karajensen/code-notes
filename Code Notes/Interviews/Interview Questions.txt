@@ -138,12 +138,12 @@ A: Orthogonal the size of the mesh stays the same regardless of distance. Used f
    Perspective the size of the mesh changes due to distance. Used for 3D rendering.
 
 Q: What are the major differences between DirectX and OpenGL?
-A:	- DirectX is a Left Handed Row Major coordinate system, OpenGL is a Right Handed Column Major coordinate system
-	- DirectX order of transforms is Scale, Rotate, Translate, OpenGL is Translate, Rotate, Scale
-	- DirectX screen space coordinates start at the top left, OpenGL start at the bottom left
-	- DirectX is clockwise vertex winding order, OpenGL is anticlockwise vertex winding order
-	- DirectX has a +Z axis, OpenGL has a -Z axis
-	- DirectX is Windows only, OpenGL is both Windows and MAC
+A:    - DirectX is a Left Handed Row Major coordinate system, OpenGL is a Right Handed Column Major coordinate system
+    - DirectX order of transforms is Scale, Rotate, Translate, OpenGL is Translate, Rotate, Scale
+    - DirectX screen space coordinates start at the top left, OpenGL start at the bottom left
+    - DirectX is clockwise vertex winding order, OpenGL is anticlockwise vertex winding order
+    - DirectX has a +Z axis, OpenGL has a -Z axis
+    - DirectX is Windows only, OpenGL is both Windows and MAC
 
 Q: What is a mipmap?
 A: 'Mip' means 'many things in a small place'
