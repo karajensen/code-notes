@@ -19,8 +19,8 @@ AXIS ALIGNED BOUNDING BOX: Box sides are aligned with the world axis
 ==================================================================================================
 LINE-LINE INTERSECTION
 ==================================================================================================
-• Line equations: yo = moxo + co and y₁ = m₁x₁ + c₁
-• Find the common point where yo = y₁ and xo = x₁ through moxo + c = m₁x₁ + c₁ and solve for x
+• Line equations: y₀ = m₀x₀ + c₀ and y₁ = m₁x₁ + c₁
+• Find the common point where y₀ = y₁ and x₀ = x₁ through m₀x₀ + c = m₁x₁ + c₁ and solve for x
 • Lines parallel if x cancels out and gives a false statement (eg. 0 = 1)
 • Lines coincident (same) if x cancels out and gives a true statement (eg. 1 = 1)
 

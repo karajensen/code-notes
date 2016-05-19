@@ -99,28 +99,6 @@ int GetLowestDivisor(int m, int n)
 }
 
 /**
-* Difference between n x n array diagonals
-*/
-int primary = 0;
-int secondary = 0;
-for (int i = 0, j = n - 1; i < n; ++i, --j)
-{
-    primary += arr[i][i];
-    secondary += arr[j][i];
-}
-int difference = abs(primary - secondary);
-
-/**
-* Find single integer value in an array of paired integers
-*/
-unsigned int values = 0;
-for (unsigned int i = 0; i < arr.size(); ++i)
-{
-    values ^= a[i];
-}
-int singleInteger = values;
-
-/**
 * Get four components of colour
 */
 unsigned int color;
@@ -273,6 +251,28 @@ for (int i = 0; i < size; ++i)
     values.insert(arr[i]);
 }
 int uniqueInts = values.size();
+
+/**
+* Difference between n x n array diagonals
+*/
+int primary = 0;
+int secondary = 0;
+for (int i = 0, j = n - 1; i < n; ++i, --j)
+{
+    primary += arr[i][i];
+    secondary += arr[j][i];
+}
+int difference = abs(primary - secondary);
+
+/**
+* Find single integer value in an array of paired integers
+*/
+unsigned int values = 0;
+for (unsigned int i = 0; i < arr.size(); ++i)
+{
+    values ^= a[i];
+}
+int singleInteger = values;
 
 /**
 * Copy a section of a nxn array at coordinates x,y to a larger nxn array
