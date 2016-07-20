@@ -94,7 +94,6 @@
     <ClCompile Include="Languages\C++ Class.cpp" />
     <ClCompile Include="Languages\C++ Code.cpp" />
     <ClCompile Include="Languages\C++ Memory.cpp" />
-    <ClCompile Include="Languages\C++ Qt.cpp" />
     <ClCompile Include="Languages\C++ STL Containers.cpp" />
     <ClCompile Include="Languages\C++ STL.cpp" />
     <ClCompile Include="Languages\C++ Templates.cpp" />

@@ -1,6 +1,6 @@
-﻿/////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////
 //SOFTWARE DEVELOPMENT
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 AGILE
 • Uses self-organizing teams
@@ -19,9 +19,9 @@ SCRUM
 • Scrum of scrums: team representitives have a 'standup' meeting
 • Retrospective to reflect on how the iteration went
 
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 //WINDOWS DEVELOPMENT
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 4 APPLICATION TYPES:
 • Console applications
@@ -40,37 +40,69 @@ DEPENDS.EXE:
 Dependency walker for 32/64 bit modules (dll,exe) and builds heirarchical tree
 diagrams of all dependent modules, shows exported functions
 
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 //MAC DEVELOPMENT
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 • Code in C++/Objective-C
 • Use Xcode for IDE and Cocoa for framework
 • Graphics API is OpenGL
 
-/////////////////////////////////////////////////////////////////////////////////////////
-//ANDRIOD DEVELOPMENT
-/////////////////////////////////////////////////////////////////////////////////////////
+TERMINAL COMMANDS:
 
-• Code in Java (SDK) or C++ (NDK)
-• Graphics API is OpenGL ES (embedded)
 
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 //GIT SOURCE CONTROL
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-INITIALISE GIT
+=============================================================================================
+INITIALISING GIT
+=============================================================================================
+
 git config --global user.name "Kara Jensen"
 git config --global user.email mail@karajensen.com
-git config --global merge.tool kdiff3
 
-CLONE REPOSITORY
-git clone https://github.com/karajensen/cloth-simulator.git folderName
+[merge]
+	tool = kdiff3
+[mergetool "kdiff3"]
+	cmd = \"C:\\\\Program Files (x86)\\\\KDiff3\\\\kdiff3\" $BASE $LOCAL $REMOTE -o $MERGED
 
-ADD REMOTE REPOSITORY
-git remote add master https://github.com/karajensen/cloth-simulator.git
+=============================================================================================
+GIT COMMANDS
+=============================================================================================
 
-IGNORING FILES (use a .gitignore file)
+git remote add master https://github.com/name/repo.git  // Create remote repository
+git clone https://github.com/name/repo.git  folderName  // Clone repository
+
+git fetch                                   // Gets updates from server
+git branch                                  // List all branches
+git checkout -b myBranch origin/myParent    // Create new branch from remote branch
+git push -u origin myBranch                 // Create remote branch from local branch
+git checkout myBranch                       // Checkout a branch
+git checkout commitID                       // Checkout a branch at a commit ID
+git status                                  // Show changed files in branch
+git add -A                                  // Add changes to next commit
+git commit -am "Description"                // Commit changes
+git reset --hard                            // Discard all uncommitted changes
+git clean -f                                // Delete uncommitted files
+git clean -fd                               // Delete uncommitted directories
+git clean -f -n                             // View all files which will be deleted
+git clean -fd -n                            // View all directories which will be deleted
+git reset --hard commitID                   // Revert back to commit
+git log                                     // List commits and commitIDs
+git push                                    // Push local changes to remote branch
+git push origin master                      // Push local changes to master branch
+git pull origin ParentBranch                // Merge remote branch into current branch
+git mergetool                               // Fix merge conflicts
+git branch -D myBranch                      // Delete local branch
+git push origin --delete myBranch           // Delete remote branch
+git remote show origin                      // Show remote branch of local
+git branch -m oldBranch newBranch           // Rename a local branch
+
+=============================================================================================
+GIT IGNORE
+=============================================================================================
+
 # ignore all .a files
 *.a
 # still track lib.a, even though you're ignoring .a files above
@@ -80,65 +112,18 @@ build/
 # ignore doc/notes.txt, but not doc/server/arch.txt
 doc/*.txt
 
-IGNORING FILES ONCE PUSHED
-git rm -r --cached file.txt
+////////////////////////////////////////////////////////////////////////////////////////////////
+//PERFORCE SOURCE CONTROL
+////////////////////////////////////////////////////////////////////////////////////////////////
 
-LIST ALL BRANCHES
-git branch
 
-CREATE NEW BRANCH
-git fetch origin //gets updates from server
-git checkout -b myBranch origin/ParentBranch
-git checkout -b myBranch commitID
-git push -u origin myBranch //creates remote branch
 
-CHECKOUT A BRANCH
-git checkout myBranch
-git checkout commitID (for viewing at an id)
 
-SHOW CHANGED FILES IN BRANCH
-git status
 
-ADD CHANGES TO NEXT COMMIT
-git add -A
 
-COMMIT CHANGES
-git commit -am "Description"
-
-DISCARD ALL UNCOMMITED CHANGES
-git reset --hard
-
-REVERT BACK TO COMMIT
-git reset --hard commitid
-[get commitid from the git log second column]
-
-PUSH LOCAL CHANGES TO REMOTE
-git push
-git push origin master
-
-MERGE REMOTE BRANCH INTO CURRENT BRANCH
-git pull origin ParentBranch
-
-MERGE CONFLICTS
-git mergetool
-
-DELETE LOCAL BRANCH
-git branch -d myBranch
-
-DELETE REMOTE BRANCH
-git push origin --delete myBranch
-
-RENAMING A BRANCH
-git branch -m old_branch new_branch
-git push origin -u new_branch
-git push origin --delete old_branch
-
-SHOW REMOTE BRANCH OF LOCAL
-git remote show origin
-
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 //VISUAL STUDIO
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 ENVIRONMENT VARIABLES:
 $(SolutionDir)\
@@ -147,15 +132,15 @@ $(Configuration)
 
 COMPILIER OPTIONS:
 /GS              Prevent returning after a function has trashed the stack                        
-/NXCOMPAT      Makes the data in the heap/stack non-executable
-/DYNAMICBASE  Extra security with no run time cost
+/NXCOMPAT        Makes the data in the heap/stack non-executable
+/DYNAMICBASE     Extra security with no run time cost
 /ZI              Program Database for Edit And Continue, disables /Zo
 /Zi              Program Data, enables /Zo for VS2015
 /Zo              Generate enhanced debug information for release builds (PBDs get larger)
 
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 //MSBUILD
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
 
