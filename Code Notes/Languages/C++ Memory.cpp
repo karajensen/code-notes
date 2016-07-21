@@ -236,7 +236,8 @@ class MyClass : public std::enable_shared_from_this<MyClass>
 // Will not call object constructor- if needed must use new or placement new
 // Will not call object destructor- call explicitly
 // Cannot mix malloc/free and new/delete
-
+        
+memset(dest, '\0', bytes)         // Fill memory over bytes with value
 memcpy(dest, src, bytes)          // Binary copy of data from src to dest over n bytes
 memmove(dest, src, bytes)         // Moves memory from src to dest over n bytes
 void* ptr = alloca(bytes)         // Allocate n bytes on the stack, returns void*

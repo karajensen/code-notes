@@ -49,6 +49,8 @@ str.find_last_not_of("hello") //returns index of last occurance of ANY character
 // CONVERTING WSTRING AND STRING
 string str(wstr.begin(),  wstr.end());
 wstring wstr(str.begin(), str.end());
+str = wstring_convert<codecvt_utf8<wchar_t>>().to_bytes(wstr);
+wstr = wstring_convert<codecvt_utf8<wchar_t>>().from_bytes(str);
 
 // ITERATORS
 begin()   end()   cbegin()   cend()

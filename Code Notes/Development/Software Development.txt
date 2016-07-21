@@ -49,7 +49,12 @@ diagrams of all dependent modules, shows exported functions
 • Graphics API is OpenGL
 
 TERMINAL COMMANDS:
-
+pwd                  // gives name of folder currently in
+ls                   // dir
+open .               // start.
+cd folder            // cd folder
+cd ..                // cd ..
+./myfile.sh          // myfile.bat
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //GIT SOURCE CONTROL

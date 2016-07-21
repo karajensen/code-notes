@@ -7,6 +7,40 @@ std::move       // Casts to rvalue no matter what type it is, compile time
 std::swap       // swaps the value of two variables, non-throwing on primitive types
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <cstring>
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//works on character arrays and string temp/literals
+
+strlen(str) //gives the length of the string array minus the null character
+strcpy(str1, str2) //copy cstring2 to cstring1 including '\0'
+strncpy(str1, str2, 3) //copy 3 members of cstring2 to cstring1, must do cstring1[4] = '\0' after
+strcat(str1, str2) //append contents of cstring2 to cstring1
+strcmp(str1, str2) //checks each char until reaching a '\0', returns 0 if same or < or > 0 if 1 < or > 2
+strchr(str, ch) //returns ptr to first occurance of char chosen, or null if not there
+strrchr(str, ch) //returns ptr to last occurance of char chosen, or null if not there
+strpbrk(str1, str2) //returns ptr to first occurance of any character in str2 or null if none
+strtok(str, delim) //removes token from str and returns it using deliminators
+wcscpy(str1, str2) //strcpy for wide strings
+wcsncpy(str1, str2) //strncpy for wide strings
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <cctype>
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+isalpha(myChar)  //is character a letter
+isalnum(myChar)  //is character a letter or number
+isdigit(myChar)  //is character a decimal digit (0-9)
+isxdigit(myChar) //is character a hexadecimal digit (0-9, A-F)
+isspace(myChar)  //is character a whitespace characters (newlines, spaces, and tabs)
+isblank(myChar)  //is character a space or tab
+ispunct(myChar)  //is character a punctuation character
+iscntrl(myChar)  //is character a control character
+islower(myChar)  //is character lower case
+isupper(myChar)  //is character upper case
+tolower(myChar)  //returns lower case of character
+toupper(myChar)  //returns upper case of character
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <typeinfo>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -14,7 +48,7 @@ typeid(myObject)               //returns const type_info& for object
 typeid(MyClass)                //returns const type_info& for class
 typeid(*myBasePtr)             //will use most derived type as works on object
 typeid(*this)                  //if done in constructor/destructor will use actual type, not most derived type
-typeid(T) == typeid(const T)   //cv qualifiers ignored
+typeid(T) == typeid(const T)   //cv and * and & qualifiers ignored
 
 // String identifying class type, compilier dependent
 // Visual Studio: class MyNamespace::MyClass
@@ -35,6 +69,8 @@ std::is_integral<A>::value //returns true if A is int/char/bool reguardless of c
 std::is_void<A>::value //returns true if A is void reguardless of constness
 std::is_null_pointer<A>::value //returns true if A is nullptr reguardless of constness
 std::is_const<A>::value //returns true if A is const
+std::is_pointer<A>::value //returns true if A is a pointer
+std::is_reference<A>::value // returns true if A is a reference
 std::is_polymorphic<A>::value //returns true if A is a non-union class with at least 1 virtual function
 std::is_abstract<A>::value //returns true if A is a non-union class with a pure virtual function
 std::remove_cv<A>::type //returns A with any const or volitile or both modifiers removed
@@ -241,38 +277,6 @@ clock_t delay = NoOfSeconds * CLOCKS_PER_SEC;
 clock_t start = clock(); //set the start of the time
 while ((clock() - start) < delay) // calculate the difference
     continue;
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <cstring>
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-//works on character arrays and string temp/literals
-
-strlen(str) //gives the length of the string array minus the null character
-strcpy(str1, str2) //copy cstring2 to cstring1 including '\0'
-strncpy(str1, str2, 3) //copy 3 members of cstring2 to cstring1, must do cstring1[4] = '\0' after
-strcat(str1, str2) //append contents of cstring2 to cstring1
-strcmp(str1, str2) //checks each char until reaching a '\0', returns 0 if same or < or > 0 if 1 < or > 2
-strchr(str, ch) //returns ptr to first occurance of char chosen, or null if not there
-strrchr(str, ch) //returns ptr to last occurance of char chosen, or null if not there
-strpbrk(str1, str2) //returns ptr to first occurance of any character in str2 or null if none
-strtok(str, delim) //removes token from str and returns it using deliminators
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <cctype>
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-isalpha(myChar)  //is character a letter
-isalnum(myChar)  //is character a letter or number
-isdigit(myChar)  //is character a decimal digit (0-9)
-isxdigit(myChar) //is character a hexadecimal digit (0-9, A-F)
-isspace(myChar)  //is character a whitespace characters (newlines, spaces, and tabs)
-isblank(myChar)  //is character a space or tab
-ispunct(myChar)  //is character a punctuation character
-iscntrl(myChar)  //is character a control character
-islower(myChar)  //is character lower case
-isupper(myChar)  //is character upper case
-tolower(myChar)  //returns lower case of character
-toupper(myChar)  //returns upper case of character
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <stdint.h>
