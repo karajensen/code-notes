@@ -266,6 +266,7 @@ myObj = null;
 myObj = {x: 2, y: 1} // auto creates object with parameters
 myObj = myObj || "default value";
 var myObj; // Makes local to scope (Without becomes global to all)
+typeof arg === "string" // Test if variable is type
 
 // STRINGS
 str = "MyString\n";               // supports escape characters
@@ -283,8 +284,17 @@ str.split(",")                    // returns array of string without seperator
 myArray = new Array();
 myArray.length 
 myArray[0] = "myEntry";
-myArray["one"] = 2.0;
-"one" in myArray        // returns true if 'one' is a key in myArray
+myArray["one"] = 2.0;        // creates new entry if key doesn't exist
+"one" in myArray             // returns true if 'one' is a key in myArray
+
+// ENUMS
+MyEnum =
+{
+    ONE: 1,
+    TWO : 3,
+    THREE : 3
+}
+var myEnum = myVar.MyEnum.ONE
 
 // CONVERSIONS
 myString = myInt.toString();
@@ -341,6 +351,7 @@ else { }
 // LOOPS
 for (i = 1; i <= 100; i++) { }
 do { } while (myBoolean)
+for (var key in myArray){ var x = myArray[key] } // safe way to iterate, using i++ may create key
 
 // LIBRARIES
 Math.max(a,b)

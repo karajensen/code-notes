@@ -95,6 +95,7 @@ git clean -f -n                             // View all files which will be dele
 git clean -fd -n                            // View all directories which will be deleted
 git reset --hard commitID                   // Revert back to commit
 git log                                     // List commits and commitIDs
+git --no-pager log > log.txt                // Save list of commits and commitIDs to a file
 git push                                    // Push local changes to remote branch
 git push origin master                      // Push local changes to master branch
 git pull origin ParentBranch                // Merge remote branch into current branch
