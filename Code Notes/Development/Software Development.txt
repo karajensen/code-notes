@@ -76,6 +76,8 @@ git config --global user.email mail@karajensen.com
 GIT COMMANDS
 =============================================================================================
 
+• If uncommited changes are on a branch, new branches checked out will take those changes
+
 git remote add master https://github.com/name/repo.git  // Create remote repository
 git clone https://github.com/name/repo.git  folderName  // Clone repository
 
@@ -94,6 +96,7 @@ git clean -fd                               // Delete uncommitted directories
 git clean -f -n                             // View all files which will be deleted
 git clean -fd -n                            // View all directories which will be deleted
 git reset --hard commitID                   // Revert back to commit
+git checkout filename.ext                   // Revert changes to file
 git log                                     // List commits and commitIDs
 git --no-pager log > log.txt                // Save list of commits and commitIDs to a file
 git push                                    // Push local changes to remote branch
