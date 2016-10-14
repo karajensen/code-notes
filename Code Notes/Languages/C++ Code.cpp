@@ -238,9 +238,10 @@ struct
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //FOR LOOP
-//Never use unsigned int when looping backwards to 0
-//When decrementing past zero the unsigned int will cycle over
-//All except the initial assigment will recompute each iteration
+// Never use unsigned int when looping backwards to 0
+// unsigned int overflow wraps to 0, signed int overflow is undefined
+// When decrementing past zero the unsigned int will cycle over
+// All except the initial assigment will recompute each iteration
 for (int i = 0; i < 5; ++i){}
 for (int i = 0, int j = 2; i < j; i = i + 15, j-- ){}
 

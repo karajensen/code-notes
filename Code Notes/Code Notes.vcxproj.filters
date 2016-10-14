@@ -102,6 +102,12 @@
     <ClCompile Include="Languages\C++ Templates.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
+    <ClCompile Include="Languages\Qt.cpp">
+      <Filter>Languages</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\Javascript.cpp">
+      <Filter>Languages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
