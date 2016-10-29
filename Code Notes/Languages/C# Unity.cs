@@ -2,7 +2,7 @@
 //UNITY SCRIPTS
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-// • Before Starting: Preferences -> Editor -> Visible Meta Files for Source Control
+// • Before Starting: Enable Visible Meta files in Edit -> Project Settings -> Editor
 // • Statics are shared between scenes
 // • GameObjects are destroyed between scenes (including statics) unless specified not to
 
