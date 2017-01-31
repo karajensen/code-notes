@@ -56,6 +56,11 @@ public class MyScript : MonoBehaviour
     void LateUpdate()
     {
     }
+
+    // Diagnostics function
+    void OnGUI()
+    {
+    }
 }
 
 // CLASS ATTRIBUTES

@@ -267,13 +267,6 @@ PROJECTIVE TEXTURING:
 • Scale the position from [-1,1] to [0,1] for proper texture coords
 • Sample the texture to be projected 
 
-GAMMA CORRECTION:
-• the relationship between a pixel's numerical value and its actual luminance
-
-SRGB COLOR SPACE:
-• Texture blending operations are done in linear space
-• sRGB format is gamma corrected color which produce incorrect results in linear space
-
 =============================================================================================
 TEXTURE COMPRESSION
 =============================================================================================
@@ -549,6 +542,36 @@ INVERSE-SQUARE LIGHT FALLOFF (ATTENUATION):
 • More distant the light is the less obvious the inverse-square light falloff
 • Not used for sunlight as sun is too far away for noticable effect
 • As light moves closer to specular reflection of an object the highlights appear bigger but not brighter
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//HIGH DYNAMIC RANGE RENDERING
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+LOW DYNAMIC RANGE (LDR): RGB values for pixels with range 0->1 of intensity for the display device
+HIGH DYNAMIC RANGE (HDR): Values allowed outside 0->1 for colours/luminance visible to the human eye
+LUMINANCE: Intensity of light emitted from a surface per unit area in a given direction
+TRICHROMATIC COLOR VALUES: Channels in an HDR image, also called radiance
+SRGB COLOR SPACE: Standard describing the relation between LDR pixel values and color emitted by the display
+TONEMAPPING: Process of mapping color values from HDR to LDR
+
+• Scene is rendered onto an HDR buffer allowing for values outside 0->1 range
+• HDR buffer is post-processed with effects such as HDR bloom/glow
+• HDR buffer goes through tone mapping to convert the values to LDR for displaying on the screen
+
+ADVANTAGES
+• Colors not being lost in high intensity areas
+• Reduction of banding in low frequency lighting areas
+• Better control of post processing effects:
+    - LDR bloom/glow requires blurring itensities at a value < 1.0 which may blur undesirable areas
+    - HDR bloom/glow allows for blurring areas in scene with intensity > 1.0
+  
+DISADVANTAGES
+• Uses floating point render textures- rendering is slower and requires more VRAM
+• No hardware anti-aliasing support 
+
+TONEMAPPING OPERATORS   
+• Algorithm that transforms HDR scene luminance into the luminance range that can be shown on a display
+• Also called Gamma correction if the algorithm takes the display device into account
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //SHADOWS

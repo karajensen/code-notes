@@ -151,7 +151,8 @@ char buffer[256];
 std::sprintf(buf, "%d", myInt)
 std::sprintf(buf, "%u", myUint) 
 std::sprintf(buf, "%f", myDbl) 
-std::sprintf(buf, "%f", myFloat) 
+std::sprintf(buf, "%f", myFloat)
+std::sprintf(buf, "%s", myCString)
 
 // STD::STRING TO CHAR*:
 std::string str = "test";

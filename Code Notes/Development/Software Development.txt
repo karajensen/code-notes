@@ -75,11 +75,11 @@ git config --global user.email mail@karajensen.com
 =============================================================================================
 GIT COMMANDS
 =============================================================================================
-
 • If uncommited changes are on a branch, new branches checked out will take those changes
 
-git remote add master https://github.com/name/repo.git  // Create remote repository
-git clone https://github.com/name/repo.git  folderName  // Clone repository
+git remote add master https://github.com/name/repo.git        // Create remote repository
+git clone https://github.com/name/repo.git  folderName        // Clone repository
+git submodule add https://github.com/name/repo.git folderName // Create submodule
 
 git fetch                                   // Gets updates from server
 git branch                                  // List all branches
@@ -105,8 +105,11 @@ git pull origin ParentBranch                // Merge remote branch into current 
 git mergetool                               // Fix merge conflicts
 git branch -D myBranch                      // Delete local branch
 git push origin --delete myBranch           // Delete remote branch
-git remote show origin                      // Show remote branch of local
+git remote show origin                      // Show remote branch of local and URL
 git branch -m oldBranch newBranch           // Rename a local branch
+git branch --sort=-committerdate            // Sort local branches by date
+git submodule init                          // Initialise all submodules
+git submodule update --recursive            // Update all submodules 
 
 =============================================================================================
 GIT IGNORE
@@ -120,6 +123,49 @@ GIT IGNORE
 build/
 # ignore doc/notes.txt, but not doc/server/arch.txt
 doc/*.txt
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//SVN SOURCE CONTROL
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+svn revert folder --depth=infinity        // reset all changes
+svn commit --depth infinity . -m "Merge"  // Commit all changes
+svn checkout url /folder/                 // Checkout url into folder
+svn update folder                         // Update folder recursivly
+svn cleanup                               // Unlock repository if needed
+svn add folder                            // Add folder or file to local
+svn delete folder                         // Remove folder from local
+svn commit -m "log messages"              // Commit changes to remote
+svn list                                  // View repository
+svn diff folder                           // View difference between remote/local
+svn status folder                         // View status of folder/file, M = modified
+svn log folder                            // List commits in folder
+
+MERGING
+• Ensure clean except for your changes
+• Merge trunk into your branch: 
+   - Right click on your branch and select MERGE
+   - Merge range of revisions, all revisions
+   - URL to merge from set to trunk
+   - Commit the merge as its local
+• Merge branch into truck, this is local
+
+PUSHING CHANGES
+• Right mouse click and go 'Tortoise SVN' and 'Check for modifications'
+• Revert or remove anything you don't want to commit
+• Check with base to see your changes
+• Right mouse click and go 'SVN Commit'
+• Add a message and press submit
+
+CREATING A NEW BRANCH
+• Right mouse click on the trunk folder from which you would like to branch
+• Select 'Tortoise SVN' and 'Branch/tag'
+• Change the 'To path' to your new branch and add a message
+• Select 'HEAD revision in the repository' to branch from the latest commit
+• Right mouse click and go 'SVN Checkout' 
+• Add the URL and change the checkout directory
+• Set the checkout depth for what you want to check out
+• Set revision to HEAD
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //VISUAL STUDIO
