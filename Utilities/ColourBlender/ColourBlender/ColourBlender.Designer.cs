@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication1
 {
-    partial class ColourConverter
+    partial class ColourBlender
     {
         /// <summary>
         /// Required designer variable.
@@ -231,7 +231,7 @@
             this.buttonRandom.UseVisualStyleBackColor = true;
             this.buttonRandom.Click += new System.EventHandler(this.buttonRandom_Click);
             // 
-            // ColourConverter
+            // ColourBlender
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -256,7 +256,7 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Name = "ColourConverter";
+            this.Name = "ColourBlender";
             this.Text = "Colour Converter";
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);

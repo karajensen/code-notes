@@ -46,16 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ColourConverter.cs">
+    <Compile Include="ColourBlender.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ColourConverter.Designer.cs">
-      <DependentUpon>ColourConverter.cs</DependentUpon>
+    <Compile Include="ColourBlender.Designer.cs">
+      <DependentUpon>ColourBlender.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ColourConverter.resx">
-      <DependentUpon>ColourConverter.cs</DependentUpon>
+    <EmbeddedResource Include="ColourBlender.resx">
+      <DependentUpon>ColourBlender.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

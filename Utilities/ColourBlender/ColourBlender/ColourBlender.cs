@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
-    public partial class ColourConverter : Form
+    public partial class ColourBlender : Form
     {
         private double m_blendValue = 0.0f;
         private List<Button> m_blending = new List<Button>();
@@ -33,7 +33,7 @@ namespace WindowsFormsApplication1
         /// <summary>
         /// Constructur
         /// </summary>
-        public ColourConverter()
+        public ColourBlender()
         {
             InitializeComponent();
 

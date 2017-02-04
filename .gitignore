@@ -19,5 +19,7 @@ Utilities/Wrapper/wrapper/Release/
 Utilities/Wrapper/native/Debug/
 Utilities/Wrapper/native/Release/
 Utilities/Wrapper/managed/obj/
-Utilities/ColourConverter/obj/
-Utilities/ColourConverter/bin/
+Utilities/ColourBlender/obj/
+Utilities/ColourBlender/bin/
+Utilities/ToneMapping/obj/
+Utilities/ToneMapping/bin/
