@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.colorDialog2 = new System.Windows.Forms.ColorDialog();
-            this.button3 = new System.Windows.Forms.Button();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.hdr_color = new System.Windows.Forms.Label();
-            this.blendValue = new System.Windows.Forms.Label();
+            this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.hdrButton = new System.Windows.Forms.Button();
+            this.intensity = new System.Windows.Forms.TrackBar();
+            this.hdrLbl = new System.Windows.Forms.Label();
+            this.intensityLbl = new System.Windows.Forms.Label();
             this.b1 = new System.Windows.Forms.Button();
             this.b2 = new System.Windows.Forms.Button();
             this.b3 = new System.Windows.Forms.Button();
@@ -43,7 +42,7 @@
             this.b7 = new System.Windows.Forms.Button();
             this.LDR = new System.Windows.Forms.Label();
             this.HDR = new System.Windows.Forms.Label();
-            this.ldr_color = new System.Windows.Forms.Label();
+            this.ldrLbl = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -51,54 +50,55 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.hdr_color_flt = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.listBox = new System.Windows.Forms.ListBox();
+            this.hdrFltLbl = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.intensity)).BeginInit();
             this.SuspendLayout();
             // 
-            // button3
+            // hdrButton
             // 
-            this.button3.Location = new System.Drawing.Point(163, 147);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 75);
-            this.button3.TabIndex = 2;
-            this.button3.UseVisualStyleBackColor = true;
+            this.hdrButton.Location = new System.Drawing.Point(166, 102);
+            this.hdrButton.Name = "hdrButton";
+            this.hdrButton.Size = new System.Drawing.Size(75, 75);
+            this.hdrButton.TabIndex = 2;
+            this.hdrButton.UseVisualStyleBackColor = true;
+            this.hdrButton.Click += new System.EventHandler(this.hdrButton_Click);
             // 
-            // trackBar1
+            // intensity
             // 
-            this.trackBar1.LargeChange = 10;
-            this.trackBar1.Location = new System.Drawing.Point(25, 164);
-            this.trackBar1.Maximum = 100;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(104, 45);
-            this.trackBar1.SmallChange = 10;
-            this.trackBar1.TabIndex = 3;
-            this.trackBar1.Value = 50;
-            this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
+            this.intensity.LargeChange = 10;
+            this.intensity.Location = new System.Drawing.Point(28, 119);
+            this.intensity.Maximum = 100;
+            this.intensity.Name = "intensity";
+            this.intensity.Size = new System.Drawing.Size(104, 45);
+            this.intensity.SmallChange = 10;
+            this.intensity.TabIndex = 3;
+            this.intensity.Value = 50;
+            this.intensity.ValueChanged += new System.EventHandler(this.intensity_ValueChanged);
             // 
-            // hdr_color
+            // hdrLbl
             // 
-            this.hdr_color.AutoSize = true;
-            this.hdr_color.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hdr_color.Location = new System.Drawing.Point(161, 225);
-            this.hdr_color.Name = "hdr_color";
-            this.hdr_color.Size = new System.Drawing.Size(77, 16);
-            this.hdr_color.TabIndex = 5;
-            this.hdr_color.Text = "255 255 255";
-            this.hdr_color.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.hdrLbl.AutoSize = true;
+            this.hdrLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hdrLbl.Location = new System.Drawing.Point(164, 180);
+            this.hdrLbl.Name = "hdrLbl";
+            this.hdrLbl.Size = new System.Drawing.Size(77, 16);
+            this.hdrLbl.TabIndex = 5;
+            this.hdrLbl.Text = "255 255 255";
+            this.hdrLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // blendValue
+            // intensityLbl
             // 
-            this.blendValue.AutoSize = true;
-            this.blendValue.Location = new System.Drawing.Point(68, 196);
-            this.blendValue.Name = "blendValue";
-            this.blendValue.Size = new System.Drawing.Size(22, 13);
-            this.blendValue.TabIndex = 7;
-            this.blendValue.Text = "0.0";
+            this.intensityLbl.AutoSize = true;
+            this.intensityLbl.Location = new System.Drawing.Point(71, 151);
+            this.intensityLbl.Name = "intensityLbl";
+            this.intensityLbl.Size = new System.Drawing.Size(22, 13);
+            this.intensityLbl.TabIndex = 7;
+            this.intensityLbl.Text = "0.0";
             // 
             // b1
             // 
-            this.b1.Location = new System.Drawing.Point(25, 299);
+            this.b1.Location = new System.Drawing.Point(28, 254);
             this.b1.Name = "b1";
             this.b1.Size = new System.Drawing.Size(40, 40);
             this.b1.TabIndex = 8;
@@ -106,7 +106,7 @@
             // 
             // b2
             // 
-            this.b2.Location = new System.Drawing.Point(71, 299);
+            this.b2.Location = new System.Drawing.Point(74, 254);
             this.b2.Name = "b2";
             this.b2.Size = new System.Drawing.Size(40, 40);
             this.b2.TabIndex = 9;
@@ -114,7 +114,7 @@
             // 
             // b3
             // 
-            this.b3.Location = new System.Drawing.Point(117, 299);
+            this.b3.Location = new System.Drawing.Point(120, 254);
             this.b3.Name = "b3";
             this.b3.Size = new System.Drawing.Size(40, 40);
             this.b3.TabIndex = 10;
@@ -122,7 +122,7 @@
             // 
             // b4
             // 
-            this.b4.Location = new System.Drawing.Point(163, 282);
+            this.b4.Location = new System.Drawing.Point(166, 237);
             this.b4.Name = "b4";
             this.b4.Size = new System.Drawing.Size(75, 75);
             this.b4.TabIndex = 11;
@@ -130,7 +130,7 @@
             // 
             // b5
             // 
-            this.b5.Location = new System.Drawing.Point(244, 299);
+            this.b5.Location = new System.Drawing.Point(247, 254);
             this.b5.Name = "b5";
             this.b5.Size = new System.Drawing.Size(40, 40);
             this.b5.TabIndex = 12;
@@ -138,7 +138,7 @@
             // 
             // b6
             // 
-            this.b6.Location = new System.Drawing.Point(336, 299);
+            this.b6.Location = new System.Drawing.Point(338, 254);
             this.b6.Name = "b6";
             this.b6.Size = new System.Drawing.Size(40, 40);
             this.b6.TabIndex = 13;
@@ -146,7 +146,7 @@
             // 
             // b7
             // 
-            this.b7.Location = new System.Drawing.Point(290, 299);
+            this.b7.Location = new System.Drawing.Point(293, 254);
             this.b7.Name = "b7";
             this.b7.Size = new System.Drawing.Size(40, 40);
             this.b7.TabIndex = 14;
@@ -156,7 +156,7 @@
             // 
             this.LDR.AutoSize = true;
             this.LDR.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LDR.Location = new System.Drawing.Point(182, 263);
+            this.LDR.Location = new System.Drawing.Point(185, 218);
             this.LDR.Name = "LDR";
             this.LDR.Size = new System.Drawing.Size(35, 16);
             this.LDR.TabIndex = 20;
@@ -167,29 +167,29 @@
             // 
             this.HDR.AutoSize = true;
             this.HDR.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HDR.Location = new System.Drawing.Point(180, 130);
+            this.HDR.Location = new System.Drawing.Point(183, 85);
             this.HDR.Name = "HDR";
             this.HDR.Size = new System.Drawing.Size(38, 16);
             this.HDR.TabIndex = 21;
             this.HDR.Text = "HDR";
             this.HDR.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // ldr_color
+            // ldrLbl
             // 
-            this.ldr_color.AutoSize = true;
-            this.ldr_color.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ldr_color.Location = new System.Drawing.Point(161, 360);
-            this.ldr_color.Name = "ldr_color";
-            this.ldr_color.Size = new System.Drawing.Size(77, 16);
-            this.ldr_color.TabIndex = 22;
-            this.ldr_color.Text = "255 255 255";
-            this.ldr_color.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ldrLbl.AutoSize = true;
+            this.ldrLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ldrLbl.Location = new System.Drawing.Point(164, 315);
+            this.ldrLbl.Name = "ldrLbl";
+            this.ldrLbl.Size = new System.Drawing.Size(77, 16);
+            this.ldrLbl.TabIndex = 22;
+            this.ldrLbl.Text = "255 255 255";
+            this.ldrLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(35, 145);
+            this.label1.Location = new System.Drawing.Point(38, 100);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(94, 16);
             this.label1.TabIndex = 23;
@@ -200,7 +200,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(30, 345);
+            this.label2.Location = new System.Drawing.Point(33, 300);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 16);
             this.label2.TabIndex = 24;
@@ -211,7 +211,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(77, 345);
+            this.label3.Location = new System.Drawing.Point(79, 300);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 16);
             this.label3.TabIndex = 25;
@@ -222,7 +222,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(123, 345);
+            this.label4.Location = new System.Drawing.Point(125, 300);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(29, 16);
             this.label4.TabIndex = 26;
@@ -233,7 +233,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(343, 345);
+            this.label5.Location = new System.Drawing.Point(342, 300);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(32, 16);
             this.label5.TabIndex = 29;
@@ -244,7 +244,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(297, 345);
+            this.label6.Location = new System.Drawing.Point(297, 300);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(32, 16);
             this.label6.TabIndex = 28;
@@ -255,45 +255,40 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(250, 345);
+            this.label7.Location = new System.Drawing.Point(251, 300);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(32, 16);
             this.label7.TabIndex = 27;
             this.label7.Text = "+1.0";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // listBox1
+            // listBox
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Items.AddRange(new object[] {
-            "Linear",
-            "Reinhard",
-            "Luma-based Reinhard",
-            "White preserving luma-based Reinhard",
-            "Filmic"});
-            this.listBox1.Location = new System.Drawing.Point(102, 12);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(205, 95);
-            this.listBox1.TabIndex = 30;
+            this.listBox.FormattingEnabled = true;
+            this.listBox.Location = new System.Drawing.Point(102, 12);
+            this.listBox.Name = "listBox";
+            this.listBox.Size = new System.Drawing.Size(205, 56);
+            this.listBox.TabIndex = 30;
+            this.listBox.SelectedIndexChanged += new System.EventHandler(this.listBox_SelectedIndexChanged);
             // 
-            // hdr_color_flt
+            // hdrFltLbl
             // 
-            this.hdr_color_flt.AutoSize = true;
-            this.hdr_color_flt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hdr_color_flt.Location = new System.Drawing.Point(297, 147);
-            this.hdr_color_flt.Name = "hdr_color_flt";
-            this.hdr_color_flt.Size = new System.Drawing.Size(41, 48);
-            this.hdr_color_flt.TabIndex = 31;
-            this.hdr_color_flt.Text = "R: 0.0\r\nG: 0.0\r\nB: 0.0";
-            this.hdr_color_flt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.hdrFltLbl.AutoSize = true;
+            this.hdrFltLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hdrFltLbl.Location = new System.Drawing.Point(277, 102);
+            this.hdrFltLbl.Name = "hdrFltLbl";
+            this.hdrFltLbl.Size = new System.Drawing.Size(41, 48);
+            this.hdrFltLbl.TabIndex = 31;
+            this.hdrFltLbl.Text = "R: 0.0\r\nG: 0.0\r\nB: 0.0";
+            this.hdrFltLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ToneMapping
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(408, 395);
-            this.Controls.Add(this.hdr_color_flt);
-            this.Controls.Add(this.listBox1);
+            this.ClientSize = new System.Drawing.Size(408, 349);
+            this.Controls.Add(this.hdrFltLbl);
+            this.Controls.Add(this.listBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label7);
@@ -301,7 +296,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.ldr_color);
+            this.Controls.Add(this.ldrLbl);
             this.Controls.Add(this.HDR);
             this.Controls.Add(this.LDR);
             this.Controls.Add(this.b7);
@@ -311,13 +306,13 @@
             this.Controls.Add(this.b3);
             this.Controls.Add(this.b2);
             this.Controls.Add(this.b1);
-            this.Controls.Add(this.blendValue);
-            this.Controls.Add(this.hdr_color);
-            this.Controls.Add(this.trackBar1);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.intensityLbl);
+            this.Controls.Add(this.hdrLbl);
+            this.Controls.Add(this.intensity);
+            this.Controls.Add(this.hdrButton);
             this.Name = "ToneMapping";
             this.Text = "Colour Converter";
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.intensity)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -325,12 +320,11 @@
 
         #endregion
 
-        private System.Windows.Forms.ColorDialog colorDialog1;
-        private System.Windows.Forms.ColorDialog colorDialog2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.Label hdr_color;
-        private System.Windows.Forms.Label blendValue;
+        private System.Windows.Forms.ColorDialog colorDialog;
+        private System.Windows.Forms.Button hdrButton;
+        private System.Windows.Forms.TrackBar intensity;
+        private System.Windows.Forms.Label hdrLbl;
+        private System.Windows.Forms.Label intensityLbl;
         private System.Windows.Forms.Button b1;
         private System.Windows.Forms.Button b2;
         private System.Windows.Forms.Button b3;
@@ -340,7 +334,7 @@
         private System.Windows.Forms.Button b7;
         private System.Windows.Forms.Label LDR;
         private System.Windows.Forms.Label HDR;
-        private System.Windows.Forms.Label ldr_color;
+        private System.Windows.Forms.Label ldrLbl;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -348,8 +342,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Label hdr_color_flt;
+        private System.Windows.Forms.ListBox listBox;
+        private System.Windows.Forms.Label hdrFltLbl;
     }
 }
 
