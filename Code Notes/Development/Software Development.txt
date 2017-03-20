@@ -1,6 +1,6 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //SOFTWARE DEVELOPMENT
-////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 AGILE
 • Uses self-organizing teams
@@ -19,9 +19,9 @@ SCRUM
 • Scrum of scrums: team representitives have a 'standup' meeting
 • Retrospective to reflect on how the iteration went
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //WINDOWS DEVELOPMENT
-////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 4 APPLICATION TYPES:
 • Console applications
@@ -40,9 +40,9 @@ DEPENDS.EXE:
 Dependency walker for 32/64 bit modules (dll,exe) and builds heirarchical tree
 diagrams of all dependent modules, shows exported functions
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //MAC DEVELOPMENT
-////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 • Code in C++/Objective-C
 • Use Xcode for IDE and Cocoa for framework
@@ -56,65 +56,54 @@ cd folder            // cd folder
 cd ..                // cd ..
 ./myfile.sh          // myfile.bat
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //GIT SOURCE CONTROL
-////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-=============================================================================================
+• If uncommited changes are on a branch, new branches checked out will take those changes
+
+git remote add master https://github.com/name/repo.git    // Create remote repository
+git clone https://github.com/name/repo.git  folder        // Clone repository
+git submodule add https://github.com/name/repo.git folder // Create submodule
+git fetch                                                 // Gets updates from server
+git branch                                                // List all branches
+git checkout -b myBranch origin/myParent                  // Create new branch from remote branch
+git push -u origin myBranch                               // Create remote branch from local branch
+git checkout myBranch                                     // Checkout a branch
+git checkout commitID                                     // Checkout a branch at a commit ID
+git status                                                // Show changed files in branch
+git add -A                                                // Add changes to next commit
+git commit -am "Description"                              // Commit changes
+git reset --hard                                          // Discard all uncommitted changes
+git clean -f                                              // Delete uncommitted files
+git clean -fd                                             // Delete uncommitted directories
+git clean -f -n                                           // View all files which will be deleted
+git clean -fd -n                                          // View all directories which will be deleted
+git reset --hard commitID                                 // Revert back to commit
+git checkout filename.ext                                 // Revert changes to file
+git log                                                   // List commits and commitIDs
+git --no-pager log > log.txt                              // Save list of commits and commitIDs to a file
+git push                                                  // Push local changes to remote branch
+git push origin master                                    // Push local changes to master branch
+git pull origin ParentBranch                              // Merge remote branch into current branch
+git mergetool                                             // Fix merge conflicts
+git branch -D myBranch                                    // Delete local branch
+git push origin --delete myBranch                         // Delete remote branch
+git remote show origin                                    // Show remote branch of local and URL
+git branch -m oldBranch newBranch                         // Rename a local branch
+git branch --sort=-committerdate                          // Sort local branches by date
+git submodule init                                        // Initialise all submodules
+git submodule update --recursive                          // Update all submodules 
+
 INITIALISING GIT
-=============================================================================================
-
 git config --global user.name "Kara Jensen"
 git config --global user.email mail@karajensen.com
-
 [merge]
 	tool = kdiff3
 [mergetool "kdiff3"]
 	cmd = \"C:\\\\Program Files (x86)\\\\KDiff3\\\\kdiff3\" $BASE $LOCAL $REMOTE -o $MERGED
 
-=============================================================================================
-GIT COMMANDS
-=============================================================================================
-• If uncommited changes are on a branch, new branches checked out will take those changes
-
-git remote add master https://github.com/name/repo.git        // Create remote repository
-git clone https://github.com/name/repo.git  folderName        // Clone repository
-git submodule add https://github.com/name/repo.git folderName // Create submodule
-
-git fetch                                   // Gets updates from server
-git branch                                  // List all branches
-git checkout -b myBranch origin/myParent    // Create new branch from remote branch
-git push -u origin myBranch                 // Create remote branch from local branch
-git checkout myBranch                       // Checkout a branch
-git checkout commitID                       // Checkout a branch at a commit ID
-git status                                  // Show changed files in branch
-git add -A                                  // Add changes to next commit
-git commit -am "Description"                // Commit changes
-git reset --hard                            // Discard all uncommitted changes
-git clean -f                                // Delete uncommitted files
-git clean -fd                               // Delete uncommitted directories
-git clean -f -n                             // View all files which will be deleted
-git clean -fd -n                            // View all directories which will be deleted
-git reset --hard commitID                   // Revert back to commit
-git checkout filename.ext                   // Revert changes to file
-git log                                     // List commits and commitIDs
-git --no-pager log > log.txt                // Save list of commits and commitIDs to a file
-git push                                    // Push local changes to remote branch
-git push origin master                      // Push local changes to master branch
-git pull origin ParentBranch                // Merge remote branch into current branch
-git mergetool                               // Fix merge conflicts
-git branch -D myBranch                      // Delete local branch
-git push origin --delete myBranch           // Delete remote branch
-git remote show origin                      // Show remote branch of local and URL
-git branch -m oldBranch newBranch           // Rename a local branch
-git branch --sort=-committerdate            // Sort local branches by date
-git submodule init                          // Initialise all submodules
-git submodule update --recursive            // Update all submodules 
-
-=============================================================================================
 GIT IGNORE
-=============================================================================================
-
 # ignore all .a files
 *.a
 # still track lib.a, even though you're ignoring .a files above
@@ -124,9 +113,9 @@ build/
 # ignore doc/notes.txt, but not doc/server/arch.txt
 doc/*.txt
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //SVN SOURCE CONTROL
-////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 svn revert folder --depth=infinity        // reset all changes
 svn commit --depth infinity . -m "Merge"  // Commit all changes
@@ -167,9 +156,41 @@ CREATING A NEW BRANCH
 • Set the checkout depth for what you want to check out
 • Set revision to HEAD
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+VIEWING COMMITS
+• Open the SVN log
+• Select all the commits you want to view including the commit before the initial commit
+• Right mouse click and go 'Compare Revisions'
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//PERFORCE SOURCE CONTROL
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ADDING WORKSPACE PATH
+• Connection -> Edit Current Workspace
+• To update Right mouse click on workspace and go Get Latest Revision
+
+CLEANING WORKSPACE
+• Delete all folders you want to clean except root folder
+• Right mouse click on workspace and go Get revision and tick Force
+
+WORKFLOW
+• In the workspace area, check out each file you want to make edits to
+• Any changes are added to the Default Changelist. Create a new changlist as necessary.
+• To pull from the latest remove, RMC on the workspace and go Get Latest Revision
+• To update the changelist, RMC on it and go Resolve Files
+• If there are files to resolve, choose Automatic Resolve and click Auto Resolve
+• If there are still files unresolved, Click Interactivly Resolve Files One at a Time and then Run Merge Tool
+• Fix any conflicts by using the red arrows at the top and then clicking on the colored icons on the right 
+    - Purple = new changes
+    - Green = old changes
+    - Yellow = ignore
+• To save your changelist, RMC it and go shelve. You can revert your workspace if needed once they are saved.
+• To restore your changelist into the workspace, RMC it and go unshelf.
+• To submit your changelist, RMC it and go submit
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //VISUAL STUDIO
-////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ENVIRONMENT VARIABLES:
 $(SolutionDir)\
@@ -177,16 +198,22 @@ $(ProjectName)
 $(Configuration)
 
 COMPILIER OPTIONS:
-/GS              Prevent returning after a function has trashed the stack                        
-/NXCOMPAT        Makes the data in the heap/stack non-executable
-/DYNAMICBASE     Extra security with no run time cost
-/ZI              Program Database for Edit And Continue, disables /Zo
-/Zi              Program Data, enables /Zo for VS2015
-/Zo              Generate enhanced debug information for release builds (PBDs get larger)
+/GS           Prevent returning after a function has trashed the stack                        
+/NXCOMPAT     Makes the data in the heap/stack non-executable
+/DYNAMICBASE  Extra security with no run time cost
+/ZI           Program Database for Edit And Continue, disables /Zo
+/Zi           Program Data, enables /Zo for VS2015
+/Zo           Generate enhanced debug information for release builds (PBDs get larger)
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+DEBUGGING IN RELEASE:
+• In C/C++ Options set Debug Information Format to C7 compatible (/Z7) or Program Database (/Zi)
+• In Linker General set Enable Incremental Linking to No (/INCREMENTAL:NO)
+• In Linker Debugging set Generate Debug Info to Yes (/DEBUG)
+• In Linker Optimization set References to Yes (/OPT:REF)
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //MSBUILD
-////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
 

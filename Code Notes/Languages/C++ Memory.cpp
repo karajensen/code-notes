@@ -155,6 +155,8 @@ if(myPtr) /*or*/ if(myPtr.get()) //true if valid, false if null
 auto unique(std::make_unique<MyClass>());        // can't use custom deleter or {}
 std::unique_ptr<MyClass> unique(new MyClass());
 std::unique_ptr<int[]> p(new int[10]);           // arrays only supported by unique_ptr, calls delete[]
+unique.reset()                                   // releases and deletes the memory
+unique.release();                                // releases and doesn't delete the memory, returns a raw pointer
 
 //SHARED POINTER
 auto shared(std::make_shared<MyClass>());        // creates a new control block, can't use custom deleter or {}
@@ -166,6 +168,7 @@ shared.use_count()                               // get the current count
 shared.swap(shared2)                             // swap what the shared_ptr look at
 shared.unique()                                  // returns true if ref count = 1, false otherwise
 shared.reset()                                   // decrements ref count
+std::dynamic_pointer_cast<MyClass>(shared);      // returns shared_ptr cast from base to derived class
 
 //WEAK POINTER
 std::weak_ptr<MyClass> weak(shared);             // observing a shared pointer control block

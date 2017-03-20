@@ -232,7 +232,7 @@ for (const std::pair<const Key, T>& p : M){}
 M.empty();      // returns true/false if empty (faster than size)
 M.size();       // number of element pairs
 M.count("Key")  // returns number of items that have that key
-M.erase("Key")  // removes element with matching key, non-throwing if item doesn't exist
+M.erase("Key")  // removes element with matching key, returns number of elements removed or 0 if none
 M.find("Key")   // returns MyMap.end() if not found or iterator MyMap::iterator if found
 M.at("Key")     // returns object at key or throws out_of_range exception if doesn't exist
 M["Key"]        // returns object if key exists or creates through default contructor if doesn't exist 
