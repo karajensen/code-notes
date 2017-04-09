@@ -2,23 +2,21 @@
 //QT
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// QSTRING
+// QString
 QString myStr = "str";
-myStr.split(" ");                    // Returns QStringList of string split by spaces
+myStr.split(" ");                       // Returns QStringList of string split by spaces
 
-// QSTRINGLIST
-QStringList myList;                  // Inherits from QList<QString>, specifically for strings
+// QStringList
+QStringList myList;                     // Inherits from QList<QString>, specifically for strings
+myList.join(" ")                        // Returns a combined string seperated by spaces
 
-// QLIST
-QList<QString> myList;               // Fast index-based access, insertions and removals
-myList << "str1" << "str2";          // Allows streaming into container
-myList.join(" ")                     // Returns a combined string seperated by spaces
+// QList
+QList<int> myList;                      // Fast index-based access, insertions and removals
+myList << 1 << 2;                       // Allows streaming into container
 
-QListIterator<QString> iter(myList);
-while(iter.hasNext()) 
-{
-    iter.next();
-}
+// QListIterator
+QListIterator<int> iter(myList);
+while(iter.hasNext()) { iter.next(); }
 
 //===================================================================================================
 // QML
@@ -32,7 +30,7 @@ import QtQuick.Layouts 1.0
 Qt.quit()  // Quits the application
 
 //--------------------------------------------------------------------------------------------------
-// QML COMMON PROPERTIES
+// QML PROPERTIES
 //--------------------------------------------------------------------------------------------------
 id: nameOfControl                         // unique id of element, can be used to access it
 objectName: "UserName"                    // user defined name
