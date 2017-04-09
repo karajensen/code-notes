@@ -1,17 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //QT
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
-
-• Model: Contains C++ data for a control, can have multiple views for the same data
-• View: Displays the C++ data in Qt / QML in some way (eg.list, slider)
-• QML: Markup language for user interfaces made up of elements, uses Javascript for scripting
-• Module: Library components of Qt (eg. QtCore, QtGUI)
-
-*/
-//===================================================================================================
-// CONTAINERS
-//===================================================================================================
 
 // QSTRING
 QString myStr = "str";
@@ -34,6 +23,7 @@ while(iter.hasNext())
 //===================================================================================================
 // QML
 //===================================================================================================
+//• QML: Markup language for user interfaces made up of elements, uses Javascript for scripting
 
 import QtQuick 2.4
 import QtQuick.Controls 1.2
@@ -42,7 +32,7 @@ import QtQuick.Layouts 1.0
 Qt.quit()  // Quits the application
 
 //--------------------------------------------------------------------------------------------------
-// ELEMENT COMMON PROPERTIES
+// QML COMMON PROPERTIES
 //--------------------------------------------------------------------------------------------------
 id: nameOfControl                         // unique id of element, can be used to access it
 objectName: "UserName"                    // user defined name
@@ -76,7 +66,7 @@ function myFunction(x, y) {
 }
 
 //--------------------------------------------------------------------------------------------------
-// ELEMENTS
+// QML ELEMENTS
 //--------------------------------------------------------------------------------------------------
 
 /* Aligns elements after each other in a single row */
@@ -119,3 +109,11 @@ Rectangle {
 Text {
     text: "text"
 }
+
+//===================================================================================================
+// MODELS / VIEWS
+//===================================================================================================
+//• Model: Contains the data and its structure
+//• View: A container that displays the data. The view might display the data in a list or a grid.
+//• Delegate: Determines how each element of data should appear in the view. Can also access each element.
+//• Role: Used to access different attributes of a data element in the model
