@@ -40,6 +40,13 @@ DEPENDS.EXE:
 Dependency walker for 32/64 bit modules (dll,exe) and builds heirarchical tree
 diagrams of all dependent modules, shows exported functions
 
+CONSOLE COMMANDS:
+dir /w             // gives directory contents
+mklink /J dst src  // dst final folder must not exist and be named the same as src final folder
+cd path            // move up a folder or switch to absolute path
+cd ..              // move down a folder
+start.             // open folder
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //MAC DEVELOPMENT
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,16 +57,15 @@ diagrams of all dependent modules, shows exported functions
 
 TERMINAL COMMANDS:
 pwd                  // gives name of folder currently in
-ls                   // dir
-open .               // start.
-cd folder            // cd folder
-cd ..                // cd ..
-./myfile.sh          // myfile.bat
+ls                   // gives directory contents
+open .               // open folder
+cd folder            // move up a folder
+cd ..                // move down a folder
+./myfile.sh          // run the file
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //GIT SOURCE CONTROL
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 • If uncommited changes are on a branch, new branches checked out will take those changes
 
 git remote add master https://github.com/name/repo.git    // Create remote repository
@@ -87,21 +93,31 @@ git push                                                  // Push local changes 
 git push origin master                                    // Push local changes to master branch
 git pull origin ParentBranch                              // Merge remote branch into current branch
 git mergetool                                             // Fix merge conflicts
+git difftool folder                                       // Rum difftool on each change in folder
 git branch -D myBranch                                    // Delete local branch
 git push origin --delete myBranch                         // Delete remote branch
 git remote show origin                                    // Show remote branch of local and URL
 git branch -m oldBranch newBranch                         // Rename a local branch
 git branch --sort=-committerdate                          // Sort local branches by date
 git submodule init                                        // Initialise all submodules
-git submodule update --recursive                          // Update all submodules 
+git submodule update --recursive                          // Update all submodules, recursive optional
 
 INITIALISING GIT
 git config --global user.name "Kara Jensen"
 git config --global user.email mail@karajensen.com
+git config --global --add diff.guitool kdiff3
+git config --global --add difftool.kdiff3.path "C:/Program Files/KDiff3/kdiff3.exe"
+git config --global --add difftool.kdiff3.trustExitCode false
+
 [merge]
 	tool = kdiff3
 [mergetool "kdiff3"]
 	cmd = \"C:\\\\Program Files (x86)\\\\KDiff3\\\\kdiff3\" $BASE $LOCAL $REMOTE -o $MERGED
+[diff]
+	guitool = kdiff3
+[difftool "kdiff3"]
+	path = C:/Program Files/KDiff3/kdiff3.exe
+	trustExitCode = false
 
 GIT IGNORE
 # ignore all .a files
