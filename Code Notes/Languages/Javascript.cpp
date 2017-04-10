@@ -28,23 +28,6 @@ MyEnum = {
 }
 var myEnum = myVar.MyEnum.ONE
 
-// EXCEPTIONS
-try 
-}
-catch(ex) 
-    alert(ex.toString());
-    throw ex; // rethrow same exception so console can log it
-}
-
-// MESSAGING
-alert("Message");
-console.log("Message"); // requires test for console == null before use
-console.error("Message");
-
-// PROMPT BOX
-result = prompt("Question Text", "Default Answer");
-if(result){ } // result will be null or 0 if cancel clicked
-
 // CONDITIONALS
 if(myInt == 10) { }
 else if(!(myInt != 10) || (myInt < 4)) { }
@@ -109,6 +92,24 @@ function MyClass(b)
     }
 }
 var myObj = new MyClass(b);
+
+//================================================================================================
+// ERROR HANDLING
+//================================================================================================
+
+try {
+}
+catch(ex) {
+    alert(ex.toString());
+    throw ex; // rethrow same exception so console can log it
+}
+
+alert("Message");
+console.log("Message"); // requires test for console == null before use
+console.error("Message");
+
+result = prompt("Question Text", "Default Answer");
+if(result){ } // result will be null or 0 if cancel clicked
 
 //================================================================================================
 // LIBRARIES
