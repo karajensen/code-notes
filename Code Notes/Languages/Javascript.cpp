@@ -34,6 +34,12 @@ myArray[0] = "myEntry";
 myArray["one"] = 2.0;             // creates new entry if key doesn't exist
 "one" in myArray                  // returns true if 'one' is a key in myArray
 
+// Remove key from array
+var index = myArray.indexOf(key);
+if (index > -1) {
+    myArray.splice(index, n);
+}
+
 // ENUMS
 MyEnum =
 {
