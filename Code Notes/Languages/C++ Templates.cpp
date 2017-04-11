@@ -339,8 +339,9 @@ struct MyClass<T> // Specialized for one
 {
     void MyFn() 
     {
-        std::cout << typeid(T).name() << std::endl;
+        std::cout << typeid(value).name() << std::endl;
     }
+    T value;
 };
 
 MyClass<int, float, double> myClass;
