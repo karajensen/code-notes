@@ -63,6 +63,7 @@ myFunction(5, 1.0);
 
 //POINTER-TO-MEMBER FUNCTION
 //Cannot cast to pointer-to-function as can be much larger storing inheritance information
+//Cannot take address of contructor
 class MyClass
 {
 public:
