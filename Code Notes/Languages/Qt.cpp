@@ -3,16 +3,17 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // QString
-QString myStr = "str";
-myStr.split(" ");                       // Returns QStringList of string split by spaces
+QString str = "str";
+str.split(" ");                         // Returns QStringList of string split by spaces
 
 // QStringList
-QStringList myList;                     // Inherits from QList<QString>, specifically for strings
-myList.join(" ")                        // Returns a combined string seperated by spaces
+QStringList lst;                        // Inherits from QList<QString>, specifically for strings
+lst.join(" ")                           // Returns a combined string seperated by spaces
+lst.append(lst2)                        // Adds a new string list to the end
 
 // QList
-QList<int> myList;                      // Fast index-based access, insertions and removals
-myList << 1 << 2;                       // Allows streaming into container
+QList<int> lst;                         // Fast index-based access, insertions and removals
+lst << 1 << 2;                          // Allows streaming into container
 
 // QListIterator
 QListIterator<int> iter(myList);
@@ -115,3 +116,19 @@ Text {
 //• View: A container that displays the data. The view might display the data in a list or a grid.
 //• Delegate: Determines how each element of data should appear in the view. Can also access each element.
 //• Role: Used to access different attributes of a data element in the model
+
+//===================================================================================================
+// FILE SYSTEM
+//===================================================================================================
+
+// Read from a file, no need to close it
+QFile file("myFile.txt");
+if(file.open(QIODevice::ReadOnly))
+{
+    QTextStream stream(&file);
+    QString line = stream.readLine(); // read the next line
+    while(!line.isNull())
+    {
+        line = stream.readLine();
+    }
+}
