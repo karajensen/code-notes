@@ -149,8 +149,10 @@ std::bind([](int x){}, myInt); // copy construct myVar
 //SMART POINTERS
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-if(myPtr) /*or*/ if(myPtr.get()) //true if valid, false if null
-*myPtr                           //dereference pointer
+*myPtr
+if(myPtr) /*or*/ if(myPtr.get())              // true if valid, false if null
+std::dynamic_pointer_cast<MyClass>(ptr);      // returns cast from base to derived class
+std::static_pointer_cast<MyClass>(ptr);
 
 //UNIQUE POINTER
 auto unique(std::make_unique<MyClass>());        // can't use custom deleter or {}
@@ -169,7 +171,6 @@ shared.use_count()                               // get the current count
 shared.swap(shared2)                             // swap what the shared_ptr look at
 shared.unique()                                  // returns true if ref count = 1, false otherwise
 shared.reset()                                   // decrements ref count
-std::dynamic_pointer_cast<MyClass>(shared);      // returns shared_ptr cast from base to derived class
 
 //WEAK POINTER
 std::weak_ptr<MyClass> weak(shared);             // observing a shared pointer control block
