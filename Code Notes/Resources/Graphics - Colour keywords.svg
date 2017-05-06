@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" width="1160" height="1000" xmlns="http://www.w3.org/2000/svg">
+<g stroke="black" stroke-width="1px">
+	<rect height="12" width="12" fill="aliceblue" x="10" y="10" />
+	<rect height="12" width="12" fill="antiquewhite" x="10" y="30" />
+	<rect height="12" width="12" fill="aqua" x="10" y="50" />
+	<rect height="12" width="12" fill="aquamarine" x="10" y="70" />
+	<rect height="12" width="12" fill="azure" x="10" y="90" />
+	<rect height="12" width="12" fill="beige" x="10" y="110" />
+	<rect height="12" width="12" fill="bisque" x="10" y="130" />
+	<rect height="12" width="12" fill="black" x="10" y="150" />
+	<rect height="12" width="12" fill="blanchedalmond" x="10" y="170" />
+	<rect height="12" width="12" fill="blue" x="10" y="190" />
+	<rect height="12" width="12" fill="blueviolet" x="10" y="210" />
+	<rect height="12" width="12" fill="brown" x="10" y="230" />
+	<rect height="12" width="12" fill="burlywood" x="10" y="250" />
+	<rect height="12" width="12" fill="cadetblue" x="10" y="270" />
+	<rect height="12" width="12" fill="chartreuse" x="10" y="290" />
+	<rect height="12" width="12" fill="chocolate" x="10" y="310" />
+	<rect height="12" width="12" fill="coral" x="10" y="330" />
+	<rect height="12" width="12" fill="cornflowerblue" x="10" y="350" />
+	<rect height="12" width="12" fill="cornsilk" x="10" y="370" />
+	<rect height="12" width="12" fill="crimson" x="10" y="390" />
+	<rect height="12" width="12" fill="cyan" x="10" y="410" />
+	<rect height="12" width="12" fill="darkblue" x="10" y="430" />
+	<rect height="12" width="12" fill="darkcyan" x="10" y="450" />
+	<rect height="12" width="12" fill="darkgoldenrod" x="10" y="470" />
+	<rect height="12" width="12" fill="darkgray" x="10" y="490" />
+	<rect height="12" width="12" fill="darkgreen" x="10" y="510" />
+	<rect height="12" width="12" fill="darkgrey" x="10" y="530" />
+	<rect height="12" width="12" fill="darkkhaki" x="10" y="550" />
+	<rect height="12" width="12" fill="darkmagenta" x="10" y="570" />
+	<rect height="12" width="12" fill="darkolivegreen" x="10" y="590" />
+	<rect height="12" width="12" fill="darkorange" x="10" y="610" />
+	<rect height="12" width="12" fill="darkorchid" x="10" y="630" />
+	<rect height="12" width="12" fill="darkred" x="10" y="650" />
+	<rect height="12" width="12" fill="darksalmon" x="10" y="670" />
+	<rect height="12" width="12" fill="darkseagreen" x="10" y="690" />
+	<rect height="12" width="12" fill="darkslateblue" x="10" y="710" />
+	<rect height="12" width="12" fill="darkslategray" x="10" y="730" />
+	<rect height="12" width="12" fill="darkslategrey" x="10" y="750" />
+	<rect height="12" width="12" fill="darkturquoise" x="10" y="770" />
+	<rect height="12" width="12" fill="darkviolet" x="10" y="790" />
+	<rect height="12" width="12" fill="deeppink" x="10" y="810" />
+	<rect height="12" width="12" fill="deepskyblue" x="10" y="830" />
+	<rect height="12" width="12" fill="dimgray" x="10" y="850" />
+	<rect height="12" width="12" fill="dimgrey" x="10" y="870" />
+	<rect height="12" width="12" fill="dodgerblue" x="10" y="890" />
+	<rect height="12" width="12" fill="firebrick" x="10" y="910" />
+	<rect height="12" width="12" fill="floralwhite" x="10" y="930" />
+	<rect height="12" width="12" fill="forestgreen" x="10" y="950" />
+	<rect height="12" width="12" fill="fuchsia" x="10" y="970" />
+	<rect height="12" width="12" fill="gainsboro" x="390" y="10" />
+	<rect height="12" width="12" fill="ghostwhite" x="390" y="30" />
+	<rect height="12" width="12" fill="gold" x="390" y="50" />
+	<rect height="12" width="12" fill="goldenrod" x="390" y="70" />
+	<rect height="12" width="12" fill="gray" x="390" y="90" />
+	<rect height="12" width="12" fill="grey" x="390" y="110" />
+	<rect height="12" width="12" fill="green" x="390" y="130" />
+	<rect height="12" width="12" fill="greenyellow" x="390" y="150" />
+	<rect height="12" width="12" fill="honeydew" x="390" y="170" />
+	<rect height="12" width="12" fill="hotpink" x="390" y="190" />
+	<rect height="12" width="12" fill="indianred" x="390" y="210" />
+	<rect height="12" width="12" fill="indigo" x="390" y="230" />
+	<rect height="12" width="12" fill="ivory" x="390" y="250" />
+	<rect height="12" width="12" fill="khaki" x="390" y="270" />
+	<rect height="12" width="12" fill="lavender" x="390" y="290" />
+	<rect height="12" width="12" fill="lavenderblush" x="390" y="310" />
+	<rect height="12" width="12" fill="lawngreen" x="390" y="330" />
+	<rect height="12" width="12" fill="lemonchiffon" x="390" y="350" />
+	<rect height="12" width="12" fill="lightblue" x="390" y="370" />
+	<rect height="12" width="12" fill="lightcoral" x="390" y="390" />
+	<rect height="12" width="12" fill="lightcyan" x="390" y="410" />
+	<rect height="12" width="12" fill="lightgoldenrodyellow" x="390" y="430" />
+	<rect height="12" width="12" fill="lightgray" x="390" y="450" />
+	<rect height="12" width="12" fill="lightgreen" x="390" y="470" />
+	<rect height="12" width="12" fill="lightgrey" x="390" y="490" />
+	<rect height="12" width="12" fill="lightpink" x="390" y="510" />
+	<rect height="12" width="12" fill="lightsalmon" x="390" y="530" />
+	<rect height="12" width="12" fill="lightseagreen" x="390" y="550" />
+	<rect height="12" width="12" fill="lightskyblue" x="390" y="570" />
+	<rect height="12" width="12" fill="lightslategray" x="390" y="590" />
+	<rect height="12" width="12" fill="lightslategrey" x="390" y="610" />
+	<rect height="12" width="12" fill="lightsteelblue" x="390" y="630" />
+	<rect height="12" width="12" fill="lightyellow" x="390" y="650" />
+	<rect height="12" width="12" fill="lime" x="390" y="670" />
+	<rect height="12" width="12" fill="limegreen" x="390" y="690" />
+	<rect height="12" width="12" fill="linen" x="390" y="710" />
+	<rect height="12" width="12" fill="magenta" x="390" y="730" />
+	<rect height="12" width="12" fill="maroon" x="390" y="750" />
+	<rect height="12" width="12" fill="mediumaquamarine" x="390" y="770" />
+	<rect height="12" width="12" fill="mediumblue" x="390" y="790" />
+	<rect height="12" width="12" fill="mediumorchid" x="390" y="810" />
+	<rect height="12" width="12" fill="mediumpurple" x="390" y="830" />
+	<rect height="12" width="12" fill="mediumseagreen" x="390" y="850" />
+	<rect height="12" width="12" fill="mediumslateblue" x="390" y="870" />
+	<rect height="12" width="12" fill="mediumspringgreen" x="390" y="890" />
+	<rect height="12" width="12" fill="mediumturquoise" x="390" y="910" />
+	<rect height="12" width="12" fill="mediumvioletred" x="390" y="930" />
+	<rect height="12" width="12" fill="midnightblue" x="390" y="950" />
+	<rect height="12" width="12" fill="mintcream" x="390" y="970" />
+	<rect height="12" width="12" fill="mistyrose" x="770" y="10" />
+	<rect height="12" width="12" fill="moccasin" x="770" y="30" />
+	<rect height="12" width="12" fill="navajowhite" x="770" y="50" />
+	<rect height="12" width="12" fill="navy" x="770" y="70" />
+	<rect height="12" width="12" fill="oldlace" x="770" y="90" />
+	<rect height="12" width="12" fill="olive" x="770" y="110" />
+	<rect height="12" width="12" fill="olivedrab" x="770" y="130" />
+	<rect height="12" width="12" fill="orange" x="770" y="150" />
+	<rect height="12" width="12" fill="orangered" x="770" y="170" />
+	<rect height="12" width="12" fill="orchid" x="770" y="190" />
+	<rect height="12" width="12" fill="palegoldenrod" x="770" y="210" />
+	<rect height="12" width="12" fill="palegreen" x="770" y="230" />
+	<rect height="12" width="12" fill="paleturquoise" x="770" y="250" />
+	<rect height="12" width="12" fill="palevioletred" x="770" y="270" />
+	<rect height="12" width="12" fill="papayawhip" x="770" y="290" />
+	<rect height="12" width="12" fill="peachpuff" x="770" y="310" />
+	<rect height="12" width="12" fill="peru" x="770" y="330" />
+	<rect height="12" width="12" fill="pink" x="770" y="350" />
+	<rect height="12" width="12" fill="plum" x="770" y="370" />
+	<rect height="12" width="12" fill="powderblue" x="770" y="390" />
+	<rect height="12" width="12" fill="purple" x="770" y="410" />
+	<rect height="12" width="12" fill="red" x="770" y="430" />
+	<rect height="12" width="12" fill="rosybrown" x="770" y="450" />
+	<rect height="12" width="12" fill="royalblue" x="770" y="470" />
+	<rect height="12" width="12" fill="saddlebrown" x="770" y="490" />
+	<rect height="12" width="12" fill="salmon" x="770" y="510" />
+	<rect height="12" width="12" fill="sandybrown" x="770" y="530" />
+	<rect height="12" width="12" fill="seagreen" x="770" y="550" />
+	<rect height="12" width="12" fill="seashell" x="770" y="570" />
+	<rect height="12" width="12" fill="sienna" x="770" y="590" />
+	<rect height="12" width="12" fill="silver" x="770" y="610" />
+	<rect height="12" width="12" fill="skyblue" x="770" y="630" />
+	<rect height="12" width="12" fill="slateblue" x="770" y="650" />
+	<rect height="12" width="12" fill="slategray" x="770" y="670" />
+	<rect height="12" width="12" fill="slategrey" x="770" y="690" />
+	<rect height="12" width="12" fill="snow" x="770" y="710" />
+	<rect height="12" width="12" fill="springgreen" x="770" y="730" />
+	<rect height="12" width="12" fill="steelblue" x="770" y="750" />
+	<rect height="12" width="12" fill="tan" x="770" y="770" />
+	<rect height="12" width="12" fill="teal" x="770" y="790" />
+	<rect height="12" width="12" fill="thistle" x="770" y="810" />
+	<rect height="12" width="12" fill="tomato" x="770" y="830" />
+	<rect height="12" width="12" fill="turquoise" x="770" y="850" />
+	<rect height="12" width="12" fill="violet" x="770" y="870" />
+	<rect height="12" width="12" fill="wheat" x="770" y="890" />
+	<rect height="12" width="12" fill="white" x="770" y="910" />
+	<rect height="12" width="12" fill="whitesmoke" x="770" y="930" />
+	<rect height="12" width="12" fill="yellow" x="770" y="950" />
+	<rect height="12" width="12" fill="yellowgreen" x="770" y="970" />
+</g>
+<g fill="black" font-family="monospace">
+	<text x="30" y="22">aliceblue</text>
+	<text x="200" y="22">#F0F8FF</text>
+	<text x="30" y="42">antiquewhite</text>
+	<text x="200" y="42">#FAEBD7</text>
+	<text x="30" y="62">aqua</text>
+	<text x="200" y="62">#00FFFF</text>
+	<text x="30" y="82">aquamarine</text>
+	<text x="200" y="82">#7FFFD4</text>
+	<text x="30" y="102">azure</text>
+	<text x="200" y="102">#F0FFFF</text>
+	<text x="30" y="122">beige</text>
+	<text x="200" y="122">#F5F5DC</text>
+	<text x="30" y="142">bisque</text>
+	<text x="200" y="142">#FFE4C4</text>
+	<text x="30" y="162">black</text>
+	<text x="200" y="162">#000000</text>
+	<text x="30" y="182">blanchedalmond</text>
+	<text x="200" y="182">#FFEBCD</text>
+	<text x="30" y="202">blue</text>
+	<text x="200" y="202">#0000FF</text>
+	<text x="30" y="222">blueviolet</text>
+	<text x="200" y="222">#8A2BE2</text>
+	<text x="30" y="242">brown</text>
+	<text x="200" y="242">#A52A2A</text>
+	<text x="30" y="262">burlywood</text>
+	<text x="200" y="262">#DEB887</text>
+	<text x="30" y="282">cadetblue</text>
+	<text x="200" y="282">#5F9EA0</text>
+	<text x="30" y="302">chartreuse</text>
+	<text x="200" y="302">#7FFF00</text>
+	<text x="30" y="322">chocolate</text>
+	<text x="200" y="322">#D2691E</text>
+	<text x="30" y="342">coral</text>
+	<text x="200" y="342">#FF7F50</text>
+	<text x="30" y="362">cornflowerblue</text>
+	<text x="200" y="362">#6495ED</text>
+	<text x="30" y="382">cornsilk</text>
+	<text x="200" y="382">#FFF8DC</text>
+	<text x="30" y="402">crimson</text>
+	<text x="200" y="402">#DC143C</text>
+	<text x="30" y="422">cyan</text>
+	<text x="200" y="422">#00FFFF</text>
+	<text x="30" y="442">darkblue</text>
+	<text x="200" y="442">#00008B</text>
+	<text x="30" y="462">darkcyan</text>
+	<text x="200" y="462">#008B8B</text>
+	<text x="30" y="482">darkgoldenrod</text>
+	<text x="200" y="482">#B8860B</text>
+	<text x="30" y="502">darkgray</text>
+	<text x="200" y="502">#A9A9A9</text>
+	<text x="30" y="522">darkgreen</text>
+	<text x="200" y="522">#006400</text>
+	<text x="30" y="542">darkgrey</text>
+	<text x="200" y="542">#A9A9A9</text>
+	<text x="30" y="562">darkkhaki</text>
+	<text x="200" y="562">#BDB76B</text>
+	<text x="30" y="582">darkmagenta</text>
+	<text x="200" y="582">#8B008B</text>
+	<text x="30" y="602">darkolivegreen</text>
+	<text x="200" y="602">#556B2F</text>
+	<text x="30" y="622">darkorange</text>
+	<text x="200" y="622">#FF8C00</text>
+	<text x="30" y="642">darkorchid</text>
+	<text x="200" y="642">#9932CC</text>
+	<text x="30" y="662">darkred</text>
+	<text x="200" y="662">#8B0000</text>
+	<text x="30" y="682">darksalmon</text>
+	<text x="200" y="682">#E9967A</text>
+	<text x="30" y="702">darkseagreen</text>
+	<text x="200" y="702">#8FBC8F</text>
+	<text x="30" y="722">darkslateblue</text>
+	<text x="200" y="722">#483D8B</text>
+	<text x="30" y="742">darkslategray</text>
+	<text x="200" y="742">#2F4F4F</text>
+	<text x="30" y="762">darkslategrey</text>
+	<text x="200" y="762">#2F4F4F</text>
+	<text x="30" y="782">darkturquoise</text>
+	<text x="200" y="782">#00CED1</text>
+	<text x="30" y="802">darkviolet</text>
+	<text x="200" y="802">#9400D3</text>
+	<text x="30" y="822">deeppink</text>
+	<text x="200" y="822">#FF1493</text>
+	<text x="30" y="842">deepskyblue</text>
+	<text x="200" y="842">#00BFFF</text>
+	<text x="30" y="862">dimgray</text>
+	<text x="200" y="862">#696969</text>
+	<text x="30" y="882">dimgrey</text>
+	<text x="200" y="882">#696969</text>
+	<text x="30" y="902">dodgerblue</text>
+	<text x="200" y="902">#1E90FF</text>
+	<text x="30" y="922">firebrick</text>
+	<text x="200" y="922">#B22222</text>
+	<text x="30" y="942">floralwhite</text>
+	<text x="200" y="942">#FFFAF0</text>
+	<text x="30" y="962">forestgreen</text>
+	<text x="200" y="962">#228B22</text>
+	<text x="30" y="982">fuchsia</text>
+	<text x="200" y="982">#FF00FF</text>
+	<text x="410" y="22">gainsboro</text>
+	<text x="580" y="22">#DCDCDC</text>
+	<text x="410" y="42">ghostwhite</text>
+	<text x="580" y="42">#F8F8FF</text>
+	<text x="410" y="62">gold</text>
+	<text x="580" y="62">#FFD700</text>
+	<text x="410" y="82">goldenrod</text>
+	<text x="580" y="82">#DAA520</text>
+	<text x="410" y="102">gray</text>
+	<text x="580" y="102">#808080</text>
+	<text x="410" y="122">grey</text>
+	<text x="580" y="122">#808080</text>
+	<text x="410" y="142">green</text>
+	<text x="580" y="142">#008000</text>
+	<text x="410" y="162">greenyellow</text>
+	<text x="580" y="162">#ADFF2F</text>
+	<text x="410" y="182">honeydew</text>
+	<text x="580" y="182">#F0FFF0</text>
+	<text x="410" y="202">hotpink</text>
+	<text x="580" y="202">#FF69B4</text>
+	<text x="410" y="222">indianred</text>
+	<text x="580" y="222">#CD5C5C</text>
+	<text x="410" y="242">indigo</text>
+	<text x="580" y="242">#4B0082</text>
+	<text x="410" y="262">ivory</text>
+	<text x="580" y="262">#FFFFF0</text>
+	<text x="410" y="282">khaki</text>
+	<text x="580" y="282">#F0E68C</text>
+	<text x="410" y="302">lavender</text>
+	<text x="580" y="302">#E6E6FA</text>
+	<text x="410" y="322">lavenderblush</text>
+	<text x="580" y="322">#FFF0F5</text>
+	<text x="410" y="342">lawngreen</text>
+	<text x="580" y="342">#7CFC00</text>
+	<text x="410" y="362">lemonchiffon</text>
+	<text x="580" y="362">#FFFACD</text>
+	<text x="410" y="382">lightblue</text>
+	<text x="580" y="382">#ADD8E6</text>
+	<text x="410" y="402">lightcoral</text>
+	<text x="580" y="402">#F08080</text>
+	<text x="410" y="422">lightcyan</text>
+	<text x="580" y="422">#E0FFFF</text>
+	<text x="410" y="442">lightgoldenrodyellow</text>
+	<text x="580" y="442">#FAFAD2</text>
+	<text x="410" y="462">lightgray</text>
+	<text x="580" y="462">#D3D3D3</text>
+	<text x="410" y="482">lightgreen</text>
+	<text x="580" y="482">#90EE90</text>
+	<text x="410" y="502">lightgrey</text>
+	<text x="580" y="502">#D3D3D3</text>
+	<text x="410" y="522">lightpink</text>
+	<text x="580" y="522">#FFB6C1</text>
+	<text x="410" y="542">lightsalmon</text>
+	<text x="580" y="542">#FFA07A</text>
+	<text x="410" y="562">lightseagreen</text>
+	<text x="580" y="562">#20B2AA</text>
+	<text x="410" y="582">lightskyblue</text>
+	<text x="580" y="582">#87CEFA</text>
+	<text x="410" y="602">lightslategray</text>
+	<text x="580" y="602">#778899</text>
+	<text x="410" y="622">lightslategrey</text>
+	<text x="580" y="622">#778899</text>
+	<text x="410" y="642">lightsteelblue</text>
+	<text x="580" y="642">#B0C4DE</text>
+	<text x="410" y="662">lightyellow</text>
+	<text x="580" y="662">#FFFFE0</text>
+	<text x="410" y="682">lime</text>
+	<text x="580" y="682">#00FF00</text>
+	<text x="410" y="702">limegreen</text>
+	<text x="580" y="702">#32CD32</text>
+	<text x="410" y="722">linen</text>
+	<text x="580" y="722">#FAF0E6</text>
+	<text x="410" y="742">magenta</text>
+	<text x="580" y="742">#FF00FF</text>
+	<text x="410" y="762">maroon</text>
+	<text x="580" y="762">#800000</text>
+	<text x="410" y="782">mediumaquamarine</text>
+	<text x="580" y="782">#66CDAA</text>
+	<text x="410" y="802">mediumblue</text>
+	<text x="580" y="802">#0000CD</text>
+	<text x="410" y="822">mediumorchid</text>
+	<text x="580" y="822">#BA55D3</text>
+	<text x="410" y="842">mediumpurple</text>
+	<text x="580" y="842">#9370DB</text>
+	<text x="410" y="862">mediumseagreen</text>
+	<text x="580" y="862">#3CB371</text>
+	<text x="410" y="882">mediumslateblue</text>
+	<text x="580" y="882">#7B68EE</text>
+	<text x="410" y="902">mediumspringgreen</text>
+	<text x="580" y="902">#00FA9A</text>
+	<text x="410" y="922">mediumturquoise</text>
+	<text x="580" y="922">#48D1CC</text>
+	<text x="410" y="942">mediumvioletred</text>
+	<text x="580" y="942">#C71585</text>
+	<text x="410" y="962">midnightblue</text>
+	<text x="580" y="962">#191970</text>
+	<text x="410" y="982">mintcream</text>
+	<text x="580" y="982">#F5FFFA</text>
+	<text x="790" y="22">mistyrose</text>
+	<text x="960" y="22">#FFE4E1</text>
+	<text x="790" y="42">moccasin</text>
+	<text x="960" y="42">#FFE4B5</text>
+	<text x="790" y="62">navajowhite</text>
+	<text x="960" y="62">#FFDEAD</text>
+	<text x="790" y="82">navy</text>
+	<text x="960" y="82">#000080</text>
+	<text x="790" y="102">oldlace</text>
+	<text x="960" y="102">#FDF5E6</text>
+	<text x="790" y="122">olive</text>
+	<text x="960" y="122">#808000</text>
+	<text x="790" y="142">olivedrab</text>
+	<text x="960" y="142">#6B8E23</text>
+	<text x="790" y="162">orange</text>
+	<text x="960" y="162">#FFA500</text>
+	<text x="790" y="182">orangered</text>
+	<text x="960" y="182">#FF4500</text>
+	<text x="790" y="202">orchid</text>
+	<text x="960" y="202">#DA70D6</text>
+	<text x="790" y="222">palegoldenrod</text>
+	<text x="960" y="222">#EEE8AA</text>
+	<text x="790" y="242">palegreen</text>
+	<text x="960" y="242">#98FB98</text>
+	<text x="790" y="262">paleturquoise</text>
+	<text x="960" y="262">#AFEEEE</text>
+	<text x="790" y="282">palevioletred</text>
+	<text x="960" y="282">#DB7093</text>
+	<text x="790" y="302">papayawhip</text>
+	<text x="960" y="302">#FFEFD5</text>
+	<text x="790" y="322">peachpuff</text>
+	<text x="960" y="322">#FFDAB9</text>
+	<text x="790" y="342">peru</text>
+	<text x="960" y="342">#CD853F</text>
+	<text x="790" y="362">pink</text>
+	<text x="960" y="362">#FFC0CB</text>
+	<text x="790" y="382">plum</text>
+	<text x="960" y="382">#DDA0DD</text>
+	<text x="790" y="402">powderblue</text>
+	<text x="960" y="402">#B0E0E6</text>
+	<text x="790" y="422">purple</text>
+	<text x="960" y="422">#800080</text>
+	<text x="790" y="442">red</text>
+	<text x="960" y="442">#FF0000</text>
+	<text x="790" y="462">rosybrown</text>
+	<text x="960" y="462">#BC8F8F</text>
+	<text x="790" y="482">royalblue</text>
+	<text x="960" y="482">#4169E1</text>
+	<text x="790" y="502">saddlebrown</text>
+	<text x="960" y="502">#8B4513</text>
+	<text x="790" y="522">salmon</text>
+	<text x="960" y="522">#FA8072</text>
+	<text x="790" y="542">sandybrown</text>
+	<text x="960" y="542">#F4A460</text>
+	<text x="790" y="562">seagreen</text>
+	<text x="960" y="562">#2E8B57</text>
+	<text x="790" y="582">seashell</text>
+	<text x="960" y="582">#2E8B57</text>
+	<text x="790" y="602">sienna</text>
+	<text x="960" y="602">#A0522D</text>
+	<text x="790" y="622">silver</text>
+	<text x="960" y="622">#C0C0C0</text>
+	<text x="790" y="642">skyblue</text>
+	<text x="960" y="642">#87CEEB</text>
+	<text x="790" y="662">slateblue</text>
+	<text x="960" y="662">#6A5ACD</text>
+	<text x="790" y="682">slategray</text>
+	<text x="960" y="682">#708090</text>
+	<text x="790" y="702">slategrey</text>
+	<text x="960" y="702">#708090</text>
+	<text x="790" y="722">snow</text>
+	<text x="960" y="722">#FFFAFA</text>
+	<text x="790" y="742">springgreen</text>
+	<text x="960" y="742">#00FF7F</text>
+	<text x="790" y="762">steelblue</text>
+	<text x="960" y="762">#4682B4</text>
+	<text x="790" y="782">tan</text>
+	<text x="960" y="782">#D2B48C</text>
+	<text x="790" y="802">teal</text>
+	<text x="960" y="802">#008080</text>
+	<text x="790" y="822">thistle</text>
+	<text x="960" y="822">#D8BFD8</text>
+	<text x="790" y="842">tomato</text>
+	<text x="960" y="842">#FF6347</text>
+	<text x="790" y="862">turquoise</text>
+	<text x="960" y="862">#40E0D0</text>
+	<text x="790" y="882">violet</text>
+	<text x="960" y="882">#EE82EE</text>
+	<text x="790" y="902">wheat</text>
+	<text x="960" y="902">#F5DEB3</text>
+	<text x="790" y="922">white</text>
+	<text x="960" y="922">#FFFFFF</text>
+	<text x="790" y="942">whitesmoke</text>
+	<text x="960" y="942">#F5F5F5</text>
+	<text x="790" y="962">yellow</text>
+	<text x="960" y="962">#FFFF00</text>
+	<text x="790" y="982">yellowgreen</text>
+	<text x="960" y="982">#9ACD32</text>
+</g>
+</svg>
