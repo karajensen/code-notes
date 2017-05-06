@@ -281,30 +281,6 @@ template <typename T> class MyClass
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//VARIADIC TEMPLATES
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-// accept a variable number of arguments
-template<typename T, typename... Args> // Args is a template parameter pack
-void MyFn(const T& value, const Args&... args) // args is a function parameter pack
-{
-    //uses recursion to take first element from list
-    //sends rest to next call of function
-    cout << value << ",";
-    MyFn2(args...);
-}
-
-auto MyFn = [](const auto& value, const Args&... args)
-{
-    cout << value << ",";
-    MyFn2(args...);
-}
-
-//can use any number, order or type of arguments
-MyFn(2.0,"hello",4*2,'c');
-MyFn(1.0,'d',"astring");
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
 //UNIVERSAL REFERENCES
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // Reference that can bind to rvalue and lvalue reference of form T&&
@@ -318,12 +294,66 @@ auto MyFn = [](auto&& x){ MyFn2(std::foward<decltype(x)>(x)); };
 auto&& x = myObj;         // initialised with lvalue reference, T/x = MyClass&
 auto&& x = 3;             // initialised with rvalue, T = MyClass, x = MyClass&&
 
-// VARIADIC PERFECT FORWADING
-template<typename... T> void MyFn(T&&... args)
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//VARIADIC TEMPLATES
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// VARIADIC FUNCTIONS
+// accept a variable number of arguments
+template<typename T, typename... Args> // Args is a template parameter pack
+void MyFn(const T& value, const Args&... args) // args is a function parameter pack
 {
-    MyFn2(std::foward<T>(args)...);
+    //uses recursion to take first element from list
+    //sends rest (minus head) to next call of function
+    cout << value << ",";
+    MyFn(args...);
 }
+
+auto MyFn = [](const auto& value, const Args&... args)
+{
+    cout << value << ",";
+    MyFn(args...);
+}
+
+MyFn(2.0,"hello",4,'c'); //can use any number, order or type of arguments
+MyFn(1.0,'d',"astring");
+
+// VARIADIC CLASSES
+// Used for the visiter pattern and tuples, inherits itself minus one arg each time
+template<typename... Args> struct MyClass; // Forward Decl
+ 
+template<typename T, typename... Args> 
+struct MyClass<T, Args...> : MyClass<Args...>
+{
+     typedef MyClass<Args...> Base;
+     void MyFn()
+     {
+         std::cout << typeid(value).name() << std::endl;
+         Base::MyFn(); // Recurse down to one
+     }
+     T value;
+};
+
+template<typename T> 
+struct MyClass<T> // Specialized for one
+{
+    void MyFn() 
+    {
+        std::cout << typeid(value).name() << std::endl;
+    }
+    T value;
+};
+
+MyClass<int, float, double> myClass;
+
+// VARIADIC PERFECT FORWADING
 auto MyFn = [](auto&&... x)
 {
     MyFn2(std::foward<decltype(x)>(x)...);
 }
+
+template<typename T, typename... Args>
+std::unique_ptr<T> MyFn(Args&&... args)
+{    
+    return std::move(std::make_unique<T>(std::forward<Args>(args)...));
+};
