@@ -36,9 +36,6 @@
     <ClCompile Include="Languages\MEL forms.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
-    <ClCompile Include="Languages\MEL objects.cpp">
-      <Filter>Languages</Filter>
-    </ClCompile>
     <ClCompile Include="Languages\MEL.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
@@ -76,9 +73,6 @@
       <Filter>Languages\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Languages\Examples\Example - Maya API Node.cpp">
-      <Filter>Languages\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Languages\Examples\Example - MEL Special Shatter.cpp">
       <Filter>Languages\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Languages\C++ Boost.cpp">

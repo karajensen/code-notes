@@ -6,70 +6,86 @@
 headsUpMessage "This is the message";
 
 //CONFIRM DIALOG BOX
-confirmDialog    -title "The Title"
-                -message "This is the message"
-                -button "Title for button"
-                -defaultButton "Title for button";    //sets button as default button
+confirmDialog -title "The Title"
+              -message "This is the message"
+              -button "Title for button"
+              -defaultButton "Title for button";  //sets button as default button
 
 //PROMPT DIALOG BOX
-string $myResult = `promptDialog -message "message here" -button "OK" -button "CANCEL" 
-                    -defaultButton "OK" -cancelButton "CANCEL" -dismissString "Cancel"`;
-if($myResult == "OK"){ use string stored }
+string $myResult = `promptDialog 
+    -message "message here" 
+    -button "OK" 
+    -button "CANCEL" 
+    -defaultButton "OK" 
+    -cancelButton "CANCEL" 
+    -dismissString "Cancel"`;
+if($myResult == "OK"){}
 
 //SELECTION DIALOG BOX
-string $myFiles[] = `fileDialog2 -fileMode 4`;    //returns a list of paths to files selected
+string $myFiles[] = `fileDialog2 -fileMode 4`;  //returns a list of paths to files selected
 
+//PROGRESS WINDOW
+waitCursor -state on; //auto done for progress window
+int $amount = 0;
+progressWindow -title "Progress" -progress $amount -status "Completed: 0%" -isInterruptable true;
+while(true)
+{
+    //do part of the operation
+    if(`progressWindow -query -isCancelled`){ break; }
+    $amount += 1;
+    progressWindow -edit -progress $amount -status ("Completed: " +$amount+"%");
+}
+progressWindow -endProgress;
 
+//PROGRESS BAR
+string $progCtrl = `progressBar -maxValue 5 -width 300`;
+button -label "Next step" -command ("progressBar -edit -step 1 " + $progCtrl);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //WINDOWS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-if(`window -exists "PluginTester"`)
+if(`window -exists "MyWindow"`)
 { 
-    windowPref -remove "PluginTester";    
-    deleteUI -wnd "PluginTester"; 
+    windowPref -remove "MyWindow";    
+    deleteUI -wnd "MyWindow"; 
 }
-window -title "PluginTester" -resizeToFitChildren false PluginTester;
-showWindow PluginTester;
-window -edit -width 200 -height 100 PluginTester; //resize to fix sizing issues 
+window -title "My Title" -resizeToFitChildren false "MyWindow";
+showWindow "MyWindow";
+window -edit -width 200 -height 100 "MyWindow"; //resize to fix sizing issues 
 
 //NAVIGATING LAYOUTS
 //Newest window becomes default and recieves the layout until another is created
-//Newest Layout becomes default and recieves any addons until moved back in the heirarchy
-
-setParent ..;                //move back one parent
-setParent -menu $myLayout    //set as current layout
+//Newest layout becomes default and recieves any components until moved back in the heirarchy
+setParent ..;                 //move back one parent
+setParent -menu "MyLayout"    //set as current layout
 
 //-------------------------------------------------------------------------------------
-//ROW/COL LAYOUTS
+//ROW/COLUMN LAYOUTS
 //-------------------------------------------------------------------------------------
-columnLayout -adjustableColumn true;    //set the default layout
-button -label "One" ;            
-    rowLayout -numberOfColumns 2;        //create new layout; rows must specify number of cols
-    button -label "Two";
-    button -label "Three";
-setParent ..;                            //move the default layout back one
-button -label "Four" ;
+columnLayout -adjustableColumn true "MyColLyaout";//set the default layout
+button;            
+    rowLayout -numberOfColumns 2 "MyRowLayout"; //create new layout; rows must specify number of cols
+    button;
+setParent ..;  //move the default layout back one
+button;
 
 //-------------------------------------------------------------------------------------
 //GRID LAYOUTS
 //-------------------------------------------------------------------------------------
 gridLayout -numberOfRowsColumns 2 2 -cellWidthHeight 60 50; //creates grid of 2x2
-gridLayout -position $myButton 2    //places button in slot 2 (slots counted from base 1, across row, next row then across)
-
+gridLayout -position "MyButton" 2  //places button in slot 2 (slots counted from base 1, across row, next row then across)
 
 //-------------------------------------------------------------------------------------
 //FORM LAYOUT
 //-------------------------------------------------------------------------------------
 //division number defines number of positions elements are snapped to (use 100 for percentage of form)
 string $form = `formLayout -numberOfDivisions 100`; 
-string $myButton1 = `button`;
 formLayout -edit 
-           -attachForm $myButton1 "top" 0            //alliged with top of form
-           -attachForm $myButton1 "left" 0            //alliged with left of form
-           -attachForm $myButton1 "bottom" 0        //alliged with bottom of form
-           -attachPosition $myButton1 "right" 0 50  //right edge placed 50% of width of form
+           -attachForm "MyButton" "top" 0           //alliged with top of form
+           -attachForm "MyButton" "left" 0          //alliged with left of form
+           -attachForm "MyButton" "bottom" 0        //alliged with bottom of form
+           -attachPosition "MyButton" "right" 0 50  //right edge placed 50% of width of form
            $form;
 
 //-------------------------------------------------------------------------------------
@@ -77,7 +93,7 @@ formLayout -edit
 //-------------------------------------------------------------------------------------
 //consists of a label and collapse/expand button for children (can only have one child layout)
 frameLayout -label "Settings" -borderStyle "etchedIn" -font "obliqueLabelFont"-collapsable true;
-    columnLayout ;
+    columnLayout;
         button;
 
 //-------------------------------------------------------------------------------------
@@ -85,7 +101,6 @@ frameLayout -label "Settings" -borderStyle "etchedIn" -font "obliqueLabelFont"-c
 //-------------------------------------------------------------------------------------
 //organises layouts into folders allowing tabbing between them
 //All children must be layouts
-
 string $tabLay = `tabLayout`;
     string $colLay = `columnLayout`;
         button;
@@ -95,8 +110,8 @@ setParent ..; //move to working with tablayout again
 setParent ..;
 
 tabLayout -edit
-          -tabLabel $colLay "Tab1 name"
-          -tabLabel $colLay2 "Tab2 name"
+          -tabLabel $colLay "MyTab1"
+          -tabLabel $colLay2 "MyTab2"
           $tabLay;
 
 //-------------------------------------------------------------------------------------
@@ -107,7 +122,6 @@ scrollLayout;
     columnLayout;
         button;
         button;
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //MENU BARS
@@ -145,129 +159,98 @@ window -menuBar true;
             menuItem -label "Three";                    //Option box created for label Three
             menuItem -optionBox true -command "ThreeOptionFunction()";
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //CONTROLS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+separator;
+helpline; //creates box that displays annotation when a control is hovered over
 control -edit -width 23 $controlName;
 control -query -parent $controlName;
 control -exists $controlName;
 
-//CONTROL COMMANDS
--command ("button -edit -label" + $myLabel + " " + $myControl);
+//CONNECTING ATTRIBUTES TO CONTROLS
+connectControl $myControl "MyObj.attr";
+connectControl -index 2 $myControlGroup "MyObj.attr";
 
-//CONNECTING ATTRIBUTES
-connectControl $myControl ($myObject + ".translateX");
-connectControl -index 2 $myControlGroup ($myObject + ".scaleX");
+//COMMON CONTROL OPTIONS
+-l "MyLbl"           // Text displayed
+-w 20                // Width
+-h 20                // Height
+-annotation "Txt";   // Pop-up help text, can use with helpline
 
-//SEPERATOR
-separator;    //creates a line between rows
+// COMMON COMMANDS
+-c "MyFn()"                                   // Execute function
+-c "MyFn(`textField -q -tx \"MyTextField\"`)" // Execute function with arguments
+-c "melCommand;"                              // Execute mel command
 
-//BUTTONS (executes a MEL command)
-button -label "but1" -c "myProc1()";
-symbolButton -image "sphere.xpm" -command "sphere;";
-iconTextButton -style "iconAndTextHorizontal" -image1 "cone.xpm" -label "cone" -command "cone";
-string $loadBut = `button -label "Load" -width 70 -c ("LoadPlugin(`textField -query -text $pluginPath`)")`;
+// BUTTONS
+button "MyButton";
+symbolButton -image "sphere.xpm" "MyButton";
+iconTextButton -style "iconAndTextHorizontal" -image1 "cone.xpm" "MyButton";
 
-//TOOL BUTTONS (activates a tool)
-toolCollection;
-toolButton -tool selectSuperContext -toolImage1 selectSuperContext "aselect.xpm";
-
-//CHECK BOX
-checkBox -v true -w 2 -label "" "cBox1"; //checkbox without any text, v is bool value
-symbolCheckBox -image "circle.xpm";
-iconTextCheckBox -style "iconAndTextVertical" -imagel "cube.xpm" -label "cube";
+// CHECKBOXES
+checkBox -value true "MyCheckBox";
+symbolCheckBox -image "circle.xpm" "MyCheckBox";
+iconTextCheckBox -style "iconAndTextVertical" -imagel "cube.xpm" "MyCheckBox";
 
 //RADIO BUTTONS (allows one choice from group)
-radioCollection ;
-radioButton -label "One";
-radioButton -label "Two";
-radioCollection -query -select $radioCollectionName;    //finds out which one is selected
-
-iconTextRadioCollection ;
-iconTextRadioButton -image1 "sphere.xpm" -label "Sphere";
-iconTextRadioButton -image1 "cone.xpm" -label "Cone";
+radioCollection;
+    radioButton -label "One";
+    radioButton -label "Two";
+radioCollection -query -select $radioCollectionName; //finds out which one is selected
+iconTextRadioCollection;
+    iconTextRadioButton -image1 "sphere.xpm" -label "Sphere";
+    iconTextRadioButton -image1 "cone.xpm" -label "Cone";
 
 //LISTS
 //Lists are base-1 indexed
-textScrollList -numberOfRows 3    -allowMultiSelection true
-                -append "One"
-                -append "Two"
-                -append "Three"
-                -selectedItem "One"
-                -showIndexedItem 3;
+textScrollList -numberOfRows 3    
+               -allowMultiSelection true
+               -append "One"
+               -append "Two"
+               -append "Three"
+               -selectedItem "One"
+               -showIndexedItem 3;
 textScrollList -query -selectIndexedItem &myList //array of selected indices    
 
-
 //TEXT
-text -label "Some text" -align "center";
-textField -editable true;
-scrollField -wordWrap true -text "Some editable text" -font boldLabelFont    -editable true;
+text;
+textField -tx "Text" -editable true;
+scrollField -wordWrap true -tx "Text" -font boldLabelFont -editable true;
 scrollField -query -text $myScrollField;    //gets text
 
-//INT FIELD
-intField -v 12 "myIntField";    
+//VALUE FIELD
+intField -v 12 "myIntField";   
+floatField -v 12.0 "myFltField";
 $intFieldValue = `intField -query -v "myIntField"`;
 
-//FLOAT FIELD
-floatField -v 12.0;
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-//GROUPS
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
 //FLOAT3/INT3 GROUPS
-floatFieldGrp -label "Vertex 01: " -numberOfFields 3 "ff00"; 
-floatSliderGrp -label "Temperature" -value 76 -field true 
-               -minValue -10.0 -maxValue 100.0                //slider box min/max
-               -fieldMinValue -100.0 -fieldMaxValue 100.0;    //actual min/max values
-
+floatFieldGrp -numberOfFields 3 "ff00"; 
+floatSliderGrp -value 76 
+               -field true 
+               -minValue -10.0 
+               -maxValue 100.0
+               -fieldMinValue -100.0 
+               -fieldMaxValue 100.0;
 
 //ATTRIBUTE GROUPS
 attrFieldSliderGrp -min 0 -max 10 -at "mySphere.sx";
-attrFieldGrp -attribute ($myObject+".scale") -label "Scale"    //holds attributes children (x,y,z)
-attrColorSliderGrp -attribute ($objName+".color") -label ($objName+"'s color");
-attrNavigationControlGrp -attribute ($obj + ".scale") -label "Scale"; //allows connection of attribute
+attrFieldGrp -attribute "MyObj.scale"; //holds attributes children (x,y,z)
+attrColorSliderGrp -attribute "MyObj.color";
+attrNavigationControlGrp -attribute "MyObj.scale"; //allows connection of attribute
 
 //COLOR SLIDER
-colorSliderGrp -cw1 5 "cSlider1";
+colorSliderGrp -cw1 5 "MyColorSlider";
 colorIndexSliderGrp;
 
 //TEXT FIELD BUTTON GROUP
-textFieldButtonGrp -label "Word" -text "some text"
+textFieldButtonGrp -text "some text"
                    -buttonLabel "Check Spelling"
                    -buttonCommand "DoSomething()";
 
 //NAME GROUP
-nameField -object $myObject    //allows changing of object's name    
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-//HELP OPTIONS
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//TOOL TIPS
-button -label "A button" -annotation "This is pop-up help";
-helpline; //creates box that displays annotation when a control is hovered over
-
-//PROGRESS WINDOW
-waitCursor -state on; //auto done for progress window
-int $amount = 0;
-progressWindow -title "Progress" -progress $amount -status "Completed: 0%" -isInterruptable true;
-while(true)
-{
-    //do part of the operation
-    if(`progressWindow -query -isCancelled`){ break; }
-    $amount += 1;
-    progressWindow -edit -progress $amount -status ("Completed: " +$amount+"%");
-}
-progressWindow -endProgress;
-
-//PROGRESS BAR
-string $progCtrl = `progressBar -maxValue 5 -width 300`;
-button -label "Next step" -command ("progressBar -edit -step 1 " + $progCtrl);
-
+nameField -object $myObject    //allows changing of object's name
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //IMAGES
@@ -282,7 +265,6 @@ picture -image "sphere.xpm";
 
 //GLOBAL VAR HOLDING SUPPORTED IMAGE EXTENSIONS
 global string $imgExt[];
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //PANELS
@@ -311,8 +293,6 @@ getPanel -all //get list of all panels
 getPanel -underPointer //get name of panel under mouse
 panel -edit -menuBarVisible true $panelName //display the menu bar
 panel -copy $paneIName    //create a copy of the panel
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //FILES

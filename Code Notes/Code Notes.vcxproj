@@ -101,7 +101,6 @@
     <ClCompile Include="Languages\Examples\Example - Maya API Command.cpp" />
     <ClCompile Include="Languages\Examples\Example - Maya API Locator.cpp" />
     <ClCompile Include="Languages\Examples\Example - Maya API Node.cpp" />
-    <ClCompile Include="Languages\Examples\Example - MEL Special Shatter.cpp" />
     <ClCompile Include="Languages\Javascript.cpp" />
     <ClCompile Include="Languages\Maxscript forms.cpp" />
     <ClCompile Include="Languages\Maxscript objects.cpp" />
@@ -109,7 +108,6 @@
     <ClCompile Include="Languages\Maya API.cpp" />
     <ClCompile Include="Languages\MEL algorithms.cpp" />
     <ClCompile Include="Languages\MEL forms.cpp" />
-    <ClCompile Include="Languages\MEL objects.cpp" />
     <ClCompile Include="Languages\MEL.cpp" />
     <ClCompile Include="Languages\Python containers.cpp" />
     <ClCompile Include="Languages\Python for Maya.cpp" />
