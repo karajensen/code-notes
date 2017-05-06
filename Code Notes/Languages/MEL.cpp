@@ -423,10 +423,10 @@ select "*:*:Base";  //double namespaces
 //LIST SELECTION
 string $sel[] = `ls -sl`; //stores in order selected, shape/transform nodes, "" if nothing selected
 string $sel[] = `ls -sl -tr`; //store only transform nodes
-string $sel[] = `ls -sl -tr`; //store only transform nodes
+string $sel[] = `ls -sl -dag -ap -s`; //store only shape nodes
+string $sel[] = `ls -sl -type "joint"`; //store only of one type
 string $sel[] = `ls -sl -tr "*Base"`; //with string in name
 string $sel[] = `ls -sl -tr "*:Base"`; //with string in name (namespace)
-string $sel[] = `ls -type surfaceShape`; //all surface shapes in scene
 
 //LIST RELATIVES
 listRelatives -c "myObject"; //list all children of object
