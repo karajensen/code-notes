@@ -152,9 +152,10 @@ $myIntArray = $tempArray;
 //=================================================================================================
 
 string $myString;  //assigned default value of ""
-string $myStringArray[];
+string $myStringArr[];
 int $NoOfCharas = size($myString);
 
+stringArrayRemove($itemsToRemove, $myStringArr) // removes first array items from second and returns array
 substituteAllString($myString,"a","b"); //in myString replace all a with b, returns string
 match "[0-9]+" $myString;  //finds all numbers in myString and returns them as a string (if none returns "")
 
@@ -197,8 +198,9 @@ trunc(amount)
 //RANDOM GENERATION
 seed(3);                     // sets the seed used by random gen
 rand(20, 50);                // returns a float between 20 and 50 inclusive
+rand(<<1,1,1>>,<<2,2,2>>);   // returns a vector with components between 1 and 2 inclusive
 sphrand(x);                  // creates random vector within a sphere with radius x
-sphrand(<< 1, 2, 1 >> );     // creates random vector within a skewed sphere 1 unit radius in x etc.
+sphrand(<<1,2,1>>);          // creates random vector within a skewed sphere 1 unit radius in x etc.
 
 //=================================================================================================
 // MATRICES
@@ -268,7 +270,6 @@ DeleteHistory;
 CenterPivot;
 duplicate - rr;
 
-//GETTING TRANSFORMATIONS
 xform -query -matrix;                    //local matrix as array of float
 xform -query -worldSpace -matrix;        //world matrix  as array of float
 xform -query -translate;                 //translation in object space
@@ -277,13 +278,15 @@ xform -query -relative -scale;           //scale in object space
 xform -query -rotation;                  //rotation in object space
 xform -query -rotateAxis;                //rotation orientation
 
-//SETTING TRANSFORMATIONS
-xform -translation 2 3 4;                //set position in local space
-xform -worldSpace -translation 2 3 4;    //set position in world space
-xform -rotation 45 0 0                   //rotation
-xform -scale 1.2 0.3 0                   //scaling
+xform -translation 1.0 2.0 3.0;                //set position in local space
+xform -worldSpace -translation 1.0 2.0 3.0;    //set position in world space
+xform -rotation 45.0 0.0 0.0
+xform -scale 1.0 1.0 1.0
 
-//RESETTING
+move -a 1.0 2.0 3.0 "MyObject"
+rotate -a 45.0 0.0 0.0 "MyObject"
+scale -a 1.0 1.0 1.0 "MyObject"
+
 makeIdentity -apply false;               //reset transformation/move object back to default
 makeIdentity -apply true;                //reset/freeze transformations
 
@@ -291,19 +294,20 @@ makeIdentity -apply true;                //reset/freeze transformations
 //RELATIONSHIPS
 //=================================================================================================
 
-parent "obj1" "ob2";    //parent obj1 to obj2    
-parent -world "ob1";    //unparent obj1 (ie. parent to world)    
+parent "MyObj1" "MyObj2";                //parent obj1 to obj2    
+parent -world "MyObj1";                  //unparent obj1 (ie. parent to world)    
 
-group -em -n "groupName" -p"parentName"; //create an empty(-em) group, parent under parentName
-group -n "groupName" $childList;         //create a group, add children to it
-ungroup -world "myObj";                     //remove myObj from the group
+group -em -n "MyGroup" -p"parentName";   //create an empty(-em) group, parent under parentName
+group -n "MyGroup" $childList;           //create a group, add children to it
+ungroup -world "MyObj";                  //remove myObj from the group
+parent "MyObj" "MyGroup"                 //add object to existing group
 
-reorder -front "myObj";    //move myObj up to front/back of list of siblings
+reorder -front "myObj";                  //move myObj up to front/back of list of siblings
 
-renameSelectionList("NewName"); //renames selection list to NewName incrementing
-rename $objName $objNewName;    //note; renaming transform node auto renames shape node
+renameSelectionList("NewName");          //renames selection list to NewName incrementing
+rename $objName $objNewName;             //note; renaming transform node auto renames shape node
 
-inheritTransform -off "childObject"; //parent's transform doesn't effect specific child
+inheritTransform -off "childObject";     //parent's transform doesn't effect specific child
 
 //=================================================================================================
 //ATTRIBUTES
@@ -317,6 +321,7 @@ getAttr transforml.matrix;    //returns array of 16 floats, not matrix
 
 //SET ATTRIBUTE
 setAttr "MyObj.attr" 15;
+setAttr "MyObj.translate" 0 1 2
 
 //LIST ATTRIBUTES
 listAttr "MyObj";                 //returns array of strings with attribute names
@@ -416,9 +421,11 @@ $pos1 = `pointPosition -world ($node + ".vtx["+$v1+"]")`;
 //=================================================================================================
 
 select -cl;
-select "*Base*";    //select all objects with string
-select "*:Base";    //namespaces
-select "*:*:Base";  //double namespaces
+select -hi;             // select all in hierarchy
+select -add "MyObject"; // adds to currently selected
+select "*Base*";        // select all objects with string
+select "*:Base";        // namespaces
+select "*:*:Base";      // double namespaces
 
 //LIST SELECTION
 string $sel[] = `ls -sl`; //stores in order selected, shape/transform nodes, "" if nothing selected
@@ -512,7 +519,7 @@ snapKey -timeMultiple 1 "myObj.tx"; //snapes keys back to whole frames
 //SET KEY FRAME
 setKeyframe;                              //set keyframe for selected objects on all keyable attributes
 setKeyframe "myObj"                       //set keyframe for object on all keyable attributes
-setKeyframe    -attribute "translateX";   //set keyframe for selected objects for translate x
+setKeyframe -attribute "translateX";      //set keyframe for selected objects for translate x
 setKeyframe -time 1 -value 5 "myObj.tx";  //set keyframe at specific time
 setKeyframe -insert -time "myObj.tx";     //inserts without changing shape of curve 
 
