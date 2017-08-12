@@ -68,9 +68,10 @@ myFunction(5, 1.0);
 class MyClass
 {
 public:
-    typedef void(MyClass::*MyMethodPtr)(); /*or*/ 
+    typedef void (MyClass::*MyConstMethodPtr)() const;
+    typedef void(MyClass::*MyMethodPtr)();
     using MyMethodPtr = void(MyClass::*)(void);
-
+    
     MyMethodPtr m_methodFn;
 };
 m_methodFn = &MyClass::MyMethod;
