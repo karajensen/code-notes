@@ -210,7 +210,6 @@ str = "a string"
 ("{0:f}").format("1234567890.1234567890.")  //Outputs number as is, without f does scientific notation
 ("{0:g}").format("1234567890.1234567890.")  //Outputs number as scientific notation (default)
 
-
 //////////////////////////////////////////////////////////////////////////////
 //LISTS
 //////////////////////////////////////////////////////////////////////////////

@@ -85,13 +85,6 @@ OPERATORS / ESCAPED CHARACTERS
 \r   Return
 \0   Null character
 
-REGULAR EXPRESSIONS
-\w{2}      2 letters
-\s*        Arbitrary number of spaces
-\d{5}      5 digits
-//.*?\n    All between // and \n
-//.*?$     All between // and end
-
 ORDER OF EXPRESSION EVALUATION
 • Known as short-circuiting logical expressions
 • Order is left to right where right is only done if left is true: if(left && right)

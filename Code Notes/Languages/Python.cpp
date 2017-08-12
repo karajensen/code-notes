@@ -66,8 +66,8 @@ myVar = None //null variable
 
 //CONVERSIONS
 int(x)   //converts x to integer
-int(s)   //converts string to integer
 float(x) //converts x to float
+str(x)   // converts x to string
 myFloat.is_integer() //Returns true if float has no fractional part
 (123.0).is_integer() //Calling on literal number
 
@@ -94,7 +94,6 @@ myComplex = Complex() //no arguments returns 0j
 myComplex.conjugate() //Get conjugate of complex number
 myComplex.real        //returns 1.0 (real part)
 myComplex.imag        //returns 2.0 (imaginary part)
-
 
 //////////////////////////////////////////////////////////////////////////////
 //BIT MANIPULATION

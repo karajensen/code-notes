@@ -2,40 +2,47 @@
 //PYTHON FOR MAYA
 //////////////////////////////////////////////////////////////////////////////
 
+// All python commands match MEL ones
 import maya.cmds as cmds
+from maya.OpenMaya import MVector
 
-cmds.select(myMeshList) //select all meshes in list
-cmds.ls(sl=true) //return list of selected objects
 cmds.warning("Please select from the list first")
-cmds.select(listOfSelectionNames)
 cmds.delete(listOfSelectionNames)
-cmds.objExists(objName) //returns if object exists in Maya scene
 cmds.FrameSelected(objName) //zooms in on object in Maya scene
 
+// Object creation
+cmds.sphere(radius = 4)
+cmds.polySphere(radius = 4)
+cmds.shadingNode("file", asTexture = True)
+cmds.shadingNode("bump2d", asUtility = True)
+
+// Object Selection
+cmds.objExists(objName) //returns if object exists in Maya scene
+cmds.select(myMeshList) //select all meshes in list
+cmds.select(listOfSelectionNames)
+cmds.ls(sl = True) //return list of selected objects
+cmds.ls(type = "geometryShape")
+
+// Object Attributes
 cmds.getAttr("MySphere.attribute")
 cmds.setAttr("MySphere.attribute", value)
 cmds.connectAttr(attr1,attr2,force=True)
 cmds.listConnections(attr, destination=False) //get attribute connected to attr
+cmds.listRelatives(myObj, type = "transform", parent = True)
 
-//Creating .OBJ
+// File output
 cmds.file(filename, force=True, options="", typ="OBJexport", stx="never", es=True)
 
-//Creating Shader Nodes
-textureNode = cmds.shadingNode("file", asTexture=True)
-bumpNode = cmds.shadingNode("bump2d", asUtility=True)
-
-//Select attached shader node to mesh
-cmds.select(myMeshName)
-cmds.hyperShade(smn=True)
-shaderNode = cmds.ls(sl=True)[0] 
-
-//Get all meshes in the scene
-scene = cmds.ls(type="geometryShape")
-if len(scene) > 0:
-    return cmds.listRelatives(scene,type="transform",parent=True)
+// Vectors
+myVec = MVector(1.0, 0.2, 0.3)
+myVec.x / myVec.y / myVec.z
+myVec.length()
+myVec.normal()
+myVec ^ myVec2      // Cross product
+myVec * myVec2      // Dot product
 
 //////////////////////////////////////////////////////////////////////////////
-//PYQT
+//PYQT FOR MAYA
 //////////////////////////////////////////////////////////////////////////////
 //Copy the PyQt4 folder, and the sip.pyd file from your python26/lib/site-packages 
 //directory into the Maya install /python/lib/site-packages directory.

@@ -13,6 +13,7 @@ const int* const ptr = &value    // can't change value or what pointer points to
 int** ptr = &ptr2;               // pointer to pointer
 int& ref = myInt;                // cannot be reassigned, cannot be null
 int& const ref = myInt;          // Redundant as references automatically & const as cannot be reassigned
+void* ptr = &myInt;              // Typeless pointer, only safe to cast to and from original pointer type
 
 *myPointer = 4;                  // dereferencing accesses variable
 myPointer->member;               // access member of object

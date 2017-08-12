@@ -178,7 +178,6 @@ os.path.isfile("filepath")         //true if not a folder
 os.path.dirname(__file__)          //directory script is in
 os.makedirs("MyFolderpath")        //creates the directory
 os.listdir("MyFolderpath")         //returns a list of what's in the director
-os.path.isfile("MyFile")           //returns true/false depending if folder or file
 
 myFilePath.split(os.path.dirname(myFilePath)+"/",1) //splits directory and name into [dir, name]
 

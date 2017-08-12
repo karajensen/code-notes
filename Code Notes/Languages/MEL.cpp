@@ -387,7 +387,7 @@ for($i = 0; $i < size($vertNo); $i++)
 
 //SELECT ALL FACES
 hilite $mySel[0];
-int $faceNo[] = `polyEvaluate -f $mySel[0]`;
+int $faceNo[] = `polyEvaluate -f $mySel[0]`;=
 for($i = 0; $i < size($faceNo); $i++)
 {select -add ($mySel[0] + ".f[" + $faceNo[$i] + "]");}
 

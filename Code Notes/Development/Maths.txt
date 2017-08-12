@@ -68,16 +68,23 @@ r = common ratio between terms
 //GEOMETRY
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-      /|     TRIANGLES
-     / |     • Triangle Area: base X height / 2
-    /  |     • Triangle 3 angles always add to 180ᵒ
-   /___|     • Trigonometry and Pythagoras true for right angled triangles
-
    o o o     CIRCLES
  o       o   • Circle Area: πr²
 o         o  • Circle Circumference: 2πr
  o       o   • Segment Area: ¹/₂ r²(Ө - sinӨ)
    o o o     • Sector Area: ¹/₂ r²Ө
+
+     ▪       TRIANGLES
+    / \      • Triangle Area: base X height / 2
+   /   \     • Triangle 3 angles always add to 180ᵒ
+  ▪-----▪    • RH Triangle use Trigonometry and Pythagoras
+             • Centroid (center): (P₁ + P₂ + P₃) / 3
+     ▪       
+    /|\      TETRAHEDRON
+   / | \     • Centroid (center): (P₁ + P₂ + P₃ + P₄) / 4 
+  ▪--|--▪
+   \ | /
+    \▪/ 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //GRAPHING AND FUNCTIONS
@@ -368,7 +375,7 @@ AFFINE SPACE: Vector space with a set of points where every pair of points has a
  ------------        -----------
 |v = P₀ - P₁ |      | v = Q - P |
  ------------        -----------
-  P₀      P₁          P       Q
+  P₁      P₀          P       Q
   ▪=======>▪          ▪=======>▪
       v                   v
 
