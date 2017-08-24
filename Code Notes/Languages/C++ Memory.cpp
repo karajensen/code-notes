@@ -153,7 +153,7 @@ std::bind([](int x){}, myInt); // copy construct myVar
 
 *myPtr
 if(myPtr) /*or*/ if(myPtr.get())              // true if valid, false if null
-std::dynamic_pointer_cast<MyClass>(ptr);      // returns cast from base to derived class
+std::dynamic_pointer_cast<MyClass>(ptr);      // returns cast or null from base to derived class
 std::static_pointer_cast<MyClass>(ptr);
 
 //UNIQUE POINTER
