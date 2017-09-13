@@ -193,19 +193,16 @@ MyFunction(ClassB<double>());
 template <typename T> class Base
 {
 public:
-    Base<T>;
-    void MyMethod();
+    Base<T>() {}
+    virtual void MyMethod() = 0;
 };
 
 template <typename T> class Derived : public Base<T> 
 {
-    Derived():Base<T>
-    {}
+    Derived() : Base<T>() {}
 
-    void MyMethod()
+    virtual void MyMethod() override
     {
-        //Need accesser as base class template methods 
-        //cannot be found when using inheritance
         Base<T>::MyMethod();
     }
 };
