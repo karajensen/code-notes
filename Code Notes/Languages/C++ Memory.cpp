@@ -39,7 +39,7 @@ const char rMyArray (&)[5] = myArray; // actual type of array
 
 //DISPLAY MEMORY LOCATION
 std::stringstream ss;
-ss << std::hex << &myVariable;
+ss << std::hex << static_cast<void*>(&myVariable)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //FUNCTION OBJECTS
