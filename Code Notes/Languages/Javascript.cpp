@@ -51,7 +51,8 @@ str.substr(0, 3);                 // Generate substring from index 0 to 3
 str.replace(/_[A-Za-z0-9]*/g,"")  // replace everything after _ with ""
 str.replace(str1, str2);          // returns new string
 str.split(",")                    // returns array of string without seperator
-      
+str.slice(start, end)             // index to [start, end), end optional
+  
 //================================================================================================
 // ARRAYS
 //================================================================================================
