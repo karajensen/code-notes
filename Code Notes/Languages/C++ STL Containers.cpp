@@ -261,7 +261,7 @@ set<int> S;
 S.empty();   // returns true/false if empty (faster than size)
 S.size();    // number of elements
 S.clear();   // clear the container
-S.insert(x); // insert element
+S.insert(x); // Returns pair: itr to the inserted item or item that prevented insertion / bool if successful
 S.find(x);   // return iterator to element position or S.end() if not found
 S.erase(x);  // erase element
 S.erase(itr) // erase element at iterator 
