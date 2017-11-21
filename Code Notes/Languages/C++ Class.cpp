@@ -156,9 +156,12 @@ public:
 
 //STRUCTURES
 //Class with members public by default
-struct MyStruct /*doesn't require name*/
+struct MyStruct /* doesn't require name */
 {
-}; 
+};
+struct /* create a new struct */
+{
+} m_struct;
 
 //LOCAL CLASS/STRUCTURES
 //Cannot define static member variables
