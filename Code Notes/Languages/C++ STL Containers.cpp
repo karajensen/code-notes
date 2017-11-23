@@ -566,11 +566,11 @@ replace_copy_if(S, E, S2, boolLam, 'A') //copies S to S2, replaces with A if lam
 
 //MERGING
 //Only used on sorted ranges, all elements remain in sorted ascending order
-merge(S, E, S2, E2, S3) //copies 1 and 2 into 3
-set_union(S, E, S2, E2, S3) //copies 1 and 2 into 3 and removes duplicates
-set_intersection(S, E, S2, E2, S3) //copies elements in 1 that are also in 2 into 3
-set_difference(S, E, S2, E2, S3) //copies elements in 1 that are not in 2 into 3
-set_symmetric_difference(S, E, S2, E2, S3) //copies elements in 1 that don't exist in 2 and vice versa into 3
+merge(S, E, S2, E2, std::back_inserter(S3)) //copies 1 and 2 into 3
+set_union(S, E, S2, E2, std::back_inserter(S3)) //copies 1 and 2 into 3 and removes duplicates
+set_intersection(S, E, S2, E2, std::back_inserter(S3)) //copies elements in 1 that are also in 2 into 3
+set_difference(S, E, S2, E2, std::back_inserter(S3)) //copies elements in 1 that are not in 2 into 3
+set_symmetric_difference(S, E, S2, E2, std::back_inserter(S3)) //copies elements in 1 that don't exist in 2 and vice versa into 3
 
 //================================================================================================================
 //SORTING ALGORITHMS
