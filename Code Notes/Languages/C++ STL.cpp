@@ -9,15 +9,10 @@ std::swap       // swaps the value of two variables, non-throwing on primitive t
 std::pair<int, double> myPair = std::make_pair(1,2.0);
 myPair.first / myPair.second // access members of pair
     
-CLOCKS_PER_SEC         // Number of ticks per second
-std::clock()           // Returns clock ticks passed since program started as std::clock_t
-std::time()            // Returns current time as std::time_t
-std::localtime(&time)  // Returns std::tm object
-    
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <cstring>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-//works on character arrays and string temp/literals
+// works on character arrays and string temp/literals
 
 strlen(str) //gives the length of the string array minus the null character
 strcpy(str1, str2) //copy cstring2 to cstring1 including '\0'
@@ -125,6 +120,21 @@ auto getRand = [&]() ->int { return dist(generator); } //Generates number in the
 auto getRand = std::bind(dist, generator); //Bind and use as function object
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <ctime>
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+CLOCKS_PER_SEC         // Number of ticks per second
+std::clock()           // Returns clock ticks passed since program started as std::clock_t
+std::time()            // Returns current time as std::time_t
+std::localtime(&time)  // Returns std::tm object
+int year = (tm->tm_year + 1900)
+int month = (tm->tm_mon + 1)
+int day = tm->tm_mday
+int hour = tm->tm_hour
+int minutes = tm->tm_min
+int seconds = tm->tm_sec
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <limits>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -181,7 +191,7 @@ _copysign(x, y) //returns double with magnitude of x and sign of y
 copysign(x, y) //returns double with magnitude of x and sign of y
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <sstream> #include <iostream> #include <fstream> #include <iomanip>
+#include <sstream> <iostream> <fstream> <iomanip>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //OUTPUT STREAMS
@@ -314,9 +324,7 @@ std::smatch matches;
 std::regex_search(line, matches, pattern); // returns true if match found
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <future>
-#include <thread>
-#include <mutex>
+#include <future> <thread> <mutex>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //THREADING
