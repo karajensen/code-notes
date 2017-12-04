@@ -6,9 +6,13 @@ std::forward    // Casts to rvalue only if argument was initialized with an rval
 std::move       // Casts to rvalue no matter what type it is, compile time
 std::swap       // swaps the value of two variables, non-throwing on primitive types
 
-// PAIRS
 std::pair<int, double> myPair = std::make_pair(1,2.0);
 myPair.first / myPair.second // access members of pair
+    
+CLOCKS_PER_SEC         // Number of ticks per second
+std::clock()           // Returns clock ticks passed since program started as std::clock_t
+std::time()            // Returns current time as std::time_t
+std::localtime(&time)  // Returns std::tm object
     
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <cstring>
@@ -284,21 +288,6 @@ std::ios_base::trunc      //Wipe file if it exists.
 std::ios_base::binary     //open/create as Binary file
 std::ios_base::_Nocreate  //don't create file
 std::ios_base::_Noreplace //only create new files, existing will not open
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <ctime>
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-CLOCKS_PER_SEC //const that equals the number of ticks per second
-clock_t //data type used for time in ticks
-clock() //returns clock ticks passed since program started
-time() //returns current time
-
-//TIMER DELAY LOOP
-clock_t delay = NoOfSeconds * CLOCKS_PER_SEC; 
-clock_t start = clock(); //set the start of the time
-while ((clock() - start) < delay) // calculate the difference
-    continue;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <stdint.h>
