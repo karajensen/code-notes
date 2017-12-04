@@ -6,6 +6,10 @@ std::forward    // Casts to rvalue only if argument was initialized with an rval
 std::move       // Casts to rvalue no matter what type it is, compile time
 std::swap       // swaps the value of two variables, non-throwing on primitive types
 
+// PAIRS
+std::pair<int, double> myPair = std::make_pair(1,2.0);
+myPair.first / myPair.second // access members of pair
+    
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <cstring>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,18 +84,36 @@ std::remove_reference<A>::type //returns A with any reference removed
 std::remove_pointer<A>::type //returns A with any pointer removed
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <tuple>
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::tuple<int, double, std::string> myTuple = std::make_tuple(0,2.0,"hello");
+auto value = std::get<0>(myTuple); // Get value at index 0, must be const index
+std::tie(myInt, myDouble, std::ignore) = myTuple; // copies from tuple into variables
+std::ignore // ignore copying of variable at position
+    
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <optional>
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+std::optional<std::string> myOptional = make_optional("str");
+std::optional<std::string> myOptional(std::nullopt); // object of no type
+myOptional.reset(); // destroys the value
+myOptional.value(); // returns a reference to the value
+myOptional.has_value(); // whether has a value
+myOptional.value_or("empty"); // returns copy of value or default value
+    
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <random>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-srand(time(0)); //choose a seed
-
-//RAND
+srand(time(0));                     //choose a seed
 rand()                              // returns int between [0, RAND_MAX]
 (rand() % (max - min)) + min;       // [min, max)
 (rand() % (max - min + 1)) + min;   // [min, max]
 
-//DISTRIBUTION
-//create one generator per application
+// Distribution
+// create one generator per application
 std::default_random_engine generator;
 std::uniform_int_distribution<int> dist(lower, upper); //integer distribution
 std::uniform_real_distribution<float> dist(lower, upper); //real distribution
