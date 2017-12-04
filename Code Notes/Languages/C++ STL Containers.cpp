@@ -333,30 +333,6 @@ mybits.to_ulong()   // converts bitset to unsigned long
 mybits.to_string()  // returns a string representation (1101101)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//MULTIPLE TYPED CONTAINERS
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// TUPLES
-#include <tuple>
-std::tuple<int, double, std::string> myTuple = std::make_tuple(0,2.0,"hello");
-auto value = std::get<0>(myTuple); // Get value at index 0, must be const index
-std::tie(myInt, myDouble, std::ignore) = myTuple; // copies from tuple into variables 
-std::ignore //ignore copying of variable
-
-// PAIRS
-std::pair<int, double> myPair = std::make_pair(1,2.0);
-myPair.first / myPair.second // access members of pair
-    
-// OPTIONAL
-#include <optional>
-std::optional<std::string> myOptional = make_optional("str");
-std::optional<std::string> myOptional(std::nullopt); // object of no type
-myOptional.reset(); // destroys the value
-myOptional.value(); // returns a reference to the value
-myOptional.has_value(); // whether has a value
-myOptional.value_or("empty"); // returns copy of value or default value
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //ITERATOR
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <iterator>
