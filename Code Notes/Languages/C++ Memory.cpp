@@ -3,13 +3,13 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 int* ptr = NULL;                 // 0 or 0L which zeros out pointer
-int* ptr = nullptr;              // store null
+int* ptr = nullptr;              // store null of type std::nullptr_t
 int* ptr = &myInt;               // store address of variable
 int* ptr = new int;              // finds empty memory location on heap and allocates
 int* ptr = (int*)0xB8000000;     // explicitly store memory address
 int* const ptr = &value;         // Constant int pointer (can't change what ptr points to)
 const int* ptr = &value;         // Pointer to a constant int (can't change value)
-const int* const ptr = &value    // can't change value or what pointer points to
+const int* const ptr = &value;   // can't change value or what pointer points to
 int** ptr = &ptr2;               // pointer to pointer
 int& ref = myInt;                // cannot be reassigned, cannot be null
 int& const ref = myInt;          // Redundant as references automatically & const as cannot be reassigned
