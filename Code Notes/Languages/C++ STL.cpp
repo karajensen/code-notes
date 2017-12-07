@@ -90,6 +90,7 @@ std::tuple<int, double, std::string> myTuple = std::make_tuple(0,2.0,"hello");
 auto value = std::get<0>(myTuple); // Get value at index 0, must be const index
 std::tie(myInt, myDouble, std::ignore) = myTuple; // copies from tuple into variables
 std::ignore // ignore copying of variable at position
+MyClass obj{std::make_from_tuple(myTuple)}; // allows initializing a POD from the tuple
     
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <optional>
