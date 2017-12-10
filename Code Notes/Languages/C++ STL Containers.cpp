@@ -1,4 +1,4 @@
-﻿///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //STRING
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <string>
@@ -16,9 +16,9 @@ string::npos //maximum allowable size for string; maximum value of unsigned int
 str.empty() //returns true/false if empty (faster than size)
 str.size() //number of elements
 str.length() //same as str.size()
-str.replace(4, n, "hello") //replace over index 4 for n characteres
+str.replace(i, n, "str") //replace over index i for n characteres
 str.c_str() //returns pointer to cstring with strings contents
-str.substr(2, n) //creates substring from index 2 with n characters
+str.substr(i, n) //creates substring from index i with n characters
 str.clear() //removes all from container
 str.back() //returns reference to last element
 str.front() //returns reference to first element
@@ -29,9 +29,9 @@ str.max_size() //returns maximum possible size
 str.resize(x) //resizes container for x units
 str.capacity() //returns number of elements vector can contain before more memory needed
 str.reserve(100) //reserves 100 spots (but doesn't create any objects) of vector's type (doesn't affect size)
-str.insert(4, "hello") //inserts before index 4
-str.insert(4, "hello", 1, n) //inserts 'ello' before index 4 where n is length of substring
-str.insert(4, n,'a') //Inserts n references of a before index 4
+str.insert(i, "str") //inserts before index i
+str.insert(i, "str", j, n) //insert before index i starting at index j for n characters
+str.insert(i, n,'a') //Inserts n references of a before index i
 str.insert(str.begin(), 'a') //Inserts a before iterator
 str.insert(str.begin(), n, 'a') //Inserts n references of a before iterator
 str.insert(str.begin(), str2.begin(), str2.end()) //Insert copies of elements in the range before iterator
@@ -39,12 +39,12 @@ str.insert(str.begin(), str2.begin(), str2.end()) //Insert copies of elements in
 // FIND METHODS
 // returns index int or if not found
 str.find(chararray, 2) //starts at position 2 and searches for the substring (cstring/string)
-str.find("hello", 2)  // returning first occurance's index or string::npos
+str.find("str", 2)  // returning first occurance's index or string::npos
 str.rfind() //finds last occurance of substring
-str.find_first_of("hello") //returns index of first occurance of ANY character in substring
-str.find_last_of("hello") //returns index of last occurance of ANY character in substring
-str.find_first_not_of("hello") //returns index of first occurance of ANY character NOT in substring
-str.find_last_not_of("hello") //returns index of last occurance of ANY character NOT in substring
+str.find_first_of("str") //returns index of first occurance of ANY character in substring
+str.find_last_of("str") //returns index of last occurance of ANY character in substring
+str.find_first_not_of("str") //returns index of first occurance of ANY character NOT in substring
+str.find_last_not_of("str") //returns index of last occurance of ANY character NOT in substring
 
 // CONVERTING WSTRING AND STRING
 string str(wstr.begin(),  wstr.end());
@@ -56,6 +56,21 @@ wstr = wstring_convert<codecvt_utf8<wchar_t>>().from_bytes(str);
 begin()   end()   cbegin()   cend()
 rbegin()  rend()  crbegin()  crend()
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//STRING VIEW
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <string_view>
+    
+// Slice in an existing string buffer, does not require a memory allocation
+string_view strView("str");
+string_view strView(array, sizeof(array)); // char array[3] = {'B', 'a', 'r'};
+string_view strView(&str[0], str.size());    
+
+strView.empty();
+strView.substr(i, n); //returns string_view from index i with n characters, O(1): faster than std::string substr
+strView.remove_prefix(n); //returns string_view removing n characters from start
+strView.remove_suffix(n); //returns string_view removing n characters from end
+    
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //ARRAY
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
