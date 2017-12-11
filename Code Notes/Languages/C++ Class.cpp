@@ -104,6 +104,7 @@ explicit MyClass(float myFloat)
 //CAST OPERATOR
 //converts class type to another type
 explicit operator double() { return 2.0; } //definition: MyClass::operator double(){}
+explicit operator bool() const { return true; } //allows using in if(obj)
 double myDouble = obj; //called implicitly if explicit is not used
 double myDouble = double(obj); //called explicitly
 
