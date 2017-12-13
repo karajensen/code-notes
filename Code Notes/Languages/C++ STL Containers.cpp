@@ -238,6 +238,7 @@ std::unordered_map<KeyType, ObjType> hashMap;
 std::unordered_multimap<KeyType, ObjType> hashMap;
 
 // VALUE TYPE
+// value_type is std::pair<const KeyType, ObjType>
 // const Key is important when iterating
 // If std::pair<Key,T> used will create temporary copy of pair
 std::map<Key, T>::value_type; /*or*/ std::pair<const Key, T>
@@ -256,10 +257,6 @@ M["Key"]        // returns object if key exists or creates through default contr
 // More effecient to use insert; operator[] creates default object then assigns if object doesn't exist 
 M.insert(MyMap::value_type("Key",2.0)); // value_type is typedef for maps pair
 M["Key"] = 2.0; // Adds entry if key doesn't exist otherwise overwrites
-
-// ITERATING
-// value_type is std::pair<const KeyType, ObjType>
-std::for_each(M.begin(), M.end(), [&](const MyMap::value_type& item){ item.second->MyMethod(); });
 
 //ITERATORS
 begin()   end()   cbegin()   cend() 
