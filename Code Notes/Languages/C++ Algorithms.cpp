@@ -71,34 +71,34 @@ myString.c_str() //string in c-style, can't use &myString[0] as string may not b
 copy(S, E, ostream_iterator<T>(cout, " ")); //copy container into output stream with space between elements   
 copy(S, E, S2) //copies O into O2, returns iterator to E2
 copy(S, E, back_inserter(O2)) //inserts O into O2, returns iterator to E2
-copy_n(S, n, S2) //copies from O to n elements into O2, returns iterator to E2, does nothing if n <= 0
+copy_backward(S, E, E2) //copies O into O2 backwards, returns iterator to S2
 copy_if(S, E, S2, boolLam) //only copies element if lamda is true, returns iterator to E2
 copy_if(S, E, back_inserter(O2), boolLam) //inserts into C2 rather than copies, returns iterator to E2
-copy_backward(S, E, E2) //copies O into O2 backwards, returns iterator to S2
-move(S, E, S2) //moves from O to O2 leaving O in undefined, valid state, returns iterator to E2, requires move constructor/op
-move_backward(S, E, E2) //moves from O to O2 leaving O in undefined, valid state, returns iterator to S2, requires move constructor/op
-transform(S, E, S2, doCopyLam) //Modifying; each element calls lambda then is copied to second container
-transform(myString.begin(), myString.end(), myString.begin(), toupper); //Modifying; can be copied in place
-transform(S, E, back_inserter(myCon), doCopyLam); //insert at end rather than copying
+copy_n(S, n, S2) //copies from O to n elements into O2, returns iterator to E2, does nothing if n <= 0
 fill(S, E, "A") //fill range with reference of value A
 fill_n(S, n, "A") //fill from S to n elements with reference of value A
 generate(S, E, createLam) //calls lamda and assigns return for each element
 generate_n(S, n, createLam) //calls lamda and assigns return for each element from S to n elements
-swap(T, T) //swap any type object with the other, works on all types/containers
-swap_ranges(S, E, S2) //exchange values of two ranges, returns iterato to E2
-iter_swap(it1, it2) //swap what each iterator points to but not underlying objects
-unique_copy(S, E, S2) //copies into 2 and removes double values, returns iterator in 2 to new end
+iter_swap(it1, it2) //swap what each iterator points to but not underlying objects    
+move(S, E, S2) //moves from O to O2 leaving O in undefined, valid state, returns iterator to E2, requires move constructor/op
+move_backward(S, E, E2) //moves from O to O2 leaving O in undefined, valid state, returns iterator to S2, requires move constructor/op
+random_shuffle(S, E) //randomly shuffles elements
 remove_copy(S, E, S2, "A") //copies to range 2 with all instances of A removed, return iterator is from 2
 remove_copy_if(S, E, S2, boolLam) //copies to range 2 with elements returning true removed, return it is from 2
+replace(S, E, 'A', 'B') //replaces over range any values that are A with value B
+replace_copy(S, E, S2, 'A', 'B') //copies S to S2 and replaces in range 2 any A with B
+replace_copy_if(S, E, S2, boolLam, 'A') //copies S to S2, replaces with A if lambda returns true in range 2 
+replace_if(S, E, boolLam, 'A') //replaces element with A if lambda returns true
 reverse(S, E) //reverses order of elements
 reverse_copy(S, E, S2) //copies into 2 with the reverse order, returns iterator E2
 rotate(A, B, C) //ranges B-C and A-B swap places. B needs to be between A and C.
 rotate_copy(A, B, C, S2) //Copies into 2 with ranges B-C and A-B swapped. B needs to be between A and C.
-random_shuffle(S, E) //randomly shuffles elements
-replace(S, E, 'A', 'B') //replaces over range any values that are A with value B
-replace_if(S, E, boolLam, 'A') //replaces element with A if lambda returns true
-replace_copy(S, E, S2, 'A', 'B') //copies S to S2 and replaces in range 2 any A with B
-replace_copy_if(S, E, S2, boolLam, 'A') //copies S to S2, replaces with A if lambda returns true in range 2 
+swap(T, T) //swap any type object with the other, works on all types/containers
+swap_ranges(S, E, S2) //exchange values of two ranges, returns iterato to E2    
+transform(S, E, S2, doCopyLam) //Modifying; each element calls lambda then is copied to second container
+transform(str.begin(), str.end(), str.begin(), toupper); //Modifying; can be copied in place
+transform(S, E, back_inserter(myCon), doCopyLam); //insert at end rather than copying
+unique_copy(S, E, S2) //copies into 2 and removes double values, returns iterator in 2 to new end
     
 //REMOVING FROM SEQUENCE CONTAINERS
 //Only works for array/vector/deque/list, better to use list.remove though
@@ -125,33 +125,29 @@ std::vector<MyClass>().swap(obj);    // Make obj empty with minimal capacity
 std::vector<MyClass>(obj).swap(obj); // Make obj with minimal capacity
 
 //================================================================================================================
-// OPERATIONS ON UNINITIALIZED STORAGE
-//================================================================================================================
-
-//================================================================================================================
 // PARTITIONING OPERATIONS
 //================================================================================================================
 
 //Splits container to those returning true and those returning false
 is_partitioned(S, E, boolLam) //returns true if all elements returning true occur before those returning false
 partition(S, E, boolLam) //splits the container to returning true->returning false; returns it to first returning false
-stable_partition(S, E, boolLam) //same as parition but keeps original ordering between both partitions
 partition_copy(S, E, S2, S3, boolLam) //those returning true copied to 2, those returning false copied to 3
 partition_point(S, E, boolLam) //requires container to be partitioned; returns iterator to first element returning false
+stable_partition(S, E, boolLam) //same as parition but keeps original ordering between both partitions
 
 //================================================================================================================
 // SORTING OPERATIONS
 //================================================================================================================
 
 //requires random access (can't be used on lists)
-sort(S, E, sortLam) //sorts container in ascending order, without lamda uses operator<
-sort(S, E, std::greater<double>()) //using inbuilt functor
-stable_sort(S, E, sortLam) //sorts container in ascending order, equal elements preserve original order
-partial_sort(S, M, E, sortLam) //smallest elements from S-E are put in ascending order from S-M, M-E becomes unordered
-partial_sort_copy(S, E, S2, E2, sortLam) //copies range to 2 and sorts in ascending order
 is_sorted(S, E, sortLam) //returns false if not sorted in ascending order, stop when mismatching pair found
 is_sorted_until(S, E, sortLam) //Returns itr to first element which does not follow an ascending order else returns E
 nth_element(S, M, E, sortLam) //puts M at the position it'd be if range was sorted, elements before are less/after are more (in any order)
+partial_sort(S, M, E, sortLam) //smallest elements from S-E are put in ascending order from S-M, M-E becomes unordered
+partial_sort_copy(S, E, S2, E2, sortLam) //copies range to 2 and sorts in ascending order
+sort(S, E, sortLam) //sorts container in ascending order, without lamda uses operator<
+sort(S, E, std::greater<double>()) //using inbuilt functor
+stable_sort(S, E, sortLam) //sorts container in ascending order, equal elements preserve original order
     
 //================================================================================================================
 // BINARY SEARCH OPERATIONS
@@ -167,8 +163,8 @@ upper_bound(S, E, myObj, sortLam) //returns first value found > myObj, requires 
 //================================================================================================================
 
 //Only used on sorted ranges, all elements remain in sorted ascending order
-merge(S, E, S2, E2, std::back_inserter(S3)) //copies 1 and 2 into 3
 includes(S, E, S2, E2) //returns true if range 2 is in range 1; both ranges must be sorted in ascending order
+merge(S, E, S2, E2, std::back_inserter(S3)) //copies 1 and 2 into 3
 set_union(S, E, S2, E2, std::back_inserter(S3)) //copies 1 and 2 into 3 and removes duplicates
 set_intersection(S, E, S2, E2, std::back_inserter(S3)) //copies elements in 1 that are also in 2 into 3
 set_difference(S, E, S2, E2, std::back_inserter(S3)) //copies elements in 1 that are not in 2 into 3
@@ -178,11 +174,11 @@ set_symmetric_difference(S, E, S2, E2, std::back_inserter(S3)) //copies elements
 // HEAP OPERATIONS
 //================================================================================================================
 
-make_heap(S, E, sortLam) //change range into a heap structure
-sort_heap(S, E, sortLam) //sorts heap into ascending order; doing this loses properties as a heap
 is_heap(S, E, sortLam) //returns true if range is a heap
+make_heap(S, E, sortLam) //change range into a heap structure
 push_heap(S, E) //push any values not already in heap structure in range to the heap
 pop_heap(S, E) //pop highest value on heap off heap (doesn't remove from container though)
+sort_heap(S, E, sortLam) //sorts heap into ascending order; doing this loses properties as a heap
 myContainer.front() //get highest value on the heap
     
 //================================================================================================================
@@ -208,10 +204,10 @@ is_permutation(S, E, S2, equalLam) //returns true if both ranges are equal to ea
 //In #include <numeric>
 accumulate(S, E, initial) //returns initial+values over whole range 
 accumulate(S, E, initial, std::minus<T>()) //returns initial-values over whole range
-iota(S, E, value) //for each element: assign value then increment value (value++)
-partial_sum(S1, E1, S2) //for each C2 element add all previous values in C1: S2[i] = S1[i] + S1[i-1] + ... + S1[0]
-inner_product(s1, E1, S2, value) //multiplies elements and accumulates: value += S1[i] * S2[i], returns final value
 adjacent_difference(S1, E1, S2) //for each C2 element: S2[i] = S1[i] - S1[i-1] with S2[0] = S1[0]
 adjacent_difference(S1, E1, S2, std::plus<T>()) //for each C2 element: S2[i] = S1[i] + S1[i-1] with S2[0] = S1[0]
+inner_product(s1, E1, S2, value) //multiplies elements and accumulates: value += S1[i] * S2[i], returns final value
+iota(S, E, value) //for each element: assign value then increment value (value++)
+partial_sum(S1, E1, S2) //for each C2 element add all previous values in C1: S2[i] = S1[i] + S1[i-1] + ... + S1[0]
 
 
