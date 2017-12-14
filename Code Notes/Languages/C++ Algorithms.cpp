@@ -36,30 +36,34 @@ equal_to<T> op      // (const T& x, const T& y) const {return x==y;}
 // NON-MODIFYING SEQUENCE OPERATIONS
 //================================================================================================================
 
+adjacent_find(S, E, equalLam) //Returns iterator to first element that is repeated consecutivly or E if not found
 all_of(S, E, boolLam) //If all objs return true then returns true, else false; If no objs in range returns true
 any_of(S, E, boolLam) //If any obj is true returns true, else false; If no objs in range returns false
-none_of(S, E, boolLam) //If all objs return false returns true, else false; If no objs in range returns true
-for_each(S, E, doLam) //Sends const dereferenced object into lambda for each element
-for_each(S, E, DelFunctor); //Fast memory deletion in array
 count(S, E, myObj) //Returns int on number of items of myObj in container
 count_if(S, E, boolLam) //Returns number of obj that lamda returns true
-mismatch(S, E, S2, equalLam) //Returns std::pair of iterators to first elements that don't match between range 1 and 2
 equal(S, E, S2, equalLam) //Returns true if both ranges are equal to each other including ordering
-adjacent_find(S, E, equalLam) //Returns iterator to first element that is repeated consecutivly or E if not found
 find(S, E, myObj, equalLam) //Returns iterator to first instance of element, If not found, returns E
-find_if(S, E, boolLam) //Returns iterator to first element in range that lambda returns true, If not found, returns E
-find_if_not(S, E, boolLam) //Returns iterator to first element in range that lambda returns false, If not found, returns E
 find_end(S, E, S2, E2, equalLam) //Same as search but back to front, returns S if none found
 find_first_of(S, E, S2, E2, equalLam) //Returns iterator to first element that matches any element in range 2 else returns end
+find_if(S, E, boolLam) //Returns iterator to first element in range that lambda returns true, If not found, returns E
+find_if_not(S, E, boolLam) //Returns iterator to first element in range that lambda returns false, If not found, returns E
+for_each(S, E, doLam) //Sends const dereferenced object into lambda for each element    
+mismatch(S, E, S2, equalLam) //Returns std::pair of iterators to first elements that don't match between range 1 and 2
+none_of(S, E, boolLam) //If all objs return false returns true, else false; If no objs in range returns true
 search(S, E, S2, E2, equalLam) //Search for range 2 in range 1, returns iterator to start of sequence found or E if none
 search_n(S, E, n, myObj, equalLam) //Searches for obj repeating n times, returns iterator to start of sequence or E if none
+
+//Finds the first mismatching item between two ranges, returns true if item from 1 is < item from 2
+//If first mismatch is end of a range, the shorter range is less than the other
+//Two empty ranges are equal, and empty range is < a non-empty range
+lexicographical_compare(S1, E1, S2, E2, equalLam)
     
 //CONVERT TO C-STYLE CONTAINERS
 //modifying c-style version cannot change number of elements
 //for non-continuous containers, need to copy to continuous
 &myVector[0] //pointer to first member in vector; memory in continuous block
 myString.c_str() //string in c-style, can't use &myString[0] as string may not be in continuous block
-    
+                                                                                           
 //================================================================================================================
 // MODIFYING SEQUENCE OPERATIONS
 //================================================================================================================
