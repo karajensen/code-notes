@@ -93,6 +93,7 @@ reverse(S, E) //reverses order of elements
 reverse_copy(S, E, S2) //copies into 2 with the reverse order, returns iterator E2
 rotate(A, B, C) //ranges B-C and A-B swap places. B needs to be between A and C.
 rotate_copy(A, B, C, S2) //Copies into 2 with ranges B-C and A-B swapped. B needs to be between A and C.
+sample(S1, E2, back_inserter(S1), n) //Selects random n items from 1
 swap(T, T) //swap any type object with the other, works on all types/containers
 swap_ranges(S, E, S2) //exchange values of two ranges, returns iterato to E2    
 transform(S, E, S2, doCopyLam) //Modifying; each element calls lambda then is copied to second container
@@ -146,7 +147,7 @@ nth_element(S, M, E, sortLam) //puts M at the position it'd be if range was sort
 partial_sort(S, M, E, sortLam) //smallest elements from S-E are put in ascending order from S-M, M-E becomes unordered
 partial_sort_copy(S, E, S2, E2, sortLam) //copies range to 2 and sorts in ascending order
 sort(S, E, sortLam) //sorts container in ascending order, without lamda uses operator<
-sort(S, E, std::greater<double>()) //using inbuilt functor
+sort(S, E, greater<double>()) //using inbuilt functor
 stable_sort(S, E, sortLam) //sorts container in ascending order, equal elements preserve original order
     
 //================================================================================================================
@@ -164,11 +165,11 @@ upper_bound(S, E, myObj, sortLam) //returns first value found > myObj, requires 
 
 //Only used on sorted ranges, all elements remain in sorted ascending order
 includes(S, E, S2, E2) //returns true if range 2 is in range 1; both ranges must be sorted in ascending order
-merge(S, E, S2, E2, std::back_inserter(S3)) //copies 1 and 2 into 3
-set_union(S, E, S2, E2, std::back_inserter(S3)) //copies 1 and 2 into 3 and removes duplicates
-set_intersection(S, E, S2, E2, std::back_inserter(S3)) //copies elements in 1 that are also in 2 into 3
-set_difference(S, E, S2, E2, std::back_inserter(S3)) //copies elements in 1 that are not in 2 into 3
-set_symmetric_difference(S, E, S2, E2, std::back_inserter(S3)) //copies elements in 1 that don't exist in 2 and vice versa into 3
+merge(S, E, S2, E2, back_inserter(S3)) //copies 1 and 2 into 3
+set_union(S, E, S2, E2, back_inserter(S3)) //copies 1 and 2 into 3 and removes duplicates
+set_intersection(S, E, S2, E2, back_inserter(S3)) //copies elements in 1 that are also in 2 into 3
+set_difference(S, E, S2, E2, back_inserter(S3)) //copies elements in 1 that are not in 2 into 3
+set_symmetric_difference(S, E, S2, E2, back_inserter(S3)) //copies elements in 1 that don't exist in 2 and vice versa into 3
 
 //================================================================================================================
 // HEAP OPERATIONS
