@@ -210,5 +210,5 @@ adjacent_difference(S1, E1, S2, std::plus<T>()) //for each C2 element: S2[i] = S
 inner_product(s1, E1, S2, value) //multiplies elements and accumulates: value += S1[i] * S2[i], returns final value
 iota(S, E, value) //for each element: assign value then increment value (value++)
 partial_sum(S1, E1, S2) //for each C2 element add all previous values in C1: S2[i] = S1[i] + S1[i-1] + ... + S1[0]
-
+reduce(execution::par, S, E, initial) //faster version of accumulate that can modify inputs
 
