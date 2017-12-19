@@ -186,6 +186,7 @@ myContainer.front() //get highest value on the heap
 // MINIMUM/MAXIMUM OPERATIONS
 //================================================================================================================
 
+clamp(T, min, max) //returns reference to min if T < min, reference to max if T > max or reference to T
 min(T, T) //returns minimum of two values
 max(T, T) //returns maximum of two values
 minmax(T, T) //returns std::pair(min,max) where .first is min and .second is max
