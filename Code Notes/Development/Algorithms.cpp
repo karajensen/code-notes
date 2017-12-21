@@ -2,9 +2,7 @@
 //GENERAL ALGORITHMS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/**
-* Change range of a value
-*/
+/** Change range of a value */
 template<typename T> 
 T ChangeRange(T value, T currentInner, T currentOuter, T newInner, T newOuter)
 {
@@ -12,9 +10,7 @@ T ChangeRange(T value, T currentInner, T currentOuter, T newInner, T newOuter)
         (currentOuter-currentInner)))+newInner;
 }
 
-/**
-* Convert degrees and radians
-*/
+/** Convert degrees and radians */
 #define _USE_MATH_DEFINES
 #include <math.h>
 template<typename T> T DegToRad(T degrees)
@@ -26,31 +22,22 @@ template<typename T> T RadToDeg(T radians)
     return static_cast<T>(180.0/M_PI)*radians;
 }
 
-/**
-* Get 1D index from 2D coord 
-* Requires uniform grid
-*/
+/** Get 1D index from 2D coord; Requires uniform grid */
 const int index = r * size + c;
 int r = index / size;
 int c = index % size;
 
-/**
-* Check whether a number is odd
-*/
+/** Check whether a number is odd */
 bool isOdd = x % 2;
 bool isOdd = x & 1;
 
-/**
-* Swap two integers without using a temporary variable
-*/
+/** Swap two integers without using a temporary variable */
 a ^= b;
 b ^= a;
 a ^= b;
 
-/**
-* Get digit at radix significant position (1, 10, 100..)
-* Eg. 234 at position 100 = 2, position 10 = 3, position 1 = 4
-*/
+/** Get digit at radix significant position (1, 10, 100..)
+    Eg. 234 at position 100 = 2, position 10 = 3, position 1 = 4 */
 int digit = number/position % 10;
 while (number != 0) 
 {
@@ -58,17 +45,11 @@ while (number != 0)
     number /= 10;
 }
 
-/**
-* Generate Fibonacci Numbers
-* Copies into container: 1 1 2 3 5 8 13 21 34 55
-*/
+/** Generate Fibonacci Numbers; Copies into container: 1 1 2 3 5 8 13 21 34 55 */
 std::vector<int> v = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 std::adjacent_difference(v.begin(), v.end() - 1, v.begin() + 1, std::plus<int>());
 
-/**
-* Get Factorial n! of a number
-* n cannot be negative and factorial of 0 is 1
-*/
+/** Get Factorial n! of a number; n cannot be negative and factorial of 0 is 1 */
 long FactorialRecursion(int n)
 {
     return n == 0 ? 1 : n * FactorialRecursion(n - 1);
@@ -83,10 +64,7 @@ long Factorial(int n)
     return result;
 }
 
-/**
-* Euclid's algorithm: 
-* Finding the largest integer that divides 2 integers
-*/
+/** Euclid's algorithm: Finding the largest integer that divides 2 integers */
 int GetLowestDivisor(int m, int n)
 {
     while (n != 0)
@@ -98,18 +76,14 @@ int GetLowestDivisor(int m, int n)
     return m;
 }
 
-/**
-* Get four components of colour
-*/
+/** Get four components of colour */
 unsigned int color;
 int r = color & 0xFF;
 int g = (color >> 8) & 0xFF;
 int b = (color >> 16) & 0xFF;
 int a = (color >> 24) & 0xFF;
 
-/**
-* Representing colour
-*/
+/** Representing colour */
 union Color
 {
     Color() :
@@ -128,36 +102,26 @@ union Color
 //STRING ALGORITHMS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/**
-* Make string upper or lower case
-*/
+/** Make string upper or lower case */
 std::transform(str.begin(), str.end(), str.begin(), &std::toupper);
 std::transform(str.begin(), str.end(), str.begin(), &std::tolower);
 
-/**
-* Case insensitive compare
-*/
+/** Case insensitive compare */
 str1.size() == str2.size() &&
 std::equal(str1.begin(), str1.end(), str2.begin(),
     [](char c1, char s2) { return toupper(c1) == toupper(c2); });
 
-/**
-* Remove duplicate characters (with additional buffer)
-*/
+/** Remove duplicate characters (with additional buffer) */
 std::set<char> characters(str.begin(), str.end());
 
-/**
-* Remove duplicate characters (no additional buffer)
-* Erase-remove idiom, erase all instances after the current character at index i
-*/
+/** Remove duplicate characters (no additional buffer)
+    Erase-remove idiom, erase all instances after the current character at index i */
 for (int i = 0; i < str.size() - 1; ++i)
 {
     str.erase(std::remove(str.begin() + i + 1, str.end(), str[i]), str.end());
 }
 
-/**
-* Reverse a C-String
-*/
+/** Reverse a C-String */
 char test[] = "this is a test";
 char saved = ' ';
 int len = strlen(test);
@@ -168,26 +132,18 @@ for (int i = 0; i < len / 2; ++i)
     test[len - i - 1] = saved;
 }
 
-/**
-* Remove consecutive (two or more) spaces
-*/
+/** Reverse a std::string */
+std::reverse(str.begin(), str.end());
+
+/** Remove consecutive (two or more) spaces */
 str.erase(std::unique(S, E, [](char l, char r){ 
     return isspace(l) && isspace(r) && l == r; })), str.end());
 
-/**
-* Reverse a std::string
-*/
-std::reverse(str.begin(), str.end());
-
-/**
-* Determine if 2 strings are anagrams
-*/
+/** Determine if 2 strings are anagrams */
 bool isAnagram = s1.size() == s2.size() && 
     std::is_permutation(s1.begin(), s1.end(), s2.begin());
 
-/**
-* Replace all spaces with %20
-*/
+/** Replace all spaces with %20 */
 for (int i = 0; i < str.size(); ++i)
 {
     if (str[i] == ' ')
@@ -201,10 +157,7 @@ for (int i = 0; i < str.size(); ++i)
 //ARRAY ALGORITHMS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/**
-* Kadane's Algorithm:
-* Finding the maximum continuous subsequence in an array
-*/
+/** Kadane's Algorithm: Finding the maximum continuous subsequence in an array */
 int maximumSum = -INT_MAX;
 int currentSum = 0;
 int currentStart = 0;
@@ -226,19 +179,14 @@ for (int i = 0; i < arr.size(); ++i)
     }
 }
 
-/**
-* Finding the missing number from an array of integers
-*/
+/** Finding the missing number from an array of integers */
 std::vector<int> baseline = { 1, 4, 2, 11, 56 };
 std::vector<int> actual = { 1, 11, 56, 4 };
 const auto baseSum = std::accumulate(baseline.begin(), baseline.end(), 0);
 const auto actualSum = std::accumulate(actual.begin(), actual.end(), 0);
 int missingValue = baseSum ^ actualSum;
 
-/**
-* Find number of unique integers in an array
-* Use bitset as hash table, fast, high memory use
-*/
+/** Find number of unique integers in an array; Use bitset as hash table, fast, high memory use */
 const int maxValues = INT_MAX + 1; // need more if accepting negative
 std::unique_ptr<std::bitset<maxValues>> values(new std::bitset<maxValues>());
 for (int i = 0; i < size; ++i)
@@ -247,10 +195,7 @@ for (int i = 0; i < size; ++i)
 }
 int uniqueInts = values.count();
 
-/**
-* Find number of unique integers in an array
-* Use set to cull duplicates, slow, low memory use
-*/
+/** Find number of unique integers in an array; Use set to cull duplicates, slow, low memory use */
 std::stack<int> values;
 for (int i = 0; i < size; ++i)
 {
@@ -258,9 +203,7 @@ for (int i = 0; i < size; ++i)
 }
 int uniqueInts = values.size();
 
-/**
-* Difference between n x n array diagonals
-*/
+/** Difference between n x n array diagonals */
 int primary = 0;
 int secondary = 0;
 for (int i = 0, j = n - 1; i < n; ++i, --j)
@@ -270,9 +213,7 @@ for (int i = 0, j = n - 1; i < n; ++i, --j)
 }
 int difference = abs(primary - secondary);
 
-/**
-* Find single integer value in an array of paired integers
-*/
+/** Find single integer value in an array of paired integers */
 unsigned int values = 0;
 for (unsigned int i = 0; i < arr.size(); ++i)
 {
@@ -280,9 +221,7 @@ for (unsigned int i = 0; i < arr.size(); ++i)
 }
 int singleInteger = values;
 
-/**
-* Copy a section of a nxn array at coordinates x,y to a larger nxn array
-*/
+/** Copy a section of a nxn array at coordinates x,y to a larger nxn array */
 void Blit(std::vector<int>& arrA, const std::vector<int>& arrB, int x, int y)
 {
     const int aSize = std::sqrt(arrA.size());
@@ -569,10 +508,7 @@ private:
 //HASH ALGORITHMS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/**
-* Get a hash key from a string
-* 37 or 31 good values for generating unique keys
-*/
+/** Get a hash key from a string, 37 or 31 good values for generating unique keys */
 unsigned int GetKey(const std::string& str)
 {
     unsigned int key = 0;
@@ -594,9 +530,7 @@ struct Node
     Node* right;
 };
 
-/**
-* Get maximum depth for tree
-*/
+/** Get maximum depth for tree */
 int MaxDepth(Node* n)
 {
     if (n == nullptr)
@@ -606,9 +540,7 @@ int MaxDepth(Node* n)
     return 1 + std::max(MaxDepth(n->left), MaxDepth(n->right));
 }
 
-/**
-* Get minimum depth for tree
-*/
+/** Get minimum depth for tree */
 int MinDepth(Node* n)
 {
     if (n == nullptr)
@@ -618,17 +550,13 @@ int MinDepth(Node* n)
     return 1 + std::min(MinDepth(n->left), MinDepth(n->right));
 }
 
-/**
-* Check if tree is balanced
-*/
+/** Check if tree is balanced */
 bool IsBalanced(Node* root)
 {
     return MaxDepth(root) - MinDepth(root) <= 1;
 }
 
-/**
-* Binary Tree Traversal
-*/
+/** Binary Tree Traversal */
 void Traverse(Node* node)
 {
     if (node != nullptr)
@@ -641,9 +569,7 @@ void Traverse(Node* node)
     }
 }
 
-/**
-* Binary Search Tree Insert value
-*/
+/** Binary Search Tree Insert value */
 void Insert(int value, Node*& node)
 {
     if (node == nullptr)
@@ -660,9 +586,7 @@ void Insert(int value, Node*& node)
     }
 }
 
-/**
-* Binary Search Tree Find Minimum value
-*/
+/** Binary Search Tree Find Minimum value */
 Node* FindMin(Node* node)
 {
     if (node->left == nullptr)
@@ -675,9 +599,7 @@ Node* FindMin(Node* node)
     }
 }
 
-/**
-* Binary Search Tree Find value
-*/
+/** Binary Search Tree Find value */
 bool Find(int value, Node* node)
 {
     if (node == nullptr)
@@ -695,9 +617,7 @@ bool Find(int value, Node* node)
     return true;
 }
 
-/**
-* Binary Search Tree Remove value
-*/
+/** Binary Search Tree Remove value */
 bool Remove(int value, Node*& node)
 {
     if (node == nullptr)
@@ -734,10 +654,7 @@ bool Remove(int value, Node*& node)
 //LINKED LIST ALGORITHMS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/**
-* Reverse a linked list
-* Call ReverseList(root)
-*/
+/** Reverse a linked list Call ReverseList(root) */
 Node* ReverseList(Node* node)
 {
     Node* temp = nullptr;
@@ -752,10 +669,7 @@ Node* ReverseList(Node* node)
     return previous;
 }
 
-/**
-* Reverse a linked list recursively
-* Call ReverseListRecursive(root, nullptr)
-*/
+/** Reverse a linked list recursively, Call ReverseListRecursive(root, nullptr) */
 Node* ReverseListRecursive(Node* node, Node* previous)
 {
     if (node != nullptr)
@@ -767,9 +681,7 @@ Node* ReverseListRecursive(Node* node, Node* previous)
     return previous;
 }
 
-/**
-* Remove duplicates using a temporary buffer
-*/
+/** Remove duplicates using a temporary buffer */
 Node* previous = n;
 std::vector<int> results;
 while (n->next != nullptr)
@@ -788,9 +700,7 @@ while (n->next != nullptr)
     }
 }
 
-/**
-* Remove duplicates without using a temporary buffer
-*/
+/** Remove duplicates without using a temporary buffer */
 while (n->next != nullptr)
 {
     Node* previous = n;
@@ -812,9 +722,7 @@ while (n->next != nullptr)
     n = n->next;
 }
 
-/**
-* Delete a linked list node
-*/
+/** Delete a linked list node */
 void DeleteNode(Node* n)
 {
     if (n->next == nullptr)
@@ -828,9 +736,7 @@ void DeleteNode(Node* n)
     delete toDelete;
 }
 
-/**
-* Find the start of a circular loop if one exists
-*/
+/** Find the start of a circular loop if one exists */
 Node* FindStartOfLoop(Node* n)
 {
     Node* previous = nullptr;
@@ -849,3 +755,16 @@ Node* FindStartOfLoop(Node* n)
 
     return nullptr;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//WINDOWS ALGORITHMS
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/** Get the executable Path */
+wchar_t exePath[MAX_PATH];
+::GetModuleFileNameW(NULL, exePath, MAX_PATH);
+::PathRemoveFileSpecW(exePath);
+
+/** Get the mouse position */
+POINT cursor;
+::GetCursorPos(&cursor);
