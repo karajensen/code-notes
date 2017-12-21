@@ -3,11 +3,11 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <algorithm>
 
-auto doCopyLam = [](MyClass o) -> MyClass { o.SomeMethod(); return o; };
-auto doLam = [](const std::shared_ptr<MyClass>& ptr) { ptr->NonConstMethod(); };
-auto boolLam = [](const MyClass& o) ->bool { return o.Exists(); };
-auto equalLam = [](const MyClass& o1, const MyClass& o2) -> bool { return o1 == o2; };
-auto sortLam = [](const MyClass& o1, const MyClass& o2) -> bool { return o1.myInt < o2.myInt; };
+auto doCopyLam = [](auto obj) -> MyClass { obj.SomeMethod(); return obj; };
+auto doLam = [](const auto& obj) { obj.NonConstMethod(); };
+auto boolLam = [](const auto& obj) ->bool { return o.Exists(); };
+auto equalLam = [](const auto& obj1, const auto& obj2) -> bool { return obj1 == obj2; };
+auto sortLam = [](const auto& obj1, const auto& obj2) -> bool { return obj1.myInt < obj2.myInt; };
 auto createLam = []() -> int { return rand()%10; }
 struct DelFunctor { template<typename T> void operator()(const T* ptr) const { delete ptr; ptr = nullptr; } };
 
@@ -15,7 +15,7 @@ struct DelFunctor { template<typename T> void operator()(const T* ptr) const { d
 struct myFunctor { void operator()(int i){} };   // ..., myFunctor);
 std::plus<T> stdFunctor;                         // ..., stdFunctor); or ..., std::plus<T>());
 auto myLambda = [](int i) {};                    // ..., myLambda);
-inline void myFunction(const MyClass& o){}       // ..., myFunction);
+inline void myFunction(const MyClass& obj){}     // ..., myFunction);
 class MyClass { static void MyStatic(int i){} }; // ..., MyClass::MyStatic);
 class MyClass { void MyMember(int i){} };        // ..., std::bind(&MyClass::MyMember, &obj, _1));
 
@@ -47,7 +47,8 @@ find_end(S, E, S2, E2, equalLam) //Same as search but back to front, returns S i
 find_first_of(S, E, S2, E2, equalLam) //Returns iterator to first element that matches any element in range 2 else returns end
 find_if(S, E, boolLam) //Returns iterator to first element in range that lambda returns true, If not found, returns E
 find_if_not(S, E, boolLam) //Returns iterator to first element in range that lambda returns false, If not found, returns E
-for_each(S, E, doLam) //Sends const dereferenced object into lambda for each element    
+for_each(S, E, doLam)  //For each item calls function
+for_each_n(S, n, doLam); //For n items from S calls function
 mismatch(S, E, S2, equalLam) //Returns std::pair of iterators to first elements that don't match between range 1 and 2
 none_of(S, E, boolLam) //If all objs return false returns true, else false; If no objs in range returns true
 search(S, E, S2, E2, equalLam) //Search for range 2 in range 1, returns iterator to start of sequence found or E if none
