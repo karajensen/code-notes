@@ -169,6 +169,12 @@ for (int i = 0; i < len / 2; ++i)
 }
 
 /**
+* Remove consecutive (two or more) spaces
+*/
+str.erase(std::unique(S, E, [](char l, char r){ 
+    return isspace(l) && isspace(r) && l == r; })), str.end());
+
+/**
 * Reverse a std::string
 */
 std::reverse(str.begin(), str.end());
