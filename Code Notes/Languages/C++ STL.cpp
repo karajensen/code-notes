@@ -252,8 +252,10 @@ ostringstream sstream;
 stringstream sstream;
 sstream.str() //return std::string of stream
 sstream.seekp(0) //set stream pointer back to 0
-sstream.str("") //reset stream
+sstream.str("") //clear stream
+sstream.clear() //clear flags
 sstream.rdbuf()->in_avail() //whether stream is empty
+sstream.rdbuf() //Returns a pointer to the internal string
 
 //OFSTREAM [OUTPUT STREAM]
 ofstream myFile("file.txt") /*or*/ ofstream myFile;
