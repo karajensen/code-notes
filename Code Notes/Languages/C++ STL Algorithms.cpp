@@ -213,4 +213,4 @@ inner_product(s1, E1, S2, value) //multiplies elements and accumulates: value +=
 iota(S, E, value) //for each element: assign value then increment value (value++)
 partial_sum(S1, E1, S2) //for each C2 element add all previous values in C1: S2[i] = S1[i] + S1[i-1] + ... + S1[0]
 reduce(execution::par, S, E, initial) //faster version of accumulate that can modify inputs
-
+transform_reduce(execution::par, S1, E1, S2, initial) //same as reduce but copies results into another buffer
