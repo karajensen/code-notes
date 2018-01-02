@@ -322,7 +322,8 @@ void MyFn(const char* str);
 // if arr[] decays to a int*, sizeof(arr) gives size of the pointer, not array
 void MyFn(int arr[6])    /*==*/  void MyFn(int arr[])
 void MyFn(int arr[2][3]) /*==*/  void MyFn(int arr[][])
-void MyFn(int(&ref)[6])  /*OR*/  void MyFn(int ref(&)[6])
+void MyFn(int(&arr)[6])  /*OR*/  void MyFn(int arr(&)[6])
+template<int n> void MyFn(char(&arr)[n]) // array of any size
 void MyFn(int* arr)
 
 //INLINE FUNCTIONS
