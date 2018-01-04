@@ -110,7 +110,7 @@ string MyFn(std::string x){ return x; } // Returning function argument by-val
 myVec.emplace_back("str")               // Emplacing rvalue/unique_ptr into container
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//CONVERSIONS
+//CASTING
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //C++ CAST                C-STYLE CAST
@@ -134,35 +134,6 @@ auto& myObj = static_cast<MyDerived&>(myBaseObject)
 //converts const to non-const [only pointers]
 //bad if variable is stored in read-only memory- use only if underlying type is non-const
 auto* myPtr = const_cast<MyClass>(myPtr);
-
-// STRING TO NUMBER
-atoi("3")   //converts cstring to int
-atof("3.0") //converts cstring to float
-
-// NUMBER TO STRING
-// Only for integers and floating types
-// Gives large precision with no control
-to_string(value);
-to_wstring(value);
-
-// NUMBER TO STRING: PRINTF/WPRINTF
-// Can have buffer overruns, difficult to use with templates
-char buffer[256];
-std::sprintf(buf, "%d", myInt)
-std::sprintf(buf, "%u", myUint) 
-std::sprintf(buf, "%f", myDbl) 
-std::sprintf(buf, "%f", myFloat)
-std::sprintf(buf, "%s", myCString)
-
-// STD::STRING TO CHAR*:
-std::string str = "test";
-std::vector<char> vec(str.size() + 1);
-std::copy(str.begin(), str.end(), vec.begin());
-vec[vec.size()-1] = '\0';
-char* myCStr = &vec[0];
-
-// HEX TO INT
-unsigned int x = std::stoul("0xfffefffe", nullptr, 16);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //UNIONS
