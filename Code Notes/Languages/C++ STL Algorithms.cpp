@@ -250,6 +250,7 @@ std::to_wstring(value);
 // On failure, a negative number is returned, \0 not guaranteed to be written
 // %[flag][min width][precision][length modifier][conversion specifier]
 char buffer[256];
+sprintf(buf, "%%")          // display % sign
 
 // Conversion Specifiers:
 sprintf(buf, "%d", value)   // display integer
@@ -261,7 +262,6 @@ sprintf(buf, "%E", value)   // display float/double using scientific notation wi
 sprintf(buf, "%g", value)   // display float/double using the shorter of %f or %e
 sprintf(buf, "%G", value)   // display float/double using the shorter of %f or %E
 sprintf(buf, "%s", str)     // display cstring
-sprintf(buf, "%%")          // display % sign
     
 // Length Modifiers:
 sprintf(buf, "%hd", value)  // requires 'h' in front for short int/unsigned short int
