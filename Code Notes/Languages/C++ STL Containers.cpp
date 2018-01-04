@@ -46,12 +46,6 @@ str.find_last_of("str") //returns index of last occurance of ANY character in su
 str.find_first_not_of("str") //returns index of first occurance of ANY character NOT in substring
 str.find_last_not_of("str") //returns index of last occurance of ANY character NOT in substring
 
-// CONVERTING WSTRING AND STRING
-string str(wstr.begin(),  wstr.end());
-wstring wstr(str.begin(), str.end());
-str = wstring_convert<codecvt_utf8<wchar_t>>().to_bytes(wstr);
-wstr = wstring_convert<codecvt_utf8<wchar_t>>().from_bytes(str);
-
 // ITERATORS
 begin()   end()   cbegin()   cend()
 rbegin()  rend()  crbegin()  crend()
