@@ -214,3 +214,57 @@ iota(S, E, value) //for each element: assign value then increment value (value++
 partial_sum(S1, E1, S2) //for each C2 element add all previous values in C1: S2[i] = S1[i] + S1[i-1] + ... + S1[0]
 reduce(execution::par, S, E, initial) //faster version of accumulate that can modify inputs
 transform_reduce(execution::par, S1, E1, S2, initial) //same as reduce but copies results into another buffer
+    
+//================================================================================================================
+// STRING CONVERSIONS
+//================================================================================================================
+    
+// STD::WSTRING TO/FROM STD::STRING
+string str(wstr.begin(),  wstr.end());
+wstring wstr(str.begin(), str.end());
+str = wstring_convert<codecvt_utf8<wchar_t>>().to_bytes(wstr);
+wstr = wstring_convert<codecvt_utf8<wchar_t>>().from_bytes(str);
+    
+// STD::STRING TO CHAR*:
+std::string str = "test";
+std::vector<char> vec(str.size() + 1);
+std::copy(str.begin(), str.end(), vec.begin());
+vec[vec.size()-1] = '\0';
+char* myCStr = &vec[0];
+
+// HEX STRING TO INT
+unsigned int x = std::stoul("0xfffefffe", nullptr, 16);
+
+// STRING TO NUMBER
+atoi("3")   //converts cstring to int
+atof("3.0") //converts cstring to float
+
+// NUMBER TO STRING
+// Only for integers and floating types
+// Gives large precision with no control
+std::to_string(value);
+std::to_wstring(value);
+
+// NUMBER TO STRING: PRINTF/WPRINTF
+// On success, total number of characters written is returned, not including \0 auto added to end
+// On failure, a negative number is returned, \0 not guaranteed to be written
+// %[flag][min width][precision][length modifier][conversion specifier]
+char buffer[256];
+
+// Conversion Specifiers:
+sprintf(buf, "%d", value)   // display integer
+sprintf(buf, "%x", value)   // display integer in hexadecimal
+sprintf(buf, "%X", value)   // display integer in hexadecimal in caps
+sprintf(buf, "%f", value)   // display float/double
+sprintf(buf, "%e", value)   // display float/double using scientific notation with e (eg. 1.86e6)
+sprintf(buf, "%E", value)   // display float/double using scientific notation with E (eg. 1.86E6)
+sprintf(buf, "%g", value)   // display float/double using the shorter of %f or %e
+sprintf(buf, "%G", value)   // display float/double using the shorter of %f or %E
+sprintf(buf, "%s", str)     // display cstring
+sprintf(buf, "%%")          // display % sign
+    
+// Length Modifiers:
+sprintf(buf, "%hd", value)  // requires 'h' in front for short int/unsigned short int
+sprintf(buf, "%ld", value)  // requires 'l' in front for long int/unsigned long int
+sprintf(buf, "%Ld", value)  // requires 'L' in front for long double
+sprintf(buf, "%ls", str)    // requires 'l' in front for wide strings
