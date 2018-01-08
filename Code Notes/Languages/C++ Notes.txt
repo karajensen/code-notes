@@ -435,33 +435,6 @@ CAN BE OVERLOADED
 ()      []      new     delete  new[]   delete[]
 
 //////////////////////////////////////////////////////////////////////////////////////////////
-//EXCEPTIONS
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-NOEXCEPT FUNCTIONS
-• If objects they work on throw, undefined behaviour
-• All destructors automatically have noexcept keyword
-• std::swap has noexcept keyword
-
-EXCEPTIONS IN CONSTRUCTORS
-• On exception construction has failed and the object never existed
-• On exception the destructor does not need to be called
-• On exception the try-catch block cannot suppress; implicitly rethrows if trying to suppress
-• On exception any members requiring explicit cleanup in destructor will be leaked
-• Cannot access any class members in catch block as out of scope
-
-EXCEPTIONS IN DESTRUCTORS
-• Destructors should never throw: if unwinding the stack from an 
-  exception and a destructor throws the program is terminated
-
-STANDARD LIBRARY EXCEPTIONS
-• Exception neutral
-• Mostly has strong exception guarantee with a few basic guarantees
-• Multi-range insert(begin,begin,end) has basic guarantee
-• Vector and Deque only: inserts or erases for multi or single objects are basic guarantee 
-  if object constructor or assignment operator throws, otherwise strong guarantee
-
-//////////////////////////////////////////////////////////////////////////////////////////////
 //STL ALGORITHMS
 //////////////////////////////////////////////////////////////////////////////////////////////
 
