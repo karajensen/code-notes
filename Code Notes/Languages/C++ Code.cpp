@@ -379,7 +379,6 @@ extern "C" { #include "header.h" }; //compile in C only
 #define MYCLASS_H_
 #define MACRO(A) ((A)+(A)) //use parathesis around any parameters 
 #endif
-
 #pragma once //Alternative to include guards      
 
 //DISABLE WARNINGS
@@ -413,75 +412,3 @@ __FILE__    //name of file
 __LINE__    //current line number
 __TIME__    //time file was compiled
 __DATE__    //date file was compiled
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-//ERROR HANDLING
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-assert(myPtr != nullptr);                   // break if myPtr is null
-assert(condition && "message");             // break with message
-static_assert(myConstInt > 0, "MyMessage"); // must use constant values, asserts at compile time
-throw("Message goes here");
-exit(EXIT_FAILURE);
-
-try 
-{ 
-    myFunction();
-} 
-catch(const std::exception& e)
-{
-    // Always catch by const reference
-    // Reference is used instead of pointer to reduce the need to manage any memory at the catch position
-    // Allocating memory for an exception through a pointer may not work if the exception is out of memory.
-
-    cout << e.what() << endl;
-
-    throw e; // throws a copy of e, splices off any derived type
-    throw; //original exception is thrown again
-}
-catch (...) //catches anything
-{
-}
-
-//EXCEPTION SPECIFICATIONS
-//If exception type not on list is thrown, calls unexpected()
-void MyFn(); //can throw anything
-void MyFn() throw(const char*, std::exception&); //can only throw string or std::exception
-void MyFn() throw(); //Doesn't throw excpetions, not optimized: keeps unwindable stack state always
-void MyFn() noexcept; //Doesn't throw exceptions, optimizes: doesn't keep unwindable stack state if exception propagates
-
-//UNEXPECTED EXPECTION
-//If type wasn't explicitly thrown or on expected list: unexpected()->terminate()->abort()
-unexpected() //calls terminate()
-set_unexpected([](){}); //takes in void MyFunction()
-
-//UNCAUGHT EXCEPTION
-//If type was known but not caught: terminate()->abort()
-terminate() //calls abort()
-set_terminate([](){}); //takes in void MyFunction()
- 
-//EXCEPTIONS IN CONSTRUCTORS
-MyClass::MyClass()
-try : A()
-    , B()
-{
-}
-catch (...) // can't access class members in catch block
-{
-}
-
-//CREATING CUSTOM EXCEPTION
-class MyClass: public std::exception
-{
-public:
-    virtual const char* what() const override { return "bad arguments"; } 
-};
-
-try 
-{
-    throw MyClass();
-}
-catch(const std::exception& e)
-{
-    cout << e.what() << endl;
-}
