@@ -248,23 +248,35 @@ std::to_wstring(value);
 // NUMBER TO STRING: PRINTF/WPRINTF
 // On success, total number of characters written is returned, not including \0 auto added to end
 // On failure, a negative number is returned, \0 not guaranteed to be written
-// %[flag][min width][precision][length modifier][conversion specifier]
+// %[flag][width.precision][length modifier][conversion specifier]
 char buffer[256];
 sprintf(buf, "%%")          // display % sign
 
 // Conversion Specifiers:
-sprintf(buf, "%d", value)   // display integer
-sprintf(buf, "%x", value)   // display integer in hexadecimal
-sprintf(buf, "%X", value)   // display integer in hexadecimal in caps
-sprintf(buf, "%f", value)   // display float/double
-sprintf(buf, "%e", value)   // display float/double using scientific notation with e (eg. 1.86e6)
-sprintf(buf, "%E", value)   // display float/double using scientific notation with E (eg. 1.86E6)
-sprintf(buf, "%g", value)   // display float/double using the shorter of %f or %e
-sprintf(buf, "%G", value)   // display float/double using the shorter of %f or %E
-sprintf(buf, "%s", str)     // display cstring
+sprintf(buf, "%d", value)     // display integer
+sprintf(buf, "%x", value)     // display integer in hexadecimal
+sprintf(buf, "%X", value)     // display integer in hexadecimal in caps
+sprintf(buf, "%f", value)     // display float/double
+sprintf(buf, "%e", value)     // display float/double using scientific notation with e (eg. 1.86e6)
+sprintf(buf, "%E", value)     // display float/double using scientific notation with E (eg. 1.86E6)
+sprintf(buf, "%g", value)     // display float/double using the shorter of %f or %e
+sprintf(buf, "%G", value)     // display float/double using the shorter of %f or %E
+sprintf(buf, "%s", value)     // display cstring, using empty str will not give any output
     
 // Length Modifiers:
-sprintf(buf, "%hd", value)  // requires 'h' in front for short int/unsigned short int
-sprintf(buf, "%ld", value)  // requires 'l' in front for long int/unsigned long int
-sprintf(buf, "%Ld", value)  // requires 'L' in front for long double
-sprintf(buf, "%ls", str)    // requires 'l' in front for wide strings
+sprintf(buf, "%hd", value)    // requires 'h' in front for short int/unsigned short int
+sprintf(buf, "%ld", value)    // requires 'l' in front for long int/unsigned long int
+sprintf(buf, "%Ld", value)    // requires 'L' in front for long double
+sprintf(buf, "%ls", value)    // requires 'l' in front for wide strings
+
+// Width.Precision:
+sprintf(buf, "%.3f", value);  // precision of 3 decimal, will round up/down
+sprintf(buf, "%.3g", value);  // number of significant numbers (not 0) used for whole number
+sprintf(buf, "%.3d", value);  // minimum number of digits, will pad with 0 in front
+sprintf(buf, "%.3s", value);  // maximum characters to use in string
+sprintf(buf, "%3s", value);   // minimum characters to use in string, will pad with space in front
+
+// Flags
+sprintf(buf, "%#x", value);   // puts 0x in front of hexadecimal number
+sprintf(buf, "%-5d", value);  // puts padding at the end rather than start
+    
