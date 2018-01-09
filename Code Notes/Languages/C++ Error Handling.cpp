@@ -1,8 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //ERROR HANDLING
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*******************************************************************************************
+/*****************************************************************************************************
 EXCEPTION REASONS:
 • Program accesses an invalid memory address (such as NULL pointer)
 • Stack overflows due to infinite recursion
@@ -11,17 +10,7 @@ EXCEPTION REASONS:
 • Memory buffer can't be allocated (out of memory)
 • Invalid parameter is passed to a C++ system function
 • C run-time libraries detect an error and request program termination
-
-C++ EXCEPTIONS:
-• Use inheritance, Language specific
-• STL and user exceptions
-• Has different levels of exception guarantees
-
-SEH EXCEPTIONS:
-• Use same data structure, Compilier specific, provided by the Operating System
-• CPU exceptions such as access violation, illegal instruction, divide by zero
-• No exception guarantee; does not unwind the stack or call destructors
-*******************************************************************************************/
+*****************************************************************************************************/
 
 assert(myPtr != nullptr);                    // break if myPtr is null
 assert(condition && "message");              // break with message
@@ -30,8 +19,27 @@ static_assert(myConstInt > 0, "MyMessage");  // must use constant values, assert
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //C++ EXCEPTIONS
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+/*****************************************************************************************************
+C++ EXCEPTIONS:
+• Used for STL and user exceptions
+• Has different levels of exception guarantees
+• When an exception occurs:
+    - Copy of thrown variable is made as it needs it after function out of scope
+    - Stack releases memory until reaching the corresponding try-catch block
+    - Any destructors are called on way as objects go out of scope
+    - Local pointers are destroyed without calling delete
+   
+CATCH BY CONST REFERENCE
+• Const is used to prevent the exception from being modified and giving incorrect crash information
+• Reference is used so the exception can be resolved polymorphically and so slicing does not happen
+• Reference is used instead of pointer to reduce the need to manage any memory at the catch position
+• Allocating memory for an exception through a pointer may not work if the exception is out of memory
 
-/*******************************************************************************************
+EXCEPTION SAFETY
+• Use RAII to auto cleanup resources if exception is thrown
+• Only change state once any possible errors have been resolved
+• Destructor/deallocation/swap functions should never throw as impossible to safely cleanup
+
 NOEXCEPT FUNCTIONS
 • If objects they work on throw, undefined behaviour
 • All destructors automatically have noexcept keyword
@@ -54,7 +62,7 @@ STANDARD LIBRARY EXCEPTIONS
 • Multi-range insert(begin,begin,end) has basic guarantee
 • Vector and Deque only: inserts or erases for multi or single objects are basic guarantee 
   if object constructor or assignment operator throws, otherwise strong guarantee
-*******************************************************************************************/
+*****************************************************************************************************/
 
 try 
 { 
@@ -121,6 +129,20 @@ catch(const std::exception& e)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //STRUCTURED EXCEPTIONS (SEH)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+/*****************************************************************************************************
+SEH EXCEPTIONS:
+• Used for CPU exceptions such as access violation, illegal instruction, divide by zero
+• No exception guarantee; does not unwind the stack or call destructors
+• Each thread has its own SEH exception handler callback function
+• When an exception occurs:
+    - linked list of EXCEPTION_REGISTRATION structures is walked one handles the exception
+    - using __try will add a new entry to the list on the stack
+    - default EXCEPTION_REGISTRATION is always called last
+    - once handled, the list is walked again but with EH_UNWINDING (value 2) set in the exception flags
+    - EH_UNWINDING gives the oppotunity to do any cleanup
+*****************************************************************************************************/
+static DWORD EH_UNWINDING = 0x00000002;
+static bool HANDLING_EXCEPTION = false;
 
 __try
 {
@@ -131,5 +153,14 @@ __except(ExceptionFilter(GetExceptionCode(), GetExceptionInformation()))
 
 int ExceptionFilter(unsigned int code, struct _EXCEPTION_POINTERS* ep)
 {
-    return EXCEPTION_CONTINUE_SEARCH;
+    if (ep->ExceptionRecord->ExceptionFlags & EH_UNWINDING) 
+    {
+        // Do any cleanup
+    }
+    else if(!HANDLING_EXCEPTION)
+    {
+        HANDLING_EXCEPTION = true; // Prevent multiple exceptions
+        // Do any handling     
+    }  
+    return EXCEPTION_CONTINUE_SEARCH; // Continue to the next handler
 }
