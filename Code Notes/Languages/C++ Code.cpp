@@ -371,9 +371,9 @@ namespace B
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream> 
-#include "header.h" //"" compiler searches in same location as source first
-extern "C" { #include "header.h" }; //compile in C only
+#include "header.h" // using "", compiler searches in same location as source first
 
+// INCLUDE GUARDS
 #ifdef DEFINED
 #ifndef MYCLASS_H_
 #define MYCLASS_H_
@@ -381,21 +381,25 @@ extern "C" { #include "header.h" }; //compile in C only
 #endif
 #pragma once //Alternative to include guards      
 
-//DISABLE WARNINGS
+// DISABLE WARNINGS
 #pragma warning(push)           
- #pragma warning(disable:4512)
-#pragma warning(pop)            
+#pragma warning(disable:4512)
+#pragma warning(pop)       
 
-//MACROS OVER MULTIPLE LINES
-//Proper way: doesn't break if user does if-else without {}
+// DISABLE OPTIMIZATION
+#pragma optimize("", off)
+#pragma optimize("", on)
+
+// MACROS OVER MULTIPLE LINES
+// Proper way: doesn't break if user does if-else without {}
 #define MYMACRO(a, b) \
     do { 
         statement1; \
         statement2; \
     } while (false) //intentially don't put ; so it can be used anywhere
 
-//CHANGING PACKING OF STRUCT
-//changes amount of bytes allocated at a time (ie, default 4 to 1)
+// CHANGING PACKING OF STRUCT
+// changes amount of bytes allocated at a time (ie, default 4 to 1)
 #pragma pack(push,1) 
 struct CStruct
 {
@@ -405,7 +409,7 @@ struct CStruct
 };
 #pragma pack(pop)
 
-//VISUAL STUDIO CONSTANTS
+// VISUAL STUDIO CONSTANTS
 _DEBUG
 _MANAGED
 __FILE__    //name of file
