@@ -3,6 +3,35 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*******************************************************************************************
+EXCEPTION REASONS:
+• Program accesses an invalid memory address (such as NULL pointer)
+• Stack overflows due to infinite recursion
+• Large block of data is written to a small buffer
+• A pure virtual method of a C++ class is called
+• Memory buffer can't be allocated (out of memory)
+• Invalid parameter is passed to a C++ system function
+• C run-time libraries detect an error and request program termination
+
+C++ EXCEPTIONS:
+• Use inheritance, Language specific
+• STL and user exceptions
+• Has different levels of exception guarantees
+
+SEH EXCEPTIONS:
+• Use same data structure, Compilier specific, provided by the Operating System
+• CPU exceptions such as access violation, illegal instruction, divide by zero
+• No exception guarantee; does not unwind the stack or call destructors
+*******************************************************************************************/
+
+assert(myPtr != nullptr);                    // break if myPtr is null
+assert(condition && "message");              // break with message
+static_assert(myConstInt > 0, "MyMessage");  // must use constant values, asserts at compile time
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//C++ EXCEPTIONS
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*******************************************************************************************
 NOEXCEPT FUNCTIONS
 • If objects they work on throw, undefined behaviour
 • All destructors automatically have noexcept keyword
@@ -24,17 +53,12 @@ STANDARD LIBRARY EXCEPTIONS
 • Mostly has strong exception guarantee with a few basic guarantees
 • Multi-range insert(begin,begin,end) has basic guarantee
 • Vector and Deque only: inserts or erases for multi or single objects are basic guarantee 
-  if object constructor or assignment operator throws, otherwise strong guarantee  
+  if object constructor or assignment operator throws, otherwise strong guarantee
 *******************************************************************************************/
-
-assert(myPtr != nullptr);                    // break if myPtr is null
-assert(condition && "message");              // break with message
-static_assert(myConstInt > 0, "MyMessage");  // must use constant values, asserts at compile time
-throw std::exception("Message goes here");
 
 try 
 { 
-    myFunction();
+    throw std::exception("Message goes here");   // throw c++ exception
 } 
 catch(const std::exception& e)
 {
@@ -92,4 +116,20 @@ try
 catch(const std::exception& e)
 {
     cout << e.what() << endl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//STRUCTURED EXCEPTIONS (SEH)
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+__try
+{
+}
+__except(ExceptionFilter(GetExceptionCode(), GetExceptionInformation()))
+{  
+}
+
+int ExceptionFilter(unsigned int code, struct _EXCEPTION_POINTERS* ep)
+{
+    return EXCEPTION_CONTINUE_SEARCH;
 }
