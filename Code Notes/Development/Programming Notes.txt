@@ -434,6 +434,7 @@ BIT MASKING
 value = Mask1 | Mask2        Adding two masks
 value &= ~Mask1              Removing a mask
 value |= Mask1               Adding a mask
+value & Mask1                If true then has the mask (C++ only as non-zero integers auto convert to true)
 (value & Mask1) == Mask1     If true then has the mask
 
 BIT MASK VALUES
