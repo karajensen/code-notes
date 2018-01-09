@@ -448,43 +448,6 @@ Mask7  = 64    0x040    0x00000040    01000000
 Mask8  = 128   0x080    0x00000080    10000000
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//ERROR HANDLING/EXCEPTIONS
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-1) THROW BY VALUE
-• When exception is thrown, copy of thrown variable is made as it needs it after function out of scope
-
-2) STACK UNWINDS
-• Stack releases memory until reaching the corresponding try-catch block
-• Any destructors are called on way as objects go out of scope
-• Local pointers are destroyed without calling delete
-
-3) CATCH BY CONST REFERENCE
-• Const is used to prevent the exception from being modified and giving incorrect crash information
-• Reference is used so the exception can be resolved polymorphically and so slicing does not happen
-• Reference is used instead of pointer to reduce the need to manage any memory at the catch position
-• Allocating memory for an exception through a pointer may not work if the exception is out of memory
-
-EXCEPTION SAFETY
-• Use RAII to auto cleanup resources if exception is thrown
-• Only change state once any possible errors have been resolved
-• Destructor/deallocation/swap functions should never throw as impossible to safely cleanup
-
-EXCEPTION NEUTRAL
-• Exceptions thrown should be propagated unchanged to the objects's caller
-
-ABRAHAMS GUARANTEE: BASIC
-• Failures/exceptions might alter program state
-• No leaks occur and affected objects are still usable but not in predictable state
-
-ABRAHAMS GUARANTEE: STRONG
-• Failures/exceptions guarantee program state is unchanged
-• No leaks occur and objects and iterators not affected
-
-ABRAHAMS GUARANTEE: NOTHROW
-• Failure and exceptions do not happen
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
 //NETWORKING
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
