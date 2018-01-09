@@ -449,6 +449,24 @@ Mask7  = 64    0x040    0x00000040    01000000
 Mask8  = 128   0x080    0x00000080    10000000
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+//EXCEPTIONS
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+EXCEPTION NEUTRAL
+• Exceptions thrown should be propagated unchanged to the objects's caller
+
+ABRAHAMS GUARANTEE: BASIC
+• Failures/exceptions might alter program state
+• No leaks occur and affected objects are still usable but not in predictable state
+
+ABRAHAMS GUARANTEE: STRONG
+• Failures/exceptions guarantee program state is unchanged
+• No leaks occur and objects and iterators not affected
+
+ABRAHAMS GUARANTEE: NOTHROW
+• Failure and exceptions do not happen
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //NETWORKING
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
