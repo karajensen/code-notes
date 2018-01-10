@@ -409,6 +409,9 @@ struct CStruct
 };
 #pragma pack(pop)
 
+// CHANGE STATIC INIT ORDER
+#pragma init_seg(lib) // Any statics in file will be initialised first
+
 // VISUAL STUDIO CONSTANTS
 _DEBUG
 _MANAGED
