@@ -133,7 +133,6 @@ catch(const std::exception& e)
 SEH EXCEPTIONS:
 • Used for CPU exceptions such as access violation, illegal instruction, divide by zero
 • No exception guarantee; does not unwind the stack or call destructors
-• Each thread has its own SEH exception handler callback function
 • Can also catch C++ exceptions with error code 0xe06d7363
 • Using __try will add a new EXCEPTION_REGISTRATION to the list
 • When an exception occurs:
