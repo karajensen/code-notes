@@ -199,6 +199,8 @@ max_element(S, E, sortLam) //returns maximum element between
 //================================================================================================================
 
 is_permutation(S, E, S2, equalLam) //returns true if both ranges are equal to each other excluding ordering
+prev_permutation(S, E) //rearranges container to the next permutation, starting from sorted descended ordering
+next_permutation(S, E) //rearranges container to the next permutation, starting from sorted ascended ordering
     
 //================================================================================================================
 // NUMERIC OPERATIONS
