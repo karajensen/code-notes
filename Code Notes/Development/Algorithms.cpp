@@ -139,9 +139,15 @@ std::reverse(str.begin(), str.end());
 str.erase(std::unique(S, E, [](char l, char r){ 
     return isspace(l) && isspace(r) && l == r; })), str.end());
 
-/** Determine if 2 strings are anagrams */
+/** Determine if 2 strings are permutations/anagrams */
 bool isAnagram = s1.size() == s2.size() && 
     std::is_permutation(s1.begin(), s1.end(), s2.begin());
+
+/** Print all possible permutations/anagrams of a string */
+std::sort(str.begin(), str.end());
+do {
+    std::cout << str << '\n';
+} while(std::next_permutation(str.begin(), str.end()));
 
 /** Replace all spaces with %20 */
 for (int i = 0; i < str.size(); ++i)
