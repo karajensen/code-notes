@@ -213,13 +213,14 @@ public:
          static_cast<LPCTSTR>(ep->ExceptionRecord->ExceptionAddress), &hm);
       MODULEINFO mi;
       ::GetModuleInformation(::GetCurrentProcess(), hm, &mi, sizeof(mi));
-      char fn[MAX_PATH];
+      char modulePath[MAX_PATH];
       ::GetModuleFileNameExA(::GetCurrentProcess(), hm, fn, MAX_PATH);
 
       std::ostringstream oss;
       oss << "SE " << seDescription(code) << " at address 0x" 
           << std::hex << ep->ExceptionRecord->ExceptionAddress << std::dec 
-          << " inside " << fn << " loaded at base address 0x" << std::hex << mi.lpBaseOfDll << "\n"; 
+          << " inside " << modulePath << " loaded at base address 0x" 
+          << std::hex << mi.lpBaseOfDll << "\n"; 
 
       if (code == EXCEPTION_ACCESS_VIOLATION || code == EXCEPTION_IN_PAGE_ERROR))
       {
