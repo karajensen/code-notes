@@ -429,6 +429,7 @@ bool b = bool1 & bool2       Both are true
 bool b = bool1 | bool2       Either are true
 bool b = bool1 ^ bool2       Either are true but not both 
 success &= HasSucceeded();   Init success to true, will lock in false if something fails
+success |= HasSucceeded();   Init success to false, will lock in true if something succeeds
 
 BIT MASKING
 value = Mask1 | Mask2        Adding two masks
