@@ -13,11 +13,12 @@ auto str = "str"s; //creates a std::string rather than literal string
 
 str[0]
 string::npos //maximum allowable size for string; maximum value of unsigned int
+str.data() //returns a pointer to the first character of a string
 str.empty() //returns true/false if empty (faster than size)
 str.size() //number of elements
 str.length() //same as str.size()
 str.replace(i, n, "str") //replace over index i for n characteres
-str.c_str() //returns pointer to cstring with strings contents
+str.c_str() //returns pointer to const cstring
 str.substr(i, n) //creates substring from index i with n characters
 str.clear() //removes all from container
 str.back() //returns reference to last element
@@ -35,6 +36,7 @@ str.insert(i, n,'a') //Inserts n references of a before index i
 str.insert(str.begin(), 'a') //Inserts a before iterator
 str.insert(str.begin(), n, 'a') //Inserts n references of a before iterator
 str.insert(str.begin(), str2.begin(), str2.end()) //Insert copies of elements in the range before iterator
+str.at(i) //returns character at index with bounds checking
 
 // FIND METHODS
 // returns index int or if not found
@@ -60,11 +62,21 @@ string_view strView("str");
 string_view strView(array, sizeof(array)); // char array[3] = {'B', 'a', 'r'};
 string_view strView(&str[0], str.size());    
 
-strView.empty();
+strView[0]
+string::npos //maximum allowable size for string; maximum value of unsigned int
+strView.empty(); //returns true/false if empty
+strView.data() //returns a pointer to the first character of a string
 strView.substr(i, n); //returns string_view from index i with n characters, O(1): faster than std::string substr
 strView.remove_prefix(n); //returns string_view removing n characters from start
 strView.remove_suffix(n); //returns string_view removing n characters from end
-    
+strView.back() //returns reference to last element
+strView.front() //returns reference to first element
+strView.at(i) //returns character at index with bounds checking
+
+// ITERATORS
+begin()   end()   cbegin()   cend()
+rbegin()  rend()  crbegin()  crend()
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //ARRAY
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
