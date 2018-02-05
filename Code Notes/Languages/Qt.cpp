@@ -1,6 +1,28 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //QT
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+--------------------------------------------------------------------------------------------------
+QT MODULES
+--------------------------------------------------------------------------------------------------
+QtCore               Core non-graphical classes used by other modules
+QtGUI                Base classes for graphical user interface (GUI) components. Includes OpenGL
+QtMultimedia         Classes for audio, video, radio and camera functionality
+QtMultimediaWidgets  Widget-based classes for implementing multimedia functionality
+QtNetwork            Classes to make network programming easier and more portable
+QtQML                Classes for QML and JavaScript languages
+QtQuick              A declarative framework for building highly dynamic applications with custom UI
+QtQuickControls      Reusable Qt Quick based UI controls to create classic desktop-style user interfaces
+QtQuickDialogs       Types for creating and interacting with system dialogs from a Qt Quick application
+QtQuickLayouts       Layouts are items that are used to arrange Qt Quick 2 based items in the UI
+QtSQL                Classes for database integration using SQL
+QtTest               Classes for unit testing Qt applications and libraries
+QtWidgets            Classes to extend Qt GUI with C++ widgets
+
+*/
+//===================================================================================================
+// Qt Components
+//===================================================================================================
 
 // QString
 QString str = "str";
@@ -20,7 +42,7 @@ QListIterator<int> iter(myList);
 while(iter.hasNext()) { iter.next(); }
 
 //===================================================================================================
-// QML
+// Qt Modeling Language (QML)
 //===================================================================================================
 //• QML: Markup language for user interfaces made up of elements, uses Javascript for scripting
 
@@ -41,7 +63,7 @@ anchors.left: parent.left                 // don't use with ColumnLayout, use La
 anchors.right: parent.right               // don't use with ColumnLayout, use Layout.fillHeight
 anchors.fill: parent                      // completely fills to parent
 anchors.margins: 1                        // adds margins between the anchor
-heigh : 30                                // avoid as easily ovewritten
+heigh: 30                                 // avoid as easily ovewritten
 width: 30                                 // avoid as easily ovewritten
 visible: true                             // whether control is visible
 property var myProperty: true             // custom property
