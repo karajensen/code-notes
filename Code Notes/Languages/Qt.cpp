@@ -1,10 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //QT
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
---------------------------------------------------------------------------------------------------
+
+/******************************************************************************************
 QT MODULES
---------------------------------------------------------------------------------------------------
 QtCore               Core non-graphical classes used by other modules
 QtGUI                Base classes for graphical user interface (GUI) components. Includes OpenGL
 QtMultimedia         Classes for audio, video, radio and camera functionality
@@ -18,8 +17,8 @@ QtQuickLayouts       Layouts are items that are used to arrange Qt Quick 2 based
 QtSQL                Classes for database integration using SQL
 QtTest               Classes for unit testing Qt applications and libraries
 QtWidgets            Classes to extend Qt GUI with C++ widgets
+******************************************************************************************/
 
-*/
 //===================================================================================================
 // Qt Components
 //===================================================================================================
