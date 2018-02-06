@@ -19,6 +19,10 @@ QtSQL                Classes for database integration using SQL
 QtTest               Classes for unit testing Qt applications and libraries
 QtWidgets            Classes to extend Qt GUI with C++ widgets
 
+LIBRARY: Set of functions, organized in classes, that does some work and then returns control to the client
+FRAMEWORK: An abstract design that you need to insert into, through inheritance or callbacks, that the framework then calls
+TOOLKIT: More focused library, used almost exclusively for graphical widgets, and GUI components
+
 **************************************************************************************************************
 QT LICENSING
 **************************************************************************************************************
