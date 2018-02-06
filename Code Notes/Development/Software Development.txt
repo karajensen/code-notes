@@ -2,7 +2,11 @@
 //SOFTWARE DEVELOPMENT
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-AGILE
+LIBRARY: Set of functions, organized in classes, that does some work and then returns control to the client
+FRAMEWORK: An abstract design that you need to insert into, through inheritance or callbacks, that the framework then calls
+TOOLKIT: More focused library, used almost exclusively for graphical widgets, and GUI components
+
+AGILE METHODOLOGY
 • Uses self-organizing teams
 • Uses time-boxed iterative approach
 • Encourages rapid and flexible response to change
@@ -11,7 +15,7 @@ AGILE
 • Goal is to have an available release at the end of each iteration
 • Have a daily standup or daily scrum meeting 
 
-SCRUM
+SCRUM METHODOLOGY
 • Product Owner: represents the stakeholders; ensures team delivers value to business
 • Product Owner writes user stories, prioritizes and adds them to the backlog
 • ScrumMaster: acts as buffer between team and any problems, not the team leader
