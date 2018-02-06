@@ -2,7 +2,8 @@
 //QT
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/******************************************************************************************
+/**************************************************************************************************
+
 QT MODULES
 QtCore               Core non-graphical classes used by other modules
 QtGUI                Base classes for graphical user interface (GUI) components. Includes OpenGL
@@ -17,7 +18,21 @@ QtQuickLayouts       Layouts are items that are used to arrange Qt Quick 2 based
 QtSQL                Classes for database integration using SQL
 QtTest               Classes for unit testing Qt applications and libraries
 QtWidgets            Classes to extend Qt GUI with C++ widgets
-******************************************************************************************/
+
+***************************************************************************************************
+
+QT LICENSING
+Qt for Application Development: 
+  • Cross platform development for desktop and mobile
+  • Can be licensed under commercial and open source licenses (GPU / LGPU)
+  • Static linking requires GPU licence and all project code public
+  • Dynamic linking can use LGPU licence to keep parts of it private
+  • Some modules GPU only: Qt Data Visualization / Qt Charts / Tooling (if modifications are done)
+Qt for Device Creation: 
+  • Used with embedded devices
+  • Only under commercial licence to allow integration with proprietary code 
+  
+**************************************************************************************************/
 
 //===================================================================================================
 // Qt Components
