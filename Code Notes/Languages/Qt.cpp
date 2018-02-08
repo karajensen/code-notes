@@ -47,26 +47,73 @@ QT FOR DEVICE CREATION:
   
 **************************************************************************************************************/
 
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+    app.exec(); // Start the event loop
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //QT COMPONENTS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // QString
 QString str = "str";
-str.split(" ");                         // Returns QStringList of string split by spaces
+str.split(" "); // Returns QStringList of string split by spaces
 
 // QStringList
-QStringList lst;                        // Inherits from QList<QString>, specifically for strings
-lst.join(" ")                           // Returns a combined string seperated by spaces
-lst.append(lst2)                        // Adds a new string list to the end
+QStringList lst; // Inherits from QList<QString>, specifically for strings
+lst.join(" ")    // Returns a combined string seperated by spaces
+lst.append(lst2) // Adds a new string list to the end
 
 // QList
-QList<int> lst;                         // Fast index-based access, insertions and removals
-lst << 1 << 2;                          // Allows streaming into container
+QList<int> lst; // Fast index-based access, insertions and removals
+lst << 1 << 2;  // Allows streaming into container
 
 // QListIterator
 QListIterator<int> iter(myList);
 while(iter.hasNext()) { iter.next(); }
+
+//==========================================================================================================
+//WIDGETS
+//==========================================================================================================
+
+// QWidget
+QWidget widget; // Root widget used as a window
+widget.setWindowTitle("Title");
+widget.show();
+widget.setLayout(layout); // Add a layout to the window, automatically parents
+
+// QLabel
+QLabel lbl("Message"); // Allows use of html tags to customise text
+
+// QPushButton
+QPushButton btn("Text");
+QObject::connect(button, SIGNAL(clicked()), &app, SLOT(myFn()));  // Connect to button's click event
+
+// QSpinBox
+QSpinBox spinbox;
+spinbox.setRange(min, max);
+spinBox.setValue(value);
+QObject::connect(spinBox, SIGNAL(valueChanged(int)), &app, SLOT(myFn(int)));
+
+// QSlider 
+QSlider slider(Qt::Horizontal);
+slider.setRange(min, max);
+slider.setValue(value);
+QObject::connect(slider, SIGNAL(valueChanged(int)), &app, SLOT(myFn(int)));
+
+//==========================================================================================================
+//LAYOUTS
+//==========================================================================================================
+
+// QHBoxLayout: lays out widgets horizontally from left to right
+QHBoxLayout layout;
+layout.addWidget(spinBox); // Add a widget to the layout, automatically parents and resizes
+
+// QVBoxLayout: lays out widgets vertically from top to bottom
+
+// QGridLayout: lays out widgets in a grid.
 
 //==========================================================================================================
 //FILE SYSTEM
