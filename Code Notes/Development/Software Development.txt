@@ -27,13 +27,13 @@ SCRUM METHODOLOGY
 //SOFTWARE LICENSING
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-GENERAL PUBLIC LICENSE (GPU)
+GENERAL PUBLIC LICENSE (GPL)
 • Requires releasing the source code of your application if distributing the open source software 
-• All portions of the project must be under GPU as well
+• All portions of the project must be under GPL as well
 
-LESSER GENERAL PUBLIC LICENSE (LGPU)
+LESSER GENERAL PUBLIC LICENSE (LGPL)
 • Allows distributing the open source software with your application without releasing the application source
-• LGPU open source software must be re-distributed as LGPU, other portions of project may have different licences
+• LGPU open source software must be re-distributed as LGPL, other portions of project may have different licences
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //WINDOWS DEVELOPMENT

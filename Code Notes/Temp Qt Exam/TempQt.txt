@@ -1,0 +1,100 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//QT MODULES
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+===============================================================================================================
+Overview of Qt modules and their key functionality 
+===============================================================================================================
+QtCore               Core non-graphical classes used by other modules
+QtGUI                Base classes for graphical user interface (GUI) components. Includes OpenGL
+QtMultimedia         Classes for audio, video, radio and camera functionality
+QtMultimediaWidgets  Widget-based classes for implementing multimedia functionality
+QtNetwork            Classes to make network programming easier and more portable
+QtQML                Classes for QML and JavaScript languages
+QtQuick              A declarative framework for building highly dynamic applications with custom UI
+QtQuickControls      Reusable Qt Quick based UI controls to create classic desktop-style user interfaces
+QtQuickDialogs       Types for creating and interacting with system dialogs from a Qt Quick application
+QtQuickLayouts       Layouts are items that are used to arrange Qt Quick 2 based items in the UI
+QtSQL                Classes for database integration using SQL
+QtTest               Classes for unit testing Qt applications and libraries
+QtWidgets            Classes to extend Qt GUI with C++ widgets
+
+===============================================================================================================
+The difference between toolkits and frameworks  
+===============================================================================================================
+LIBRARY: Set of functions, organized in classes, that does some work and then returns control to the client
+FRAMEWORK: An abstract design that you need to insert into, through inheritance or callbacks, that the framework then calls
+TOOLKIT: More focused library, used almost exclusively for graphical widgets, and GUI components
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//QT LICENSING
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+===============================================================================================================
+Know Qt licensing options: GPL, LGPL, commercial
+===============================================================================================================
+COMMERCIAL:
+• Official Qt Support Helpdesk
+• Keep your application private
+• Full rights to proprietary Qt source code modifications
+
+GENERAL PUBLIC LICENSE (GPL):
+• Requires releasing the source code of your application if distributing the open source software 
+• All portions of the project must be under GPL as well
+• Can use static linking
+• Needs to include qt source code or instructions on how to access it
+
+LESSER GENERAL PUBLIC LICENSE (LGPL):
+• Allows distributing the open source software with your application without releasing the application source
+• LGPL open source software must be re-distributed as LGPU, other portions of project may have different licences
+• Possible to keep your application private with dynamic linking
+• Needs to include qt source code or instructions on how to access it
+
+===============================================================================================================
+Understand the difference between application development and device creation licenses 
+===============================================================================================================
+QT FOR APPLICATION DEVELOPMENT: 
+  • Cross platform development for desktop and mobile
+  • Can be licensed under commercial and open source licenses (GPU / LGPU)
+  • Some modules GPU only: QtDataVisualization / QtCharts / Tooling (if modifications are done)
+  
+QT FOR DEVICE CREATION: 
+  • Used with embedded devices
+  • Only under commercial licence to allow integration with proprietary code 
+  
+===============================================================================================================
+Basic differences between GPLv2, GPLv3, LGPLv2.1, and LGPLv3 
+===============================================================================================================
+GPLv2/GPLv3
+• GPLv3 added compatibility regulations that make it easier to combine GPL code and code under different licenses
+• GPLv3 adds regulations for digital rights management were added to keep GPL software from being changed at will
+• GPLv3 adds an explicit patent license/copyright so that no one can profit from them
+  
+LGPLv2.1/LGPLv3
+• LGPLv3 closes loophole of locked-down consumer devices preventing users from installing
+  modified versions of the library on the device
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//BASIC DEVELOPMENT STEPS 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+===============================================================================================================
+Simple widget based and QML based application creation using wizards in QtCreator
+===============================================================================================================
+
+===============================================================================================================
+Documentation, community, and other sources for help
+===============================================================================================================
+
+===============================================================================================================
+Qt project file (.pro) creation and management
+===============================================================================================================
+
+===============================================================================================================
+qmake key variables, basic syntax, and variable values 
+===============================================================================================================
+
+===============================================================================================================
+Basic development and build tools (Qt Designer, Qt Help, Qt Linguist, qmake, Makefiles, moc, uic)
+===============================================================================================================
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//QTCREATOR
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////

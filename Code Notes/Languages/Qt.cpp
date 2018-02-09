@@ -1,61 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//QT OVERVIEW
+//QT COMPONENTS
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*************************************************************************************************************
-QT MODULES
-**************************************************************************************************************
-QtCore               Core non-graphical classes used by other modules
-QtGUI                Base classes for graphical user interface (GUI) components. Includes OpenGL
-QtMultimedia         Classes for audio, video, radio and camera functionality
-QtMultimediaWidgets  Widget-based classes for implementing multimedia functionality
-QtNetwork            Classes to make network programming easier and more portable
-QtQML                Classes for QML and JavaScript languages
-QtQuick              A declarative framework for building highly dynamic applications with custom UI
-QtQuickControls      Reusable Qt Quick based UI controls to create classic desktop-style user interfaces
-QtQuickDialogs       Types for creating and interacting with system dialogs from a Qt Quick application
-QtQuickLayouts       Layouts are items that are used to arrange Qt Quick 2 based items in the UI
-QtSQL                Classes for database integration using SQL
-QtTest               Classes for unit testing Qt applications and libraries
-QtWidgets            Classes to extend Qt GUI with C++ widgets
-
-LIBRARY: Set of functions, organized in classes, that does some work and then returns control to the client
-FRAMEWORK: An abstract design that you need to insert into, through inheritance or callbacks, that the framework then calls
-TOOLKIT: More focused library, used almost exclusively for graphical widgets, and GUI components
-
-**************************************************************************************************************
-QT LICENSING
-**************************************************************************************************************
-GENERAL PUBLIC LICENSE (GPU):
-• Requires releasing the source code of your application if distributing the open source software 
-• All portions of the project must be under GPU as well
-
-LESSER GENERAL PUBLIC LICENSE (LGPU):
-• Allows distributing the open source software with your application without releasing the application source
-• LGPU open source software must be re-distributed as LGPU, other portions of project may have different licences
-
-QT FOR APPLICATION DEVELOPMENT: 
-  • Cross platform development for desktop and mobile
-  • Can be licensed under commercial and open source licenses (GPU / LGPU)
-  • Static linking requires GPU licence and all project code public
-  • Dynamic linking can use LGPU licence to keep parts of it private
-  • Some modules GPU only: QtDataVisualization / QtCharts / Tooling (if modifications are done)
-  
-QT FOR DEVICE CREATION: 
-  • Used with embedded devices
-  • Only under commercial licence to allow integration with proprietary code 
-  
-**************************************************************************************************************/
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     app.exec(); // Start the event loop
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//QT COMPONENTS
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // QString
 QString str = "str";
