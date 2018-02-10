@@ -77,7 +77,7 @@ QMAKE
 
 qmake -o Makefile hello.pro             // generate Makefiles
 qmake -tp vc hello.pro                  // generate visual studio project
-make /*or*/ nmake						// generates exe from Makefiles
+make /*or*/ nmake                       // generates exe from Makefiles
 
 ===============================================================================================================
 PROJECT FILES (.pro)
@@ -85,10 +85,17 @@ PROJECT FILES (.pro)
 • List of source/header files, libraries, include paths, configuration info
 • Can be auto-generated from Qt Creator wizard and qmake
 
-CONFIG += debug
+TARGET = hello          // name of the executable
+CONFIG += debug         // add debug symbols/information
+CONFIG += console       // show console window
 HEADERS += hello.h
 SOURCES += hello.cpp
 SOURCES += main.cpp
+win32 {}                // anything inside used only if windows
+debug {}                // anything inside used if debug configuration
+win32:debug {}          // can combine nested scopes
+exists(main.cpp) {}     // do code inside if file exists, !exists(){} for negative
+error("error")          // print an error
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //DEBUGGING AIDS
