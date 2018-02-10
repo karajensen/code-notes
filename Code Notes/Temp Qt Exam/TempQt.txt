@@ -59,14 +59,36 @@ LGPLv2.1 vs. LGPLv3
   modified versions of the library on the device
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//BASIC DEVELOPMENT STEPS 
+//QT PROJECT
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+    app.exec(); // Start the event loop
+}
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//QTCREATOR
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+===============================================================================================================
+QMAKE
+===============================================================================================================
+• Run from top level directory of the project  
+• Generates Makefiles from a project files (.pro)
+• Includes build rules for moc and uic
 
+qmake -o Makefile hello.pro             // generate Makefiles
+qmake -tp vc hello.pro                  // generate visual studio project
+make /*or*/ nmake						// generates exe from Makefiles
+
+===============================================================================================================
+PROJECT FILES (.pro)
+===============================================================================================================
+• List of source/header files, libraries, include paths, configuration info
+• Can be auto-generated from Qt Creator wizard and qmake
+
+CONFIG += debug
+HEADERS += hello.h
+SOURCES += hello.cpp
+SOURCES += main.cpp
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //DEBUGGING AIDS
