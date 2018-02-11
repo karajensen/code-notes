@@ -45,13 +45,13 @@ LESSER GENERAL PUBLIC LICENSE (LGPL):
 • Needs to include qt source code or instructions on how to access it
 
 QT FOR APPLICATION DEVELOPMENT: 
-  • Cross platform development for desktop and mobile
-  • Can be licensed under commercial and open source licenses (GPU / LGPU)
-  • Some modules GPU only: QtDataVisualization / QtCharts / Tooling (if modifications are done)
+• Cross platform development for desktop and mobile
+• Can be licensed under commercial and open source licenses (GPU / LGPU)
+• Some modules GPU only: QtDataVisualization / QtCharts / Tooling (if modifications are done)
   
 QT FOR DEVICE CREATION: 
-  • Used with embedded devices
-  • Only under commercial licence to allow integration with proprietary code 
+• Used with embedded devices
+• Only under commercial licence to allow integration with proprietary code 
   
 GPLv2 vs. GPLv3
 • GPLv3 added compatibility regulations that make it easier to combine GPL code and code under different licenses
@@ -305,10 +305,10 @@ warn_on                   // Increase warning level from default
 warn_off                  // Decrease warning level from default
 exceptions                // Exception support enabled (default)
 exceptions_off            // Exception support disabled
-rtti                      // RTTI support enabled (by default, compilier default is used)
-rtti_off                  // RTTI support disabled (by default, compilier default is used)
-stl                       // STL support enabled (by default, compilier default is used)
-stl_off                   // STL support disabled (by default, compilier default is used)
+rtti                      // RTTI support enabled (by default, compiler default is used)
+rtti_off                  // RTTI support disabled (by default, compiler default is used)
+stl                       // STL support enabled (by default, compiler default is used)
+stl_off                   // STL support disabled (by default, compiler default is used)
 thread                    // Thread support is enabled (enabled by default)
 c++11                     // C++11 support enabled, by default is disabled
 c++14                     // C++14 support enabled, by default is disabled
