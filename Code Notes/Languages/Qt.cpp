@@ -273,23 +273,63 @@ Text {
 **************************************************************************************************************/
 
 //===================================================================================================
-//TRIGGERING QMAKE
+//RUNNING QMAKE
 //===================================================================================================
-qmake -o Makefile hello.pro   // generate Makefiles
-qmake -tp vc hello.pro        // generate visual studio project
-make /*or*/ nmake             // generates exe from Makefiles
+qmake -makefile [options] file1.pro file2.pro // output will be Makefiles (default)
+qmake -project  [options] file.pro MyDir      // output will be a project (*.pro) file, accepts dirs
+make /*or*/ nmake                             // generates exe from Makefiles
+
+//GENERAL OPTIONS
+-help               // output help information
+-o [outputname]     // change the name of the output file
+-d                  // output debug information
+-t [template]       // change the template used in the project file (only after it's processed)
+-Wall               // output all warnings
+-Wnone              // output no warnings
+-Wparser            // output only parser warnings
+-Wlogic             // output warnings for problems in project file
+-spec macx-g++      // change the platform to mac
+
+//MAKEFILE MODE OPTIONS
+"CONFIG+=test"           // pass extra assignments, processed before .pro file
+"CONFIG+=test" -after    // extra assignments processed after .pro file
+-nocache                 // .qmake.cache file ignored
+-nodepend                // don't generate dependency information	
+
+//PROJECT MODE OPTIONS
+-r                       // look through supplied directories excursively
+-nopwd                   // only use supplied files, do not use current working directory
 
 //===================================================================================================
 //PROJECT CONFIGURATION
 //===================================================================================================
-TARGET = hello                // name of the executable
-CONFIG += debug               // add configuration information to project
-TEMPLATE = app                // sets what type of project to build, overrides previously set
-HEADERS += hello.h            
-SOURCES = hello.cpp main.cpp  // Can also just list instead of +=, use \ for newlines      
-INCLUDEPATH += "c:/MyPath"
-DEFINES += MY_DEFINE          // Add a new #define MY_DEFINE, can be removed with -=
-QT += xml                     // Add qt libraries to link against, core and gui already there by default
+TARGET = hello                 // name of the executable
+VERSION = 1.2.3                
+LANGUAGE  = C++
+DESTDIR = "c:/MyPath"          // The directory to output the target executable
+CONFIG += debug                // add configuration information to project
+TEMPLATE = app                 // sets what type of project to build, overrides previously set
+PRECOMPILED_HEADER = stdafx.h  
+HEADERS += hello.h             	
+FORMS = hello.ui               
+SOURCES = hello.cpp main.cpp   // Can also just list instead of +=, use \ for newlines      
+INCLUDEPATH += "c:/MyPath"     
+DEFINES += MY_DEFINE           // Add a new #define MY_DEFINE, can be removed with -=
+QT += xml                      // Add qt libraries to link against, core and gui already there by default
+QT += widgets designer         // Requires lib template, builds a qt designer plugin
+
+//OPERATORS
+# This is a comment       // use &&LITERAL_HASH for actual #
+$$value                   // Get contents of variable
+$${value}                 // Same as $$value but allows adding to string values (eg. DEFINES = name_$${value})
+$$[qmake_property]        // Get contents of qmake property
+$$(env_variable)          // Get contents of environment variable when qmake is run
+$(env_variable)           // Get contents of environment variable when makefiles are processed
+= value                   // Replace the value	
+-= value                  // Subtract the value
++= value                  // Add the value
+*= value                  // Only add if it hasn't already been added
+~= expression             // Replaces any values that match a regular expression
 
 //CONFIG OPTIONS
 qt                        // Link against qt library
@@ -312,39 +352,62 @@ stl_off                   // STL support disabled (by default, compiler default 
 thread                    // Thread support is enabled (enabled by default)
 c++11                     // C++11 support enabled, by default is disabled
 c++14                     // C++14 support enabled, by default is disabled
-depend_includepath        // Appending the value of INCLUDEPATH to DEPENDPATH is enabled (default)
 opengl                    // Includes opengl support
-console                   // Target is a Win32 console application
+windows                   // app Template only, Target is a Windows GUID application
+console                   // app Template only, Target is a Win32 console application
+testcase                  // app Template only, Target is an automated test
+dll                       // lib Template only, The library is a shared library (dll).
+staticlib                 // lib Template only, The library is a static library.
+plugin                    // lib Template only, The library is a plugin.
 
 //TEMPLATE OPTIONS
-app                       // creates Makefile to build an application (default)
-lib                       // creates Makefile to build a library
-aux                       // creates Makefile to build nothing, used fo interpreted languages
-subdirs                   // creates Makefile to use project files in each subdirectory
-vcapp                     // creates Visual Studio Project file to build an application
-vclib                     // creates Visual Studio Project file to build a library
-vcsubdirs                 // creates Visual Studio Solution file to build projects in sub-directories 
+app                           // creates Makefile to build an application (default)
+lib                           // creates Makefile to build a library
+aux                           // creates Makefile to build nothing, used fo interpreted languages
+subdirs                       // creates Makefile to use project files in each subdirectory
+vcapp                         // creates Visual Studio Project file to build an application
+vclib                         // creates Visual Studio Project file to build a library
+vcsubdirs                     // creates Visual Studio Solution file to build projects in sub-directories 
+                              
+//CONDITIONAL SCOPE                  
+debug {}                      // do if debug configuration, can use any config options
+!debug {}                     // do if not debug configuration
+win32 {}                      // do if windows configuration
+win32:debug {}                // can combine nested scopes
+win32|macx {}                 // do if either is true
+win32:DEFINES += TEST         // add only if win32
+CONFIG(opengl) {}             // alternative to scope
+win32 {} else:macx {} else {}
 
-//===================================================================================================
-//SCOPES
-//===================================================================================================
-debug {}                  // do if debug configuration
-win32 {}                  // do if windows configuration
-win32:debug {}            // can combine nested scopes
-win32:INCLUDEPATH {}      // include only if win32
-CONFIG(opengl) {}         // do if configuration value is set
-
-//===================================================================================================
 //FUNCTIONS
-//===================================================================================================
-exists(main.cpp) {}       // do code inside if file exists, !exists(){} for negative
-error("error")            // print an error
-message("message")        // print a message
-include(other.pro)        // include another project file
+exists(main.cpp) {}           // do code inside if file exists, !exists(){} for negative
+error("error")                // print an error
+message("message")            // print a message
+include(other.pro)            // include another project file
 
 //===================================================================================================
-//VARIABLES
+//QMAKE PROPERTIES
 //===================================================================================================
-# This is a comment       // use &&LITERAL_HASH for actual #
-MYVAR = $$MYVAR2          // assign contents of variable to another
+qmake -set "QT_VERSION" value    // set the property
+qmake -query "QT_VERSION"        // query the property
+qmake -query                     // queries all property/value pairs
+$$[QMAKE_VERSION]                // query the property in a project file
 
+QMAKE_VERSION             // the current version of qmake
+QT_INSTALL_ARCHDATA       // location of general architecture-dependent Qt data
+QT_INSTALL_BINS           // location of Qt binaries (tools and applications)
+QT_INSTALL_CONFIGURATION  // location for Qt settings. Not applicable on Windows
+QT_INSTALL_DATA           // location of general architecture-independent Qt data
+QT_INSTALL_DOCS           // location of documentation
+QT_INSTALL_EXAMPLES       // location of examples
+QT_INSTALL_HEADERS        // location for all header files
+QT_INSTALL_IMPORTS        // location of QML 1.x extensions
+QT_INSTALL_LIBEXECS       // location of executables required by libraries at runtime
+QT_INSTALL_LIBS           // location of libraries
+QT_INSTALL_PLUGINS        // location of Qt plugins
+QT_INSTALL_PREFIX         // default prefix for all paths
+QT_INSTALL_QML            // location of QML 2.x extensions
+QT_INSTALL_TESTS          // location of Qt test cases
+QT_INSTALL_TRANSLATIONS   // location of translation information for Qt strings
+QT_SYSROOT                // the sysroot used by the target build environment
+QT_VERSION                // the Qt version
