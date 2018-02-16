@@ -314,6 +314,8 @@ HEADERS += hello.h
 FORMS = hello.ui               
 SOURCES = hello.cpp main.cpp   // Can also just list instead of +=, use \ for newlines      
 INCLUDEPATH += "c:/MyPath"     
+MOC_DIR = "c:/MyPath"          // Where intermediate moc files are placed
+OBJECTS_DIR = "c:/MyPath"      // Where intermediate objects are placed
 DEFINES += MY_DEFINE           // Add a new #define MY_DEFINE, can be removed with -=
 QT += xml                      // Add qt libraries to link against, core and gui already there by default
 QT += widgets designer         // Requires lib template, builds a qt designer plugin
@@ -325,11 +327,14 @@ $${value}                 // Same as $$value but allows adding to string values 
 $$[qmake_property]        // Get contents of qmake property
 $$(env_variable)          // Get contents of environment variable when qmake is run
 $(env_variable)           // Get contents of environment variable when makefiles are processed
+$$replace_fn()            // Get return of a replace function
 = value                   // Replace the value	
 -= value                  // Subtract the value
 += value                  // Add the value
 *= value                  // Only add if it hasn't already been added
 ~= expression             // Replaces any values that match a regular expression
+MY_VAR = 0                // Create a new variable
+MY_VAR = one two three    // Create a new list with strings
 
 //CONFIG OPTIONS
 qt                        // Link against qt library
@@ -379,11 +384,34 @@ win32:DEFINES += TEST         // add only if win32
 CONFIG(opengl) {}             // alternative to scope
 win32 {} else:macx {} else {}
 
-//FUNCTIONS
+// FUNCTIONS
 exists(main.cpp) {}           // do code inside if file exists, !exists(){} for negative
 error("error")                // print an error
 message("message")            // print a message
 include(other.pro)            // include another project file
+
+//REPLACE FUNCTIONS
+absolute_path("file.txt")
+basename("MyPath/file.txt")      // Returns file name
+cat("file.txt")                  // Returns contents of file
+clean_path("MyPath/file.txt")    // Returns normalized path, converts to / and removes .
+dirname("MyPath/file.txt")       // Returns directory of file	
+enumerate_vars()                 // Returns list of all defined variable names
+find(MY_VAR, expression)         // Returns all the values in MY_VAR that match the regex
+files(expression, true)          // Returns list of files using regex from working dir, true for recursion
+first(MY_VAR)                    // Returns first of MY_VAR if a list
+getenv(MY_ENV_VAR)               // Returns value of env var, supports var names with () in them
+join(MY_VAR, , prefix, suffix)   // Returns MY_VAR with suffix and prefix (both optional)
+
+//REPLACE FORMAT FUNCTIONS
+//Floating-point numbers are currently not supported
+format_number(value, obase=16)   // Returns decimal number in hex
+format_number(value, ibase=16)   // Returns hex number in decimal
+format_number(value, width=n)    // Sets the min width of the output, if output shorter, pads with spaces
+format_number(value, zeropad)    // Pads the output with 0 instead of spaces
+format_number(value, padsign)    // Prepends a space to positive values in the output
+format_number(value, alwayssign) // Repends a plus sign to positive values in the output
+format_number(value, leftalign)  // Places the padding to the right of the value in the output
 
 //===================================================================================================
 //QMAKE PROPERTIES
