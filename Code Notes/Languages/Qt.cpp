@@ -334,8 +334,8 @@ $$replace_fn()            // Get return of a replace function
 += value                  // Add the value
 *= value                  // Only add if it hasn't already been added
 ~= expression             // Replaces any values that match a regular expression
-MY_VAR = 0                // Create a new variable
-MY_VAR = one two three    // Create a new list with strings
+MY_VAR = 0                // Create a new variable, all are lists by default even if one item assigned
+MY_VAR = one two three    // Create a new variable with strings
 
 //CONFIG OPTIONS
 qt                        // Link against qt library
@@ -430,12 +430,18 @@ join(MY_VAR, , prefix, suffix)   // Returns MY_VAR with suffix and prefix (both 
 list(one two three)              // Returns a list of strings
 lower(MY_VAR, MY_VAR2...)        // Takes n values and converts them to lower case
 upper(MY_VAR, MY_VAR2...)        // Takes n values and converts them to upper case
-member(MY_LIST, start, end)      // Returns slice of list between zero-based indices
+member(MY_LIST, start, end)      // Returns slice of list between zero-based indices, use str_member() for strings
 num_add(MY_VAR, MY_VAR2...)      // Takes n values and returns sum
 re_escape("String")              // Returns string with regular expression characters escaped with a backslash
 quote("String")                  // Adds " to a string
 sprintf("String", MY_VAR...)     // Replaces %1-%9 in string with variables
 reverse(MY_VAR)                  // Returns value of MY_VAR in reverse order
+size(MY_VAR)                     // Returns number of values in MY_VAR, use str_size() for strings
+sorted(MY_VAR)                   // Returns list of ascended sorted values in MY_VAR	
+split(MY_VAR, delim)             // Returns a list of MY_VAR seperated by delim
+take_first(MY_VAR)               // Returns the first item and pops it
+take_last(MY_VAR)                // Returns the last item and pops it
+unique(MY_VAR)                   // Returns MY_VAR with any duplicate items removed
 
 //REPLACE FORMAT FUNCTIONS
 //Floating-point numbers are currently not supported
