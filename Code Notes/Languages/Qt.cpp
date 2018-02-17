@@ -270,6 +270,7 @@ Text {
 • Generates Makefiles from a project files (.pro) and includes build rules for moc and uic
 • Project files include a list of source/header files, libraries, include paths, configuration info
 • Project files can be auto-generated from Qt Creator wizard and qmake
+• Should only use directory separator / regardless of platform
 **************************************************************************************************************/
 
 //===================================================================================================
@@ -381,17 +382,40 @@ win32 {}                      // do if windows configuration
 win32:debug {}                // can combine nested scopes
 win32|macx {}                 // do if either is true
 win32:DEFINES += TEST         // add only if win32
-CONFIG(opengl) {}             // alternative to scope
+for(var, $$MY_LIST) {}        // takes a list variable eg. list(one two three)
+if(expression) {} else {}
 win32 {} else:macx {} else {}
 
-// FUNCTIONS
-exists(main.cpp) {}           // do code inside if file exists, !exists(){} for negative
-error("error")                // print an error
-message("message")            // print a message
-include(other.pro)            // include another project file
+//FUNCTIONS
+include(other.pro)               // Include another project file
+log("Message")                   // Same as message() but without line break
+error("String")                  // Print an error and exits
+message("String")                // Prints a message
+warning("String")                // Prints a warning
+prompt("String")                 // Shows a dialog prompt and returns answer
+mkpath("c:/MyPath")              // Creates a new path
+requires(expression)             // Evaluates expression, if false, qmake skips file
+system("cd Folder")              // Execute using the command line
+unset(MY_VAR)                    // Undefines variable
+
+//TEST FUNCTIONS
+//Return bool, can be used as fn(){}, putting ! in front negates
+CONFIG(option)                     // Succeeds if config option is on
+contains(MY_VAR, value)            // Succeeds if MY_VAR contains value
+count(MY_VAR, n)                   // Succeeds if contains a list with n values
+debug(level, "String")             // Succeeds if qmake debug level is set, prints message if so
+defined(MY_VAR)                    // Succeeds function or variable name is defined
+equals(MY_VAR, value)              // Succeeds if MY_VAR equals value, can use isEqual()
+eval(expression)                   // Succeeds if expression succeeds, same as if block
+exists(main.cpp)                   // Succeeds if file exists
+greaterThan(MY_VAR, value)         // Succeeds if MY_VAR > value
+infile("file.txt", MY_VAR, value)  // Succeeds if file contains variable with name and optionally value
+isEmpty(MY_VAR)                    // Succeeds if MY_VAR is empty or has no value
 
 //REPLACE FUNCTIONS
-absolute_path("file.txt")
+//To use return value, put $$ in front
+absolute_path("file.txt")	     // Returns path as absolute
+relative_path("c:/file.txt")     // Returns path as relative
 basename("MyPath/file.txt")      // Returns file name
 cat("file.txt")                  // Returns contents of file
 clean_path("MyPath/file.txt")    // Returns normalized path, converts to / and removes .
@@ -400,8 +424,18 @@ enumerate_vars()                 // Returns list of all defined variable names
 find(MY_VAR, expression)         // Returns all the values in MY_VAR that match the regex
 files(expression, true)          // Returns list of files using regex from working dir, true for recursion
 first(MY_VAR)                    // Returns first of MY_VAR if a list
+last(MY_VAR)                     // Returns last of MY_VAR if a list
 getenv(MY_ENV_VAR)               // Returns value of env var, supports var names with () in them
 join(MY_VAR, , prefix, suffix)   // Returns MY_VAR with suffix and prefix (both optional)
+list(one two three)              // Returns a list of strings
+lower(MY_VAR, MY_VAR2...)        // Takes n values and converts them to lower case
+upper(MY_VAR, MY_VAR2...)        // Takes n values and converts them to upper case
+member(MY_LIST, start, end)      // Returns slice of list between zero-based indices
+num_add(MY_VAR, MY_VAR2...)      // Takes n values and returns sum
+re_escape("String")              // Returns string with regular expression characters escaped with a backslash
+quote("String")                  // Adds " to a string
+sprintf("String", MY_VAR...)     // Replaces %1-%9 in string with variables
+reverse(MY_VAR)                  // Returns value of MY_VAR in reverse order
 
 //REPLACE FORMAT FUNCTIONS
 //Floating-point numbers are currently not supported
