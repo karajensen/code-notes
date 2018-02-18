@@ -479,3 +479,61 @@ QT_INSTALL_TESTS          // location of Qt test cases
 QT_INSTALL_TRANSLATIONS   // location of translation information for Qt strings
 QT_SYSROOT                // the sysroot used by the target build environment
 QT_VERSION                // the Qt version
+  
+//===================================================================================================
+//META-OBJECT COMPILER (MOC)
+//===================================================================================================
+
+//===================================================================================================
+//USER INTERFACE COMPILER (UIC)
+//===================================================================================================
+  
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//QT HELP
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
+• Includes tools for generating and viewing Qt help files
+• Provides framework for accessing help contents / integrating online help programmatically
+• Can view help files through Qt Assistant browser or linking to QHelpEngine API
+• 4 files involved with generating help documentation:
+-------------------------------------------------------------------------------------------------------
+Qt Help Project    | .qhp  | The input file for the help generator consisting of the table of contents, 
+                   |       | indices, and references to the actual documentation files (*.html). 
+                   |       | It also defines a unique namespace for the documentation. Generates .qch
+                   |       | when calling qhelpgenerator doc.qhp -o doc.qch
+                   |       | 
+Qt Compressed Help | .qch  | The output file of the help generator. This binary file contains all the 
+                   |       | information specified in the help project file along with all the 
+                   |       | compressed documentation files.
+                   |       | 
+Qt Help Collection | .qhcp | The input file for the help collection generator. It contains references 
+Project            |       | to the compressed help files that should be included in the collection; 
+                   |       | it also may contain other information for customizing Qt Assistant. 
+                   |       | Generates a .qhc file by calling:
+                   |       | qcollectiongenerator mycollection.qhcp -o mycollection.qhc              
+                   |       | 
+Qt Help Collection | .qhc  | The output of the help collection generator. This is the file QHelpEngine 
+                   |       | operates on. It contains references to any number of compressed help files 
+                   |       | as well as additional information, such as custom filters.
+-------------------------------------------------------------------------------------------------------
+**************************************************************************************************************/
+
+// ACCESSING HELP FILES
+QHelpEngineCore helpEngine("help.qhc");
+QMap<QString, QUrl> links = helpEngine.linksForIdentifier("keyword"));
+// If help is available for this keyword, get the help data
+if (links.count()) 
+{
+    QByteArray helpData = helpEngine->fileData(links.constBegin().value());
+    if (!helpData.isEmpty())
+    {
+        displayHelp(helpData);
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//QT LINGUIST
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
