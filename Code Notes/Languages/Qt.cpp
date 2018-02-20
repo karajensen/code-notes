@@ -456,7 +456,7 @@ isEmpty(MY_VAR)                    // Succeeds if MY_VAR is empty or has no valu
 
 //REPLACE FUNCTIONS
 //To use return value, put $$ in front
-absolute_path("file.txt")	     // Returns path as absolute
+absolute_path("file.txt")	       // Returns path as absolute
 relative_path("c:/file.txt")     // Returns path as relative
 basename("MyPath/file.txt")      // Returns file name
 cat("file.txt")                  // Returns contents of file
@@ -570,4 +570,25 @@ if (links.count())
 //QT LINGUIST
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*************************************************************************************************************
+LUPDATE
+• Tool to synchronize source code and translations
+• Finds translatable strings from files specified in .pro and creates/updates .ts translation files
+• Run using: lupdate myproject.pro
 
+LRELEASE
+• Tool to create run-time translation files for use by the released application
+• Creates binary QM files out of TS files
+• Run using: lrelease myproject.pro
+
+QT LINGUIST TOOL
+• Translate text in applications using TS files, can save out QM files
+• Includes phrase book
+**************************************************************************************************************/
+
+// PROJECT FILE
+// Each language required needs to be specified
+TRANSLATIONS    = superapp_dk.ts \
+                  superapp_fi.ts \
+                  superapp_no.ts \
+                  superapp_se.ts
