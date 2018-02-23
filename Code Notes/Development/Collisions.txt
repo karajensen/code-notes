@@ -2,7 +2,6 @@
 //COLLISIONS
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-COLLISION ALGORITHM REFERENCE: http://www.realtimerendering.com/intersections.html
 PERFECTLY ELASTIC COLLISION: collision with no loss of energy
 COLLISION DETECTION: Detection/prediction of collision of objects
 COLLISION RESOLUTION: Physics rules applied to the colliding objects as a result of the event
