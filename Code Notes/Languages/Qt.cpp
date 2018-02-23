@@ -162,6 +162,11 @@ QOBJECT MOC LIMITATIONS:
 • Function Pointers cannot be direct signal/slot Parameters, work-around is to typedef it
 • Enums/typedefs cannot be forward decl for signal/slot parameters
 • Nested Classes cannot have signals or slots
+
+PARENT-CHILD RELATIONSHIP:
+• Parent needs to be explicitly deleted, either by delete or stack scope
+• Children deleted by parent automatically, if child is deleted first, parent is notified
+• Children should not be created on the stack as parent assumes children are heap allocated
 **************************************************************************************************************/
 
 class MyClass : public QObject
