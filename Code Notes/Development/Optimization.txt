@@ -1,6 +1,6 @@
-﻿///////////////////////////////////////////////////////////////////////////////////////////////////
-//PROGRAMMING OPTIMIZATION
-///////////////////////////////////////////////////////////////////////////////////////////////////
+﻿/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// PROGRAMMING OPTIMIZATION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 • A compiler may reorder instructions for the sake of parallel execution
 • Branches are often predicted before evaluated, hard to predict branches can be costly
@@ -20,9 +20,9 @@
 • STL container empty() is always O(1), size() may be O(n) depending on container
 • Loop conditions are evaluated each iteration, evaluate any constants before loop starts
 
-===================================================================================================
+===============================================================================================================
 CACHE-FRIENDLY PROGRAMMING
-===================================================================================================
+===============================================================================================================
 
 • Cache misses are where data needs to be fetched from RAM
 • Memory stored together is fetched together: whole cache line is taken even if only a byte is required
@@ -30,25 +30,25 @@ CACHE-FRIENDLY PROGRAMMING
 • Data can complete for same cache lines (large pow of 2 arrays) resulting in excessive writing/flushing 
 • Fragmentation of heap means more cache misses
 
---------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
 ARRAYS
---------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
 • Linear arrays are cache-friendly
 • Hardware can pre-fetch elements if traversal is forwards/backwards in predictable way
 • 2D arrays should always have outer loop rows, inner loop columns where arr[row][column]
     - Other row members are part of cache line when fetched and fast to traverse
     - Column members cause a cache miss
 
---------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
 OBJECTS
---------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
 • Object is aligned in memory so if single member is used often chunk of object will be cached
 • Reorder class members so the data aligns without extra padding to reduce amount of data fetched
 • Store any frequently accessed booleans in seperate array
 
---------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
 FALSE SHARING
---------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
 • Seperate cores have same data cached and one writes to it with synchronisation:
     - Entire cache line is invalidated
     - Entire cache line is fetched again
@@ -66,9 +66,9 @@ for (int i = 0; i < n; ++i)
     });
 }
 
-===================================================================================================
+===============================================================================================================
 MEMORY ALLOCATORS
-===================================================================================================
+===============================================================================================================
 
 • May improve performance/memory usage and reduce fragmentation of heap
 • Handle requests for allocation and deallocation of memory for a container
@@ -79,9 +79,9 @@ MEMORY POOL ALLOCATOR
 • Requests by container are from the pool and returned to the pool
 • Pool is deallocated when lifetime of container ends
 
-===================================================================================================
+===============================================================================================================
 SYMMETRIC INSTRUCTION IN MULTIPLE DATA (SIMD)
-===================================================================================================
+===============================================================================================================
 
 • Same intructions done in parallel on multiple data objects
 • Registers (XMM, MMX, YMM) optimized for doing same work on vectorized floats and/or ints
@@ -103,9 +103,9 @@ for(int i = 0; i < 100; i+=4)
     s3 += arr[i+3]
 sum = s0 + s1 + s2 + s3
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//RENDERING OPTIMIZATION
-///////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// RENDERING OPTIMIZATION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 • Don't allocate stencil if you don't use it
 • R5G6B5 color sufficient for dynamic reflection maps
@@ -136,9 +136,9 @@ OCCLUSION CULLING
 • Can use a plane to represent occluder (similar to frustum culling)
 • Can use Potential Visible Sets for indoor scenes
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//SHADER OPTIMIZATION
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SHADER OPTIMIZATION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 • Floats faster for calculations, integers faster for indexing
 • Use half instead of float where strict precision isn't important

@@ -87,14 +87,15 @@
   <ItemGroup>
     <ClCompile Include="Development\Concurrency.cpp" />
     <ClCompile Include="Development\Design Patterns.cpp" />
-    <ClCompile Include="Development\Render Engines.cpp" />
     <ClCompile Include="Development\Shaders.cpp" />
     <ClCompile Include="Development\Web Development.cpp" />
     <ClCompile Include="Languages\C++ Boost.cpp" />
     <ClCompile Include="Languages\C++ Class.cpp" />
-    <ClCompile Include="Languages\C++ Algorithms.cpp" />
     <ClCompile Include="Languages\C++ Code.cpp" />
+    <ClCompile Include="Languages\C++ Error Handling.cpp" />
     <ClCompile Include="Languages\C++ Memory.cpp" />
+    <ClCompile Include="Languages\C++ Render Engines.cpp" />
+    <ClCompile Include="Languages\C++ STL Algorithms.cpp" />
     <ClCompile Include="Languages\C++ STL Containers.cpp" />
     <ClCompile Include="Languages\C++ STL.cpp" />
     <ClCompile Include="Languages\C++ Templates.cpp" />

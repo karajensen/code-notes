@@ -1,6 +1,6 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////
-//PROGRAMMING NOTES
-////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// PROGRAMMING NOTES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 C++ VARIABLE               C# VARIABLE      BYTES     RANGE
 bool                       bool             1         true/false
@@ -95,9 +95,9 @@ CHARACTER ENCODING
 • UTF-8 (Unicode) backward compatibly with ASCII and use 1 byte- other characters require 2-4 bytes
 • UTF-16 (Unicode) better when not using ASCII- can represent some characters with less memory than UTF-8
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//PROGRAM EXECUTION
-////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// PROGRAM EXECUTION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 1) PREPROCESSOR
 • Accepts Source code, Outputs Source code
@@ -119,9 +119,9 @@ OPCODE: single executable machine language instruction
 OPERANDS: arguments given after the opcode
 MNEMONICS: set to equal an opcode or a series of opcodes/operands
 
-===============================================================================
+===============================================================================================================
 CPU MEMORY LOCATIONS
-===============================================================================
+===============================================================================================================
 
 REGISTERS
 • Physical Temporary storage for processing data/calculations taken from cache
@@ -156,9 +156,9 @@ RANDOM ACCESS MEMORY (RAM)
 • Physical Main memory where everything is held for execution
 • Virtual memory is memory on hard drive extending RAM
 
-===============================================================================
+===============================================================================================================
 RAM MEMORY LOCATIONS
-===============================================================================
+===============================================================================================================
 
 SEGMENTS 
 • Sections of memory used for various purposes
@@ -194,9 +194,9 @@ THE HEAP
 • Free Store may be the Heap or a seperated area so new/delete and malloc/free can't be interchanged
 • Segmentation fault caused if accessing memory after its deleted
 
-===============================================================================
+===============================================================================================================
 VISUAL STUDIO DEBUG MEMORY ALLOCATION
-===============================================================================
+===============================================================================================================
 
 • Debug uses more memory than release to store guard bytes/information about allocated memory
 • Guard bytes are used to detect buffer overruns/underruns
@@ -216,9 +216,9 @@ VISUAL STUDIO DEBUG MEMORY ALLOCATION
 0xDEADDEAD : Microsoft Windows STOP Error code used when the user manually initiates the crash
 0xc0000005 : Exception Code Access Violation, accessing an null pointer
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//CLASSES/STRUCTS/FUNCTIONS
-////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CLASSES/STRUCTS/FUNCTIONS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 FUNCTION DECLARATION/PROTOTYPE: Function header
 FUNCTION DEFINITION: Function including body
@@ -293,9 +293,9 @@ FASTCALL CALLING CONVENTION
 • Additional/large arguments passed via stack. 
 • Calling function cleans the stack
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//OBJECT ORIENTED PROGRAMMING
-////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// OBJECT ORIENTED PROGRAMMING
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 POLYMORPHISM: Implementing the same methods in different ways
 ABSTRACTION: Providing an interface for commonly used actions (eg. IMyClass, =0)
@@ -304,9 +304,9 @@ RE-USABILITY: Preventing code duplication (eg. templates, shared functions/class
 DATA HIDING: Type of encapsulation- hiding members from view (eg. Pimpl)
 ENCAPSULATION: Hiding private implementation details behind a public interface/class (eg. private/public)
 
-===============================================================================
+===============================================================================================================
 INHERITANCE
-===============================================================================
+===============================================================================================================
 COVARIANCE: Allows assinging MyClass or derived from it to MyClass object [polymorphism basis]
 CONTRAVARIANCE: Allows assigning MyClass or what MyClass derived from to MyClass object 
 INVARIANCE: Allows neither
@@ -320,9 +320,9 @@ HAS-A RELATIONSHIP
 • Interface can still be used within class methods, but not outside class
 • Containment/Composition/Layering, Private/Protected inheritance
 
-===============================================================================
+===============================================================================================================
 POLYMORPHISM
-===============================================================================
+===============================================================================================================
 AD-HOC POLYMORPHISM: object types are explicitly defined for overloading
 PARAMETRIC POLYMORPHISM: object types aren't defined, any object can be used
 
@@ -343,9 +343,9 @@ PARAMETRIC POLYMORPHISM: object types aren't defined, any object can be used
    BaseClass* pBase = &derivedObject;
    pBase->MyVirtualFunction();
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//BIT MANIPULATION
-///////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// BIT MANIPULATION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 BYTE: 8 bits
 WORD: 2 bytes
@@ -379,9 +379,9 @@ BIG ENDIAN
 • multi-byte values are written most significant byte first
 • 0x12345678 is written in memory as 12 34 56 78
 
------------------------------------------------------------------------------------------------
+===============================================================================================================
 BITWISE OPERATORS
------------------------------------------------------------------------------------------------
+===============================================================================================================
 ~   bitwise NOT   Flips every bit                                   ~00000011 = 11111100
 |   bitwise OR    For every bit if a or b have 1 then use 1         00000011 | 00000100 = 00000111
 &   bitwise AND   For every bit if a and b have 1 then use 1        00000011 & 11111101 = 00000001
@@ -389,9 +389,9 @@ BITWISE OPERATORS
 <<  left shift    Moves all bits to the left, adds 0 to the start   10000011 << 3 = 00011000
 >>  right shift   Moves all bits to the right, adds 0 to the end    10000011 >> 3 = 00010000
 
------------------------------------------------------------------------------------------------
+===============================================================================================================
 BIT MANIPULATION
------------------------------------------------------------------------------------------------
+===============================================================================================================
 • Bits accessed where n = [0, total bits-1]
 • Bits go from least significant (b0) to most significant (bn-1)
 • Bits read from left to right (little endian)
@@ -449,9 +449,18 @@ Mask6  = 32    0x020    0x00000020    00100000
 Mask7  = 64    0x040    0x00000040    01000000
 Mask8  = 128   0x080    0x00000080    10000000
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//EXCEPTIONS
-///////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// EXCEPTIONS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+EXCEPTION REASONS
+• Program accesses an invalid memory address (such as NULL pointer)
+• Stack overflows due to infinite recursion
+• Large block of data is written to a small buffer
+• A pure virtual method of a C++ class is called
+• Memory buffer can't be allocated (out of memory)
+• Invalid parameter is passed to a C++ system function
+• C run-time libraries detect an error and request program termination
 
 EXCEPTION NEUTRAL
 • Exceptions thrown should be propagated unchanged to the objects's caller
@@ -467,9 +476,9 @@ ABRAHAMS GUARANTEE: STRONG
 ABRAHAMS GUARANTEE: NOTHROW
 • Failure and exceptions do not happen
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//NETWORKING
-///////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// NETWORKING
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 NETWORK: Requires common language (protocol) and link (wireless or physical)
 ROUTER: Directs network traffic along the correct route

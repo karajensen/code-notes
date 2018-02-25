@@ -1,6 +1,6 @@
-﻿/////////////////////////////////////////////////////////////////////////////////////////////////////
-//ALGORITHMS AND STRUCTURES
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ALGORITHMS AND STRUCTURES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 GREEDY ALGORITHM: Takes the best/highest value first and moves to the lower values
 DIVIDE AND CONQUER: Smaller problems solved recursively and pulled together to form overall solution
@@ -12,9 +12,9 @@ STABLE SORT: Maintains the original order of equal elements
 COMPARISON SORT: Examines data only by comparing two elements with operator
 DISTRIBUTION SORT: Data is distributed to multiple intermediate structures
 
-=====================================================================================================
+===============================================================================================================
 ARRAY SORTING     AVG SPD     SPACE    DESCRIPTION
-=====================================================================================================
+===============================================================================================================
 Quick Sort        O(NlogN)    O(logN)  Comparison, Recursive, Unstable, Fastest average though can get worst speed of O(N²)
 Heap Sort         O(NLogN)    O(1)     Comparison, In-place, Unstable, Removes top of heap and reconstructs
 Merge Sort        O(NlogN)    O(N)     Comparison, Recursive, Stable, Continually splits elements in half
@@ -24,18 +24,18 @@ Insertion Sort    O(N²)       O(1)     Comparison, In-place, Stable, Bad for la
 Selection Sort    O(N²)       O(1)     Comparison, In-place, Can be stable, Bad for large arrays
 Bubble Sort       O(N²)       O(1)     Comparison, In-place, Stable, Swaps elements, Slowest of all sorts
 
-=====================================================================================================
+===============================================================================================================
 SEARCHING              AVG SPD   SPACE   TYPE         DESCRIPTION
-=====================================================================================================
+===============================================================================================================
 Binary Search          O(logN)   O(1)    Array        Sorted arrays, compares the value with the middle element
 Linear Search          O(N)      O(1)    Array        Unsorted arrays, Brute force checking
 Breadth-First Search   O(N+E)    O(N)    Graph/Tree   Traverses to all children before moving down a level
 Depth-First Search     O(N+E)    O(N)    Graph/Tree   Traverses graph to the greatest depth before backtracking
 A*                     O(E)      O(N)    Graph/Tree   Pathfinding using heuristics to traverse
 
-=====================================================================================================
+===============================================================================================================
 STRUCTURES       ACCESS    SEARCH    INSERT     REMOVE    DESCRIPTION
-=====================================================================================================
+===============================================================================================================
 Array            O(1)      O(N)      O(N)       O(N)      Block of continuous memory
 List             O(N)      O(N)      O(1)       O(1)      Elements scattered and linked to each other
 Stack            ---       ---       O(1)       O(1)      Last-In-First-Out
@@ -46,15 +46,15 @@ BS Trees         O(logN)   O(logN)   O(logN)    O(logN)   Binary Tree where left
 Heap             ---       O(N)      O(logN)    O(logN)   Weakly ordered binary tree where root is highest value
 B-Tree           O(logN)   O(logN)   O(logN)    O(logN)   Tree with more than 2 children per node
 
-=====================================================================================================
+===============================================================================================================
 ALGORITHM            INPUT    DESCRIPTION
-=====================================================================================================
+===============================================================================================================
 Kadane's Algorithm   Array    Find the maximum continuous subsequence in an array
 Euclid's Algorithm   2 ints   Find the largest integer that divides 2 integers
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//BIG-O NOTATION
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// BIG-O NOTATION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 • Used to describe the performance of algorithm based on item amount
 • O(1) Linear time and doesn't depend on number of items
@@ -82,13 +82,13 @@ Euclid's Algorithm   2 ints   Find the largest integer that divides 2 integers
 |                                |         DoSomething();              |
 ------------------------------------------------------------------------
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//ARRAY ALGORITHMS
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ARRAY ALGORITHMS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
---------------------------------------------------------------------------------------
+===============================================================================================================
 QUICK SORT
---------------------------------------------------------------------------------------
+===============================================================================================================
 • Fatest, can be slowest if worst-case scenario
 • Sorts in ascending order
 1) Partition the container to values lower than pivot and values higher
@@ -110,9 +110,9 @@ QUICK SORT
 
 [1   2   5   6   3]  [8   6   9   7]     Run again on each partition until sorted
 
---------------------------------------------------------------------------------------
+===============================================================================================================
 MERGE SORT
---------------------------------------------------------------------------------------
+===============================================================================================================
 • Good if require stable sort
 • Sorts in ascending order
 1) Container is divided into sublists having 1 element
@@ -128,9 +128,9 @@ MERGE SORT
    \       /
     2 3 5 7
 
---------------------------------------------------------------------------------------
+===============================================================================================================
 BUBBLE SORT
---------------------------------------------------------------------------------------
+===============================================================================================================
 • Slow but easy to implement
 • Sorts in ascending order
 1) Iterate through array once for every value
@@ -141,9 +141,9 @@ BUBBLE SORT
 2 4 (5 3) 6   Swap
 2 4 3 (5 6)   Keep and move to next value
 
---------------------------------------------------------------------------------------
+===============================================================================================================
 BINARY SEARCH
---------------------------------------------------------------------------------------
+===============================================================================================================
 • Requires ascending sort
 • Swap end/start assignment in loop for descending sort
 1) Look at middle value and check if required value
@@ -154,9 +154,9 @@ BINARY SEARCH
 5 [6] 7 8              5 < 6: discard second section
 [5]
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//HASH TABLES
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// HASH TABLES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 • Fixed size list of records organized according to a unique key
 • Object is hashed into an integer (key) using the hash function
@@ -208,9 +208,9 @@ ROBIN-HOOD HASHING: Variation of double hashing
 PROBABILISTIC HASHING: Drops or replaces value upon collision
 PERFECT HASHING: prevents collision with known keys/array size
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//GRAPH/TREES
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// GRAPH/TREES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 GRAPH: Nodes/Vertices
 TREE: Root/Nodes/Edges, Directed Acyclic Graph with no recursion/cycles
@@ -236,9 +236,9 @@ TRIE: Node key is constructed from position in tree combining parents, used for 
 PARTITIONING TREE: Subdivide a space/object into partitions
 MINIMAX TREE: Game tree for a 2-player game alternating between lowest/highest choice
 
-=====================================================================================================
+===============================================================================================================
 BINARY TREES
-=====================================================================================================
+===============================================================================================================
 
 BINARY SEARCH TREE
 • The left subtree of a node contains only nodes with values less than the node
@@ -281,9 +281,9 @@ RED-BLACK TREE
 • All leaf nodes must have a 'nil' node
 • All red nodes must have 2 black or nil nodes
 
-=====================================================================================================
+===============================================================================================================
 B-TREES
-=====================================================================================================
+===============================================================================================================
 
 GENERIC B-TREE
 • Tree with multiple children
@@ -296,9 +296,9 @@ GENERIC B-TREE
 • 3-node has two data elements, and if internal has three child nodes;
 • 4-node has three data elements, and if internal has four child nodes.
 
-=====================================================================================================
+===============================================================================================================
 PARTITIONING TREES
-=====================================================================================================
+===============================================================================================================
 
 BINARY SPACE PARTITIONING TREES
 • Spacial Partitioning Scheme
@@ -329,9 +329,9 @@ BOUNDING VOLUME HIERARCHY TREE
 • Object Partitioning Scheme
 • Used in collision detection and ray tracing
 
-=====================================================================================================
+===============================================================================================================
 MINIMAX TREES
-=====================================================================================================
+===============================================================================================================
 
        6        (root)
       / \
@@ -365,9 +365,9 @@ Anything less than highest choice (α) for player doesn't need to be looked at
 Anything more than lowest choice (β) for opponent doesn't need to be looked 
 Values searched are in range [min->max] [α->β] ([-INF,INF] initially)
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//GRAPH/TREE ALGORITHMS
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// GRAPH/TREE ALGORITHMS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 HEAP NODE INSERTION
 • Insert node in the fartest right location of the lowest depth level
@@ -465,9 +465,9 @@ A* PATHFINDING
 6) Once all connected nodes are finished, add the parent node to the closed list
 7) Continue until goal node or no solution is found 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//NP-COMPLETE/HARD PROBLEMS
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// NP-COMPLETE/HARD PROBLEMS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 • Exercises in heuristics and approximation
 • Time required to solve the problem using any currently known 

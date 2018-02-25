@@ -1,6 +1,6 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//ALGORITHMS
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ALGORITHMS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <algorithm>
 
 auto doCopyLam = [](auto obj) -> MyClass { obj.SomeMethod(); return obj; };
@@ -32,9 +32,9 @@ greater_equal<T> op // (const T& x, const T& y) const {return x>=y;}
 greater<T> op       // (const T& x, const T& y) const {return x>y;}
 equal_to<T> op      // (const T& x, const T& y) const {return x==y;}
 
-//================================================================================================================
+//===============================================================================================================
 // NON-MODIFYING SEQUENCE OPERATIONS
-//================================================================================================================
+//===============================================================================================================
 
 adjacent_find(S, E, equalLam) //Returns iterator to first element that is repeated consecutivly or E if not found
 all_of(S, E, boolLam) //If all objs return true then returns true, else false; If no objs in range returns true
@@ -65,9 +65,9 @@ lexicographical_compare(S1, E1, S2, E2, equalLam)
 &myVector[0] //pointer to first member in vector; memory in continuous block
 myString.c_str() //string in c-style, can't use &myString[0] as string may not be in continuous block
                                                                                            
-//================================================================================================================
+//===============================================================================================================
 // MODIFYING SEQUENCE OPERATIONS
-//================================================================================================================
+//===============================================================================================================
 
 copy(S, E, ostream_iterator<T>(cout, " ")); //copy container into output stream with space between elements   
 copy(S, E, S2) //copies O into O2, returns iterator to E2
@@ -126,9 +126,9 @@ obj.clear();                         // Make obj empty with current capacity
 std::vector<MyClass>().swap(obj);    // Make obj empty with minimal capacity
 std::vector<MyClass>(obj).swap(obj); // Make obj with minimal capacity
 
-//================================================================================================================
+//===============================================================================================================
 // PARTITIONING OPERATIONS
-//================================================================================================================
+//===============================================================================================================
 
 //Splits container to those returning true and those returning false
 is_partitioned(S, E, boolLam) //returns true if all elements returning true occur before those returning false
@@ -137,9 +137,9 @@ partition_copy(S, E, S2, S3, boolLam) //those returning true copied to 2, those 
 partition_point(S, E, boolLam) //requires container to be partitioned; returns iterator to first element returning false
 stable_partition(S, E, boolLam) //same as parition but keeps original ordering between both partitions
 
-//================================================================================================================
+//===============================================================================================================
 // SORTING OPERATIONS
-//================================================================================================================
+//===============================================================================================================
 
 //requires random access (can't be used on lists)
 is_sorted(S, E, sortLam) //returns false if not sorted in ascending order, stop when mismatching pair found
@@ -151,18 +151,18 @@ sort(S, E, sortLam) //sorts container in ascending order, without lamda uses ope
 sort(S, E, greater<double>()) //using inbuilt functor
 stable_sort(S, E, sortLam) //sorts container in ascending order, equal elements preserve original order
     
-//================================================================================================================
+//===============================================================================================================
 // BINARY SEARCH OPERATIONS
-//================================================================================================================
+//===============================================================================================================
 
 binary_search(S, E, myObj, equalLam) //returns true if lamda is true, requires sorting
 equal_range(S, E, myObj, equalLam) //Returns pair of itrs for bounds of subrange with values that return true for equalLam
 lower_bound(S, E, myObj, sortLam) //returns first value found >= myObj, requires sorting, If not found, returns E
 upper_bound(S, E, myObj, sortLam) //returns first value found > myObj, requires sorting, If not found, returns E
     
-//================================================================================================================
+//===============================================================================================================
 // SET OPERATIONS
-//================================================================================================================
+//===============================================================================================================
 
 //Only used on sorted ranges, all elements remain in sorted ascending order
 includes(S, E, S2, E2) //returns true if range 2 is in range 1; both ranges must be sorted in ascending order
@@ -172,9 +172,9 @@ set_intersection(S, E, S2, E2, back_inserter(S3)) //copies elements in 1 that ar
 set_difference(S, E, S2, E2, back_inserter(S3)) //copies elements in 1 that are not in 2 into 3
 set_symmetric_difference(S, E, S2, E2, back_inserter(S3)) //copies elements in 1 that don't exist in 2 and vice versa into 3
 
-//================================================================================================================
+//===============================================================================================================
 // HEAP OPERATIONS
-//================================================================================================================
+//===============================================================================================================
 
 is_heap(S, E, sortLam) //returns true if range is a heap
 make_heap(S, E, sortLam) //change range into a heap structure
@@ -183,9 +183,9 @@ pop_heap(S, E) //pop highest value on heap off heap (doesn't remove from contain
 sort_heap(S, E, sortLam) //sorts heap into ascending order; doing this loses properties as a heap
 myContainer.front() //get highest value on the heap
     
-//================================================================================================================
+//===============================================================================================================
 // MINIMUM/MAXIMUM OPERATIONS
-//================================================================================================================
+//===============================================================================================================
 
 clamp(T, min, max) //returns reference to min if T < min, reference to max if T > max or reference to T
 min(T, T) //returns minimum of two values
@@ -194,17 +194,17 @@ minmax(T, T) //returns std::pair(min,max) where .first is min and .second is max
 min_element(S, E, sortLam) //returns minimum element between range
 max_element(S, E, sortLam) //returns maximum element between
     
-//================================================================================================================
+//===============================================================================================================
 // PERMUTATIONS
-//================================================================================================================
+//===============================================================================================================
 
 is_permutation(S, E, S2, equalLam) //returns true if both ranges are equal to each other excluding ordering
 prev_permutation(S, E) //rearranges container to the next permutation, starting from sorted descended ordering
 next_permutation(S, E) //rearranges container to the next permutation, starting from sorted ascended ordering
     
-//================================================================================================================
+//===============================================================================================================
 // NUMERIC OPERATIONS
-//================================================================================================================
+//===============================================================================================================
 
 //In #include <numeric>
 accumulate(S, E, initial) //returns initial+values over whole range 
@@ -218,9 +218,9 @@ transform_reduce(execution::par, S1, E1, S2, initial) //same as reduce but copie
 partial_sum(S1, E1, S2) //for each C2 element add all previous values in C1: S2[i] = S1[i] + S1[i-1] + ... + S1[0]
 inclusive_scan(S1, E1, S2) //same as partial_sum except non-associative container operations may be done in any order    
     
-//================================================================================================================
+//===============================================================================================================
 // STRING CONVERSIONS
-//================================================================================================================
+//===============================================================================================================
     
 // STD::WSTRING TO/FROM STD::STRING
 string str(wstr.begin(),  wstr.end());

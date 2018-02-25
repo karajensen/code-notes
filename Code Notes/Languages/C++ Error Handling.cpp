@@ -1,25 +1,16 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-//ERROR HANDLING
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-/*****************************************************************************************************
-EXCEPTION REASONS:
-• Program accesses an invalid memory address (such as NULL pointer)
-• Stack overflows due to infinite recursion
-• Large block of data is written to a small buffer
-• A pure virtual method of a C++ class is called
-• Memory buffer can't be allocated (out of memory)
-• Invalid parameter is passed to a C++ system function
-• C run-time libraries detect an error and request program termination
-*****************************************************************************************************/
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ERROR HANDLING
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 assert(myPtr != nullptr);                    // break if myPtr is null
 assert(condition && "message");              // break with message
 static_assert(myConstInt > 0, "MyMessage");  // must use constant values, asserts at compile time
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-//C++ EXCEPTIONS
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-/*****************************************************************************************************
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// C++ EXCEPTIONS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
 C++ EXCEPTIONS:
 • Used for STL and user exceptions
 • Has different levels of exception guarantees
@@ -62,7 +53,7 @@ STANDARD LIBRARY EXCEPTIONS
 • Multi-range insert(begin,begin,end) has basic guarantee
 • Vector and Deque only: inserts or erases for multi or single objects are basic guarantee 
   if object constructor or assignment operator throws, otherwise strong guarantee
-*****************************************************************************************************/
+*************************************************************************************************************/
 
 try 
 { 
@@ -126,10 +117,11 @@ catch(const std::exception& e)
     cout << e.what() << endl;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-//STRUCTURED EXCEPTIONS (SEH)
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-/*****************************************************************************************************
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// STRUCTURED EXCEPTIONS (SEH)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
 SEH EXCEPTIONS:
 • Used for CPU exceptions such as access violation, illegal instruction, divide by zero
 • No exception guarantee; does not unwind the stack or call destructors
@@ -140,7 +132,7 @@ SEH EXCEPTIONS:
     - default EXCEPTION_REGISTRATION is always called last
     - once handled, the list is walked again but with EH_UNWINDING (value 2) set in the exception flags
     - EH_UNWINDING gives the oppotunity to do any cleanup
-*****************************************************************************************************/
+*************************************************************************************************************/
 __try
 {
 }

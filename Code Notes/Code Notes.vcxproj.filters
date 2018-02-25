@@ -60,9 +60,6 @@
     <ClCompile Include="Development\Web Development.cpp">
       <Filter>Development</Filter>
     </ClCompile>
-    <ClCompile Include="Development\Render Engines.cpp">
-      <Filter>Development</Filter>
-    </ClCompile>
     <ClCompile Include="Development\Concurrency.cpp">
       <Filter>Development</Filter>
     </ClCompile>
@@ -100,6 +97,15 @@
       <Filter>Languages</Filter>
     </ClCompile>
     <ClCompile Include="Languages\Javascript.cpp">
+      <Filter>Languages</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\C++ STL Algorithms.cpp">
+      <Filter>Languages</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\C++ Error Handling.cpp">
+      <Filter>Languages</Filter>
+    </ClCompile>
+    <ClCompile Include="Languages\C++ Render Engines.cpp">
       <Filter>Languages</Filter>
     </ClCompile>
   </ItemGroup>

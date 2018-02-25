@@ -1,7 +1,8 @@
-﻿/*/////////////////////////////////////////////////////////////////////////////////////////////////
-//DATABASES
-///////////////////////////////////////////////////////////////////////////////////////////////////
+﻿/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// DATABASES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*************************************************************************************************************
 DATABASE: Collection of tables that stores structured data
 TABLE: Collection of rows/columns for the data and controls to help validate it
 ROW: Row of individual records
@@ -53,11 +54,13 @@ RESTORING           Unavailable; File is being restored
 RECOVERY PENDING    Recovery of file is postponed
 SUSPECT             Recovery of file failed; if lives in primary filegroup, database marked as suspect
 DEFUNCT             The file was dropped when it was not online
+*************************************************************************************************************/
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//SYSTEM DATABASES
-///////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SYSTEM DATABASES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*************************************************************************************************************
 SQL SERVER
 • Database management system (DBMS) containing 5 system databases that are used to manage user-created databases
 • Maximum of 32,767 databases can be created on an instance of SQL Server
@@ -82,11 +85,13 @@ TEMPDB
 • Global resource that is available to all users connected to the instance of SQL Server
 • Holds temporary objects such as global and local temporary tables and stored procedures
 • Recreated every time SQL Server starts
+*************************************************************************************************************/
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//DATABASE DESIGN
-//////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// DATABASE DESIGN
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*************************************************************************************************************
 DESIGN RULES
 • Each table should have an primary key column where each row has a unique value
 • A table should avoid nullable columns as they increase complexity of operations
@@ -121,15 +126,18 @@ DATABASE KEYS
 EXTENDED PROPERTIES
 • Should not contain sensitive information
 • Used for captions, input masks for querying data, formatting rules, size/window location for display
+*************************************************************************************************************/
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//STRUCTURED QUERY LANGUAGE (SQL)
-//////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// STRUCTURED QUERY LANGUAGE (SQL)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
 • Not case sensitive- use [] if using a name that's also a keyword
 • Data Definition Language (DDL): Used to define the database structure, cannot be undone
 • Data Manipulation Language (DML): Used to managing data, can be undone
 • Syntax chosen mostly from SQL server, other DBMS can have different
-*/
+*************************************************************************************************************/
  
 /*TYPE                   BYTES    RANGE*/
 bigint                   8       -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
@@ -240,10 +248,9 @@ ALTER TABLE MyTable DROP COLUMN MyCol      /*delete column in table*/
 ALTER TABLE MyTable ADD MyCol int          /*add column to table*/
 ALTER TABLE MyTable ALTER COLUMN MyCol int /*change datatype of column*/
 
-/*////////////////////////////////////////////////////////////////////////////////////////////////
-//FUNCTIONS AND PROCEDURES
-//////////////////////////////////////////////////////////////////////////////////////////////////
-*/
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FUNCTIONS / PROCEDURES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*****************************************************************************
 AGGREGATE FUNCTIONS: Return a single value
