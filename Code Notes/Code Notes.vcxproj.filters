@@ -146,9 +146,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Languages\C# Notes.txt">
-      <Filter>Languages</Filter>
-    </Text>
     <Text Include="Development\Collisions.txt">
       <Filter>Development</Filter>
     </Text>
@@ -176,9 +173,6 @@
     </Text>
     <Text Include="Development\Algorithms.cpp">
       <Filter>Development</Filter>
-    </Text>
-    <Text Include="Languages\C++ Notes.txt">
-      <Filter>Languages</Filter>
     </Text>
     <Text Include="Interviews\Cheatsheet.txt">
       <Filter>Interviews</Filter>

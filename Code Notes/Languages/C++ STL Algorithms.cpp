@@ -3,6 +3,46 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <algorithm>
 
+/*************************************************************************************************************
+ATAN-ATAN2 DIFFERENCES:
+ATAN2: Looks at 4 quadrants
+ATAN: Looks at 2 quadrants
+                                   +y
+    atan(-x/+y) = +angle [0,-90]   |   atan(+x/+y) = +angle [0,90]
+   atan2(-x,+y) = +angle [0,-90]   |   atan2(+x,+y) = +angle [0,90]
+                                   |
+                       -x----------|----------+x
+                                   |
+    atan(-x/-y) = +angle [0,-90]   |   atan(+x/-y) = -angle [0,90)
+atan2(-x,-y) = +angle [-90,-180)   |   atan2(+x,-y) = +angle [90,180]
+                                   -y
+
+• Non-modifying: on const objects; Modifying: on non-const objects
+• Preferable to use container's equivalent method for stability
+• All ranges are [Start, End) with End non-inclusive
+• Comparison lambdas should always return false for equal values
+• Functors used are passed by-val and copied
+• In-built functors are faster than passing lambdas/function pointers due to them being inlined
+
+CONDITION          UNSORTED      SORTED               SET/MAP         MULTI SET/MAP
+does obj exist     std::find     std::binary_search  .count()        .find()
+find obj           std::find     std::equal_range    .count()        .find()     
+no. obj with val   std::count    std::equal_range    .count()        .count()
+find all obj       std::find     std::equal_range    .equal_range()  .equal_range()
+find obj if        std::find_if  std::lower_bound    .lower_bound()  .lower_bound()      
+
+SORT/SEARCHING
+• Sorting Fastest-slowest: Partitions, partial_sort, sort, stable_sort
+• Require sort ascending, Search speed O(logN): binary_search, lower_bound, upper_bound, equal_range
+• Don't require sorting, Search speed O(N): count, count_if, find, find_if
+• std::sort must be any algorithm with O(NlogN), std::stable_sort must be stable with O(NlogN)
+                    
+INSERTING
+• Algorithms that copy over a range can be changed to insert with back/front insert iterators
+• Emplacing is always as (if not more) effecient as insert/push
+• Never emplace arguments allocating memory through new in case of memory exception; use push/insert
+**************************************************************************************************************/
+
 auto doCopyLam = [](auto obj) -> MyClass { obj.SomeMethod(); return obj; };
 auto doLam = [](const auto& obj) { obj.NonConstMethod(); };
 auto boolLam = [](const auto& obj) ->bool { return o.Exists(); };

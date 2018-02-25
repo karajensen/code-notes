@@ -183,6 +183,14 @@ stopWatch.Reset() //resets timer
 // REFLECTION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*************************************************************************************************************
+Used For:
+• Accessing attributes of a class/method
+• Examining and instantiating types in an assembly
+• Building new types at runtime(Reflection.Emit)
+• Creating compilers
+**************************************************************************************************************/
+
 //GET DLL INFORMATION
 System.Reflection.Assembly assem = System.Reflection.Assembly.Load("myDLL.dll");
 assem.GetName() //get name, version information for dll

@@ -1,8 +1,79 @@
 ﻿/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// C# NOTES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
+.NET FRAMEWORK
+• Development framework for creating windows applications
+• Used by languages C#, VB.NET, C++/CLI
+• A type of COMMON LANGUAGE INFRASTRUCTURE (CLI)
+    |  
+    |__ COMMON TYPE SYSTEM (CTS)
+    |   • Shared basic data types used by .NET languages
+    |   
+    |__ BASE/FRAMEWORK CLASS LIBRARY (BCL/FCL)
+    |   • Shared classes used by .NET languages
+    |   
+    |__ COMMON LANGUAGE RUNTIME (CLR)
+        • Responsible for .NET program execution
+        • Contains Virtual Execution System, Garbage Collector, JIT Compiler, Managed Heap
+            |   
+            |__ VIRTUAL EXECUTION SYSTEM (VES)
+            |   • Environment for executing managed code
+            |   
+            |__ JUST-IN-TIME COMPILER (JIT)
+                • Source code is compiled into Common Intermediate Language (CIL)
+                • Microsoft Intermediate Language (MSIL) is another name for CIL
+                • CIL is stored in an assembly and converted to native code at runtime
+
+ASSEMBLIES
+• Exe/dll that contain metadata about the information inside and optional resources (images, sound)
+• Dll only loaded if required. Can use two versions of same assembly in single application
+• Share assemblies between applications using Global Assembly Cache
+• Assemblies must be strong named; guaranteed uniqueness
+• Assemblies contain modules. Modules contain classes.
+**************************************************************************************************************/
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // VARIABLES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//VALUE-TYPE VARIABLES
+/*************************************************************************************************************
+VALUE-TYPE VARIABLES
+• Structs, enums, nullable/basic data types, reference/pointer used to store a reference variable
+• Variable exists on stack or register, passed by-val and are copied deeply
+• Memory auto deleted by stack when out of scope
+• Equality: If both are same type and have same contents
+• Sealed: can't inherit anything or be derived from
+
+REFERENCE-TYPE VARIABLES
+• Classes, arrays, boxed value-types
+• Variable exists in the heap with a value-type object refering to it, copied shallow
+• Memory auto deleted by garbage collector when reference count equals zero
+• Equality: If both have the same memory address
+• Can inherit one class and be derived from
+
+ARRAYS
+• All arrays are reference even if elements are value-types
+• Inherit System.Array
+
+STRINGS
+• String literals are interned so that for each occurrence of a particular
+  string only occurs once in memory and can be referenced by multiple variables
+
+VARIABLE INITIALISATION
+• Class members and local variables at start of method and not within block scope auto-initialised
+• Must explicitly initialise variables in block scope or error
+**************************************************************************************************************/
+
+sbyte     System.SByte         byte    System.Byte
+short     System.Int16         ushort  System.UInt16
+int       System.Int32         uint    System.UInt32
+long      System.Int64         ulong   System.UInt64
+float     System.Single        double  System.Double
+decimal   System.Decimal       bool    System.Boolean
+
+// VALUE-TYPE VARIABLES
 short myShort;
 int myInt;
 long myLong = 2L;
@@ -18,11 +89,11 @@ bool myBool = true; //does not accept number
 BigInteger myBInt = 2.0; //grows as needed to accomadate size, no overflow
 MyStruct myStruct;
 
-//REFERENCE-TYPE VARIABLES
+// REFERENCE-TYPE VARIABLES
 object myObj = null;
 MyClass myObj = new MyClass();
 
-//VARIABLE USAGE
+// VARIABLE USAGE
 var myVar = "same as auto"
 int myInt = 1, myOtherInt = 2;
 myInt = myShort = 2;
@@ -30,7 +101,7 @@ myInt++;
 ++myInt;
 2 + 3; //expressions must be assigned to something (okay in C++)
 
-//DEFAULT VARIABLE VALUES
+// DEFAULT VARIABLE VALUES
 default(int) //returns default value for that type
 default(bool) //false
 default(number) //0
@@ -38,7 +109,7 @@ default(objects) //null
 default(String) //null
 default(enum) //0
 
-//VARIABLE CONSTANTS
+// VARIABLE CONSTANTS
 float.PositiveInfinity
 float.NegativeInfinity
 int.MaxValue
@@ -48,22 +119,33 @@ double.NegativeInfinity
 bool.FalseString
 bool.TrueString
 
-//NULLABLE VALUE-TYPES
+// NULLABLE VALUE-TYPES
 int? myint = null; //allows null to be assigned to value-type
 int myInt2 = (int)myint; //requires cast to convert
 
-//OVERFLOW CHECKING
+// OVERFLOW CHECKING
 checked(a+b) //checks expression for overflow and throws System.OverflowException
 checked{ /*do some calculations*/ }
 unchecked(a+b) //don't check expression
 
-//NOTATION
+// NOTATION
 uint = 0xFF00FF00; //hex notation
 var myVar = 1.0E-20f; //scientific notation
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // VARIABLE MODIFIERS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
+CONST/READONLY VARIABLE DIFFERENCES:
+• Const compile time and faster; Readonly runtime and slower
+• Const can be declared inside methods; Readonly only as member variable
+• Const replaces value during compilation; Readonly becomes const after contructor called
+• Const only used with inbuilt numbers/strings; Readonly used with everything
+• Const can't be initialised with 'new'; Readonly can be initialised with 'new'
+• Const can never be changed. Readonly objects only make the reference to the object 
+  constant, not the object itself. The reference can also be hacked through reflection.
+**************************************************************************************************************/
 
 public readonly int myConst; // Const, initialised once at runtime.
 public const int myConst = 1; // Const, initialised at compile time
@@ -232,8 +314,33 @@ myLabel:
 #pragma warning disable 168
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//DELEGATES
+// DELEGATES/EVENTS/LAMBDAS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
+DELEGATES
+• Reference to a method or lambda deriving from System.Delegate
+• Sealed; cannot be derived from
+
+ANONYMOUS DELEGATES
+• Can't use goto/break/continue to move outside delegate block
+• Auto captures a reference to any variables used within block
+• Until delegate lifetime is over these variables remain in memory
+• Cannot capture any ref/out variables from parent scope
+• Cannot use pointer or access unsafe code
+
+EVENTS
+• Holds delegates for publishers/subscribers
+• Publisher: class that sends the event
+• Subscriber: class that recieves/handles the event
+• Events that have no subscribers are never called
+
+LAMBDAS
+• A captured variable will not be garbage-collected until the lamda goes out of scope
+• Variables inside lambda are not visible outside
+• Lambda cannot directly capture a ref/out parameter from the parent method
+• Cannot contain goto, break, containue that moves to outside lambda
+**************************************************************************************************************/
 
 Func<int, double> myFn; //Takes in int, returns double
 Action<int> myFn; //Takes in int, no return value
@@ -308,6 +415,60 @@ MyDelegate myDel = MyFunction; //Accepts despite requiring derived as a paramete
 // OBJECT LIFETIME
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*************************************************************************************************************
+ROOT: Memory address for object on heap or null
+
+CLR HEAP
+• Reference-types live on heap; Value-types live in heap, register or stack
+• Constructing object through new adds block to the heap
+• Garbage collector removes the memory at intervals
+• Each block has a header; includes object type, and information for hash generation
+• 32-bit system, header is +8 bytes, 64-bit system, header is +16 bytes per object
+
+GARBAGE COLLECTION
+• When object is out of scope/not being used anymore, marked as dead by Garbage Collection
+• Garbage collection monitors own performance and adjusts settings as needed
+• Forcing garbage collection is not good; it can't tune itself properly
+
+LARGE OBJECT HEAP
+• Large objects greater than certain byte amount are stored on Large Object Heap
+• No heap relocation/compaction occurs due to cost of copying large objects
+
+HEAP GENERATIONS
+• When Generation 0 runs out of memory, does a collection and moves objects to next gen
+• The longer the object stays alive the more expensive it is to delete
+    Generation 0: Hasn't survived a garbage collection yet
+    Generation 1: Recently created object that's survived
+    Generation 2: Oldest generation for long lived objects
+• GC most effecient for objects with long or short lives.
+• GC least effecient for deleting objects just entering Generation 2
+  knowledge of this section will need to be rebuilt, may not be in the cache
+
+HEAP COMPACTION
+• As objects destroyed, heap becomes fragmented
+• Moving remaining objects together and then adding to heap is cheaper than slotting into the gaps
+• Older the generation, less heap compaction occurs
+• Careful when refering to direct addresses of objects as they will move around after compaction
+•
+PINNING MEMORY BLOCKS
+• Pinning a block sets a flag to disallow moving by the garbage collector
+• Calls to unmanaged code that requires pointers will auto pin/unpin the block
+• Causes more fragmentation and effeciancy issues to CLR heap, none to Large Object Heap
+
+WEAK REFERENCES
+• Short Weak Reference: Tells when object is unreachable or fully removed by GC
+• Long Weak Reference: Tells when object is fully removed by GC
+
+BOXING
+• Process of converting a value type to a System.Object reference type
+• Copy of the value-type is wrapped in System.Object and put on the heap
+• This boxed object remembers what the original type was and will only unbox if cast correctly
+• Unboxing copies the boxed value to another value-type variable
+• Boxing is implicit, Unboxing is reverse and explicit
+• Ineffecient as copying required and Garbage Collected needs to remove new boxed object
+• If nullable value-type is null, returns null before doing any boxing
+**************************************************************************************************************/
+
 //IDISPOSABLE
 //class that inherits IDisposable contains a destructor, use using() to ensure its called
 using(MyDisposable myDis = new MyDisposable())
@@ -331,6 +492,21 @@ bool isAlive = myWeakRef.TryGetTarget(out myObj2)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UNSAFE CODE
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
+POINTERS
+• Works on sbyte, byte, short, ushort, int, uint, long, ulong, char, float, double, decimal, bool
+• Works on void, enum and structs with value-types only
+• Cannot point to reference as garbage collector doesn't keep track of pointers
+• Do not inherit from System.Object- No conversions exist between pointers/object
+• Boxing/Unboxing not supported
+
+UNSAFE CODE
+• Methods, types, and code blocks can be defined as unsafe
+• Can increase performance by removing bounds/runtime checks
+• Required when calling native functions that require pointers
+• /unsafe must be set to compile
+**************************************************************************************************************/
 
 //POINTERS
 //Pointers can only be used in unsafe code

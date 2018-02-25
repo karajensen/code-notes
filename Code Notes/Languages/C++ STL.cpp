@@ -206,6 +206,50 @@ copysign(x, y) //returns double with magnitude of x and sign of y
 #include <sstream> <iostream> <fstream> <iomanip>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*************************************************************************************************************
+BUFFER
+• Bloack of memory for storage/transfer of information
+• Flushed when endl, when full or when specified
+• Controls rate of stream of bytes to/from buffer
+
+BITMASK TYPES    
+• OPENMODE: bitmask type for setting the file mode
+• FMTFLAGS: Setting the formatting for the stream
+• IOSTATE: A stream state contained in a cout/cin object
+           eofbit  = Is set to 1 if end-of-file reached.
+           badbit  = Is set to 1 if the stream has file read error
+           failbit = Is set to 1 if an input operation failed to read/write expected characters
+
+IOSTREAM
+• Creates 8 stream objects (four narrow/four wide character streams)
+  CIN/WCIN
+  COUT/WCOUT
+  CERR/WCERR (error stream unbuffered)
+  CLOG/WCLOG (error stream)
+
+FILESTREAM
+• Redirects the input/output streams to either use a file instead of console
+• This doesn't affect CERR or CLOG unless changed.
+
+OSTREAM CLASS
+• translates data as binary bit patterns to an output stream of char bytes
+• ostream & operator<<(type); returns reference back to the ostream object
+• all methods return ostream type allowing concatenation (cout.put(1).put(1))
+• cout << "one" << endl; "one" sent to buffer, returns cout. 
+• Endl reached, buffer flushes, inserts \n, no cout returned.
+
+ISTREAM CLASS
+• translates data as char from the input stream into binary bit patterns
+• istream & operator>>(type &); returns reference back to the istream object
+• all methods return istream type allowing concatenation
+
+BINARY FILES
+• Smaller, take up less room
+• No hidden conversions; written in computer binary language
+• More accurate as no conversion/round-off errors for numbers
+• Risky as different computers have different internal representation
+**************************************************************************************************************/
+
 //OUTPUT STREAMS
 cout << "Value" << 20; //Store values into stream
 cout << std::flush; //flushes buffer

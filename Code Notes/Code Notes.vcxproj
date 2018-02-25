@@ -145,8 +145,6 @@
     <Text Include="Hotkeys.txt" />
     <Text Include="Interviews\Cheatsheet.txt" />
     <Text Include="Interviews\Interview Questions.txt" />
-    <Text Include="Languages\C# Notes.txt" />
-    <Text Include="Languages\C++ Notes.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

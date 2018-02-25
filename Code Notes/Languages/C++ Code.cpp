@@ -2,54 +2,16 @@
 // VARIABLES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static      // Makes static storage, can be used on local, global or class member variable
-extern      // References (in .h) or declares (in .cpp) an externally linked global variable
-register    // May store variable in register, not on stack, no address and can't be global
-volatile    // Don't cache or optimize value, can prevent cache race conditions
-mutable     // Value changes ignored for bitwise const checking; used to show internal synchronization
-const       // Can store variable in read-only memory or value repaced at compile time
-constexpr   // Evaluates at compile time, will store in read-only memory
-::myInt     // Allows access to global variables when shadowed by local variables
-
-//INITIALISING VARIABLES
-Type x;                         // Default constructor
-Type x = 5;                     // Conversion constructor
-Type x(5);                      // User constructor
-Type x(y); /*or*/ Type x = y;   // Copy constructor
-Type x{5}; /*or*/ Type x = {5}; // Class Types: List constructor or Type(5) if can't implicitly convert
-Type x{5}; /*or*/ Type x = {5}; // POD Types: auto initialises other members to 0
-Type x{};  /*or*/ Type x = {};  // Default constructor; POD: auto initialises all members to 0
-Type x = Type();                // Default constructor; POD: auto initialises all members to 0
-Type[5] x = {};                 // Default constructor; POD: auto initialises all members to 0
-Type x({});                     // Default constructor; requires defined constructor
-Type x();                       // BAD: 'Most vexing parse' seen as function declaration
-Type x(Type2(y));               // BAD: 'Most vexing parse' seen as function declaration
-Type x((Type2(y)));             // Extra () shows not function declaration
-Type x(Type2(5));               // Using temp var shows not function declaration
-5 + 1;                          // Temporary value on left side allowable but doesn't do anything
-
-//ALIAS DECLARATION
-typedef int myType;   
-typedef decltype(x) myType;
-using myType = int;
-
-//VARIABLE SIZES
-sizeof(myInt)                 // gives size of myInt in bytes
-sizeof(myObj)                 // gives size of class in bytes
-sizeof(myArray)               // gives number of elements for array
-sizeof(myCString)             // gives numbers of characters for string
-sizeof(myPointer)             // gives size of the pointer in bytes
-sizeof(myRef)                 // gives size of object referenced in bytes
-extent<int[3]>::value         // gives number of elements 3
-extent<decltype(arr)>::value  // gives number of elements for array
-
-//VARIABLE INCREMENTING
-b = ++a    // increment a and then use it (before anything else)
-b = a++    // use a and then increment it (after everything including assigment)
-++++++i;   // OKAY: parsed as (++(++(++i)))
-i++ * ++i; // BAD: i is modified more than once
-i = ++i    // BAD: i is modified more than once
-++i = 2;   // BAD: i is modified more than once
+unsigned char         BYTE        ---
+short                 ---         short int / signed short / signed short int
+unsigned short        WORD        unsigned short int
+int                   INT/BOOL    signed 
+unsigned int          UINT        unsigned
+long                  ---         long int / signed long / signed long int
+unsigned long         ULONG       unsigned long int
+long long             ---         long long int / signed long long / signed long long int
+unsigned long long    DWORD       unsigned long long int
+float                 FLOAT       ---
 
 //CSTRINGS
 //Can change individual chars
@@ -82,9 +44,157 @@ int myArray[2][2]
     {3, 4}
 };
 
+//SIZES
+sizeof(myInt)                 // gives size of myInt in bytes
+sizeof(myObj)                 // gives size of class in bytes
+sizeof(myArray)               // gives number of elements for array
+sizeof(myCString)             // gives numbers of characters for string
+sizeof(myPointer)             // gives size of the pointer in bytes
+sizeof(myRef)                 // gives size of object referenced in bytes
+extent<int[3]>::value         // gives number of elements 3
+extent<decltype(arr)>::value  // gives number of elements for array
+
+//INCREMENTING
+b = ++a    // increment a and then use it (before anything else)
+b = a++    // use a and then increment it (after everything including assigment)
+++++++i;   // OKAY: parsed as (++(++(++i)))
+
+//===============================================================================================================
+// MODIFIERS
+//===============================================================================================================
+/*************************************************************************************************************
+STATIC VARIABLES
+• Variables with static storage duration:
+    - Global variables: Doesn't require 'static' keyword
+    - Class member variables: Require 'static' keyword
+    - Local variables: Require 'static' keyword
+• All static variables zero-initialisated or initialised to constant before main() called
+• If dynamic initialisation is required, can be initialised any time between main() 
+  and first use of variable (or object if class member)
+
+GLOBAL VARIABLES
+• Defined outside function or class scope
+• Have static storage duration
+• Automatically has 'static' keyword unless 'extern' keyword is used, can't have both
+• If same named non-extern static and extern variable exist then error
+          -------------------------------------------
+          | static int x      |                     |
+          | int x             | extern int x        |
+-----------------------------------------------------
+|         | creates copy for  | References extern   |
+| .H      | every #include    | version in .cpp     |
+|         |                   |                     |
+| .CPP    | creates only one  | Definition for any  |
+|         | for .cpp use      | .h extern versions  |
+|         |                   |                     |
+| Linkage | Internal          | External            |
+|         | Single use        | Shared use          |
+-----------------------------------------------------
+
+TEMPORARY VARIABLES
+• Move semantics reduces creation of temp variables
+• Value-typed variables auto created on the stack during:
+   - reference initialization
+   - expression evaluation
+   - automatic type conversion
+   - function passing/returning if no move constructor
+
+CONST VARIABLES
+• String constants and floating point constants are stored in static memory in optimized code
+• Integer constants are usually included as part of the instruction code
+• If type unknown or is refered to, may be stored in fixed seperate memory/data segment
+• Variable const-casted remains in same location but cannot change values
+• Cannot use move operations on const variables
+**************************************************************************************************************/
+
+static      // Makes static storage, can be used on local, global or class member variable
+extern      // References (in .h) or declares (in .cpp) an externally linked global variable
+register    // May store variable in register, not on stack, no address and can't be global
+volatile    // Don't cache or optimize value, can prevent cache race conditions
+mutable     // Value changes ignored for bitwise const checking; used to show internal synchronization
+const       // Can store variable in read-only memory or value repaced at compile time
+constexpr   // Evaluates at compile time, will store in read-only memory
+::myInt     // Allows access to global variables when shadowed by local variables
+
+//===============================================================================================================
+// INITIALISATION
+//===============================================================================================================
+/*************************************************************************************************************
+ZERO-INITIALISATION
+• All Static variables before main()
+• POD types after default constructor is called
+- MyPOD obj = {};
+- MyPOD[2] array = {};
+- MyPOD* obj = new MyPOD{};
+- MyPOD obj = MyPOD();
+- MyPOD* obj = new MyPOD();
+• POD type members that are not user initialised in {}
+- MyPOD obj = { 5 };
+- MyPOD[2] array = { 5 };
+- MyPOD* obj = new MyPOD{ 5 };
+**************************************************************************************************************/
+
+Type x;                         // Default constructor
+Type x = 5;                     // Conversion constructor
+Type x(5);                      // User constructor
+Type x(y); /*or*/ Type x = y;   // Copy constructor
+Type x{5}; /*or*/ Type x = {5}; // Class Types: List constructor or Type(5) if can't implicitly convert
+Type x{5}; /*or*/ Type x = {5}; // POD Types: auto initialises other members to 0
+Type x{};  /*or*/ Type x = {};  // Default constructor; POD: auto initialises all members to 0
+Type x = Type();                // Default constructor; POD: auto initialises all members to 0
+Type[5] x = {};                 // Default constructor; POD: auto initialises all members to 0
+Type x({});                     // Default constructor; requires defined constructor
+Type x();                       // BAD: 'Most vexing parse' seen as function declaration
+Type x(Type2(y));               // BAD: 'Most vexing parse' seen as function declaration
+Type x((Type2(y)));             // Extra () shows not function declaration
+Type x(Type2(5));               // Using temp var shows not function declaration
+5 + 1;                          // Temporary value on left side allowable but doesn't do anything
+
+//===============================================================================================================
+// SEQUENCE POINTS
+//===============================================================================================================
+/*************************************************************************************************************
+• Undefined behaviour when changing a variable and reading it again without a sequence point.
+• After a function's returned object has been copied back to the caller
+• After evaluation of all a function's parameters when the function is called
+• After the initialization of each base and member for an object
+;       int x = 0;
+,       f(x,y) 
+||      x || y 
+&&      x && y 
+?:      x ? y : 0 
+**************************************************************************************************************/
+
+i++ * ++i; // BAD: i is modified more than once
+i = ++i    // BAD: i is modified more than once
+++i = 2;   // BAD: i is modified more than once
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MOVE SEMANTICS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*************************************************************************************************************
+• Allows resources to transfer between objects rather than copying
+• Automatically done if object has a valid move assignment/constructor
+• All function parameters are lvalue even if initialised with an rvalue
+• Don't use with const objects: move becomes copy operation
+
+UNIVERSAL REFERENCES
+• T&& (not const T&&) that uses Reference Collapsing to bind to both rvalue/lvalue references
+• Requires type deduction that must be determined each time its called (not class templates)
+• Requires Pefect Fowarding to pass on arguments
+• Bad for overloading: instantiate to create exact matches for almost any type of argument
+
+PERFECT FORWARDING
+• Function templates that take arbitrary arguments and forward exactly the same arguments
+• Preserves R/L value-ness of passed args as all function params are lvalues
+• std::foward used to pass on correct type by casting to rvalue if pass argument was an rvalue
+• Fails with {}, NULL, static const members without a definition, template/overloaded function names, bitfields
+
+REFERENCE COLLAPSING
+• Occurs in universal references, typedef T&& MyTypedef, aliases and decltype
+• When lvalue reference is passed to T&&, creates type MyClass& && which collapses to MyClass&
+• Only compiler can create type T& && for collapsing, otherwise error
+**************************************************************************************************************/
 
 int x =         // L-VALUES: Persisting variable on left side of assignment expression    
 = 3;            // R-VALUES: Temporary variable on right side of assignment expression
@@ -277,17 +387,31 @@ label:  //do something
 // FUNCTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//MAIN ENTRY FUNCTION
-//argc is number of arguments, including the string used to invoke the program
-//argv is array of arguments, including the string used to invoke the program
-//must be called main or winmain
+// RETURN VALUE OPTIMIZATION(RVO)
+// If possible, a returned local var is constructed in memory allocated for function's return value
+// If not possible, a returned local var is treated as rvalue (automatically uses std::move)
+// Using std::move / std::foward explicitly will prevent RVO for ever occuring
+// Only use std::move / std::foward on return if returning by - value a T && (or else copy will occur)
+MyClass MyFn() { MyClass obj;  return obj; }
+
+// ORDER OF ARGUMENT EVALUATION
+// Order that function parameters are evaluated is up to the complier.
+// callFunc(getA(),getB()); can either be:
+int a = getA();           int b = getB();
+int b = getB();  /*OR*/   int a = getA();
+callFunc(a,b);            callFunc(a,b);
+
+// MAIN ENTRY FUNCTION
+// argc is number of arguments, including the string used to invoke the program
+// argv is array of arguments, including the string used to invoke the program
+// must be called main or winmain
 int main(int argc, char* argv[]){ /*no return auto returns 0 (success)*/ }
 
-//PASSING C-STRING
-//Use strlen to get the length of string up to '\0'
+// PASSING C-STRING
+// Use strlen to get the length of string up to '\0'
 void MyFn(const char* str);
 
-//PASSING C-ARRAYS
+// PASSING C-ARRAYS
 // int arr[x] is a suggestion, the x isn't enforced and arr[3] could be passed to an arr[6]
 // Use pass-by-ref to enforce array size, otherwise require size to be parameter
 // if arr[] decays to a int*, sizeof(arr) gives size of the pointer, not array
@@ -297,12 +421,16 @@ void MyFn(int(&arr)[6])  /*OR*/  void MyFn(int arr(&)[6])
 template<int n> void MyFn(char(&arr)[n]) // array of any size
 void MyFn(int* arr, int size)
 
-//INLINE FUNCTIONS
-//Function call is replaced by function body
-//If in .h any internal static members are shared between files
+// INLINE FUNCTIONS
+// Function call is replaced by function body
+// Compiler ultimately decides what is inlined
+// If in.h any internal static members are shared between files
+// May increase program size unless a very small inlined function
+// Large inlined functions used alot can increase execution time due to caching
+// Increases build time as all uses need to be recompiled rather than just relinked
 inline void MyFn(int x){}
 
-//C-VARIADIC FUNCTION
+// C-VARIADIC FUNCTION
 MyFn("This is a %i %f test",2,3.0f);
 void MyFn(char* text, ...)
 {
@@ -314,7 +442,7 @@ void MyFn(char* text, ...)
     cout << buffer;
 }
 
-//DEFAULT VALUES
+// DEFAULT VALUES
 void MyFn(int x, int y = 0);        // constant, parameters must be right to left
 void MyFn(int x = Fn(5));           // Non-member function with constant arguments
 void MyFn(int x = Fn(global));      // Non-member function with global variable
@@ -323,29 +451,64 @@ void MyFn(int x = StaticFn());      // Static member function
 void MyFn(int x = (global==0?1:2))  // Ternary expressions
 void MyFn(int x = m_member)         // CANT DO: can't use non-static class members
 
-//CONTEXPR FUNCTIONS
-//All arguments constexpr then computed at compile time, else computed at runtime
+// CONTEXPR FUNCTIONS
+// All arguments constexpr then computed at compile time, else computed at runtime
 constexpr int MyFn(int x){ return x; }
 MyFn(2); //computed at compiletime
 MyFn(y); //computed at runtime unless y is constexpr
 
-//TRAILING RETURN TYPE
-//shifts the return type to after the function arguments
+// TRAILING RETURN TYPE
+// shifts the return type to after the function arguments
 double MyFn(int x, int y) {} /*or*/
 auto MyFn(int x, int y) -> double {}
 auto MyFn(int x, int y) -> decltype(x) {} // make return type same as x
 auto MyFn(MyCallback fn, int x) -> decltype(fn(x)) { return fn(x)); }
 
+//===============================================================================================================
+// FUNCTION OVERLOADING
+//===============================================================================================================
+/*************************************************************************************************************
+REQUIRES SIGNATURE DIFFERENCE
+• Type of parameters
+• Number of parameters
+• Const or non-const reference/pointers
+
+OVERLOAD RESOLUTION ORDER
+• Template functions never implicitly cast
+• Prefer exact non-template type over template
+• Implicit casting always last priority, never explicitly casts
+• Uses SFINAE: substitution failure is not an error where the compilier
+  can reject template types without throwing any errors
+**************************************************************************************************************/
+
+FN(1.0F, 1.0F)
+1) Non-template Exact type                        void Fn(float x, float y)
+2) Template Explicit Specialization Exact type    template <> void Fn(float x, float y) [requires 3]
+3) Template Overloads with Exact type             template <typename T> void Fn(T x, float y)
+OR Template Overload                              template <typename T> void Fn(T x, T y)
+5) Primary Template                               template <typename T, typename S> void Fn(T x, S y)
+6) Non-template with Implicit conversion          void Fn(float x, double y)
+
+FN<FLOAT>(1.0F, 1.0F)
+1) Template Explicit Specialization Exact type    template <> void Fn(float x, float y) [requires 2]
+2) Template Overloads with Exact type             template <typename T> void Fn(T x, float y)
+OR Template Overload                              template <typename T> void Fn(T x, T y)
+3) Primary Template                               template <typename T, typename S> void Fn(T x, S y)
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// NAMESPACES
+// NAMESPACES / ALIASES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 namespace /*anon*/ {}
 namespace MySpace {}
-
 MySpace::MyVariable = 3;
 using namespace MySpace;
 using namespace MySpace::MyFunction();
+
+//ALIAS DECLARATION
+typedef int myType;
+typedef decltype(x) myType;
+using myType = int;
 
 // ADDING NAMESPACE ALIAS
 namespace MyAlias = MySpace;
