@@ -5,34 +5,34 @@
 
 /*************************************************************************************************************
 VARIABLES / OBJECTS: &name gives address of object
-C - STYLE ARRAY : name gives address of first element
-CSTRING / STRING LITERAL : name gives string, &name gives address of first character
+C - STYLE ARRAY: name gives address of first element
+CSTRING / STRING LITERAL: name gives string, &name gives address of first character
 
 POINTERS / REFERENCES DIFFERENCES
-• Pointers hold a memory address; reference is another name for variable.
-• Pointer must be dereferenced, reference just uses name
-• References can't change once initialised. Pointers can change what they point to.s
-• References can't easily be nullptr or void, pointers can
-• Pointers use -> for classes / structures while references use .
+â€¢ Pointers hold a memory address; reference is another name for variable.
+â€¢ Pointer must be dereferenced, reference just uses name
+â€¢ References can't change once initialised. Pointers can change what they point to.s
+â€¢ References can't easily be nullptr or void, pointers can
+â€¢ Pointers use -> for classes / structures while references use .
 
 NEW AND DELETE
-• Don’t use delete to free memory that new didn’t allocate.
-• Don’t use delete to free the same block of memory twice in succession.
-• Use delete[] if you used new[] to allocate an array.
-• Use delete (no brackets) if you used new to allocate a single entity.
-• It’s safe to apply delete to the null pointer(nothing happens).
+â€¢ Donâ€™t use delete to free memory that new didnâ€™t allocate.
+â€¢ Donâ€™t use delete to free the same block of memory twice in succession.
+â€¢ Use delete[] if you used new[] to allocate an array.
+â€¢ Use delete (no brackets) if you used new to allocate a single entity.
+â€¢ Itâ€™s safe to apply delete to the null pointer(nothing happens).
 
 MEMSET
-• memset used to zero out memory or wipe sensitive data
-• Can be optimised out by compilier if deemed not affecting program
-• Dangerous to use on non - POD types due to wiping hidden members(vptr etc)
-• memset_s never optimised
+â€¢ memset used to zero out memory or wipe sensitive data
+â€¢ Can be optimised out by compilier if deemed not affecting program
+â€¢ Dangerous to use on non - POD types due to wiping hidden members(vptr etc)
+â€¢ memset_s never optimised
 
 RESOURCE ACQUISITION IS INITIALIZATION(RAII)
-• Aquiring and owning a resource means cleaning that resource up properly
-• If an exception is thrown or return happens, 'delete' may never be called
-• Resource cleaning needs to be tied to the lifespace of objects for automatic allocation / deletion
-• Vital for exception and thread safe code
+â€¢ Aquiring and owning a resource means cleaning that resource up properly
+â€¢ If an exception is thrown or return happens, 'delete' may never be called
+â€¢ Resource cleaning needs to be tied to the lifespace of objects for automatic allocation / deletion
+â€¢ Vital for exception and thread safe code
 **************************************************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -190,59 +190,59 @@ std::bind([](int x){}, myInt); // copy construct myVar
 
 /*************************************************************************************************************
 UNIQUE/SCOPED POINTER
-• Has sole ownership of memory allocated, can only be moved
-• By default are same size as raw pointers and call 'delete' on destruction
-• Deleter is part of unique_ptr type and can change its size
-• Has version for pointer and version for array
-• Can be converted to shared_ptr
-• If type is forward declared, implicit methods (ie. destructor) inlined 
+â€¢ Has sole ownership of memory allocated, can only be moved
+â€¢ By default are same size as raw pointers and call 'delete' on destruction
+â€¢ Deleter is part of unique_ptr type and can change its size
+â€¢ Has version for pointer and version for array
+â€¢ Can be converted to shared_ptr
+â€¢ If type is forward declared, implicit methods (ie. destructor) inlined 
   in .h may use static_assert which require the full type. Declare these 
   functions =default in the .cpp file (MyClass::~MyClass() = default;)
 
 SHARED POINTER
-• Reference counted shared ownership of memory allocated, can be copied/moved
-• Hold two raw pointers: one to memory, one to control block
-• Control block dynamically allocated only once on first pointer creation
-• Control block holds holds reference count, weak count, deleter, memory allocator
-• Control block uses virtual inheritance
-• Modifying reference count is thread-safe atomic operation (slower)
-• Deleter is not part of type and does not require full type for implicit methods
-• Has only version for pointer (doesn't support arrays)
-• Can't detect cyclic dependencies
-• Can't be converted to unique_ptr
-• new allocates memory twice while make_shared allocates memory for control block and object together
-• When reference count is 0, memory/control block deleted unless weak count > 0 then 
+â€¢ Reference counted shared ownership of memory allocated, can be copied/moved
+â€¢ Hold two raw pointers: one to memory, one to control block
+â€¢ Control block dynamically allocated only once on first pointer creation
+â€¢ Control block holds holds reference count, weak count, deleter, memory allocator
+â€¢ Control block uses virtual inheritance
+â€¢ Modifying reference count is thread-safe atomic operation (slower)
+â€¢ Deleter is not part of type and does not require full type for implicit methods
+â€¢ Has only version for pointer (doesn't support arrays)
+â€¢ Can't detect cyclic dependencies
+â€¢ Can't be converted to unique_ptr
+â€¢ new allocates memory twice while make_shared allocates memory for control block and object together
+â€¢ When reference count is 0, memory/control block deleted unless weak count > 0 then 
   holds onto control block (and object memory if allocated together)
 
 WEAK POINTER
-• Non-owning observers of an object owned by shared_ptr
-• Hold two raw pointers: one to memory, one to control block
-• Creates shared_ptr when using
-• Only contribute to weak count which may prevent releasing of object memory
-• When object is deleted, all pointers are marked as invalid
-• Useful when having cyclic dependencies and in place of raw pointers
+â€¢ Non-owning observers of an object owned by shared_ptr
+â€¢ Hold two raw pointers: one to memory, one to control block
+â€¢ Creates shared_ptr when using
+â€¢ Only contribute to weak count which may prevent releasing of object memory
+â€¢ When object is deleted, all pointers are marked as invalid
+â€¢ Useful when having cyclic dependencies and in place of raw pointers
 
 INTRUSIVE POINTER
-• Shared pointer where reference counting is not done by the pointer object
-• Helper function is used which is defined by the object that is pointed to
+â€¢ Shared pointer where reference counting is not done by the pointer object
+â€¢ Helper function is used which is defined by the object that is pointed to
 
 AUTO POINTER
-• Deprecated smart pointer
-• Has sole ownership of the object which is passed if the pointer is copied
-• Pass auto pointers by reference otherwise copied version takes ownership and sets original to null
-• Can't point to arrays due to it using delete, not delete []
-• Can't point to memory on the stack
-• Can't be used in STL containers due to it's transfer ownership property
+â€¢ Deprecated smart pointer
+â€¢ Has sole ownership of the object which is passed if the pointer is copied
+â€¢ Pass auto pointers by reference otherwise copied version takes ownership and sets original to null
+â€¢ Can't point to arrays due to it using delete, not delete []
+â€¢ Can't point to memory on the stack
+â€¢ Can't be used in STL containers due to it's transfer ownership property
 
 ARRAY POINTERS
-• boost scoped_array; Simple sole ownership of arrays. Noncopyable.
-• boost shared_array; Array ownership shared among multiple pointers.
+â€¢ boost scoped_array; Simple sole ownership of arrays. Noncopyable.
+â€¢ boost shared_array; Array ownership shared among multiple pointers.
 
 SMART POINTER DESTRUCTION
-• Calls delete by default (unless deleter given) on loss of scope/reference count 0
-• If local in a noexcept function which throws may not be destroyed
-• If std::abort, std::exit, std::quick_exit is called will not be destroyed
-************************************************************************************************************** /
+â€¢ Calls delete by default (unless deleter given) on loss of scope/reference count 0
+â€¢ If local in a noexcept function which throws may not be destroyed
+â€¢ If std::abort, std::exit, std::quick_exit is called will not be destroyed
+**************************************************************************************************************/
 
 *myPtr
 if(myPtr) /*or*/ if(myPtr.get())              // true if valid, false if null
@@ -275,17 +275,7 @@ weak.expired()                                   // returns true if object has b
 
 //AUTO POINTER
 auto_ptr<double> ap(new double) //only use for new
-*ap = 3.2;      
-
-//RESETTING SMART POINTERS
-//Changing the initial smart pointer does not change others, only decrements count
-std::shared_ptr<double> shared1(new double(2.0));
-std::shared_ptr<double> shared2(shared1);
-std::weak_ptr<double> weak(shared1);
-shared1.reset(new double(4.0));
-double value = *shared1;         // return 4.0
-double value = *shared2;         // return 2.0
-double value = *weak.lock();     // return 2.0
+*ap = 3.2;
 
 //CREATING CUSTOM DELETERS
 //Without a deleter, plain 'delete' is implicitely called
