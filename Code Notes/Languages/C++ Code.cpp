@@ -134,21 +134,19 @@ ZERO-INITIALISATION
     - MyPOD* obj = new MyPOD{ 5 };
 **************************************************************************************************************/
 
-Type x;                         // Default constructor
-Type x = 5;                     // Conversion constructor
-Type x(5);                      // User constructor
-Type x(y); /*or*/ Type x = y;   // Copy constructor
-Type x{5}; /*or*/ Type x = {5}; // Class Types: List constructor or Type(5) if can't implicitly convert
-Type x{5}; /*or*/ Type x = {5}; // POD Types: auto initialises other members to 0
-Type x{};  /*or*/ Type x = {};  // Default constructor; POD: auto initialises all members to 0
-Type x = Type();                // Default constructor; POD: auto initialises all members to 0
-Type[5] x = {};                 // Default constructor; POD: auto initialises all members to 0
-Type x({});                     // Default constructor; requires defined constructor
-Type x();                       // BAD: 'Most vexing parse' seen as function declaration
-Type x(Type2(y));               // BAD: 'Most vexing parse' seen as function declaration
-Type x((Type2(y)));             // Extra () shows not function declaration
-Type x(Type2(5));               // Using temp var shows not function declaration
-5 + 1;                          // Temporary value on left side allowable but doesn't do anything
+Type x                        // Default constructor
+Type x(y) /*or*/ Type x = y   // Copy constructor
+Type x(5) /*or*/ Type x = 5   // Conversion constructor (second not possible with explicit keyword)
+Type x{5} /*or*/ Type x = {5} // List constructor else conversion constructor; POD: auto initialises other members to 0
+Type x{}  /*or*/ Type x = {}  // Default constructor; POD: auto initialises all members to 0
+Type x = Type()               // Default constructor; POD: auto initialises all members to 0
+Type[5] x = {}                // Default constructor; POD: auto initialises all members to 0
+Type x({})                    // Default constructor; Requires user-defined default constructor else compile error
+Type x()                      // Most vexing parse: compiles as function declaration
+Type x(Type2(y))              // Most vexing parse: compiles as function declaration
+Type x((Type2(y)))            // Extra () shows not function declaration
+Type x(Type2(5))              // Using temp var shows not function declaration
+5 + 1;                        // Temporary value on left side allowable but doesn't do anything
 
 //===============================================================================================================
 // SEQUENCE POINTS
@@ -181,7 +179,7 @@ int x = (a, b)  // a assigned to nothing, b assigned to x
 // Compilier specific, callFunc(getA(), getB()); can either be:
 int a = getA();           int b = getB();
 int b = getB();  /*OR*/   int a = getA();
-callFunc(a, b);            callFunc(a, b);
+callFunc(a, b);           callFunc(a, b);
 
 // INITIALISER LIST
 // In order, callFunc({getA(), getB()}); will be:
