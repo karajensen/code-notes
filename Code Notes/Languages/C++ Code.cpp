@@ -169,6 +169,26 @@ i++ * ++i; // BAD: i is modified more than once
 i = ++i    // BAD: i is modified more than once
 ++i = 2;   // BAD: i is modified more than once
 
+//===============================================================================================================
+// ORDER OF EVALUATION
+//===============================================================================================================
+
+// COMMA-SEPERATION
+int x = a, b    // a assigned to x, b assigned to nothing
+int x = (a, b)  // a assigned to nothing, b assigned to x
+
+// FUNCTION PARAMETERS
+// Compilier specific, callFunc(getA(), getB()); can either be:
+int a = getA();           int b = getB();
+int b = getB();  /*OR*/   int a = getA();
+callFunc(a, b);            callFunc(a, b);
+
+// INITIALISER LIST
+// In order, callFunc({getA(), getB()}); will be:
+int a = getA();
+int b = getB();
+callFunc({a, b});
+    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MOVE SEMANTICS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -393,13 +413,6 @@ label:  //do something
 // Using std::move / std::foward explicitly will prevent RVO for ever occuring
 // Only use std::move / std::foward on return if returning by - value a T && (or else copy will occur)
 MyClass MyFn() { MyClass obj;  return obj; }
-
-// ORDER OF ARGUMENT EVALUATION
-// Order that function parameters are evaluated is up to the complier.
-// callFunc(getA(),getB()); can either be:
-int a = getA();           int b = getB();
-int b = getB();  /*OR*/   int a = getA();
-callFunc(a,b);            callFunc(a,b);
 
 // MAIN ENTRY FUNCTION
 // argc is number of arguments, including the string used to invoke the program
