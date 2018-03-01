@@ -587,3 +587,15 @@ struct CStruct
 
 // CHANGE STATIC INIT ORDER
 #pragma init_seg(lib) // Any statics in file will be initialised first
+
+// TRIGRAPH
+// Replaced at preprocessor stage, disabled VS, deprecated c++17
+??=  /*replaced with*/  #
+??/  /*replaced with*/  \
+??’  /*replaced with*/  ^
+??(  /*replaced with*/  [
+??)  /*replaced with*/  ]
+??!  /*replaced with*/  |
+??<  /*replaced with*/  {
+??>  /*replaced with*/  }
+??-  /*replaced with*/  ˜
