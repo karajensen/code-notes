@@ -428,11 +428,11 @@ void MyFn(const char* str);
 // int arr[x] is a suggestion, the x isn't enforced and arr[3] could be passed to an arr[6]
 // Use pass-by-ref to enforce array size, otherwise require size to be parameter
 // if arr[] decays to a int*, sizeof(arr) gives size of the pointer, not array
-void MyFn(int arr[6])    /*==*/  void MyFn(int arr[])
-void MyFn(int arr[2][3]) /*==*/  void MyFn(int arr[][])
+void MyFn(int arr[6])    /*==*/  void MyFn(int arr[]) // decays to pointer
+void MyFn(int arr[2][3]) /*==*/  void MyFn(int arr[][]) // decays to pointer
 void MyFn(int(&arr)[6])  /*OR*/  void MyFn(int arr(&)[6])
 template<int n> void MyFn(char(&arr)[n]) // array of any size
-void MyFn(int* arr, int size)
+void MyFn(int* arr, int size) // decays to pointer
 
 // INLINE FUNCTIONS
 // Function call is replaced by function body
