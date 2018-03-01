@@ -123,15 +123,15 @@ constexpr   // Evaluates at compile time, will store in read-only memory
 ZERO-INITIALISATION
 • All Static variables before main()
 • POD types after default constructor is called
-- MyPOD obj = {};
-- MyPOD[2] array = {};
-- MyPOD* obj = new MyPOD{};
-- MyPOD obj = MyPOD();
-- MyPOD* obj = new MyPOD();
+    - MyPOD obj = {};
+    - MyPOD[2] array = {};
+    - MyPOD* obj = new MyPOD{};
+    - MyPOD obj = MyPOD();
+    - MyPOD* obj = new MyPOD();
 • POD type members that are not user initialised in {}
-- MyPOD obj = { 5 };
-- MyPOD[2] array = { 5 };
-- MyPOD* obj = new MyPOD{ 5 };
+    - MyPOD obj = { 5 };
+    - MyPOD[2] array = { 5 };
+    - MyPOD* obj = new MyPOD{ 5 };
 **************************************************************************************************************/
 
 Type x;                         // Default constructor
