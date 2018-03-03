@@ -283,13 +283,15 @@ template <typename T> class MyClass
 // Reference that can bind to rvalue and lvalue reference of form T&&
 // Arguments must be perfect fowarded as all params are lvalues even if initialised as rvalue
 
-template<typename T> void MyFn(T&& x) { MyFn2(std::foward<T>(x)); }   
-MyFn(myObj);              // initialised with lvalue reference, T/x = MyClass&
-MyFn(std::move(myObj));   // initialised with rvalue, T = MyClass, x = MyClass&&
+void fn(T& x) {}
+void fn(T&& x) {}
+void MyFn(T&& x) { return fn(x); } // Calls fn(T& x) for rvalues/lvalues
+void MyFn(T&& x) { return fn(std::move(x)); } // Calls fn(T&& x) for rvalues/lvalues
+void MyFn(T&& x) { return fn(std::forward<T>(x)); } // Calls fn(T&& x) for rvalues, fn(T& x) for lvalues 
                                               
 auto MyFn = [](auto&& x){ MyFn2(std::foward<decltype(x)>(x)); };
-auto&& x = myObj;         // initialised with lvalue reference, T/x = MyClass&
-auto&& x = 3;             // initialised with rvalue, T = MyClass, x = MyClass&&
+auto&& x = myObj; // initialised with lvalue reference, T/x = MyClass&
+auto&& x = 3;     // initialised with rvalue, T = MyClass, x = MyClass&&
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // VARIADIC TEMPLATES
