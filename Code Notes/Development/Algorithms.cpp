@@ -76,27 +76,26 @@ int GetLowestDivisor(int m, int n)
     return m;
 }
 
-/** Get four components of colour */
-unsigned int color;
-int r = color & 0xFF;
-int g = (color >> 8) & 0xFF;
-int b = (color >> 16) & 0xFF;
-int a = (color >> 24) & 0xFF;
+/** Get/set components of colour for 0xAARRGGBB */
+unsigned int color = (((a & 0xFF) << 24) | ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF));
+unsigned int b2 = color & 0xFF;
+unsigned int g2 = (color >> 8) & 0xFF;
+unsigned int r2 = (color >> 16) & 0xFF;
+unsigned int a2 = (color >> 24) & 0xFF;
 
-/** Representing colour */
-union Color
+/** Get points for a circle at center x,y */
+void getCirclePoints(float x, float y, float radius)
 {
-    Color() :
-        color(0)
-    {
+    std::vector<Vector2> points;
+	int lineAmount = 100;
+	float twicePi = 2.0f * PI;
+    for(int i = 0; i <= lineAmount; i++) 
+    { 
+        points.emplace_back(
+            x + (radius * std::cos(i * twicePi / lineAmount)), 
+            y + (radius * std::sin(i * twicePi / lineAmount)));
     }
-
-    unsigned int color;
-    struct
-    {
-        unsigned char r, g, b, a;
-    };
-};
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // STRING ALGORITHMS
