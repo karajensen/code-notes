@@ -89,11 +89,17 @@ git clone https://github.com/name/repo.git  folder          // Clone repository
 git submodule add https://github.com/name/repo.git folder   // Create submodule
 git remote set-url origin https://github.com/name/repo.git  // Change the remote repository
 git fetch                                                   // Gets updates from server
-git branch                                                  // List all branches
+git fetch --all --tags                                      // Gets all tags from the server
+git fetch --prune                                           // Removes deleted branches from server cache
+git tag                                                     // List all tags from server
+git branch                                                  // List all branches locally
+git branch --sort=-committerdate                            // List all branches locally by date
+git branch -r                                               // List all remote branches
+git checkout tags/myTag -b myBranch                         // Checkout tag as a branch
 git checkout -b myBranch origin/myParent                    // Create new branch from remote branch
-git push -u origin myBranch                                 // Create remote branch from local branch
 git checkout myBranch                                       // Checkout a branch
 git checkout commitID                                       // Checkout a branch at a commit ID
+git push -u origin myBranch                                 // Create remote branch from local branch
 git status                                                  // Show changed files in branch
 git add -A                                                  // Add changes to next commit
 git commit -am "Description"                                // Commit changes
@@ -115,7 +121,6 @@ git branch -D myBranch                                      // Delete local bran
 git push origin --delete myBranch                           // Delete remote branch
 git remote show origin                                      // Show remote branch of local and URL
 git branch -m oldBranch newBranch                           // Rename a local branch
-git branch --sort=-committerdate                            // Sort local branches by date
 git submodule init                                          // Initialise all submodules
 git submodule update --recursive                            // Update all submodules, recursive optional
 
