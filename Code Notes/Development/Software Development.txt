@@ -83,46 +83,47 @@ cd ..                // move down a folder
 // GIT SOURCE CONTROL
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 • If uncommited changes are on a branch, new branches checked out will take those changes
+• repo will be something like: https://github.com/name/repo.git
 
-git remote add master https://github.com/name/repo.git      // Create remote repository
-git clone https://github.com/name/repo.git  folder          // Clone repository
-git submodule add https://github.com/name/repo.git folder   // Create submodule
-git remote set-url origin https://github.com/name/repo.git  // Change the remote repository
-git fetch                                                   // Gets updates from server
-git fetch --all --tags                                      // Gets all tags from the server
-git fetch --prune                                           // Removes deleted branches from server cache
-git tag                                                     // List all tags from server
-git branch                                                  // List all branches locally
-git branch --sort=-committerdate                            // List all branches locally by date
-git branch -r                                               // List all remote branches
-git checkout tags/myTag -b myBranch                         // Checkout tag as a branch
-git checkout -b myBranch origin/myParent                    // Create new branch from remote branch
-git checkout myBranch                                       // Checkout a branch
-git checkout commitID                                       // Checkout a branch at a commit ID
-git push -u origin myBranch                                 // Create remote branch from local branch
-git status                                                  // Show changed files in branch
-git add -A                                                  // Add changes to next commit
-git commit -am "Description"                                // Commit changes
-git reset --hard                                            // Discard all uncommitted changes
-git clean -f                                                // Delete uncommitted files
-git clean -fd                                               // Delete uncommitted directories
-git clean -f -n                                             // View all files which will be deleted
-git clean -fd -n                                            // View all directories which will be deleted
-git reset --hard commitID                                   // Revert back to commit
-git checkout filename.ext                                   // Revert changes to file
-git log                                                     // List commits and commitIDs
-git --no-pager log > log.txt                                // Save list of commits and commitIDs to a file
-git push                                                    // Push local changes to remote branch
-git push origin master                                      // Push local changes to master branch
-git pull origin ParentBranch                                // Merge remote branch into current branch
-git mergetool                                               // Fix merge conflicts
-git difftool folder                                         // Rum difftool on each change in folder
-git branch -D myBranch                                      // Delete local branch
-git push origin --delete myBranch                           // Delete remote branch
-git remote show origin                                      // Show remote branch of local and URL
-git branch -m oldBranch newBranch                           // Rename a local branch
-git submodule init                                          // Initialise all submodules
-git submodule update --recursive                            // Update all submodules, recursive optional
+git remote add master repo                 // Create remote repository
+git clone repo  folder                     // Clone repository
+git submodule add repo folder              // Create submodule
+git remote set-url origin repo             // Change the remote repository
+git fetch                                  // Gets updates from server
+git fetch --all --tags                     // Gets all tags from the server
+git fetch --prune                          // Removes deleted remote branches from cache, do before listing
+git tag                                    // List all remote tags
+git branch                                 // List all branches locally
+git branch --sort=-committerdate           // List all branches locally by date
+git branch -r                              // List all remote branches
+git checkout tags/myTag -b myBranch        // Checkout tag as a branch
+git checkout -b myBranch origin/myParent   // Create new branch from remote branch
+git checkout myBranch                      // Checkout a branch
+git checkout commitID                      // Checkout a branch at a commit ID
+git push -u origin myBranch                // Create remote branch from local branch
+git status                                 // Show changed files in branch
+git add -A                                 // Add changes to next commit
+git commit -am "Description"               // Commit changes
+git reset --hard                           // Discard all uncommitted changes
+git clean -f                               // Delete uncommitted files
+git clean -fd                              // Delete uncommitted directories
+git clean -f -n                            // View all files which will be deleted
+git clean -fd -n                           // View all directories which will be deleted
+git reset --hard commitID                  // Revert back to commit
+git checkout filename.ext                  // Revert changes to file
+git log                                    // List commits and commitIDs
+git --no-pager log > log.txt               // Save list of commits and commitIDs to a file
+git push                                   // Push local changes to remote branch
+git push origin master                     // Push local changes to master branch
+git pull origin ParentBranch               // Merge remote branch into current branch
+git mergetool                              // Fix merge conflicts
+git difftool folder                        // Rum difftool on each change in folder
+git branch -D myBranch                     // Delete local branch
+git push origin --delete myBranch          // Delete remote branch
+git remote show origin                     // Show remote branch of local and URL
+git branch -m oldBranch newBranch          // Rename a local branch
+git submodule init                         // Initialise all submodules
+git submodule update --recursive           // Update all submodules, recursive optional
 
 INITIALISING GIT
 git config --global user.name "Kara Jensen"
