@@ -62,6 +62,7 @@ mklink /J dst src  // dst final folder must not exist and be named the same as s
 cd path            // move up a folder or switch to absolute path
 cd ..              // move down a folder
 start.             // open folder
+mkdir path         // create new folder
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MAC DEVELOPMENT
@@ -259,6 +260,30 @@ __FILE__    //name of file
 __LINE__    //current line number
 __TIME__    //time file was compiled
 __DATE__    //date file was compiled
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CMAKE
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+# Call cmake, will use CMakeLists.txt file one folder up
+cmake -G "Visual Studio 14 2015 Win64" -DCMAKE_PREFIX_PATH=C:/Qt/Qt5.6.1/5.6/msvc2015_64 ..
+
+cmake_minimum_required(VERSION 2.8.11)
+project(my_project_name)
+
+set(MY_VARIABLE ON)        # Bool variable
+set(MY_PATH c:/folder)     # String variable
+set(SRC_LIST a.cpp b.cpp)  # String list
+
+if(MY_VARIABLE)
+else()
+endif()
+
+file(COPY ${SRC_PATH}/folder/file.txt DESTINATION ${DST_PATH}/folder)
+
+add_executable(my_exe_name ${SRC_LIST})
+
+error("This is an error")
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MSBUILD
