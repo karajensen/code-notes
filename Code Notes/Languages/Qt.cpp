@@ -298,6 +298,102 @@ Text {
 • Role: Used to access different attributes of a data element in the model
 **************************************************************************************************************/
 
+// CREATING CUSTOM MODEL
+class MyModel : public QAbstractListModel
+{
+    Q_OBJECT
+public:
+    virtual ~MyModel() = default;
+    MyModel(QObject* parent = nullptr)
+        : QAbstractListModel(parent)
+    {
+    }
+
+    enum ModelRoles
+    {
+        MyRole1 = Qt::UserRole + 1,
+        MyRole2
+    };
+
+    virtual int rowCount(const QModelIndex& parent = QModelIndex()) const override
+    {
+        Q_UNUSED(parent);
+        return static_cast<int>(m_items.size());    
+    }
+    
+    virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override
+    {
+        if (index.row() >= 0 && index.row() < static_cast<int>(m_items.size()))
+        {
+            const auto& item = m_items[index.row()];
+            if (role == Role1)
+            {
+                return item->getRole1();
+            }
+            else if (role == Role2)
+            {
+                return item->getRole2();
+            }
+        }
+        return QVariant();    
+    }
+    
+    virtual QHash<int, QByteArray> roleNames() const override
+    {
+        QHash<int, QByteArray> roles;
+        roles[MyRole1] = "role_one";
+        roles[MyRole2] = "role_two";
+        return roles;    
+    }
+
+private:
+    std::vector<MyItem> m_items;
+};
+
+// USING MODEL IN QML
+ScrollView {
+    Layout.fillWidth: true
+    Layout.fillHeight: true
+    ListView {
+        id: listView
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        model: context_model
+
+        onCurrentIndexChanged: {
+            console.log("Selected " + currentIndex);
+        }          
+        onCurrentItemChanged: {
+            console.log("Selected " + currentItem);
+        }
+        
+        // Each item of the model is instantiated with the delegate
+        delegate: Item {
+            property bool isHighlighted: mouseArea.containsMouse
+            property bool isSelected: listView.currentIndex == index
+            MouseArea {
+                id: mouseArea
+                anchors.fill: parent
+                hoverEnabled: true
+                acceptedButtons: Qt.RightButton | Qt.LeftButton
+                onPressed: { listView.currentIndex = index; }
+                onClicked: { listView.currentIndex = index; }
+            }                   
+            Text {
+                width: listView.width
+                height: 30
+                text: role_name
+            }
+        }
+    }
+}
+
+// ATTACHING MODEL TO QML VIEW
+QQuickView view;
+view.rootContext()->setContextProperty("context_model", &model);
+view.setSource(QUrl("qrc:/main.qml"));
+view.show();
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QMAKE
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
