@@ -158,7 +158,6 @@ if(file.open(QIODevice::ReadOnly))
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT MODELING LANGUAGE (QML)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//• QML: Markup language for user interfaces made up of elements, uses Javascript for scripting
 
 import QtQuick 2.4
 import QtQuick.Controls 1.2
@@ -169,6 +168,7 @@ Qt.quit()  // Quits the application
 //===============================================================================================================
 // QML PROPERTIES
 //===============================================================================================================
+
 id: nameOfControl                         // unique id of element, can be used to access it
 objectName: "UserName"                    // user defined name
 anchors.left: parent.left                 // don't use with RowLayout, use Layout.fillWidth
@@ -184,16 +184,13 @@ property var myProperty: true             // custom property
 property alias myProperty2: myProperty;   // alias for property
     
 /* Called when the element has been instantiated */
-Component.onCompleted: {
-}
+Component.onCompleted: {}
 
 /* Called when the element is destroyed */
-Component.onDestruction: {
-}
+Component.onDestruction: {}
 
 /* Called when the property 'color' has changed */
-onColorChanged: {
-}
+onColorChanged: {}
 
 /* Javascript custom function */
 function myFunction(x, y) {
@@ -204,53 +201,110 @@ function myFunction(x, y) {
 // QML COMPONENTS
 //===============================================================================================================
 
-/* Interactable area */
+Item {
+}
+
 MouseArea {
-    acceptedButtons: Qt.AllButtons
+    hoverEnabled: true
+    acceptedButtons: Qt.RightButton | Qt.LeftButton | Qt.AllButtons
     onPressed: {}
     onRelease: {}
     onClicked: {
         var clickX = mouse.x;
         var clickY = mouse.y;
+        var button = mouse.button
     }
 }
 
-/* Invisible Rectangle */
-Item {
+// Call using id.popup() to show at mouse position
+Menu {
+    visible: false
+    MenuItem {
+        text: "Item"
+        iconSource: "qrc:///icon.png"
+        enabled: true
+        onTriggered: {}
+    }
 }
+
 
 //===============================================================================================================
 // QML LAYOUTS
 //===============================================================================================================
 
-/* Aligns elements after each other in a single row */
+Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+Layout.fillHeight: true
+Layout.fillWidth: true
+Layout.preferredHeight: 30
+Layout.preferredWidth: 30
+
+// Aligns elements after each other in a single row
 RowLayout {
     spacing: 5
+    anchors.fill: parent // Still use anchors on base
 }
 
-/* Aligns elements after each other in a single column */
+// Aligns elements after each other in a single column
 ColumnLayout {
     spacing: 5
+    anchors.fill: parent // Still use anchors on base
 }
 
-/* Aligns elements in a grid with n columns */
+// Aligns elements in a grid with n columns
 GridLayout {
     columns: 3
     spacing: 5
+    anchors.fill: parent // Still use anchors on base
 }
 
 //===============================================================================================================
 // QML WIDGETS
 //===============================================================================================================
 
-/* Visible Rectangle */
 Rectangle {
-    color: "red"
+    color: "#8EACFF"
+    radius: 2
+    border.color: "red"
+    border.width: 1      
 }
 
-/* Visible Text */
 Text {
     text: "text"
+    verticalAlignment: Text.AlignVCenter
+    font.pointSize: 14
+    font.bold: true
+}
+
+Button {
+    iconSource: "qrc:///icon.png"
+    enabled: true
+    onClicked: {}
+}
+
+ProgressBar {
+    maximumValue: 20
+    minimumValue: 0
+    style: ProgressBarStyle {
+        background: Rectangle {
+            radius: 2
+            color: "grey"
+            implicitWidth: 100
+            implicitHeight: 20
+        }
+        progress: Rectangle {
+            color: "blue"
+        }
+    }
+}
+
+Dialog {
+    visible: false // Turning on/off will show dialog window
+    title: "Title"
+    width: 300
+    height: 80
+    contentItem: Rectangle {
+        anchors.fill: parent
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -278,15 +332,22 @@ PARENT-CHILD RELATIONSHIP:
 class MyClass : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(MyEnum m_enum READ getEnum WRITE setEnum)
-    Q_ENUMS(MyEnum)
     Q_CLASSINFO("Author", "Name") // attach additional name/value pairs to the class's meta-object
 
 public:
     MyClass(QObject *parent = 0);
     ~MyClass();
     
+    // Enums must start with capital letter
     enum MyEnum { ONE, TWO, THREE };
+    Q_ENUMS(MyEnum)
+    
+    // Use Enum with QML
+    // Use 'import MyEnums 1.0' and 'MyEnum.ONE'
+    static registerEnum() { qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum"); }
+    
+    // Use Enum with signals/slots
+    Q_PROPERTY(MyEnum m_enum READ getEnum WRITE setEnum)
     void setEnum(MyEnum value) { m_enum = value; }
     MyEnum getEnum() const { return m_enum; }
 
@@ -295,7 +356,6 @@ signals:
 
 public slots:
     void mySlot();
-    
     void mySlot(void (*fn)(void *)); // Cannot do
     void mySlot(MyFn fn);            // Can do
     
@@ -361,6 +421,41 @@ public:
         roles[MyRole2] = "role_two";
         return roles;    
     }
+    
+    MyItem* rowToItem(int row) const
+    {
+        return row >= 0 && row < static_cast<int>(m_items.size())
+            ? m_items[row].get() : nullptr;
+    }
+    
+    Q_INVOKABLE void qmlFunction(int row)
+    {
+        if (auto item = rowToItem(row))
+        {
+            item->doSomethingToChangeData();
+            const auto& modelIndex = index(row);
+            emit dataChanged(modelIndex, modelIndex);
+        }
+    }
+    
+    void createItem()
+    {
+        beginInsertRows(QModelIndex(), rowCount(), rowCount());
+        m_items.push_back(std::make_unique<MyItem>());
+        endInsertRows();
+    }
+
+    void deleteItem(int row)
+    {
+        if (row >= 0 && row < static_cast<int>(m_items.size()))
+        {
+            beginRemoveRows(QModelIndex(), row, row);
+            auto itr = m_items.begin();
+            std::advance(itr, row);
+            m_items.erase(itr);
+            endRemoveRows();
+        }
+    }    
 
 private:
     std::vector<MyItem> m_items;
@@ -411,6 +506,17 @@ view.setSource(QUrl("qrc:/main.qml"));
 view.show();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// RESOURCES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+<RCC>
+    <qresource prefix="/">
+        <file>icon.png</file>  // QML: qrc:///icon.png
+        <file>main.qml</file>  // C++: qrc:/main.qml
+    </qresource>
+</RCC>
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QMAKE
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -430,10 +536,10 @@ USER INTERFACE COMPILER (UIC)
 • Reads a .ui file as generated by Qt Designer and creates a .h file
 
 **************************************************************************************************************/
-
 //===============================================================================================================
 // RUNNING QMAKE
 //===============================================================================================================
+
 qmake -makefile [options] file1.pro file2.pro // output will be Makefiles (default)
 qmake -project  [options] file.pro MyDir      // output will be a project (*.pro) file, accepts dirs
 make /*or*/ nmake                             // generates exe from Makefiles
@@ -463,6 +569,7 @@ make /*or*/ nmake                             // generates exe from Makefiles
 //===============================================================================================================
 // PROJECT CONFIGURATION
 //===============================================================================================================
+
 TARGET = hello                 // name of the executable
 VERSION = 1.2.3                
 LANGUAGE  = C++
@@ -615,6 +722,7 @@ format_number(value, leftalign)  // Places the padding to the right of the value
 //===============================================================================================================
 // QMAKE PROPERTIES
 //===============================================================================================================
+
 qmake -set "QT_VERSION" value    // set the property
 qmake -query "QT_VERSION"        // query the property
 qmake -query                     // queries all property/value pairs
@@ -638,6 +746,15 @@ QT_INSTALL_TESTS          // location of Qt test cases
 QT_INSTALL_TRANSLATIONS   // location of translation information for Qt strings
 QT_SYSROOT                // the sysroot used by the target build environment
 QT_VERSION                // the Qt version
+  
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CMAKE
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+  
+find_package(Qt5 COMPONENTS Core Widgets Quick)
+qt5_add_resources(RESOURCES resources/myResources.qrc)
+add_executable(exe_name ${SRC_LIST} ${RESOURCES})
+qt5_use_modules(exe_name Core Widgets Quick)
   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT HELP
