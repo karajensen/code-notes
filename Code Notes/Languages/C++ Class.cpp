@@ -145,7 +145,7 @@ MyClass& operator=(const MyClass&) = delete;
 • Are generated inline in class header
 • To generate in .cpp, delcare in header and use =default on definition
 • =default generates implicit version and is not considered user-defined
-• Templates never suppres generation of implicit member functions
+• Templates never suppress generation of implicit member functions
 
 ALL METHOD REQUIREMENTS:
 • Create if function is required for usage of the class
@@ -206,7 +206,7 @@ MyClass::MyClass(const MyClass& obj)
 // Doesn't take const objects as it modifies rvalue passed in
 MyClass(MyClass&& obj):
     m_pointer(std::move(obj.myPointer),
-    m_member(std::move(obj.m_member)
+    m_member(std::move(obj.m_member))
 {
 }
 
