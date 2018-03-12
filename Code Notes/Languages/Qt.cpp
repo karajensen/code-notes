@@ -183,7 +183,7 @@ heigh: 30                                 // avoid as easily ovewritten
 width: 30                                 // avoid as easily ovewritten
 visible: true                             // whether control is visible
 property var myProperty: true             // custom property
-property alias myProperty2: myProperty;   // alias for property
+property alias myProperty2: myProperty    // alias for property
     
 /* Called when the element has been instantiated */
 Component.onCompleted: {}
@@ -214,7 +214,7 @@ MouseArea {
     onClicked: {
         var clickX = mouse.x;
         var clickY = mouse.y;
-        var button = mouse.button
+        var button = mouse.button;
     }
 }
 
