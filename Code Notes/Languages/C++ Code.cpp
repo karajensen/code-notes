@@ -48,7 +48,8 @@ int myArray[2][2]
 sizeof(myInt)                 // gives size of myInt in bytes
 sizeof(myObj)                 // gives size of class in bytes
 sizeof(myArray)               // gives number of elements for array
-sizeof(myCString)             // gives numbers of characters for string
+sizeof(myCString)             // gives characters in string + \0
+sizeof("string literal")      // gives characters in string + \0, if const* used, gives size of pointer
 sizeof(myPointer)             // gives size of the pointer in bytes
 sizeof(myRef)                 // gives size of object referenced in bytes
 extent<int[3]>::value         // gives number of elements 3
@@ -195,23 +196,6 @@ callFunc({a, b});
 • Automatically done if object has a valid move assignment/constructor
 • All function parameters are lvalue even if initialised with an rvalue
 • Don't use with const objects: move becomes copy operation
-
-UNIVERSAL REFERENCES
-• T&& (not const T&&) that uses Reference Collapsing to bind to both rvalue/lvalue references
-• Requires type deduction that must be determined each time its called (not class templates)
-• Requires Pefect Fowarding to pass on arguments
-• Bad for overloading: instantiate to create exact matches for almost any type of argument
-
-PERFECT FORWARDING
-• Function templates that take arbitrary arguments and forward exactly the same arguments
-• Preserves R/L value-ness of passed args as all function params are lvalues
-• std::foward used to pass on correct type by casting to rvalue if pass argument was an rvalue
-• Fails with {}, NULL, static const members without a definition, template/overloaded function names, bitfields
-
-REFERENCE COLLAPSING
-• Occurs in universal references, typedef T&& MyTypedef, aliases and decltype
-• When lvalue reference is passed to T&&, creates type MyClass& && which collapses to MyClass&
-• Only compiler can create type T& && for collapsing, otherwise error
 **************************************************************************************************************/
 
 int x =         // L-VALUES: Persisting variable on left side of assignment expression    
