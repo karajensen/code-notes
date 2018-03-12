@@ -280,8 +280,25 @@ template <typename T> class MyClass
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UNIVERSAL REFERENCES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Reference that can bind to rvalue and lvalue reference of form T&&
-// Arguments must be perfect fowarded as all params are lvalues even if initialised as rvalue
+
+UNIVERSAL REFERENCES
+• Reference that can bind to rvalue and lvalue reference of form T&&
+• T&& (not const T&&) that uses Reference Collapsing to bind to both rvalue/lvalue references
+• Requires type deduction that must be determined each time its called (not class templates)
+• Requires Pefect Fowarding to pass on arguments
+• Bad for overloading: instantiate to create exact matches for almost any type of argument
+
+PERFECT FORWARDING
+• Function templates that take arbitrary arguments and forward exactly the same arguments
+• Preserves R/L value-ness of passed args as all function params are lvalues
+• std::foward used to pass on correct type by casting to rvalue if pass argument was an rvalue
+• Fails with {}, NULL, static const members without a definition, template/overloaded function names, bitfields
+
+REFERENCE COLLAPSING
+• Occurs in universal references, typedef T&& MyTypedef, aliases and decltype
+• When lvalue reference is passed to T&&, creates type MyClass& && which collapses to MyClass&
+• Only compiler can create type T& && for collapsing, otherwise error
+
 
 void fn(T& x) {}
 void fn(T&& x) {}
