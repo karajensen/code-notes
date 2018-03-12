@@ -109,7 +109,7 @@ MyClass::Subclass& Get();         // Subclass as return value requires namespace
 static void StaticMethod()  
 {
     //only access static members and have friendship with class
-    sm_singleton->m_constMember = x;
+    sm_singleton->m_member = x;
 }
 
 // CAST OPERATOR
@@ -135,8 +135,8 @@ const int& m_refMember; //Must be in initialisation list
 // Important if dynamic allocation occurs in class
 // delete preferred over no definition as compiler error 
 // occurs rather than linker error when trying to use the method
-MyClass(const MyClass) = delete;
-MyClass& operator=(const MyClass) = delete;
+MyClass(const MyClass&) = delete;
+MyClass& operator=(const MyClass&) = delete;
 
 //===============================================================================================================
 // IMPLICIT CLASS METHODS
