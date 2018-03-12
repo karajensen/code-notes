@@ -681,7 +681,7 @@ isEmpty(MY_VAR)                    // Succeeds if MY_VAR is empty or has no valu
 
 //REPLACE FUNCTIONS
 //To use return value, put $$ in front
-absolute_path("file.txt")	       // Returns path as absolute
+absolute_path("file.txt")        // Returns path as absolute
 relative_path("c:/file.txt")     // Returns path as relative
 basename("MyPath/file.txt")      // Returns file name
 cat("file.txt")                  // Returns contents of file
