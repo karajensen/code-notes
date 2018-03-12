@@ -67,6 +67,10 @@ LGPLv2.1 vs. LGPLv3
 // QT FRAMEWORK
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+qDebug() << "Message\n"; // Prints to stderr output
+Q_ASSERT(expression);
+Q_ASSERT_X(expression, "divide", "division by zero");
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -165,7 +169,8 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.2
 
-Qt.quit()  // Quits the application
+Qt.quit() // Quits the application
+console.log("Message")
 
 //===============================================================================================================
 // QML PROPERTIES
