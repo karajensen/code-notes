@@ -281,6 +281,7 @@ template <typename T> class MyClass
 // UNIVERSAL REFERENCES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*************************************************************************************************************
 UNIVERSAL REFERENCES
 • Reference that can bind to rvalue and lvalue reference of form T&&
 • T&& (not const T&&) that uses Reference Collapsing to bind to both rvalue/lvalue references
@@ -298,7 +299,7 @@ REFERENCE COLLAPSING
 • Occurs in universal references, typedef T&& MyTypedef, aliases and decltype
 • When lvalue reference is passed to T&&, creates type MyClass& && which collapses to MyClass&
 • Only compiler can create type T& && for collapsing, otherwise error
-
+*************************************************************************************************************/
 
 void fn(T& x) {}
 void fn(T&& x) {}
