@@ -258,10 +258,12 @@ auto* myPtr = const_cast<MyClass>(myPtr);
 
 union MyUnion
 {
-    MyUnion() : myInt(0) //can have user defined constructor
-    {
-    }
+    //can have user defined constructor
+    MyUnion() : myInt(0) { }
 
+    //can have member functions
+    Void MyFn() { }
+    
     unsigned int myInt;
     double myDouble;
 };
