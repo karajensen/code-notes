@@ -197,7 +197,7 @@ MyClass() :
 }
 
 // COPY CONSTRUCTOR
-MyClass::MyClass(const MyClass& obj)
+MyClass(const MyClass& obj)
 {
     this.m_member = obj.m_member;
 }
@@ -236,7 +236,7 @@ explicit MyClass(float myFloat) {}
 //===============================================================================================================
 
 // COPY ASSIGNMENT OPERATOR
-MyClass& MyClass::operator=(const MyClass& obj)
+MyClass& operator=(const MyClass& obj)
 {
     if(&obj == this) //check not copying self
     { 
@@ -268,7 +268,7 @@ MyClass& operator=(MyClass&& obj)
 // Requires non - throwing swap function, copy constructor and destructor
 // Passes argument in by - val; if construction fails, 'this' never used in body which gives strong exception guarantee
 // Take parameter by-val to use copy constructor
-MyClass& MyClass::operator=(const MyClass obj)
+MyClass& operator=(const MyClass obj)
 {
     std::swap(*this, obj);
     return *this;
