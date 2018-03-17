@@ -113,14 +113,24 @@ vec.resize(n);
 // QSharedDataPointer<T>
 // Requires T to be derived from QSharedData
 // Thread-safe reference counting pointer to an implicitly shared object
+// Calling non-const class methods auto detaches ptr from shared block
 QSharedDataPointer<T> ptr(new T());
+QSharedDataPointer<T> ptr2(ptr); // Implicity shares data with ptr
+ptr.constData();         // Returns const T*
+ptr.data();              // Returns T* or const T*
+ptr.detach();            // Detaches object from shared data
 
 // QExplicitlySharedDataPointer
 // Requires T to be derived from QSharedData
-// Thread-safe reference counting shared pointer
+// Thread-safe reference counting pointer to an implicitly shared object
+// Calling non-const class methods DOES NOT auto detach ptr from shared block
 QExplicitlySharedDataPointer<T> ptr(new T());
+QExplicitlySharedDataPointer<T> ptr2(ptr); // Implicity shares data with ptr
+ptr.constData();         // Returns const T*
+ptr.data();              // Returns T* or const T*
+ptr.detach();            // Detaches object from shared data
 
-// QSharedPointer
+// QSharedPointer  
 // Thread-safe reference counting shared pointer with control block
 QSharedPointer<T> ptr(new T());
 QSharedPointer<T> ptr(new T(), [](T* data){}); // With custom deleter
