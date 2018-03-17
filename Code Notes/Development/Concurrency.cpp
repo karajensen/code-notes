@@ -39,6 +39,8 @@ LIVELOCK
 
 ATOMIC OPERATIONS: Non-blocking, work on simple data types
 LOCKING: Blocking, for critical parts where only one thread is allowed access
+THREAD-SAFE: Can be called simultaneously from multiple threads, even with shared data
+REENTRANT: Can be called simultaneously from multiple threads but not with shared data
 
 SEMAPHORE:
 • Can be locked by a set number of lockers concurrently
