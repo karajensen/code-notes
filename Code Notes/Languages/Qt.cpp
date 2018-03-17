@@ -135,31 +135,45 @@ ptr.detach();            // Detaches object from shared data
 QSharedPointer<T> ptr(new T());
 QSharedPointer<T> ptr(new T(), [](T* data){}); // With custom deleter
 auto ptr = QSharedPointer<T>::create(); // Allocates control block and memory together
-ptr->clear();            // Clears pointer and decrements ref count
-ptr->constCast();        // Returns QSharedPointer<T> with T stripped of const
-ptr->objectCast<T2>();   // Returns QSharedPointer<T2> by doing a qobject_cast
-ptr->dynamicCast<T2>();  // Returns QSharedPointer<T2>
-ptr->staticCast<T2>();   // Returns QSharedPointer<T2>
-ptr->toWeakRef();        // Returns QWeakPointer<T>
-ptr->isNull();           // Returns if null
-ptr->data();             // Returns T*
-ptr->reset();
-ptr->reset(new T());
+ptr.clear();             // Clears pointer and decrements ref count
+ptr.constCast();         // Returns QSharedPointer<T> with T stripped of const
+ptr.objectCast<T2>();    // Returns QSharedPointer<T2> by doing a qobject_cast
+ptr.dynamicCast<T2>();   // Returns QSharedPointer<T2>
+ptr.staticCast<T2>();    // Returns QSharedPointer<T2>
+ptr.toWeakRef();         // Returns QWeakPointer<T>
+ptr.isNull();            // Returns if null
+ptr.data();              // Returns T*
+ptr.reset();
+ptr.reset(new T());
 
 // QWeakPointer
 // Holds a weak reference to a QSharedPointer
 QWeakPointer<T> ptr(mySharedPtr->toWeakRef());
-ptr->clear();            // Clears pointer
-ptr->data();             // Returns T*, does not cast to QSharedPointer<T> or check if valid
-ptr->isNull();           // Returns if null
-ptr->lock();             // Returns QSharedPointer<T>, same as toStrongRef
-ptr->toStrongRef();      // Returns QSharedPointer<T>, same as lock
+ptr.clear();             // Clears pointer
+ptr.data();              // Returns T*, does not cast to QSharedPointer<T> or check if valid
+ptr.isNull();            // Returns if null
+ptr.lock();              // Returns QSharedPointer<T>, same as toStrongRef
+ptr.toStrongRef();       // Returns QSharedPointer<T>, same as lock
+
+// QScopedPointer
+QScopedPointer<T> ptr(new T());
+ptr.take();             // Returns T* and sets pointer to null
+ptr.data();             // Returns T*
+ptr.isNull();           // Returns if null
+ptr.reset();
+ptr.reset(new T());
+
+// QScopedArrayPointer
+QScopedArrayPointer<T> ptr(new T[n]);
+ptr[index];             // Returns T& at index
+ptr.take();             // Returns T* and sets pointer to null
+ptr.data();             // Returns T*
+ptr.isNull();           // Returns if null
+ptr.reset();
+ptr.reset(new T[n]);
 
 // QPointer
 
-// QScopedPointer
-
-// QScopedArrayPointer
 
 //===============================================================================================================
 // QT WIDGETS
