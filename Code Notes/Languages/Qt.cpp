@@ -103,6 +103,29 @@ QListIterator<int> iter(myList);
 while(iter.hasNext()) { iter.next(); }
 
 //===============================================================================================================
+// QT SMART POINTERS
+//===============================================================================================================
+
+// QSharedDataPointer<T>
+// Requires T to be derived from QSharedData
+// Thread-safe reference counting
+QSharedDataPointer<T> ptr;
+
+// QExplicitlySharedDataPointer
+// Requires T to be derived from QSharedData
+// Thread-safe reference counting shared pointer
+
+// QSharedPointer
+
+// QWeakPointer
+
+// QPointer
+
+// QScopedPointer
+
+// QScopedArrayPointer
+
+//===============================================================================================================
 // QT WIDGETS
 //===============================================================================================================
 
@@ -332,7 +355,7 @@ QOBJECT MOC LIMITATIONS:
 PARENT-CHILD RELATIONSHIP:
 • Parent needs to be explicitly deleted, either by delete or stack scope
 • Children deleted by parent automatically, if child is deleted first, parent is notified
-• Children should not be created on the stack as parent assumes children are heap allocated
+• Children should not be created on the stack unless deleted first, as parent assumes children are on heap
 **************************************************************************************************************/
 
 class MyClass : public QObject
