@@ -102,10 +102,14 @@ lst << 1 << 2;  // Allows streaming into container
 QListIterator<int> iter(myList);
 while(iter.hasNext()) { iter.next(); }
 
+// QVector
+QVector<int> vec;
+vec.resize(n);
+
 //===============================================================================================================
 // QT SMART POINTERS
 //===============================================================================================================
-
+ 
 // QSharedDataPointer<T>
 // Requires T to be derived from QSharedData
 // Thread-safe reference counting pointer to an implicitly shared object
@@ -187,6 +191,20 @@ layout.addWidget(spinBox); // Add a widget to the layout, automatically parents 
 // QVBoxLayout: lays out widgets vertically from top to bottom
 
 // QGridLayout: lays out widgets in a grid.
+
+//===============================================================================================================
+// IMPLICIT SHARING (COPY-ON-WRITE)
+//===============================================================================================================
+
+// • Objects share the same memory in a 'shared block' if have the same values
+// • Automatically detaches the object from a shared block when object changes and ref count is > 1
+// • Qt classes use it internally, doesn't require a shared data pointer for it to happen
+// • Can be dangerous for iterators when container detaches from shared block:
+QVector<int> a, b;
+QVector<int>::iterator i = a.begin();
+b = a;    // Make both implicity share
+*i = 10;  // Iterator points to share block, will modify both a and b
+a[0] = 5; // Detach a by modifying only it, i still points to b though
 
 //===============================================================================================================
 // FILE SYSTEM
@@ -363,7 +381,11 @@ Dialog {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*************************************************************************************************************
-QOBJECT MOC LIMITATIONS:
+QOBJECTS:
+• Base class of all Qt objects, organised in an object tree
+• Identified by Q_OBJECT macro which uses Moc to generate extra data to use in framework
+
+QOBJECT LIMITATIONS:
 • Only signals and slots can live in the signals and slots sections
 • Class templates cannot have signals or slots
 • Signal/Slot return types cannot be references
