@@ -108,16 +108,38 @@ while(iter.hasNext()) { iter.next(); }
 
 // QSharedDataPointer<T>
 // Requires T to be derived from QSharedData
-// Thread-safe reference counting
-QSharedDataPointer<T> ptr;
+// Thread-safe reference counting pointer to an implicitly shared object
+QSharedDataPointer<T> ptr(new T());
 
 // QExplicitlySharedDataPointer
 // Requires T to be derived from QSharedData
 // Thread-safe reference counting shared pointer
+QExplicitlySharedDataPointer<T> ptr(new T());
 
 // QSharedPointer
+// Thread-safe reference counting shared pointer with control block
+QSharedPointer<T> ptr(new T());
+QSharedPointer<T> ptr(new T(), [](T* data){}); // With custom deleter
+auto ptr = QSharedPointer<T>::create(); // Allocates control block and memory together
+ptr->clear();            // Clears pointer and decrements ref count
+ptr->constCast();        // Returns QSharedPointer<T> with T stripped of const
+ptr->objectCast<T2>();   // Returns QSharedPointer<T2> by doing a qobject_cast
+ptr->dynamicCast<T2>();  // Returns QSharedPointer<T2>
+ptr->staticCast<T2>();   // Returns QSharedPointer<T2>
+ptr->toWeakRef();        // Returns QWeakPointer<T>
+ptr->isNull();           // Returns if null
+ptr->data();             // Returns T*
+ptr->reset();
+ptr->reset(new T());
 
 // QWeakPointer
+// Holds a weak reference to a QSharedPointer
+QWeakPointer<T> ptr(mySharedPtr->toWeakRef());
+ptr->clear();            // Clears pointer
+ptr->data();             // Returns T*, does not cast to QSharedPointer<T> or check if valid
+ptr->isNull();           // Returns if null
+ptr->lock();             // Returns QSharedPointer<T>, same as toStrongRef
+ptr->toStrongRef();      // Returns QSharedPointer<T>, same as lock
 
 // QPointer
 
