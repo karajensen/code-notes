@@ -606,11 +606,20 @@ view.show();
 // RESOURCES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*************************************************************************************************************
+• Allows storing resource files as binary in executable
+• To add to exe, add RESOURCES = myResources.qrc to .pro file
+• Access using qrc:///file.ext, paths relative to .qrc file
+**************************************************************************************************************/
+
 <RCC>
-    <qresource prefix="/">
-        <file>icon.png</file>  // QML: qrc:///icon.png
-        <file>main.qml</file>  // C++: qrc:/main.qml
+    <qresource prefix="/MyResources"> // Prefix optional
+        <file>file.ext</file>
+        <file alias="file.ext">path/file.ext</file>
     </qresource>
+    <qresource prefix="/MyResources" lang="fr">
+        <file>file.ext</file> // Will use instead if language matches
+    </qresource>    
 </RCC>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
