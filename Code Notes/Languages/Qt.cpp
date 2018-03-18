@@ -110,7 +110,7 @@ vec.resize(n);
 // QT SMART POINTERS
 //===============================================================================================================
  
-// QSharedDataPointer<T>
+// QSharedDataPointer
 // Requires T to be derived from QSharedData
 // Thread-safe reference counting pointer to an implicitly shared object
 // Calling non-const class methods auto detaches ptr from shared block
@@ -173,7 +173,11 @@ ptr.reset();
 ptr.reset(new T[n]);
 
 // QPointer
-
+// Same as QScopedPointer, kept for legacy support
+QPointer<T> ptr(new T());
+ptr.clear();             // Clears pointer and decrements ref count
+ptr.isNull();            // Returns if null
+ptr.data();              // Returns T*
 
 //===============================================================================================================
 // QT WIDGETS
