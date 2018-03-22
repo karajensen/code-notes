@@ -88,14 +88,33 @@ qobject_cast<MyQObject*>(qObj); // dynamic_cast without requiring RTTI
 //===============================================================================================================
 
 // QString
-QString str = "str";
+QString str("str");
+QString str('c');
 str.split(" "); // Returns QStringList of string split by spaces
+str.append("str", n); // Adds n characters to the end of the string, returns QString& for chaining
+str.append("str"); // Adds to the end of the string, returns QString& for chaining
+str.append('c'); // Adds to the end of the string, returns QString& for chaining
+str.arg(value); // Returns QString copy with %n replaced with value (eg. %1, %2...), printf with %n
+str.at(n); // Returns QChar at index
+str.back(); // Returns QChar (const version) or QCharRef at back, undefined on empty string
+str.begin(); // Returns iterator or const_iterator
+str.capacity(); // Returns maximum number of characters that can be stored without forcing a reallocation
+str.chop(n); // Removes n chars from end of the string, if n >= size, string becomes empty
+str.chopped(n); // Removes n chars from end of the string and returns QString copy, n >= size is undefined
+str.clear(); // Makes string empty
+str.compare("str", Qt::CaseInsensitive); // Returns 0 if they match 
+str.toUtf8().constData(); // Convert to const char*
+QString::asprintf("%i", n); // QString version of printf, uses same modifiers
+QString::compare(str1, str2, Qt::CaseInsensitive); // Returns 0 if they match
+  
+// QTextStream
+QTextStream(&str) << "str" << value; // QString streamstream
 
 // QStringList
 QStringList lst; // Inherits from QList<QString>, specifically for strings
 lst.join(" ")    // Returns a combined string seperated by spaces
 lst.append(lst2) // Adds a new string list to the end
-
+  
 // QList
 QList<int> lst; // Fast index-based access, insertions and removals
 lst << 1 << 2;  // Allows streaming into container
