@@ -88,12 +88,11 @@ qobject_cast<MyQObject*>(qObj); // dynamic_cast without requiring RTTI
 //===============================================================================================================
 
 // QString
+// Most also overload using a char, regex etc
 QString str("str");
-QString str('c');
 str.split(" "); // Returns QStringList of string split by spaces
 str.append("str", n); // Adds n characters to the end of the string, returns QString& for chaining
 str.append("str"); // Adds to the end of the string, returns QString& for chaining
-str.append('c'); // Adds to the end of the string, returns QString& for chaining
 str.arg(value); // Returns QString copy with %n replaced with value (eg. %1, %2...), printf with %n
 str.at(n); // Returns QChar at index
 str.back(); // Returns QChar (const version) or QCharRef at back, undefined on empty string
@@ -104,9 +103,17 @@ str.chopped(n); // Removes n chars from end of the string and returns QString co
 str.clear(); // Makes string empty
 str.compare("str", Qt::CaseInsensitive); // Returns 0 if they match 
 str.toUtf8().constData(); // Convert to const char*
+str.contains("str", Qt::CaseInsensitive); // Returns true if contains substring 'str'
+str.count("str", Qt::CaseInsensitive); // Returns count of substring, will count overlaps
+str.end(); // Returns iterator or const_iterator
+str.endsWith("str", Qt::CaseInsensitive); // Returns true if ends with 'str'
+str.fill('c', n); // Resizes string to n and fills with character, without n will fill to current size
+str.font(); // Returns QChar (const version) or QCharRef at back, undefined on empty string
+str.indexOf("str", n); // Searches for 'str' from index n, returns index, or -1 if not found
+str.insert(n, "str"); // Inserts 'str' at index n, returns QString&, auto resizes if n >= size
 QString::asprintf("%i", n); // QString version of printf, uses same modifiers
 QString::compare(str1, str2, Qt::CaseInsensitive); // Returns 0 if they match
-  
+ 
 // QTextStream
 QTextStream(&str) << "str" << value; // QString streamstream
 
