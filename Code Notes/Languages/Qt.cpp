@@ -121,17 +121,17 @@ QTextStream(&str) << "str" << value; // QString streamstream
 //===============================================================================================================
 // QT CONTAINERS
 //===============================================================================================================
+/*************************************************************************************************************
+• Type T must provide default constructor, copy constructor, assignment operator, else use T*
+• If container uses Key, type T must provide operator<
+• Iterators can become invalid after insertion/removal, due to changing internals and implicit sharing
+**************************************************************************************************************/
 
 // QList<T>
 // Pre-allocates memory both at start and end, fast index access, insertions and removals
 // Array of T if sizeof(T) <= sizeof(void*) and T is Q_PRIMITIVE_TYPE or Q_MOVABLE_TYPE, else array of T* on heap
-// Iterators can become invalid after insertion/removal
 QList<T> lst;
 lst << 1 << 2;  // Allows streaming into container
-
-// QListIterator<T>
-QListIterator<T> iter(myList);
-while(iter.hasNext()) { iter.next(); }
 
 // QStringList
 // Inherits from QList<QString>
@@ -172,6 +172,51 @@ vec.resize(n);
 // QCache<T>
 
 // QContiguousCache <T>
+
+
+//===============================================================================================================
+// QT ITERATORS
+//===============================================================================================================
+/*************************************************************************************************************
+CONTAINER           JAVA-STYLE READ-ONLY    JAVA-STYLE MUTABLE               STL-STYLE ITERATORS
+QList<T>            QListIterator<T>        QMutableListIterator<T>          QList<T>::iterator   
+QQueue<T>           QListIterator<T>        QMutableListIterator<T>          QQueue<T>::iterator     
+QLinkedList<T>      QLinkedListIterator<T>  QMutableLinkedListIterator<T>    QLinkedList<T>::iterator   
+QVector<T>          QVectorIterator<T>      QMutableVectorIterator<T>        QVector<T>::iterator    
+QStack<T>           QVectorIterator<T>      QMutableVectorIterator<T>        QStack<T>::iterator     
+QSet<T>             QSetIterator<T>         QMutableSetIterator<T>           QSet<T>::iterator   
+QMap<Key, T>        QMapIterator<Key, T>    QMutableMapIterator<Key, T>      QMap<Key, T>::iterator   
+QMultiMap<Key, T>   QMapIterator<Key, T>    QMutableMapIterator<Key, T>      QMultiMap<Key, T>::iterator   
+QHash<Key, T>       QHashIterator<Key, T>   QMutableHashIterator<Key, T>     QHash<Key, T>::iterator    
+QMultiHash<Key, T>  QHashIterator<Key, T>   QMutableHashIterator<Key, T>     QMultiHash<Key, T>::iterator   
+**************************************************************************************************************/
+
+// STL-STYLED ITERATORS
+// Point to actual values
+// Support reverse_iterator, const_iterator and iterator maths
+*itr                    // Return value
+++i / --i               // Increment/decrement
+itr.begin()             // Start of container
+itr.end()               // One after end of container
+itr.key()               // Key-based only, returns const Key&
+  
+// JAVA-STYLED ITERATORS
+// Point to position between values
+itr.toFront()           // Sets iterator as begin
+itr.toBack()            // Sets iterator as end
+itr.hasNext()           // Returns true if the iterator isn't at the back of the list
+itr.next()	            // Returns the next item and advances the iterator by one position
+itr.peekNext()          // Returns the next item without moving the iterator
+itr.hasPrevious()       // Returns true if the iterator isn't at the front of the list
+itr.previous()          // Returns the previous item and moves the iterator back by one position
+itr.peekPrevious()      // Returns the previous item without moving the iterator
+itr.value()             // Mutable or key-based only, Returns T& or const T&
+itr.setValue(value)     // Mutable only, Takes in const T&
+itr.insert(value)       // Mutable, non-key based only, Takes in const T&, inserts one after itr
+itr.findNext(value)     // Mutable or key-based only, from itr, searches forward for value, returns if found
+itr.findPrevious(value) // Mutable or key-based only, from itr, searches backwards for value, returns if found
+itr.remove()            // Mutable only, Removes the value, does not invalidate itr
+itr.key()               // Key-based only, Returns const Key&
 
 //===============================================================================================================
 // QT SMART POINTERS
