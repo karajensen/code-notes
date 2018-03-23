@@ -117,22 +117,61 @@ QString::compare(str1, str2, Qt::CaseInsensitive); // Returns 0 if they match
 // QTextStream
 QTextStream(&str) << "str" << value; // QString streamstream
 
-// QStringList
-QStringList lst; // Inherits from QList<QString>, specifically for strings
-lst.join(" ")    // Returns a combined string seperated by spaces
-lst.append(lst2) // Adds a new string list to the end
-  
-// QList
-QList<int> lst; // Fast index-based access, insertions and removals
+
+//===============================================================================================================
+// QT CONTAINERS
+//===============================================================================================================
+
+// QList<T>
+// Pre-allocates memory both at start and end, fast index access, insertions and removals
+// Array of T if sizeof(T) <= sizeof(void*) and T is Q_PRIMITIVE_TYPE or Q_MOVABLE_TYPE, else array of T* on heap
+// Iterators can become invalid after insertion/removal
+QList<T> lst;
 lst << 1 << 2;  // Allows streaming into container
 
-// QListIterator
-QListIterator<int> iter(myList);
+// QListIterator<T>
+QListIterator<T> iter(myList);
 while(iter.hasNext()) { iter.next(); }
 
-// QVector
-QVector<int> vec;
+// QStringList
+// Inherits from QList<QString>
+QStringList lst;
+lst.join(" ")    // Returns a combined string seperated by spaces
+lst.append(lst2) // Adds a new string list to the end
+
+// QLinkedList<T>
+// Uses iterators to access members, segmented allocations
+// Better performance than QList when inserting in the middle of a huge list
+
+// QVector<T>
+// Continuous memory allocation, reallocates whole block when resizing
+// Fast index access and add/remove from back, slow insert and add/remove from front
+QVector<T> vec;
 vec.resize(n);
+
+// QStack<T>
+// Inherits QVector<T>
+
+// QQueue<T>
+// Inherits QList<T>
+
+// QMap<Key, T>
+// Dictionary, auto stores its data in Key order
+
+// QMultiMap<Key, T>
+// Inherits QMap<Key, T>
+
+// QHash<Key, T>
+// Hash map, no auto sorting
+
+// QMultiHash<Key, T>
+// Inherits QHash<Key, T>
+
+// QSet<T>
+
+// QCache<T>
+
+// QContiguousCache <T>
 
 //===============================================================================================================
 // QT SMART POINTERS
