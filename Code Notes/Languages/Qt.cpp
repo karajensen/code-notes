@@ -117,7 +117,6 @@ QString::compare(str1, str2, Qt::CaseInsensitive); // Returns 0 if they match
 // QTextStream
 QTextStream(&str) << "str" << value; // QString streamstream
 
-
 //===============================================================================================================
 // QT CONTAINERS
 //===============================================================================================================
@@ -173,7 +172,6 @@ vec.resize(n);
 
 // QContiguousCache <T>
 
-
 //===============================================================================================================
 // QT ITERATORS
 //===============================================================================================================
@@ -205,7 +203,7 @@ itr.key()               // Key-based only, returns const Key&
 itr.toFront()           // Sets iterator as begin
 itr.toBack()            // Sets iterator as end
 itr.hasNext()           // Returns true if the iterator isn't at the back of the list
-itr.next()	            // Returns the next item and advances the iterator by one position
+itr.next()              // Returns the next item and advances the iterator by one position
 itr.peekNext()          // Returns the next item without moving the iterator
 itr.hasPrevious()       // Returns true if the iterator isn't at the front of the list
 itr.previous()          // Returns the previous item and moves the iterator back by one position
