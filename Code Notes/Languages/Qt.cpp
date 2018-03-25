@@ -126,17 +126,17 @@ QTextStream(&str) << "str" << value; // QString streamstream
 • Type T must provide default constructor, copy constructor, assignment operator, else use T*
 • If container uses Key, type T must provide operator<
 • Iterators can become invalid after insertion/removal, due to changing internals and implicit sharing
- 
-----------------------------------------------------------------------
-CONTAINER          Access       Insertion  Prepending  Appending
-----------------------------------------------------------------------
-QLinkedList<T>     O(n)         O(1)       O(1)        O(1)
-QList<T>           O(1)         O(n)       O(1)        O(1)
-QVector<T>         O(1)         O(n)       O(n)        O(1)
-QMap<Key, T>       O(log n)     O(logn)    -           -
-QMultiMap<Key, T>  O(log n)     O(logn)    -           -
-QHash<Key, T>      O(1) O(n)    O(n)       -           -
-QSet<Key>          O(1) O(n)    O(n)       -           -
+• Average performance for containers:
+  --------------------------------------------------------------
+  Container          Access       Insert     Prepend   Append
+  --------------------------------------------------------------
+  QLinkedList<T>     O(n)         O(1)       O(1)      O(1)
+  QList<T>           O(1)         O(n)       O(1)      O(1)
+  QVector<T>         O(1)         O(n)       O(n)      O(1)
+  QMap<Key, T>       O(log n)     O(logn)    -         -
+  QMultiMap<Key, T>  O(log n)     O(logn)    -         -
+  QHash<Key, T>      O(1) O(n)    O(n)       -         -
+  QSet<Key>          O(1) O(n)    O(n)       -         -
 **************************************************************************************************************/
 
 // CONTAINER FOREACH
@@ -198,17 +198,17 @@ lst.append(lst2) // Adds a new string list to the end
 // QT ITERATORS
 //===============================================================================================================
 /*************************************************************************************************************
-CONTAINER           JAVA-STYLE READ-ONLY    JAVA-STYLE MUTABLE               STL-STYLE ITERATORS
-QList<T>            QListIterator<T>        QMutableListIterator<T>          QList<T>::iterator   
-QQueue<T>           QListIterator<T>        QMutableListIterator<T>          QQueue<T>::iterator     
-QLinkedList<T>      QLinkedListIterator<T>  QMutableLinkedListIterator<T>    QLinkedList<T>::iterator   
-QVector<T>          QVectorIterator<T>      QMutableVectorIterator<T>        QVector<T>::iterator    
-QStack<T>           QVectorIterator<T>      QMutableVectorIterator<T>        QStack<T>::iterator     
-QSet<T>             QSetIterator<T>         QMutableSetIterator<T>           QSet<T>::iterator   
-QMap<Key, T>        QMapIterator<Key, T>    QMutableMapIterator<Key, T>      QMap<Key, T>::iterator   
-QMultiMap<Key, T>   QMapIterator<Key, T>    QMutableMapIterator<Key, T>      QMultiMap<Key, T>::iterator   
-QHash<Key, T>       QHashIterator<Key, T>   QMutableHashIterator<Key, T>     QHash<Key, T>::iterator    
-QMultiHash<Key, T>  QHashIterator<Key, T>   QMutableHashIterator<Key, T>     QMultiHash<Key, T>::iterator   
+CONTAINER            JAVA-STYLE READ-ONLY      JAVA-STYLE MUTABLE               STL-STYLE ITERATORS
+QList<T>             QListIterator<T>          QMutableListIterator<T>          QList<T>::iterator   
+QQueue<T>            QListIterator<T>          QMutableListIterator<T>          QQueue<T>::iterator     
+QLinkedList<T>       QLinkedListIterator<T>    QMutableLinkedListIterator<T>    QLinkedList<T>::iterator   
+QVector<T>           QVectorIterator<T>        QMutableVectorIterator<T>        QVector<T>::iterator    
+QStack<T>            QVectorIterator<T>        QMutableVectorIterator<T>        QStack<T>::iterator     
+QSet<T>              QSetIterator<T>           QMutableSetIterator<T>           QSet<T>::iterator   
+QMap<Key, T>         QMapIterator<Key, T>      QMutableMapIterator<Key, T>      QMap<Key, T>::iterator   
+QMultiMap<Key, T>    QMapIterator<Key, T>      QMutableMapIterator<Key, T>      QMultiMap<Key, T>::iterator   
+QHash<Key, T>        QHashIterator<Key, T>     QMutableHashIterator<Key, T>     QHash<Key, T>::iterator    
+QMultiHash<Key, T>   QHashIterator<Key, T>     QMutableHashIterator<Key, T>     QMultiHash<Key, T>::iterator   
 **************************************************************************************************************/
 
 // STL-STYLED ITERATORS
