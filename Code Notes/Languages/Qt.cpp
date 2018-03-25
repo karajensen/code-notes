@@ -128,15 +128,15 @@ QTextStream(&str) << "str" << value; // QString streamstream
 • Iterators can become invalid after insertion/removal, due to changing internals and implicit sharing
 • Average performance for containers:
   --------------------------------------------------------------
-  Container          Access       Insert     Prepend   Append
+  Container          Access     Insert     Prepend   Append
   --------------------------------------------------------------
-  QLinkedList<T>     O(n)         O(1)       O(1)      O(1)
-  QList<T>           O(1)         O(n)       O(1)      O(1)
-  QVector<T>         O(1)         O(n)       O(n)      O(1)
-  QMap<Key, T>       O(log n)     O(logn)    -         -
-  QMultiMap<Key, T>  O(log n)     O(logn)    -         -
-  QHash<Key, T>      O(1) O(n)    O(n)       -         -
-  QSet<Key>          O(1) O(n)    O(n)       -         -
+  QLinkedList<T>     O(n)        O(1)       O(1)      O(1)
+  QList<T>           O(1)        O(n)       O(1)      O(1)
+  QVector<T>         O(1)        O(n)       O(n)      O(1)
+  QMap<Key, T>       O(logn)     O(logn)    -         -
+  QMultiMap<Key, T>  O(logn)     O(logn)    -         -
+  QHash<Key, T>      O(1)        O(n)       -         -
+  QSet<Key>          O(1)        O(n)       -         -
 **************************************************************************************************************/
 
 // CONTAINER FOREACH
