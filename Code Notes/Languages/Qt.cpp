@@ -111,8 +111,13 @@ str.end(); // Returns iterator or const_iterator
 str.endsWith("str", Qt::CaseInsensitive); // Returns true if ends with 'str'
 str.fill('c', n); // Resizes string to n and fills with character, without n will fill to current size
 str.font(); // Returns QChar (const version) or QCharRef at back, undefined on empty string
-str.indexOf("str", n); // Searches for 'str' from index n, returns index, or -1 if not found
+str.indexOf("str", i); // Searches for 'str' from index i, returns index, or -1 if not found
 str.insert(n, "str"); // Inserts 'str' at index n, returns QString&, auto resizes if n >= size
+str.empty(); // Returns true if has no characters
+str.isNull(); // Returns true if null (default constructor)
+str.isRightToLeft(); // Returns true if string is to be read right to left
+str.lastIndexOf("str", i); // Searches for 'str' backwards from index i, returns index, or -1 if not found
+str.left(n); // Returns QString with only n characters starting from left
 QString::asprintf("%i", n); // QString version of printf, uses same modifiers
 QString::compare(str1, str2, Qt::CaseInsensitive); // Returns 0 if they match
  
