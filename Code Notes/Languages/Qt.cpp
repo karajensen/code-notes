@@ -83,6 +83,8 @@ Q_ASSERT_X(expression, "divide", "division by zero");
 
 qobject_cast<MyQObject*>(qObj); // dynamic_cast without requiring RTTI
 
+forever { break; }
+
 //===============================================================================================================
 // QT COMPONENTS
 //===============================================================================================================
@@ -124,7 +126,26 @@ QTextStream(&str) << "str" << value; // QString streamstream
 • Type T must provide default constructor, copy constructor, assignment operator, else use T*
 • If container uses Key, type T must provide operator<
 • Iterators can become invalid after insertion/removal, due to changing internals and implicit sharing
+ 
+----------------------------------------------------------------------
+CONTAINER          Access       Insertion  Prepending  Appending
+----------------------------------------------------------------------
+QLinkedList<T>     O(n)         O(1)       O(1)        O(1)
+QList<T>           O(1)         O(n)       O(1)        O(1)
+QVector<T>         O(1)         O(n)       O(n)        O(1)
+QMap<Key, T>       O(log n)     O(logn)    -           -
+QMultiMap<Key, T>  O(log n)     O(logn)    -           -
+QHash<Key, T>      O(1) O(n)    O(n)       -           -
+QSet<Key>          O(1) O(n)    O(n)       -           -
 **************************************************************************************************************/
+
+// CONTAINER FOREACH
+// Auto takes copy of container at start of loop
+// Modifying container during loop won't affect it due to implicit sharing
+foreach (const auto& value, container) {}
+foreach (const auto& value, map) {}
+foreach (const auto& key, map.keys()) {}
+foreach (const auto& key, multimap.uniqueKeys()) { foreach (const auto& value, multimap.values(key)) {} }
 
 // QList<T>
 // Pre-allocates memory both at start and end, fast index access, insertions and removals
@@ -145,8 +166,6 @@ lst.append(lst2) // Adds a new string list to the end
 // QVector<T>
 // Continuous memory allocation, reallocates whole block when resizing
 // Fast index access and add/remove from back, slow insert and add/remove from front
-QVector<T> vec;
-vec.resize(n);
 
 // QStack<T>
 // Inherits QVector<T>
@@ -162,15 +181,18 @@ vec.resize(n);
 
 // QHash<Key, T>
 // Hash map, no auto sorting
+// Uses hash key qHash(key) % QHash::capacity() (number of buckets)
 
 // QMultiHash<Key, T>
 // Inherits QHash<Key, T>
 
 // QSet<T>
+// Uses hash key qHash(key) % QHash::capacity() (number of buckets)
 
-// QCache<T>
+// QCache<Key, T>
+// Uses hash key qHash(key) % QHash::capacity() (number of buckets)
 
-// QContiguousCache <T>
+// QContiguousCache<Key, T>
 
 //===============================================================================================================
 // QT ITERATORS
