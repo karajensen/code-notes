@@ -80,9 +80,9 @@ QTextStream(&str) << "str" << value; // QString streamstream
 /*************************************************************************************************************
 • Type T must provide default constructor, copy constructor, assignment operator, else use T*
 • If container uses Key, type T must provide operator<
-• Iterators can become invalid after insertion/removal, due to changing internals and implicit sharing
-• Using mutable operator[] will detach container from implicit sharing, except for QByteArray which uses QByteRef
-• Using mutable iterators will detach container from implicit sharing, use constBegin/constEnd for read-only
+• Iterators can become invalid after insertion/removal, due to changing internals and implicit sharing (COW)
+• Using mutable operator[] will COW detach, except for QByteArray which uses QByteRef
+• Using mutable iterators will COW detach, use constBegin/constEnd for read-only
 • Can disable implicit conversion of begin() to constBegin() using QT_STRICT_ITERATORS
 
 QLIST<T>:
@@ -112,9 +112,9 @@ QSet<T>
 QCache<Key, T>
 • Uses hash key qHash(key) % QHash::capacity() (number of buckets)
   
-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 CONTAINER      ACCESS     INSERT     PREPEND   APPEND   EQUIVALENT
-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 QLinkedList    O(n)       O(1)       O(1)      O(1)     std::list   
 QList          O(1)       O(n)       O(1)      O(1)     -
 QVector        O(1)       O(n)       O(n)      O(1)     std::vector  
@@ -124,30 +124,39 @@ QHash          O(1)       O(n)       -         -        std::unordered_map
 QMultiHash                                              std::unordered_multimap    
 QSet           O(1)       O(n)       -         -        std::unordered_set
 
-------------------------------------------------------------------------------------------------------------
-CONTAINER            JAVA-STYLE READ-ONLY      JAVA-STYLE MUTABLE               STL-STYLE ITERATORS
-------------------------------------------------------------------------------------------------------------
-QList<T>             QListIterator<T>          QMutableListIterator<T>          QList<T>::iterator   
-QQueue<T>            QListIterator<T>          QMutableListIterator<T>          QQueue<T>::iterator     
-QLinkedList<T>       QLinkedListIterator<T>    QMutableLinkedListIterator<T>    QLinkedList<T>::iterator   
-QVector<T>           QVectorIterator<T>        QMutableVectorIterator<T>        QVector<T>::iterator    
-QStack<T>            QVectorIterator<T>        QMutableVectorIterator<T>        QStack<T>::iterator     
-QSet<T>              QSetIterator<T>           QMutableSetIterator<T>           QSet<T>::iterator   
-QMap<Key, T>         QMapIterator<Key, T>      QMutableMapIterator<Key, T>      QMap<Key, T>::iterator   
-QMultiMap<Key, T>    QMapIterator<Key, T>      QMutableMapIterator<Key, T>      QMultiMap<Key, T>::iterator   
-QHash<Key, T>        QHashIterator<Key, T>     QMutableHashIterator<Key, T>     QHash<Key, T>::iterator    
-QMultiHash<Key, T>   QHashIterator<Key, T>     QMutableHashIterator<Key, T>     QMultiHash<Key, T>::iterator 
+-------------------------------------------------------------------------------------------------
+CONTAINER         JAVA-STYLE READ-ONLY   JAVA-STYLE MUTABLE            STL-STYLE ITERATORS
+-------------------------------------------------------------------------------------------------
+QList             QListIterator          QMutableListIterator          QList::iterator
+QQueue            QListIterator          QMutableListIterator          QQueue::iterator     
+QLinkedList       QLinkedListIterator    QMutableLinkedListIterator    QLinkedList::iterator   
+QVector           QVectorIterator        QMutableVectorIterator        QVector::iterator    
+QStack            QVectorIterator        QMutableVectorIterator        QStack::iterator     
+QSet              QSetIterator           QMutableSetIterator           QSet::iterator   
+QMap              QMapIterator           QMutableMapIterator           QMap::iterator   
+QMultiMap         QMapIterator           QMutableMapIterator           QMultiMap::iterator   
+QHash             QHashIterator          QMutableHashIterator          QHash::iterator    
+QMultiHash        QHashIterator          QMutableHashIterator          QMultiHash::iterator 
 
 **************************************************************************************************************/
 
 // QList<T>
 QList<T> lst;
-lst << 1 << 2;  // Allows streaming into container
+lst << 1 << 2; // Allows streaming into container
+lst.append(value); // Appends to end of list
+lst.at(i); // Returns const T&, will not COW detach
+lst.back(); // Returns const T& or T&
+lst.clear(); // Clears the container
+lst.constFirst(); // Returns const T& for first item
+lst.constLast(); // Returns const T& for last item
+lst.contains(value); // Returns true if item is in list
+lst.count(value); // Returns number of times item is in list
+lst.count(); // Returns number of items in list
 
 // QStringList
 // Inherits from QList<QString>
 QStringList lst;
-lst.join(" ")    // Returns a combined string seperated by spaces
+lst.join(" ") // Returns a combined string seperated by spaces
 lst.append(lst2) // Adds a new string list to the end
 
 // QLinkedList<T>
@@ -179,6 +188,7 @@ lst.append(lst2) // Adds a new string list to the end
 // CONTAINER FOREACH
 // Auto takes copy of container at start of loop
 // Modifying container during loop won't affect it due to implicit sharing
+// Q_FOREACH if QT_NO_KETYWORDS is defined
 foreach (const auto& value, container) {}
 foreach (const auto& value, map) {}
 foreach (const auto& key, map.keys()) {}
@@ -186,31 +196,36 @@ foreach (const auto& key, multimap.uniqueKeys()) { foreach (const auto& value, m
 
 // STL-STYLED ITERATORS
 // Point to actual values, support reverse_iterator, const_iterator and iterator maths
-*itr                    // Return value
-++i / --i               // Increment/decrement
-itr.begin()             // Start of container
-itr.end()               // One after end of container
-itr.constBegin()        // Start of container
-itr.constEnd()          // One after end of container    
-itr.key()               // Key-based only, returns const Key&
-  
+// Getting a mutable iterator will auto COW detach
+begin()       end()        // Returns iterator or const_iterator
+rBegin()      rEnd()       // Returns reverse_iterator or const_reverse_iterator
+cbegin()      cend()       // Returns const_iterator
+constBegin()  constEnd()   // Returns const_iterator
+crbegin()     crEnd()      // Returns const_reverse_iterator
+*itr                       // Return value
+++i / --i                  // Increment/decrement
+itr.begin()                // Start of container
+itr.end()                  // One after end of container
+itr.key()                  // Key-based only, returns const Key&
+    
 // JAVA-STYLED ITERATORS
 // Point to position between values
-itr.toFront()           // Sets iterator as begin
-itr.toBack()            // Sets iterator as end
-itr.hasNext()           // Returns true if the iterator isn't at the back of the list
-itr.next()              // Returns the next item and advances the iterator by one position
-itr.peekNext()          // Returns the next item without moving the iterator
-itr.hasPrevious()       // Returns true if the iterator isn't at the front of the list
-itr.previous()          // Returns the previous item and moves the iterator back by one position
-itr.peekPrevious()      // Returns the previous item without moving the iterator
-itr.value()             // Mutable or key-based only, Returns T& or const T&
-itr.setValue(value)     // Mutable only, Takes in const T&
-itr.insert(value)       // Mutable, non-key based only, Takes in const T&, inserts one after itr
-itr.findNext(value)     // Mutable or key-based only, from itr, searches forward for value, returns if found
-itr.findPrevious(value) // Mutable or key-based only, from itr, searches backwards for value, returns if found
-itr.remove()            // Mutable only, Removes the value, does not invalidate itr
-itr.key()               // Key-based only, Returns const Key&
+QListIterator<T> itr(lst);
+itr.toFront()              // Sets iterator as begin
+itr.toBack()               // Sets iterator as end
+itr.hasNext()              // Returns true if the iterator isn't at the back of the list
+itr.next()                 // Returns the next item and advances the iterator by one position
+itr.peekNext()             // Returns the next item without moving the iterator
+itr.hasPrevious()          // Returns true if the iterator isn't at the front of the list
+itr.previous()             // Returns the previous item and moves the iterator back by one position
+itr.peekPrevious()         // Returns the previous item without moving the iterator
+itr.value()                // Mutable or key-based only, Returns T& or const T&
+itr.setValue(value)        // Mutable only, Takes in const T&
+itr.insert(value)          // Mutable, non-key based only, Takes in const T&, inserts one after itr
+itr.findNext(value)        // Mutable or key-based only, from itr, searches forward for value, returns if found
+itr.findPrevious(value)    // Mutable or key-based only, from itr, searches backwards for value, returns if found
+itr.remove()               // Mutable only, Removes the value, does not invalidate itr
+itr.key()                  // Key-based only, Returns const Key&
   
 // ITERATOR IMPLICIT SHARING PITFALL
 // Can be dangerous for iterators when container detaches from shared block:
