@@ -137,7 +137,6 @@ QMap              QMapIterator           QMutableMapIterator           QMap::ite
 QMultiMap         QMapIterator           QMutableMapIterator           QMultiMap::iterator   
 QHash             QHashIterator          QMutableHashIterator          QHash::iterator    
 QMultiHash        QHashIterator          QMutableHashIterator          QMultiHash::iterator 
-
 **************************************************************************************************************/
 
 // QList<T>
