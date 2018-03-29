@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT MODULES
+// QT FRAMEWORK
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*************************************************************************************************************
@@ -16,56 +16,7 @@ QtQuickLayouts       Layouts are items that are used to arrange Qt Quick 2 based
 QtSQL                Classes for database integration using SQL
 QtTest               Classes for unit testing Qt applications and libraries
 QtWidgets            Classes to extend Qt GUI with C++ widgets
-
-LIBRARY: Set of functions, organized in classes, that does some work and then returns control to the client
-FRAMEWORK: An abstract design that you need to insert into, through inheritance or callbacks, that the framework then calls
-TOOLKIT: More focused library, used almost exclusively for graphical widgets, and GUI components
 **************************************************************************************************************/
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT LICENSING
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*************************************************************************************************************
-COMMERCIAL:
-• Official Qt Support Helpdesk
-• Keep your application private
-• Full rights to proprietary Qt source code modifications
-
-GENERAL PUBLIC LICENSE (GPL):
-• Requires releasing the source code of your application if distributing the open source software 
-• All portions of the project must be under GPL as well
-• Can use static linking
-• Needs to include qt source code or instructions on how to access it
-
-LESSER GENERAL PUBLIC LICENSE (LGPL):
-• Allows distributing the open source software with your application without releasing the application source
-• LGPL open source software must be re-distributed as LGPU, other portions of project may have different licences
-• Possible to keep your application private with dynamic linking
-• Needs to include qt source code or instructions on how to access it
-
-QT FOR APPLICATION DEVELOPMENT: 
-• Cross platform development for desktop and mobile
-• Can be licensed under commercial and open source licenses (GPU / LGPU)
-• Some modules GPU only: QtDataVisualization / QtCharts / Tooling (if modifications are done)
-  
-QT FOR DEVICE CREATION: 
-• Used with embedded devices
-• Only under commercial licence to allow integration with proprietary code 
-  
-GPLv2 vs. GPLv3
-• GPLv3 added compatibility regulations that make it easier to combine GPL code and code under different licenses
-• GPLv3 adds regulations for digital rights management were added to keep GPL software from being changed at will
-• GPLv3 adds an explicit patent license/copyright so that no one can profit from them
-  
-LGPLv2.1 vs. LGPLv3
-• LGPLv3 closes loophole of locked-down consumer devices preventing users from installing
-  modified versions of the library on the device
-**************************************************************************************************************/
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT FRAMEWORK
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char *argv[])
 {
@@ -77,17 +28,15 @@ int main(int argc, char *argv[])
     app.exec(); // Start the event loop
 }
 
+forever { break; }
 qDebug() << "Message\n"; // Prints to stderr output
+qobject_cast<MyQObject*>(qObj); // dynamic_cast without requiring RTTI
 Q_ASSERT(expression);
 Q_ASSERT_X(expression, "divide", "division by zero");
 
-qobject_cast<MyQObject*>(qObj); // dynamic_cast without requiring RTTI
-
-forever { break; }
-
-//===============================================================================================================
-// QT COMPONENTS
-//===============================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT STRINGS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // QString
 // Most also overload using a char, regex etc
@@ -124,9 +73,10 @@ QString::compare(str1, str2, Qt::CaseInsensitive); // Returns 0 if they match
 // QTextStream
 QTextStream(&str) << "str" << value; // QString streamstream
 
-//===============================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT CONTAINERS
-//===============================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /*************************************************************************************************************
 • Type T must provide default constructor, copy constructor, assignment operator, else use T*
 • If container uses Key, type T must provide operator<
@@ -199,9 +149,10 @@ lst.append(lst2) // Adds a new string list to the end
 
 // QContiguousCache<Key, T>
 
-//===============================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT ITERATORS
-//===============================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
 /*************************************************************************************************************
 CONTAINER            JAVA-STYLE READ-ONLY      JAVA-STYLE MUTABLE               STL-STYLE ITERATORS
 QList<T>             QListIterator<T>          QMutableListIterator<T>          QList<T>::iterator   
@@ -242,11 +193,19 @@ itr.findNext(value)     // Mutable or key-based only, from itr, searches forward
 itr.findPrevious(value) // Mutable or key-based only, from itr, searches backwards for value, returns if found
 itr.remove()            // Mutable only, Removes the value, does not invalidate itr
 itr.key()               // Key-based only, Returns const Key&
+  
+// IMPLICIT SHARING PITFALL
+// • Can be dangerous for iterators when container detaches from shared block:
+QVector<int> a, b;
+QVector<int>::iterator i = a.begin();
+b = a;    // Make both implicity share
+*i = 10;  // Iterator points to share block, will modify both a and b
+a[0] = 5; // Detach a by modifying only it, i still points to b though  
 
-//===============================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT SMART POINTERS
-//===============================================================================================================
- 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
 // QSharedDataPointer
 // Requires T to be derived from QSharedData
 // Thread-safe reference counting pointer to an implicitly shared object
@@ -316,9 +275,25 @@ ptr.clear();             // Clears pointer and decrements ref count
 ptr.isNull();            // Returns if null
 ptr.data();              // Returns T*
 
-//===============================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT LAYOUTS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// QHBoxLayout: lays out widgets horizontally from left to right
+QHBoxLayout layout;
+layout.addWidget(spinBox); // Add a widget to the layout, automatically parents and resizes
+
+// QVBoxLayout: lays out widgets vertically from top to bottom
+QVBoxLayout layout;
+layout.addWidget(spinBox); // Add a widget to the layout, automatically parents and resizes
+
+// QGridLayout: lays out widgets in a grid.
+QGridLayout layout;
+layout.addWidget(spinBox, r, c); // Add a widget to the layout, automatically parents and resizes
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT WIDGETS
-//===============================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // QWidget
 QWidget widget; // Root widget used as a window
@@ -344,206 +319,6 @@ QSlider slider(Qt::Horizontal);
 slider.setRange(min, max);
 slider.setValue(value);
 QObject::connect(slider, SIGNAL(valueChanged(int)), &app, SLOT(myFn(int)));
-
-//===============================================================================================================
-// QT LAYOUTS
-//===============================================================================================================
-
-// QHBoxLayout: lays out widgets horizontally from left to right
-QHBoxLayout layout;
-layout.addWidget(spinBox); // Add a widget to the layout, automatically parents and resizes
-
-// QVBoxLayout: lays out widgets vertically from top to bottom
-QVBoxLayout layout;
-layout.addWidget(spinBox); // Add a widget to the layout, automatically parents and resizes
-
-// QGridLayout: lays out widgets in a grid.
-QGridLayout layout;
-layout.addWidget(spinBox, r, c); // Add a widget to the layout, automatically parents and resizes
-
-//===============================================================================================================
-// IMPLICIT SHARING (COPY-ON-WRITE)
-//===============================================================================================================
-
-// • Objects share the same memory in a 'shared block' if have the same values
-// • Automatically detaches the object from a shared block when object changes and ref count is > 1
-// • Qt classes use it internally, doesn't require a shared data pointer for it to happen
-// • Can be dangerous for iterators when container detaches from shared block:
-QVector<int> a, b;
-QVector<int>::iterator i = a.begin();
-b = a;    // Make both implicity share
-*i = 10;  // Iterator points to share block, will modify both a and b
-a[0] = 5; // Detach a by modifying only it, i still points to b though
-
-//===============================================================================================================
-// FILE SYSTEM
-//===============================================================================================================
-
-// Read from a file, no need to close it
-QFile file("myFile.txt");
-if(file.open(QIODevice::ReadOnly))
-{
-    QTextStream stream(&file);
-    QString line = stream.readLine(); // read the next line
-    while(!line.isNull())
-    {
-        line = stream.readLine();
-    }
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT MODELING LANGUAGE (QML)
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
-import QtQuick.Layouts 1.0
-import QtQuick.Dialogs 1.2
-
-Qt.quit() // Quits the application
-console.log("Message")
-
-//===============================================================================================================
-// QML PROPERTIES
-//===============================================================================================================
-
-id: nameOfControl                         // unique id of element, can be used to access it
-objectName: "UserName"                    // user defined name
-anchors.left: parent.left                 // don't use with RowLayout, use Layout.fillWidth
-anchors.right: parent.right               // don't use with RowLayout, use Layout.fillWidth
-anchors.left: parent.left                 // don't use with ColumnLayout, use Layout.fillHeight
-anchors.right: parent.right               // don't use with ColumnLayout, use Layout.fillHeight
-anchors.fill: parent                      // completely fills to parent
-anchors.margins: 1                        // adds margins between the anchor
-heigh: 30                                 // avoid as easily ovewritten
-width: 30                                 // avoid as easily ovewritten
-visible: true                             // whether control is visible
-property var myProperty: true             // custom property
-property alias myProperty2: myProperty    // alias for property
-    
-/* Called when the element has been instantiated */
-Component.onCompleted: {}
-
-/* Called when the element is destroyed */
-Component.onDestruction: {}
-
-/* Called when the property 'color' has changed */
-onColorChanged: {}
-
-/* Javascript custom function */
-function myFunction(x, y) {
-    return x + y;
-}
-
-//===============================================================================================================
-// QML COMPONENTS
-//===============================================================================================================
-
-Item {
-}
-
-MouseArea {
-    hoverEnabled: true
-    acceptedButtons: Qt.RightButton | Qt.LeftButton | Qt.AllButtons
-    onPressed: {}
-    onRelease: {}
-    onClicked: {
-        var clickX = mouse.x;
-        var clickY = mouse.y;
-        var button = mouse.button;
-    }
-}
-
-// Call using id.popup() to show at mouse position
-Menu {
-    visible: false
-    MenuItem {
-        text: "Item"
-        iconSource: "qrc:///icon.png"
-        enabled: true
-        onTriggered: {}
-    }
-}
-
-//===============================================================================================================
-// QML LAYOUTS
-//===============================================================================================================
-
-Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-Layout.fillHeight: true
-Layout.fillWidth: true
-Layout.preferredHeight: 30
-Layout.preferredWidth: 30
-
-// Aligns elements after each other in a single row
-RowLayout {
-    spacing: 5
-    anchors.fill: parent // Still use anchors on base
-}
-
-// Aligns elements after each other in a single column
-ColumnLayout {
-    spacing: 5
-    anchors.fill: parent // Still use anchors on base
-}
-
-// Aligns elements in a grid with n columns
-GridLayout {
-    columns: 3
-    spacing: 5
-    anchors.fill: parent // Still use anchors on base
-}
-
-//===============================================================================================================
-// QML WIDGETS
-//===============================================================================================================
-
-Rectangle {
-    color: "#8EACFF"
-    radius: 2
-    border.color: "red"
-    border.width: 1      
-}
-
-Text {
-    text: "text"
-    verticalAlignment: Text.AlignVCenter
-    font.pointSize: 14
-    font.bold: true
-}
-
-Button {
-    iconSource: "qrc:///icon.png"
-    enabled: true
-    onClicked: {}
-}
-
-ProgressBar {
-    maximumValue: 20
-    minimumValue: 0
-    style: ProgressBarStyle {
-        background: Rectangle {
-            radius: 2
-            color: "grey"
-            implicitWidth: 100
-            implicitHeight: 20
-        }
-        progress: Rectangle {
-            color: "blue"
-        }
-    }
-}
-
-Dialog {
-    visible: false // Turning on/off will show dialog window
-    title: "Title"
-    width: 300
-    height: 80
-    contentItem: Rectangle {
-        anchors.fill: parent
-    }
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT OBJECTS
@@ -576,6 +351,12 @@ PARENT-CHILD RELATIONSHIP:
 • Parent needs to be explicitly deleted, either by delete or stack scope
 • Children deleted by parent automatically, if child is deleted first, parent is notified
 • Children should not be created on the stack unless deleted first, as parent assumes children are on heap
+
+IMPLICIT SHARING (COPY-ON-WRITE):
+• Objects share the same memory in a 'shared block' if have the same values
+• Automatically detaches the object from a shared block when object changes and ref count is > 1
+• Qt classes use it internally, doesn't require a shared data pointer for it to happen
+• Can be dangerous for iterators when container detaches from shared block:
 **************************************************************************************************************/
 
 class MyClass : public QObject
@@ -755,6 +536,172 @@ view.setSource(QUrl("qrc:/main.qml"));
 view.show();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT FILESYSTEM
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Read from a file, no need to close it
+QFile file("myFile.txt");
+if(file.open(QIODevice::ReadOnly))
+{
+    QTextStream stream(&file);
+    QString line = stream.readLine(); // read the next line
+    while(!line.isNull())
+    {
+        line = stream.readLine();
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT MODELING LANGUAGE (QML)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+import QtQuick 2.6
+import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Layouts 1.0
+import QtQuick.Dialogs 1.2
+
+Qt.quit() // Quits the application
+console.log("Message")
+
+id: nameOfControl                         // unique id of element, can be used to access it
+objectName: "UserName"                    // user defined name
+anchors.left: parent.left                 // don't use with RowLayout, use Layout.fillWidth
+anchors.right: parent.right               // don't use with RowLayout, use Layout.fillWidth
+anchors.left: parent.left                 // don't use with ColumnLayout, use Layout.fillHeight
+anchors.right: parent.right               // don't use with ColumnLayout, use Layout.fillHeight
+anchors.fill: parent                      // completely fills to parent
+anchors.margins: 1                        // adds margins between the anchor
+heigh: 30                                 // avoid as easily ovewritten
+width: 30                                 // avoid as easily ovewritten
+visible: true                             // whether control is visible
+property var myProperty: true             // custom property
+property alias myProperty2: myProperty    // alias for property
+    
+/* Called when the element has been instantiated */
+Component.onCompleted: {}
+
+/* Called when the element is destroyed */
+Component.onDestruction: {}
+
+/* Called when the property 'color' has changed */
+onColorChanged: {}
+
+/* Javascript custom function */
+function myFunction(x, y) {
+    return x + y;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML COMPONENTS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Item {
+}
+
+MouseArea {
+    hoverEnabled: true
+    acceptedButtons: Qt.RightButton | Qt.LeftButton | Qt.AllButtons
+    onPressed: {}
+    onRelease: {}
+    onClicked: {
+        var clickX = mouse.x;
+        var clickY = mouse.y;
+        var button = mouse.button;
+    }
+}
+
+// Call using id.popup() to show at mouse position
+Menu {
+    visible: false
+    MenuItem {
+        text: "Item"
+        iconSource: "qrc:///icon.png"
+        enabled: true
+        onTriggered: {}
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML LAYOUTS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+Layout.fillHeight: true
+Layout.fillWidth: true
+Layout.preferredHeight: 30
+Layout.preferredWidth: 30
+
+// Aligns elements after each other in a single row
+RowLayout {
+    spacing: 5
+    anchors.fill: parent // Still use anchors on base
+}
+
+// Aligns elements after each other in a single column
+ColumnLayout {
+    spacing: 5
+    anchors.fill: parent // Still use anchors on base
+}
+
+// Aligns elements in a grid with n columns
+GridLayout {
+    columns: 3
+    spacing: 5
+    anchors.fill: parent // Still use anchors on base
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML WIDGETS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Rectangle {
+    color: "#8EACFF"
+    radius: 2
+    border.color: "red"
+    border.width: 1      
+}
+
+Text {
+    text: "text"
+    verticalAlignment: Text.AlignVCenter
+    font.pointSize: 14
+    font.bold: true
+}
+
+Button {
+    iconSource: "qrc:///icon.png"
+    enabled: true
+    onClicked: {}
+}
+
+ProgressBar {
+    maximumValue: 20
+    minimumValue: 0
+    style: ProgressBarStyle {
+        background: Rectangle {
+            radius: 2
+            color: "grey"
+            implicitWidth: 100
+            implicitHeight: 20
+        }
+        progress: Rectangle {
+            color: "blue"
+        }
+    }
+}
+
+Dialog {
+    visible: false // Turning on/off will show dialog window
+    title: "Title"
+    width: 300
+    height: 80
+    contentItem: Rectangle {
+        anchors.fill: parent
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // RESOURCES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -775,10 +722,11 @@ view.show();
 </RCC>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QMAKE
+// BUILDING QT
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*************************************************************************************************************
+QMAKE:
 • Run from top level directory of the project  
 • Generates Makefiles from a project files (.pro) and includes build rules for moc and uic
 • Project files include a list of source/header files, libraries, include paths, configuration info
@@ -1005,19 +953,22 @@ QT_INSTALL_TRANSLATIONS   // location of translation information for Qt strings
 QT_SYSROOT                // the sysroot used by the target build environment
 QT_VERSION                // the Qt version
   
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// CMAKE
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
-  
+//===============================================================================================================
+// CMAKE OPTIONS
+//===============================================================================================================
+
 find_package(Qt5 COMPONENTS Core Widgets Quick)
 qt5_add_resources(RESOURCES resources/myResources.qrc)
 add_executable(exe_name ${SRC_LIST} ${RESOURCES})
 qt5_use_modules(exe_name Core Widgets Quick)
   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT HELP
+// QT TEMP NOTES FOR EXAM
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//===============================================================================================================
+// QT HELP
+//===============================================================================================================
 /*************************************************************************************************************
 • Includes tools for generating and viewing Qt help files
 • Provides framework for accessing help contents / integrating online help programmatically
@@ -1058,10 +1009,9 @@ if (links.count())
     }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//===============================================================================================================
 // QT LINGUIST
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//===============================================================================================================
 /*************************************************************************************************************
 LUPDATE
 • Tool to synchronize source code and translations
@@ -1084,3 +1034,47 @@ TRANSLATIONS    = superapp_dk.ts \
                   superapp_fi.ts \
                   superapp_no.ts \
                   superapp_se.ts
+                  
+//===============================================================================================================
+// QT LICENSING
+//===============================================================================================================
+/*************************************************************************************************************
+COMMERCIAL:
+• Official Qt Support Helpdesk
+• Keep your application private
+• Full rights to proprietary Qt source code modifications
+
+GENERAL PUBLIC LICENSE (GPL):
+• Requires releasing the source code of your application if distributing the open source software 
+• All portions of the project must be under GPL as well
+• Can use static linking
+• Needs to include qt source code or instructions on how to access it
+
+LESSER GENERAL PUBLIC LICENSE (LGPL):
+• Allows distributing the open source software with your application without releasing the application source
+• LGPL open source software must be re-distributed as LGPU, other portions of project may have different licences
+• Possible to keep your application private with dynamic linking
+• Needs to include qt source code or instructions on how to access it
+
+QT FOR APPLICATION DEVELOPMENT: 
+• Cross platform development for desktop and mobile
+• Can be licensed under commercial and open source licenses (GPU / LGPU)
+• Some modules GPU only: QtDataVisualization / QtCharts / Tooling (if modifications are done)
+  
+QT FOR DEVICE CREATION: 
+• Used with embedded devices
+• Only under commercial licence to allow integration with proprietary code 
+  
+GPLv2 vs. GPLv3
+• GPLv3 added compatibility regulations that make it easier to combine GPL code and code under different licenses
+• GPLv3 adds regulations for digital rights management were added to keep GPL software from being changed at will
+• GPLv3 adds an explicit patent license/copyright so that no one can profit from them
+  
+LGPLv2.1 vs. LGPLv3
+• LGPLv3 closes loophole of locked-down consumer devices preventing users from installing
+  modified versions of the library on the device
+
+LIBRARY: Set of functions, organized in classes, that does some work and then returns control to the client
+FRAMEWORK: An abstract design that you need to insert into, through inheritance or callbacks, that the framework then calls
+TOOLKIT: More focused library, used almost exclusively for graphical widgets, and GUI components  
+**************************************************************************************************************/
