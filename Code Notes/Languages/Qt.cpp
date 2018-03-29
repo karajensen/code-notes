@@ -81,30 +81,66 @@ QTextStream(&str) << "str" << value; // QString streamstream
 • Type T must provide default constructor, copy constructor, assignment operator, else use T*
 • If container uses Key, type T must provide operator<
 • Iterators can become invalid after insertion/removal, due to changing internals and implicit sharing
-• Average performance for containers:
-  --------------------------------------------------------------
-  Container          Access     Insert     Prepend   Append
-  --------------------------------------------------------------
-  QLinkedList<T>     O(n)        O(1)       O(1)      O(1)
-  QList<T>           O(1)        O(n)       O(1)      O(1)
-  QVector<T>         O(1)        O(n)       O(n)      O(1)
-  QMap<Key, T>       O(logn)     O(logn)    -         -
-  QMultiMap<Key, T>  O(logn)     O(logn)    -         -
-  QHash<Key, T>      O(1)        O(n)       -         -
-  QSet<Key>          O(1)        O(n)       -         -
+• Using mutable operator[] will detach container from implicit sharing, except for QByteArray which uses QByteRef
+• Using mutable iterators will detach container from implicit sharing, use constBegin/constEnd for read-only
+• Can disable implicit conversion of begin() to constBegin() using QT_STRICT_ITERATORS
+
+QLIST<T>:
+• Pre-allocates array of void*, with extra space before/after, fast index access, insertions and removals
+• void* becomes T if sizeof(T) <= sizeof(void*) and T is Q_PRIMITIVE_TYPE or Q_MOVABLE_TYPE
+  else void* becomes T*, copy-constructed into the heap using new
+• Wastes memory if sizeof(T) < sizeof(void*) or if allocated on heap due to extra T*
+
+QLinkedList<T>
+• Uses iterators to access members, segmented allocations
+• Better performance than QList when inserting in the middle of a huge list
+
+QVector<T>
+• Continuous memory allocation, reallocates whole block when resizing
+• Fast index access and add/remove from back, slow insert and add/remove from front
+
+QMap<Key, T>
+• Dictionary, auto stores its data in Key order
+
+QHash<Key, T>
+• Hash map, no auto sorting
+• Uses hash key qHash(key) % QHash::capacity() (number of buckets)
+
+QSet<T>
+• Uses hash key qHash(key) % QHash::capacity() (number of buckets)
+
+QCache<Key, T>
+• Uses hash key qHash(key) % QHash::capacity() (number of buckets)
+  
+------------------------------------------------------------------------------------------------------------
+CONTAINER      ACCESS     INSERT     PREPEND   APPEND   EQUIVALENT
+------------------------------------------------------------------------------------------------------------
+QLinkedList    O(n)       O(1)       O(1)      O(1)     std::list   
+QList          O(1)       O(n)       O(1)      O(1)     -
+QVector        O(1)       O(n)       O(n)      O(1)     std::vector  
+QMap           O(logn)    O(logn)    -         -        std::map 
+QMultiMap      O(logn)    O(logn)    -         -        std::multimap
+QHash          O(1)       O(n)       -         -        std::unordered_map       
+QMultiHash                                              std::unordered_multimap    
+QSet           O(1)       O(n)       -         -        std::unordered_set
+
+------------------------------------------------------------------------------------------------------------
+CONTAINER            JAVA-STYLE READ-ONLY      JAVA-STYLE MUTABLE               STL-STYLE ITERATORS
+------------------------------------------------------------------------------------------------------------
+QList<T>             QListIterator<T>          QMutableListIterator<T>          QList<T>::iterator   
+QQueue<T>            QListIterator<T>          QMutableListIterator<T>          QQueue<T>::iterator     
+QLinkedList<T>       QLinkedListIterator<T>    QMutableLinkedListIterator<T>    QLinkedList<T>::iterator   
+QVector<T>           QVectorIterator<T>        QMutableVectorIterator<T>        QVector<T>::iterator    
+QStack<T>            QVectorIterator<T>        QMutableVectorIterator<T>        QStack<T>::iterator     
+QSet<T>              QSetIterator<T>           QMutableSetIterator<T>           QSet<T>::iterator   
+QMap<Key, T>         QMapIterator<Key, T>      QMutableMapIterator<Key, T>      QMap<Key, T>::iterator   
+QMultiMap<Key, T>    QMapIterator<Key, T>      QMutableMapIterator<Key, T>      QMultiMap<Key, T>::iterator   
+QHash<Key, T>        QHashIterator<Key, T>     QMutableHashIterator<Key, T>     QHash<Key, T>::iterator    
+QMultiHash<Key, T>   QHashIterator<Key, T>     QMutableHashIterator<Key, T>     QMultiHash<Key, T>::iterator 
+
 **************************************************************************************************************/
 
-// CONTAINER FOREACH
-// Auto takes copy of container at start of loop
-// Modifying container during loop won't affect it due to implicit sharing
-foreach (const auto& value, container) {}
-foreach (const auto& value, map) {}
-foreach (const auto& key, map.keys()) {}
-foreach (const auto& key, multimap.uniqueKeys()) { foreach (const auto& value, multimap.values(key)) {} }
-
 // QList<T>
-// Pre-allocates memory both at start and end, fast index access, insertions and removals
-// Array of T if sizeof(T) <= sizeof(void*) and T is Q_PRIMITIVE_TYPE or Q_MOVABLE_TYPE, else array of T* on heap
 QList<T> lst;
 lst << 1 << 2;  // Allows streaming into container
 
@@ -115,12 +151,8 @@ lst.join(" ")    // Returns a combined string seperated by spaces
 lst.append(lst2) // Adds a new string list to the end
 
 // QLinkedList<T>
-// Uses iterators to access members, segmented allocations
-// Better performance than QList when inserting in the middle of a huge list
 
 // QVector<T>
-// Continuous memory allocation, reallocates whole block when resizing
-// Fast index access and add/remove from back, slow insert and add/remove from front
 
 // QStack<T>
 // Inherits QVector<T>
@@ -129,51 +161,37 @@ lst.append(lst2) // Adds a new string list to the end
 // Inherits QList<T>
 
 // QMap<Key, T>
-// Dictionary, auto stores its data in Key order
 
 // QMultiMap<Key, T>
 // Inherits QMap<Key, T>
 
 // QHash<Key, T>
-// Hash map, no auto sorting
-// Uses hash key qHash(key) % QHash::capacity() (number of buckets)
 
 // QMultiHash<Key, T>
 // Inherits QHash<Key, T>
 
 // QSet<T>
-// Uses hash key qHash(key) % QHash::capacity() (number of buckets)
 
 // QCache<Key, T>
-// Uses hash key qHash(key) % QHash::capacity() (number of buckets)
 
 // QContiguousCache<Key, T>
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT ITERATORS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
-/*************************************************************************************************************
-CONTAINER            JAVA-STYLE READ-ONLY      JAVA-STYLE MUTABLE               STL-STYLE ITERATORS
-QList<T>             QListIterator<T>          QMutableListIterator<T>          QList<T>::iterator   
-QQueue<T>            QListIterator<T>          QMutableListIterator<T>          QQueue<T>::iterator     
-QLinkedList<T>       QLinkedListIterator<T>    QMutableLinkedListIterator<T>    QLinkedList<T>::iterator   
-QVector<T>           QVectorIterator<T>        QMutableVectorIterator<T>        QVector<T>::iterator    
-QStack<T>            QVectorIterator<T>        QMutableVectorIterator<T>        QStack<T>::iterator     
-QSet<T>              QSetIterator<T>           QMutableSetIterator<T>           QSet<T>::iterator   
-QMap<Key, T>         QMapIterator<Key, T>      QMutableMapIterator<Key, T>      QMap<Key, T>::iterator   
-QMultiMap<Key, T>    QMapIterator<Key, T>      QMutableMapIterator<Key, T>      QMultiMap<Key, T>::iterator   
-QHash<Key, T>        QHashIterator<Key, T>     QMutableHashIterator<Key, T>     QHash<Key, T>::iterator    
-QMultiHash<Key, T>   QHashIterator<Key, T>     QMutableHashIterator<Key, T>     QMultiHash<Key, T>::iterator   
-**************************************************************************************************************/
+// CONTAINER FOREACH
+// Auto takes copy of container at start of loop
+// Modifying container during loop won't affect it due to implicit sharing
+foreach (const auto& value, container) {}
+foreach (const auto& value, map) {}
+foreach (const auto& key, map.keys()) {}
+foreach (const auto& key, multimap.uniqueKeys()) { foreach (const auto& value, multimap.values(key)) {} }
 
 // STL-STYLED ITERATORS
-// Point to actual values
-// Support reverse_iterator, const_iterator and iterator maths
+// Point to actual values, support reverse_iterator, const_iterator and iterator maths
 *itr                    // Return value
 ++i / --i               // Increment/decrement
 itr.begin()             // Start of container
 itr.end()               // One after end of container
+itr.constBegin()        // Start of container
+itr.constEnd()          // One after end of container    
 itr.key()               // Key-based only, returns const Key&
   
 // JAVA-STYLED ITERATORS
@@ -194,8 +212,8 @@ itr.findPrevious(value) // Mutable or key-based only, from itr, searches backwar
 itr.remove()            // Mutable only, Removes the value, does not invalidate itr
 itr.key()               // Key-based only, Returns const Key&
   
-// IMPLICIT SHARING PITFALL
-// • Can be dangerous for iterators when container detaches from shared block:
+// ITERATOR IMPLICIT SHARING PITFALL
+// Can be dangerous for iterators when container detaches from shared block:
 QVector<int> a, b;
 QVector<int>::iterator i = a.begin();
 b = a;    // Make both implicity share
