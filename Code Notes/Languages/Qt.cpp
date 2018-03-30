@@ -142,15 +142,37 @@ QMultiHash        QHashIterator          QMutableHashIterator          QMultiHas
 // QList<T>
 QList<T> lst;
 lst << 1 << 2; // Allows streaming into container
-lst.append(value); // Appends to end of list
-lst.at(i); // Returns const T&, will not COW detach
-lst.back(); // Returns const T& or T&
-lst.clear(); // Clears the container
-lst.constFirst(); // Returns const T& for first item
-lst.constLast(); // Returns const T& for last item
-lst.contains(value); // Returns true if item is in list
-lst.count(value); // Returns number of times item is in list
-lst.count(); // Returns number of items in list
+lst.append(value)  / lst.push_back(value) // Appends to end of list
+lst.prepend(value) / lst.push_back(value) // Prepends to start of list
+lst.removeLast()   / lst.pop_back() // Remove item at end
+lst.removeFirst()  / lst.pop_front() // Remove item at start
+lst.first() / lst.front() // Returns const T& or T& for first item
+lst.last()  / lst.back() // Returns const T& or T& for last item
+lst.constFirst() // Returns const T& for first item
+lst.constLast() // Returns const T& for last item
+lst.at(i) // Returns const T&, will not COW detach
+lst.clear() // Clears the container
+lst.contains(value) // Returns true if item is in list
+lst.count(value) // Returns number of times item is in list
+lst.count() / lst.length() // Returns number of items in list
+lst.empty() / lst.isEmpty() // Whether the list is empty
+lst.endsWith(value) // Whether list is not empty and last item is value
+lst.erase(itr) // Removes item at iterator, returns itr to next item
+lst.erase(itr1, itr2) // Removes range, returns itr to the same item that itr2 used to be at
+lst.indexOf(value, i) // Returns index of first value, starting from optional i, or -1 if not found
+lst.insert(i, value) // Insert at index, i <= 0 uses preprend, i >= size uses append
+lst.insert(itr, value) // Inserts value before itr, returns iterator at new item, invalidates itr
+lst.lastIndexOf(value, i) // Returns index of last value, starting from optional i, or -1 if not found
+lst.mid(i, n) // Returns QList<T> from index i over n items, use -1 for all to the end
+lst.move(i1, i2) // Moves item at i1 to i2, shifts other elements as needed
+lst.removeAll(value) // Remove all items with value, returns amount removed
+lst.removeAt(i) // Remove at index i
+lst.removeOne(value) // Removes first occurance of value, returns true if removed
+lst.replace(i, value) // Replaces at index i with the value
+lst.reserve(n) // Reserve capacity for n items, only reserves space for the void*
+QList<T>::fromSet(set); // Returns QList<T> converted from a QSet<T>
+QList<T>::fromStdList(lst); // Returns QList<T> converted from a std::list
+QList<T>::fromVector(vec); // Returns QList<T> converted from a QVector<T>
 
 // QStringList
 // Inherits from QList<QString>
