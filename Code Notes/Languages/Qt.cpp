@@ -88,7 +88,6 @@ QTextStream(&str) << "str" << value; // QString streamstream
 
 /*************************************************************************************************************
 • Type T must provide default constructor, copy constructor, assignment operator, else use T*
-• If container uses Key, type T must provide operator<
 • Iterators can become invalid after insertion/removal, due to changing internals and implicit sharing (COW)
 • Using mutable operator[] will COW detach, except for QByteArray which uses QByteRef
 • Using mutable iterators will COW detach, use constBegin/constEnd for read-only
@@ -114,9 +113,11 @@ QLinkedList<T>
 
 QMap<Key, T>
 • Dictionary, auto stores its data in Key order
+• Key must provide operator<()
 
 QHash<Key, T>
-• Hash map, no auto sorting
+• Provides average faster lookups than QMap, no auto sorting
+• Key must provide operator==() and a global qHash(Key) function
 • Uses hash key qHash(key) % QHash::capacity() (number of buckets)
 
 QSet<T>
@@ -343,7 +344,37 @@ lst.toStdList() // Returns std::list<T> from list
 QLinkedList<T>::fromStdList(lst); // Returns QList<T> converted from a std::list<T>
 
 // QMap<Key, T>
-
+// Can hold multiple values per key- will work on most recent added key value unless specified
+QMap<Key, T> map = { std::make_pair(key, value) }
+map[key] // Inserts into map if key doesn't exist for non-const maps
+map.clear() // Clears the container
+map.constFind(key) // Returns const_iterator or constEnd() if not found
+map.contains(key) // Return true if map contains key
+map.count(key) // number of items associated with key
+map.count() / map.size() // number of items in map
+map.empty() / map.isEmpty() // Whether map has items
+map.equal_range(key) // Returns QPair<itr, itr> for range of values [first, second) in key, has const overload
+map.erase(itr) // Removes item, returns itr for next item
+map.find(key) // Returns itr or end(), has const overload
+map.first() // Returns T& or const T& of the value to the smallest key in map
+map.firstKey() // Returns const Key& to the smallest key in map
+map.insert(key, value) // Inserts into map, returns itr to new item, for multi overrides most recent value
+map.insertMulti(key, value) // Inserts into map, returns itr to new item, for multi appends to key values
+map.key(value, default) // Returns first key using value or default if not found, slow
+map.keys() // Returns QList<Key> of all keys, for multi has multiple same key entries, order same as values()
+map.last() // Returns T& or const T& of the value to the largest key in map
+map.lastKey() // Returns const Key& to the largest key in map    
+map.lowerBound(key) // Returns itr/const itr to first item with key or nearest item with greater key
+map.remove(key) // Removes all items with key, return number of items removed
+map.take(key) // Removes item with key and returns T or default constructed value
+map.toStdMap() // Returns std::map<Key, T>
+map.uniqueKeys() // Returns all unique keys in ascending order
+map.unite(map2) // Adds map2 to map, if sharing keys will append values to key
+map.upperBound(key) // Returns itr/const itr to one after first item with key or nearest item with greater key
+map.value(key, default) // Returns value of key or optional default value if doesn't exist
+map.values() // Returns QList<T> in same order/count as keys()
+map.values(key) // Returns QList<T> of all values under key
+    
 // QMultiMap<Key, T>
 // Inherits QMap<Key, T>
 
@@ -369,17 +400,18 @@ foreach (const auto& key, multimap.uniqueKeys()) { foreach (const auto& value, m
 
 // STL-STYLED ITERATORS
 // Point to actual values, support reverse_iterator, const_iterator and iterator maths
-// Getting a mutable iterator will auto COW detach
-begin()       end()        // Returns iterator or const_iterator
-rBegin()      rEnd()       // Returns reverse_iterator or const_reverse_iterator
-cbegin()      cend()       // Returns const_iterator
-constBegin()  constEnd()   // Returns const_iterator
-crbegin()     crEnd()      // Returns const_reverse_iterator
-*itr                       // Return value
-++i / --i                  // Increment/decrement
-itr.begin()                // Start of container
-itr.end()                  // One after end of container
-itr.key()                  // Key-based only, returns const Key&
+// Getting a mutable iterator from a container will auto COW detach
+begin()              end()              // iterator or const_iterator
+rBegin()             rEnd()             // reverse_iterator or const_reverse_iterator
+cbegin()             cend()             // const_iterator
+constBegin()         constEnd()         // const_iterator
+crbegin()            crEnd()            // const_reverse_iterator
+keyBegin()           keyEnd()           // key_iterator
+keyValueBegin()      keyValueEnd()      // key_value_iterator or const_key_value_iterator
+constKeyValueBegin() constKeyValueEnd() // const_key_value_iterator
+*itr                 // Return value
+++i / --i            // Increment/decrement
+itr.key()            // Key-based only, returns const Key&
     
 // JAVA-STYLED ITERATORS
 // Point to position between values
