@@ -90,19 +90,23 @@ QTextStream(&str) << "str" << value; // QString streamstream
 • Using mutable iterators will COW detach, use constBegin/constEnd for read-only
 • Can disable implicit conversion of begin() to constBegin() using QT_STRICT_ITERATORS
 
-QLIST<T>
+QList<T>
 • Pre-allocates array of void*, with extra space before/after, fast index access, insertions and removals
 • void* becomes T if sizeof(T) <= sizeof(void*) and T is Q_PRIMITIVE_TYPE or Q_MOVABLE_TYPE
   else void* becomes T*, copy-constructed into the heap using new
 • Wastes memory if sizeof(T) < sizeof(void*) or if allocated on heap due to extra T*
 
-QLinkedList<T>
-• Uses iterators to access members, segmented allocations
-• Better performance than QList when inserting in the middle of a huge list
-
 QVector<T>
 • Continuous memory allocation, reallocates whole block when resizing
 • Fast index access and add/remove from back, slow insert and add/remove from front
+
+QVarLengthArray<T, n>
+• Stack allocated array, n must be constant, if resizing will move to heap
+• No implicit sharing, no auto-init for basic types
+
+QLinkedList<T>
+• Uses iterators to access members, segmented allocations
+• Better performance than QList when inserting in the middle of a huge list
 
 QMap<Key, T>
 • Dictionary, auto stores its data in Key order
@@ -269,6 +273,41 @@ QStack<T> stack = { value }
 stack.pop() // Removes from top and returns T
 stack.push(value) // Adds to top of stack
 stack.top() // Returns T& or const T& from top of stack
+    
+// QVarLengthArray<T, n>
+QVarLengthArray<T, n> arr = { value }
+QVarLengthArray<T, n> arr(n2) // n capacity, n2 items
+arr[index]; // Returns const T& or T&
+arr.append(value)  / arr.push_back(value) // Appends to end of array
+arr.prepend(value) / arr.push_back(value) // Prepends to start of array
+arr.removeLast()   / arr.pop_back() // Remove item at end
+arr.removeFirst()  / arr.pop_front() // Remove item at start
+arr.first() / arr.front() // Returns const T& or T& for first item
+arr.last()  / arr.back() // Returns const T& or T& for last item
+arr.constFirst() // Returns const T& for first item
+arr.constLast() // Returns const T& for last item
+arr.at(i) // Returns const T&, will not COW detach
+arr.clear() // Clears the container
+arr.capacity() // Returns maximum items before forcing a reallocation
+arr.constData() // Returns const T* of the first item
+arr.contains(value) // Returns true if item is in array
+arr.count() / arr.length() / arr.size() // Returns number of items in array
+arr.data() // Returns T* or const T* of the first item
+arr.empty() / arr.isEmpty() // Whether the array is empty
+arr.erase(itr) // Removes item at iterator, returns itr to next item
+arr.erase(itr1, itr2) // Removes range, returns itr to the same item that itr2 used to be at
+arr.indexOf(value, i) // Returns index of first value, starting from optional i, or -1 if not found
+arr.insert(i, value) // Insert at index, i <= 0 uses preprend, i >= size uses append
+arr.insert(itr, value) // Inserts value before itr, returns iterator at new item, invalidates itr
+arr.lastIndexOf(value, i) // Returns index of last value, backwards from optional i, or -1 if not found
+arr.remove(i, n) // Remove n items from index i
+arr.remove(i) // Remove at index i
+arr.replace(i, value) // Replaces at index i with the value
+arr.reserve(n) // Reserve capacity for n items
+arr.resize(n) // Resizes vector to n items
+arr.shrink_to_fit() / arr.squeeze() // Removes unused capacity
+arr.value(i) // Returns T at index i, if i is out of bounds, returns default constructed T
+arr.value(i, default) // Returns T at index i, if i is out of bounds, returns default
 
 // QLinkedList<T>
 QLinkedList<T> lst = { value }
