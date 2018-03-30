@@ -34,6 +34,11 @@ qobject_cast<MyQObject*>(qObj); // dynamic_cast without requiring RTTI
 Q_ASSERT(expression);
 Q_ASSERT_X(expression, "divide", "division by zero");
 
+// QPair<T1, T2>
+auto pair = qMakePair(v1, v2);
+pair.first;
+pair.second;
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT STRINGS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -123,7 +128,6 @@ QMultiMap      O(logn)    O(logn)    -         -        std::multimap
 QHash          O(1)       O(n)       -         -        std::unordered_map       
 QMultiHash                                              std::unordered_multimap    
 QSet           O(1)       O(n)       -         -        std::unordered_set
-
 -------------------------------------------------------------------------------------------------
 CONTAINER         JAVA-STYLE READ-ONLY   JAVA-STYLE MUTABLE            STL-STYLE ITERATORS
 -------------------------------------------------------------------------------------------------
@@ -140,7 +144,6 @@ QMultiHash        QHashIterator          QMutableHashIterator          QMultiHas
 **************************************************************************************************************/
 
 // QList<T>
-QList<T> lst;
 lst[index]; // Returns const T& or T&
 lst << 1 << 2; // Allows streaming into container
 lst.append(value)  / lst.push_back(value) // Appends to end of list
@@ -196,7 +199,10 @@ lst.append(lst2) // Adds a new string list to the end
 // QVector<T>
 
 // QStack<T>
-// Inherits QVector<T>
+// Inherits QVector<T> methods
+stack.pop() // Removes from top and returns T
+stack.push(value) // Adds to top of stack
+stack.top() // Returns T& or const T& from top of stack
 
 // QQueue<T>
 // Inherits QList<T>
