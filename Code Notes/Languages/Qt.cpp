@@ -85,7 +85,7 @@ QTextStream(&str) << "str" << value; // QString streamstream
 • Using mutable iterators will COW detach, use constBegin/constEnd for read-only
 • Can disable implicit conversion of begin() to constBegin() using QT_STRICT_ITERATORS
 
-QLIST<T>:
+QLIST<T>
 • Pre-allocates array of void*, with extra space before/after, fast index access, insertions and removals
 • void* becomes T if sizeof(T) <= sizeof(void*) and T is Q_PRIMITIVE_TYPE or Q_MOVABLE_TYPE
   else void* becomes T*, copy-constructed into the heap using new
@@ -141,6 +141,7 @@ QMultiHash        QHashIterator          QMutableHashIterator          QMultiHas
 
 // QList<T>
 QList<T> lst;
+lst[index]; // Returns const T& or T&
 lst << 1 << 2; // Allows streaming into container
 lst.append(value)  / lst.push_back(value) // Appends to end of list
 lst.prepend(value) / lst.push_back(value) // Prepends to start of list
@@ -157,6 +158,7 @@ lst.count(value) // Returns number of times item is in list
 lst.count() / lst.length() // Returns number of items in list
 lst.empty() / lst.isEmpty() // Whether the list is empty
 lst.endsWith(value) // Whether list is not empty and last item is value
+lst.startsWith(value) // Whether list is not empty and first item is value
 lst.erase(itr) // Removes item at iterator, returns itr to next item
 lst.erase(itr1, itr2) // Removes range, returns itr to the same item that itr2 used to be at
 lst.indexOf(value, i) // Returns index of first value, starting from optional i, or -1 if not found
@@ -170,8 +172,17 @@ lst.removeAt(i) // Remove at index i
 lst.removeOne(value) // Removes first occurance of value, returns true if removed
 lst.replace(i, value) // Replaces at index i with the value
 lst.reserve(n) // Reserve capacity for n items, only reserves space for the void*
+lst.swap(i1, i1) // Swap values at i1 and i2    
+lst.takeAt(i) // Removes item at index i and returns T, removeAt more effecient if not using T
+lst.takeFirst() // Removes first item and returns T, removeFirst more effecient if not using T
+lst.takeLast() // Removes last item and returns T, removeLast more effecient if not using T
+lst.toSet() // Returns QSet<T> from list
+lst.toStdList() // Returns std::list<T> from list
+lst.toVector() // Returns QVector<T> from list
+lst.value(i) // Returns T at index i, if i is out of bounds, returns default constructed T
+lst.value(i, default) // Returns T at index i, if i is out of bounds, returns default
 QList<T>::fromSet(set); // Returns QList<T> converted from a QSet<T>
-QList<T>::fromStdList(lst); // Returns QList<T> converted from a std::list
+QList<T>::fromStdList(lst); // Returns QList<T> converted from a std::list<T>
 QList<T>::fromVector(vec); // Returns QList<T> converted from a QVector<T>
 
 // QStringList
