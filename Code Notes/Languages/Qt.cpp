@@ -44,7 +44,7 @@ pair.second;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // QString
-// Most also overload using a char, regex etc
+// Most also overload using a char, QRegularExpression, QRegExp
 QString str("str");
 str.split(" "); // Returns QStringList of string split by spaces
 str.append("str", n); // Adds n characters to the end of the string, returns QString& for chaining
@@ -144,8 +144,9 @@ QMultiHash        QHashIterator          QMutableHashIterator          QMultiHas
 **************************************************************************************************************/
 
 // QList<T>
+QList<T> lst = { value }
 lst[index]; // Returns const T& or T&
-lst << 1 << 2; // Allows streaming into container
+lst << value; // Allows streaming into container
 lst.append(value)  / lst.push_back(value) // Appends to end of list
 lst.prepend(value) / lst.push_back(value) // Prepends to start of list
 lst.removeLast()   / lst.pop_back() // Remove item at end
@@ -158,7 +159,7 @@ lst.at(i) // Returns const T&, will not COW detach
 lst.clear() // Clears the container
 lst.contains(value) // Returns true if item is in list
 lst.count(value) // Returns number of times item is in list
-lst.count() / lst.length() // Returns number of items in list
+lst.count() / lst.length() / lst.size() // Returns number of items in list
 lst.empty() / lst.isEmpty() // Whether the list is empty
 lst.endsWith(value) // Whether list is not empty and last item is value
 lst.startsWith(value) // Whether list is not empty and first item is value
@@ -167,7 +168,7 @@ lst.erase(itr1, itr2) // Removes range, returns itr to the same item that itr2 u
 lst.indexOf(value, i) // Returns index of first value, starting from optional i, or -1 if not found
 lst.insert(i, value) // Insert at index, i <= 0 uses preprend, i >= size uses append
 lst.insert(itr, value) // Inserts value before itr, returns iterator at new item, invalidates itr
-lst.lastIndexOf(value, i) // Returns index of last value, starting from optional i, or -1 if not found
+lst.lastIndexOf(value, i) // Returns index of last value, backwards from optional i, or -1 if not found
 lst.mid(i, n) // Returns QList<T> from index i over n items, use -1 for all to the end
 lst.move(i1, i2) // Moves item at i1 to i2, shifts other elements as needed
 lst.removeAll(value) // Remove all items with value, returns amount removed
@@ -190,22 +191,113 @@ QList<T>::fromVector(vec); // Returns QList<T> converted from a QVector<T>
 
 // QStringList
 // Inherits from QList<QString>
-QStringList lst;
-lst.join(" ") // Returns a combined string seperated by spaces
-lst.append(lst2) // Adds a new string list to the end
-
-// QLinkedList<T>
+// Most also overload using a char, QRegularExpression, QRegExp
+QStringList<T> lst = { value }
+QStringList<T> lst("str")
+lst.join("delim") // Returns a combined string seperated by delim
+lst.split("delim") // Returns 
+lst.contains("str", Qt::CaseInsensitive) // True if list contains string
+lst.filter(regex) // Returns QStringList filtered by regex
+lst.indexOf(regex, i) // Returns index of first match from regex starting from optional i, else -1
+lst.lastIndexOf(regex, i) // Returns index of last match from regex backwards from optional i, else -1
+lst.removeDuplicates() // Removes all duplicate strings, doesn't require sorting
+lst.replaceInStrings("str1", "str2", Qt::CaseInsensitive) // Replace 'str1' with 'str2' in all strings
+lst.sort(Qt::CaseInsensitive) // Sort all strings using std::sort
+    
+// QQueue<T>
+// Inherits QList<T>
+QQueue<T> queue = { value }
+queue.dequeue() // Removes from front of queue and returns T
+queue.enqueue(value) // Adds to back of queue
+queue.head() // Returns T& or const T& from front of queue
 
 // QVector<T>
+QVector<T> vec = { value }
+QVector<T> vec(n) // Initialise all with default constructor
+QVector<T> vec(value) // Initialise all with value
+vec[index]; // Returns const T& or T&
+vec.append(value)  / vec.push_back(value) // Appends to end of vector
+vec.prepend(value) / vec.push_back(value) // Prepends to start of vector
+vec.removeLast()   / vec.pop_back() // Remove item at end
+vec.removeFirst()  / vec.pop_front() // Remove item at start
+vec.first() / vec.front() // Returns const T& or T& for first item
+vec.last()  / vec.back() // Returns const T& or T& for last item
+vec.constFirst() // Returns const T& for first item
+vec.constLast() // Returns const T& for last item
+vec.at(i) // Returns const T&, will not COW detach
+vec.clear() // Clears the container
+vec.capacity() // Returns maximum items before forcing a reallocation
+vec.constData() // Returns const T* of the first item
+vec.contains(value) // Returns true if item is in vector
+vec.count(value) // Returns number of times item is in vector
+vec.count() / vec.length() / vec.size() // Returns number of items in vector
+vec.data() // Returns T* or const T* of the first item
+vec.empty() / vec.isEmpty() // Whether the vector is empty
+vec.endsWith(value) // Whether vector is not empty and last item is value
+vec.startsWith(value) // Whether vector is not empty and first item is value
+vec.erase(itr) // Removes item at iterator, returns itr to next item
+vec.erase(itr1, itr2) // Removes range, returns itr to the same item that itr2 used to be at
+vec.fill(value, n) // Resizes to n, fills whole vector with value
+vec.indexOf(value, i) // Returns index of first value, starting from optional i, or -1 if not found
+vec.insert(i, value) // Insert at index, i <= 0 uses preprend, i >= size uses append
+vec.insert(itr, value) // Inserts value before itr, returns iterator at new item, invalidates itr
+vec.lastIndexOf(value, i) // Returns index of last value, backwards from optional i, or -1 if not found
+vec.mid(i, n) // Returns QVector<T> from index i over n items, use -1 for all to the end
+vec.move(i1, i2) // Moves item at i1 to i2, shifts other elements as needed
+vec.remove(i, n) // Remove n items from index i
+vec.removeAll(value) // Remove all items with value, returns amount removed
+vec.removeAt(i) / vec.remove(i) // Remove at index i
+vec.removeOne(value) // Removes first occurance of value, returns true if removed
+vec.replace(i, value) // Replaces at index i with the value
+vec.reserve(n) // Reserve capacity for n items
+vec.resize(n) // Resizes vector to n items
+vec.shrink_to_fit() / vec.squeeze() // Removes unused capacity
+vec.swap(i1, i1) // Swap values at i1 and i2    
+vec.takeAt(i) // Removes item at index i and returns T, removeAt more effecient if not using T
+vec.takeFirst() // Removes first item and returns T, removeFirst more effecient if not using T
+vec.takeLast() // Removes last item and returns T, removeLast more effecient if not using T
+vec.toStdVector() // Returns std::vector<T> from vector
+vec.toList() // Returns QList<T> from vector
+vec.value(i) // Returns T at index i, if i is out of bounds, returns default constructed T
+vec.value(i, default) // Returns T at index i, if i is out of bounds, returns default
+QVector<T>::fromStdVector(vec); // Returns QVector<T> converted from a std::vector<T>
+QVector<T>::fromList(lst); // Returns QVector<T> converted from a QList<T>
 
 // QStack<T>
-// Inherits QVector<T> methods
+// Inherits QVector<T>
+QStack<T> stack = { value }
 stack.pop() // Removes from top and returns T
 stack.push(value) // Adds to top of stack
 stack.top() // Returns T& or const T& from top of stack
 
-// QQueue<T>
-// Inherits QList<T>
+// QLinkedList<T>
+QLinkedList<T> lst = { value }
+lst << value; // Allows streaming into container
+lst.append(value)  / lst.push_back(value) // Appends to end of list
+lst.prepend(value) / lst.push_back(value) // Prepends to start of list
+lst.removeLast()   / lst.pop_back() // Remove item at end
+lst.removeFirst()  / lst.pop_front() // Remove item at start
+lst.first() / lst.front() // Returns const T& or T& for first item
+lst.last()  / lst.back() // Returns const T& or T& for last item
+lst.constFirst() // Returns const T& for first item
+lst.constLast() // Returns const T& for last item
+lst.clear() // Clears the container
+lst.contains(value) // Returns true if item is in list
+lst.count(value) // Returns number of times item is in list
+lst.count() / lst.length() / lst.size() // Returns number of items in list
+lst.empty() / lst.isEmpty() // Whether the list is empty
+lst.endsWith(value) // Whether list is not empty and last item is value
+lst.startsWith(value) // Whether list is not empty and first item is value
+lst.erase(itr) // Removes item at iterator, returns itr to next item
+lst.erase(itr1, itr2) // Removes range, returns itr to the same item that itr2 used to be at
+lst.insert(itr, value) // Inserts value before itr, returns iterator at new item, invalidates itr
+lst.lastIndexOf(value, i) // Returns index of last value, starting from optional i, or -1 if not found
+lst.removeAll(value) // Remove all items with value, returns amount removed
+lst.removeOne(value) // Removes first occurance of value, returns true if removed
+lst.takeFirst() // Removes first item and returns T, removeFirst more effecient if not using T
+lst.takeLast() // Removes last item and returns T, removeLast more effecient if not using T
+lst.toStdList() // Returns std::list<T> from list
+QLinkedList<T>::fromStdList(lst); // Returns QList<T> converted from a std::list<T>
 
 // QMap<Key, T>
 
