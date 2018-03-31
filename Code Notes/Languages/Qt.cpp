@@ -377,7 +377,14 @@ map.values(key) // Returns QList<T> of all values under key
     
 // QMultiMap<Key, T>
 // Inherits QMap<Key, T>
-
+map.constFind(key, value) // Returns const_iterator or constEnd() if not found
+map.contains(key, value) // Return true if map contains key/value
+map.count(key, value) // number of items associated with key/value
+map.find(key, value) // Returns itr or end(), has const overload
+map.insert(key, value) // Inserts into map, returns itr to new item, appends to key values
+map.remove(key, value) // Removes all items with key/value, return number of items removed
+map.replace(key, value) // Inserts into map, returns itr to new item, overrides most recent value
+    
 // QHash<Key, T>
 
 // QMultiHash<Key, T>
