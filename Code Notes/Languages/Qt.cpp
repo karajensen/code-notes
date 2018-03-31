@@ -116,8 +116,8 @@ QMap<Key, T>
 • Key must provide operator<()
 
 QHash<Key, T>
-• Provides average faster lookups than QMap, no auto sorting
-• Key must provide operator==() and a global qHash(Key) function
+• Provides average faster lookups than QMap, no auto sorting, has auto resizing
+• Key must provide operator==() and a global uint qHash(const K &key) function
 • Uses hash key qHash(key) % QHash::capacity() (number of buckets)
 
 QSet<T>
@@ -386,6 +386,38 @@ map.remove(key, value) // Removes all items with key/value, return number of ite
 map.replace(key, value) // Inserts into map, returns itr to new item, overrides most recent value
     
 // QHash<Key, T>
+// Can hold multiple values per key- will work on most recent added key value unless specified
+QHash<Key, T> map = { std::make_pair(key, value) }
+hash[key] // Inserts into hash if key doesn't exist for non-const hashs
+hash.capacity() // Returns maximum items before forcing a reallocation 
+hash.clear() // Clears the container
+hash.constFind(key) // Returns const_iterator or constEnd() if not found
+
+hash.contains(key) // Return true if hash contains key
+hash.count(key) // number of items associated with key
+hash.count() / hash.size() // number of items in hash
+hash.empty() / hash.isEmpty() // Whether hash has items
+hash.equal_range(key) // Returns QPair<itr, itr> for range of values [first, second) in key, has const overload
+hash.erase(itr) // Removes item, returns itr for next item
+hash.find(key) // Returns itr or end(), has const overload
+hash.first() // Returns T& or const T& of the value to the smallest key in hash
+hash.firstKey() // Returns const Key& to the smallest key in hash
+hash.insert(key, value) // Inserts into hash, returns itr to new item, for multi overrides most recent value
+hash.insertMulti(key, value) // Inserts into hash, returns itr to new item, for multi appends to key values
+hash.key(value, default) // Returns first key using value or default if not found, slow
+hash.keys() // Returns QList<Key> of all keys, for multi has multiple same key entries, order same as values()
+hash.last() // Returns T& or const T& of the value to the largest key in hash
+hash.lastKey() // Returns const Key& to the largest key in hash    
+hash.lowerBound(key) // Returns itr/const itr to first item with key or nearest item with greater key
+hash.remove(key) // Removes all items with key, return number of items removed
+hash.take(key) // Removes item with key and returns T or default constructed value
+hash.toStdMap() // Returns std::map<Key, T>
+hash.uniqueKeys() // Returns all unique keys in ascending order
+hash.unite(hash2) // Adds hash2 to hash, if sharing keys will append values to key
+hash.upperBound(key) // Returns itr/const itr to one after first item with key or nearest item with greater key
+hash.value(key, default) // Returns value of key or optional default value if doesn't exist
+hash.values() // Returns QList<T> in same order/count as keys()
+hash.values(key) // Returns QList<T> of all values under key
 
 // QMultiHash<Key, T>
 // Inherits QHash<Key, T>
