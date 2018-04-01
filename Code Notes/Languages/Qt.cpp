@@ -125,7 +125,7 @@ QSet<T>
 • Provides average faster lookups than QMap, no auto sorting
 
 QCache<Key, T>
-• 
+• Auto takes ownership of items inserted and deletes least accessed to make room if needed
 
 QContinuousCache<Key, T>
 • 
@@ -453,7 +453,21 @@ set.unite(set2) // Adds set2 to set, if sharing keys will append values to key
 set.values() / set.toList() // Returns QList<T> with undefined order
 
 // QCache<Key, T>
-
+QCache<Key, T> cache(n) // Optional max cost
+cache[key] // Returns T*, or 0 if doesn't exist
+cache.clear() // Clears the container
+cache.contains(key) // Return true if cache contains key
+cache.count() / cache.size() // number of items in cache
+cache.insert(key, value, cost) // adds/overwrites item with key at cost, returns true if inserted
+cache.isEmpty() // Returns true if cache has no objects
+cache.keys() // Returns QList<Key> of keys
+cache.maxCost() // Returns max cost which determines how much cache holds before deleting
+cache.object(key) // Returns T*
+cache.remove(key) // Returns true if object is in cache and was deleted
+cache.setMaxCost(n) // Sets the max cost
+cache.take(key) // Removes T* from the cache without deleting it and returns T*
+cache.totalCost() // Returns combined cost of all objects in cache, can be > maxCost with COW
+    
 // QContiguousCache<Key, T>
     
 // QBitArray
