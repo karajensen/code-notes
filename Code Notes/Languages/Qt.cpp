@@ -120,6 +120,10 @@ QHash<Key, T>
 • Key must provide operator==() and a global uint qHash(const K &key) function
 • Uses hash key qHash(key) % QHash::capacity() (number of buckets)
 
+QSet<T>
+• Underlying type based on QHash
+• Provides average faster lookups than QMap, no auto sorting
+
 QCache<Key, T>
 • 
 
@@ -393,7 +397,7 @@ map.replace(key, value) // Inserts into map, returns itr to new item, overrides 
     
 // QHash<Key, T>
 // Can hold multiple values per key- will work on most recent added key value unless specified
-QHash<Key, T> map = { std::make_pair(key, value) }
+QHash<Key, T> hash = { std::make_pair(key, value) }
 hash[key] // Inserts into hash if key doesn't exist for non-const hashs
 hash.capacity() // Returns maximum items before forcing a reallocation 
 hash.clear() // Clears the container
@@ -430,7 +434,23 @@ hash.remove(key, value) // Removes all items with key/value, return number of it
 hash.replace(key, value) // Inserts into hash, returns itr to new item, overrides most recent value    
 
 // QSet<T>
-// Inherits QHash<Key, T>
+QSet<T> set = { value }
+set[value] // Inserts into set if value doesn't exist for non-const sets
+set.capacity() // Returns maximum items before forcing a reallocation 
+set.clear() // Clears the container
+set.constFind(value) // Returns const_iterator or constEnd() if not found
+set.contains(value) // Return true if set contains value
+set.count() / set.size() // number of items in set
+set.empty() / set.isEmpty() // Whether set has items
+set.erase(itr) // Removes item, returns itr for next item
+set.find(value) // Returns itr or end(), has const overload
+set.insert(value) // Inserts into set, returns itr to new item
+set.remove(value) // Removes item with value, return if item removed
+set.reserve() // Reserve capacity for n items
+set.subtract(set2) // Removes all items from set that are contained in set2
+set.squeeze() // Removes unused capacity
+set.unite(set2) // Adds set2 to set, if sharing keys will append values to key
+set.values() / set.toList() // Returns QList<T> with undefined order
 
 // QCache<Key, T>
 
