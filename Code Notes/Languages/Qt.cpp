@@ -82,6 +82,21 @@ QString::compare(str1, str2, Qt::CaseInsensitive); // Returns 0 if they match
 // QTextStream
 QTextStream(&str) << "str" << value; // QString streamstream
 
+// QStringList
+// Inherits from QList<QString>
+// Most also overload using a char, QRegularExpression, QRegExp
+QStringList<T> lst = { value }
+QStringList<T> lst("str")
+lst.join("delim") // Returns a combined string seperated by delim
+lst.split("delim") // Returns 
+lst.contains("str", Qt::CaseInsensitive) // True if list contains string
+lst.filter(regex) // Returns QStringList filtered by regex
+lst.indexOf(regex, i) // Returns index of first match from regex starting from optional i, else -1
+lst.lastIndexOf(regex, i) // Returns index of last match from regex backwards from optional i, else -1
+lst.removeDuplicates() // Removes all duplicate strings, doesn't require sorting
+lst.replaceInStrings("str1", "str2", Qt::CaseInsensitive) // Replace 'str1' with 'str2' in all strings
+lst.sort(Qt::CaseInsensitive) // Sort all strings using std::sort
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT CONTAINERS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -206,21 +221,6 @@ lst.value(i, default) // Returns T at index i, if i is out of bounds, returns de
 QList<T>::fromSet(set); // Returns QList<T> converted from a QSet<T>
 QList<T>::fromStdList(lst); // Returns QList<T> converted from a std::list<T>
 QList<T>::fromVector(vec); // Returns QList<T> converted from a QVector<T>
-
-// QStringList
-// Inherits from QList<QString>
-// Most also overload using a char, QRegularExpression, QRegExp
-QStringList<T> lst = { value }
-QStringList<T> lst("str")
-lst.join("delim") // Returns a combined string seperated by delim
-lst.split("delim") // Returns 
-lst.contains("str", Qt::CaseInsensitive) // True if list contains string
-lst.filter(regex) // Returns QStringList filtered by regex
-lst.indexOf(regex, i) // Returns index of first match from regex starting from optional i, else -1
-lst.lastIndexOf(regex, i) // Returns index of last match from regex backwards from optional i, else -1
-lst.removeDuplicates() // Removes all duplicate strings, doesn't require sorting
-lst.replaceInStrings("str1", "str2", Qt::CaseInsensitive) // Replace 'str1' with 'str2' in all strings
-lst.sort(Qt::CaseInsensitive) // Sort all strings using std::sort
     
 // QQueue<T>
 // Inherits QList<T>
