@@ -125,10 +125,15 @@ QSet<T>
 • Provides average faster lookups than QMap, no auto sorting
 
 QCache<Key, T>
-• Auto takes ownership of items inserted and deletes least accessed to make room if needed
+• Auto takes ownership of items inserted
+• Uses score to determine what to keep/remove from cache
+• If full, least accessed item is removed
 
-QContinuousCache<Key, T>
-• 
+QContiguousCache<Key, T>
+• Items must be contiguous (adjacent)
+• Consumes less memory and processor cycles than QCache
+• Uses capacity to determine what the keep/remove from cache
+• If full, item at opposite end of the cache from prepend/append is removed
 
 QBitArray
 • 
@@ -469,6 +474,30 @@ cache.take(key) // Removes T* from the cache without deleting it and returns T*
 cache.totalCost() // Returns combined cost of all objects in cache, can be > maxCost with COW
     
 // QContiguousCache<Key, T>
+QContiguousCache<T> cache(n) // Capacity must be set as has default of 0
+cache[i] // Returns T& or const T&, will auto add value to non-const cache if doesn't exist    
+cache.append(value) // Inserts value at end of cache, will remove items from front if full
+cache.areIndexesValid() // True if no indexes are > INT_MAX or < 0
+cache.at(i) // Returns const T& at index
+cache.available() // Returns number of items that can be added before cache is full
+cache.capacity() // Returns number of items the cache can hold
+cache.clear() // Remove all items from cache
+cache.containsIndex(i) // Return true if index is valid
+cache.count() / cache.size() // Returns number of items in cache
+cache.first() // Returns T& or const T& from front of cache
+cache.firstIndex() // Returns first valid index in the cache, will be invalid if empty
+cache.insert(i, value) // Inserts into cache, replaces if already exist, invalid i will clear cache first
+cache.isEmpty() // Returns true if nothing in cache
+cache.isFull() // Returns true if max capacity has been reached
+cache.last() // Returns T& or const T& from back of cache
+cache.lastIndex() // Returns last valid index in the cache, will be invalid if empty
+cache.normalizeIndexes() // Ensures all indexes in cache are valid, does not reorder values
+cache.prepend(value) // Inserts value at start of cache, will remove items from back if full
+cache.removeFirst() // Removes first item from cache, cache must not be empty
+cache.removeLast() // Removes last item from cache, cache must not be empty
+cache.setCapacity(n) // Set amount of items cache can hold before considered full
+cache.takeFirst() // Removes first item from cache and returns T, cache must not be empty
+cache.takeLast() // Removes last item from cache and returns T, cache must not be empty
     
 // QBitArray
     
