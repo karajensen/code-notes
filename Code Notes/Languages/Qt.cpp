@@ -135,12 +135,6 @@ QContiguousCache<Key, T>
 • Uses capacity to determine what the keep/remove from cache
 • If full, item at opposite end of the cache from prepend/append is removed
 
-QBitArray
-• 
-    
-QByteArray
-• 
-
 -------------------------------------------------------------------------------------------------
 CONTAINER      ACCESS     INSERT     PREPEND   APPEND   EQUIVALENT
 -------------------------------------------------------------------------------------------------
@@ -500,8 +494,27 @@ cache.takeFirst() // Removes first item from cache and returns T, cache must not
 cache.takeLast() // Removes last item from cache and returns T, cache must not be empty
     
 // QBitArray
-    
-// QByteArray
+QBitArray arr; // Null bit array
+QBitArray arr(n, isOn) // Number of bits, if n == 0, considered empty bit array, optional bool isOn
+arr |= arr2 // OR, result has the length of the longest of the two
+arr ^= arr2 // XOR, result has the length of the longest of the two
+arr &= arr2 // AND, result has the length of the longest of the two
+~arr // Returns QBitArray copy inverted
+arr[i] // Returns QBitRef (non-const) or bool (const), 0-based index
+arr.at(i) // Returns bool, 0-based index
+arr.clear() // Makes array empty
+arr.clearBit(i) // Sets bit to false
+arr.count() / arr.size() // Number of bits
+arr.count(isOn) // if isOn == true, count of bits on, else count of bits off
+arr.fill(isOn, n) // Optional n resizes array, then sets all bits to isOn
+arr.fill(isOn, i1, i2) // Fills array from [i1, i2)
+arr.isEmpty() // Returns true if size of array is 0
+arr.isNull() // Returns true if considered null (default constructor initialised)
+arr.resize() // Changes size of array, any new bits auto init to false
+arr.setBit(i, isOn) // Sets bit at index i
+arr.testBit(i) // Returns true if bit at index i is on
+arr.toggleBit(i) // Toggles bit at index i, returning previous value of bit
+arr.truncate(i) // Truncates array to index i
 
 // CONTAINER FOREACH
 // Auto takes copy of container at start of loop
