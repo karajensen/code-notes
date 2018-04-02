@@ -34,10 +34,6 @@ qobject_cast<MyQObject*>(qObj); // dynamic_cast without requiring RTTI
 Q_ASSERT(expression);
 Q_ASSERT_X(expression, "divide", "division by zero");
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT COMPONENTS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 // QPair<T1, T2>
 auto pair = qMakePair(v1, v2);
 pair.first;
@@ -47,9 +43,39 @@ pair.second;
 // QT STRINGS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*************************************************************************************************************
+• Unicode, 16-bit QChars, for characters with code > 65535, two consecutive QChars are used
+
+QSTRINGBUILDER
+• Faster than + as multiple substring concatenations will be postponed until the final result
+• At final result, amount of memory required is known and allocated only once
+• Using QT_USE_QSTRINGBUILDER will auto convert all + to %
+
+DEFINES
+QT_NO_CAST_FROM_ASCII           Disables auto conversion from C strings to QString
+QT_RESTRICTED_CAST_FROM_ASCII   Allows auto conversion from char/char arrays, disables rest
+QT_NO_CAST_TO_ASCII             Disables automatic conversion from QString to C strings
+QT_USE_QSTRINGBUILDER           Auto converts all QString + to use QStringBuilder %
+
+FORMAT CHARACTERS
+e	format as [-]9.9e[+|-]999
+E	format as [-]9.9E[+|-]999
+f	format as [-]9.9
+g	use e or f format, whichever is the most concise
+G	use E or f format, whichever is the most concise 
+
+CASE TYPES
+Qt::CaseInsensitive
+Qt::CaseSensitive
+**************************************************************************************************************/
+
+QChar::Null // null terminator character \0
+
 // QString
 // Most also overload using a char, QRegularExpression, QRegExp
-QString str("str")
+QString str(QStringLiteral(u"str")) // Use to avoid a copy of "str", internal data is generated at compile time
+QString str() / QString str('\0') // Creates a null string
+str[i] // Returns QCharRef (QChar&) or const QCharRef, assigning to it will COW detach
 str.append("str", n) // Adds n characters to the end of the string, returns QString& for chaining
 str.append("str") / str.push_back("str") // Adds to the end of the string, returns QString& for chaining
 str.arg(value) // Returns QString copy with %n replaced with value (eg. %1, %2...), printf with %n
@@ -59,10 +85,10 @@ str.capacity() // Returns maximum number of characters that can be stored withou
 str.chop(n) // Removes n chars from end of the string, if n >= size, string becomes empty
 str.chopped(n) // Removes n chars from end of the string and returns QString copy, n >= size is undefined
 str.clear() // Makes string empty
-str.compare("str", Qt::CaseInsensitive) // Returns 0 if they match 
-str.contains("a", Qt::CaseInsensitive) // Returns true if contains substring 'a'
-str.count("a", Qt::CaseInsensitive) // Returns count of substring, will count overlaps
-str.endsWith("a", Qt::CaseInsensitive) // Returns true if ends with 'a'
+str.compare("str", case) // Returns 0 if they match 
+str.contains("a", case) // Returns true if contains substring 'a'
+str.count("a", case) // Returns count of substring, will count overlaps
+str.endsWith("a", case) // Returns true if ends with 'a'
 str.fill('c', n) // Resizes string to n and fills with character, without n will fill to current size
 str.front() // Returns QChar (const version) or QCharRef at back, undefined on empty string
 str.indexOf("a", i) // Searches for 'a' from index i, returns index, or -1 if not found
@@ -74,15 +100,15 @@ str.lastIndexOf("a", i) // Searches for 'a' backwards from index i, returns inde
 str.left(n) // Returns QString with only n characters starting from left
 str.leftJustified(n, 'c') // Returns QString of n width, any extra chars padded with fill 'c'
 str.leftRef(n) // Returns QStringRef of n left most characters
-str.length() / str.size() // Amount of characters
+str.length() / str.size() // Amount of characters including any \0
 str.mid(i, n) // Returns QString starting at index i for n optional characters
 str.midRef(i, n) // Returns QStringRef starting at index i for n optional characters    
 str.prepend("a") / str.push_front("a") // Adds to start of str and returns QString&
 str.remove(i, n) // Removes n characters from index i, returns QString&, if i+n >= size will truncate
-str.remove("a", Qt::CaseInsensitive) // Removes every occurance of "a" and returns QString&
+str.remove("a", case) // Removes every occurance of "a" and returns QString&
 str.repeated(n) // Returns QString repeated n times
 str.replace(i, n, "a") // Replaces from index i over n characters with "a" and returns QString& 
-str.replace("a", "b", Qt::CaseInsensitive) // Replaces all instances of "a" with "b"
+str.replace("a", "b", case) // Replaces all instances of "a" with "b"
 str.reserve(n) // Reserve capacity for n characters
 str.resize(n) // Sets size of string to n characters, new characters are uninitialized
 str.resize(n, 'c') // Sets size of string to n characters, new characters use 'c'
@@ -90,17 +116,24 @@ str.right(n) // Returns QString with only n characters starting from right
 str.rightJustified(n, 'c') // Returns QString of n width from end, any extra chars padded with fill 'c'
 str.rightRef(n) // Returns QStringRef of n right most characters
 str.split(" ") // Returns QStringList of string split by spaces
-str.toUtf8().constData() // Convert to const char*
+
+str.toLocal8Bit().constData() // Convert to const char* using system's local encoding, null string returns \0
+str.toUtf8().constData() // Convert to const char* using UTF-8 encoding, null string returns \0
 str.begin() / str.end() // iterator or const_iterator
 str.rBegin() / str.rEnd() // reverse_iterator or const_reverse_iterator
 str.cbegin() / str.cend() // const_iterator
 str.constBegin() / str.constEnd() // const_iterator
 str.crbegin() / str.crEnd() // const_reverse_iterator    
 QString::asprintf("%i", n) // QString version of printf, uses same modifiers
-QString::compare(str1, str2, Qt::CaseInsensitive) // Returns 0 if they match
+QString::compare(str1, str2, case) // Returns 0 if they match, comparing char codes
+QString::localeAwareCompare(str1, str2) // Returns 0 if they match, comparing actual words
 QString::number(integer) // Converts integer to QString
-QString::number(double, 'g', precision) // Converts floating point number to QString
- 
+QString::number(double, format, precision) // Converts floating point number to QString
+    
+// QStringRef
+QStringRef ref(&str)
+QStringRef ref(&str, i, n) // Reference str from index i for n characters
+    
 // QTextStream
 QTextStream(&str) << "str" << value; // QString streamstream
 
@@ -111,13 +144,13 @@ QStringList<T> lst = { value }
 QStringList<T> lst("str")
 lst.join("delim") // Returns a combined string seperated by delim
 lst.split("delim") // Returns 
-lst.contains("str", Qt::CaseInsensitive) // True if list contains string
+lst.contains("str", case) // True if list contains string
 lst.filter(regex) // Returns QStringList filtered by regex
 lst.indexOf(regex, i) // Returns index of first match from regex starting from optional i, else -1
 lst.lastIndexOf(regex, i) // Returns index of last match from regex backwards from optional i, else -1
 lst.removeDuplicates() // Removes all duplicate strings, doesn't require sorting
-lst.replaceInStrings("str1", "str2", Qt::CaseInsensitive) // Replace 'str1' with 'str2' in all strings
-lst.sort(Qt::CaseInsensitive) // Sort all strings using std::sort
+lst.replaceInStrings("str1", "str2", case) // Replace 'str1' with 'str2' in all strings
+lst.sort(case) // Sort all strings using std::sort
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT CONTAINERS
@@ -698,7 +731,7 @@ QTypeInfo<T>::isSpecialized = true
 QTypeInfo<T>::isComplex = (((FLAGS) & Q_PRIMITIVE_TYPE) == 0)
 QTypeInfo<T>::isStatic = (((FLAGS) & (Q_MOVABLE_TYPE | Q_PRIMITIVE_TYPE)) == 0)
 QTypeInfo<T>::isRelocatable = !isStatic || ((FLAGS) & Q_RELOCATABLE_TYPE)
-QTypeInfo<T>::isLarge = sizeof(T)  >sizeof(void*)
+QTypeInfo<T>::isLarge = sizeof(T) > sizeof(void*)
 QTypeInfo<T>::isPointer = false
 QTypeInfo<T>::isIntegral = std::is_integral<T>::value
 
