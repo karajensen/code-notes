@@ -58,11 +58,11 @@ QT_NO_CAST_TO_ASCII             Disables automatic conversion from QString to C 
 QT_USE_QSTRINGBUILDER           Auto converts all QString + to use QStringBuilder %
 
 FORMAT CHARACTERS
-e	format as [-]9.9e[+|-]999
-E	format as [-]9.9E[+|-]999
-f	format as [-]9.9
-g	use e or f format, whichever is the most concise
-G	use E or f format, whichever is the most concise 
+e   format as [-]9.9e[+|-]999
+E   format as [-]9.9E[+|-]999
+f   format as [-]9.9
+g   use e or f format, whichever is the most concise
+G   use E or f format, whichever is the most concise 
 
 CASE TYPES
 Qt::CaseInsensitive
