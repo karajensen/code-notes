@@ -49,35 +49,57 @@ pair.second;
 
 // QString
 // Most also overload using a char, QRegularExpression, QRegExp
-QString str("str");
-str.split(" "); // Returns QStringList of string split by spaces
-str.append("str", n); // Adds n characters to the end of the string, returns QString& for chaining
-str.append("str"); // Adds to the end of the string, returns QString& for chaining
-str.arg(value); // Returns QString copy with %n replaced with value (eg. %1, %2...), printf with %n
-str.at(n); // Returns QChar at index
-str.back(); // Returns QChar (const version) or QCharRef at back, undefined on empty string
-str.begin(); // Returns iterator or const_iterator
-str.capacity(); // Returns maximum number of characters that can be stored without forcing a reallocation
-str.chop(n); // Removes n chars from end of the string, if n >= size, string becomes empty
-str.chopped(n); // Removes n chars from end of the string and returns QString copy, n >= size is undefined
-str.clear(); // Makes string empty
-str.compare("str", Qt::CaseInsensitive); // Returns 0 if they match 
-str.toUtf8().constData(); // Convert to const char*
-str.contains("str", Qt::CaseInsensitive); // Returns true if contains substring 'str'
-str.count("str", Qt::CaseInsensitive); // Returns count of substring, will count overlaps
-str.end(); // Returns iterator or const_iterator
-str.endsWith("str", Qt::CaseInsensitive); // Returns true if ends with 'str'
-str.fill('c', n); // Resizes string to n and fills with character, without n will fill to current size
-str.font(); // Returns QChar (const version) or QCharRef at back, undefined on empty string
-str.indexOf("str", i); // Searches for 'str' from index i, returns index, or -1 if not found
-str.insert(n, "str"); // Inserts 'str' at index n, returns QString&, auto resizes if n >= size
-str.empty(); // Returns true if has no characters
-str.isNull(); // Returns true if null (default constructor)
-str.isRightToLeft(); // Returns true if string is to be read right to left
-str.lastIndexOf("str", i); // Searches for 'str' backwards from index i, returns index, or -1 if not found
-str.left(n); // Returns QString with only n characters starting from left
-QString::asprintf("%i", n); // QString version of printf, uses same modifiers
-QString::compare(str1, str2, Qt::CaseInsensitive); // Returns 0 if they match
+QString str("str")
+str.append("str", n) // Adds n characters to the end of the string, returns QString& for chaining
+str.append("str") / str.push_back("str") // Adds to the end of the string, returns QString& for chaining
+str.arg(value) // Returns QString copy with %n replaced with value (eg. %1, %2...), printf with %n
+str.at(n) // Returns QChar at index
+str.back() // Returns QChar (const version) or QCharRef at back, undefined on empty string
+str.capacity() // Returns maximum number of characters that can be stored without forcing a reallocation
+str.chop(n) // Removes n chars from end of the string, if n >= size, string becomes empty
+str.chopped(n) // Removes n chars from end of the string and returns QString copy, n >= size is undefined
+str.clear() // Makes string empty
+str.compare("str", Qt::CaseInsensitive) // Returns 0 if they match 
+str.contains("a", Qt::CaseInsensitive) // Returns true if contains substring 'a'
+str.count("a", Qt::CaseInsensitive) // Returns count of substring, will count overlaps
+str.endsWith("a", Qt::CaseInsensitive) // Returns true if ends with 'a'
+str.fill('c', n) // Resizes string to n and fills with character, without n will fill to current size
+str.front() // Returns QChar (const version) or QCharRef at back, undefined on empty string
+str.indexOf("a", i) // Searches for 'a' from index i, returns index, or -1 if not found
+str.insert(n, "a") // Inserts 'a' at index n, returns QString&, auto resizes if n >= size
+str.empty() // Returns true if has no characters
+str.isNull() // Returns true if null (default constructor)
+str.isRightToLeft() // Returns true if string is to be read right to left
+str.lastIndexOf("a", i) // Searches for 'a' backwards from index i, returns index, or -1 if not found
+str.left(n) // Returns QString with only n characters starting from left
+str.leftJustified(n, 'c') // Returns QString of n width, any extra chars padded with fill 'c'
+str.leftRef(n) // Returns QStringRef of n left most characters
+str.length() / str.size() // Amount of characters
+str.mid(i, n) // Returns QString starting at index i for n optional characters
+str.midRef(i, n) // Returns QStringRef starting at index i for n optional characters    
+str.prepend("a") / str.push_front("a") // Adds to start of str and returns QString&
+str.remove(i, n) // Removes n characters from index i, returns QString&, if i+n >= size will truncate
+str.remove("a", Qt::CaseInsensitive) // Removes every occurance of "a" and returns QString&
+str.repeated(n) // Returns QString repeated n times
+str.replace(i, n, "a") // Replaces from index i over n characters with "a" and returns QString& 
+str.replace("a", "b", Qt::CaseInsensitive) // Replaces all instances of "a" with "b"
+str.reserve(n) // Reserve capacity for n characters
+str.resize(n) // Sets size of string to n characters, new characters are uninitialized
+str.resize(n, 'c') // Sets size of string to n characters, new characters use 'c'
+str.right(n) // Returns QString with only n characters starting from right
+str.rightJustified(n, 'c') // Returns QString of n width from end, any extra chars padded with fill 'c'
+str.rightRef(n) // Returns QStringRef of n right most characters
+str.split(" ") // Returns QStringList of string split by spaces
+str.toUtf8().constData() // Convert to const char*
+str.begin() / str.end() // iterator or const_iterator
+str.rBegin() / str.rEnd() // reverse_iterator or const_reverse_iterator
+str.cbegin() / str.cend() // const_iterator
+str.constBegin() / str.constEnd() // const_iterator
+str.crbegin() / str.crEnd() // const_reverse_iterator    
+QString::asprintf("%i", n) // QString version of printf, uses same modifiers
+QString::compare(str1, str2, Qt::CaseInsensitive) // Returns 0 if they match
+QString::number(integer) // Converts integer to QString
+QString::number(double, 'g', precision) // Converts floating point number to QString
  
 // QTextStream
 QTextStream(&str) << "str" << value; // QString streamstream
@@ -178,7 +200,7 @@ QMultiHash        QHashIterator          QMutableHashIterator          QMultiHas
 
 // QList<T>
 QList<T> lst = { value }
-lst[index]; // Returns const T& or T&
+lst[index]; // Returns const T& or T&, asserts out-of-range
 lst << value; // Allows streaming into container
 lst.append(value)  / lst.push_back(value) // Appends to end of list
 lst.prepend(value) / lst.push_back(value) // Prepends to start of list
@@ -188,7 +210,7 @@ lst.first() / lst.front() // Returns const T& or T& for first item
 lst.last()  / lst.back() // Returns const T& or T& for last item
 lst.constFirst() // Returns const T& for first item
 lst.constLast() // Returns const T& for last item
-lst.at(i) // Returns const T&, will not COW detach
+lst.at(i) // Returns const T&, will not COW detach, asserts out-of-range
 lst.clear() // Clears the container
 lst.contains(value) // Returns true if item is in list
 lst.count(value) // Returns number of times item is in list
@@ -233,7 +255,7 @@ queue.head() // Returns T& or const T& from front of queue
 QVector<T> vec = { value }
 QVector<T> vec(n) // Initialise all with default constructor
 QVector<T> vec(value) // Initialise all with value
-vec[index]; // Returns const T& or T&
+vec[index]; // Returns const T& or T&, asserts out-of-range
 vec.append(value)  / vec.push_back(value) // Appends to end of vector
 vec.prepend(value) / vec.push_back(value) // Prepends to start of vector
 vec.removeLast()   / vec.pop_back() // Remove item at end
@@ -242,7 +264,7 @@ vec.first() / vec.front() // Returns const T& or T& for first item
 vec.last()  / vec.back() // Returns const T& or T& for last item
 vec.constFirst() // Returns const T& for first item
 vec.constLast() // Returns const T& for last item
-vec.at(i) // Returns const T&, will not COW detach
+vec.at(i) // Returns const T&, will not COW detach, asserts out-of-range
 vec.clear() // Clears the container
 vec.capacity() // Returns maximum items before forcing a reallocation
 vec.constData() // Returns const T* of the first item
@@ -291,7 +313,7 @@ stack.top() // Returns T& or const T& from top of stack
 // QVarLengthArray<T, n>
 QVarLengthArray<T, n> arr = { value }
 QVarLengthArray<T, n> arr(n2) // n capacity, n2 items
-arr[index]; // Returns const T& or T&
+arr[index]; // Returns const T& or T&, asserts out-of-range
 arr.append(value)  / arr.push_back(value) // Appends to end of array
 arr.prepend(value) / arr.push_back(value) // Prepends to start of array
 arr.removeLast()   / arr.pop_back() // Remove item at end
@@ -300,7 +322,7 @@ arr.first() / arr.front() // Returns const T& or T& for first item
 arr.last()  / arr.back() // Returns const T& or T& for last item
 arr.constFirst() // Returns const T& for first item
 arr.constLast() // Returns const T& for last item
-arr.at(i) // Returns const T&, will not COW detach
+arr.at(i) // Returns const T&, will not COW detach, asserts out-of-range
 arr.clear() // Clears the container
 arr.capacity() // Returns maximum items before forcing a reallocation
 arr.constData() // Returns const T* of the first item
@@ -743,10 +765,10 @@ QOBJECTS:
 
 QOBJECT LIMITATIONS:
 • Only signals and slots can live in the signals and slots sections
-• Class templates cannot have signals or slots
 • Signal/Slot return types cannot be references
 • Multiple Inheritance requires QObject to be first
-• Virtual inheritance with QObject is not supported
+• Moc doesn't support virtual inheritance
+• Moc doesn't support templates with Q_OBJECT/signals/slots
 • Moc doesn't expand #define: cannot use a macro to declare a signal/slot or used as a signal/slot parameter
 • Function Pointers cannot be direct signal/slot Parameters, work-around is to typedef it
 • Enums/typedefs cannot be forward decl for signal/slot parameters
