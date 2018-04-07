@@ -817,16 +817,42 @@ IMPLICIT SHARING (COPY-ON-WRITE):
 • Automatically detaches the object from a shared block when object changes and ref count is > 1
 • Qt classes use it internally, doesn't require a shared data pointer for it to happen
 • Can be dangerous for iterators when container detaches from shared block:
+
+SIGNALS/SLOTS:
+• On signal emit, all slots in order of connection are immediately notified, can't be async
+• Slots can be virtual
+• Can duplicate connections: multiple signals are then emitted, all are broken with single disconnect call
+• Type safe: The signature of a signal must match the signature of the receiving slot
+• Supports default args: signatures must match though in QConnect else runtime error
+• Use normalised form from moc cpp, eg. SIGNAL(rowsInserted(QModelIndex,int,int)), otherwise performance hit
 **************************************************************************************************************/
 
+// QOBJECT WITH SIGNALS/SLOTS
 class MyClass : public QObject
 {
     Q_OBJECT // required for all moc provided features
     Q_CLASSINFO("Author", "Name") // attach additional name/value pairs to the class's meta-object
 
 public:
-    MyClass(QObject *parent = 0);
-    ~MyClass();
+    MyClass(QObject *parent = 0) { }
+    void emitMySignal() { emit mySignal(); }
+    
+signals:
+    void mySignal();
+
+public slots:
+    void mySlot();
+    void mySlot(void (*fn)(void *)); // Cannot do
+    void mySlot(MyFn fn);            // Can do
+};
+
+// QOBJECT WITH ENUM
+class MyClass : public QObject
+{
+    Q_OBJECT // required for all moc provided features
+
+public:
+    MyClass(QObject *parent = 0) { }
     
     // Enums must start with capital letter
     enum MyEnum { ONE, TWO, THREE };
@@ -840,26 +866,26 @@ public:
     Q_PROPERTY(MyEnum m_enum READ getEnum WRITE setEnum)
     void setEnum(MyEnum value) { m_enum = value; }
     MyEnum getEnum() const { return m_enum; }
-
-signals:
-    void mySignal();
-
-public slots:
-    void mySlot();
-    void mySlot(void (*fn)(void *)); // Cannot do
-    void mySlot(MyFn fn);            // Can do
     
 private:
     MyEnum m_enum;
 };
 
-// Leave memory unitialised, Q_COMPLEX_TYPE is default
-Q_DECLARE_TYPEINFO(MyEnum, Q_PRIMITIVE_TYPE);
+// SET OBJECT TYPE INFO
+//• Leave memory unitialised, Q_COMPLEX_TYPE is default
+Q_DECLARE_TYPEINFO(MyClass::MyEnum, Q_PRIMITIVE_TYPE);
 Q_DECLARE_TYPEINFO(MyPOD, Q_PRIMITIVE_TYPE);
-
-// std::memcpy() rather than copy constructor to move instances around
-// Don't use this for any class that requires deep copying
+//• Uses std::memcpy() rather than copy constructor to move instances around
+//• Don't use this for any class that requires deep copying
 Q_DECLARE_TYPEINFO(MyClass,  Q_MOVABLE_TYPE);
+
+// CONNECT SIGNALS/SLOTS
+// • Signatures must always match, even with default args
+// • Returns QMetaObject::Connection for disconnecting, or call QObject::disconnect with same signature
+QObject::connect(sender, &Sender::mySignal, reciever, &Receiver::mySlot);
+QObject::connect(sender, &Sender::mySignal, reciever, [](){});
+QObject::connect(sender, SIGNAL(mySignal()), reciever, SLOT(mySlot()));
+QObject::connect(sender, SIGNAL(mySignalArgs(int,float)), reciever, SLOT(mySlotArgs(int,float)));
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT MODELS / VIEWS
