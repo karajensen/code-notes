@@ -820,11 +820,7 @@ IMPLICIT SHARING (COPY-ON-WRITE):
 
 SIGNALS/SLOTS:
 • On signal emit, all slots in order of connection are immediately notified, can't be async
-• Slots can be virtual
-• Can duplicate connections: multiple signals are then emitted, all are broken with single disconnect call
 • Type safe: The signature of a signal must match the signature of the receiving slot
-• Supports default args: signatures must match though in QConnect else runtime error
-• Use normalised form from moc cpp, eg. SIGNAL(rowsInserted(QModelIndex,int,int)), otherwise performance hit
 **************************************************************************************************************/
 
 // QOBJECT WITH SIGNALS/SLOTS
@@ -880,8 +876,10 @@ Q_DECLARE_TYPEINFO(MyPOD, Q_PRIMITIVE_TYPE);
 Q_DECLARE_TYPEINFO(MyClass,  Q_MOVABLE_TYPE);
 
 // CONNECT SIGNALS/SLOTS
-// • Signatures must always match, even with default args
-// • Returns QMetaObject::Connection for disconnecting, or call QObject::disconnect with same signature
+//• Returns QMetaObject::Connection for disconnecting, or can call QObject::disconnect with same signature
+//• Can duplicate connections, multiple signals are then emitted, all are broken with single disconnect call 
+//• Signatures must match: SIGNAL/SLOT macros give runtime error, functions give compile error
+//• Use normalised form from moc cpp for SIGNAL/SLOT macros, otherwise performance hit
 QObject::connect(sender, &Sender::mySignal, reciever, &Receiver::mySlot);
 QObject::connect(sender, &Sender::mySignal, reciever, [](){});
 QObject::connect(sender, SIGNAL(mySignal()), reciever, SLOT(mySlot()));
