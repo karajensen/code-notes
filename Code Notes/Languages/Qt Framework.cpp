@@ -906,7 +906,6 @@ SIGNALS/SLOTS:
 • Type safe: The signature of a signal must match the signature of the receiving slot
 **************************************************************************************************************/
 
-// QOBJECT WITH SIGNALS/SLOTS
 class MyClass : public QObject
 {
     Q_OBJECT // required for all moc provided features
@@ -914,40 +913,26 @@ class MyClass : public QObject
 
 public:
     MyClass(QObject *parent = 0) { }
-    void emitMySignal() { emit mySignal(); }
+    
+    Q_INVOKABLE void emitMySignal() { emit mySignal(); } // Can be called in QML
+    Q_PROPERTY(MyValue value MEMBER m_value NOTIFY myValueSignal)
     
 signals:
     void mySignal();
+    void myValueSignal(const MyValue& value);
 
-public slots:
+public slots: // can be protected/private
     void mySlot();
     void mySlot(void (*fn)(void *)); // Cannot do
     void mySlot(MyFn fn);            // Can do
-};
-
-// QOBJECT WITH ENUM
-class MyClass : public QObject
-{
-    Q_OBJECT // required for all moc provided features
-
-public:
-    MyClass(QObject *parent = 0) { }
     
+public:
     // Enums must start with capital letter
     enum MyEnum { ONE, TWO, THREE };
+    // Allows enum use in signals/slots/QML
     Q_ENUMS(MyEnum)
-    
-    // Use Enum with QML
-    // Use 'import MyEnums 1.0' and 'MyEnum.ONE'
+    // Register enum for QML: Use 'import MyEnums 1.0' and 'MyEnum.ONE'
     static registerEnum() { qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum"); }
-    
-    // Use Enum with signals/slots
-    Q_PROPERTY(MyEnum m_enum READ getEnum WRITE setEnum)
-    void setEnum(MyEnum value) { m_enum = value; }
-    MyEnum getEnum() const { return m_enum; }
-    
-private:
-    MyEnum m_enum;
 };
 
 // SET OBJECT TYPE INFO
