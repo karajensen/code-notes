@@ -653,13 +653,14 @@ arr.toggleBit(i) // Toggles bit at index i, returning previous value of bit
 arr.truncate(i) // Truncates array to index i
 
 // CONTAINER FOREACH
-// Readonly loop, Auto takes copy of container at start of loop
-// Modifying container during loop won't affect it due to implicit sharing
 // Q_FOREACH if QT_NO_KETYWORDS is defined
+// Do not use foreach with STL containers as does copy before loop- cheap for qt due to COW
+foreach (auto& value, container) {} // Will COW detach
 foreach (const auto& value, container) {}
 foreach (const auto& value, map) {}
 foreach (const auto& key, map.keys()) {}
 foreach (const auto& key, multimap.uniqueKeys()) { foreach (const auto& value, multimap.values(key)) {} }
+for (auto& value, container) {} // Will COW detach if container is non-const, value constness doesn't matter
 
 // STL-STYLED ITERATORS
 // Point to actual values, support reverse_iterator, const_iterator and iterator maths
