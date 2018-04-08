@@ -40,6 +40,125 @@ pair.first;
 pair.second;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT OBJECTS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
+QOBJECTS:
+• Base class of all Qt objects, organised in an object tree
+• Doesn't have a copy constructor or assignment operator
+• Meta Object Compilier (moc) uses Q_OBJECT macro to generate extra data/features to use in framework:
+    - Ability to use qobject_cast, signals and slots
+    - QObject::metaObject returns the associated meta-object for the class
+    - QMetaObject::className returns the class name as a string (without using RTTI)
+    - QObject::inherits returns whether an instance of another QObject class
+    - QObject::setProperty / QObject::property dynamically set and get properties by name
+    - QMetaObject::newInstance constructs a new instance of the class
+
+QOBJECT LIMITATIONS:
+• Only signals and slots can live in the signals and slots sections
+• Multiple Inheritance requires QObject to be first
+• Moc doesn't support virtual inheritance
+• Moc doesn't support templates with Q_OBJECT/signals/slots
+• Moc doesn't expand #define: cannot use a macro to declare a signal/slot or used as a signal/slot parameter
+• Function Pointers cannot be direct signal/slot Parameters, work-around is to typedef it
+• Enums/typedefs cannot be forward decl for signal/slot parameters
+• Nested Classes cannot have signals or slots
+
+PARENT-CHILD RELATIONSHIP:
+• Parent needs to be explicitly deleted, either by delete or stack scope
+• Children deleted by parent automatically, if child is deleted first, parent is notified
+• Children should not be created on the stack unless deleted first, as parent assumes children are on heap
+
+IMPLICIT SHARING (COPY-ON-WRITE):
+• Objects share the same memory in a 'shared block' if have the same values
+• Automatically detaches the object from a shared block when object changes and ref count is > 1
+• Qt classes use it internally, doesn't require a shared data pointer for it to happen
+• Can be dangerous for iterators when container detaches from shared block:
+
+SIGNALS/SLOTS:
+• On signal emit, all slots in order of connection are immediately notified, can't be async
+• Type safe: The signature of a signal must match the signature of the receiving slot
+• No return values, slots can be virtual/pure virtual
+
+PROPERTY SYSTEM
+MEMBER    Required if READ not used
+READ      Required if MEMBER not used
+WRITE     Optional, can be used with either READ or MEMBER
+NOTIFY    Optional, takes signal with one or no arguments
+STORED    Default true, indicates whether the property value must be saved when storing the object's state
+CONSTANT  Optional, makes readonly
+FINAL     Optional, can enable optimizations, indicates shouldn't override though not enforced by moc
+**************************************************************************************************************/
+
+class MyClass : public QObject
+{
+    Q_OBJECT // required for all moc provided features
+    Q_CLASSINFO("Author", "Name") // attach additional name/value pairs to the class's meta-object
+
+public:
+    MyClass(QObject *parent = 0) { }
+    
+    Q_INVOKABLE void myFn() { }
+    Q_PROPERTY(MyValue value MEMBER m_value NOTIFY myValueSignal)
+    Q_PROPERTY(MyValue value READ getValue WRITE setValue NOTIFY myVoidSignal)
+    
+    // Can be inherited/virtual
+    const MyValue& getValue() const { return m_value; }
+    void setValue(const MyValue& value) { m_value = value; }
+    
+signals:
+    void myVoidSignal();
+    void myValueSignal(const MyValue& value);
+
+public slots: // can be protected/private
+    void mySlot();
+    void mySlot(void (*fn)(void *)); // Cannot do
+    void mySlot(MyFn fn);            // Can do
+    
+public:
+    // Enums must start with capital letter
+    enum MyEnum { ONE, TWO, THREE };
+    // Allows enum use in signals/slots/QML
+    Q_ENUMS(MyEnum)
+    // Register enum for QML: Use 'import MyEnums 1.0' and 'MyEnum.ONE'
+    static registerEnum() { qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum"); }
+};
+
+emit obj.myVoidSignal() // Emit a signal
+obj.setProperty("value", v); // Return true if existed and set, auto creates if doesn't exist only for obj
+obj.property("value") // Returns QVariant, invalid if doesn't exist
+
+// ITERATE PROPERTIES
+const QMetaObject* metaobject = object->metaObject();
+int count = metaobject->propertyCount();
+for (int i=0; i<count; ++i) 
+{
+    QMetaProperty metaproperty = metaobject->property(i);
+    const char *name = metaproperty.name();
+    QVariant value = object->property(name);
+}
+
+// SET OBJECT TYPE INFO
+//• Declare directly after class
+//• Leave memory unitialised, Q_COMPLEX_TYPE is default
+Q_DECLARE_TYPEINFO(MyClass::MyEnum, Q_PRIMITIVE_TYPE);
+Q_DECLARE_TYPEINFO(MyPOD, Q_PRIMITIVE_TYPE);
+//• Uses std::memcpy() rather than copy constructor to move instances around
+//• Does shallow move; don't use for types that self refer (eg. pimpl with base pointer)
+Q_DECLARE_TYPEINFO(MyClass,  Q_MOVABLE_TYPE);
+
+// CONNECT SIGNALS/SLOTS
+//• Returns QMetaObject::Connection for disconnecting, or can call QObject::disconnect with same signature
+//• Can duplicate connections, multiple signals are then emitted, all are broken with single disconnect call 
+//• Signatures must match: SIGNAL/SLOT macros give runtime error, functions give compile error
+//• Use normalised form from moc cpp for SIGNAL/SLOT macros, otherwise performance hit
+QObject::connect(sender, &Sender::mySignal, reciever, &Receiver::mySlot);
+QObject::connect(sender, &Sender::mySignal, reciever, [](){});
+QObject::connect(sender, SIGNAL(mySignal()), reciever, SLOT(mySlot()));
+QObject::connect(sender, SIGNAL(mySignalArgs(int,float)), reciever, SLOT(mySlotArgs(int,float)));
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT STRINGS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -862,125 +981,6 @@ QSlider slider(Qt::Horizontal);
 slider.setRange(min, max);
 slider.setValue(value);
 QObject::connect(slider, SIGNAL(valueChanged(int)), &app, SLOT(myFn(int)));
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT OBJECTS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*************************************************************************************************************
-QOBJECTS:
-• Base class of all Qt objects, organised in an object tree
-• Doesn't have a copy constructor or assignment operator
-• Meta Object Compilier (moc) uses Q_OBJECT macro to generate extra data/features to use in framework:
-    - Ability to use qobject_cast, signals and slots
-    - QObject::metaObject returns the associated meta-object for the class
-    - QMetaObject::className returns the class name as a string (without using RTTI)
-    - QObject::inherits returns whether an instance of another QObject class
-    - QObject::setProperty / QObject::property dynamically set and get properties by name
-    - QMetaObject::newInstance constructs a new instance of the class
-
-QOBJECT LIMITATIONS:
-• Only signals and slots can live in the signals and slots sections
-• Multiple Inheritance requires QObject to be first
-• Moc doesn't support virtual inheritance
-• Moc doesn't support templates with Q_OBJECT/signals/slots
-• Moc doesn't expand #define: cannot use a macro to declare a signal/slot or used as a signal/slot parameter
-• Function Pointers cannot be direct signal/slot Parameters, work-around is to typedef it
-• Enums/typedefs cannot be forward decl for signal/slot parameters
-• Nested Classes cannot have signals or slots
-
-PARENT-CHILD RELATIONSHIP:
-• Parent needs to be explicitly deleted, either by delete or stack scope
-• Children deleted by parent automatically, if child is deleted first, parent is notified
-• Children should not be created on the stack unless deleted first, as parent assumes children are on heap
-
-IMPLICIT SHARING (COPY-ON-WRITE):
-• Objects share the same memory in a 'shared block' if have the same values
-• Automatically detaches the object from a shared block when object changes and ref count is > 1
-• Qt classes use it internally, doesn't require a shared data pointer for it to happen
-• Can be dangerous for iterators when container detaches from shared block:
-
-SIGNALS/SLOTS:
-• On signal emit, all slots in order of connection are immediately notified, can't be async
-• Type safe: The signature of a signal must match the signature of the receiving slot
-• No return values, slots can be virtual/pure virtual
-
-PROPERTY SYSTEM
-MEMBER    Required if READ not used
-READ      Required if MEMBER not used
-WRITE     Optional, can be used with either READ or MEMBER
-NOTIFY    Optional, takes signal with one or no arguments
-STORED    Default true, indicates whether the property value must be saved when storing the object's state
-CONSTANT  Optional, makes readonly
-FINAL     Optional, can enable optimizations, indicates shouldn't override though not enforced by moc
-**************************************************************************************************************/
-
-class MyClass : public QObject
-{
-    Q_OBJECT // required for all moc provided features
-    Q_CLASSINFO("Author", "Name") // attach additional name/value pairs to the class's meta-object
-
-public:
-    MyClass(QObject *parent = 0) { }
-    
-    Q_INVOKABLE void myFn() { }
-    Q_PROPERTY(MyValue value MEMBER m_value NOTIFY myValueSignal)
-    Q_PROPERTY(MyValue value READ getValue WRITE setValue NOTIFY myVoidSignal)
-    
-    // Can be inherited/virtual
-    const MyValue& getValue() const { return m_value; }
-    void setValue(const MyValue& value) { m_value = value; }
-    
-signals:
-    void myVoidSignal();
-    void myValueSignal(const MyValue& value);
-
-public slots: // can be protected/private
-    void mySlot();
-    void mySlot(void (*fn)(void *)); // Cannot do
-    void mySlot(MyFn fn);            // Can do
-    
-public:
-    // Enums must start with capital letter
-    enum MyEnum { ONE, TWO, THREE };
-    // Allows enum use in signals/slots/QML
-    Q_ENUMS(MyEnum)
-    // Register enum for QML: Use 'import MyEnums 1.0' and 'MyEnum.ONE'
-    static registerEnum() { qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum"); }
-};
-
-emit obj.myVoidSignal() // Emit a signal
-obj.setProperty("value", v); // Return true if existed and set, auto creates if doesn't exist only for obj
-obj.property("value") // Returns QVariant, invalid if doesn't exist
-
-// ITERATE PROPERTIES
-const QMetaObject* metaobject = object->metaObject();
-int count = metaobject->propertyCount();
-for (int i=0; i<count; ++i) 
-{
-    QMetaProperty metaproperty = metaobject->property(i);
-    const char *name = metaproperty.name();
-    QVariant value = object->property(name);
-}
-
-// SET OBJECT TYPE INFO
-//• Declare directly after class
-//• Leave memory unitialised, Q_COMPLEX_TYPE is default
-Q_DECLARE_TYPEINFO(MyClass::MyEnum, Q_PRIMITIVE_TYPE);
-Q_DECLARE_TYPEINFO(MyPOD, Q_PRIMITIVE_TYPE);
-//• Uses std::memcpy() rather than copy constructor to move instances around
-//• Does shallow move; don't use for types that self refer (eg. pimpl with base pointer)
-Q_DECLARE_TYPEINFO(MyClass,  Q_MOVABLE_TYPE);
-
-// CONNECT SIGNALS/SLOTS
-//• Returns QMetaObject::Connection for disconnecting, or can call QObject::disconnect with same signature
-//• Can duplicate connections, multiple signals are then emitted, all are broken with single disconnect call 
-//• Signatures must match: SIGNAL/SLOT macros give runtime error, functions give compile error
-//• Use normalised form from moc cpp for SIGNAL/SLOT macros, otherwise performance hit
-QObject::connect(sender, &Sender::mySignal, reciever, &Receiver::mySlot);
-QObject::connect(sender, &Sender::mySignal, reciever, [](){});
-QObject::connect(sender, SIGNAL(mySignal()), reciever, SLOT(mySlot()));
-QObject::connect(sender, SIGNAL(mySignalArgs(int,float)), reciever, SLOT(mySlotArgs(int,float)));
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT MODELS / VIEWS
