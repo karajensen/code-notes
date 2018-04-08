@@ -955,7 +955,7 @@ private:
 Q_DECLARE_TYPEINFO(MyClass::MyEnum, Q_PRIMITIVE_TYPE);
 Q_DECLARE_TYPEINFO(MyPOD, Q_PRIMITIVE_TYPE);
 //• Uses std::memcpy() rather than copy constructor to move instances around
-//• Don't use this for any class that requires deep copying
+//• Does shallow move; don't use for types that self refer (eg. pimpl with base pointer)
 Q_DECLARE_TYPEINFO(MyClass,  Q_MOVABLE_TYPE);
 
 // CONNECT SIGNALS/SLOTS
