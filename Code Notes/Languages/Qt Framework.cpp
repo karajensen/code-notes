@@ -312,6 +312,17 @@ QHash             QHashIterator          QMutableHashIterator          QHash::it
 QMultiHash        QHashIterator          QMutableHashIterator          QMultiHash::iterator 
 **************************************************************************************************************/
 
+// CONTAINER ITERATING
+// Q_FOREACH takes const copy of container before iterating to prevent COW detach
+// If Q_FOREACH original container detaches, doesn't affect Q_FOREACH looping container
+// Do not use Q_FOREACH with STL containers or QVarLengthArray as they don't have COW
+// STL for loop will COW detach if container itself is non-const, using const for item doesn't prevent
+Q_FOREACH (const auto& value, container) {}
+for (const auto& value : container) {} // COW detaches if container is mutable
+for (const auto& value : std::as_const(container)) {} // Enforce const container, No COW detach
+for (auto itr = container.begin(); itr != container.end(); ++itr) {} // COW detaches if container is mutable
+for (auto itr = container.cbegin(); itr != container.cend(); ++itr) {} // No COW detach
+
 // QList<T>
 QList<T> lst = { value }
 lst[index]; // Returns const T& or T&, asserts out-of-range
@@ -651,17 +662,6 @@ arr.setBit(i, isOn) // Sets bit at index i
 arr.testBit(i) // Returns true if bit at index i is on
 arr.toggleBit(i) // Toggles bit at index i, returning previous value of bit
 arr.truncate(i) // Truncates array to index i
-
-// CONTAINER FOREACH
-// Use Q_FOREACH if QT_NO_KEYWORDS is defined, disable both with QT_NO_FOREACH
-// foreach takes const copy of container before iterating to prevent COW detach- bad for STL containers
-// If foreach original container detaches, doesn't affect foreach looping container
-// STL for loop will COW detach if container itself is non-const, using const for item doesn't prevent
-foreach (const auto& value, container) {}
-foreach (const auto& value, map) {}
-foreach (const auto& key, map.keys()) {}
-foreach (const auto& key, multimap.uniqueKeys()) { foreach (const auto& value, multimap.values(key)) {} }
-for (const auto& value : container) {} // COW detaches if container itself is mutable
 
 // STL-STYLED ITERATORS
 // Point to actual values, support reverse_iterator, const_iterator and iterator maths
