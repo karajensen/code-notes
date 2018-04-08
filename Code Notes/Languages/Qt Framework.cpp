@@ -904,6 +904,15 @@ IMPLICIT SHARING (COPY-ON-WRITE):
 SIGNALS/SLOTS:
 • On signal emit, all slots in order of connection are immediately notified, can't be async
 • Type safe: The signature of a signal must match the signature of the receiving slot
+
+PROPERTY SYSTEM
+MEMBER    Required if READ not used
+READ      Required if MEMBER not used
+WRITE     Optional, can be used with either READ or MEMBER
+NOTIFY    Optional, takes signal with one or no arguments
+STORED    Default true, indicates whether the property value must be saved when storing the object's state
+CONSTANT  Optional, makes readonly
+FINAL     Optional, can enable optimizations, indicates shouldn't override though not enforced by moc
 **************************************************************************************************************/
 
 class MyClass : public QObject
@@ -914,11 +923,16 @@ class MyClass : public QObject
 public:
     MyClass(QObject *parent = 0) { }
     
-    Q_INVOKABLE void emitMySignal() { emit mySignal(); } // Can be called in QML
+    Q_INVOKABLE void myFn() { }
     Q_PROPERTY(MyValue value MEMBER m_value NOTIFY myValueSignal)
+    Q_PROPERTY(MyValue value READ getValue WRITE setValue NOTIFY myVoidSignal)
+    
+    // Can be inherited/virtual
+    const MyValue& getValue() const { return m_value; }
+    void setValue(const MyValue& value) { m_value = value; }
     
 signals:
-    void mySignal();
+    void myVoidSignal();
     void myValueSignal(const MyValue& value);
 
 public slots: // can be protected/private
@@ -934,6 +948,20 @@ public:
     // Register enum for QML: Use 'import MyEnums 1.0' and 'MyEnum.ONE'
     static registerEnum() { qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum"); }
 };
+
+emit obj.myVoidSignal() // Emit a signal
+obj.setProperty("value", v); // Return true if existed and set, auto creates if doesn't exist only for obj
+obj.property("value") // Returns QVariant, invalid if doesn't exist
+
+// ITERATE PROPERTIES
+const QMetaObject* metaobject = object->metaObject();
+int count = metaobject->propertyCount();
+for (int i=0; i<count; ++i) 
+{
+    QMetaProperty metaproperty = metaobject->property(i);
+    const char *name = metaproperty.name();
+    QVariant value = object->property(name);
+}
 
 // SET OBJECT TYPE INFO
 //• Leave memory unitialised, Q_COMPLEX_TYPE is default
