@@ -45,17 +45,12 @@ pair.second;
 
 /*************************************************************************************************************
 • Unicode, 16-bit QChars, for characters with code > 65535, two consecutive QChars are used
+• QStringRef avoids the memory allocation and reference counting overhead of a standard QString 
 
 QSTRINGBUILDER
 • Faster than + as multiple substring concatenations will be postponed until the final result
 • At final result, amount of memory required is known and allocated only once
 • Using QT_USE_QSTRINGBUILDER will auto convert all + to %
-
-DEFINES
-QT_NO_CAST_FROM_ASCII           Disables auto conversion from C strings to QString
-QT_RESTRICTED_CAST_FROM_ASCII   Allows auto conversion from char/char arrays, disables rest
-QT_NO_CAST_TO_ASCII             Disables automatic conversion from QString to C strings
-QT_USE_QSTRINGBUILDER           Auto converts all QString + to use QStringBuilder %
 
 FORMAT CHARACTERS
 e   format as [-]9.9e[+|-]999
@@ -64,9 +59,26 @@ f   format as [-]9.9
 g   use e or f format, whichever is the most concise
 G   use E or f format, whichever is the most concise 
 
-CASE TYPES
-Qt::CaseInsensitive
-Qt::CaseSensitive
+DEFINES
+QT_NO_CAST_FROM_ASCII                 Disables auto conversion from C strings to QString
+QT_RESTRICTED_CAST_FROM_ASCII         Allows auto conversion from char/char arrays, disables rest
+QT_NO_CAST_TO_ASCII                   Disables automatic conversion from QString to C strings
+QT_USE_QSTRINGBUILDER                 Auto converts all QString + to use QStringBuilder %
+
+SECTION FLAGS
+QString::SectionSkipEmpty             Ignore empty sections; don't include in section count
+QString::SectionIncludeLeadingSep     Include any leading delims in the result string
+QString::SectionIncludeTrailingSep    Include any trailing delims in the result string
+QString::SectionCaseInsensitiveSeps   Compare the delims case-insensitively
+QString::SectionDefault               Empty sections counted, pre/post delims not included and case sensitive
+
+SPLIT FLAGS                            
+QString::KeepEmptyParts	              If a field is empty, keep it in the result
+QString::SkipEmptyParts	              If a field is empty, don't include it in the result                          
+  
+CASE FLAGS
+Qt::CaseInsensitive                   Lower and upper characters treated the same
+Qt::CaseSensitive                     Lower and upper characters not treated the same
 **************************************************************************************************************/
 
 QChar::Null // null terminator character \0
@@ -79,21 +91,22 @@ str[i] // Returns QCharRef (QChar&) or const QCharRef, assigning to it will COW 
 str.append("str", n) // Adds n characters to the end of the string, returns QString& for chaining
 str.append("str") / str.push_back("str") // Adds to the end of the string, returns QString& for chaining
 str.arg(value) // Returns QString copy with %n replaced with value (eg. %1, %2...), printf with %n
-str.at(n) // Returns QChar at index
+str.at(i) // Returns QChar at index
 str.back() // Returns QChar (const version) or QCharRef at back, undefined on empty string
 str.capacity() // Returns maximum number of characters that can be stored without forcing a reallocation
 str.chop(n) // Removes n chars from end of the string, if n >= size, string becomes empty
 str.chopped(n) // Removes n chars from end of the string and returns QString copy, n >= size is undefined
 str.clear() // Makes string empty
-str.compare("str", case) // Returns 0 if they match 
-str.contains("a", case) // Returns true if contains substring 'a'
-str.count("a", case) // Returns count of substring, will count overlaps
-str.endsWith("a", case) // Returns true if ends with 'a'
+str.compare("str", caseFlag) // Returns 0 if they match 
+str.contains("a", caseFlag) // Returns true if contains substring 'a'
+str.count("a", caseFlag) // Returns count of substring, will count overlaps
+str.data() // Returns QChar* or const QChar*
+str.endsWith("a", caseFlag) // Returns true if ends with 'a'
 str.fill('c', n) // Resizes string to n and fills with character, without n will fill to current size
 str.front() // Returns QChar (const version) or QCharRef at back, undefined on empty string
 str.indexOf("a", i) // Searches for 'a' from index i, returns index, or -1 if not found
 str.insert(n, "a") // Inserts 'a' at index n, returns QString&, auto resizes if n >= size
-str.empty() // Returns true if has no characters
+str.isEmpty() // Returns true if has no characters
 str.isNull() // Returns true if null (default constructor)
 str.isRightToLeft() // Returns true if string is to be read right to left
 str.lastIndexOf("a", i) // Searches for 'a' backwards from index i, returns index, or -1 if not found
@@ -105,27 +118,50 @@ str.mid(i, n) // Returns QString starting at index i for n optional characters
 str.midRef(i, n) // Returns QStringRef starting at index i for n optional characters    
 str.prepend("a") / str.push_front("a") // Adds to start of str and returns QString&
 str.remove(i, n) // Removes n characters from index i, returns QString&, if i+n >= size will truncate
-str.remove("a", case) // Removes every occurance of "a" and returns QString&
+str.remove("a", caseFlag) // Removes every occurance of "a" and returns QString&
 str.repeated(n) // Returns QString repeated n times
 str.replace(i, n, "a") // Replaces from index i over n characters with "a" and returns QString& 
-str.replace("a", "b", case) // Replaces all instances of "a" with "b"
+str.replace("a", "b", caseFlag) // Replaces all instances of "a" with "b"
 str.reserve(n) // Reserve capacity for n characters
 str.resize(n) // Sets size of string to n characters, new characters are uninitialized
 str.resize(n, 'c') // Sets size of string to n characters, new characters use 'c'
 str.right(n) // Returns QString with only n characters starting from right
 str.rightJustified(n, 'c') // Returns QString of n width from end, any extra chars padded with fill 'c'
 str.rightRef(n) // Returns QStringRef of n right most characters
-str.split(" ") // Returns QStringList of string split by spaces
-
+str.section(',', s1, s2, sectionFlag) // For string ",,a,b,," will take section s1 to s2 where a=1, b=2 etc
+str.setNum(integer) // Converts integer to QString
+str.setNum(double, format, precision) // Converts floating point number to QString
+str.setRawData(qchar, n) // Takes const QChar*, does not copy, qchar must stay alive, n = size
+str.shrink_to_fit() / str.squeeze() // Removes unused capacity
+str.simplified() // Returns QString with no start/end whitespace, any \t\n\v\f\r all replaced with single space
+str.split(" ", splitFlag, caseFlag) // Returns QStringList split by delim, default keeps empty entries
+str.splitRef(" ", splitFlag, caseFlag) // Same as split, but returns QVector<QStringRef>, requires str alive
+str.startsWith("a", caseFlag) // Returns true if starts with 'a'
+str.toLower() / str.toCaseFolded() // Returns lower case QString
+str.toUpper() // Returns upper case QString
+str.toHtmlEscaped() // Converts a string for use in HTML with metacharacters < > & " replaced
+str.toDouble(&ok) // Converts to double or 0.0 if fails, can include characters + - g e .
+str.toFloat(&ok) // Converts to float or 0.0 if fails, can include characters + - g e .
+str.toInt(&ok, base = 10) // Converts to int or 0, 0x in str will use hexadecimal base
+str.toLong(&ok, base = 10) // Converts to long or 0, 0x in str will use hexadecimal base
+str.toLongLong(&ok, base = 10) // Converts to long long or 0, 0x in str will use hexadecimal base
+str.toShort(&ok, base = 10) // Converts to short or 0, 0x in str will use hexadecimal base
+str.toUInt(&ok, base = 10) // Converts to unsigned int or 0, 0x in str will use hexadecimal base 
+str.toULong(&ok, base = 10) // Converts to unsigned long or 0, 0x in str will use hexadecimal base
+str.toULongLong(&ok, base = 10) // Converts to unsigned long long or 0, 0x in str will use hexadecimal base
+str.toUShort(&ok, base = 10) // Converts to unsigned short or 0, 0x in str will use hexadecimal base
 str.toLocal8Bit().constData() // Convert to const char* using system's local encoding, null string returns \0
 str.toUtf8().constData() // Convert to const char* using UTF-8 encoding, null string returns \0
+str.toWCharArray(arr) // Fills wchar_t*, arr must be preallocated, returns length of arr, does not add \0
+str.trimmed() // Returns QString with no pre/post whitespaces
+str.truncate(i) // Removes all characters from index i onwards
 str.begin() / str.end() // iterator or const_iterator
 str.rBegin() / str.rEnd() // reverse_iterator or const_reverse_iterator
 str.cbegin() / str.cend() // const_iterator
 str.constBegin() / str.constEnd() // const_iterator
 str.crbegin() / str.crEnd() // const_reverse_iterator    
 QString::asprintf("%i", n) // QString version of printf, uses same modifiers
-QString::compare(str1, str2, case) // Returns 0 if they match, comparing char codes
+QString::compare(str1, str2, caseFlag) // Returns 0 if they match, comparing char codes
 QString::localeAwareCompare(str1, str2) // Returns 0 if they match, comparing actual words
 QString::number(integer) // Converts integer to QString
 QString::number(double, format, precision) // Converts floating point number to QString
@@ -133,6 +169,51 @@ QString::number(double, format, precision) // Converts floating point number to 
 // QStringRef
 QStringRef ref(&str)
 QStringRef ref(&str, i, n) // Reference str from index i for n characters
+ref[i] // Returns QChar
+ref.appendTo(&str) // Adds ref to str, returns QStringRef for the new combination
+ref.at(i) // Returns QChar at index
+ref.back() // Returns QChar at back, undefined on empty string
+ref.chop(n) // Removes n chars from end of the string, if n >= size, string becomes empty
+ref.chopped(n) // Removes n chars from end of the string and returns QStringRef, n >= size is undefined
+ref.clear() // Makes reference empty
+ref.compare("str", caseFlag) // Returns 0 if they match 
+ref.contains("a", caseFlag) // Returns true if contains substring 'a'
+ref.count("a", caseFlag) // Returns count of substring, will count overlaps
+ref.data() // Returns const QChar*
+ref.endsWith("a", caseFlag) // Returns true if ends with 'a'
+ref.front() // Returns QChar at front, undefined on empty string
+ref.indexOf("a", i) // Searches for 'a' from index i, returns index, or -1 if not found
+ref.isEmpty() // Returns true if has no characters
+ref.isNull() // Returns true if null (default constructor)
+ref.isRightToLeft() // Returns true if string is to be read right to left
+ref.lastIndexOf("a", i) // Searches for 'a' backwards from index i, returns index, or -1 if not found
+ref.left(n) // Returns QStringRef with only n characters starting from left
+ref.length() / ref.size() // Amount of characters including any \0
+ref.mid(i, n) // Returns QStringRef starting at index i for n optional characters
+ref.position() // Returns index the ref starts in the actual string
+ref.right(n) // Returns QStringRef with only n characters starting from right
+ref.split(" ", splitFlag, caseFlag) // Returns QVector<QStringRef> split by delim, default keeps empty entries
+ref.startsWith("a", caseFlag) // Returns true if starts with 'a'
+ref.string() // Returns full const QString* or 0 if doesn't reference anything
+ref.toDouble(&ok) // Converts to double or 0.0 if fails, can include characters + - g e .
+ref.toFloat(&ok) // Converts to float or 0.0 if fails, can include characters + - g e .
+ref.toInt(&ok, base = 10) // Converts to int or 0, 0x in str will use hexadecimal base
+ref.toLong(&ok, base = 10) // Converts to long or 0, 0x in str will use hexadecimal base
+ref.toLongLong(&ok, base = 10) // Converts to long long or 0, 0x in str will use hexadecimal base
+ref.toShort(&ok, base = 10) // Converts to short or 0, 0x in str will use hexadecimal base
+ref.toUInt(&ok, base = 10) // Converts to unsigned int or 0, 0x in str will use hexadecimal base 
+ref.toULong(&ok, base = 10) // Converts to unsigned long or 0, 0x in str will use hexadecimal base
+ref.toULongLong(&ok, base = 10) // Converts to unsigned long long or 0, 0x in str will use hexadecimal base
+ref.toUShort(&ok, base = 10) // Converts to unsigned short or 0, 0x in str will use hexadecimal base
+ref.toLocal8Bit().constData() // Convert to const char* using system's local encoding, null string returns \0
+ref.toUtf8().constData() // Convert to const char* using UTF-8 encoding, null string returns \0
+ref.trimmed() // Returns QStringRef with no pre/post whitespaces
+ref.truncate(i) // Removes all characters from index i onwards
+ref.begin() / ref.end() // iterator or const_iterator
+ref.rBegin() / ref.rEnd() // reverse_iterator or const_reverse_iterator
+ref.cbegin() / ref.cend() // const_iterator
+ref.constBegin() / ref.constEnd() // const_iterator
+ref.crbegin() / ref.crEnd() // const_reverse_iterator    
     
 // QTextStream
 QTextStream(&str) << "str" << value; // QString streamstream
@@ -144,12 +225,12 @@ QStringList<T> lst = { value }
 QStringList<T> lst("str")
 lst.join("delim") // Returns a combined string seperated by delim
 lst.split("delim") // Returns 
-lst.contains("str", case) // True if list contains string
+lst.contains("str", caseFlag) // True if list contains string
 lst.filter(regex) // Returns QStringList filtered by regex
 lst.indexOf(regex, i) // Returns index of first match from regex starting from optional i, else -1
 lst.lastIndexOf(regex, i) // Returns index of last match from regex backwards from optional i, else -1
 lst.removeDuplicates() // Removes all duplicate strings, doesn't require sorting
-lst.replaceInStrings("str1", "str2", case) // Replace 'str1' with 'str2' in all strings
+lst.replaceInStrings("str1", "str2", caseFlag) // Replace 'str1' with 'str2' in all strings
 lst.sort(case) // Sort all strings using std::sort
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
