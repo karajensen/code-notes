@@ -964,6 +964,7 @@ for (int i=0; i<count; ++i)
 }
 
 // SET OBJECT TYPE INFO
+//• Declare directly after class
 //• Leave memory unitialised, Q_COMPLEX_TYPE is default
 Q_DECLARE_TYPEINFO(MyClass::MyEnum, Q_PRIMITIVE_TYPE);
 Q_DECLARE_TYPEINFO(MyPOD, Q_PRIMITIVE_TYPE);
