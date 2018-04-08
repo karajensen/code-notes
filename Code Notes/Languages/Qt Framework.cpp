@@ -881,7 +881,6 @@ QOBJECTS:
 
 QOBJECT LIMITATIONS:
 • Only signals and slots can live in the signals and slots sections
-• Signal/Slot return types cannot be references
 • Multiple Inheritance requires QObject to be first
 • Moc doesn't support virtual inheritance
 • Moc doesn't support templates with Q_OBJECT/signals/slots
@@ -904,6 +903,7 @@ IMPLICIT SHARING (COPY-ON-WRITE):
 SIGNALS/SLOTS:
 • On signal emit, all slots in order of connection are immediately notified, can't be async
 • Type safe: The signature of a signal must match the signature of the receiving slot
+• No return values, slots can be virtual/pure virtual
 
 PROPERTY SYSTEM
 MEMBER    Required if READ not used
