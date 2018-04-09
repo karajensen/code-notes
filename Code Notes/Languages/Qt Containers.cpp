@@ -197,7 +197,7 @@ lst.sort(case) // Sort all strings using std::sort
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*************************************************************************************************************
-• For Q_PRIMITIVE_TYPE objects doesn't call destructor
+• For Q_PRIMITIVE_TYPE objects doesn't call constructor/destructor
 **************************************************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -216,6 +216,7 @@ QList<T>
 • Pre-allocates array of void*, with extra space before/after, fast index access, insertions and removals
 • void* becomes T if sizeof(T) <= sizeof(void*) and T is Q_PRIMITIVE_TYPE or Q_MOVABLE_TYPE
   else void* becomes T*, copy-constructed into the heap using new
+• For Q_PRIMITIVE_TYPE objects doesn't call constructor/destructor
 • Wastes memory if sizeof(T) < sizeof(void*) or if allocated on heap due to extra T*
 
 QVector<T>
