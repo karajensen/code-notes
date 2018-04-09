@@ -117,11 +117,9 @@ public slots: // can be protected/private
     void mySlot(MyFn fn);            // Can do
     
 public:
-    // Enums must start with capital letter
+    // Enums must start with capital letter, Use 'import MyEnums 1.0' and 'MyEnum.ONE'
     enum MyEnum { ONE, TWO, THREE };
-    // Allows enum use in signals/slots/QML
     Q_ENUMS(MyEnum)
-    // Register enum for QML: Use 'import MyEnums 1.0' and 'MyEnum.ONE'
     static registerEnum() { qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum"); }
 };
 
