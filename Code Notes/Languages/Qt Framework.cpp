@@ -133,6 +133,7 @@ metaObj.propertyCount() // Number of properties
 // OBJECT TYPE INFO
 //• Macro must be outside all namespaces
 //• Q_PRIMITIVE_TYPE leaves memory unitialised, Q_COMPLEX_TYPE is default
+//• Q_PRIMITIVE_TYPE means trivally relocatable/copyable
 //• Q_MOVABLE_TYPE uses std::memcpy() rather than copy constructor to move instances around
 //• Q_MOVABLE_TYPE does shallow move; don't use for types that self refer (eg. pimpl with base pointer)
 Q_DECLARE_TYPEINFO(MyClass::MyEnum, Q_PRIMITIVE_TYPE)
