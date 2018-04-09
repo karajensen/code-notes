@@ -137,6 +137,7 @@ metaObj.propertyCount() // Number of properties
 //• Q_MOVABLE_TYPE does shallow move; don't use for types that self refer (eg. pimpl with base pointer)
 Q_DECLARE_TYPEINFO(MyClass::MyEnum, Q_PRIMITIVE_TYPE)
 Q_DECLARE_TYPEINFO(MyClass, Q_MOVABLE_TYPE)
+QTypeInfoQuery<MyClass>::isRelocatable
 
 // REGISTERING OBJECTS
 //• Macro must be outside all namespaces
@@ -898,46 +899,6 @@ QPointer<T> ptr(new T());
 ptr.clear();             // Clears pointer and decrements ref count
 ptr.isNull();            // Returns if null
 ptr.data();              // Returns T*
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT TYPE INFO
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// QTypeInfo Default
-QTypeInfo<T>::isSpecialized = std::is_enum<T>::value
-QTypeInfo<T>::isPointer = false
-QTypeInfo<T>::isIntegral = std::is_integral<T>::value
-QTypeInfo<T>::isComplex = !isIntegral && !std::is_enum<T>::value
-QTypeInfo<T>::isStatic = true
-QTypeInfo<T>::isRelocatable = std::is_enum<T>::value
-QTypeInfo<T>::isLarge = sizeof(T) > sizeof(void*)
-    
-// QTypeInfo Pointer specialisation
-QTypeInfo<T*>::isSpecialized = true
-QTypeInfo<T*>::isPointer = true
-QTypeInfo<T*>::isIntegral = false
-QTypeInfo<T*>::isComplex = false
-QTypeInfo<T*>::isStatic = false
-QTypeInfo<T*>::isRelocatable = true
-QTypeInfo<T*>::isLarge = false
-    
-// QTypeInfo void specialisation
-QTypeInfo<void>::isSpecialized = true
-QTypeInfo<void>::isPointer = false
-QTypeInfo<void>::isIntegral = false
-QTypeInfo<void>::isComplex = false
-QTypeInfo<void>::isStatic = false
-QTypeInfo<void>::isRelocatable = false
-QTypeInfo<void>::isLarge = false
-    
-// QTypeInfo Qt Container specialisation
-QTypeInfo<T>::isSpecialized = true
-QTypeInfo<T>::isComplex = (((FLAGS) & Q_PRIMITIVE_TYPE) == 0)
-QTypeInfo<T>::isStatic = (((FLAGS) & (Q_MOVABLE_TYPE | Q_PRIMITIVE_TYPE)) == 0)
-QTypeInfo<T>::isRelocatable = !isStatic || ((FLAGS) & Q_RELOCATABLE_TYPE)
-QTypeInfo<T>::isLarge = sizeof(T) > sizeof(void*)
-QTypeInfo<T>::isPointer = false
-QTypeInfo<T>::isIntegral = std::is_integral<T>::value
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT LAYOUTS
