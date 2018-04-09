@@ -41,6 +41,8 @@ TERNARY OPERATOR: Act on three values
 
 DEEP COPY: Underlying memory the reference/pointer points to is copied
 SHALLOW COPY: Reference/pointer is copied and points to original data
+TRIVIALLY COPYABLE: Can copy with memcpy; not types that have deep copy/hidden pointers
+TRIVIALLY RELOCATABLE: Can move with memcpy; not types that self refer (pimpl with ptr back to parent)
 
 DECLARING VARIABLES
 • Determines how much memory is needed for a data object
