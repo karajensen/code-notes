@@ -193,6 +193,14 @@ lst.replaceInStrings("str1", "str2", caseFlag) // Replace 'str1' with 'str2' in 
 lst.sort(case) // Sort all strings using std::sort
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT VARIANT
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
+• For Q_PRIMITIVE_TYPE objects doesn't call destructor
+**************************************************************************************************************/
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT CONTAINERS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -213,7 +221,8 @@ QList<T>
 QVector<T>
 • Continuous memory allocation, reallocates whole block when resizing
 • Fast index access and add/remove from back, slow insert and add/remove from front
-• For moving, uses realloc (faster) for Q_MOVABLE_TYPE/Q_PRIMITIVE_TYPE and doesn't call ctor/dtor
+• For Q_PRIMITIVE_TYPE objects doesn't call constructor/destructor
+• For Q_MOVABLE_TYPE/Q_PRIMITIVE_TYPE when moving objects uses realloc (faster)
 
 QVarLengthArray<T, n>
 • Stack allocated array, n must be constant, if resizing will move to heap
