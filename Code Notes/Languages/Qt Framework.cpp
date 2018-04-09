@@ -101,50 +101,54 @@ public:
     
     Q_INVOKABLE void myFn() { }
     Q_PROPERTY(MyValue value MEMBER m_value NOTIFY myValueSignal)
-    Q_PROPERTY(MyValue value READ getValue WRITE setValue NOTIFY myVoidSignal)
+    Q_PROPERTY(MyValue value READ getValue WRITE setValue NOTIFY mySignal)
     
     // Can be inherited/virtual
     const MyValue& getValue() const { return m_value; }
     void setValue(const MyValue& value) { m_value = value; }
     
+   // Enums must start with capital letter
+    enum MyEnum { ONE, TWO, THREE };
+    enum MyFlag { One=0x01, Two=0x02, Three=0x04 };
+    
 signals:
-    void myVoidSignal();
+    void mySignal();
     void myValueSignal(const MyValue& value);
 
 public slots: // can be protected/private
     void mySlot();
     void mySlot(void (*fn)(void *)); // Cannot do
     void mySlot(MyFn fn);            // Can do
-    
-public:
-    // Enums must start with capital letter, Use 'import MyEnums 1.0' and 'MyEnum.ONE'
-    enum MyEnum { ONE, TWO, THREE };
-    Q_ENUMS(MyEnum)
-    static registerEnum() { qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum"); }
 };
 
-emit obj.myVoidSignal() // Emit a signal
+// QOBJECT
+emit obj.mySignal() // Emit a signal
 obj.setProperty("value", v); // Return true if existed and set, auto creates if doesn't exist only for obj
 obj.property("value") // Returns QVariant, invalid if doesn't exist
+obj.metaObject() // Returns obj's QMetaObject
 
-// ITERATE PROPERTIES
-const QMetaObject* metaobject = object->metaObject();
-int count = metaobject->propertyCount();
-for (int i=0; i<count; ++i) 
-{
-    QMetaProperty metaproperty = metaobject->property(i);
-    const char *name = metaproperty.name();
-    QVariant value = object->property(name);
-}
+// QMETAOBJECT
+metaObj.propertyCount() // Number of properties
 
-// SET OBJECT TYPE INFO
-//• Declare directly after class
-//• Leave memory unitialised, Q_COMPLEX_TYPE is default
-Q_DECLARE_TYPEINFO(MyClass::MyEnum, Q_PRIMITIVE_TYPE);
-Q_DECLARE_TYPEINFO(MyPOD, Q_PRIMITIVE_TYPE);
-//• Uses std::memcpy() rather than copy constructor to move instances around
-//• Does shallow move; don't use for types that self refer (eg. pimpl with base pointer)
-Q_DECLARE_TYPEINFO(MyClass,  Q_MOVABLE_TYPE);
+// OBJECT TYPE INFO
+//• Macro must be outside all namespaces
+//• Q_PRIMITIVE_TYPE leaves memory unitialised, Q_COMPLEX_TYPE is default
+//• Q_MOVABLE_TYPE uses std::memcpy() rather than copy constructor to move instances around
+//• Q_MOVABLE_TYPE does shallow move; don't use for types that self refer (eg. pimpl with base pointer)
+Q_DECLARE_TYPEINFO(MyClass::MyEnum, Q_PRIMITIVE_TYPE)
+Q_DECLARE_TYPEINFO(MyClass, Q_MOVABLE_TYPE)
+
+// REGISTERING OBJECTS
+//• Macro must be outside all namespaces
+//• Not needed for: MyClass*, qt smart pointers/container with MyClass, if using Q_ENUM/Q_FLAG/Q_GADGET
+Q_DECLARE_METATYPE(MyClass) // Allows use with variant: myVariant.value<MyClass>()
+qRegisterMetaType<MyClass>(); // Allows use with signals/slots/property system
+    
+// REGISTERING ENUMS
+//• Macro must be outside all namespaces
+//• QML use 'import MyEnums 1.0' and 'MyEnum.ONE'
+Q_ENUMS(MyClass::MyEnum)
+qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum");
 
 // CONNECT SIGNALS/SLOTS
 //• Returns QMetaObject::Connection for disconnecting, or can call QObject::disconnect with same signature
