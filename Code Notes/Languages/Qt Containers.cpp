@@ -202,6 +202,7 @@ lst.sort(case) // Sort all strings using std::sort
 • Using mutable operator[] will COW detach, except for QByteArray which uses QByteRef
 • Using mutable iterators will COW detach, use constBegin/constEnd for read-only
 • Can disable implicit conversion of begin() to constBegin() using QT_STRICT_ITERATORS
+• Q_MOVABLE_TYPE/Q_PRIMITIVE_TYPE can improve performance for some containers
 
 QList<T>
 • Pre-allocates array of void*, with extra space before/after, fast index access, insertions and removals
