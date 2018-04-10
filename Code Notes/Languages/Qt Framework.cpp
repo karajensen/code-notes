@@ -30,7 +30,6 @@ int main(int argc, char *argv[])
 
 forever { break; }
 qDebug() << "Message\n"; // Prints to stderr output
-qobject_cast<MyQObject*>(qObj); // dynamic_cast without requiring RTTI
 Q_ASSERT(expression);
 Q_ASSERT_X(expression, "divide", "division by zero");
 
@@ -120,13 +119,29 @@ public slots: // can be protected/private
 };
 
 // QOBJECT
+qobject_cast<MyClass*>(obj); // dynamic_cast without requiring RTTI
 emit obj.mySignal() // Emit a signal
 obj.setProperty("value", v); // Return true if existed and set, auto creates if doesn't exist only for obj
 obj.property("value") // Returns QVariant, invalid if doesn't exist
-obj.metaObject() // Returns obj's QMetaObject
+obj.metaObject() // Returns const QMetaObject*
 obj.blockSignals(true) // Prevents any signals from calling slots, doesnt block destroyed() signal
+obj.signalsBlocked() // Whether signals blocked
 obj.children() // Returns const QList<QObject*>& for children, order changes when child raised/lowered
-
+obj.dumpObjectInfo() // Outputs to debug log
+obj.dumpObjectTree() // Outputs to debug log
+obj.dynamicPropertyNames() // Returns QList<QByteArray> for all dynamic properties
+obj.findChild<T*>("objectName") // Optional objectName, returns T* or null
+obj.findChild<T*>("objectName", Qt::FindDirectChildrenOnly) // Non recursive version
+obj.findChildren<T*>("objectName") // Optional objectName, returns QList<T*> =
+obj.findChildren<T*>("objectName", Qt::FindDirectChildrenOnly) // Non recursive version
+obj.installEventFilter(&obj2) // obj2's eventFilter() called before obj's event() for obj's events
+obj.removeEventFilter(&obj2) // Remove obj2 as an event filter
+obj.isWidgetType() // Whether obj inherits QWidget
+obj.isWindowType() // Whether obj inherits QWindow
+obj.parent() // Returns QObject*
+obj.setParent(obj2) // Sets parent
+obj.thread() // Returns QThread* where the object lives
+    
 // QMETAOBJECT
 metaObj.propertyCount() // Number of properties
 
@@ -430,7 +445,8 @@ bool MyObject::event(QEvent *event)
 }
 
 // EVENT FILTERS
-//• Recieve an event from one object in another
+//• Recieve an event from one object in another, can install multiple filters
+//• myObj2 eventFilter() called before myObj event()
 myObj->installEventFilter(&myObj2);
 myObj->removeEventFilter(&myObj2);
 bool MyObject2::eventFilter(QObject* object, QEvent* event)
