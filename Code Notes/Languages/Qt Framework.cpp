@@ -46,7 +46,7 @@ pair.second;
 QOBJECTS:
 • Base class of all Qt objects, organised in an object tree
 • Doesn't have a copy constructor or assignment operator
-• Meta Object Compilier (moc) uses Q_OBJECT macro to generate extra data/features to use in framework
+• Meta Object Compilier (moc) uses Q_OBJECT macro to generate extra data
 • Ability to use qobject_cast, signals, slots, property system
 
 QOBJECT LIMITATIONS:
