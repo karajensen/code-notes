@@ -44,7 +44,7 @@ QChar::Null // null terminator character \0
 
 // QString
 // Most also overload using a char, QRegularExpression, QRegExp
-QString str(QStringLiteral(u"str")) // Use to avoid a copy of "str", internal data is generated at compile time
+QString str("str")
 QString str() / QString str('\0') // Creates a null string
 str[i] // Returns QCharRef (QChar&) or const QCharRef, assigning to it will COW detach
 str.append("str", n) // Adds n characters to the end of the string, returns QString& for chaining
