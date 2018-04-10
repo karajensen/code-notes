@@ -47,13 +47,8 @@ pair.second;
 QOBJECTS:
 • Base class of all Qt objects, organised in an object tree
 • Doesn't have a copy constructor or assignment operator
-• Meta Object Compilier (moc) uses Q_OBJECT macro to generate extra data/features to use in framework:
-    - Ability to use qobject_cast, signals and slots
-    - QObject::metaObject returns the associated meta-object for the class
-    - QMetaObject::className returns the class name as a string (without using RTTI)
-    - QObject::inherits returns whether an instance of another QObject class
-    - QObject::setProperty / QObject::property dynamically set and get properties by name
-    - QMetaObject::newInstance constructs a new instance of the class
+• Meta Object Compilier (moc) uses Q_OBJECT macro to generate extra data/features to use in framework
+• Ability to use qobject_cast, signals, slots, property system
 
 QOBJECT LIMITATIONS:
 • Only signals and slots can live in the signals and slots sections
@@ -81,14 +76,17 @@ SIGNALS/SLOTS:
 • Type safe: The signature of a signal must match the signature of the receiving slot
 • No return values, slots can be virtual/pure virtual
 
-PROPERTY SYSTEM
-MEMBER    Required if READ not used
-READ      Required if MEMBER not used
-WRITE     Optional, can be used with either READ or MEMBER
-NOTIFY    Optional, takes signal with one or no arguments
-STORED    Default true, indicates whether the property value must be saved when storing the object's state
-CONSTANT  Optional, makes readonly
-FINAL     Optional, can enable optimizations, indicates shouldn't override though not enforced by moc
+QOBJECT PROPERTIES:
+objectName    User-defined name of object instance, blank as default
+
+PROPERTY SYSTEM:
+MEMBER        Required if READ not used
+READ          Required if MEMBER not used
+WRITE         Optional, can be used with either READ or MEMBER
+NOTIFY        Optional, takes signal with one or no arguments
+STORED        Default true, indicates whether property value must be saved when storing the object's state
+CONSTANT      Optional, makes readonly
+FINAL         Optional, can enable optimizations, indicates shouldn't override though not enforced by moc
 **************************************************************************************************************/
 
 class MyClass : public QObject
@@ -126,6 +124,8 @@ emit obj.mySignal() // Emit a signal
 obj.setProperty("value", v); // Return true if existed and set, auto creates if doesn't exist only for obj
 obj.property("value") // Returns QVariant, invalid if doesn't exist
 obj.metaObject() // Returns obj's QMetaObject
+obj.blockSignals(true) // Prevents any signals from calling slots, doesnt block destroyed() signal
+obj.children() // Returns const QList<QObject*>& for children, order changes when child raised/lowered
 
 // QMETAOBJECT
 metaObj.propertyCount() // Number of properties
