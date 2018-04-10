@@ -143,7 +143,9 @@ obj.setParent(obj2) // Sets parent
 obj.thread() // Returns QThread* where the object lives
     
 // QMETAOBJECT
-metaObj.propertyCount() // Number of properties
+metaObj.propertyCount() // Number of properties, not including dynamic properties
+metaObj.className() // Returns class name as const char*
+metaObj.methodCount() // Numbers of methods inc inherited, signals, slots
 
 // OBJECT TYPE INFO
 //• Macro must be outside all namespaces
@@ -254,15 +256,18 @@ ptr.data();              // Returns T*
 // QT LAYOUTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// QHBoxLayout: lays out widgets horizontally from left to right
+// QHBoxLayout
+// Lays out widgets horizontally from left to right
 QHBoxLayout layout;
 layout.addWidget(spinBox); // Add a widget to the layout, automatically parents and resizes
 
-// QVBoxLayout: lays out widgets vertically from top to bottom
+// QVBoxLayout
+// Lays out widgets vertically from top to bottom
 QVBoxLayout layout;
 layout.addWidget(spinBox); // Add a widget to the layout, automatically parents and resizes
 
-// QGridLayout: lays out widgets in a grid.
+// QGridLayout
+// Lays out widgets in a grid.
 QGridLayout layout;
 layout.addWidget(spinBox, r, c); // Add a widget to the layout, automatically parents and resizes
 
