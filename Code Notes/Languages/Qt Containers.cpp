@@ -204,7 +204,7 @@ lst.sort(case) // Sort all strings using std::sort
 QVariant variant // Null variant
 QVariant variant("str")
 variant.canConvert<T>() // Whether can cast, T doesn't have to be variant type
-variant.convert<T>() // Cast, returns true if success
+variant.convert<T>() // Cast variant to type, returns true if success
 variant.clear() // Convert to type QMetaType::UnknownType and free up any resources
 variant.fromValue(value) // Returns a QVariant containing a copy of value
 variant.isNull() // Null if no value, nullptr or type that has an isNull method which returns true
@@ -249,7 +249,9 @@ variant.toUInt(&ok) // uint
 variant.toULongLong(&ok) // qulonglong
 variant.toUrl() // QUrl
 variant.toUuid() // QUuid
-variant.value<T>()
+variant.type() // Returns QVariant::Type
+variant.typeName() // Returns const char* or 0 if invalid
+variant.value<T>() // If the value cannot be converted a default-constructed value will be returned
   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT CONTAINERS
