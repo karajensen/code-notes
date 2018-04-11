@@ -119,8 +119,6 @@ public slots: // can be protected/private
 };
 
 // QOBJECT
-qobject_cast<MyClass*>(obj); // dynamic_cast without requiring RTTI
-emit obj.mySignal() // Emit a signal
 obj.setProperty("value", v); // Return true if existed and set, auto creates if doesn't exist only for obj
 obj.property("value") // Returns QVariant, invalid if doesn't exist
 obj.metaObject() // Returns const QMetaObject*
@@ -141,6 +139,9 @@ obj.isWindowType() // Whether obj inherits QWindow
 obj.parent() // Returns QObject*
 obj.setParent(obj2) // Sets parent
 obj.thread() // Returns QThread* where the object lives
+qobject_cast<MyClass*>(obj); // dynamic_cast without requiring RTTI
+emit obj.mySignal() // Emit a signal
+MyClass::staticMetaObject // QMetaObject for class
     
 // QMETAOBJECT
 metaObj.propertyCount() // Number of properties, not including dynamic properties
@@ -148,8 +149,10 @@ metaObj.className() // Returns class name as const char*
 metaObj.methodCount() // Number of methods including inherited, signals, slots
 metaObj.enumeratorCount() // Number of enums including inherited
 metaObj.enumerator(index) // Get QMetaEnum from index
+metaObj.indexOfEnumerator(name) // Get index of enum from name, or -1 if not found
 
 // QMETAENUM
+QMetaEnum metaEnum(QMetaEnum::fromType<MyClass::MyEnum>());
 metaEnum.valueToKey(MyClass::ONE)
 metaEnum.keyToValue("ONE")
 
