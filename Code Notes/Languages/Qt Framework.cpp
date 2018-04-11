@@ -145,7 +145,13 @@ obj.thread() // Returns QThread* where the object lives
 // QMETAOBJECT
 metaObj.propertyCount() // Number of properties, not including dynamic properties
 metaObj.className() // Returns class name as const char*
-metaObj.methodCount() // Numbers of methods inc inherited, signals, slots
+metaObj.methodCount() // Number of methods including inherited, signals, slots
+metaObj.enumeratorCount() // Number of enums including inherited
+metaObj.enumerator(index) // Get QMetaEnum from index
+
+// QMETAENUM
+metaEnum.valueToKey(MyClass::ONE)
+metaEnum.keyToValue("ONE")
 
 // OBJECT TYPE INFO
 //• Macro must be outside all namespaces
