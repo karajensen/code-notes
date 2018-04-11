@@ -197,9 +197,22 @@ lst.sort(case) // Sort all strings using std::sort
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*************************************************************************************************************
+• Holds a single value of a type, need to register type to use it
 • For Q_PRIMITIVE_TYPE objects doesn't call constructor/destructor
 **************************************************************************************************************/
 
+QVariant variant // Null variant
+QVariant variant("str")
+variant.canConvert<T>() // Whether can cast, T doesn't have to be variant type
+variant.convert<T>() // Cast, returns true if success
+variant.clear() // Convert to type QMetaType::UnknownType and free up any resources
+variant.fromValue(value) // Returns a QVariant containing a copy of value
+variant.isNull() // Null if no value, nullptr or type that has an isNull method which returns true
+variant.isValid() // Returns true if the storage type is not QMetaType::UnknownType
+variant.setValue(value) // Stores a copy of value
+variant.toBitArray() // Returns QBitArray
+variant.value<T>()
+  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT CONTAINERS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
