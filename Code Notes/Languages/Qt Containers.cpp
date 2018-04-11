@@ -210,7 +210,45 @@ variant.fromValue(value) // Returns a QVariant containing a copy of value
 variant.isNull() // Null if no value, nullptr or type that has an isNull method which returns true
 variant.isValid() // Returns true if the storage type is not QMetaType::UnknownType
 variant.setValue(value) // Stores a copy of value
-variant.toBitArray() // Returns QBitArray
+variant.toBitArray() // QBitArray
+variant.toBool() // bool
+variant.toByteArray() //QByteArray
+variant.toChar() // QChar
+variant.toDate() // QDate
+variant.toDateTime() // QDateTime
+variant.toDouble(&ok) // double
+variant.toEasingCurve() // QEasingCurve
+variant.toFloat(&ok) // float
+variant.toHash() // QHash<QString, QVariant>
+variant.toInt(&ok) // int
+variant.toJsonArray() // QJsonArray
+variant.toJsonDocument() // QJsonDocument
+variant.toJsonObject() // QJsonObject
+variant.toJsonValue() // QJsonValue
+variant.toLine() // QLine
+variant.toLineF() // QLineF
+variant.toList() // QList<QVariant>	
+variant.toLocale() // QLocale
+variant.toLongLong(&ok) // qlonglong
+variant.toMap() // QMap<QString, QVariant>
+variant.toModelIndex() // QModelIndex
+variant.toPersistentModelIndex() // QPersistentModelIndex
+variant.toPoint() // QPoint
+variant.toPointF() // QPointF
+variant.toReal(&ok) // qreal
+variant.toRect() // QRect
+variant.toRectF() // QRectF
+variant.toRegExp() // QRegExp
+variant.toRegularExpression() // QRegularExpression
+variant.toSize() // QSize
+variant.toSizeF() // QSizeF
+variant.toString() // QString
+variant.toStringList() // QStringList
+variant.toTime() // QTime
+variant.toUInt(&ok) // uint
+variant.toULongLong(&ok) // qulonglong
+variant.toUrl() // QUrl
+variant.toUuid() // QUuid
 variant.value<T>()
   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
