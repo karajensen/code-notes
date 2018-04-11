@@ -17,17 +17,20 @@ AVOID WHEN PROPERTY BINDING:
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
+import MyEnums 1.0
 
-id: nameOfControl                         // unique id of element, can be used to access it
-objectName: "UserName"                    // user defined name
-anchors.left: parent.left                 // don't use with RowLayout, use Layout.fillWidth
-anchors.right: parent.right               // don't use with RowLayout, use Layout.fillWidth
-anchors.left: parent.left                 // don't use with ColumnLayout, use Layout.fillHeight
-anchors.right: parent.right               // don't use with ColumnLayout, use Layout.fillHeight
-anchors.fill: parent                      // completely fills to parent
-anchors.margins: 1                        // adds margins between the anchor
-property var myProperty: true             // custom property
-property alias myProperty2: myProperty    // alias for property
+id: nameOfControl                      // unique id of element, can be used to access it
+objectName: "UserName"                 // user defined name
+anchors.left: parent.left              // don't use with RowLayout, use Layout.fillWidth
+anchors.right: parent.right            // don't use with RowLayout, use Layout.fillWidth
+anchors.left: parent.left              // don't use with ColumnLayout, use Layout.fillHeight
+anchors.right: parent.right            // don't use with ColumnLayout, use Layout.fillHeight
+anchors.fill: parent                   // completely fills to parent
+anchors.margins: 1                     // adds margins between the anchor
+property bool myProperty: true         // custom property
+property int myEnum: MyEnum.ONE        // enum property
+property int myProperty: myFunction    // if property used in function changes, re-evaluates property
+property alias myAlias: myProperty     // reference for property
     
 /* Called when the element has been instantiated */
 Component.onCompleted: {}
@@ -35,8 +38,8 @@ Component.onCompleted: {}
 /* Called when the element is destroyed */
 Component.onDestruction: {}
 
-/* Called when the property 'color' has changed */
-onColorChanged: {}
+/* Called when the property has changed */
+onMyPropertyChanged: {}
 
 /* Javascript custom function */
 function myFunction(x, y) {
