@@ -2,14 +2,21 @@
 // QT MODELING LANGUAGE (QML)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*************************************************************************************************************
+
+AVOID WHEN PROPERTY BINDING:
+• Declaring intermediate JavaScript variables
+• Accessing "var" properties
+• Calling JavaScript functions
+• Constructing closures or defining functions within the binding expression
+• Accessing properties outside of the immediate evaluation scope (non-component properties)
+• Writing to other properties as side effects
+• Using var unless type is QVariantMap/variant
+
+**************************************************************************************************************/
+
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
-import QtQuick.Layouts 1.0
-import QtQuick.Dialogs 1.2
-
-Qt.quit() // Quits the application
-console.log("Message")
 
 id: nameOfControl                         // unique id of element, can be used to access it
 objectName: "UserName"                    // user defined name
@@ -19,9 +26,6 @@ anchors.left: parent.left                 // don't use with ColumnLayout, use La
 anchors.right: parent.right               // don't use with ColumnLayout, use Layout.fillHeight
 anchors.fill: parent                      // completely fills to parent
 anchors.margins: 1                        // adds margins between the anchor
-heigh: 30                                 // avoid as easily ovewritten
-width: 30                                 // avoid as easily ovewritten
-visible: true                             // whether control is visible
 property var myProperty: true             // custom property
 property alias myProperty2: myProperty    // alias for property
     
@@ -38,6 +42,9 @@ onColorChanged: {}
 function myFunction(x, y) {
     return x + y;
 }
+
+Qt.quit() // Quits the application
+console.log("Message")
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML COMPONENTS
