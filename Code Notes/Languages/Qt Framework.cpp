@@ -33,11 +33,6 @@ qDebug() << "Message\n"; // Prints to stderr output
 Q_ASSERT(expression);
 Q_ASSERT_X(expression, "divide", "division by zero");
 
-// QPair<T1, T2>
-auto pair = qMakePair(v1, v2);
-pair.first;
-pair.second;
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT OBJECTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -262,30 +257,27 @@ ptr.isNull();            // Returns if null
 ptr.data();              // Returns T*
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT LAYOUTS
+// QT COMPONENTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// QHBoxLayout
-// Lays out widgets horizontally from left to right
-QHBoxLayout layout;
-layout.addWidget(spinBox); // Add a widget to the layout, automatically parents and resizes
+// QWindow
+// Toplevel window for non-widgets based applications (QML)
 
-// QVBoxLayout
-// Lays out widgets vertically from top to bottom
-QVBoxLayout layout;
-layout.addWidget(spinBox); // Add a widget to the layout, automatically parents and resizes
+// QQuickWindow
+// Inherits QWindow
 
-// QGridLayout
-// Lays out widgets in a grid.
-QGridLayout layout;
-layout.addWidget(spinBox, r, c); // Add a widget to the layout, automatically parents and resizes
+// QPair<T1, T2>
+auto pair = qMakePair(v1, v2);
+pair.first;
+pair.second;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT WIDGETS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // QWidget
-QWidget widget; // Root widget used as a window
+// Toplevel window for widgets based applications (non-QML)
+QWidget widget;
 widget.setWindowTitle("Title");
 widget.show();
 widget.setLayout(layout); // Add a layout to the window, automatically parents
@@ -308,6 +300,25 @@ QSlider slider(Qt::Horizontal);
 slider.setRange(min, max);
 slider.setValue(value);
 QObject::connect(slider, SIGNAL(valueChanged(int)), &app, SLOT(myFn(int)));
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT LAYOUTS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// QHBoxLayout
+// Lays out widgets horizontally from left to right
+QHBoxLayout layout;
+layout.addWidget(spinBox); // Add a widget to the layout, automatically parents and resizes
+
+// QVBoxLayout
+// Lays out widgets vertically from top to bottom
+QVBoxLayout layout;
+layout.addWidget(spinBox); // Add a widget to the layout, automatically parents and resizes
+
+// QGridLayout
+// Lays out widgets in a grid.
+QGridLayout layout;
+layout.addWidget(spinBox, r, c); // Add a widget to the layout, automatically parents and resizes
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT MODELS / VIEWS
