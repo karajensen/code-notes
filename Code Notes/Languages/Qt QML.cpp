@@ -2,19 +2,6 @@
 // QT MODELING LANGUAGE (QML)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*************************************************************************************************************
-
-AVOID WHEN PROPERTY BINDING:
-• Declaring intermediate JavaScript variables
-• Accessing "var" properties
-• Calling JavaScript functions
-• Constructing closures or defining functions within the binding expression
-• Accessing properties outside of the immediate evaluation scope (non-component properties)
-• Writing to other properties as side effects
-• Using var unless type is QVariantMap/variant
-
-**************************************************************************************************************/
-
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import MyEnums 1.0
@@ -198,3 +185,50 @@ ScrollView {
         }
     }
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML OPTIMIZATIONS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
+PROPERTY OPTIMIZATIONS
+• Avoid declaring with var keyword unless type is QVariantMap/variant
+• Using a propery resolves it; faster to store result in local and access that
+      var rectColor = rect.color; // resolve the common base.
+      printValue("red", rectColor.r);
+      printValue("green", rectColor.g)
+• Avoid lots of writes to Q_PROPERTIES especially if has notify signal, pefer temp while initialising
+      var tempProperty = [];
+      tempProperty.length = 100;
+      for (var i = 0; i < 100; ++i) {
+          tempProperty[i] = i;
+      }
+      qProperty = tempProperty;
+• Avoid binding as container[index] as it will re-evaluate when any container member is changed, do instead
+      property int intermediateBinding: cointainer[index]
+      property int firstBinding: intermediateBinding + x;
+      property int secondBinding: intermediateBinding + y;
+
+PROPERTY BINDING OPTIMZATIONS:
+• Avoid declaring intermediate JavaScript variables
+• Avoid accessing "var" properties
+• Avoid calling JavaScript functions
+• Avoid constructing closures or defining functions within the binding expression
+• Avoid accessing properties outside of the immediate evaluation scope (non-component properties)
+• Avoid writing to other properties
+
+JAVASCRIPT OPTIMIZATIONS:
+• Avoid using eval() if at all possible
+• Do not delete properties of objects
+
+COMPONENT OPTIMIZATIONS:
+• Consider using the PlainText format instead of StyledText, avoid RichText
+• Set asynchronous property of images to true for loading
+• Set sourceSize property for images to the exact size you want to ensure only what's needed is cached
+• Avoid smoothing images using the smooth property
+• Prefer Item over invisible Rectangles
+• Prefer anchors over using another component's height/width properties
+
+MODEL/VIEW OPTIMIZATIONS
+• 
+**************************************************************************************************************/
