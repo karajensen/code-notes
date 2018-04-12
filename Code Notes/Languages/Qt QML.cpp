@@ -191,7 +191,7 @@ ScrollView {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*************************************************************************************************************
-PROPERTY OPTIMIZATIONS
+PROPERTY OPTIMIZATIONS:
 • Avoid declaring with var keyword unless type is QVariantMap/variant
 • Using a propery resolves it; faster to store result in local and access that
       var rectColor = rect.color; // resolve the common base.
@@ -216,19 +216,34 @@ PROPERTY BINDING OPTIMZATIONS:
 • Avoid constructing closures or defining functions within the binding expression
 • Avoid accessing properties outside of the immediate evaluation scope (non-component properties)
 • Avoid writing to other properties
+• Prefer binding to anchors over using another component's height/width properties
 
 JAVASCRIPT OPTIMIZATIONS:
 • Avoid using eval() if at all possible
 • Do not delete properties of objects
+• Don't manually invoke the garbage collector
 
 COMPONENT OPTIMIZATIONS:
-• Consider using the PlainText format instead of StyledText, avoid RichText
+• If a component has a custom property, it becomes its own implicit type. 
+  If more than one of these used, move to own file to save memory
+• Consider using an asynchronous Loader component
+• Prefer Item over invisible Rectangles
+• For global data, use singleton types instead of pragma library scripts
+  
+RENDERING OPTIMIZATIONS:
 • Set asynchronous property of images to true for loading
 • Set sourceSize property for images to the exact size you want to ensure only what's needed is cached
 • Avoid smoothing images using the smooth property
-• Prefer Item over invisible Rectangles
-• Prefer anchors over using another component's height/width properties
+• May be better to disable bindings before and animation and re-enable once finished
+• Avoid running JavaScript during animation
+• Avoid enabling clipping
+• Opaque faster than translucent, only one pixel needed to be considered translucent
 
 MODEL/VIEW OPTIMIZATIONS
-• 
+• Use WorkerScript with ListModel to move processing to another thread if needed
+• Avoid setting the ListModel dynamicRoles property to true
+• Avoid using ShaderEffect elements within delegates
+• Never enable clipping on a delegate
+• Use view cacheBuffer property to allow asynchronous creation and buffering of
+  delegates outside of the visible area, at a memory usage increase cost
 **************************************************************************************************************/
