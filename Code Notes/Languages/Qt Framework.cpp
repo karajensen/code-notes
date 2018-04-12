@@ -152,32 +152,32 @@ metaEnum.valueToKey(MyClass::ONE)
 metaEnum.keyToValue("ONE")
 
 // OBJECT TYPE INFO
-//• Macro must be outside all namespaces
-//• Q_PRIMITIVE_TYPE leaves obj memory unitialised, means trivally copyable
-//• Q_MOVABLE_TYPE uses std::memcpy rather than copy ctor to move obs around, means trivally relocatable
-//• Q_MOVABLE_TYPE does shallow move; don't use for types that self refer (pimpl with ptr back to parent)
+// Macro must be outside all namespaces
+// Q_PRIMITIVE_TYPE leaves obj memory unitialised, means trivally copyable
+// Q_MOVABLE_TYPE uses std::memcpy rather than copy ctor to move obs around, means trivally relocatable
+// Q_MOVABLE_TYPE does shallow move; don't use for types that self refer (pimpl with ptr back to parent)
 Q_DECLARE_TYPEINFO(MyClass, Q_COMPLEX_TYPE) // Default
 Q_DECLARE_TYPEINFO(MyClass::MyEnum, Q_PRIMITIVE_TYPE)
 Q_DECLARE_TYPEINFO(MyClass, Q_MOVABLE_TYPE)
 QTypeInfoQuery<MyClass>::isRelocatable
 
 // REGISTERING OBJECTS
-//• Macro must be outside all namespaces
-//• Not needed for: MyClass*, qt smart pointers/container with MyClass, if using Q_ENUM/Q_FLAG/Q_GADGET
+// Macro must be outside all namespaces
+// Not needed for: MyClass*, qt smart pointers/container with MyClass, if using Q_ENUM/Q_FLAG/Q_GADGET
 Q_DECLARE_METATYPE(MyClass) // Allows use with variant: myVariant.value<MyClass>()
 qRegisterMetaType<MyClass>(); // Allows use with signals/slots/property system
     
 // REGISTERING ENUMS
-//• Macro must be outside all namespaces
-//• QML use 'import MyEnums 1.0' and 'MyEnum.ONE'
+// Macro must be outside all namespaces
+// QML use 'import MyEnums 1.0' and 'MyEnum.ONE'
 Q_ENUMS(MyClass::MyEnum)
 qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum");
 
 // CONNECT SIGNALS/SLOTS
-//• Returns QMetaObject::Connection for disconnecting, or can call QObject::disconnect with same signature
-//• Can duplicate connections, multiple signals are then emitted, all are broken with single disconnect call 
-//• Signatures must match: SIGNAL/SLOT macros give runtime error, functions give compile error
-//• Use normalised form from moc cpp for SIGNAL/SLOT macros, otherwise performance hit
+// Returns QMetaObject::Connection for disconnecting, or can call QObject::disconnect with same signature
+// Can duplicate connections, multiple signals are then emitted, all are broken with single disconnect call 
+// Signatures must match: SIGNAL/SLOT macros give runtime error, functions give compile error
+// Use normalised form from moc cpp for SIGNAL/SLOT macros, otherwise performance hit
 QObject::connect(sender, &Sender::mySignal, reciever, &Receiver::mySlot);
 QObject::connect(sender, &Sender::mySignal, reciever, [](){});
 QObject::connect(sender, SIGNAL(mySignal()), reciever, SLOT(mySlot()));
@@ -447,7 +447,7 @@ EVENT LOOP:
 **************************************************************************************************************/
 
 // RECEIVE EVENTS
-//• Recieve events only for the object
+// Recieve events only for the object
 bool MyObject::event(QEvent *event)
 {
     switch (event->type())
@@ -470,8 +470,8 @@ bool MyObject::event(QEvent *event)
 }
 
 // EVENT FILTERS
-//• Recieve an event from one object in another, can install multiple filters
-//• myObj2 eventFilter() called before myObj event()
+// Recieve an event from one object in another, can install multiple filters
+// myObj2 eventFilter() called before myObj event()
 myObj->installEventFilter(&myObj2);
 myObj->removeEventFilter(&myObj2);
 bool MyObject2::eventFilter(QObject* object, QEvent* event)
@@ -484,14 +484,14 @@ bool MyObject2::eventFilter(QObject* object, QEvent* event)
 }
 
 // SEND EVENTS
-//• Sends directly to myObject, returns value returned from MyObject::event
-//• Doesn't take ownership of event
+// Sends directly to myObject, returns value returned from MyObject::event
+// Doesn't take ownership of event
 QMouseEvent event(QEvent::MouseButtonPress, pos, 0, 0, 0);
 QApplication::sendEvent(myObject, &event);
 
 // POST EVENTS
-//• Adds the event to an event queue run from the main loop and returns immediately
-//• Takes ownership of event- not safe to access after post call
+// Adds the event to an event queue run from the main loop and returns immediately
+// Takes ownership of event- not safe to access after post call
 QApplication::postEvent(myObject, 
     new QMouseEvent(QEvent::MouseButtonPress, pos, 0, 0, 0), 
     Qt::NormalEventPriority);
