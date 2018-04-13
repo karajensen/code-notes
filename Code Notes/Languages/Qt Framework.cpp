@@ -262,6 +262,9 @@ ptr.data();              // Returns T*
 
 // QWindow
 // Toplevel window for non-widgets based applications (QML)
+// If has a parent, becomes a native child window of their parent window
+// Uses QBackingStore for rendering with QPainter using QSurface::RasterSurface
+// Or can use QOpenGLContext for rendering with OpenGL using QSurface::OpenGLSurface
 
 // QQuickWindow
 // Inherits QWindow
@@ -277,10 +280,14 @@ pair.second;
 
 // QWidget
 // Toplevel window for widgets based applications (non-QML)
+// Uses QBackingStore for rendering with QPainter using QSurface::RasterSurface
 QWidget widget;
 widget.setWindowTitle("Title");
 widget.show();
 widget.setLayout(layout); // Add a layout to the window, automatically parents
+
+// QOpenGLWidget
+// Inherits QWidget but uses QOpenGLContext for rendering with OpenGL using QSurface::OpenGLSurface
 
 // QLabel
 QLabel lbl("Message"); // Allows use of html tags to customise text
