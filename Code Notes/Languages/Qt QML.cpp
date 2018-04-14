@@ -27,7 +27,7 @@ QML SCENE GRAPH
 • Allows the scene to be retained between frames and complete set of primitives is known before rendering
 • Allows optimizations such as batch rendering to minimize state changes and discarding obscured primitives
 • Managed and rendered by the QQuickWindow class 
-• On many platforms rendered in seperate render thread
+• Render loop type auto chosen for hardware, QSG_RENDER_LOOP forces type
   
 SCENE GRAPH NODES
 • Added by subclassing QQuickItem::updatePaintNode and setting the QQuickItem::ItemHasContents flag
@@ -44,16 +44,23 @@ QSGTransformNode      Implements transformations in the scene graph
 QSGSimpleRectNode     QSGGeometryNode which defines a rectangular geometry with a solid color material
 QSGSimpleTextureNode  QSGGeometryNode which defines a rectangular geometry with a texture material
 
-RENDER LOOP VARIANTS
-Loop type auto chosen for hardware, QSG_RENDER_LOOP forces loop type
-Basic      Uses Main thread
-Windows    Uses Main thread
-Threaded   Uses Dedicated thread
+THREADED SCENE GRAPH RENDER LOOP (DEDICATED THREAD)
+1) QQuickItem::update called when QML scene changed
+2) Render thread prepares to draw a new frame
+3) Meanwhile GUI thread calls QQuickItem::updatePolish to do final item touch-up
+4) GUI thread is blocked
+5) QQuickWindow::beforeSynchronizing signal is emitted
+6) Synchronization of the QML state into the scene graph by calling QQuickItem::updatePaintNode
+7) GUI thread block is released
+8) The scene graph is rendered:
+     1) QQuickWindow::beforeRendering signal is emitted
+     2) QSGNode::preprocess called for those that use it
+     3) Renderer processes the nodes and calls OpenGL functions
+     4) QQuickWindow::afterRendering signal is emitted
+     5) Rendered frame is swapped and QQuickWindow::frameSwapped is emitted
+9) Meanwhile GUI is free to advance animations, process events, etc
 
-THREADED RENDER LOOP 
-01) 
-
-BASIC/WINDOWS RENDER LOOP
+BASIC/WINDOWS SCENE GRAPH RENDER LOOP (GUI/MAIN THREAD)
 
 **************************************************************************************************************/
     
