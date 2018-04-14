@@ -446,10 +446,6 @@ EVENT LOOP:
     1) Processes any posted events until queue is empty
     2) Processes any spontaneous events
     3) Processed any posted events generated during spontaneous events
-    
-ACTIVE FOCUS:
-• Item currently receives keyboard input
-• Or item is a FocusScope ancestor of the item that currently receives keyboard input
 **************************************************************************************************************/
 
 // RECEIVE EVENTS
