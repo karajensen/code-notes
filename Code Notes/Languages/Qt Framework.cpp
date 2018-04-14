@@ -261,7 +261,7 @@ ptr.data();              // Returns T*
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // QWindow
-// Window for non-widgets based applications (eg QML)
+// Window for non-widgets based applications (QML)
 // If has a parent, becomes a native child window of their parent window
 // Uses QBackingStore for rendering with QPainter using QSurface::RasterSurface
 // Or can use QOpenGLContext for rendering with OpenGL using QSurface::OpenGLSurface
@@ -270,19 +270,6 @@ ptr.data();              // Returns T*
 auto pair = qMakePair(v1, v2);
 pair.first;
 pair.second;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT QUICK
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// QQuickWindow
-// Inherits QWindow, window for QML applications
-
-// QQuickWidget
-// Wrapper for QQuickWindow to automatically load and display a QML scene from an url
-
-// QQuickItem
-// Inherited by all QML visual items
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT WIDGETS
