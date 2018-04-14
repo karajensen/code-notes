@@ -122,7 +122,11 @@ item.grabMouse() // Item will receive all mouse events until ungrabMouse is call
 item.isComponentComplete() // If construction of the QML component is complete
 item.isFocusScope() // If item is a FocusScope
 item.keepMouseGrab() // Whether mouse input should exclusively remain with this item
-item.mapFromGlobal(point)
+item.mapFromGlobal(point) // Returns converted global QPointF to item local coord system
+item.mapFromItem(item2, point) // Returns converted QPointF in item2 coord system to item local coord system
+item.mapFromScene(point) // Returns converted scene QPointF to item local coord system
+item.mapRectFromItem(item2, rect) // Returns converted QRectF in item2 coord system to item local coord system
+item.mapRectFromScene(rect) // Returns converted scene QRectF to item local coord system
 
 // QQuickPaintedItem
 // Inherits QQuickItem, allows rendering content using QPainter
