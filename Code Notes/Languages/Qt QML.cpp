@@ -73,8 +73,14 @@ SCENE GRAPH THREADED RENDER LOOP:
 // QQuickWindow
 // Inherits QWindow, window for QML applications
 
+// QQuickView 
+// Wrapper for QQuickWindow to automatically load and display a QML scene from an url
+
 // QQuickWidget
 // Wrapper for QQuickWindow to automatically load and display a QML scene from an url
+// Less stacking order restrictions, though slower compared to QQuickWindow/QQuickView
+// Disables the threaded render loop on all platforms
+// Avoid calling winId; triggers creation of a native window, resulting in reduced performance
 
 // QQuickItem
 // Inherited by all QML visual items
