@@ -56,7 +56,47 @@ function myFunction(x, y) {
 
 Qt.quit() // Quits the application
 console.log("Message")
+    
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT QUICK
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/************************************************************************************************************
+QT QUICK SCENE GRAPH
+• Low-level, high-performance rendering stack that renders QML visual items using OpenGL by default
+• Allows the scene to be retained between frames and complete set of primitives is known before rendering
+• Allows optimizations such as batch rendering to minimize state changes and discarding obscured primitives
+• Managed and rendered by the QQuickWindow class 
+• On many platforms rendered in seperate render thread
+  
+SCENE GRAPH NODES
+• Added by subclassing QQuickItem::updatePaintNode and setting the QQuickItem::ItemHasContents flag
+• Only use classes with the "QSG" prefix inside the QQuickItem::updatePaintNode
+• To preprocess, set QSGNode::UsePreprocess and override QSGNode::preprocess; called before rendering
+• Each node uses a material (simple OpenGL shader program)
+
+SCENE GRAPH NODE TYPES
+QSGClipNode           Implements the clipping functionality in the scene graph
+QSGGeometryNode       Used for all rendered content, describes the shape/mesh of the primitive
+QSGNode               The base class for all nodes in the scene graph
+QSGOpacityNode        Used to change opacity of nodes
+QSGTransformNode      Implements transformations in the scene graph
+QSGSimpleRectNode     QSGGeometryNode which defines a rectangular geometry with a solid color material
+QSGSimpleTextureNode  QSGGeometryNode which defines a rectangular geometry with a texture material
+
+RENDER LOOP VARIANTS
+
+**************************************************************************************************************/
+    
+// QQuickWindow
+// Inherits QWindow, window for QML applications
+
+// QQuickWidget
+// Wrapper for QQuickWindow to automatically load and display a QML scene from an url
+
+// QQuickItem
+// Inherited by all QML visual items
+    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML COMPONENTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
