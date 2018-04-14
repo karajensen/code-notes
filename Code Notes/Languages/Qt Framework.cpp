@@ -70,17 +70,14 @@ SIGNALS/SLOTS:
 • Type safe: The signature of a signal must match the signature of the receiving slot
 • No return values, slots can be virtual/pure virtual
 
-QOBJECT PROPERTIES:
-objectName    User-defined name of object instance, blank as default
-
 PROPERTY SYSTEM:
-MEMBER        Required if READ not used
-READ          Required if MEMBER not used
-WRITE         Optional, can be used with either READ or MEMBER
-NOTIFY        Optional, takes signal with one or no arguments
-STORED        Default true, indicates whether property value must be saved when storing the object's state
-CONSTANT      Optional, makes readonly
-FINAL         Optional, can enable optimizations, indicates shouldn't override though not enforced by moc
+MEMBER     Required if READ not used
+READ       Required if MEMBER not used
+WRITE      Optional, can be used with either READ or MEMBER
+NOTIFY     Optional, takes signal with one or no arguments
+STORED     Default true, indicates whether property value must be saved when storing the object's state
+CONSTANT   Optional, makes readonly
+FINAL      Optional, can enable optimizations, indicates shouldn't override though not enforced by moc
 **************************************************************************************************************/
 
 class MyClass : public QObject
@@ -114,6 +111,7 @@ public slots: // can be protected/private
 };
 
 // QOBJECT
+obj.objectName // Property; User-defined name of object instance, blank as default
 obj.setProperty("value", v); // Return true if existed and set, auto creates if doesn't exist only for obj
 obj.property("value") // Returns QVariant, invalid if doesn't exist
 obj.metaObject() // Returns const QMetaObject*
@@ -276,7 +274,7 @@ pair.second;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // QWidget
-// Window for widgets based applications (non-QML)
+// If no parent, window for widgets based applications (non-QML), else base class for widgets
 // Uses QBackingStore for rendering with QPainter using QSurface::RasterSurface
 QWidget widget;
 widget.setWindowTitle("Title");
@@ -448,6 +446,10 @@ EVENT LOOP:
     1) Processes any posted events until queue is empty
     2) Processes any spontaneous events
     3) Processed any posted events generated during spontaneous events
+    
+ACTIVE FOCUS:
+• Item currently receives keyboard input
+• Or item is a FocusScope ancestor of the item that currently receives keyboard input
 **************************************************************************************************************/
 
 // RECEIVE EVENTS
