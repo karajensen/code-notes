@@ -261,17 +261,10 @@ ptr.data();              // Returns T*
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // QWindow
-// Toplevel window for non-widgets based applications (QML)
+// Window for non-widgets based applications (eg QML)
 // If has a parent, becomes a native child window of their parent window
 // Uses QBackingStore for rendering with QPainter using QSurface::RasterSurface
 // Or can use QOpenGLContext for rendering with OpenGL using QSurface::OpenGLSurface
-
-// QQuickWindow
-// Inherits QWindow
-
-// QQuickItem
-
-// QQuickWidget
 
 // QPair<T1, T2>
 auto pair = qMakePair(v1, v2);
@@ -279,11 +272,24 @@ pair.first;
 pair.second;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT QUICK
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// QQuickWindow
+// Inherits QWindow, window for QML applications
+
+// QQuickWidget
+// Wrapper for QQuickWindow to automatically load and display a QML scene from an url
+
+// QQuickItem
+// Inherited by all QML visual items
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT WIDGETS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // QWidget
-// Toplevel window for widgets based applications (non-QML)
+// Window for widgets based applications (non-QML)
 // Uses QBackingStore for rendering with QPainter using QSurface::RasterSurface
 QWidget widget;
 widget.setWindowTitle("Title");
