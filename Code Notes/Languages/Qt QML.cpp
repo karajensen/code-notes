@@ -89,14 +89,19 @@ ACTIVE FOCUS:
 // QQuickItem
 // Inherited by all QML visual items
 item.activeFocus // Read only property; whether item has active focus
-item.activeFocusOnTab // Property; whether included in active focus on tab, default false
-item.childrenRect // Property; QRectF collective position and size of the item's children
-item.enabled // Property; recursive, whether the item receives mouse and keyboard events
-item.focus // Property; whether item has input focus
+item.activeFocusOnTab // Whether included in active focus on tab, default false
+item.antialiasing // Whether antialiasing enable, default false
+item.baselineOffset // Position offset, default 0, used for text
+item.childrenRect // QRectF collective position and size of the item's children
+item.clip // Whether clipping enabled, default false, hides part of item/children, performance hit
+item.enabled // Recursive, whether the item receives mouse and keyboard events
+item.focus // Whether item has input focus
 item.height // Actual height of item
 item.width // Actual width of item
-item.implicitHeight // Natural height of the Item if no height is specified
-item.implicitWidth // Natural width of the Item if no width is specified
+item.implicitHeight // Default height of the Item if no height is specified
+item.implicitWidth // Default width of the Item if no width is specified
+item.opacity // Alpha of item, values outside [0,1] clamped
+item.parent // QQuickItem*, visual parent of the item
 
 // QQuickPaintedItem
 // Inherits QQuickItem, allows rendering content using QPainter
@@ -108,44 +113,44 @@ item.implicitWidth // Natural width of the Item if no width is specified
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import MyEnums 1.0
-
-id: nameOfControl                      // unique id of element, can be used to access it
-objectName: "UserName"                 // user defined name
-anchors.left: parent.left              // don't use with RowLayout, use Layout.fillWidth
-anchors.right: parent.right            // don't use with RowLayout, use Layout.fillWidth
-anchors.left: parent.left              // don't use with ColumnLayout, use Layout.fillHeight
-anchors.right: parent.right            // don't use with ColumnLayout, use Layout.fillHeight
-anchors.fill: parent                   // completely fills to parent
-anchors.margins: 1                     // adds margins between the anchor
-property bool myProperty: true         // custom property
-property int myEnum: MyEnum.ONE        // enum property
-property int myProperty: myFunction    // if property used in function changes, re-evaluates property
-property alias myAlias: myProperty     // reference for property
-    
-/* Called when the element has been instantiated */
-Component.onCompleted: {}
-
-/* Called when the element is destroyed */
-Component.onDestruction: {}
-
-/* Called when the property has changed */
-onMyPropertyChanged: {}
-
-/* Javascript custom function */
-function myFunction(x, y) {
-    return x + y;
-}
-
+  
 Qt.quit() // Quits the application
 console.log("Message")
+  
+// Item
+// Base for all QML components, see QQuickItem for full list of properties
+Item {
+    id: nameOfControl                      // unique id of element, can be used to access it
+    objectName: "UserName"                 // user defined name
+    anchors.left: parent.left              // don't use with RowLayout, use Layout.fillWidth
+    anchors.right: parent.right            // don't use with RowLayout, use Layout.fillWidth
+    anchors.left: parent.left              // don't use with ColumnLayout, use Layout.fillHeight
+    anchors.right: parent.right            // don't use with ColumnLayout, use Layout.fillHeight
+    anchors.fill: parent                   // completely fills to parent
+    anchors.margins: 1                     // adds margins between the anchor
+    property bool myProperty: true         // custom property
+    property int myEnum: MyEnum.ONE        // enum property
+    property int myProperty: myFunction    // if property used in function changes, re-evaluates property
+    property alias myAlias: myProperty     // reference for property
+    
+    /* Called when the element has been instantiated */
+    Component.onCompleted: {}
+
+    /* Called when the element is destroyed */
+    Component.onDestruction: {}
+
+    /* Called when the property has changed */
+    onMyPropertyChanged: {}
+
+    /* Javascript custom function */
+    function myFunction(x, y) {
+        return x + y;
+    }
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML COMPONENTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// QQuickItem
-Item {
-}
 
 // MouseArea
 MouseArea {
