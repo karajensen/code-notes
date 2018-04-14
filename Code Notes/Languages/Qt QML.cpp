@@ -64,6 +64,14 @@ SCENE GRAPH THREADED RENDER LOOP:
      4) QQuickWindow::afterRendering signal is emitted
      5) Rendered frame is swapped and QQuickWindow::frameSwapped is emitted
 9) Meanwhile GUI is free to advance animations, process events, etc
+
+===============================================================================================================
+QML KEYBOARD FOCUS
+===============================================================================================================
+
+ACTIVE FOCUS:
+• Item currently receives keyboard input
+• Or item is a FocusScope ancestor of the item that currently receives keyboard input
 **************************************************************************************************************/
     
 // QQuickWindow
@@ -80,8 +88,8 @@ SCENE GRAPH THREADED RENDER LOOP:
 
 // QQuickItem
 // Inherited by all QML visual items
-item.activeFocus // Read only property, whether item has active focus
-item.activeFocusOnTab // Propery, whether included in active focus on tab, default false
+item.activeFocus // Read only property; whether item has active focus
+item.activeFocusOnTab // Property; whether included in active focus on tab, default false
 
 // QQuickPaintedItem
 // Inherits QQuickItem, allows rendering content using QPainter
@@ -128,9 +136,11 @@ console.log("Message")
 // QML COMPONENTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// QQuickItem
 Item {
 }
 
+// MouseArea
 MouseArea {
     hoverEnabled: true
     acceptedButtons: Qt.RightButton | Qt.LeftButton | Qt.AllButtons
@@ -143,6 +153,7 @@ MouseArea {
     }
 }
 
+// Menu
 // Call using id.popup() to show at mouse position
 Menu {
     visible: false
@@ -164,18 +175,21 @@ Layout.fillWidth: true
 Layout.preferredHeight: 30
 Layout.preferredWidth: 30
 
+// RowLayout
 // Aligns elements after each other in a single row
 RowLayout {
     spacing: 5
     anchors.fill: parent // Still use anchors on base
 }
 
+// ColumnLayout
 // Aligns elements after each other in a single column
 ColumnLayout {
     spacing: 5
     anchors.fill: parent // Still use anchors on base
 }
 
+// GridLayout
 // Aligns elements in a grid with n columns
 GridLayout {
     columns: 3
@@ -187,6 +201,7 @@ GridLayout {
 // QML WIDGETS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Rectangle
 Rectangle {
     color: "#8EACFF"
     radius: 2
@@ -194,6 +209,7 @@ Rectangle {
     border.width: 1      
 }
 
+// Text
 Text {
     text: "text"
     verticalAlignment: Text.AlignVCenter
@@ -201,12 +217,14 @@ Text {
     font.bold: true
 }
 
+// Button
 Button {
     iconSource: "qrc:///icon.png"
     enabled: true
     onClicked: {}
 }
 
+// ProgressBar
 ProgressBar {
     maximumValue: 20
     minimumValue: 0
@@ -223,6 +241,7 @@ ProgressBar {
     }
 }
 
+//Dialog
 Dialog {
     visible: false // Turning on/off will show dialog window
     title: "Title"
