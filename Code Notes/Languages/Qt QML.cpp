@@ -87,7 +87,7 @@ ACTIVE FOCUS:
 // Avoid calling winId; triggers creation of a native window, resulting in reduced performance
 
 // QQuickItem
-// Inherited by all QML visual items, inherits QObject
+// Inherits QObject, instantiated by Item QML component
 item.activeFocus // Read only property; whether item has active focus
 item.activeFocusOnTab // Whether included in active focus on tab, default false
 item.antialiasing // Whether antialiasing enable, default false
