@@ -66,7 +66,7 @@ SCENE GRAPH THREADED RENDER LOOP:
 9) Meanwhile GUI is free to advance animations, process events, etc
 
 ===============================================================================================================
-QML KEYBOARD FOCUS
+QML INPUT FOCUS
 ===============================================================================================================
 
 ACTIVE FOCUS:
@@ -90,6 +90,13 @@ ACTIVE FOCUS:
 // Inherited by all QML visual items
 item.activeFocus // Read only property; whether item has active focus
 item.activeFocusOnTab // Property; whether included in active focus on tab, default false
+item.childrenRect // Property; QRectF collective position and size of the item's children
+item.enabled // Property; recursive, whether the item receives mouse and keyboard events
+item.focus // Property; whether item has input focus
+item.height // Actual height of item
+item.width // Actual width of item
+item.implicitHeight // Natural height of the Item if no height is specified
+item.implicitWidth // Natural width of the Item if no width is specified
 
 // QQuickPaintedItem
 // Inherits QQuickItem, allows rendering content using QPainter
