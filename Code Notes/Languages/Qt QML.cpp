@@ -87,7 +87,7 @@ ACTIVE FOCUS:
 // Avoid calling winId; triggers creation of a native window, resulting in reduced performance
 
 // QQuickItem
-// Inherited by all QML visual items
+// Inherited by all QML visual items, inherits QObject
 item.activeFocus // Read only property; whether item has active focus
 item.activeFocusOnTab // Whether included in active focus on tab, default false
 item.antialiasing // Whether antialiasing enable, default false
@@ -101,7 +101,15 @@ item.width // Actual width of item
 item.implicitHeight // Default height of the Item if no height is specified
 item.implicitWidth // Default width of the Item if no width is specified
 item.opacity // Alpha of item, values outside [0,1] clamped
+item.objectName // Inherited from QObject
 item.parent // QQuickItem*, visual parent of the item
+item.rotation // rotation of the item in degrees clockwise around its transformOrigin, default 0
+item.scale // size of item, negative mirror's item, default 1
+item.smooth // Image interpolation, true is linear, false is nearest neighbour, default true
+item.state // QString state name, default empty
+item.transformOrigin // TransformOrigin type which scale/rotate use
+item.visible // Recursive, whether item is rendered
+item.x / item.y / item.z // Position and stacking depth of item, negative z draws under parent
 
 // QQuickPaintedItem
 // Inherits QQuickItem, allows rendering content using QPainter
@@ -118,7 +126,7 @@ Qt.quit() // Quits the application
 console.log("Message")
   
 // Item
-// Base for all QML components, see QQuickItem for full list of properties
+// Base for all QML components, instantiates QQuickItem
 Item {
     id: nameOfControl                      // unique id of element, can be used to access it
     objectName: "UserName"                 // user defined name
@@ -128,6 +136,7 @@ Item {
     anchors.right: parent.right            // don't use with ColumnLayout, use Layout.fillHeight
     anchors.fill: parent                   // completely fills to parent
     anchors.margins: 1                     // adds margins between the anchor
+ 
     property bool myProperty: true         // custom property
     property int myEnum: MyEnum.ONE        // enum property
     property int myProperty: myFunction    // if property used in function changes, re-evaluates property
