@@ -269,6 +269,10 @@ ptr.data();              // Returns T*
 // QQuickWindow
 // Inherits QWindow
 
+// QQuickItem
+
+// QQuickWidget
+
 // QPair<T1, T2>
 auto pair = qMakePair(v1, v2);
 pair.first;
