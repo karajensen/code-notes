@@ -88,11 +88,12 @@ ACTIVE FOCUS:
 
 // QQuickItem
 // Inherits QObject, instantiated by Item QML component
-item.activeFocus // Read only property; whether item has active focus
+// Properties have accessors item.property() and item.setProperty()
+item.activeFocus // Read only, whether item has active focus
 item.activeFocusOnTab // Whether included in active focus on tab, default false
 item.antialiasing // Whether antialiasing enable, default false
 item.baselineOffset // Position offset, default 0, used for text
-item.childrenRect // QRectF collective position and size of the item's children
+item.childrenRect // Read only, QRectF collective position and size of the item's children
 item.clip // Whether clipping enabled, default false, hides part of item/children, performance hit
 item.enabled // Recursive, whether the item receives mouse and keyboard events
 item.focus // Whether item has input focus
@@ -110,6 +111,18 @@ item.state // QString state name, default empty
 item.transformOrigin // TransformOrigin type which scale/rotate use
 item.visible // Recursive, whether item is rendered
 item.x / item.y / item.z // Position and stacking depth of item, negative z draws under parent
+item.childAt(x, y) // Returns first visible QQuickItem* child found at point within item coord system
+item.childItems() // Returns QList<QQuickItem*>
+item.componentComplete() // Called when the item has been instantiated
+item.contains(point) // If item contains QPointF (in local coordinates)
+item.cursor() // Returns QCursor enum for cursor type when mouse over item, default Qt::ArrowCursor
+item.flag() // Returns Flags enum value
+item.forceActiveFocus(reason) // Focuses item and any parent FocusScopes, reason optional
+item.grabMouse() // Item will receive all mouse events until ungrabMouse is called
+item.isComponentComplete() // If construction of the QML component is complete
+item.isFocusScope() // If item is a FocusScope
+item.keepMouseGrab() // Whether mouse input should exclusively remain with this item
+item.mapFromGlobal(point)
 
 // QQuickPaintedItem
 // Inherits QQuickItem, allows rendering content using QPainter
@@ -128,7 +141,7 @@ console.log("Message")
 // Item
 // Base for all QML components, instantiates QQuickItem
 Item {
-    id: nameOfControl                      // unique id of element, can be used to access it
+    id: item                               // unique id of item, can be used to access it
     objectName: "UserName"                 // user defined name
     anchors.left: parent.left              // don't use with RowLayout, use Layout.fillWidth
     anchors.right: parent.right            // don't use with RowLayout, use Layout.fillWidth
@@ -142,10 +155,10 @@ Item {
     property int myProperty: myFunction    // if property used in function changes, re-evaluates property
     property alias myAlias: myProperty     // reference for property
     
-    /* Called when the element has been instantiated */
+    /* Called when the item has been instantiated */
     Component.onCompleted: {}
 
-    /* Called when the element is destroyed */
+    /* Called when the item is destroyed */
     Component.onDestruction: {}
 
     /* Called when the property has changed */
