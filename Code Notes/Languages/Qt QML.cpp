@@ -127,7 +127,26 @@ item.mapFromItem(item2, point) // Returns converted QPointF in item2 coord syste
 item.mapFromScene(point) // Returns converted scene QPointF to item local coord system
 item.mapRectFromItem(item2, rect) // Returns converted QRectF in item2 coord system to item local coord system
 item.mapRectFromScene(rect) // Returns converted scene QRectF to item local coord system
-
+item.mapRectToItem(item2, rect)
+item.mapRectToScene(rect)
+item.mapToGlobal(point)
+item.mapToItem(item2, point)
+item.mapToScene(point)
+item.nextItemInFocusChain(forward)
+item.polish()
+item.releaseResources()
+item.scopedFocusItem()
+item.setCursor(cursor)
+item.setFlags(flags)
+item.stackAfter(sibling)
+item.ungrabMouse()
+item.update()
+item.updatePaintNode(oldNode, nodeData)
+item.updatePolish()
+item.widthValid()
+item.heightValid()
+item.window()
+ 
 // QQuickPaintedItem
 // Inherits QQuickItem, allows rendering content using QPainter
 
@@ -223,8 +242,8 @@ item.mapFromGlobal(x, y)
 item.mapFromItem(item2, x, y, w, h)
 item.mapFromItem(item2, x, y)
 item.mapToGlobal(x, y)
-item.mapToItem(item, x, y, w, h)
-item.mapToItem(item, x, y)
+item.mapToItem(item2, x, y, w, h)
+item.mapToItem(item2, x, y)
 item.nextItemInFocusChain(forward)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
