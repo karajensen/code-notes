@@ -279,6 +279,7 @@ Menu {
 // QML LAYOUTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Use these on any components inside the layout
 Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
 Layout.fillHeight: true
 Layout.fillWidth: true
