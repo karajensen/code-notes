@@ -143,14 +143,6 @@ import MyEnums 1.0
 // Base for all QML components, instantiates QQuickItem
 Item {
     id: item                               // unique id of item, can be used to access it
-    objectName: "UserName"                 // user defined name
-    anchors.left: parent.left              // don't use with RowLayout, use Layout.fillWidth
-    anchors.right: parent.right            // don't use with RowLayout, use Layout.fillWidth
-    anchors.left: parent.left              // don't use with ColumnLayout, use Layout.fillHeight
-    anchors.right: parent.right            // don't use with ColumnLayout, use Layout.fillHeight
-    anchors.fill: parent                   // completely fills to parent
-    anchors.margins: 1                     // adds margins between the anchor
- 
     property bool myProperty: true         // custom property
     property int myEnum: MyEnum.ONE        // enum property
     property int myProperty: myFunction    // if property used in function changes, re-evaluates property
@@ -170,6 +162,64 @@ Item {
         return x + y;
     }
 }
+
+item.activeFocus // Read only, whether item has active focus
+item.activeFocusOnTab // Whether included in active focus on tab, default false
+item.antialiasing // Whether antialiasing enable, default false
+item.baselineOffset // Position offset, default 0, used for text
+item.childrenRect // Read only, QRectF collective position and size of the item's children
+item.clip // Whether clipping enabled, default false, hides part of item/children, performance hit
+item.enabled // Recursive, whether the item receives mouse and keyboard events
+item.focus // Whether item has input focus
+item.height // Actual height of item
+item.width // Actual width of item
+item.implicitHeight // Default height of the Item if no height is specified
+item.implicitWidth // Default width of the Item if no width is specified
+item.opacity // Alpha of item, values outside [0,1] clamped
+item.objectName // Inherited from QObject
+item.parent // QQuickItem*, visual parent of the item
+item.rotation // rotation of the item in degrees clockwise around its transformOrigin, default 0
+item.scale // size of item, negative mirror's item, default 1
+item.smooth // Image interpolation, true is linear, false is nearest neighbour, default true
+item.transformOrigin // TransformOrigin type which scale/rotate use
+item.visible // Recursive, whether item is rendered
+item.x / item.y / item.z // Position and stacking depth of item, negative z draws under parent
+item.anchors.top : AnchorLine
+item.anchors.bottom : AnchorLine
+item.anchors.left : AnchorLine
+item.anchors.right : AnchorLine
+item.anchors.horizontalCenter : AnchorLine
+item.anchors.verticalCenter : AnchorLine
+item.anchors.baseline : AnchorLine
+item.anchors.fill : Item
+item.anchors.centerIn : Item
+item.anchors.margins : real
+item.anchors.topMargin : real
+item.anchors.bottomMargin : real
+item.anchors.leftMargin : real
+item.anchors.rightMargin : real
+item.anchors.horizontalCenterOffset : real
+item.anchors.verticalCenterOffset : real
+item.anchors.baselineOffset : real
+item.anchors.alignWhenCentered : bool
+item.data : list<Object>
+item.layer.effect : Component
+item.layer.enabled : bool
+item.layer.format : enumeration
+item.layer.mipmap : bool
+item.layer.samplerName : string
+item.layer.samples : enumeration
+item.layer.smooth : bool
+item.layer.sourceRect : rect
+item.layer.textureMirroring : enumeration
+item.layer.textureSize : size
+item.layer.wrapMode : enumeration
+item.resources : list<Object>
+item.state // QString state name, default empty
+item.states : list<State>
+item.transform : list<Transform>
+item.transitions : list<Transition>
+item.visibleChildren : list<Item>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML COMPONENTS
