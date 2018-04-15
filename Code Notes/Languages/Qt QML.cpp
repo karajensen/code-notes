@@ -199,21 +199,33 @@ item.anchors.alignWhenCentered // forces centered anchors to align to a whole pi
 item.data // list<Object> of both visual children and resources
 item.layer.effect // Component, typically a ShaderEffect component
 item.layer.enabled // Whether the item is layered or not, disabled by default
-item.layer.format : enumeration
-item.layer.mipmap : bool
-item.layer.samplerName : string
-item.layer.samples : enumeration
-item.layer.smooth : bool
-item.layer.sourceRect : rect
-item.layer.textureMirroring : enumeration
-item.layer.textureSize : size
-item.layer.wrapMode : enumeration
-item.resources : list<Object>
+item.layer.format // Enum, internal OpenGL format of the texture
+item.layer.mipmap // Whether mipmaps are generated for the texture
+item.layer.samplerName // Name of the effect's source texture property
+item.layer.samples // Enum, allows requesting multisampled rendering in the layer
+item.layer.smooth // Whether the layer is smoothly transformed
+item.layer.sourceRect // The rectangular area of the item that should be rendered into the texture
+item.layer.textureMirroring // Enum, how the generated OpenGL texture should be mirrored
+item.layer.textureSize // Pixel size of the layers texture, if empty (default) uses item's size
+item.layer.wrapMode // Enum, OpenGL wrap modes associated with the texture
+item.resources // list<Object>, contains non-visual children
 item.state // QString state name, default empty
-item.states : list<State>
-item.transform : list<Transform>
-item.transitions : list<Transition>
-item.visibleChildren : list<Item>
+item.states // list<State>, list of possible states for this item
+item.transform // list<Transform>, list of transformations to apply
+item.transitions // list<Transition>, transitions to be applied to the item whenever it changes its state
+item.visibleChildren // list<Item>, contains visual children
+item.childAt(x, y)
+item.contains(point)
+item.forceActiveFocus(reason)
+item.forceActiveFocus()
+item.grabToImage(callback, targetSize)
+item.mapFromGlobal(x, y)
+item.mapFromItem(item2, x, y, w, h)
+item.mapFromItem(item2, x, y)
+item.mapToGlobal(x, y)
+item.mapToItem(item, x, y, w, h)
+item.mapToItem(item, x, y)
+item.nextItemInFocusChain(forward)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML COMPONENTS
