@@ -279,12 +279,30 @@ Menu {
 // QML LAYOUTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// LAYOUT PROPERTIES
 // Use these on any components inside the layout
-Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-Layout.fillHeight: true
-Layout.fillWidth: true
-Layout.preferredHeight: 30
-Layout.preferredWidth: 30
+Layout.alignment
+Layout.bottomMargin
+Layout.column
+Layout.columnSpan
+Layout.fillHeight
+Layout.fillWidth
+Layout.leftMargin
+Layout.margins 
+Layout.maximumHeight
+Layout.maximumWidth
+Layout.minimumHeight
+Layout.minimumWidth
+Layout.preferredHeight
+Layout.preferredWidth
+Layout.rightMargin
+Layout.row
+Layout.rowSpan
+Layout.topMargin
+
+// ALIGNMENT TYPES
+Qt.AlignVCenter
+Qt.AlignRight
 
 // RowLayout
 // Aligns elements after each other in a single row
