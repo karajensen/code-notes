@@ -184,24 +184,18 @@ item.smooth // Image interpolation, true is linear, false is nearest neighbour, 
 item.transformOrigin // TransformOrigin type which scale/rotate use
 item.visible // Recursive, whether item is rendered
 item.x / item.y / item.z // Position and stacking depth of item, negative z draws under parent
-item.anchors.top : AnchorLine
-item.anchors.bottom : AnchorLine
-item.anchors.left : AnchorLine
-item.anchors.right : AnchorLine
-item.anchors.horizontalCenter : AnchorLine
-item.anchors.verticalCenter : AnchorLine
-item.anchors.baseline : AnchorLine
-item.anchors.fill : Item
-item.anchors.centerIn : Item
-item.anchors.margins : real
-item.anchors.topMargin : real
-item.anchors.bottomMargin : real
-item.anchors.leftMargin : real
-item.anchors.rightMargin : real
-item.anchors.horizontalCenterOffset : real
-item.anchors.verticalCenterOffset : real
-item.anchors.baselineOffset : real
-item.anchors.alignWhenCentered : bool
+item.anchors // Sub options: top, bottom, left, right, horizontalCenter, verticalCenter, baseLine
+item.anchors.fill // Takes QQuickItem parent or sibling, set to undefined to detach
+item.anchors.centerIn // Takes QQuickItem parent or sibling, set to undefined to detach
+item.anchors.margins // Set value for all margins
+item.anchors.topMargin // Set value for top margin
+item.anchors.bottomMargin // Set value for bottom margin
+item.anchors.leftMargin // Set value for left margin
+item.anchors.rightMargin // Set value for right margin
+item.anchors.horizontalCenterOffset // Value offset from horizontal center
+item.anchors.verticalCenterOffset // Value offset from vertical center
+item.anchors.baselineOffset // Value offset from position
+item.anchors.alignWhenCentered // forces centered anchors to align to a whole pixel, default true
 item.data : list<Object>
 item.layer.effect : Component
 item.layer.enabled : bool
