@@ -196,9 +196,9 @@ item.anchors.horizontalCenterOffset // Value offset from horizontal center
 item.anchors.verticalCenterOffset // Value offset from vertical center
 item.anchors.baselineOffset // Value offset from position
 item.anchors.alignWhenCentered // forces centered anchors to align to a whole pixel, default true
-item.data : list<Object>
-item.layer.effect : Component
-item.layer.enabled : bool
+item.data // list<Object> of both visual children and resources
+item.layer.effect // Component, typically a ShaderEffect component
+item.layer.enabled // Whether the item is layered or not, disabled by default
 item.layer.format : enumeration
 item.layer.mipmap : bool
 item.layer.samplerName : string
