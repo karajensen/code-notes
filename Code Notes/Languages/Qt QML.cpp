@@ -139,9 +139,6 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import MyEnums 1.0
   
-Qt.quit() // Quits the application
-console.log("Message")
-  
 // Item
 // Base for all QML components, instantiates QQuickItem
 Item {
@@ -331,6 +328,39 @@ ScrollView {
     }
 }
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// DEBUGGING QML
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/************************************************************************************************************
+QT CREATOR QML DEBUGGING
+1) In the Run Settings, Debugger Settings section, select the Enable QML 
+2) Window > Output Panes > Debugger Console allows executing javascript during a break
+3) Use the Locals and Expressions views to explore/change the QML item structure
+ 
+PROFILING QML
+1) Ensure project built with QML debugging infrastructure
+2) Run: app.exe -qmljsdebugger=port:<port>
+3) Should output: QML Debugger: Waiting for connection on port <port>
+4) Enter console command: qmlprofiler -p <port> -attach <ip address>
+**************************************************************************************************************/
+
+QML_IMPORT_TRACE // enable debug output from QML's import loading 
+QT_DECLARATIVE_DEBUG / QT_QML_DEBUG // enable the debugging infrastructure
+
+Qt.quit() // Quits the application
+console.log("Message")
+console.debug("Message")
+console.info("Message")
+console.warn("Message")
+console.error("Message")
+console.assert(exp, "Message on fail")
+console.time("timerName") / console.timeEnd("timerName") // log the time (in milliseconds) between the calls
+console.trace() // prints stack trace
+console.profile() / console.profileEnd() 
+console.exception("Message") // prints message and stack trace
+  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML OPTIMIZATIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
