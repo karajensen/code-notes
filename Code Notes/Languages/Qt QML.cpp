@@ -325,7 +325,10 @@ property url myUrl: "qrc:///folder/image.png" // Resource path
 myUrl == Qt.resolvedUrl("folder/image.png") // Comparison
 myUrl.toString() // Returns the absolute path
 
-// Color
+//===========================================================================================================
+// QML COLOR
+//===========================================================================================================
+
 // ARGB color value, auto converts to/from QColor
 // Attributes do not have signals, use onMyColorChanged instead
 property color myColor: "red"
@@ -350,16 +353,31 @@ myColor.hslLightness
 //===========================================================================================================
 
 matrix4x4
+
 quaternion
-vector2d
+
+property vector2d myVec: "0,1"
+property vector2d myVec: Qt.vector2d(0,1)
+myVec.x / myVec.y
+myVec.dotProduct(myVec2) // returns real
+myVec.times(myVec2) // returns vector * vector2
+myVec.times(value) // returns vector * value
+myVec.plus(myVec2) // returns vector + vector2
+myVec.minus(myVec2) // returns vector - vector2
+myVec.normalized() // returns vector normalized
+myVec.length() // returns real
+myVec.toVector3d() // returns vector3d, z component is set to 0
+myVec.toVector4d() // returns vector4d, z/w components set to 0
+myVec.fuzzyEquals(myVec2, epsilon) // epsilon is real
+
 vector3d
+
 vector4d
 
 //===========================================================================================================
 // QML FONT TYPE
 //===========================================================================================================
 
-// Font
 // Auto converts to/from QFont
 // Attributes do not have signals, use onMyFontChanged instead
 property font myFont: "red"
