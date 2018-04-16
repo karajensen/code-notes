@@ -436,23 +436,24 @@ myVec.toString()
 
 // Font
 // Auto converts to/from QFont
+// If no matching font exists, Qt will use the closest matching installed font
 // Attributes do not have signals, use onMyFontChanged instead
 property font myFont:
-myFont.family
-myFont.bold
-myFont.italic
-myFont.underline
-myFont.pointSize
-myFont.pixelSize // Overrides pointSize
-myFont.weight
-myFont.overline
-myFont.strikeout
-myFont.capitalization
-myFont.letterSpacing
-myFont.wordSpacing
-myFont.kerning
-myFont.preferShaping
-myFont.hintingPreference
+myFont.family // String font family name, eg "Helvetica"
+myFont.bold // Whether bold
+myFont.italic // Whether italic
+myFont.underline // Whether has underline
+myFont.pointSize // real
+myFont.pixelSize // Overrides pointSize, int
+myFont.weight // Weight enum
+myFont.overline // Whether has overline
+myFont.strikeout // Whether line through it
+myFont.capitalization // Capitalization Rendering enum
+myFont.letterSpacing // real, spacing between characters
+myFont.wordSpacing // real, spacing between words
+myFont.kerning // Whether to auto adjust character spacing, default enabled
+myFont.preferShaping // Whether to enable display/spacing rules, default enabled
+myFont.hintingPreference // Hinting preference enum
 
 // Font Weighting
 Font.Thin          0
@@ -471,6 +472,14 @@ Font.AllUppercase    // Render in all uppercase
 Font.AllLowercase    // Render in all lowercase
 Font.SmallCaps       // Render in all small-caps
 Font.Capitalize      // Render with the first character of each word as uppercase
+  
+// Font Hinting
+// Adjusts an outline (non-rastor) font so it lines up with a rasterized grid
+// Important for displaying small text, only used with "NativeRendering"
+Font.PreferDefaultHinting    // default hinting level
+Font.PreferNoHinting         // render text without hinting
+Font.PreferVerticalHinting   // no horizontal hinting, but align in the vertical direction
+Font.PreferFullHinting       // hinting in both horizontal and vertical directions
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML COMPONENTS
