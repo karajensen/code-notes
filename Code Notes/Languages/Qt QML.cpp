@@ -180,6 +180,12 @@ Item {
     function myFunction(x, y) {
         return x + y;
     }
+  
+    /* Item states, state property holds chosen */
+    states: [
+        State { name: "state1" },
+        State { name: "state2" }
+    ]
 }
 
 item.activeFocus // Read only, whether item has active focus
@@ -233,18 +239,52 @@ item.states // list<State>, list of possible states for this item
 item.transform // list<Transform>, list of transformations to apply
 item.transitions // list<Transition>, transitions to be applied to the item whenever it changes its state
 item.visibleChildren // list<Item>, contains visual children
-item.childAt(x, y)
-item.contains(point)
-item.forceActiveFocus(reason)
-item.forceActiveFocus()
-item.grabToImage(callback, targetSize)
-item.mapFromGlobal(x, y)
+item.childAt(x, y) // Returns first visible QQuickItem* child found at point within item coord system
+item.contains(point) // If item contains QPointF (in local coordinates)
+item.forceActiveFocus(reason) // Focuses item and any parent FocusScopes, reason optional
+item.grabToImage(callback, targetSize) // Grabs the item into an in-memory image
+item.mapFromGlobal(x, y) // Returns converted global point to item local coord system
 item.mapFromItem(item2, x, y, w, h)
 item.mapFromItem(item2, x, y)
 item.mapToGlobal(x, y)
 item.mapToItem(item2, x, y, w, h)
 item.mapToItem(item2, x, y)
 item.nextItemInFocusChain(forward)
+  
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML BASIC TYPES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+property bool myBool: true
+property double myDouble: 0.0
+property int myInt: 0
+property real myReal: 0.0
+property string myStr: "str"
+property url myUrl:
+
+// Var
+// Use for holding Javascript types, QVariantMap and variant
+property var myArray: [1, 2, 3, "a", "b"] // Javascript array
+property var myObj: { "a":0, "b":1 } // Javascript object
+property var myFunction: (function() { return 0; }) // Javascript function
+
+// List
+// list of QML objects, not a Javascript array
+// Auto converts to/from QmlListProperty
+property list myList: []
+myList.length // item count in list
+myList[index] // access item
+  
+// Point
+// Auto converts to/from QPoint and QPointF
+property point myPoint: Qt.point(0, 20)
+property point myPoint: "0,20"
+myPoint.x
+myPoint.y
+
+// Date
+// Auto converts to/from QDate and QDateTime
+property date myDate: "2020-12-31"
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML COMPONENTS
