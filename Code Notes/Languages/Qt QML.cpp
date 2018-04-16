@@ -162,7 +162,7 @@ import MyEnums 1.0
 // Base for all QML components, instantiates QQuickItem
 Item {
     id: item                               // unique id of item, can be used to access it
-    property bool myProperty: true         // custom property
+    property int myProperty: 0             // custom property
     property int myProperty: myFunction    // if properties used in function changes, re-evaluates myProperty
     property int myProperty: { return 0; } // if properties used in function changes, re-evaluates myProperty
     property alias myAlias: myProperty     // reference for property
@@ -243,7 +243,7 @@ item.childAt(x, y) // Returns first visible QQuickItem* child found at point wit
 item.contains(point) // If item contains QPointF (in local coordinates)
 item.forceActiveFocus(reason) // Focuses item and any parent FocusScopes, reason optional
 item.grabToImage(callback, targetSize) // Grabs the item into an in-memory image
-item.mapFromGlobal(x, y) // Returns converted global point to item local coord system
+item.mapFromGlobal(x, y) // Returns converted global QML point to item local coord system
 item.mapFromItem(item2, x, y, w, h)
 item.mapFromItem(item2, x, y)
 item.mapToGlobal(x, y)
@@ -264,12 +264,12 @@ property real myReal: 0.0
 // Var
 // Use for holding Javascript types, QVariantMap and variant
 // Object attributes do not send signal or update bindings when changed
+property var myFn: (function() { return 0; }) // Javascript function
 property var myArray: [1, 2, 3, "a", "b"] // Javascript array
 property var myObj: { "a":0, "b":1 } // Javascript object
 property var myObj: ({ a:0, b:1 }) // Javascript object, requires () without "
 property var myObj: new Object({ "a":0, "b":1 }) // Javascript object
 property int myAttr: myObj.a // Will not update when 'a' updates
-property var myFn: (function() { return 0; }) // Javascript function
 
 // String
 // Auto converts to/from QString
@@ -297,16 +297,24 @@ myPoint.y
 property date myDate: "2020-12-31"
   
 // Rect
+// Auto converts to/from QRecr and QRectF
 // Attributes do not have signals, use onMyRectChanged instead
-property rect myRect:
+property rect myRect: "50,50,100x100"
+property rect myRect: Qt.rect(50, 50, 100, 100)
 myRect.x
 myRect.y
 myRect.width
 myRect.height
+myRect.top // read-only
+myRect.bottom // read-only
+myRect.left // read-only
+myRect.right // read-only
 
 // Size
+// Auto converts to/from QSize and QSizeF
 // Attributes do not have signals, use onMySizeChanged instead
-property size mySize:
+property size mySize: "150x50"
+property size mySize: Qt.size(150, 50)
 mySize.width
 mySize.height
 
