@@ -328,6 +328,7 @@ myUrl.toString() // Returns the absolute path
 // QML COLOR
 //===========================================================================================================
 
+// Color
 // ARGB color value, auto converts to/from QColor
 // Attributes do not have signals, use onMyColorChanged instead
 property color myColor: "red"
@@ -433,9 +434,10 @@ myVec.toString()
 // QML FONT TYPE
 //===========================================================================================================
 
+// Font
 // Auto converts to/from QFont
 // Attributes do not have signals, use onMyFontChanged instead
-property font myFont: "red"
+property font myFont:
 myFont.family
 myFont.bold
 myFont.italic
