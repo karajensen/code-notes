@@ -132,7 +132,7 @@ item.mapRectToScene(rect) // Converts item local coords into scene coords, retur
 item.mapToGlobal(point) // Converts item local coords into global coords, returns QPointF
 item.mapToItem(item2, point) // Converts item local coords into item2 local coords, returns QPointF
 item.mapToScene(point) // Converts item local coords into scene coords, returns QPointF
-item.nextItemInFocusChain(forward) // Returns item in the focus chain next to this item, whether to move forward
+item.nextItemInFocusChain(forward) // Returns next QQuickItem* in the focus chain, whether to move forward
 item.polish()
 item.releaseResources()
 item.scopedFocusItem()
@@ -249,7 +249,7 @@ item.mapFromItem(item2, x, y) // Converts item2 local coords into item local coo
 item.mapToGlobal(x, y) // Converts item local coords into global coords, returns QML point
 item.mapToItem(item2, x, y, w, h) // Converts item local coords into item2 local coords, returns QML rect
 item.mapToItem(item2, x, y) // Converts item local coords into item2 local coords, returns QML point
-item.nextItemInFocusChain(forward) // Returns item in the focus chain next to this item, forward optional
+item.nextItemInFocusChain(forward) // Returns item next in the focus chain, forward optional
   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML BASIC TYPES
