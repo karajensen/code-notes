@@ -181,7 +181,7 @@ Item {
         return x + y;
     }
   
-    /* Item states, state property holds chosen */
+    /* Item states, state property holds chosen, QML list type */
     states: [
         State { name: "state1" },
         State { name: "state2" }
@@ -243,13 +243,13 @@ item.childAt(x, y) // Returns first visible QQuickItem* child found at point wit
 item.contains(point) // If item contains QPointF (in local coordinates)
 item.forceActiveFocus(reason) // Focuses item and any parent FocusScopes, reason optional
 item.grabToImage(callback, targetSize) // Grabs the item into an in-memory image
-item.mapFromGlobal(x, y) // Returns converted global QML point to item local coord system
-item.mapFromItem(item2, x, y, w, h)
-item.mapFromItem(item2, x, y)
-item.mapToGlobal(x, y)
-item.mapToItem(item2, x, y, w, h)
-item.mapToItem(item2, x, y)
-item.nextItemInFocusChain(forward)
+item.mapFromGlobal(x, y) // Converts global coords into item local coords, retuns QML point
+item.mapFromItem(item2, x, y, w, h) // Converts item2 local coords into item local coords, retuns QML rect
+item.mapFromItem(item2, x, y) // Converts item2 local coords into item local coords, retuns QML point
+item.mapToGlobal(x, y) // Converts item local coords into global coords, returns QML point
+item.mapToItem(item2, x, y, w, h) // Converts item local coords into item2 local coords, returns QML rect
+item.mapToItem(item2, x, y) // Converts item local coords into item2 local coords, returns QML point
+item.nextItemInFocusChain(forward) // Returns item in the focus chain next to this item, forward optional
   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML BASIC TYPES
