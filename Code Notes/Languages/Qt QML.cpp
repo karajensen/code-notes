@@ -163,7 +163,6 @@ import MyEnums 1.0
 Item {
     id: item                               // unique id of item, can be used to access it
     property bool myProperty: true         // custom property
-    property int myEnum: MyEnum.ONE        // enum property
     property int myProperty: myFunction    // if properties used in function changes, re-evaluates myProperty
     property int myProperty: { return 0; } // if properties used in function changes, re-evaluates myProperty
     property alias myAlias: myProperty     // reference for property
@@ -259,6 +258,7 @@ item.nextItemInFocusChain(forward)
 property bool myBool: true
 property double myDouble: 0.0
 property int myInt: 0
+property int myEnum: MyEnum.ONE
 property real myReal: 0.0
 
 // Var
@@ -311,7 +311,13 @@ mySize.width
 mySize.height
 
 // Url
-property url myUrl:
+// Auto converts to/from QUrl
+// Attributes do not have signals, use onMyUrlChanged instead
+property url myUrl: "folder/image.png" // Relative path, will be converted to absolute
+property url myUrl: "file:///folder/image.png" // Absolute path
+property url myUrl: "qrc:///folder/image.png" // Resource path
+myUrl == Qt.resolvedUrl("folder/image.png") // Comparison
+myUrl.toString() // Returns the absolute path
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML COMPONENTS
