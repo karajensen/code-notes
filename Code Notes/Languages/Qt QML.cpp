@@ -122,17 +122,17 @@ item.grabMouse() // Item will receive all mouse events until ungrabMouse is call
 item.isComponentComplete() // If construction of the QML component is complete
 item.isFocusScope() // If item is a FocusScope
 item.keepMouseGrab() // Whether mouse input should exclusively remain with this item
-item.mapFromGlobal(point) // Returns converted global QPointF to item local coord system
-item.mapFromItem(item2, point) // Returns converted QPointF in item2 coord system to item local coord system
-item.mapFromScene(point) // Returns converted scene QPointF to item local coord system
-item.mapRectFromItem(item2, rect) // Returns converted QRectF in item2 coord system to item local coord system
-item.mapRectFromScene(rect) // Returns converted scene QRectF to item local coord system
-item.mapRectToItem(item2, rect)
-item.mapRectToScene(rect)
-item.mapToGlobal(point)
-item.mapToItem(item2, point)
-item.mapToScene(point)
-item.nextItemInFocusChain(forward)
+item.mapFromGlobal(point) // Converts global coords into item local coords, returns QPointF
+item.mapFromItem(item2, point) // Converts item2 local coords into item local coords, returns QPointF
+item.mapFromScene(point) // Converts scene coords into item local coords, returns QPointF
+item.mapRectFromItem(item2, rect) // Converts item2 local coords into item local coords, returns QRectF
+item.mapRectFromScene(rect) // Converts scene coords into item local coords, returns QRectF
+item.mapRectToItem(item2, rect) // Converts item local coords into item2 local coords, returns QRectF
+item.mapRectToScene(rect) // Converts item local coords into scene coords, returns QRectF
+item.mapToGlobal(point) // Converts item local coords into global coords, returns QPointF
+item.mapToItem(item2, point) // Converts item local coords into item2 local coords, returns QPointF
+item.mapToScene(point) // Converts item local coords into scene coords, returns QPointF
+item.nextItemInFocusChain(forward) // Returns item in the focus chain next to this item, whether to move forward
 item.polish()
 item.releaseResources()
 item.scopedFocusItem()
