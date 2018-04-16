@@ -192,7 +192,7 @@ item.activeFocus // Read only, whether item has active focus
 item.activeFocusOnTab // Whether included in active focus on tab, default false
 item.antialiasing // Whether antialiasing enable, default false
 item.baselineOffset // Position offset, default 0, used for text
-item.childrenRect // Read only, QRectF collective position and size of the item's children
+item.childrenRect // Read only, QML rect collective position and size of the item's children
 item.clip // Whether clipping enabled, default false, hides part of item/children, performance hit
 item.enabled // Recursive, whether the item receives mouse and keyboard events
 item.focus // Whether item has input focus
@@ -202,7 +202,7 @@ item.implicitHeight // Default height of the Item if no height is specified
 item.implicitWidth // Default width of the Item if no width is specified
 item.opacity // Alpha of item, values outside [0,1] clamped
 item.objectName // Inherited from QObject
-item.parent // QQuickItem*, visual parent of the item
+item.parent // returns Item, visual parent of the item
 item.rotation // rotation of the item in degrees clockwise around its transformOrigin, default 0
 item.scale // size of item, negative mirror's item, default 1
 item.smooth // Image interpolation, true is linear, false is nearest neighbour, default true
@@ -210,8 +210,8 @@ item.transformOrigin // TransformOrigin type which scale/rotate use
 item.visible // Recursive, whether item is rendered
 item.x / item.y / item.z // Position and stacking depth of item, negative z draws under parent
 item.anchors // Sub options: top, bottom, left, right, horizontalCenter, verticalCenter, baseLine
-item.anchors.fill // Takes QQuickItem parent or sibling, set to undefined to detach
-item.anchors.centerIn // Takes QQuickItem parent or sibling, set to undefined to detach
+item.anchors.fill // Takes QML Item parent or sibling, set to undefined to detach
+item.anchors.centerIn // Takes QML Item parent or sibling, set to undefined to detach
 item.anchors.margins // Set value for all margins
 item.anchors.topMargin // Set value for top margin
 item.anchors.bottomMargin // Set value for bottom margin
@@ -239,8 +239,8 @@ item.states // list<State>, list of possible states for this item
 item.transform // list<Transform>, list of transformations to apply
 item.transitions // list<Transition>, transitions to be applied to the item whenever it changes its state
 item.visibleChildren // list<Item>, contains visual children
-item.childAt(x, y) // Returns first visible QQuickItem* child found at point within item coord system
-item.contains(point) // If item contains QPointF (in local coordinates)
+item.childAt(x, y) // Returns first visible QML Item child found at point within item coord system
+item.contains(point) // If item contains QML point (in local coordinates)
 item.forceActiveFocus(reason) // Focuses item and any parent FocusScopes, reason optional
 item.grabToImage(callback, targetSize) // Grabs the item into an in-memory image
 item.mapFromGlobal(x, y) // Converts global coords into item local coords, retuns QML point
@@ -296,7 +296,7 @@ myPoint.x / myPoint.y
 property date myDate: "2020-12-31"
   
 // Rect
-// Auto converts to/from QRecr and QRectF
+// Auto converts to/from QRect and QRectF
 // Attributes do not have signals, use onMyRectChanged instead
 property rect myRect: "50,50,100x100"
 property rect myRect: Qt.rect(50, 50, 100, 100)
@@ -349,7 +349,7 @@ myColor.hslSaturation
 myColor.hslLightness
 
 //===========================================================================================================
-// QML MATH TYPES
+// QML MATH
 //===========================================================================================================
 
 // Matrix4x4
@@ -431,15 +431,15 @@ myVec.fuzzyEquals(myVec2, epsilon) // epsilon is real
 myVec.toString()
 
 //===========================================================================================================
-// QML FONT TYPE
+// QML FONT
 //===========================================================================================================
 
 // Font
 // Auto converts to/from QFont
 // If no matching font exists, Qt will use the closest matching installed font
 // Attributes do not have signals, use onMyFontChanged instead
-property font myFont:
-myFont.family // String font family name, eg "Helvetica"
+property font myFont: Qt.font({ family: "Helvetica", weight: Font.Black })
+myFont.family // String font family name
 myFont.bold // Whether bold
 myFont.italic // Whether italic
 myFont.underline // Whether has underline
