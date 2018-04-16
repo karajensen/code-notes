@@ -164,7 +164,8 @@ Item {
     id: item                               // unique id of item, can be used to access it
     property bool myProperty: true         // custom property
     property int myEnum: MyEnum.ONE        // enum property
-    property int myProperty: myFunction    // if property used in function changes, re-evaluates property
+    property int myProperty: myFunction    // if properties used in function changes, re-evaluates myProperty
+    property int myProperty: { return 0; } // if properties used in function changes, re-evaluates myProperty
     property alias myAlias: myProperty     // reference for property
     
     /* Called when the item has been instantiated */
@@ -259,14 +260,22 @@ property bool myBool: true
 property double myDouble: 0.0
 property int myInt: 0
 property real myReal: 0.0
-property string myStr: "str"
-property url myUrl:
 
 // Var
 // Use for holding Javascript types, QVariantMap and variant
+// Object attributes do not send signal or update bindings when changed
 property var myArray: [1, 2, 3, "a", "b"] // Javascript array
 property var myObj: { "a":0, "b":1 } // Javascript object
-property var myFunction: (function() { return 0; }) // Javascript function
+property var myObj: ({ a:0, b:1 }) // Javascript object, requires () without "
+property var myObj: new Object({ "a":0, "b":1 }) // Javascript object
+property int myAttr: myObj.a // Will not update when 'a' updates
+property var myFn: (function() { return 0; }) // Javascript function
+
+// String
+// Auto converts to/from QString
+// Attributes do not have signals, use onMyStrChanged instead
+property string myStr: "str"
+myStr.length
 
 // List
 // list of QML objects, not a Javascript array
@@ -276,10 +285,11 @@ myList.length // item count in list
 myList[index] // access item
   
 // Point
-// Auto converts to/from QPoint and QPointF
+// Auto converts to/from QPoint and QPoint
+// Attributes do not have signals, use onMyPointChanged instead
 property point myPoint: Qt.point(0, 20)
 property point myPoint: "0,20"
-myPoint.x
+myPoint.x 
 myPoint.y
 
 // Date
@@ -287,6 +297,7 @@ myPoint.y
 property date myDate: "2020-12-31"
   
 // Rect
+// Attributes do not have signals, use onMyRectChanged instead
 property rect myRect:
 myRect.x
 myRect.y
@@ -294,9 +305,13 @@ myRect.width
 myRect.height
 
 // Size
+// Attributes do not have signals, use onMySizeChanged instead
 property size mySize:
 mySize.width
 mySize.height
+
+// Url
+property url myUrl:
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML COMPONENTS
