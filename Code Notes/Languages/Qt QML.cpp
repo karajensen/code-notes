@@ -345,6 +345,37 @@ myColor.hslHue
 myColor.hslSaturation
 myColor.hslLightness
 
+// Font
+// Auto converts to/from QFont
+// Attributes do not have signals, use onMyFontChanged instead
+property font myFont: "red"
+myFont.family
+myFont.bold
+myFont.italic
+myFont.underline
+myFont.pointSize
+myFont.pixelSize // Overrides pointSize
+myFont.weight
+myFont.overline
+myFont.strikeout
+myFont.capitalization
+myFont.letterSpacing
+myFont.wordSpacing
+myFont.kerning
+myFont.preferShaping
+myFont.hintingPreference
+
+// Font Weighting
+Font.Thin	0
+Font.ExtraLight	12
+Font.Light	25
+Font.Normal	50
+Font.Medium	57
+Font.DemiBold	63
+Font.Bold	75
+Font.ExtraBold	81
+Font.Black	87
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML COMPONENTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
