@@ -352,9 +352,25 @@ myColor.hslLightness
 // QML MATH TYPES
 //===========================================================================================================
 
-matrix4x4
+property matrix4x4 myMat: Qt.matrix4x4(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
+myMat.m11...myMat.m44
+myMat.times(myMat2) // multiplying myMat with myMat4
+myMat.times(myVec) // transforming vector3d or vector4d with the 4x4 matrix
+myMat.times(value) // multiply matrix by real scalar
+myMat.plus(myMat2) // myMat + myMat2
+myMat.minus(myMat2) // myMat - myMat2
+myMat.row(index) // returns vector4d, zero-based index
+myMat.column(index) // returns vector4d, zero-based index
+myMat.determinant() // returns real
+myMat.inverted() // returns myMat inverted
+myMat.transposed() // returns myMat transposed
+myMat.fuzzyEquals(myMat2, epsilon) // epsilon is real
+myMat.toString()
 
-quaternion
+property quaternion myQuat: "1.0,0,1,0" // scalar,x,y,z
+property quaternion myQuat: Qt.quaternion(1.0,0,1,0) // scalar,x,y,z
+myQuat.x / myQuat.y / myQuat.z
+myQuat.scalar
 
 property vector2d myVec: "0,1"
 property vector2d myVec: Qt.vector2d(0,1)
