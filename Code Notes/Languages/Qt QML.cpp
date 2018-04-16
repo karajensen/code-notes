@@ -285,6 +285,18 @@ myPoint.y
 // Date
 // Auto converts to/from QDate and QDateTime
 property date myDate: "2020-12-31"
+  
+// Rect
+property rect myRect:
+myRect.x
+myRect.y
+myRect.width
+myRect.height
+
+// Size
+property size mySize:
+mySize.width
+mySize.height
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML COMPONENTS
