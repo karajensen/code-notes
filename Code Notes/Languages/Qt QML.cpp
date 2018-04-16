@@ -280,7 +280,7 @@ myStr.length
 // List
 // list of QML objects, not a Javascript array
 // Auto converts to/from QmlListProperty
-property list myList: []
+property list myList: [] 
 myList.length // item count in list
 myList[index] // access item
   
@@ -369,10 +369,40 @@ myVec.length() // returns real
 myVec.toVector3d() // returns vector3d, z component is set to 0
 myVec.toVector4d() // returns vector4d, z/w components set to 0
 myVec.fuzzyEquals(myVec2, epsilon) // epsilon is real
+myVec.toString()
 
-vector3d
+property vector3d myVec: "0,1,0"
+property vector3d myVec: Qt.vector3d(0,1,0)
+myVec.x / myVec.y / myVec.z
+myVec.crossProduct(myVec2) // returns vector x vector2
+myVec.dotProduct(myVec2) // returns real
+myVec.times(matrix) // transforming vector with the 4x4 matrix
+myVec.times(myVec2) // returns vector * vector2
+myVec.times(value) // returns vector * value
+myVec.plus(myVec2) // returns vector + vector2
+myVec.minus(myVec2) // returns vector - vector2
+myVec.normalized() // returns vector normalized
+myVec.length() // returns real
+myVec.toVector2d() // returns vector2d, z component dropped
+myVec.toVector4d() // returns vector4d, w component set to 0
+myVec.fuzzyEquals(myVec2, epsilon) // epsilon is real
+myVec.toString()
 
-vector4d
+property vector4d myVec: "0,1,0,1"
+property vector4d myVec: Qt.vector3d(0,1,0,1)
+myVec.x / myVec.y / myVec.z / myVec.w
+myVec.dotProduct(myVec2) // returns real
+myVec.times(matrix) // transforming vector with the 4x4 matrix
+myVec.times(myVec2) // returns vector * vector2
+myVec.times(value) // returns vector * value
+myVec.plus(myVec2) // returns vector + vector2
+myVec.minus(myVec2) // returns vector - vector2
+myVec.normalized() // returns vector normalized
+myVec.length() // returns real
+myVec.toVector2d() // returns vector2d, z/w components dropped
+myVec.toVector3d() // returns vector3d, w component dropped
+myVec.fuzzyEquals(myVec2, epsilon) // epsilon is real
+myVec.toString()
 
 //===========================================================================================================
 // QML FONT TYPE
