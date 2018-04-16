@@ -289,8 +289,7 @@ myList[index] // access item
 // Attributes do not have signals, use onMyPointChanged instead
 property point myPoint: Qt.point(0, 20)
 property point myPoint: "0,20"
-myPoint.x 
-myPoint.y
+myPoint.x / myPoint.y
 
 // Date
 // Auto converts to/from QDate and QDateTime
@@ -301,8 +300,7 @@ property date myDate: "2020-12-31"
 // Attributes do not have signals, use onMyRectChanged instead
 property rect myRect: "50,50,100x100"
 property rect myRect: Qt.rect(50, 50, 100, 100)
-myRect.x
-myRect.y
+myRect.x / myRect.y
 myRect.width
 myRect.height
 myRect.top // read-only
@@ -326,6 +324,26 @@ property url myUrl: "file:///folder/image.png" // Absolute path
 property url myUrl: "qrc:///folder/image.png" // Resource path
 myUrl == Qt.resolvedUrl("folder/image.png") // Comparison
 myUrl.toString() // Returns the absolute path
+
+// Color
+// ARGB color value, auto converts to/from QColor
+// Attributes do not have signals, use onMyColorChanged instead
+property color myColor: "red"
+property color myColor: "#RRGGBB"
+property color myColor: "#AARRGGBB"
+property color myColor: Qt.rgba()
+property color myColor: Qt.hsva()
+property color myColor: Qt.hsla()
+property color myColor: Qt.darker()
+property color myColor: Qt.lighter() 
+property color myColor: Qt.tint()
+myColor.r / myColor.g / myColor.b / myColor.a
+myColor.hsvHue
+myColor.hsvSaturation
+myColor.hsvValue 
+myColor.hslHue
+myColor.hslSaturation
+myColor.hslLightness
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML COMPONENTS
