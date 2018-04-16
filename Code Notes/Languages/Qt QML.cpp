@@ -318,7 +318,6 @@ mySize.height
 
 // Url
 // Auto converts to/from QUrl
-// Attributes do not have signals, use onMyUrlChanged instead
 property url myUrl: "folder/image.png" // Relative path, will be converted to absolute
 property url myUrl: "file:///folder/image.png" // Absolute path
 property url myUrl: "qrc:///folder/image.png" // Resource path
@@ -352,6 +351,8 @@ myColor.hslLightness
 // QML MATH TYPES
 //===========================================================================================================
 
+// Matrix4x4
+// Attributes do not have signals, use onMyMatChanged instead
 property matrix4x4 myMat: Qt.matrix4x4(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
 myMat.m11...myMat.m44
 myMat.times(myMat2) // multiplying myMat with myMat4
@@ -367,11 +368,15 @@ myMat.transposed() // returns myMat transposed
 myMat.fuzzyEquals(myMat2, epsilon) // epsilon is real
 myMat.toString()
 
+// Quaternion
+// Attributes do not have signals, use onMyQuatChanged instead
 property quaternion myQuat: "1.0,0,1,0" // scalar,x,y,z
 property quaternion myQuat: Qt.quaternion(1.0,0,1,0) // scalar,x,y,z
 myQuat.x / myQuat.y / myQuat.z
 myQuat.scalar
 
+// Vector2d
+// Attributes do not have signals, use onMyVecChanged instead
 property vector2d myVec: "0,1"
 property vector2d myVec: Qt.vector2d(0,1)
 myVec.x / myVec.y
@@ -387,6 +392,8 @@ myVec.toVector4d() // returns vector4d, z/w components set to 0
 myVec.fuzzyEquals(myVec2, epsilon) // epsilon is real
 myVec.toString()
 
+// Vector3d
+// Attributes do not have signals, use onMyVecChanged instead
 property vector3d myVec: "0,1,0"
 property vector3d myVec: Qt.vector3d(0,1,0)
 myVec.x / myVec.y / myVec.z
@@ -404,6 +411,8 @@ myVec.toVector4d() // returns vector4d, w component set to 0
 myVec.fuzzyEquals(myVec2, epsilon) // epsilon is real
 myVec.toString()
 
+// Vector4d
+// Attributes do not have signals, use onMyVecChanged instead
 property vector4d myVec: "0,1,0,1"
 property vector4d myVec: Qt.vector3d(0,1,0,1)
 myVec.x / myVec.y / myVec.z / myVec.w
