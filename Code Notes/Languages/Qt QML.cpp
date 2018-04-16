@@ -281,28 +281,33 @@ Menu {
 
 // LAYOUT PROPERTIES
 // Use these on any components inside the layout
-Layout.alignment
-Layout.bottomMargin
-Layout.column
-Layout.columnSpan
-Layout.fillHeight
-Layout.fillWidth
-Layout.leftMargin
-Layout.margins 
-Layout.maximumHeight
-Layout.maximumWidth
-Layout.minimumHeight
-Layout.minimumWidth
-Layout.preferredHeight
-Layout.preferredWidth
-Layout.rightMargin
-Layout.row
-Layout.rowSpan
-Layout.topMargin
+Layout.alignment // Alignment type flags
+Layout.bottomMargin // Overrides margin property if set
+Layout.column // column position of an item in a GridLayout
+Layout.columnSpan // column span of an item in a GridLayout
+Layout.fillHeight // Uses preferredHeight if false
+Layout.fillWidth // Uses preferredWidth if false
+Layout.leftMargin // Overrides margin property if set
+Layout.margins // Spacing between items
+Layout.maximumHeight // Number.POSITIVE_INFINITY default
+Layout.maximumWidth // Number.POSITIVE_INFINITY default
+Layout.minimumHeight // 0 default
+Layout.minimumWidth // 0 default
+Layout.preferredHeight // if -1 (default), will be ignored, and item's implicitHeight used instead
+Layout.preferredWidth // if -1 (default), will be ignored, and item's implicitWidth used instead
+Layout.rightMargin // Overrides margin property if set
+Layout.row // row position of an item in a GridLayout
+Layout.rowSpan // row span of an item in a GridLayout
+Layout.topMargin // Overrides margin property if set
 
 // ALIGNMENT TYPES
-Qt.AlignVCenter
+Qt.AlignLeft
+Qt.AlignHCenter
 Qt.AlignRight
+Qt.AlignTop
+Qt.AlignVCenter
+Qt.AlignBottom
+Qt.AlignBaseline
 
 // RowLayout
 // Aligns elements after each other in a single row
