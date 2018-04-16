@@ -345,6 +345,20 @@ myColor.hslHue
 myColor.hslSaturation
 myColor.hslLightness
 
+//===========================================================================================================
+// QML MATH TYPES
+//===========================================================================================================
+
+matrix4x4
+quaternion
+vector2d
+vector3d
+vector4d
+
+//===========================================================================================================
+// QML FONT TYPE
+//===========================================================================================================
+
 // Font
 // Auto converts to/from QFont
 // Attributes do not have signals, use onMyFontChanged instead
@@ -366,15 +380,22 @@ myFont.preferShaping
 myFont.hintingPreference
 
 // Font Weighting
-Font.Thin	0
-Font.ExtraLight	12
-Font.Light	25
-Font.Normal	50
-Font.Medium	57
-Font.DemiBold	63
-Font.Bold	75
-Font.ExtraBold	81
-Font.Black	87
+Font.Thin          0
+Font.ExtraLight    12
+Font.Light         25
+Font.Normal        50
+Font.Medium        57
+Font.DemiBold      63
+Font.Bold          75
+Font.ExtraBold     81
+Font.Black         87
+  
+// Font Capitalization
+Font.MixedCase       // No change
+Font.AllUppercase    // Render in all uppercase
+Font.AllLowercase    // Render in all lowercase
+Font.SmallCaps       // Render in all small-caps
+Font.Capitalize      // Render with the first character of each word as uppercase
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML COMPONENTS
