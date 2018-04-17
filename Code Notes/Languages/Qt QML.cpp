@@ -265,35 +265,6 @@ item.mapToItem(item2, x, y) // Converts item local coords into item2 local coord
 item.nextItemInFocusChain(forward) // Returns item next in the focus chain, forward optional
   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QML GLOBAL ITEMS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
-Qt.application.aboutToQuit.connect(mySlot) // Called on application exit
-Qt.application.state // Read only application state enum, undefined without QGuiApplication
-Qt.application.layoutDirection // Read only application layout enum, undefined without QGuiApplication
-Qt.application.font // Read only default font from QGuiApplication::font, undefined without QGuiApplication
-Qt.application.arguments // arguments the executable was invoked with
-Qt.application.name // application name set on the QCoreApplication instance
-Qt.application.displayName // application display name set on the QCoreApplication instance
-Qt.application.version // application version set on the QCoreApplication instance
-Qt.application.organization // organization name set on the QCoreApplication instance
-Qt.application.domain // organization domain set on the QCoreApplication instance
-Qt.application.supportsMultipleWindows // read only whether platform supports multiple windows
-Qt.application.screens // array containing the descriptions of all connected screens  
-
-Qt.quit() // Quits the application
-
-// APPLICATION STATE
-Qt.ApplicationActive     // Top-most and focused, interactable
-Qt.ApplicationInactive   // Not top-most or interactable but visible
-Qt.ApplicationSuspended  // Not visible or running
-Qt.ApplicationHidden     // Not visible but running
-  
-// APPLICATION LAYOUT
-Qt.RightToLeft           // Text and graphics positioned right to left
-Qt.LeftToRight           // Text and graphics positioned left to right
-  
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML BASIC TYPES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
@@ -382,6 +353,7 @@ property color myColor: Qt.hsla()
 property color myColor: Qt.darker()
 property color myColor: Qt.lighter() 
 property color myColor: Qt.tint()
+Qt.colorEqual(myColor, myColor2) // Either arg can be Color or string type
 myColor.r / myColor.g / myColor.b / myColor.a
 myColor.hsvHue
 myColor.hsvSaturation
@@ -524,74 +496,43 @@ Font.PreferVerticalHinting   // no horizontal hinting, but align in the vertical
 Font.PreferFullHinting       // hinting in both horizontal and vertical directions
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QML COMPONENTS
+// QML GLOBAL ITEMS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+Qt.application.aboutToQuit.connect(mySlot) // Called on application exit
+Qt.application.state // Read only application state enum, undefined without QGuiApplication
+Qt.application.layoutDirection // Read only application layout enum, undefined without QGuiApplication
+Qt.application.font // Read only default font from QGuiApplication::font, undefined without QGuiApplication
+Qt.application.arguments // arguments the executable was invoked with
+Qt.application.name // application name set on the QCoreApplication instance
+Qt.application.displayName // application display name set on the QCoreApplication instance
+Qt.application.version // application version set on the QCoreApplication instance
+Qt.application.organization // organization name set on the QCoreApplication instance
+Qt.application.domain // organization domain set on the QCoreApplication instance
+Qt.application.supportsMultipleWindows // read only whether platform supports multiple windows
+Qt.application.screens // array of QML Screen containing the descriptions of all connected screens  
+Qt.platform.os // String name of platform
+Qt.styleHints // QStyleHints, platform-specific style hints and settings
+Qt.callLater(myFn, arg1, arg2...) // Call once the QML engine returns to the event loop
+Qt.quit() // Quits the application
 
-// MOUSEAREA
-MouseArea {
-    hoverEnabled: true
-    acceptedButtons: Qt.RightButton | Qt.LeftButton | Qt.AllButtons
-    onPressed: {}
-    onRelease: {}
-    onClicked: {
-        var clickX = mouse.x;
-        var clickY = mouse.y;
-        var button = mouse.button;
-    }
-}
+// APPLICATION STATE
+Qt.ApplicationActive     // Top-most and focused, interactable
+Qt.ApplicationInactive   // Not top-most or interactable but visible
+Qt.ApplicationSuspended  // Not visible or running
+Qt.ApplicationHidden     // Not visible but running
+  
+// APPLICATION LAYOUT
+Qt.RightToLeft           // Text and graphics positioned right to left
+Qt.LeftToRight           // Text and graphics positioned left to righ
 
-// MENU
-// Call using id.popup() to show at mouse position
-Menu {
-    visible: false
-    MenuItem {
-        text: "Item"
-        iconSource: "qrc:///icon.png"
-        enabled: true
-        onTriggered: {}
-    }
-}
-
-// COMPONENT
-Component {
-    id: myComponent
-    Rectangle {
-        signal mySignal(int value)
-    }
-}
-
-// CONNECTIONS
-// Access a signal outside of the object that emits it
-Connections {
-    target: myLoader.item
-    onMySignal: { console.log(value); }
-}
-
-// LOADER
-// Dynamic loading from a URL or Component
-// If an explicit size is not set for Loader, automatically resized to the size of the loaded item
-// Signals emitted from the loaded object can be received using the Connections type
-// Use myLoader.item to access dynamic-created item
-// If using external myComponent, it can only see properties in myLoader, not in any of myLoader parents
-Loader {
-    id: myLoader
-    sourceComponent: myComponent // set to undefined or change to destroy items
-    sourceComponent: Component { } // Supports inline
-    source: "MyItem.qml" // set to "" or change to destroy items
-    focus: true // must be set to true for any of its children to get the active focus
-    onLoaded: {} // Signal when loading complete
-}
-
-myLoader.active // Set to false destroys, doesn't auto create if source/sourceComponent changes, true creates
-myLoader.asynchronous // Default false, change to false while loading will force it to finish synchronously
-myLoader.item // Item loaded, not available until Loader.Ready state
-myLoader.progress // Progress real [0.0, 1.0]
-myLoader.status // Status enum value
-
-Loader.Null     // the loader is inactive or no QML source has been set
-Loader.Ready    // the QML source has been loaded
-Loader.Loading  // the QML source is currently being loaded
-Loader.Error    // an error occurred while loading the QML source
+// PLATFORM TYPE
+"android"   // Android
+"ios"       // iOS
+"linux"     // Linux
+"osx"       // macOS
+"unix"      // Other Unix-based OS
+"windows"   // Windows
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML LAYOUTS
@@ -705,6 +646,84 @@ Dialog {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML COMPONENTS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// MOUSEAREA
+MouseArea {
+    hoverEnabled: true
+    acceptedButtons: Qt.RightButton | Qt.LeftButton | Qt.AllButtons
+    onPressed: {}
+    onRelease: {}
+    onClicked: {
+        var clickX = mouse.x;
+        var clickY = mouse.y;
+        var button = mouse.button;
+    }
+}
+
+// MENU
+// Call using id.popup() to show at mouse position
+Menu {
+    visible: false
+    MenuItem {
+        text: "Item"
+        iconSource: "qrc:///icon.png"
+        enabled: true
+        onTriggered: {}
+    }
+}
+
+// COMPONENT
+Component {
+    id: myComponent
+    Rectangle {
+        signal mySignal(int value)
+    }
+}
+
+// CONNECTIONS
+// Access a signal outside of the object that emits it, required for Loader items
+Connections {
+    target: myLoader.item
+    onMySignal: { console.log(value); }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML DYNAMIC COMPONENT CREATION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Qt.binding(function() { return 0; })
+Qt.createComponent(url, mode, parent)
+Qt.createQmlObject(qml, parent, filepath)
+
+// LOADER
+// Dynamic loading from a URL or Component
+// If an explicit size is not set for Loader, automatically resized to the size of the loaded item
+// Signals emitted from the loaded object can be received using the Connections type
+// Use myLoader.item to access dynamic-created item
+// If using external myComponent, it can only see properties in myLoader, not in any of myLoader parents
+Loader {
+    id: myLoader
+    sourceComponent: myComponent // set to undefined or change to destroy items
+    sourceComponent: Component { } // Supports inline
+    source: "MyItem.qml" // set to "" or change to destroy items
+    focus: true // must be set to true for any of its children to get the active focus
+    onLoaded: {} // Signal when loading complete
+}
+
+myLoader.active // Set to false destroys, doesn't auto create if source/sourceComponent changes, true creates
+myLoader.asynchronous // Default false, change to false while loading will force it to finish synchronously
+myLoader.item // Item loaded, not available until Loader.Ready state
+myLoader.progress // Progress real [0.0, 1.0]
+myLoader.status // Status enum value
+
+Loader.Null     // the loader is inactive or no QML source has been set
+Loader.Ready    // the QML source has been loaded
+Loader.Loading  // the QML source is currently being loaded
+Loader.Error    // an error occurred while loading the QML source
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML VIEWS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -744,7 +763,6 @@ ScrollView {
         }
     }
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // DEBUGGING QML
