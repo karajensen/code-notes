@@ -4,12 +4,12 @@
 
 // VARIABLE MODIFIERS
 //• Attempt to access an undeclared variable results in a ReferenceError exception
-//• Type determined by assignment, undefined if not assigned
+//• Type determined by assignment, undefined if not assigned, type changes with assigning
 //• Undefined value converts to NaN when used as a number, false when used as a boolean
-value = 0;         // Global variable
-var value = 0;     // Local variable to function, rest of function can see even if inside block scope
-const value = 0;   // Same as var but const
-let value = 0;     // Local variable to scope, rest of function cannot see
+value = true;         // Global variable
+var value = true;     // Local variable to function, rest of function can see even if inside block scope
+const value = true;   // Same as var but const, must be initialized
+let value = true;     // Local variable to scope, rest of function cannot see
 
 // VARIABLE COMPARISON
 x === y                           // equal value and equal type
@@ -20,13 +20,16 @@ typeof value === "string"
   
 // OBJECTS
 obj = null;                       // Null object
-value = { x: 2, y : 1 };          // Object with parameters
+obj = { x: 2, y : 1 };            // Object with parameters, keys don't require "
+obj.x /*or*/ obj["x"]             // Access object attributes, key requires "
 obj = obj || "default value";
   
 // CONVERSIONS
 myString = myInt.toString();
 myString = myInt + "MyString";   // Auto converts and concatenates
 myInt = parseInt("8");           // Returns NaN if not a number
+myFloat = parseFloat("8.0");     // Returns NaN if not a number
+myNumber = (+"8.0")              // Returns NaN if not a number
 
 // ENUMS
 MyEnum = {
@@ -51,8 +54,9 @@ for (var key in myArray){ var x = myArray[key] } // safe way to iterate, using i
 // STRINGS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-str = "MyString\n";               // supports escape characters
-str = new String("MyString");     
+str = new String("MyString");
+str = "MyString\n";               // Allows using escaped characters
+str = `String Template`           // Allows using escaped characters and multiline
 str.toUpperCase();                // Returns upper case of string
 str.toLowerCase();                // Returns lower case of string
 str.indexOf("substring");         // Returns first index of or -1 if not found
@@ -67,6 +71,8 @@ str.slice(start, end)             // Index to [start, end), end optional
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
 myArray = new Array();
+myArray = ["a","b","c",];         // Last , not needed and ignored
+myArray = [, ,];                  // Adds undefined for the empty element between , ,
 myArray.length 
 myArray[0] = "myEntry";
 myArray["one"] = 2.0;             // creates new entry if key doesn't exist
