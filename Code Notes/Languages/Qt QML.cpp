@@ -163,6 +163,7 @@ import MyEnums 1.0
 Item {
     id: item                               // unique id of item, can be used to access it
     property int myProperty: 0             // custom property
+    property int myProperty: myProperty2   // if myProperty2 changes, re-evaluates myProperty
     property int myProperty: myFunction    // if properties used in function changes, re-evaluates myProperty
     property int myProperty: { return 0; } // if properties used in function changes, re-evaluates myProperty
     property alias myAlias: myProperty     // reference for property
