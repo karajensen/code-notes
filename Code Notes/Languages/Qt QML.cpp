@@ -133,19 +133,19 @@ item.mapToGlobal(point) // Converts item local coords into global coords, return
 item.mapToItem(item2, point) // Converts item local coords into item2 local coords, returns QPointF
 item.mapToScene(point) // Converts item local coords into scene coords, returns QPointF
 item.nextItemInFocusChain(forward) // Returns next QQuickItem* in the focus chain, whether to move forward
-item.polish()
-item.releaseResources()
-item.scopedFocusItem()
-item.setCursor(cursor)
-item.setFlags(flags)
-item.stackAfter(sibling)
-item.ungrabMouse()
-item.update()
-item.updatePaintNode(oldNode, nodeData)
-item.updatePolish()
-item.widthValid()
-item.heightValid()
-item.window()
+item.scopedFocusItem() // If item is a FocusScope, returns the item in its focus chain with current focus
+item.setCursor(cursor) // Sets the cursor shape for this item
+item.setFlags(flags) // Enables the specified flags for this item
+item.stackAfter(sibling) // Moves sibling QQuickItem* to the index after item in the list of children
+item.stackAfter(sibling) // Moves sibling QQuickItem* to the index before item in the list of children
+item.ungrabMouse() // Releases the mouse grab following a call to grabMouse
+item.unsetCursor() // Clears the cursor shape for this item
+item.update() // Schedules a call to updatePaintNode
+item.updatePaintNode(oldNode, nodeData) // Called on render thread to sync the item with scene graph
+item.updatePolish() // Called to do item layout before rendering the next frame
+item.widthValid() // whether the width property has been set explicitly
+item.heightValid() //whether the height property has been set explicitly
+item.window() // Return QQuickWindow* in which this item is rendered
  
 // QQuickPaintedItem
 // Inherits QQuickItem, allows rendering content using QPainter
