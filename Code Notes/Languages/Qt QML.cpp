@@ -158,7 +158,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import MyEnums 1.0
   
-// Item
+// ITEM
 // Base for all QML components, instantiates QQuickItem
 Item {
     id: item                               // unique id of item, can be used to access it
@@ -274,7 +274,7 @@ property int myInt: 0
 property int myEnum: MyEnum.ONE
 property real myReal: 0.0
 
-// Var
+// VAR
 // Use for holding Javascript types, QVariantMap and variant
 // Object attributes do not send signal or update bindings when changed
 property var myFn: (function() { return 0; }) // Javascript function
@@ -284,31 +284,31 @@ property var myObj: ({ a:0, b:1 }) // Javascript object, requires () without "
 property var myObj: new Object({ "a":0, "b":1 }) // Javascript object
 property int myAttr: myObj.a // Will not update when 'a' updates
 
-// String
+// STRING
 // Auto converts to/from QString
 // Attributes do not have signals, use onMyStrChanged instead
 property string myStr: "str"
 myStr.length
 
-// List
+// LIST
 // list of QML objects, not a Javascript array
 // Auto converts to/from QmlListProperty
 property list myList: [] 
 myList.length // item count in list
 myList[index] // access item
   
-// Point
+// POINT
 // Auto converts to/from QPoint and QPoint
 // Attributes do not have signals, use onMyPointChanged instead
 property point myPoint: Qt.point(0, 20)
 property point myPoint: "0,20"
 myPoint.x / myPoint.y
 
-// Date
+// DATE
 // Auto converts to/from QDate and QDateTime
 property date myDate: "2020-12-31"
   
-// Rect
+// RECT
 // Auto converts to/from QRect and QRectF
 // Attributes do not have signals, use onMyRectChanged instead
 property rect myRect: "50,50,100x100"
@@ -321,7 +321,7 @@ myRect.bottom // read-only
 myRect.left // read-only
 myRect.right // read-only
 
-// Size
+// SIZE
 // Auto converts to/from QSize and QSizeF
 // Attributes do not have signals, use onMySizeChanged instead
 property size mySize: "150x50"
@@ -329,7 +329,7 @@ property size mySize: Qt.size(150, 50)
 mySize.width
 mySize.height
 
-// Url
+// URL
 // Auto converts to/from QUrl
 property url myUrl: "folder/image.png" // Relative path, will be converted to absolute
 property url myUrl: "file:///folder/image.png" // Absolute path
@@ -341,7 +341,7 @@ myUrl.toString() // Returns the absolute path
 // QML COLOR
 //===========================================================================================================
 
-// Color
+// COLOR
 // ARGB color value, auto converts to/from QColor
 // Attributes do not have signals, use onMyColorChanged instead
 property color myColor: "red"
@@ -365,7 +365,7 @@ myColor.hslLightness
 // QML MATH
 //===========================================================================================================
 
-// Matrix4x4
+// MATRIX4X4
 // Attributes do not have signals, use onMyMatChanged instead
 property matrix4x4 myMat: Qt.matrix4x4(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
 myMat.m11...myMat.m44
@@ -382,14 +382,14 @@ myMat.transposed() // returns myMat transposed
 myMat.fuzzyEquals(myMat2, epsilon) // epsilon is real
 myMat.toString()
 
-// Quaternion
+// QUATERNION
 // Attributes do not have signals, use onMyQuatChanged instead
 property quaternion myQuat: "1.0,0,1,0" // scalar,x,y,z
 property quaternion myQuat: Qt.quaternion(1.0,0,1,0) // scalar,x,y,z
 myQuat.x / myQuat.y / myQuat.z
 myQuat.scalar
 
-// Vector2d
+// VECTOR2D
 // Attributes do not have signals, use onMyVecChanged instead
 property vector2d myVec: "0,1"
 property vector2d myVec: Qt.vector2d(0,1)
@@ -406,7 +406,7 @@ myVec.toVector4d() // returns vector4d, z/w components set to 0
 myVec.fuzzyEquals(myVec2, epsilon) // epsilon is real
 myVec.toString()
 
-// Vector3d
+// VECTOR3D
 // Attributes do not have signals, use onMyVecChanged instead
 property vector3d myVec: "0,1,0"
 property vector3d myVec: Qt.vector3d(0,1,0)
@@ -425,7 +425,7 @@ myVec.toVector4d() // returns vector4d, w component set to 0
 myVec.fuzzyEquals(myVec2, epsilon) // epsilon is real
 myVec.toString()
 
-// Vector4d
+// VECTOR4D
 // Attributes do not have signals, use onMyVecChanged instead
 property vector4d myVec: "0,1,0,1"
 property vector4d myVec: Qt.vector3d(0,1,0,1)
@@ -447,7 +447,7 @@ myVec.toString()
 // QML FONT
 //===========================================================================================================
 
-// Font
+// FONT
 // Auto converts to/from QFont
 // If no matching font exists, Qt will use the closest matching installed font
 // Attributes do not have signals, use onMyFontChanged instead
@@ -479,14 +479,14 @@ Font.Bold          75
 Font.ExtraBold     81
 Font.Black         87
   
-// Font Capitalization
+// CAPITALIZATION
 Font.MixedCase       // No change
 Font.AllUppercase    // Render in all uppercase
 Font.AllLowercase    // Render in all lowercase
 Font.SmallCaps       // Render in all small-caps
 Font.Capitalize      // Render with the first character of each word as uppercase
   
-// Font Hinting
+// HINTING
 // Adjusts an outline (non-rastor) font so it lines up with a rasterized grid
 // Important for displaying small text, only used with "NativeRendering"
 Font.PreferDefaultHinting    // default hinting level
@@ -498,7 +498,7 @@ Font.PreferFullHinting       // hinting in both horizontal and vertical directio
 // QML COMPONENTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// MouseArea
+// MOUSEAREA
 MouseArea {
     hoverEnabled: true
     acceptedButtons: Qt.RightButton | Qt.LeftButton | Qt.AllButtons
@@ -511,7 +511,7 @@ MouseArea {
     }
 }
 
-// Menu
+// MENU
 // Call using id.popup() to show at mouse position
 Menu {
     visible: false
@@ -523,7 +523,7 @@ Menu {
     }
 }
 
-// Component
+// COMPONENT
 Component {
     id: myComponent
     Rectangle {
@@ -531,14 +531,14 @@ Component {
     }
 }
 
-// Connections
+// CONNECTIONS
 // Access a signal outside of the object that emits it
 Connections {
     target: myLoader.item
     onMySignal: { console.log(value); }
 }
 
-// Loader
+// LOADER
 // Dynamic loading from a URL or Component
 // If an explicit size is not set for Loader, automatically resized to the size of the loaded item
 // Signals emitted from the loaded object can be received using the Connections type
@@ -598,21 +598,21 @@ Qt.AlignVCenter
 Qt.AlignBottom
 Qt.AlignBaseline
 
-// RowLayout
+// ROWLAYOUT
 // Aligns elements after each other in a single row
 RowLayout {
     spacing: 5
     anchors.fill: parent // Still use anchors on base
 }
 
-// ColumnLayout
+// COLUMNLAYOUT
 // Aligns elements after each other in a single column
 ColumnLayout {
     spacing: 5
     anchors.fill: parent // Still use anchors on base
 }
 
-// GridLayout
+// GRIDLAYOUT
 // Aligns elements in a grid with n columns
 GridLayout {
     columns: 3
@@ -624,7 +624,7 @@ GridLayout {
 // QML WIDGETS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Rectangle
+// RECTANGLE
 Rectangle {
     color: "#8EACFF"
     radius: 2
@@ -632,7 +632,7 @@ Rectangle {
     border.width: 1      
 }
 
-// Text
+// TEXT
 Text {
     text: "text"
     verticalAlignment: Text.AlignVCenter
@@ -640,14 +640,14 @@ Text {
     font.bold: true
 }
 
-// Button
+// BUTTON
 Button {
     iconSource: "qrc:///icon.png"
     enabled: true
     onClicked: {}
 }
 
-// ProgressBar
+// PROGRESSBAR
 ProgressBar {
     maximumValue: 20
     minimumValue: 0
@@ -664,7 +664,7 @@ ProgressBar {
     }
 }
 
-//Dialog
+// DIALOG
 Dialog {
     visible: false // Turning on/off will show dialog window
     title: "Title"
