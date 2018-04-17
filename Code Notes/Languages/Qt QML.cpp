@@ -186,6 +186,11 @@ Item {
         State { name: "state1" },
         State { name: "state2" }
     ]
+  
+    /* Handle key pressed event when has active focus */
+    Keys.onPressed: {
+        event.accepted = true; // Don't send event to parent
+    }
 }
 
 item.activeFocus // Read only, whether item has active focus
@@ -527,17 +532,28 @@ Connections {
 
 // Loader
 // Dynamic loading from a URL or Component
-// If source or sourceComponent changes, any previously instantiated items are destroyed
-// If source set to "" or sourceComponent set to undefined, any previously instantiated items are destroyed
 // If an explicit size is not set for Loader, automatically resized to the size of the loaded item
 // Signals emitted from the loaded object can be received using the Connections type
 // Use myLoader.item to access dynamic-created item
+// If using external myComponent, it can only see properties in myLoader, not in any of myLoader parents
 Loader {
     id: myLoader
-    sourceComponent: myComponent
-    source: "MyItem.qml"
+    sourceComponent: myComponent // set to undefined or change to destroy items
+    sourceComponent: Component { } // Supports inline
+    source: "MyItem.qml" // set to "" or change to destroy items
     focus: true // must be set to true for any of its children to get the active focus
 }
+
+myLoader.active // Set to false destroys, doesn't auto create if source/sourceComponent changes, true creates
+myLoader.asynchronous // Default false, change to false while loading will force it to finish synchronously
+myLoader.item // Item loaded, not available until Loader.Ready state
+myLoader.progress // Progress real [0.0, 1.0]
+myLoader.status // Status enum value
+
+Loader.Null     // the loader is inactive or no QML source has been set
+Loader.Ready    // the QML source has been loaded
+Loader.Loading  // the QML source is currently being loaded
+Loader.Error    // an error occurred while loading the QML source
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML LAYOUTS
