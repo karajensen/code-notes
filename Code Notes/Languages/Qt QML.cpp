@@ -264,21 +264,34 @@ item.mapToItem(item2, x, y, w, h) // Converts item local coords into item2 local
 item.mapToItem(item2, x, y) // Converts item local coords into item2 local coords, returns QML point
 item.nextItemInFocusChain(forward) // Returns item next in the focus chain, forward optional
   
-// GLOBAL PROPERTIES
-Qt.application.state // Read only application state enum
-Qt.application.layoutDirection // Read only application layout enum
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML GLOBAL ITEMS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+Qt.application.aboutToQuit.connect(mySlot) // Called on application exit
+Qt.application.state // Read only application state enum, undefined without QGuiApplication
+Qt.application.layoutDirection // Read only application layout enum, undefined without QGuiApplication
+Qt.application.font // Read only default font from QGuiApplication::font, undefined without QGuiApplication
+Qt.application.arguments // arguments the executable was invoked with
+Qt.application.name // application name set on the QCoreApplication instance
+Qt.application.displayName // application display name set on the QCoreApplication instance
+Qt.application.version // application version set on the QCoreApplication instance
+Qt.application.organization // organization name set on the QCoreApplication instance
+Qt.application.domain // organization domain set on the QCoreApplication instance
+Qt.application.supportsMultipleWindows // read only whether platform supports multiple windows
+Qt.application.screens // array containing the descriptions of all connected screens  
 
-// Application State
+Qt.quit() // Quits the application
+
+// APPLICATION STATE
 Qt.ApplicationActive     // Top-most and focused, interactable
 Qt.ApplicationInactive   // Not top-most or interactable but visible
 Qt.ApplicationSuspended  // Not visible or running
 Qt.ApplicationHidden     // Not visible but running
   
-// Application Layout
+// APPLICATION LAYOUT
 Qt.RightToLeft           // Text and graphics positioned right to left
-QtLeftToRight            // Text and graphics positioned left to right
-  
-// GLOBAL METHODS
+Qt.LeftToRight           // Text and graphics positioned left to right
   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML BASIC TYPES
@@ -753,7 +766,6 @@ PROFILING QML
 QML_IMPORT_TRACE // enable debug output from QML's import loading 
 QT_DECLARATIVE_DEBUG / QT_QML_DEBUG // enable the debugging infrastructure
 
-Qt.quit() // Quits the application
 console.log("Message")
 console.debug("Message")
 console.info("Message")
