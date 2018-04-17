@@ -510,6 +510,35 @@ Menu {
     }
 }
 
+// Component
+Component {
+    id: myComponent
+    Rectangle {
+        // emit by calling myComponent.mySignal(0)
+        signal mySignal(int value)
+    }
+}
+
+// Connections
+Connections {
+    target: myLoader.item
+    onMySignal: { console.log(value); }
+}
+
+// Loader
+// Dynamic loading from a URL or Component
+// If source or sourceComponent changes, any previously instantiated items are destroyed
+// If source set to "" or sourceComponent set to undefined, any previously instantiated items are destroyed
+// If an explicit size is not set for Loader, automatically resized to the size of the loaded item
+// Signals emitted from the loaded object can be received using the Connections type
+// Use myLoader.item to access dynamic-created item
+Loader {
+    id: myLoader
+    sourceComponent: myComponent
+    source: "MyItem.qml"
+    focus: true // must be set to true for any of its children to get the active focus
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML LAYOUTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
