@@ -166,7 +166,8 @@ Item {
     property int myProperty: myFunction    // if properties used in function changes, re-evaluates myProperty
     property int myProperty: { return 0; } // if properties used in function changes, re-evaluates myProperty
     property alias myAlias: myProperty     // reference for property
-    
+    signal mySignal(int value)             // call with item.mySignal(0)
+      
     /* Called when the item has been instantiated */
     Component.onCompleted: {}
 
@@ -175,6 +176,12 @@ Item {
 
     /* Called when the property has changed */
     onMyPropertyChanged: {}
+  
+    /* Called when signal emitted */
+    onMySignal: { console.log(value); }
+  
+    /* Called when signal emitted, requires calling signal.connect */
+    function mySlot(value) {}
 
     /* Javascript custom function */
     function myFunction(x, y) {
@@ -193,6 +200,7 @@ Item {
     }
 }
 
+item.mySignal.connect(mySlot) // Connect signal and slot
 item.activeFocus // Read only, whether item has active focus
 item.activeFocusOnTab // Whether included in active focus on tab, default false
 item.antialiasing // Whether antialiasing enable, default false
@@ -519,12 +527,12 @@ Menu {
 Component {
     id: myComponent
     Rectangle {
-        // emit by calling myComponent.mySignal(0)
         signal mySignal(int value)
     }
 }
 
 // Connections
+// Access a signal outside of the object that emits it
 Connections {
     target: myLoader.item
     onMySignal: { console.log(value); }
@@ -542,6 +550,7 @@ Loader {
     sourceComponent: Component { } // Supports inline
     source: "MyItem.qml" // set to "" or change to destroy items
     focus: true // must be set to true for any of its children to get the active focus
+    onLoaded: {} // Signal when loading complete
 }
 
 myLoader.active // Set to false destroys, doesn't auto create if source/sourceComponent changes, true creates
