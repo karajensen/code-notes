@@ -513,6 +513,8 @@ Qt.application.supportsMultipleWindows // read only whether platform supports mu
 Qt.application.screens // array of QML Screen containing the descriptions of all connected screens  
 Qt.platform.os // String name of platform
 Qt.styleHints // QStyleHints, platform-specific style hints and settings
+Qt.atob(data) // decodes the base64 encoded data string and returns it
+Qt.btoa(data) // returns a base64 encoding of data
 Qt.callLater(myFn, arg1, arg2...) // Call once the QML engine returns to the event loop
 Qt.quit() // Quits the application
 
