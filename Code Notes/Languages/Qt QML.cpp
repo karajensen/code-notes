@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//QML ENGINE / QT QUICK
+// QML ENGINE / QT QUICK
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /************************************************************************************************************
@@ -347,13 +347,15 @@ myUrl.toString() // Returns the absolute path
 property color myColor: "red"
 property color myColor: "#RRGGBB"
 property color myColor: "#AARRGGBB"
-property color myColor: Qt.rgba()
-property color myColor: Qt.hsva()
-property color myColor: Qt.hsla()
-property color myColor: Qt.darker()
-property color myColor: Qt.lighter() 
-property color myColor: Qt.tint()
-Qt.colorEqual(myColor, myColor2) // Either arg can be Color or string type
+property color myColor: Qt.rgba(r, g, b, a) // All real in range [0.0,1.0]
+Qt.hsva(hue, saturation, value, alpha) // All real in range [0.0,1.0]
+Qt.hsla(hue, saturation, lightness, alpha) // All real in range [0.0,1.0]
+Qt.darker(myColor, v) // Returns darker color by converting to HSV then value/v, v <= 0 unspecified
+Qt.darker(myColor) // Returns color 50% darker than myColor
+Qt.lighter(myColor, v) // Returns lighter color by converting to HSV then value*v, v <= 0 unspecified
+Qt.lighter(myColor) // Returns color 50% lighter than myColor
+Qt.tint(myColor, tintColor) // Returns color with tintColor overlaying myColor
+Qt.colorEqual(myColor, myColor2) // Either argument can be Color or string type
 myColor.r / myColor.g / myColor.b / myColor.a
 myColor.hsvHue
 myColor.hsvSaturation
@@ -453,6 +455,7 @@ myVec.toString()
 // If no matching font exists, Qt will use the closest matching installed font
 // Attributes do not have signals, use onMyFontChanged instead
 property font myFont: Qt.font({ family: "Helvetica", weight: Font.Black })
+Qt.fontFamilies() // Returns list<string> of font families available
 myFont.family // String font family name
 myFont.bold // Whether bold
 myFont.italic // Whether italic
@@ -516,6 +519,7 @@ Qt.styleHints // QStyleHints, platform-specific style hints and settings
 Qt.atob(data) // decodes the base64 encoded data string and returns it
 Qt.btoa(data) // returns a base64 encoding of data
 Qt.callLater(myFn, arg1, arg2...) // Call once the QML engine returns to the event loop
+Qt.exit(returncode) // causes the QQmlEngine::exit(int) signal to be emitted
 Qt.quit() // Quits the application
 
 // APPLICATION STATE
