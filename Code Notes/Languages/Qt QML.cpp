@@ -264,6 +264,22 @@ item.mapToItem(item2, x, y, w, h) // Converts item local coords into item2 local
 item.mapToItem(item2, x, y) // Converts item local coords into item2 local coords, returns QML point
 item.nextItemInFocusChain(forward) // Returns item next in the focus chain, forward optional
   
+// GLOBAL PROPERTIES
+Qt.application.state // Read only application state enum
+Qt.application.layoutDirection // Read only application layout enum
+
+// Application State
+Qt.ApplicationActive     // Top-most and focused, interactable
+Qt.ApplicationInactive   // Not top-most or interactable but visible
+Qt.ApplicationSuspended  // Not visible or running
+Qt.ApplicationHidden     // Not visible but running
+  
+// Application Layout
+Qt.RightToLeft           // Text and graphics positioned right to left
+QtLeftToRight            // Text and graphics positioned left to right
+  
+// GLOBAL METHODS
+  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML BASIC TYPES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
