@@ -304,10 +304,6 @@ myList[index] // access item
 property point myPoint: Qt.point(0, 20)
 property point myPoint: "0,20"
 myPoint.x / myPoint.y
-
-// DATE
-// Auto converts to/from QDate and QDateTime
-property date myDate: "2020-12-31"
   
 // RECT
 // Auto converts to/from QRect and QRectF
@@ -337,6 +333,25 @@ property url myUrl: "file:///folder/image.png" // Absolute path
 property url myUrl: "qrc:///folder/image.png" // Resource path
 myUrl == Qt.resolvedUrl("folder/image.png") // Comparison
 myUrl.toString() // Returns the absolute path
+
+//===========================================================================================================
+// QML DATE
+//===========================================================================================================
+
+// DATE
+// Auto converts to/from QDate and QDateTime
+property date myDate: "2020-12-31"
+Qt.formatDate(date, format) // JavaScript Date or QML date, format defaults Qt.SystemLocaleShortDate
+Qt.formatDateTime(date, format) // Same as formatDate, returns date as string
+  
+// DATE FORMAT ENUM
+Qt.TextDate                //
+Qt.ISODate                 //
+Qt.ISODateWithMs           //
+Qt.SystemLocaleShortDate   //
+Qt.SystemLocaleLongDate    //
+Qt.DefaultLocaleShortDate  // 
+Qt.DefaultLocaleLongDate   //
 
 //===========================================================================================================
 // QML COLOR
@@ -531,7 +546,7 @@ Qt.ApplicationHidden     // Not visible but running
   
 // APPLICATION LAYOUT
 Qt.RightToLeft           // Text and graphics positioned right to left
-Qt.LeftToRight           // Text and graphics positioned left to righ
+Qt.LeftToRight           // Text and graphics positioned left to right
 
 // PLATFORM TYPE
 "android"   // Android
