@@ -167,7 +167,7 @@ Item {
     property int myProperty: myProperty2   // if myProperty2 changes, re-evaluates myProperty
     property int myProperty: myFunction    // if properties used in function changes, re-evaluates myProperty
     property int myProperty: { return 0; } // if properties used in function changes, re-evaluates myProperty
-    property int myProperty: MyJS.fn()     // Use function from imported javascript file
+    property int myProperty: MyJS.fn       // Use function from imported javascript file
     property alias myAlias: myProperty     // reference for property
     signal mySignal(int value)             // call with item.mySignal(0)
       
@@ -556,50 +556,6 @@ Font.PreferVerticalHinting   // no horizontal hinting, but align in the vertical
 Font.PreferFullHinting       // hinting in both horizontal and vertical directions
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QML GLOBAL ITEMS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
-Qt.application.aboutToQuit.connect(mySlot) // Called on application exit
-Qt.application.state // Read only application state enum, undefined without QGuiApplication
-Qt.application.layoutDirection // Read only application layout enum, undefined without QGuiApplication
-Qt.application.font // Read only default font from QGuiApplication::font, undefined without QGuiApplication
-Qt.application.arguments // arguments the executable was invoked with
-Qt.application.name // application name set on the QCoreApplication instance
-Qt.application.displayName // application display name set on the QCoreApplication instance
-Qt.application.version // application version set on the QCoreApplication instance
-Qt.application.organization // organization name set on the QCoreApplication instance
-Qt.application.domain // organization domain set on the QCoreApplication instance
-Qt.application.supportsMultipleWindows // read only whether platform supports multiple windows
-Qt.application.screens // array of QML Screen containing the descriptions of all connected screens  
-Qt.platform.os // String name of platform
-Qt.styleHints // QStyleHints, platform-specific style hints and settings
-Qt.atob(data) // decodes the base64 encoded data string and returns it
-Qt.btoa(data) // returns a base64 encoding of data
-Qt.callLater(myFn, arg1, arg2...) // Call once the QML engine returns to the event loop
-Qt.exit(returncode) // causes the QQmlEngine::exit(int) signal to be emitted
-Qt.isQtObject(obj) // true if object is a valid reference to a Qt or QML object
-Qt.md5(data) // Returns a hex string of the md5 hash of data
-Qt.quit() // Quits the application
-
-// APPLICATION STATE
-Qt.ApplicationActive     // Top-most and focused, interactable
-Qt.ApplicationInactive   // Not top-most or interactable but visible
-Qt.ApplicationSuspended  // Not visible or running
-Qt.ApplicationHidden     // Not visible but running
-  
-// APPLICATION LAYOUT
-Qt.RightToLeft           // Text and graphics positioned right to left
-Qt.LeftToRight           // Text and graphics positioned left to right
-
-// PLATFORM TYPE
-"android"   // Android
-"ios"       // iOS
-"linux"     // Linux
-"osx"       // macOS
-"unix"      // Other Unix-based OS
-"windows"   // Windows
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML LAYOUTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -656,7 +612,7 @@ GridLayout {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QML WIDGETS
+// QML COMPONENTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // RECTANGLE
@@ -699,9 +655,17 @@ ProgressBar {
     }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QML COMPONENTS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MENU
+// Call using id.popup() to show at mouse position
+Menu {
+    visible: false
+    MenuItem {
+        text: "Item"
+        iconSource: "qrc:///icon.png"
+        enabled: true
+        onTriggered: {}
+    }
+}
 
 // DIALOG
 Dialog {
@@ -724,18 +688,6 @@ MouseArea {
         var clickX = mouse.x;
         var clickY = mouse.y;
         var button = mouse.button;
-    }
-}
-
-// MENU
-// Call using id.popup() to show at mouse position
-Menu {
-    visible: false
-    MenuItem {
-        text: "Item"
-        iconSource: "qrc:///icon.png"
-        enabled: true
-        onTriggered: {}
     }
 }
 
@@ -787,7 +739,7 @@ Binding {
 // QML DYNAMIC CREATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
-// DYNAMIC CREATE COMPONENT
+// CREATE COMPONENT
 // Returns a Component object created using qml url, parent can be null
 // Use createObject to create an object instance of this component, will return null if failed
 // incubator can be used to load instances asynchronously
@@ -812,7 +764,7 @@ Component.Ready    // the component has been loaded, and can be used to create i
 Component.Loading  // the component is currently being loaded
 Component.Error    // an error occurred while loading the component
 
-// DYNAMIC CREATE QML OBJECT
+// CREATE QML OBJECT
 // Will be null if error creating object
 // Any imports used here must also be at top of file
 var obj = Qt.createQmlObject('import QtQuick 2.0; Rectangle {width: 20; height: 20}', parent);
@@ -883,6 +835,50 @@ ScrollView {
         }
     }
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML GLOBAL ITEMS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+Qt.application.aboutToQuit.connect(mySlot) // Called on application exit
+Qt.application.state // Read only application state enum, undefined without QGuiApplication
+Qt.application.layoutDirection // Read only application layout enum, undefined without QGuiApplication
+Qt.application.font // Read only default font from QGuiApplication::font, undefined without QGuiApplication
+Qt.application.arguments // arguments the executable was invoked with
+Qt.application.name // application name set on the QCoreApplication instance
+Qt.application.displayName // application display name set on the QCoreApplication instance
+Qt.application.version // application version set on the QCoreApplication instance
+Qt.application.organization // organization name set on the QCoreApplication instance
+Qt.application.domain // organization domain set on the QCoreApplication instance
+Qt.application.supportsMultipleWindows // read only whether platform supports multiple windows
+Qt.application.screens // array of QML Screen containing the descriptions of all connected screens  
+Qt.platform.os // String name of platform
+Qt.styleHints // QStyleHints, platform-specific style hints and settings
+Qt.atob(data) // decodes the base64 encoded data string and returns it
+Qt.btoa(data) // returns a base64 encoding of data
+Qt.callLater(myFn, arg1, arg2...) // Call once the QML engine returns to the event loop
+Qt.exit(returncode) // causes the QQmlEngine::exit(int) signal to be emitted
+Qt.isQtObject(obj) // true if object is a valid reference to a Qt or QML object
+Qt.md5(data) // Returns a hex string of the md5 hash of data
+Qt.quit() // Quits the application
+
+// APPLICATION STATE
+Qt.ApplicationActive     // Top-most and focused, interactable
+Qt.ApplicationInactive   // Not top-most or interactable but visible
+Qt.ApplicationSuspended  // Not visible or running
+Qt.ApplicationHidden     // Not visible but running
+  
+// APPLICATION LAYOUT
+Qt.RightToLeft           // Text and graphics positioned right to left
+Qt.LeftToRight           // Text and graphics positioned left to right
+
+// PLATFORM TYPE
+"android"   // Android
+"ios"       // iOS
+"linux"     // Linux
+"osx"       // macOS
+"unix"      // Other Unix-based OS
+"windows"   // Windows
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // DEBUGGING QML
