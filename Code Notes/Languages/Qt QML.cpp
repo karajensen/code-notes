@@ -748,10 +748,34 @@ Connections {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML DYNAMIC CREATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+// DYNAMIC CREATE COMPONENT
+// Returns a Component object created using qml url
+// Use createObject to create/return an object instance of this component
+// incubator can be used to load instances asynchronously
+var component = Qt.createComponent("MyQML.qml");
+console.log(component.errorString());
+if (component.status == Component.Ready) {
+    var obj = component.createObject(parent, {"x": 100, "y": 100});
+    var obj = component.createObject(parent, {"x": Qt.binding(function() { return item.x; })});
+  
+    var incubator = component.incubateObject(parent, { x: 10, y: 10 });
+    if (incubator.status != Component.Ready) {
+        incubator.onStatusChanged = function(status) {
+            if (status == Component.Ready) {
+                var obj = incubator.object;
+            }
+        }
+    }
+}
 
-Qt.binding(function() { return 0; })
-Qt.createComponent(url, mode, parent)
-Qt.createQmlObject(qml, parent, filepath)
+Component.Null     // no data is available for the component
+Component.Ready    // the component has been loaded, and can be used to create instances
+Component.Loading  // the component is currently being loaded
+Component.Error    // an error occurred while loading the component
+
+// DYNAMIC CREATE QML OBJECT
+var obj = Qt.createQmlObject('import QtQuick 2.0; Rectangle {width: 20; height: 20}', parent);
 
 // LOADER
 // Dynamic loading from a URL or Component
