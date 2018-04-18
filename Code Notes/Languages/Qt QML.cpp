@@ -191,10 +191,18 @@ Item {
         return x + y;
     }
   
-    /* Item states, state property holds chosen, QML list type */
+    /* Item states, if multiple 'when' true, first is chosen */
     states: [
-        State { name: "state1" },
-        State { name: "state2" }
+        State {
+            name: "state1" 
+            PropertyChanges { target: item; myProperty: 1 } 
+            when: myBoolProperty
+        },
+        State { 
+            name: "state2" 
+            PropertyChanges { target: item; myProperty: 2 }
+            when: myFunction
+        }
     ]
   
     /* Handle key pressed event when has active focus */
