@@ -157,6 +157,7 @@ item.window() // Return QQuickWindow* in which this item is rendered
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import MyEnums 1.0
+import "MyJavascript.js" as MyJS
   
 // ITEM
 // Base for all QML components, instantiates QQuickItem
@@ -166,6 +167,7 @@ Item {
     property int myProperty: myProperty2   // if myProperty2 changes, re-evaluates myProperty
     property int myProperty: myFunction    // if properties used in function changes, re-evaluates myProperty
     property int myProperty: { return 0; } // if properties used in function changes, re-evaluates myProperty
+    property int myProperty: MyJS.fn()     // Use function from imported javascript file
     property alias myAlias: myProperty     // reference for property
     signal mySignal(int value)             // call with item.mySignal(0)
       
@@ -750,8 +752,8 @@ Connections {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
 // DYNAMIC CREATE COMPONENT
-// Returns a Component object created using qml url
-// Use createObject to create/return an object instance of this component
+// Returns a Component object created using qml url, parent can be null
+// Use createObject to create an object instance of this component, will return null if failed
 // incubator can be used to load instances asynchronously
 var component = Qt.createComponent("MyQML.qml");
 console.log(component.errorString());
@@ -775,6 +777,8 @@ Component.Loading  // the component is currently being loaded
 Component.Error    // an error occurred while loading the component
 
 // DYNAMIC CREATE QML OBJECT
+// Will be null if error creating object
+// Any imports used here must also be at top of file
 var obj = Qt.createQmlObject('import QtQuick 2.0; Rectangle {width: 20; height: 20}', parent);
 
 // LOADER
