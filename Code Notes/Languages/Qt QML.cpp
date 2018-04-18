@@ -631,6 +631,13 @@ Text {
     font.bold: true
 }
 
+// TEXTINPUT
+TextInput {
+    maximumLength: 100
+    focus: true
+    validator: IntValidator { bottom:-100 top:100 } 
+}
+
 // BUTTON
 Button {
     iconSource: "qrc:///icon.png"
