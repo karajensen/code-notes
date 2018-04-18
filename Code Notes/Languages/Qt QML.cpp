@@ -731,6 +731,23 @@ Menu {
     }
 }
 
+// REPEATER
+// Usually in Row/Column, instantiates n items
+// creates all of its delegate items when the repeater is first created
+Repeater {
+    id: repeater
+    model: 3
+    Text { text: "Item " + indeX + "/" repeater.count }
+}
+Repeater {
+    model: ["one", "two", "three"]
+    Text { text: "Data: " + modelData }
+}
+Repeater {
+    model: listView
+    Text { text: "Data: " + modelData.role_name }
+}
+
 // COMPONENT
 // Used for sourceComponent and contentItem properties
 Component {
