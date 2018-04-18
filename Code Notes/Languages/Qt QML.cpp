@@ -341,8 +341,12 @@ myUrl.toString() // Returns the absolute path
 // DATE
 // Auto converts to/from QDate and QDateTime
 property date myDate: "2020-12-31"
-Qt.formatDate(date, format) // JavaScript Date or QML date, format defaults Qt.SystemLocaleShortDate
-Qt.formatDateTime(date, format) // Same as formatDate, returns date as string
+  
+// JavaScript Date or QML date, returns date as string
+// Format defaults Qt.SystemLocaleShortDate, can be enum or string
+Qt.formatDate(date, format)
+Qt.formatDateTime(date, format)
+Qt.formatTime(date, format)
   
 // DATE FORMAT ENUM
 Qt.TextDate                // ddd MMM d yyyy
@@ -352,6 +356,30 @@ Qt.SystemLocaleShortDate   // The short format used by the operating system
 Qt.SystemLocaleLongDate    // The long format used by the operating system
 Qt.DefaultLocaleShortDate  // The short format specified by the application's locale
 Qt.DefaultLocaleLongDate   // The long format specified by the application's locale
+  
+// DATE FORMAT STRING
+// Can use space . and : to seperate (eg. "ddd MMMM d yy" )
+d     // the day as number without a leading zero (1 to 31)
+dd    // the day as number with a leading zero (01 to 31)
+ddd   // the abbreviated localized day name (e.g. 'Mon' to 'Sun'). Uses QDate::shortDayName()
+dddd  // the long localized day name (e.g. 'Monday' to 'Qt::Sunday'). Uses QDate::longDayName()
+M     // the month as number without a leading zero (1-12)
+MM    // the month as number with a leading zero (01-12)
+MMM   // the abbreviated localized month name (e.g. 'Jan' to 'Dec'). Uses QDate::shortMonthName()
+MMMM  // the long localized month name (e.g. 'January' to 'December'). Uses QDate::longMonthName()
+yy    // the year as two digit number (00-99)
+yyyy  // the year as four digit number
+h     // the hour without a leading zero (0 to 23 or 1 to 12 if AM/PM display)
+hh    // the hour with a leading zero (00 to 23 or 01 to 12 if AM/PM display)
+m     // the minute without a leading zero (0 to 59)
+mm    // the minute with a leading zero (00 to 59)
+s     // the second without a leading zero (0 to 59)
+ss    // the second with a leading zero (00 to 59)
+z     // the milliseconds without leading zeroes (0 to 999)
+zzz   // the milliseconds with leading zeroes (000 to 999)
+AP    // use AM/PM display. AP will be replaced by either "AM" or "PM"
+ap    // use am/pm display. ap will be replaced by either "am" or "pm"
+t     // include a time-zone indicator
 
 //===========================================================================================================
 // QML COLOR
