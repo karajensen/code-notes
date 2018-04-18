@@ -772,6 +772,17 @@ Connections {
     onMySignal: { console.log(value); }
 }
 
+// BINDING
+// Will become active and assign value to myProperty when myBoolean becomes true
+// When active, will disable any direct bindings myProperty may have until myBoolean is false
+Binding {
+    target: item // required if not a child of item with property
+    property: "myProperty" // can be QML basic type attribute (eg. "myRectProperty.x")
+    when: myBoolean
+    value: 10 // Can be value, another property etc
+    delayed: true // wait until event queue cleared before assigning
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML DYNAMIC CREATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
