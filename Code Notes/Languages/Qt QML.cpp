@@ -285,12 +285,6 @@ property var myObj: ({ a:0, b:1 }) // Javascript object, requires () without "
 property var myObj: new Object({ "a":0, "b":1 }) // Javascript object
 property int myAttr: myObj.a // Will not update when 'a' updates
 
-// STRING
-// Auto converts to/from QString
-// Attributes do not have signals, use onMyStrChanged instead
-property string myStr: "str"
-myStr.length
-
 // LIST
 // list of QML objects, not a Javascript array
 // Auto converts to/from QmlListProperty
@@ -333,6 +327,15 @@ property url myUrl: "file:///folder/image.png" // Absolute path
 property url myUrl: "qrc:///folder/image.png" // Resource path
 myUrl == Qt.resolvedUrl("folder/image.png") // Comparison
 myUrl.toString() // Returns the absolute path
+Qt.resolvedUrl(myUrl) // Returns url resolved relative to the URL of the caller
+
+// STRING
+// Auto converts to/from QString
+// Attributes do not have signals, use onMyStrChanged instead
+property string myStr: "str"
+myStr.length
+Qt.qsTrId(id) // returns translated string at id, else id if no translation
+Qt.qsTrIdNoOp(id) // Marks id for dynamic translation, returns id
 
 //===========================================================================================================
 // QML DATE
@@ -342,7 +345,7 @@ myUrl.toString() // Returns the absolute path
 // Auto converts to/from QDate and QDateTime
 property date myDate: "2020-12-31"
   
-// JavaScript Date or QML date, returns date as string
+// Takes JavaScript Date or QML date, returns date as string
 // Format defaults Qt.SystemLocaleShortDate, can be enum or string
 Qt.formatDate(date, format)
 Qt.formatDateTime(date, format)
@@ -564,6 +567,8 @@ Qt.atob(data) // decodes the base64 encoded data string and returns it
 Qt.btoa(data) // returns a base64 encoding of data
 Qt.callLater(myFn, arg1, arg2...) // Call once the QML engine returns to the event loop
 Qt.exit(returncode) // causes the QQmlEngine::exit(int) signal to be emitted
+Qt.isQtObject(obj) // true if object is a valid reference to a Qt or QML object
+Qt.md5(data) // Returns a hex string of the md5 hash of data
 Qt.quit() // Quits the application
 
 // APPLICATION STATE
