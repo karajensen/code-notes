@@ -345,13 +345,13 @@ Qt.formatDate(date, format) // JavaScript Date or QML date, format defaults Qt.S
 Qt.formatDateTime(date, format) // Same as formatDate, returns date as string
   
 // DATE FORMAT ENUM
-Qt.TextDate                //
-Qt.ISODate                 //
-Qt.ISODateWithMs           //
-Qt.SystemLocaleShortDate   //
-Qt.SystemLocaleLongDate    //
-Qt.DefaultLocaleShortDate  // 
-Qt.DefaultLocaleLongDate   //
+Qt.TextDate                // ddd MMM d yyyy
+Qt.ISODate                 // yyyy-MM-dd or yyyy-MM-ddTHH:mm:ss or with a time-zone suffix 
+Qt.ISODateWithMs           // Qt.ISODate with ms
+Qt.SystemLocaleShortDate   // The short format used by the operating system
+Qt.SystemLocaleLongDate    // The long format used by the operating system
+Qt.DefaultLocaleShortDate  // The short format specified by the application's locale
+Qt.DefaultLocaleLongDate   // The long format specified by the application's locale
 
 //===========================================================================================================
 // QML COLOR
@@ -488,7 +488,7 @@ myFont.kerning // Whether to auto adjust character spacing, default enabled
 myFont.preferShaping // Whether to enable display/spacing rules, default enabled
 myFont.hintingPreference // Hinting preference enum
 
-// Font Weighting
+// WEIGHTING
 Font.Thin          0
 Font.ExtraLight    12
 Font.Light         25
