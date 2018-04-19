@@ -168,6 +168,8 @@ Item {
     property int myProperty: myFunction    // if properties used in function changes, re-evaluates myProperty
     property int myProperty: { return 0; } // if properties used in function changes, re-evaluates myProperty
     property int myProperty: MyJS.fn       // Use function from imported javascript file
+    property int myProperty: MyGlobal.fn   // Use function from global singleton
+    readonly property int myProperty: 0    // read-only property
     property alias myAlias: myProperty     // reference for property
     signal mySignal(int value)             // call with item.mySignal(0)
       
@@ -274,7 +276,24 @@ item.mapToGlobal(x, y) // Converts item local coords into global coords, returns
 item.mapToItem(item2, x, y, w, h) // Converts item local coords into item2 local coords, returns QML rect
 item.mapToItem(item2, x, y) // Converts item local coords into item2 local coords, returns QML point
 item.nextItemInFocusChain(forward) // Returns item next in the focus chain, forward optional
-  
+
+// MyGlobal.qml
+pragma Singleton
+import QtQuick 2.4
+QtObject {
+    property value: 0
+    function fn() {
+        return 0;
+    }
+}
+
+// MyJavascript.js
+// Make a library to enable sharing across all QML files
+var value = 0;
+function fn() {
+    return 0;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML BASIC TYPES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
