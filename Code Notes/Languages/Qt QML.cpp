@@ -866,73 +866,73 @@ DoubleValidator.ScientificNotation   // allow E in value
 //===========================================================================================================
   
 // STANDARD KEYS
-StandardKey.AddTab                  // Add new tab
-StandardKey.Back                    // Navigate back
-StandardKey.Backspace               // Delete previous character
-StandardKey.Bold                    // Bold text
-StandardKey.Close                   // Close document/tab
-StandardKey.Copy                    // Copy
-StandardKey.Cut                     // Cut
-StandardKey.Delete                  // Delete
-StandardKey.DeleteEndOfLine         // Delete end of line
-StandardKey.DeleteEndOfWord         // Delete word from the end of the cursor
-StandardKey.DeleteStartOfWord       // Delete the beginning of a word up to the cursor
-StandardKey.DeleteCompleteLine      // Delete the entire line
-StandardKey.Find                    // Find in document
-StandardKey.FindNext                // Find next result
-StandardKey.FindPrevious            // Find previous result
-StandardKey.Forward                 // Navigate forward
-StandardKey.HelpContents            // Open help contents
-StandardKey.InsertLineSeparator     // Insert a new line
-StandardKey.InsertParagraphSeparato // Insert a new paragraph
-StandardKey.Italic                  // Italic text
-StandardKey.MoveToEndOfDocument     // Move cursor to end of document
-StandardKey.MoveToEndOfLine         // Move cursor to end of line
-StandardKey.MoveToNextChar          // Move cursor to next character
-StandardKey.MoveToNextLine          // Move cursor to next line
-StandardKey.MoveToNextPage          // Move cursor to next page
-StandardKey.MoveToNextWord          // Move cursor to next word
-StandardKey.MoveToPreviousChar      // Move cursor to previous character
-StandardKey.MoveToPreviousLine      // Move cursor to previous line
-StandardKey.MoveToPreviousPage      // Move cursor to previous page
-StandardKey.MoveToPreviousWord      // Move cursor to previous word
-StandardKey.MoveToStartOfDocument   // Move cursor to start of document
-StandardKey.MoveToStartOfLine       // Move cursor to start of line
-StandardKey.New                     // Create new document
-StandardKey.NextChild               // Navigate to next tab or child window
-StandardKey.Open                    // Open document
-StandardKey.Paste                   // Paste
-StandardKey.Preferences             // Open the preferences dialog
-StandardKey.PreviousChild           // Navigate to previous tab or child window
-StandardKey.Print                   // Print document
-StandardKey.Quit                    // Quit the application
-StandardKey.Redo                    // Redo
-StandardKey.Refresh                 // Refresh or reload current document
-StandardKey.Replace                 // Find and replace
-StandardKey.SaveAs                  // Save document after prompting the user for a file name
-StandardKey.Save                    // Save document
-StandardKey.SelectAll               // Select all text
-StandardKey.Deselect                // Deselect text
-StandardKey.SelectEndOfDocument     // Extend selection to end of document
-StandardKey.SelectEndOfLine         // Extend selection to end of line
-StandardKey.SelectNextChar          // Extend selection to next character
-StandardKey.SelectNextLine          // Extend selection to next line
-StandardKey.SelectNextPage          // Extend selection to next page
-StandardKey.SelectNextWord          // Extend selection to next word
-StandardKey.SelectPreviousChar      // Extend selection to previous character
-StandardKey.SelectPreviousLine      // Extend selection to previous line
-StandardKey.SelectPreviousPage      // Extend selection to previous page
-StandardKey.SelectPreviousWord      // Extend selection to previous word
-StandardKey.SelectStartOfDocumen    // Extend selection to start of document
-StandardKey.SelectStartOfLine       // Extend selection to start of line
-StandardKey.Underline               // Underline text
-StandardKey.Undo                    // Undo
-StandardKey.UnknownKey              // Unbound key
-StandardKey.WhatsThis               // Activate "what's this"
-StandardKey.ZoomIn                  // Zoom in
-StandardKey.ZoomOut                 // Zoom out
-StandardKey.FullScreen              // Toggle the window state to/from full screen
-StandardKey.Cancel                  // Cancel the current operation
+StandardKey.AddTab                     // Add new tab
+StandardKey.Back                       // Navigate back
+StandardKey.Backspace                  // Delete previous character
+StandardKey.Bold                       // Bold text
+StandardKey.Close                      // Close document/tab
+StandardKey.Copy                       // Copy
+StandardKey.Cut                        // Cut
+StandardKey.Delete                     // Delete
+StandardKey.DeleteEndOfLine            // Delete end of line
+StandardKey.DeleteEndOfWord            // Delete word from the end of the cursor
+StandardKey.DeleteStartOfWord          // Delete the beginning of a word up to the cursor
+StandardKey.DeleteCompleteLine         // Delete the entire line
+StandardKey.Find                       // Find in document
+StandardKey.FindNext                   // Find next result
+StandardKey.FindPrevious               // Find previous result
+StandardKey.Forward                    // Navigate forward
+StandardKey.HelpContents               // Open help contents
+StandardKey.InsertLineSeparator        // Insert a new line
+StandardKey.InsertParagraphSeparator   // Insert a new paragraph
+StandardKey.Italic                     // Italic text
+StandardKey.MoveToEndOfDocument        // Move cursor to end of document
+StandardKey.MoveToEndOfLine            // Move cursor to end of line
+StandardKey.MoveToNextChar             // Move cursor to next character
+StandardKey.MoveToNextLine             // Move cursor to next line
+StandardKey.MoveToNextPage             // Move cursor to next page
+StandardKey.MoveToNextWord             // Move cursor to next word
+StandardKey.MoveToPreviousChar         // Move cursor to previous character
+StandardKey.MoveToPreviousLine         // Move cursor to previous line
+StandardKey.MoveToPreviousPage         // Move cursor to previous page
+StandardKey.MoveToPreviousWord         // Move cursor to previous word
+StandardKey.MoveToStartOfDocument      // Move cursor to start of document
+StandardKey.MoveToStartOfLine          // Move cursor to start of line
+StandardKey.New                        // Create new document
+StandardKey.NextChild                  // Navigate to next tab or child window
+StandardKey.Open                       // Open document
+StandardKey.Paste                      // Paste
+StandardKey.Preferences                // Open the preferences dialog
+StandardKey.PreviousChild              // Navigate to previous tab or child window
+StandardKey.Print                      // Print document
+StandardKey.Quit                       // Quit the application
+StandardKey.Redo                       // Redo
+StandardKey.Refresh                    // Refresh or reload current document
+StandardKey.Replace                    // Find and replace
+StandardKey.SaveAs                     // Save document after prompting the user for a file name
+StandardKey.Save                       // Save document
+StandardKey.SelectAll                  // Select all text
+StandardKey.Deselect                   // Deselect text
+StandardKey.SelectEndOfDocument        // Extend selection to end of document
+StandardKey.SelectEndOfLine            // Extend selection to end of line
+StandardKey.SelectNextChar             // Extend selection to next character
+StandardKey.SelectNextLine             // Extend selection to next line
+StandardKey.SelectNextPage             // Extend selection to next page
+StandardKey.SelectNextWord             // Extend selection to next word
+StandardKey.SelectPreviousChar         // Extend selection to previous character
+StandardKey.SelectPreviousLine         // Extend selection to previous line
+StandardKey.SelectPreviousPage         // Extend selection to previous page
+StandardKey.SelectPreviousWord         // Extend selection to previous word
+StandardKey.SelectStartOfDocumen       // Extend selection to start of document
+StandardKey.SelectStartOfLine          // Extend selection to start of line
+StandardKey.Underline                  // Underline text
+StandardKey.Undo                       // Undo
+StandardKey.UnknownKey                 // Unbound key
+StandardKey.WhatsThis                  // Activate "what's this"
+StandardKey.ZoomIn                     // Zoom in
+StandardKey.ZoomOut                    // Zoom out
+StandardKey.FullScreen                 // Toggle the window state to/from full screen
+StandardKey.Cancel                     // Cancel the current operation
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML DYNAMIC CREATION
