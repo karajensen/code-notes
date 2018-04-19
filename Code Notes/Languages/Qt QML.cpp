@@ -824,7 +824,6 @@ TextInput {
     color: "red" // text color
     cursorDelegate: Rectangle {} // Override cursor
 }
-
 input.acceptableInput // if validator/input mask has been set, true if valid, if not set, always true
 input.canUndo // If writable and there are previous operations that can be undone
 input.canPaste // If writable and the content of the clipboard can be pasted into input
@@ -835,6 +834,7 @@ input.cursorPosition // position of the cursor in input
 input.cursorRectangle // rectangle where the cursor is rendered within inout
 input.cursorVisible // True when input shows a cursor
 
+// Text Edit Echo Mode Enum
 TextInput.Normal              // Displays the text as it is (default)
 TextInput.Password            // Displays platform-dependent password mask characters instead
 TextInput.NoEcho              // Displays nothing
@@ -858,12 +858,26 @@ DoubleValidator {
     notation: myNotationEnum // default DoubleValidator.ScientificNotation
 }
 
+// Double Validator Notation Enum
 DoubleValidator.StandardNotation     // disables E in value
 DoubleValidator.ScientificNotation   // allow E in value
 
 //===========================================================================================================
 // QML SHORTCUTS
 //===========================================================================================================
+  
+// SHORTCUT
+Shortcut {
+    autoRepeat: true // default true
+    context: myContextEnum // default Qt.WindowShortcut
+    sequence: StandardKey.Copy
+    sequences: [StandardKey.Cut, StandardKey.Copy]
+    onActivated: {}
+}
+
+// Shortcut Context Enum
+Qt.WindowShortcut       // Active when its parent item is in an active top-level window
+Qt.ApplicationShortcut  // Active when one of the application's windows are active
   
 // STANDARD KEYS
 StandardKey.AddTab                     // Add new tab
@@ -958,6 +972,7 @@ if (component.status == Component.Ready) {
     }
 }
 
+// Component State Enum
 Component.Null     // no data is available for the component
 Component.Ready    // the component has been loaded, and can be used to create instances
 Component.Loading  // the component is currently being loaded
@@ -982,13 +997,13 @@ Loader {
     focus: true // must be set to true for any of its children to get the active focus
     onLoaded: {} // Signal when loading complete
 }
-
 loader.active // Set to false destroys, doesn't auto create if source/sourceComponent changes, true creates
 loader.asynchronous // Default false, change to false while loading will force it to finish synchronously
 loader.item // Item loaded, not available until Loader.Ready state
 loader.progress // Progress real [0.0, 1.0]
 loader.status // Status enum value
 
+// Loader State Enum
 Loader.Null     // the loader is inactive or no QML source has been set
 Loader.Ready    // the QML source has been loaded
 Loader.Loading  // the QML source is currently being loaded
