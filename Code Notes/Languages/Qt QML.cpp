@@ -157,6 +157,7 @@ item.window() // Return QQuickWindow* in which this item is rendered
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import MyEnums 1.0
+import MyGlobals 1.0
 import "MyJavascript.js" as MyJS
   
 // ITEM
@@ -169,6 +170,7 @@ Item {
     property int myProperty: { return 0; } // if properties used in function changes, re-evaluates myProperty
     property int myProperty: MyJS.fn       // Use function from imported javascript file
     property int myProperty: MyGlobal.fn   // Use function from global singleton
+    property int myProperty: MyEnum.ONE    // Use int type for enums
     readonly property int myProperty: 0    // read-only property
     property alias myAlias: myProperty     // reference for property
     signal mySignal(int value)             // call with item.mySignal(0)
@@ -278,6 +280,7 @@ item.mapToItem(item2, x, y) // Converts item local coords into item2 local coord
 item.nextItemInFocusChain(forward) // Returns item next in the focus chain, forward optional
 
 // MyGlobal.qml
+// Requires registering to enable as global
 pragma Singleton
 import QtQuick 2.4
 QtObject {
@@ -301,7 +304,6 @@ function fn() {
 property bool myBool: true
 property double myDouble: 0.0
 property int myInt: 0
-property int myEnum: MyEnum.ONE
 property real myReal: 0.0
 
 // VAR
