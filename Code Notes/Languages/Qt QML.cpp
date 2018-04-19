@@ -663,8 +663,8 @@ Button {
     isDefault: true // If in dialog, auto pressed on enter even without focus
     menu: myMenu
     onClicked: {}
-    onHoveredChanged: {} // hover property
-    onPressedChanged: {} // pressed property
+    onHoveredChanged: {} // 'hover' property
+    onPressedChanged: {} // 'pressed' property
 }
 
 // CHECKBOX
@@ -866,77 +866,73 @@ DoubleValidator.ScientificNotation   // allow E in value
 //===========================================================================================================
   
 // STANDARD KEYS
-QKeySequence::AddTab	19	Add new tab.
-QKeySequence::Back	13	Navigate back.
-QKeySequence::Backspace	69	Delete previous character.
-QKeySequence::Bold	27	Bold text.
-QKeySequence::Close	4	Close document/tab.
-QKeySequence::Copy	9	Copy.
-QKeySequence::Cut	8	Cut.
-QKeySequence::Delete	7	Delete.
-QKeySequence::DeleteEndOfLine	60	Delete end of line.
-QKeySequence::DeleteEndOfWord	59	Delete word from the end of the cursor.
-QKeySequence::DeleteStartOfWord	58	Delete the beginning of a word up to the cursor.
-QKeySequence::DeleteCompleteLine	68	Delete the entire line.
-QKeySequence::Find	22	Find in document.
-QKeySequence::FindNext	23	Find next result.
-QKeySequence::FindPrevious	24	Find previous result.
-QKeySequence::Forward	14	Navigate forward.
-QKeySequence::HelpContents	1	Open help contents.
-QKeySequence::InsertLineSeparator	62	Insert a new line.
-QKeySequence::InsertParagraphSeparator	61	Insert a new paragraph.
-QKeySequence::Italic	28	Italic text.
-QKeySequence::MoveToEndOfBlock	41	Move cursor to end of block. This shortcut is only used on the macOS.
-QKeySequence::MoveToEndOfDocument	43	Move cursor to end of document.
-QKeySequence::MoveToEndOfLine	39	Move cursor to end of line.
-QKeySequence::MoveToNextChar	30	Move cursor to next character.
-QKeySequence::MoveToNextLine	34	Move cursor to next line.
-QKeySequence::MoveToNextPage	36	Move cursor to next page.
-QKeySequence::MoveToNextWord	32	Move cursor to next word.
-QKeySequence::MoveToPreviousChar	31	Move cursor to previous character.
-QKeySequence::MoveToPreviousLine	35	Move cursor to previous line.
-QKeySequence::MoveToPreviousPage	37	Move cursor to previous page.
-QKeySequence::MoveToPreviousWord	33	Move cursor to previous word.
-QKeySequence::MoveToStartOfBlock	40	Move cursor to start of a block. This shortcut is only used on macOS.
-QKeySequence::MoveToStartOfDocument	42	Move cursor to start of document.
-QKeySequence::MoveToStartOfLine	38	Move cursor to start of line.
-QKeySequence::New	6	Create new document.
-QKeySequence::NextChild	20	Navigate to next tab or child window.
-QKeySequence::Open	3	Open document.
-QKeySequence::Paste	10	Paste.
-QKeySequence::Preferences	64	Open the preferences dialog.
-QKeySequence::PreviousChild	21	Navigate to previous tab or child window.
-QKeySequence::Print	18	Print document.
-QKeySequence::Quit	65	Quit the application.
-QKeySequence::Redo	12	Redo.
-QKeySequence::Refresh	15	Refresh or reload current document.
-QKeySequence::Replace	25	Find and replace.
-QKeySequence::SaveAs	63	Save document after prompting the user for a file name.
-QKeySequence::Save	5	Save document.
-QKeySequence::SelectAll	26	Select all text.
-QKeySequence::Deselect	67	Deselect text. Since 5.1
-QKeySequence::SelectEndOfBlock	55	Extend selection to the end of a text block. This shortcut is only used on macOS.
-QKeySequence::SelectEndOfDocument	57	Extend selection to end of document.
-QKeySequence::SelectEndOfLine	53	Extend selection to end of line.
-QKeySequence::SelectNextChar	44	Extend selection to next character.
-QKeySequence::SelectNextLine	48	Extend selection to next line.
-QKeySequence::SelectNextPage	50	Extend selection to next page.
-QKeySequence::SelectNextWord	46	Extend selection to next word.
-QKeySequence::SelectPreviousChar	45	Extend selection to previous character.
-QKeySequence::SelectPreviousLine	49	Extend selection to previous line.
-QKeySequence::SelectPreviousPage	51	Extend selection to previous page.
-QKeySequence::SelectPreviousWord	47	Extend selection to previous word.
-QKeySequence::SelectStartOfBlock	54	Extend selection to the start of a text block. This shortcut is only used on macOS.
-QKeySequence::SelectStartOfDocument	56	Extend selection to start of document.
-QKeySequence::SelectStartOfLine	52	Extend selection to start of line.
-QKeySequence::Underline	29	Underline text.
-QKeySequence::Undo	11	Undo.
-QKeySequence::UnknownKey	0	Unbound key.
-QKeySequence::WhatsThis	2	Activate "what's this".
-QKeySequence::ZoomIn	16	Zoom in.
-QKeySequence::ZoomOut	17	Zoom out.
-QKeySequence::FullScreen	66	Toggle the window state to/from full screen.
-QKeySequence::Cancel	70	Cancel the current operation
+StandardKey.AddTab                  // Add new tab
+StandardKey.Back                    // Navigate back
+StandardKey.Backspace               // Delete previous character
+StandardKey.Bold                    // Bold text
+StandardKey.Close                   // Close document/tab
+StandardKey.Copy                    // Copy
+StandardKey.Cut                     // Cut
+StandardKey.Delete                  // Delete
+StandardKey.DeleteEndOfLine         // Delete end of line
+StandardKey.DeleteEndOfWord         // Delete word from the end of the cursor
+StandardKey.DeleteStartOfWord       // Delete the beginning of a word up to the cursor
+StandardKey.DeleteCompleteLine      // Delete the entire line
+StandardKey.Find                    // Find in document
+StandardKey.FindNext                // Find next result
+StandardKey.FindPrevious            // Find previous result
+StandardKey.Forward                 // Navigate forward
+StandardKey.HelpContents            // Open help contents
+StandardKey.InsertLineSeparator     // Insert a new line
+StandardKey.InsertParagraphSeparato // Insert a new paragraph
+StandardKey.Italic                  // Italic text
+StandardKey.MoveToEndOfDocument     // Move cursor to end of document
+StandardKey.MoveToEndOfLine         // Move cursor to end of line
+StandardKey.MoveToNextChar          // Move cursor to next character
+StandardKey.MoveToNextLine          // Move cursor to next line
+StandardKey.MoveToNextPage          // Move cursor to next page
+StandardKey.MoveToNextWord          // Move cursor to next word
+StandardKey.MoveToPreviousChar      // Move cursor to previous character
+StandardKey.MoveToPreviousLine      // Move cursor to previous line
+StandardKey.MoveToPreviousPage      // Move cursor to previous page
+StandardKey.MoveToPreviousWord      // Move cursor to previous word
+StandardKey.MoveToStartOfDocument   // Move cursor to start of document
+StandardKey.MoveToStartOfLine       // Move cursor to start of line
+StandardKey.New                     // Create new document
+StandardKey.NextChild               // Navigate to next tab or child window
+StandardKey.Open                    // Open document
+StandardKey.Paste                   // Paste
+StandardKey.Preferences             // Open the preferences dialog
+StandardKey.PreviousChild           // Navigate to previous tab or child window
+StandardKey.Print                   // Print document
+StandardKey.Quit                    // Quit the application
+StandardKey.Redo                    // Redo
+StandardKey.Refresh                 // Refresh or reload current document
+StandardKey.Replace                 // Find and replace
+StandardKey.SaveAs                  // Save document after prompting the user for a file name
+StandardKey.Save                    // Save document
+StandardKey.SelectAll               // Select all text
+StandardKey.Deselect                // Deselect text
+StandardKey.SelectEndOfDocument     // Extend selection to end of document
+StandardKey.SelectEndOfLine         // Extend selection to end of line
+StandardKey.SelectNextChar          // Extend selection to next character
+StandardKey.SelectNextLine          // Extend selection to next line
+StandardKey.SelectNextPage          // Extend selection to next page
+StandardKey.SelectNextWord          // Extend selection to next word
+StandardKey.SelectPreviousChar      // Extend selection to previous character
+StandardKey.SelectPreviousLine      // Extend selection to previous line
+StandardKey.SelectPreviousPage      // Extend selection to previous page
+StandardKey.SelectPreviousWord      // Extend selection to previous word
+StandardKey.SelectStartOfDocumen    // Extend selection to start of document
+StandardKey.SelectStartOfLine       // Extend selection to start of line
+StandardKey.Underline               // Underline text
+StandardKey.Undo                    // Undo
+StandardKey.UnknownKey              // Unbound key
+StandardKey.WhatsThis               // Activate "what's this"
+StandardKey.ZoomIn                  // Zoom in
+StandardKey.ZoomOut                 // Zoom out
+StandardKey.FullScreen              // Toggle the window state to/from full screen
+StandardKey.Cancel                  // Cancel the current operation
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML DYNAMIC CREATION
