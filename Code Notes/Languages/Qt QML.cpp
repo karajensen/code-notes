@@ -642,51 +642,11 @@ GridLayout {
 
 // RECTANGLE
 Rectangle {
-    color: "#8EACFF"
+    color: "red"
     radius: 2
     border.color: "red"
     border.width: 1      
 }
-
-// TEXT
-Text {
-    text: "text"
-    verticalAlignment: Text.AlignVCenter
-    font.pointSize: 14
-    font.bold: true
-}
-
-// TEXTINPUT
-// single line of editable plain text
-TextInput {
-    maximumLength: 100
-    focus: true
-    validator: myValidator
-    input.activeFocusOnPress
-    autoScroll: true
-    canPaste: true
-    canRedo: true
-    canUndo: true
-    bottomPadding: 1
-}
-input.acceptableInput // if validator/input mask has been set, true if valid, if not set, always true
-
-
-// DOUBLEVALIDATOR
-DoubleValidator {
-    bottom: -1.0 // default -infinity
-    top: 1.0 // default infinity
-    decimals: 1 // n digits after decimal point, default 1000
-    notation: myNotationEnum // default DoubleValidator.ScientificNotation
-}
-DoubleValidator.StandardNotation     // disables E in value
-DoubleValidator.ScientificNotation   // allow Ein value
-
-// INTVALIDATOR
-IntValidator {
-    bottom: -1 // default -infinity
-    top: 1 // default infinity
-} 
 
 // BUTTON
 Button {
@@ -791,6 +751,70 @@ Binding {
     value: 10 // Can be value, another property etc
     delayed: true // wait until event queue cleared before assigning
 }
+
+//===========================================================================================================
+// QML TEXT
+//===========================================================================================================
+
+// TEXT
+Text {
+    text: "text"
+    verticalAlignment: Text.AlignVCenter
+    font.pointSize: 14
+    font.bold: true
+}
+
+// TEXTINPUT
+// single line of editable plain text
+TextInput {
+    maximumLength: 100
+    focus: true
+    displayText: "str" // Dependent on echo mode, holds input as editing
+    text: "str"
+    echoMode: myEchoModeEnum
+    validator: myValidator
+    activeFocusOnPress: true // If gain active focus on a mouse press
+    autoScroll: true
+    bottomPadding: 1
+    color: "red" // text color
+    cursorDelegate: Rectangle {} // Override cursor
+}
+
+input.acceptableInput // if validator/input mask has been set, true if valid, if not set, always true
+input.canUndo // If writable and there are previous operations that can be undone
+input.canPaste // If writable and the content of the clipboard can be pasted into input
+input.canRedo // If writable and there are undone operations that can be redone
+input.contentHeight // height of the unclipped text
+input.contentWidth // width of the unclipped text
+input.cursorPosition // position of the cursor in input
+input.cursorRectangle // rectangle where the cursor is rendered within inout
+input.cursorVisible // True when input shows a cursor
+
+TextInput.Normal              // Displays the text as it is (default)
+TextInput.Password            // Displays platform-dependent password mask characters instead
+TextInput.NoEcho              // Displays nothing
+TextInput.PasswordEchoOnEdit  // Displays characters as they are entered while editing, otherwise password
+
+//===========================================================================================================
+// QML VALIDATOR
+//===========================================================================================================
+  
+// DOUBLEVALIDATOR
+DoubleValidator {
+    bottom: -1.0 // default -infinity
+    top: 1.0 // default infinity
+    decimals: 1 // n digits after decimal point, default 1000
+    notation: myNotationEnum // default DoubleValidator.ScientificNotation
+}
+
+DoubleValidator.StandardNotation     // disables E in value
+DoubleValidator.ScientificNotation   // allow E in value
+
+// INTVALIDATOR
+IntValidator {
+    bottom: -1 // default -infinity
+    top: 1 // default infinity
+} 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML DYNAMIC CREATION
