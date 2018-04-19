@@ -651,8 +651,14 @@ Rectangle {
 // BUTTON
 Button {
     iconSource: "qrc:///icon.png"
-    enabled: true
     onClicked: {}
+    action: myAction
+}
+
+// CHECKBOX
+CheckBox {
+    text: "str"
+    checked: true
 }
 
 // PROGRESSBAR
@@ -677,10 +683,10 @@ ProgressBar {
 Menu {
     visible: false
     MenuItem {
-        text: "Item"
+        text: "str"
         iconSource: "qrc:///icon.png"
-        enabled: true
         onTriggered: {}
+        action: myAction
     }
 }
 
@@ -708,13 +714,25 @@ MouseArea {
     }
 }
 
+// ACTION
+Action {
+    id: myAction
+    checkable: true // defaults false
+    exclusiveGroup: myGroup // defaults null
+    iconSource: "qrc:///icon.png"
+    text: "str"
+    shortcut: StandardKey.Copy
+    onTriggered: {}
+}
+myAction.checked // Whether currently checked, false if not checkable
+
 // REPEATER
 // Usually in Row/Column, instantiates n items
 // creates all of its delegate items when the repeater is first created
 Repeater {
     id: repeater
     model: 3
-    Text { text: "Item " + indeX + "/" repeater.count }
+    Text { text: "Item " + indeX + "/" + repeater.count }
 }
 Repeater {
     model: ["one", "two", "three"]
@@ -799,6 +817,12 @@ TextInput.PasswordEchoOnEdit  // Displays characters as they are entered while e
 // QML VALIDATOR
 //===========================================================================================================
   
+// INTVALIDATOR
+IntValidator {
+    bottom: -1 // default -infinity
+    top: 1 // default infinity
+} 
+  
 // DOUBLEVALIDATOR
 DoubleValidator {
     bottom: -1.0 // default -infinity
@@ -810,11 +834,81 @@ DoubleValidator {
 DoubleValidator.StandardNotation     // disables E in value
 DoubleValidator.ScientificNotation   // allow E in value
 
-// INTVALIDATOR
-IntValidator {
-    bottom: -1 // default -infinity
-    top: 1 // default infinity
-} 
+//===========================================================================================================
+// QML SHORTCUTS
+//===========================================================================================================
+
+QKeySequence::AddTab	19	Add new tab.
+QKeySequence::Back	13	Navigate back.
+QKeySequence::Backspace	69	Delete previous character.
+QKeySequence::Bold	27	Bold text.
+QKeySequence::Close	4	Close document/tab.
+QKeySequence::Copy	9	Copy.
+QKeySequence::Cut	8	Cut.
+QKeySequence::Delete	7	Delete.
+QKeySequence::DeleteEndOfLine	60	Delete end of line.
+QKeySequence::DeleteEndOfWord	59	Delete word from the end of the cursor.
+QKeySequence::DeleteStartOfWord	58	Delete the beginning of a word up to the cursor.
+QKeySequence::DeleteCompleteLine	68	Delete the entire line.
+QKeySequence::Find	22	Find in document.
+QKeySequence::FindNext	23	Find next result.
+QKeySequence::FindPrevious	24	Find previous result.
+QKeySequence::Forward	14	Navigate forward.
+QKeySequence::HelpContents	1	Open help contents.
+QKeySequence::InsertLineSeparator	62	Insert a new line.
+QKeySequence::InsertParagraphSeparator	61	Insert a new paragraph.
+QKeySequence::Italic	28	Italic text.
+QKeySequence::MoveToEndOfBlock	41	Move cursor to end of block. This shortcut is only used on the macOS.
+QKeySequence::MoveToEndOfDocument	43	Move cursor to end of document.
+QKeySequence::MoveToEndOfLine	39	Move cursor to end of line.
+QKeySequence::MoveToNextChar	30	Move cursor to next character.
+QKeySequence::MoveToNextLine	34	Move cursor to next line.
+QKeySequence::MoveToNextPage	36	Move cursor to next page.
+QKeySequence::MoveToNextWord	32	Move cursor to next word.
+QKeySequence::MoveToPreviousChar	31	Move cursor to previous character.
+QKeySequence::MoveToPreviousLine	35	Move cursor to previous line.
+QKeySequence::MoveToPreviousPage	37	Move cursor to previous page.
+QKeySequence::MoveToPreviousWord	33	Move cursor to previous word.
+QKeySequence::MoveToStartOfBlock	40	Move cursor to start of a block. This shortcut is only used on macOS.
+QKeySequence::MoveToStartOfDocument	42	Move cursor to start of document.
+QKeySequence::MoveToStartOfLine	38	Move cursor to start of line.
+QKeySequence::New	6	Create new document.
+QKeySequence::NextChild	20	Navigate to next tab or child window.
+QKeySequence::Open	3	Open document.
+QKeySequence::Paste	10	Paste.
+QKeySequence::Preferences	64	Open the preferences dialog.
+QKeySequence::PreviousChild	21	Navigate to previous tab or child window.
+QKeySequence::Print	18	Print document.
+QKeySequence::Quit	65	Quit the application.
+QKeySequence::Redo	12	Redo.
+QKeySequence::Refresh	15	Refresh or reload current document.
+QKeySequence::Replace	25	Find and replace.
+QKeySequence::SaveAs	63	Save document after prompting the user for a file name.
+QKeySequence::Save	5	Save document.
+QKeySequence::SelectAll	26	Select all text.
+QKeySequence::Deselect	67	Deselect text. Since 5.1
+QKeySequence::SelectEndOfBlock	55	Extend selection to the end of a text block. This shortcut is only used on macOS.
+QKeySequence::SelectEndOfDocument	57	Extend selection to end of document.
+QKeySequence::SelectEndOfLine	53	Extend selection to end of line.
+QKeySequence::SelectNextChar	44	Extend selection to next character.
+QKeySequence::SelectNextLine	48	Extend selection to next line.
+QKeySequence::SelectNextPage	50	Extend selection to next page.
+QKeySequence::SelectNextWord	46	Extend selection to next word.
+QKeySequence::SelectPreviousChar	45	Extend selection to previous character.
+QKeySequence::SelectPreviousLine	49	Extend selection to previous line.
+QKeySequence::SelectPreviousPage	51	Extend selection to previous page.
+QKeySequence::SelectPreviousWord	47	Extend selection to previous word.
+QKeySequence::SelectStartOfBlock	54	Extend selection to the start of a text block. This shortcut is only used on macOS.
+QKeySequence::SelectStartOfDocument	56	Extend selection to start of document.
+QKeySequence::SelectStartOfLine	52	Extend selection to start of line.
+QKeySequence::Underline	29	Underline text.
+QKeySequence::Undo	11	Undo.
+QKeySequence::UnknownKey	0	Unbound key.
+QKeySequence::WhatsThis	2	Activate "what's this".
+QKeySequence::ZoomIn	16	Zoom in.
+QKeySequence::ZoomOut	17	Zoom out.
+QKeySequence::FullScreen	66	Toggle the window state to/from full screen.
+QKeySequence::Cancel	70	Cancel the current operation
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML DYNAMIC CREATION
