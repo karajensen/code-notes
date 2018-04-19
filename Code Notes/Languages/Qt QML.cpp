@@ -650,9 +650,21 @@ Rectangle {
 
 // BUTTON
 Button {
+    id: myButton
+    text: "str"
+    tooltip: "str"
     iconSource: "qrc:///icon.png"
-    onClicked: {}
     action: myAction
+    activeFocusOnPress: true // If gain active focus on a mouse press
+    checkable: true // defaults false
+    checked: true
+    exclusiveGroup: myGroup
+    iconSource: "qrc:///icon.png"
+    isDefault: true // If in dialog, auto pressed on enter even without focus
+    menu: myMenu
+    onClicked: {}
+    onHoveredChanged: {} // hover property
+    onPressedChanged: {} // pressed property
 }
 
 // CHECKBOX
@@ -681,7 +693,8 @@ ProgressBar {
 // MENU
 // Call using id.popup() to show at mouse position
 Menu {
-    visible: false
+    id: myMenu
+    visible: false // context menu start off invisible
     MenuItem {
         text: "str"
         iconSource: "qrc:///icon.png"
@@ -715,16 +728,29 @@ MouseArea {
 }
 
 // ACTION
+// Can be used in MenuItem, Button, ToolButton 
 Action {
     id: myAction
     checkable: true // defaults false
+    checked: true
     exclusiveGroup: myGroup // defaults null
     iconSource: "qrc:///icon.png"
     text: "str"
+    tooltip: "str"
     shortcut: StandardKey.Copy
     onTriggered: {}
+    onToggled: {}
 }
-myAction.checked // Whether currently checked, false if not checkable
+
+// EXCLUSIVE GROUP
+// Can inline members or add to Action's exclusiveGroup property
+ExclusiveGroup {
+    id: myGroup
+    current: myAction // Current checked item
+    Action {
+        checkable: true // Required
+    }
+}
 
 // REPEATER
 // Usually in Row/Column, instantiates n items
@@ -785,6 +811,7 @@ Text {
 // TEXTINPUT
 // single line of editable plain text
 TextInput {
+    id: input
     maximumLength: 100
     focus: true
     displayText: "str" // Dependent on echo mode, holds input as editing
@@ -837,7 +864,8 @@ DoubleValidator.ScientificNotation   // allow E in value
 //===========================================================================================================
 // QML SHORTCUTS
 //===========================================================================================================
-
+  
+// STANDARD KEYS
 QKeySequence::AddTab	19	Add new tab.
 QKeySequence::Back	13	Navigate back.
 QKeySequence::Backspace	69	Delete previous character.
