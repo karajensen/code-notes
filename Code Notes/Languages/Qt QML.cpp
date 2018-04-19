@@ -150,6 +150,10 @@ item.window() // Return QQuickWindow* in which this item is rendered
 // QQuickPaintedItem
 // Inherits QQuickItem, allows rendering content using QPainter
 
+// QQmlEngine
+qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyGlobals", 1, 0, "MyGlobal")
+qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum") // MyEnum must be in Q_OBJECT class
+  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT MODELING LANGUAGE (QML)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
