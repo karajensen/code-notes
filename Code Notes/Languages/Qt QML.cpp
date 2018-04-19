@@ -648,31 +648,6 @@ Rectangle {
     border.width: 1      
 }
 
-// BUTTON
-Button {
-    id: myButton
-    text: "str"
-    tooltip: "str"
-    iconSource: "qrc:///icon.png"
-    action: myAction
-    activeFocusOnPress: true // If gain active focus on a mouse press
-    checkable: true // defaults false
-    checked: true
-    exclusiveGroup: myGroup
-    iconSource: "qrc:///icon.png"
-    isDefault: true // If in dialog, auto pressed on enter even without focus
-    menu: myMenu
-    onClicked: {}
-    onHoveredChanged: {} // 'hover' property
-    onPressedChanged: {} // 'pressed' property
-}
-
-// CHECKBOX
-CheckBox {
-    text: "str"
-    checked: true
-}
-
 // PROGRESSBAR
 ProgressBar {
     maximumValue: 20
@@ -687,19 +662,6 @@ ProgressBar {
         progress: Rectangle {
             color: "blue"
         }
-    }
-}
-
-// MENU
-// Call using id.popup() to show at mouse position
-Menu {
-    id: myMenu
-    visible: false // context menu start off invisible
-    MenuItem {
-        text: "str"
-        iconSource: "qrc:///icon.png"
-        onTriggered: {}
-        action: myAction
     }
 }
 
@@ -721,34 +683,9 @@ MouseArea {
     onPressed: {}
     onRelease: {}
     onClicked: {
-        var clickX = mouse.x;
-        var clickY = mouse.y;
-        var button = mouse.button;
-    }
-}
-
-// ACTION
-// Can be used in MenuItem, Button, ToolButton 
-Action {
-    id: myAction
-    checkable: true // defaults false
-    checked: true
-    exclusiveGroup: myGroup // defaults null
-    iconSource: "qrc:///icon.png"
-    text: "str"
-    tooltip: "str"
-    shortcut: StandardKey.Copy
-    onTriggered: {}
-    onToggled: {}
-}
-
-// EXCLUSIVE GROUP
-// Can inline members or add to Action's exclusiveGroup property
-ExclusiveGroup {
-    id: myGroup
-    current: myAction // Current checked item
-    Action {
-        checkable: true // Required
+        real clickX = mouse.x;
+        real clickY = mouse.y;
+        int button = mouse.button;
     }
 }
 
@@ -794,6 +731,86 @@ Binding {
     when: myBoolean
     value: 10 // Can be value, another property etc
     delayed: true // wait until event queue cleared before assigning
+}
+
+// TIMER
+Timer {
+    id: myTimer
+    interval: 500 // milliseconds
+    running: true
+    repeat: true
+    triggeredOnStart: true // default false, triggered signal emitted once extra on timer start
+    onTriggered: {}
+}
+myTimer.restart()
+myTimer.start()
+myTimer.stop()
+  
+//===========================================================================================================
+// QML ACTIONABLES
+//===========================================================================================================
+
+// ACTION
+// Can be used in MenuItem, Button, ToolButton 
+Action {
+    id: myAction
+    checkable: true // defaults false
+    checked: true
+    exclusiveGroup: myGroup // defaults null
+    iconSource: "qrc:///icon.png"
+    text: "str"
+    tooltip: "str"
+    shortcut: StandardKey.Copy
+    onTriggered: {}
+    onToggled: {}
+}
+
+// EXCLUSIVE GROUP
+// Can inline members or add to Action's exclusiveGroup property
+ExclusiveGroup {
+    id: myGroup
+    current: myAction // Current checked item
+    Action {
+        checkable: true // Required
+    }
+}
+  
+// BUTTON
+Button {
+    id: myButton
+    text: "str"
+    tooltip: "str"
+    iconSource: "qrc:///icon.png"
+    action: myAction
+    activeFocusOnPress: true // If gain active focus on a mouse press
+    checkable: true // defaults false
+    checked: true
+    exclusiveGroup: myGroup
+    iconSource: "qrc:///icon.png"
+    isDefault: true // If in dialog, auto pressed on enter even without focus
+    menu: myMenu
+    onClicked: {}
+}
+myButton.pressed
+myButton.hovered
+
+// CHECKBOX
+CheckBox {
+    text: "str"
+    checked: true
+}
+
+// MENU
+// Call using id.popup() to show at mouse position
+Menu {
+    id: myMenu
+    visible: false // context menu start off invisible
+    MenuItem {
+        text: "str"
+        iconSource: "qrc:///icon.png"
+        onTriggered: {}
+        action: myAction
+    }
 }
 
 //===========================================================================================================
