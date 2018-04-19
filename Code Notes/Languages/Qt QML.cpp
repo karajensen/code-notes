@@ -657,11 +657,36 @@ Text {
 }
 
 // TEXTINPUT
+// single line of editable plain text
 TextInput {
     maximumLength: 100
     focus: true
-    validator: IntValidator { bottom:-100 top:100 } 
+    validator: myValidator
+    input.activeFocusOnPress
+    autoScroll: true
+    canPaste: true
+    canRedo: true
+    canUndo: true
+    bottomPadding: 1
 }
+input.acceptableInput // if validator/input mask has been set, true if valid, if not set, always true
+
+
+// DOUBLEVALIDATOR
+DoubleValidator {
+    bottom: -1.0 // default -infinity
+    top: 1.0 // default infinity
+    decimals: 1 // n digits after decimal point, default 1000
+    notation: myNotationEnum // default DoubleValidator.ScientificNotation
+}
+DoubleValidator.StandardNotation     // disables E in value
+DoubleValidator.ScientificNotation   // allow Ein value
+
+// INTVALIDATOR
+IntValidator {
+    bottom: -1 // default -infinity
+    top: 1 // default infinity
+} 
 
 // BUTTON
 Button {
@@ -743,7 +768,7 @@ Repeater {
 // COMPONENT
 // Used for sourceComponent and contentItem properties
 Component {
-    id: myComponent
+    id: component
     Rectangle {
         signal mySignal(int value)
     }
@@ -752,7 +777,7 @@ Component {
 // CONNECTIONS
 // Access a signal outside of the object that emits it, required for Loader items
 Connections {
-    target: myLoader.item
+    target: loader.item
     onMySignal: { console.log(value); }
 }
 
@@ -808,19 +833,19 @@ var obj = Qt.createQmlObject('import QtQuick 2.0; Rectangle {width: 20; height: 
 // Use myLoader.item to access dynamic-created item
 // If using external myComponent, it can only see properties in myLoader, not in any of myLoader parents
 Loader {
-    id: myLoader
-    sourceComponent: myComponent // set to undefined or change to destroy items
+    id: loader
+    sourceComponent: component // set to undefined or change to destroy items
     sourceComponent: Component { } // Supports inline
     source: "MyItem.qml" // set to "" or change to destroy items
     focus: true // must be set to true for any of its children to get the active focus
     onLoaded: {} // Signal when loading complete
 }
 
-myLoader.active // Set to false destroys, doesn't auto create if source/sourceComponent changes, true creates
-myLoader.asynchronous // Default false, change to false while loading will force it to finish synchronously
-myLoader.item // Item loaded, not available until Loader.Ready state
-myLoader.progress // Progress real [0.0, 1.0]
-myLoader.status // Status enum value
+loader.active // Set to false destroys, doesn't auto create if source/sourceComponent changes, true creates
+loader.asynchronous // Default false, change to false while loading will force it to finish synchronously
+loader.item // Item loaded, not available until Loader.Ready state
+loader.progress // Progress real [0.0, 1.0]
+loader.status // Status enum value
 
 Loader.Null     // the loader is inactive or no QML source has been set
 Loader.Ready    // the QML source has been loaded
