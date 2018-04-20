@@ -542,8 +542,8 @@ myFont.family // String font family name
 myFont.bold // Whether bold
 myFont.italic // Whether italic
 myFont.underline // Whether has underline
-myFont.pointSize // real
-myFont.pixelSize // Overrides pointSize, int
+myFont.pointSize // real, device independent
+myFont.pixelSize // Overrides pointSize, int, device dependent
 myFont.weight // Weight enum
 myFont.overline // Whether has overline
 myFont.strikeout // Whether line through it
@@ -767,6 +767,7 @@ Action {
 
 // EXCLUSIVE GROUP
 // Can inline members or add to Action's exclusiveGroup property
+// Can be used by anything that has checked property
 ExclusiveGroup {
     id: myGroup
     current: myAction // Current checked item
@@ -830,16 +831,29 @@ Text {
 TextInput {
     id: input
     maximumLength: 100
-    focus: true
-    displayText: "str" // Dependent on echo mode, holds input as editing
     text: "str"
-    echoMode: myEchoModeEnum
     validator: myValidator
     activeFocusOnPress: true // If gain active focus on a mouse press
     autoScroll: true
     bottomPadding: 1
     color: "red" // text color
     cursorDelegate: Rectangle {} // Override cursor
+    displayText: "str" // Dependent on echo mode, holds input as editing
+    echoMode: TextInput.Normal
+    font.bold: true
+    font.capitalization: Font.MixedCase // defsult, see QML font type for enums
+    font.family: "Helvetica"
+    font.hintingPreference: Font.PreferDefaultHinting // default, see QML font type for enums
+    font.italic: true
+    font.kerning: true // Whether to auto adjust character spacing, default enabled
+    font.letterSpacing: 1 // real, spacing between characters
+    font.pointSize 16 // real, device independent
+    font.pixelSize: 5 // Overrides pointSize, int, device dependent
+    font.preferShaping: true // Whether to enable display/spacing rules, default enabled
+    font.strikeout: true
+    font.underline: true
+    font.weight: Font.Normal // default, see QML font type for enums
+    font.wordSpacing: 1 // real, spacing between words
 }
 input.acceptableInput // if validator/input mask has been set, true if valid, if not set, always true
 input.canUndo // If writable and there are previous operations that can be undone
@@ -872,7 +886,7 @@ DoubleValidator {
     bottom: -1.0 // default -infinity
     top: 1.0 // default infinity
     decimals: 1 // n digits after decimal point, default 1000
-    notation: myNotationEnum // default DoubleValidator.ScientificNotation
+    notation: DoubleValidator.ScientificNotation // default 
 }
 
 // Double Validator Notation Enum
@@ -886,7 +900,7 @@ DoubleValidator.ScientificNotation   // allow E in value
 // SHORTCUT
 Shortcut {
     autoRepeat: true // default true
-    context: myContextEnum // default Qt.WindowShortcut
+    context: Qt.WindowShortcut // default
     sequence: StandardKey.Copy
     sequences: [StandardKey.Cut, StandardKey.Copy]
     onActivated: {}
