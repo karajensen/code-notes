@@ -901,7 +901,17 @@ b    // Binary character permitted but not required
 !    // Switch off case conversion
 \    // To escape the special characters listed above to use them as separators
 
-// Text Edit Input Method Hints Enum
+// Text Edit Input Method Hints Flags
+Qt.ImhHiddenText       // Characters should be hidden, auto set when echoMode is TextInput.Password
+Qt.ImhSensitiveData    // Typed text should not be stored in any persistent storage (dictionary lookup)
+Qt.ImhNoAutoUppercase  // Should not try to auto switch to upper case when a sentence ends
+Qt.ImhPreferNumbers    // Numbers are preferred (but not required)
+Qt.ImhPreferUppercase  // Upper case letters are preferred (but not required)
+Qt.ImhPreferLowercase  // Lower case letters are preferred (but not required)
+Qt.ImhNoPredictiveText // Do not use predictive text (dictionary lookup) while typing
+Qt.ImhDate             // The text editor functions as a date field
+Qt.ImhTime             // The text editor functions as a time field.
+Qt.ImhMultiLine        // Don't stop input when Return or Enter key is pressed
 
 //===========================================================================================================
 // QML VALIDATOR
