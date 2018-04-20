@@ -165,7 +165,7 @@ import MyGlobals 1.0
 import "MyJavascript.js" as MyJS
   
 // ITEM
-// Base for all QML components, instantiates QQuickItem
+// Base for most QML components, instantiates QQuickItem
 Item {
     id: item                               // unique id of item, can be used to access it
     property int myProperty: 0             // custom property
@@ -219,7 +219,6 @@ Item {
         event.accepted = true; // Don't send event to parent
     }
 }
-
 item.mySignal.connect(mySlot) // Connect signal and slot
 item.activeFocus // Read only, whether item has active focus
 item.activeFocusOnTab // Whether included in active focus on tab, default false
@@ -807,6 +806,9 @@ CheckBox {
 Menu {
     id: myMenu
     visible: false // context menu start off invisible
+    MenuSeparator {
+        visible: true
+    }
     MenuItem {
         text: "str"
         iconSource: "qrc:///icon.png"
