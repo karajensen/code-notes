@@ -749,10 +749,6 @@ myTimer.restart()
 myTimer.start()
 myTimer.stop()
   
-//===========================================================================================================
-// QML ACTIONABLES
-//===========================================================================================================
-
 // ACTION
 // Can be used in MenuItem, Button, ToolButton 
 Action {
@@ -825,6 +821,7 @@ Menu {
 //===========================================================================================================
 
 // TEXT
+// Inherits item
 Text {
     text: "text"
     bottomPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
@@ -835,7 +832,7 @@ Text {
 }
 
 // TEXTINPUT
-// single line of editable plain text
+// Inherits Item, single line of editable plain text
 TextInput {
     id: input
     text: "str"
@@ -904,7 +901,22 @@ input.selectAll() // Causes all text to be selected
 input.selectWord() // Selects word closest to the current cursor position
 input.undo() // Undos if possible
 
-// Text/TextEdit Shared Font Properties
+// LABEL
+// Inherits
+Label {
+}
+
+// TEXTFIELD
+// Inherits TextInput
+TextField {
+}
+
+// TEXTAREA
+// Inherits 
+TextArea {
+}
+
+// Text / TextEdit / TextField Shared Font Properties
 font.bold: true
 font.capitalization: Font.MixedCase // default, see QML font type for enums
 font.family: "Helvetica"
