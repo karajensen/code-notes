@@ -824,7 +824,11 @@ Menu {
 // TEXT
 Text {
     text: "text"
-    verticalAlignment: Text.AlignVCenter
+    bottomPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
+    leftPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
+    rightPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
+    topPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
+    padding: 1 // padding around the content, not part of contentHeight/contentHeight
     font.bold: true
     font.capitalization: Font.MixedCase // default, see QML font type for enums
     font.family: "Helvetica"
@@ -845,15 +849,17 @@ Text {
 // single line of editable plain text
 TextInput {
     id: input
-    maximumLength: 100
     text: "str"
-    validator: myValidator
+    displayText: "str" // Dependent on echo mode, holds input as editing
     activeFocusOnPress: true // If gain active focus on a mouse press
     autoScroll: true
-    bottomPadding: 1
+    bottomPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
+    leftPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
+    rightPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
+    topPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
+    padding: 1 // padding around the content, not part of contentHeight/contentHeight
     color: "red" // text color
     cursorDelegate: Rectangle {} // Override cursor
-    displayText: "str" // Dependent on echo mode, holds input as editing
     echoMode: TextInput.Normal
     font.bold: true
     font.capitalization: Font.MixedCase // default, see QML font type for enums
@@ -871,7 +877,14 @@ TextInput {
     font.wordSpacing: 1 // real, spacing between words
     horizontalAlignment: TextInput.AlignHCenter
     inputMask: ">AAAAA-AAAAA-AAAAA;#"
-    inputMethodHints: Qt.ImhDigitsOnly
+    inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhTime
+    validator: myValidator
+    maximumLength: 100 // truncates/prevents input, default 32767
+    mouseSelectionMode: TextInput.SelectCharacters // requires selectByMouse property on
+    overwriteMode: true // Whether text inserted will overrite (insert key behavior)
+    passwordCharacter: "*" // Character used with echomode Password, only first char is used
+    passwordMaskDelay: 10 // ms delay before masking the character for echomode Password
+    persistentSelection: true // Whether keep selection when focus lost, default false
 }
 input.acceptableInput // if validator/input mask has been set, true if valid, if not set, always true
 input.canUndo // If writable and there are previous operations that can be undone
@@ -882,6 +895,8 @@ input.contentWidth // width of the unclipped text
 input.cursorPosition // position of the cursor in input
 input.cursorRectangle // rectangle where the cursor is rendered within inout
 input.cursorVisible // True when input shows a cursor
+input.length // Length of text, if has inputMask will include mask characters
+input.preeditText // partial text input from an input method
 
 // Text Edit Echo Mode Enum
 TextInput.Normal              // Displays the text as it is (default)
@@ -934,6 +949,10 @@ Qt.ImhLowercaseOnly          // Only lower case letter input is allowed
 Qt.ImhDialableCharactersOnly // Only characters suitable for phone dialing are allowed
 Qt.ImhEmailCharactersOnly    // Only characters suitable for email addresses are allowed
 Qt.ImhUrlCharactersOnly      // Only characters suitable for URLs are allowed
+
+// Text Edit Mouse Selection Mode Enum
+TextInput.SelectCharacters   // The selection is updated with individual characters
+TextInput.SelectWords        // The selection is updated with whole words
 
 //===========================================================================================================
 // QML VALIDATOR
