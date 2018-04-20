@@ -175,6 +175,7 @@ Item {
     property int myProperty: MyJS.fn       // Use function from imported javascript file
     property int myProperty: MyGlobal.fn   // Use function from global singleton
     property int myProperty: MyEnum.ONE    // Use int type for enums
+    property int myProperty: myObj.value   // Context Q_OBJECT with Q_PROPERTY 'value' with NOTIFY
     readonly property int myProperty: 0    // read-only property
     property alias myAlias: myProperty     // reference for property
     signal mySignal(int value)             // call with item.mySignal(0)
@@ -185,7 +186,7 @@ Item {
     /* Called when the item is destroyed */
     Component.onDestruction: {}
 
-    /* Called when the property has changed */
+    /* Called when property has changed, for context Q_OBJECTs emit signal needed */
     onMyPropertyChanged: {}
   
     /* Called when signal emitted */
@@ -854,6 +855,9 @@ TextInput {
     font.underline: true
     font.weight: Font.Normal // default, see QML font type for enums
     font.wordSpacing: 1 // real, spacing between words
+    horizontalAlignment: TextInput.AlignHCenter
+    inputMask: ">AAAAA-AAAAA-AAAAA;#"
+    inputMethodHints: Qt.ImhDigitsOnly
 }
 input.acceptableInput // if validator/input mask has been set, true if valid, if not set, always true
 input.canUndo // If writable and there are previous operations that can be undone
@@ -870,6 +874,34 @@ TextInput.Normal              // Displays the text as it is (default)
 TextInput.Password            // Displays platform-dependent password mask characters instead
 TextInput.NoEcho              // Displays nothing
 TextInput.PasswordEchoOnEdit  // Displays characters as they are entered while editing, otherwise password
+
+// Text Edit Horizontal Alignment Enum
+TextInput.AlignLeft
+TextInput.AlignRight
+TextInput.AlignHCenter
+
+// Text Input Input Mask Characters
+A    // ASCII alphabetic character required. A-Z, a-z
+a    // ASCII alphabetic character permitted but not required
+N    // ASCII alphanumeric character required. A-Z, a-z, 0-9
+n    // ASCII alphanumeric character permitted but not required
+X    // Any character required
+x    // Any character permitted but not required
+9    // ASCII digit required. 0-9
+0    // ASCII digit permitted but not required
+D    // ASCII digit required. 1-9
+d    // ASCII digit permitted but not required (1-9)
+#    // ASCII digit or plus/minus sign permitted but not required
+H    // Hexadecimal character required. A-F, a-f, 0-9
+h    // Hexadecimal character permitted but not required
+B    // Binary character required. 0-1
+b    // Binary character permitted but not required
+>    // All following alphabetic characters are uppercased
+<    // All following alphabetic characters are lowercased
+!    // Switch off case conversion
+\    // To escape the special characters listed above to use them as separators
+
+// Text Edit Input Method Hints Enum
 
 //===========================================================================================================
 // QML VALIDATOR
