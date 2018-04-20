@@ -829,20 +829,6 @@ Text {
     rightPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
     topPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
     padding: 1 // padding around the content, not part of contentHeight/contentHeight
-    font.bold: true
-    font.capitalization: Font.MixedCase // default, see QML font type for enums
-    font.family: "Helvetica"
-    font.hintingPreference: Font.PreferDefaultHinting // default, see QML font type for enums
-    font.italic: true
-    font.kerning: true // Whether to auto adjust character spacing, default enabled
-    font.letterSpacing: 1 // real, spacing between characters
-    font.pointSize 16 // real, device independent
-    font.pixelSize: 5 // Overrides pointSize, int, device dependent
-    font.preferShaping: true // Whether to enable display/spacing rules, default enabled
-    font.strikeout: true
-    font.underline: true
-    font.weight: Font.Normal // default, see QML font type for enums
-    font.wordSpacing: 1 // real, spacing between words
 }
 
 // TEXTINPUT
@@ -861,20 +847,6 @@ TextInput {
     color: "red" // text color
     cursorDelegate: Rectangle {} // Override cursor
     echoMode: TextInput.Normal
-    font.bold: true
-    font.capitalization: Font.MixedCase // default, see QML font type for enums
-    font.family: "Helvetica"
-    font.hintingPreference: Font.PreferDefaultHinting // default, see QML font type for enums
-    font.italic: true
-    font.kerning: true // Whether to auto adjust character spacing, default enabled
-    font.letterSpacing: 1 // real, spacing between characters
-    font.pointSize 16 // real, device independent
-    font.pixelSize: 5 // Overrides pointSize, int, device dependent
-    font.preferShaping: true // Whether to enable display/spacing rules, default enabled
-    font.strikeout: true
-    font.underline: true
-    font.weight: Font.Normal // default, see QML font type for enums
-    font.wordSpacing: 1 // real, spacing between words
     horizontalAlignment: TextInput.AlignHCenter
     verticalAlignment: TextInput.AlignVCenter
     inputMask: ">AAAAA-AAAAA-AAAAA;#"
@@ -908,18 +880,40 @@ input.cursorVisible // True when input shows a cursor
 input.length // Length of text, if has inputMask will include mask characters
 input.preeditText // partial text input from an input method
 input.selectedText // currently selected text
-input.selectionEnd // index after last character where selection ends in 'text'
-input.selectionStart // index of first character where selection starts in 'text'
+input.selectionEnd // index after last character where selection ends in 'text', read-only
+input.selectionStart // index of first character where selection starts in 'text', read-only
 input.clear() // clears text
 input.copy() // Copies selected text to system clipboard, won't work for Password echomode
+input.cut() // Cuts selected text to system clipboard, won't work for Password echomode
+input.deselect() // Removes selection
+input.ensureVisible(position) // Scrolls the contents to position
+input.getText(start, end) // Returns section of text between start and end positions
+input.insert(position, "str") // Inserts at position
+input.isRightToLeft(start, end) // true if natural reading direction between start/end is right to left
+input.moveCursorSelection(position, selectionMode) // Moves cursor and selects while moving
+input.paste() // Replaces the currently selected text by the contents of the system clipboard
 
-// Text Edit Echo Mode Enum
-TextInput.Normal              // Displays the text as it is (default)
-TextInput.Password            // Displays platform-dependent password mask characters instead
-TextInput.NoEcho              // Displays nothing
-TextInput.PasswordEchoOnEdit  // Displays characters as they are entered while editing, otherwise password
+// Text/TextEdit Shared Font Properties
+font.bold: true
+font.capitalization: Font.MixedCase // default, see QML font type for enums
+font.family: "Helvetica"
+font.hintingPreference: Font.PreferDefaultHinting // default, see QML font type for enums
+font.italic: true
+font.kerning: true // Whether to auto adjust character spacing, default enabled
+font.letterSpacing: 1 // real, spacing between characters
+font.pointSize 16 // real, device independent
+font.pixelSize: 5 // Overrides pointSize, int, device dependent
+font.preferShaping: true // Whether to enable display/spacing rules, default enabled
+font.strikeout: true
+font.underline: true
+font.weight: Font.Normal // default, see QML font type for enums
+font.wordSpacing: 1 // real, spacing between words
+  
+// Text Render Type Enum
+Text.QtRendering        // advanced features (transformations)
+Text.NativeRendering    // look native on the target platform, no advanced features (transformations)
 
-// Text Edit Alignment Enum
+// TextEdit Alignment Enum
 TextInput.AlignLeft
 TextInput.AlignRight
 TextInput.AlignHCenter
@@ -927,7 +921,7 @@ TextInput.AlignTop
 TextInput.AlignBottom
 TextInput.AlignVCenter
 
-// Text Input Input Mask Characters
+// TextEdit Input Mask Characters
 A    // ASCII alphabetic character required. A-Z, a-z
 a    // ASCII alphabetic character permitted but not required
 N    // ASCII alphanumeric character required. A-Z, a-z, 0-9
@@ -948,7 +942,7 @@ b    // Binary character permitted but not required
 !    // Switch off case conversion
 \    // To escape the special characters listed above to use them as separators
 
-// Text Edit Input Method Hints Flags
+// TextEdit Input Method Hints Flags
 Qt.ImhNone                   // No hints
 Qt.ImhHiddenText             // Characters should be hidden, auto set when echoMode is TextInput.Password
 Qt.ImhSensitiveData          // Typed text should not be stored in persistent storage (dictionary lookup)
@@ -968,19 +962,25 @@ Qt.ImhDialableCharactersOnly // Only characters suitable for phone dialing are a
 Qt.ImhEmailCharactersOnly    // Only characters suitable for email addresses are allowed
 Qt.ImhUrlCharactersOnly      // Only characters suitable for URLs are allowed
 
-// Text Edit Mouse Selection Mode Enum
+// TextEdit Mouse Selection Mode Enum
 TextInput.SelectCharacters   // The selection is updated with individual characters
 TextInput.SelectWords        // The selection is updated with whole words
 
-// Text Edit Wrap Mode Enum
+// TextEdit Wrap Mode Enum
 TextInput.NoWrap        // no wrapping
 TextInput.WordWrap      // wrapping done on word boundaries only
 TextInput.WrapAnywhere  // wrapping is done at any point on a line, even in the middle of a word
 TextInput.Wrap          // if possible, TextInput.WordWrap, else TextInput.WrapAnywhere
 
-// Text Render Type Enum
-Text.QtRendering        // advanced features (transformations)
-Text.NativeRendering    // look native on the target platform, no advanced features (transformations)
+// TextEdit Echo Mode Enum
+TextInput.Normal              // Displays the text as it is (default)
+TextInput.Password            // Displays platform-dependent password mask characters instead
+TextInput.NoEcho              // Displays nothing
+TextInput.PasswordEchoOnEdit  // Displays characters as they are entered while editing, otherwise password\
+
+// TextEdit Selection Mode Enum
+TextInput.SelectCharacters    // Selects all characters between selection start/end pos
+TextInput.SelectWords         // Selects all words between selection start/end pos, partial words included
 
 //===========================================================================================================
 // QML VALIDATOR
