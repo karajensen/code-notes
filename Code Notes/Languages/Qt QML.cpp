@@ -640,6 +640,62 @@ GridLayout {
 // QML COMPONENTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// QTOBJECT
+// lightweight non-visual element
+QtObject {
+   objectName: "name"
+}
+
+// COMPONENT
+// Instantiates QQmlComponent, Used for sourceComponent and contentItem properties
+Component {
+    id: component
+    Rectangle {
+        signal mySignal(int value)
+    }
+}
+
+// CONNECTIONS
+// Access a signal outside of the object that emits it, required for Loader items
+Connections {
+    target: loader.item
+    onMySignal: { console.log(value); }
+}
+
+// BINDING
+// Will become active and assign value to myProperty when myBoolean becomes true
+// When active, will disable any direct bindings myProperty may have until myBoolean is false
+Binding {
+    target: item // required if not a child of item with property
+    property: "myProperty" // can be QML basic type attribute (eg. "myRectProperty.x")
+    when: myBoolean
+    value: 10 // Can be value, another property etc
+    delayed: true // wait until event queue cleared before assigning
+}
+
+// CONTROL
+// Inherits Item
+Control {
+}
+
+// ABSTRACTBUTTON
+// Inherits Control
+AbstractButton {
+    id: myButton
+    text: "str"
+    action: myAction
+    checkable: true // defaults false
+    checked: true
+    icon.source: "qrc:///icon.png"
+    onClicked: {}
+}
+myButton.pressed
+
+// POPUP
+// Inherits QtObject
+Popup {
+}
+
 // RECTANGLE
 // Inherits Item
 Rectangle {
@@ -650,7 +706,7 @@ Rectangle {
 }
 
 // PROGRESSBAR
-// Inherits FocusScope
+// Inherits Control
 ProgressBar {
     maximumValue: 20
     minimumValue: 0
@@ -668,6 +724,7 @@ ProgressBar {
 }
 
 // DIALOG
+// Inherits Popup
 Dialog {
     visible: false // Turning on/off will show dialog window
     title: "Title"
@@ -709,33 +766,6 @@ Repeater {
     Text { text: "Data: " + modelData.role_name }
 }
 
-// COMPONENT
-// Instantiates QQmlComponent, Used for sourceComponent and contentItem properties
-Component {
-    id: component
-    Rectangle {
-        signal mySignal(int value)
-    }
-}
-
-// CONNECTIONS
-// Access a signal outside of the object that emits it, required for Loader items
-Connections {
-    target: loader.item
-    onMySignal: { console.log(value); }
-}
-
-// BINDING
-// Will become active and assign value to myProperty when myBoolean becomes true
-// When active, will disable any direct bindings myProperty may have until myBoolean is false
-Binding {
-    target: item // required if not a child of item with property
-    property: "myProperty" // can be QML basic type attribute (eg. "myRectProperty.x")
-    when: myBoolean
-    value: 10 // Can be value, another property etc
-    delayed: true // wait until event queue cleared before assigning
-}
-
 // TIMER
 Timer {
     id: myTimer
@@ -750,7 +780,7 @@ myTimer.start()
 myTimer.stop()
   
 // ACTION
-// Can be used in MenuItem, Button, ToolButton 
+// Inherits QtObject, Can be used in MenuItem, Button, ToolButton 
 Action {
     id: myAction
     checkable: true // defaults false
@@ -764,35 +794,10 @@ Action {
     onToggled: {}
 }
 
-// EXCLUSIVE GROUP
-// Can inline members or add to Action's exclusiveGroup property
-// Can be used by anything that has checked property
-ExclusiveGroup {
-    id: myGroup
-    current: myAction // Current checked item
-    Action {
-        checkable: true // Required
-    }
-}
-  
 // BUTTON
+// Inherits AbstractButton
 Button {
-    id: myButton
-    text: "str"
-    tooltip: "str"
-    iconSource: "qrc:///icon.png"
-    action: myAction
-    activeFocusOnPress: true // If gain active focus on a mouse press
-    checkable: true // defaults false
-    checked: true
-    exclusiveGroup: myGroup
-    iconSource: "qrc:///icon.png"
-    isDefault: true // If in dialog, auto pressed on enter even without focus
-    menu: myMenu
-    onClicked: {}
 }
-myButton.pressed
-myButton.hovered
 
 // CHECKBOX
 CheckBox {
@@ -801,19 +806,17 @@ CheckBox {
 }
 
 // MENU
-// Call using id.popup() to show at mouse position
+// Inherits Popup, Call using id.popup() to show at mouse position
 Menu {
     id: myMenu
     visible: false // context menu start off invisible
-    MenuSeparator {
-        visible: true
-    }
-    MenuItem {
-        text: "str"
-        iconSource: "qrc:///icon.png"
-        onTriggered: {}
-        action: myAction
-    }
+    MenuSeparator { visible: true }
+    MenuItem { text: "str" }
+}
+
+// MENUITEM
+// Inherits AbstractButton
+MenuItem {
 }
 
 //===========================================================================================================
@@ -901,8 +904,13 @@ input.selectAll() // Causes all text to be selected
 input.selectWord() // Selects word closest to the current cursor position
 input.undo() // Undos if possible
 
+// TEXTEDIT
+// Inherits Item
+TextEdit {
+}
+  
 // LABEL
-// Inherits
+// Inherits Text
 Label {
 }
 
@@ -912,11 +920,11 @@ TextField {
 }
 
 // TEXTAREA
-// Inherits 
+// Inherits TextEdit
 TextArea {
 }
 
-// Text / TextEdit / TextField Shared Font Properties
+// Text / TextInput / TextEdit Shared Font Properties
 font.bold: true
 font.capitalization: Font.MixedCase // default, see QML font type for enums
 font.family: "Helvetica"
@@ -936,7 +944,7 @@ font.wordSpacing: 1 // real, spacing between words
 Text.QtRendering        // advanced features (transformations)
 Text.NativeRendering    // look native on the target platform, no advanced features (transformations)
 
-// TextEdit Alignment Enum
+// TextInput Alignment Enum
 TextInput.AlignLeft
 TextInput.AlignRight
 TextInput.AlignHCenter
@@ -944,7 +952,7 @@ TextInput.AlignTop
 TextInput.AlignBottom
 TextInput.AlignVCenter
 
-// TextEdit InputMask Characters
+// TextInput InputMask Characters
 A    // ASCII alphabetic character required. A-Z, a-z
 a    // ASCII alphabetic character permitted but not required
 N    // ASCII alphanumeric character required. A-Z, a-z, 0-9
@@ -965,7 +973,7 @@ b    // Binary character permitted but not required
 !    // Switch off case conversion
 \    // To escape the special characters listed above to use them as separators
 
-// TextEdit InputMethodHints Flags
+// TextInput InputMethodHints Flags
 Qt.ImhNone                   // No hints
 Qt.ImhHiddenText             // Characters should be hidden, auto set when echoMode is TextInput.Password
 Qt.ImhSensitiveData          // Typed text should not be stored in persistent storage (dictionary lookup)
@@ -985,23 +993,23 @@ Qt.ImhDialableCharactersOnly // Only characters suitable for phone dialing are a
 Qt.ImhEmailCharactersOnly    // Only characters suitable for email addresses are allowed
 Qt.ImhUrlCharactersOnly      // Only characters suitable for URLs are allowed
 
-// TextEdit WrapMode Enum
+// TextInput WrapMode Enum
 TextInput.NoWrap        // no wrapping
 TextInput.WordWrap      // wrapping done on word boundaries only
 TextInput.WrapAnywhere  // wrapping is done at any point on a line, even in the middle of a word
 TextInput.Wrap          // if possible, TextInput.WordWrap, else TextInput.WrapAnywhere
 
-// TextEdit EchoMode Enum
+// TextInput EchoMode Enum
 TextInput.Normal              // Displays the text as it is (default)
 TextInput.Password            // Displays platform-dependent password mask characters instead
 TextInput.NoEcho              // Displays nothing
 TextInput.PasswordEchoOnEdit  // Displays characters as they are entered while editing, otherwise password\
 
-// TextEdit SelectionMode Enum
+// TextInput SelectionMode Enum
 TextInput.SelectCharacters    // Selects all characters between selection start/end pos
 TextInput.SelectWords         // Selects all words between selection start/end pos, partial words included
 
-// TextEdit CursorPosition Enum
+// TextInput CursorPosition Enum
 TextInput.CursorBetweenCharacters  // Returns the position between characters that is nearest x
 TextInput.CursorOnCharacter        // Returns the position before the character that is nearest x
 
