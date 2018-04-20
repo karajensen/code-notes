@@ -133,7 +133,7 @@ obj.parent() // Returns QObject*
 obj.setParent(obj2) // Sets parent
 obj.thread() // Returns QThread* where the object lives
 qobject_cast<MyClass*>(obj); // dynamic_cast without requiring RTTI
-emit obj.mySignal() // Emit a signal
+emit obj.mySignal() // Emit a signal, need to call emit whenever Q_PROPERTY changes to update QML
 MyClass::staticMetaObject // QMetaObject for class
     
 // QMETAOBJECT
