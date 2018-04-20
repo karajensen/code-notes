@@ -825,8 +825,20 @@ Menu {
 Text {
     text: "text"
     verticalAlignment: Text.AlignVCenter
-    font.pointSize: 14
     font.bold: true
+    font.capitalization: Font.MixedCase // default, see QML font type for enums
+    font.family: "Helvetica"
+    font.hintingPreference: Font.PreferDefaultHinting // default, see QML font type for enums
+    font.italic: true
+    font.kerning: true // Whether to auto adjust character spacing, default enabled
+    font.letterSpacing: 1 // real, spacing between characters
+    font.pointSize 16 // real, device independent
+    font.pixelSize: 5 // Overrides pointSize, int, device dependent
+    font.preferShaping: true // Whether to enable display/spacing rules, default enabled
+    font.strikeout: true
+    font.underline: true
+    font.weight: Font.Normal // default, see QML font type for enums
+    font.wordSpacing: 1 // real, spacing between words
 }
 
 // TEXTINPUT
@@ -844,7 +856,7 @@ TextInput {
     displayText: "str" // Dependent on echo mode, holds input as editing
     echoMode: TextInput.Normal
     font.bold: true
-    font.capitalization: Font.MixedCase // defsult, see QML font type for enums
+    font.capitalization: Font.MixedCase // default, see QML font type for enums
     font.family: "Helvetica"
     font.hintingPreference: Font.PreferDefaultHinting // default, see QML font type for enums
     font.italic: true
