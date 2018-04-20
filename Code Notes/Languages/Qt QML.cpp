@@ -615,21 +615,21 @@ Qt.AlignBottom
 Qt.AlignBaseline
 
 // ROWLAYOUT
-// Aligns elements after each other in a single row
+// Inherits Item, Aligns elements after each other in a single row
 RowLayout {
     spacing: 5
     anchors.fill: parent // Still use anchors on base
 }
 
 // COLUMNLAYOUT
-// Aligns elements after each other in a single column
+// Inherits Item, Aligns elements after each other in a single column
 ColumnLayout {
     spacing: 5
     anchors.fill: parent // Still use anchors on base
 }
 
 // GRIDLAYOUT
-// Aligns elements in a grid with n columns
+// Inherits Item, Aligns elements in a grid with n columns
 GridLayout {
     columns: 3
     spacing: 5
@@ -641,6 +641,7 @@ GridLayout {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // RECTANGLE
+// Inherits Item
 Rectangle {
     color: "red"
     radius: 2
@@ -649,6 +650,7 @@ Rectangle {
 }
 
 // PROGRESSBAR
+// Inherits FocusScope
 ProgressBar {
     maximumValue: 20
     minimumValue: 0
@@ -677,6 +679,7 @@ Dialog {
 }
 
 // MOUSEAREA
+// Inherits Item
 MouseArea {
     hoverEnabled: true
     acceptedButtons: Qt.RightButton | Qt.LeftButton | Qt.AllButtons
@@ -690,7 +693,7 @@ MouseArea {
 }
 
 // REPEATER
-// Usually in Row/Column, instantiates n items
+// Inherits Item, Usually in Row/Column, instantiates n items
 // creates all of its delegate items when the repeater is first created
 Repeater {
     id: repeater
@@ -707,7 +710,7 @@ Repeater {
 }
 
 // COMPONENT
-// Used for sourceComponent and contentItem properties
+// Instantiates QQmlComponent, Used for sourceComponent and contentItem properties
 Component {
     id: component
     Rectangle {
@@ -892,6 +895,14 @@ input.insert(position, "str") // Inserts at position
 input.isRightToLeft(start, end) // true if natural reading direction between start/end is right to left
 input.moveCursorSelection(position, selectionMode) // Moves cursor and selects while moving
 input.paste() // Replaces the currently selected text by the contents of the system clipboard
+input.positionAt(x, y, cursorPosition) // Returns position from topleft of input based on cursorPosition
+input.positionToRectangle(position) // Returns QML rect that cursor would occupy if placed at char position
+input.redo() // Redos if possible
+input.remove(start, end) // Removes section of text between start and end position
+input.select(start, end) // Selects start to end char position, if out of range does no selection change
+input.selectAll() // Causes all text to be selected
+input.selectWord() // Selects word closest to the current cursor position
+input.undo() // Undos if possible
 
 // Text/TextEdit Shared Font Properties
 font.bold: true
@@ -909,7 +920,7 @@ font.underline: true
 font.weight: Font.Normal // default, see QML font type for enums
 font.wordSpacing: 1 // real, spacing between words
   
-// Text Render Type Enum
+// Text RenderType Enum
 Text.QtRendering        // advanced features (transformations)
 Text.NativeRendering    // look native on the target platform, no advanced features (transformations)
 
@@ -921,7 +932,7 @@ TextInput.AlignTop
 TextInput.AlignBottom
 TextInput.AlignVCenter
 
-// TextEdit Input Mask Characters
+// TextEdit InputMask Characters
 A    // ASCII alphabetic character required. A-Z, a-z
 a    // ASCII alphabetic character permitted but not required
 N    // ASCII alphanumeric character required. A-Z, a-z, 0-9
@@ -942,7 +953,7 @@ b    // Binary character permitted but not required
 !    // Switch off case conversion
 \    // To escape the special characters listed above to use them as separators
 
-// TextEdit Input Method Hints Flags
+// TextEdit InputMethodHints Flags
 Qt.ImhNone                   // No hints
 Qt.ImhHiddenText             // Characters should be hidden, auto set when echoMode is TextInput.Password
 Qt.ImhSensitiveData          // Typed text should not be stored in persistent storage (dictionary lookup)
@@ -962,25 +973,25 @@ Qt.ImhDialableCharactersOnly // Only characters suitable for phone dialing are a
 Qt.ImhEmailCharactersOnly    // Only characters suitable for email addresses are allowed
 Qt.ImhUrlCharactersOnly      // Only characters suitable for URLs are allowed
 
-// TextEdit Mouse Selection Mode Enum
-TextInput.SelectCharacters   // The selection is updated with individual characters
-TextInput.SelectWords        // The selection is updated with whole words
-
-// TextEdit Wrap Mode Enum
+// TextEdit WrapMode Enum
 TextInput.NoWrap        // no wrapping
 TextInput.WordWrap      // wrapping done on word boundaries only
 TextInput.WrapAnywhere  // wrapping is done at any point on a line, even in the middle of a word
 TextInput.Wrap          // if possible, TextInput.WordWrap, else TextInput.WrapAnywhere
 
-// TextEdit Echo Mode Enum
+// TextEdit EchoMode Enum
 TextInput.Normal              // Displays the text as it is (default)
 TextInput.Password            // Displays platform-dependent password mask characters instead
 TextInput.NoEcho              // Displays nothing
 TextInput.PasswordEchoOnEdit  // Displays characters as they are entered while editing, otherwise password\
 
-// TextEdit Selection Mode Enum
+// TextEdit SelectionMode Enum
 TextInput.SelectCharacters    // Selects all characters between selection start/end pos
 TextInput.SelectWords         // Selects all words between selection start/end pos, partial words included
+
+// TextEdit CursorPosition Enum
+TextInput.CursorBetweenCharacters  // Returns the position between characters that is nearest x
+TextInput.CursorOnCharacter        // Returns the position before the character that is nearest x
 
 //===========================================================================================================
 // QML VALIDATOR
