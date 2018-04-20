@@ -876,6 +876,7 @@ TextInput {
     font.weight: Font.Normal // default, see QML font type for enums
     font.wordSpacing: 1 // real, spacing between words
     horizontalAlignment: TextInput.AlignHCenter
+    verticalAlignment: TextInput.AlignVCenter
     inputMask: ">AAAAA-AAAAA-AAAAA;#"
     inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhTime
     validator: myValidator
@@ -885,6 +886,15 @@ TextInput {
     passwordCharacter: "*" // Character used with echomode Password, only first char is used
     passwordMaskDelay: 10 // ms delay before masking the character for echomode Password
     persistentSelection: true // Whether keep selection when focus lost, default false
+    readOnly: true
+    renderType: Text.QtRendering // Default given by QQuickWindow::textRenderType
+    selectByMouse: true // Allow mouse to select, default false
+    selectedTextColor: "red" // text
+    selectionColor: "red" // background
+    wrapMode: TextInput.NoWrap // default
+    onAccepted() {} // when Return/Enter key pressed and text passed validation
+    onEditingFinished() {} // when Return/Enter key pressed or focus lost and text passed validation
+    onTextEdited() {} // whenever the text is edited by user, not explicitly set
 }
 input.acceptableInput // if validator/input mask has been set, true if valid, if not set, always true
 input.canUndo // If writable and there are previous operations that can be undone
@@ -897,6 +907,11 @@ input.cursorRectangle // rectangle where the cursor is rendered within inout
 input.cursorVisible // True when input shows a cursor
 input.length // Length of text, if has inputMask will include mask characters
 input.preeditText // partial text input from an input method
+input.selectedText // currently selected text
+input.selectionEnd // index after last character where selection ends in 'text'
+input.selectionStart // index of first character where selection starts in 'text'
+input.clear() // clears text
+input.copy() // Copies selected text to system clipboard, won't work for Password echomode
 
 // Text Edit Echo Mode Enum
 TextInput.Normal              // Displays the text as it is (default)
@@ -904,10 +919,13 @@ TextInput.Password            // Displays platform-dependent password mask chara
 TextInput.NoEcho              // Displays nothing
 TextInput.PasswordEchoOnEdit  // Displays characters as they are entered while editing, otherwise password
 
-// Text Edit Horizontal Alignment Enum
+// Text Edit Alignment Enum
 TextInput.AlignLeft
 TextInput.AlignRight
 TextInput.AlignHCenter
+TextInput.AlignTop
+TextInput.AlignBottom
+TextInput.AlignVCenter
 
 // Text Input Input Mask Characters
 A    // ASCII alphabetic character required. A-Z, a-z
@@ -953,6 +971,16 @@ Qt.ImhUrlCharactersOnly      // Only characters suitable for URLs are allowed
 // Text Edit Mouse Selection Mode Enum
 TextInput.SelectCharacters   // The selection is updated with individual characters
 TextInput.SelectWords        // The selection is updated with whole words
+
+// Text Edit Wrap Mode Enum
+TextInput.NoWrap        // no wrapping
+TextInput.WordWrap      // wrapping done on word boundaries only
+TextInput.WrapAnywhere  // wrapping is done at any point on a line, even in the middle of a word
+TextInput.Wrap          // if possible, TextInput.WordWrap, else TextInput.WrapAnywhere
+
+// Text Render Type Enum
+Text.QtRendering        // advanced features (transformations)
+Text.NativeRendering    // look native on the target platform, no advanced features (transformations)
 
 //===========================================================================================================
 // QML VALIDATOR
