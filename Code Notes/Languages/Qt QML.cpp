@@ -902,16 +902,24 @@ b    // Binary character permitted but not required
 \    // To escape the special characters listed above to use them as separators
 
 // Text Edit Input Method Hints Flags
-Qt.ImhHiddenText       // Characters should be hidden, auto set when echoMode is TextInput.Password
-Qt.ImhSensitiveData    // Typed text should not be stored in any persistent storage (dictionary lookup)
-Qt.ImhNoAutoUppercase  // Should not try to auto switch to upper case when a sentence ends
-Qt.ImhPreferNumbers    // Numbers are preferred (but not required)
-Qt.ImhPreferUppercase  // Upper case letters are preferred (but not required)
-Qt.ImhPreferLowercase  // Lower case letters are preferred (but not required)
-Qt.ImhNoPredictiveText // Do not use predictive text (dictionary lookup) while typing
-Qt.ImhDate             // The text editor functions as a date field
-Qt.ImhTime             // The text editor functions as a time field.
-Qt.ImhMultiLine        // Don't stop input when Return or Enter key is pressed
+Qt.ImhNone                   // No hints
+Qt.ImhHiddenText             // Characters should be hidden, auto set when echoMode is TextInput.Password
+Qt.ImhSensitiveData          // Typed text should not be stored in persistent storage (dictionary lookup)
+Qt.ImhNoAutoUppercase        // Should not try to auto switch to upper case when a sentence ends
+Qt.ImhPreferNumbers          // Numbers are preferred (but not required)
+Qt.ImhPreferUppercase        // Upper case letters are preferred (but not required)
+Qt.ImhPreferLowercase        // Lower case letters are preferred (but not required)
+Qt.ImhNoPredictiveText       // Do not use predictive text (dictionary lookup) while typing
+Qt.ImhDate                   // The text editor functions as a date field
+Qt.ImhTime                   // The text editor functions as a time field.
+Qt.ImhMultiLine              // Don't stop input when Return or Enter key is pressed
+Qt.ImhDigitsOnly             // Only digits are allowed
+Qt.ImhFormattedNumbersOnly   // Only number input is allowed, includes decimal point and minus sign
+Qt.ImhUppercaseOnly          // Only upper case letter input is allowed
+Qt.ImhLowercaseOnly          // Only lower case letter input is allowed
+Qt.ImhDialableCharactersOnly // Only characters suitable for phone dialing are allowed
+Qt.ImhEmailCharactersOnly    // Only characters suitable for email addresses are allowed
+Qt.ImhUrlCharactersOnly      // Only characters suitable for URLs are allowed
 
 //===========================================================================================================
 // QML VALIDATOR
