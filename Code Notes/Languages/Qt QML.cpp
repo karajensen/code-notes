@@ -285,7 +285,7 @@ Qt.formatDate(date, format)
 Qt.formatDateTime(date, format)
 Qt.formatTime(date, format)
   
-// DATE FORMAT ENUM
+// Date Format Enum
 Qt.TextDate                // ddd MMM d yyyy
 Qt.ISODate                 // yyyy-MM-dd or yyyy-MM-ddTHH:mm:ss or with a time-zone suffix 
 Qt.ISODateWithMs           // Qt.ISODate with ms
@@ -294,7 +294,7 @@ Qt.SystemLocaleLongDate    // The long format used by the operating system
 Qt.DefaultLocaleShortDate  // The short format specified by the application's locale
 Qt.DefaultLocaleLongDate   // The long format specified by the application's locale
   
-// DATE FORMAT STRING
+// Date Format String
 // Can use space . and : to seperate (eg. "ddd MMMM d yy" )
 d     // the day as number without a leading zero (1 to 31)
 dd    // the day as number with a leading zero (01 to 31)
@@ -453,7 +453,7 @@ myFont.kerning // Whether to auto adjust character spacing, default enabled
 myFont.preferShaping // Whether to enable display/spacing rules, default enabled
 myFont.hintingPreference // Hinting preference enum
 
-// WEIGHTING
+// Font Weighting
 Font.Thin          0
 Font.ExtraLight    12
 Font.Light         25
@@ -464,14 +464,14 @@ Font.Bold          75
 Font.ExtraBold     81
 Font.Black         87
   
-// CAPITALIZATION
+// Font Capitalization
 Font.MixedCase       // No change
 Font.AllUppercase    // Render in all uppercase
 Font.AllLowercase    // Render in all lowercase
 Font.SmallCaps       // Render in all small-caps
 Font.Capitalize      // Render with the first character of each word as uppercase
   
-// HINTING
+// Font Hinting
 // Adjusts an outline (non-rastor) font so it lines up with a rasterized grid
 // Important for displaying small text, only used with "NativeRendering"
 Font.PreferDefaultHinting    // default hinting level
@@ -483,7 +483,7 @@ Font.PreferFullHinting       // hinting in both horizontal and vertical directio
 // QML LAYOUTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// LAYOUT PROPERTIES
+// LAYOUT ATTACHED PROPERTIES
 // Use these on any components inside the layout
 Layout.alignment // Alignment type flags
 Layout.bottomMargin // Overrides margin property if set
@@ -504,7 +504,7 @@ Layout.row // row position of an item in a GridLayout
 Layout.rowSpan // row span of an item in a GridLayout
 Layout.topMargin // Overrides margin property if set
 
-// ALIGNMENT TYPES
+// Layout Alignment Types
 Qt.AlignLeft
 Qt.AlignHCenter
 Qt.AlignRight
