@@ -64,14 +64,6 @@ SCENE GRAPH THREADED RENDER LOOP:
      4) QQuickWindow::afterRendering signal is emitted
      5) Rendered frame is swapped and QQuickWindow::frameSwapped is emitted
 9) Meanwhile GUI is free to advance animations, process events, etc
-
-===========================================================================================================
-QML INPUT FOCUS
-===========================================================================================================
-
-ACTIVE FOCUS:
-• Item currently receives keyboard input
-• Or item is a FocusScope ancestor of the item that currently receives keyboard input
 **************************************************************************************************************/
     
 // QQuickWindow
@@ -213,11 +205,6 @@ Item {
             when: myFunction
         }
     ]
-  
-    /* Handle key pressed event when has active focus */
-    Keys.onPressed: {
-        event.accepted = true; // Don't send event to parent
-    }
 }
 item.mySignal.connect(mySlot) // Connect signal and slot
 item.activeFocus // Read only, whether item has active focus
@@ -681,20 +668,6 @@ Rectangle {
     border.width: 1      
 }
 
-// MOUSEAREA
-// Inherits Item
-MouseArea {
-    hoverEnabled: true
-    acceptedButtons: Qt.RightButton | Qt.LeftButton | Qt.AllButtons
-    onPressed: {}
-    onRelease: {}
-    onClicked: {
-        real clickX = mouse.x;
-        real clickY = mouse.y;
-        int button = mouse.button;
-    }
-}
-
 // REPEATER
 // Inherits Item, Usually in Row/Column, instantiates n items
 // creates all of its delegate items when the repeater is first created
@@ -1038,92 +1011,6 @@ TextInput.SelectWords         // Selects all words between selection start/end p
 TextInput.CursorBetweenCharacters  // Returns the position between characters that is nearest x
 TextInput.CursorOnCharacter        // Returns the position before the character that is nearest x
 
-//===========================================================================================================
-// QML SHORTCUT
-//===========================================================================================================
-  
-// SHORTCUT
-Shortcut {
-    autoRepeat: true // default true
-    context: Qt.WindowShortcut // default
-    sequence: StandardKey.Copy
-    sequences: [StandardKey.Cut, StandardKey.Copy]
-    onActivated: {}
-}
-
-// Shortcut Context Enum
-Qt.WindowShortcut       // Active when its parent item is in an active top-level window
-Qt.ApplicationShortcut  // Active when one of the application's windows are active
-  
-// Standard Key Flags
-StandardKey.AddTab                     // Add new tab
-StandardKey.Back                       // Navigate back
-StandardKey.Backspace                  // Delete previous character
-StandardKey.Bold                       // Bold text
-StandardKey.Close                      // Close document/tab
-StandardKey.Copy                       // Copy
-StandardKey.Cut                        // Cut
-StandardKey.Delete                     // Delete
-StandardKey.DeleteEndOfLine            // Delete end of line
-StandardKey.DeleteEndOfWord            // Delete word from the end of the cursor
-StandardKey.DeleteStartOfWord          // Delete the beginning of a word up to the cursor
-StandardKey.DeleteCompleteLine         // Delete the entire line
-StandardKey.Find                       // Find in document
-StandardKey.FindNext                   // Find next result
-StandardKey.FindPrevious               // Find previous result
-StandardKey.Forward                    // Navigate forward
-StandardKey.HelpContents               // Open help contents
-StandardKey.InsertLineSeparator        // Insert a new line
-StandardKey.InsertParagraphSeparator   // Insert a new paragraph
-StandardKey.Italic                     // Italic text
-StandardKey.MoveToEndOfDocument        // Move cursor to end of document
-StandardKey.MoveToEndOfLine            // Move cursor to end of line
-StandardKey.MoveToNextChar             // Move cursor to next character
-StandardKey.MoveToNextLine             // Move cursor to next line
-StandardKey.MoveToNextPage             // Move cursor to next page
-StandardKey.MoveToNextWord             // Move cursor to next word
-StandardKey.MoveToPreviousChar         // Move cursor to previous character
-StandardKey.MoveToPreviousLine         // Move cursor to previous line
-StandardKey.MoveToPreviousPage         // Move cursor to previous page
-StandardKey.MoveToPreviousWord         // Move cursor to previous word
-StandardKey.MoveToStartOfDocument      // Move cursor to start of document
-StandardKey.MoveToStartOfLine          // Move cursor to start of line
-StandardKey.New                        // Create new document
-StandardKey.NextChild                  // Navigate to next tab or child window
-StandardKey.Open                       // Open document
-StandardKey.Paste                      // Paste
-StandardKey.Preferences                // Open the preferences dialog
-StandardKey.PreviousChild              // Navigate to previous tab or child window
-StandardKey.Print                      // Print document
-StandardKey.Quit                       // Quit the application
-StandardKey.Redo                       // Redo
-StandardKey.Refresh                    // Refresh or reload current document
-StandardKey.Replace                    // Find and replace
-StandardKey.SaveAs                     // Save document after prompting the user for a file name
-StandardKey.Save                       // Save document
-StandardKey.SelectAll                  // Select all text
-StandardKey.Deselect                   // Deselect text
-StandardKey.SelectEndOfDocument        // Extend selection to end of document
-StandardKey.SelectEndOfLine            // Extend selection to end of line
-StandardKey.SelectNextChar             // Extend selection to next character
-StandardKey.SelectNextLine             // Extend selection to next line
-StandardKey.SelectNextPage             // Extend selection to next page
-StandardKey.SelectNextWord             // Extend selection to next word
-StandardKey.SelectPreviousChar         // Extend selection to previous character
-StandardKey.SelectPreviousLine         // Extend selection to previous line
-StandardKey.SelectPreviousPage         // Extend selection to previous page
-StandardKey.SelectPreviousWord         // Extend selection to previous word
-StandardKey.SelectStartOfDocumen       // Extend selection to start of document
-StandardKey.SelectStartOfLine          // Extend selection to start of line
-StandardKey.Underline                  // Underline text
-StandardKey.Undo                       // Undo
-StandardKey.UnknownKey                 // Unbound key
-StandardKey.WhatsThis                  // Activate "what's this"
-StandardKey.ZoomIn                     // Zoom in
-StandardKey.ZoomOut                    // Zoom out
-StandardKey.FullScreen                 // Toggle the window state to/from full screen
-StandardKey.Cancel                     // Cancel the current operation
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML DYNAMIC CREATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1225,6 +1112,128 @@ ScrollView {
         }
     }
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML INPUT HANDLING
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/************************************************************************************************************
+ACTIVE FOCUS:
+• Item currently receives keyboard input
+• Or item is a FocusScope ancestor of the item that currently receives keyboard input
+
+KEY HANDLING STEPS
+1) Qt receives the key action and generates a key event
+2) If a QQuickWindow is the active window, the key event is delivered to it
+3) The key event is delivered to the Item with active focus. If none with focus then event ignored
+4) If the Item accepts the key event, propagation stops
+5) If the Item declines, the event is sent to the Item's parent until the event is accepted or root reached
+**************************************************************************************************************/
+
+// MOUSEAREA
+// Inherits Item
+MouseArea {
+    hoverEnabled: true
+    acceptedButtons: Qt.RightButton | Qt.LeftButton | Qt.AllButtons
+    onPressed: {}
+    onRelease: {}
+    onClicked: {
+        real clickX = mouse.x;
+        real clickY = mouse.y;
+        int button = mouse.button;
+    }
+}
+
+// KEY EVENT SIGNALS
+// Add to any Item, to stop propergation, do event.accepted = true
+Item {
+    /* Handle key pressed event when has active focus */
+    Keys.onPressed: {
+        event.accepted = true; // Don't send event to parent
+    }
+}
+  
+// SHORTCUT
+Shortcut {
+    autoRepeat: true // default true
+    context: Qt.WindowShortcut // default
+    sequence: StandardKey.Copy
+    sequences: [StandardKey.Cut, StandardKey.Copy]
+    onActivated: {}
+}
+
+// Shortcut Context Enum
+Qt.WindowShortcut       // Active when its parent item is in an active top-level window
+Qt.ApplicationShortcut  // Active when one of the application's windows are active
+  
+// Standard Key Flags
+StandardKey.AddTab                     // Add new tab
+StandardKey.Back                       // Navigate back
+StandardKey.Backspace                  // Delete previous character
+StandardKey.Bold                       // Bold text
+StandardKey.Close                      // Close document/tab
+StandardKey.Copy                       // Copy
+StandardKey.Cut                        // Cut
+StandardKey.Delete                     // Delete
+StandardKey.DeleteEndOfLine            // Delete end of line
+StandardKey.DeleteEndOfWord            // Delete word from the end of the cursor
+StandardKey.DeleteStartOfWord          // Delete the beginning of a word up to the cursor
+StandardKey.DeleteCompleteLine         // Delete the entire line
+StandardKey.Find                       // Find in document
+StandardKey.FindNext                   // Find next result
+StandardKey.FindPrevious               // Find previous result
+StandardKey.Forward                    // Navigate forward
+StandardKey.HelpContents               // Open help contents
+StandardKey.InsertLineSeparator        // Insert a new line
+StandardKey.InsertParagraphSeparator   // Insert a new paragraph
+StandardKey.Italic                     // Italic text
+StandardKey.MoveToEndOfDocument        // Move cursor to end of document
+StandardKey.MoveToEndOfLine            // Move cursor to end of line
+StandardKey.MoveToNextChar             // Move cursor to next character
+StandardKey.MoveToNextLine             // Move cursor to next line
+StandardKey.MoveToNextPage             // Move cursor to next page
+StandardKey.MoveToNextWord             // Move cursor to next word
+StandardKey.MoveToPreviousChar         // Move cursor to previous character
+StandardKey.MoveToPreviousLine         // Move cursor to previous line
+StandardKey.MoveToPreviousPage         // Move cursor to previous page
+StandardKey.MoveToPreviousWord         // Move cursor to previous word
+StandardKey.MoveToStartOfDocument      // Move cursor to start of document
+StandardKey.MoveToStartOfLine          // Move cursor to start of line
+StandardKey.New                        // Create new document
+StandardKey.NextChild                  // Navigate to next tab or child window
+StandardKey.Open                       // Open document
+StandardKey.Paste                      // Paste
+StandardKey.Preferences                // Open the preferences dialog
+StandardKey.PreviousChild              // Navigate to previous tab or child window
+StandardKey.Print                      // Print document
+StandardKey.Quit                       // Quit the application
+StandardKey.Redo                       // Redo
+StandardKey.Refresh                    // Refresh or reload current document
+StandardKey.Replace                    // Find and replace
+StandardKey.SaveAs                     // Save document after prompting the user for a file name
+StandardKey.Save                       // Save document
+StandardKey.SelectAll                  // Select all text
+StandardKey.Deselect                   // Deselect text
+StandardKey.SelectEndOfDocument        // Extend selection to end of document
+StandardKey.SelectEndOfLine            // Extend selection to end of line
+StandardKey.SelectNextChar             // Extend selection to next character
+StandardKey.SelectNextLine             // Extend selection to next line
+StandardKey.SelectNextPage             // Extend selection to next page
+StandardKey.SelectNextWord             // Extend selection to next word
+StandardKey.SelectPreviousChar         // Extend selection to previous character
+StandardKey.SelectPreviousLine         // Extend selection to previous line
+StandardKey.SelectPreviousPage         // Extend selection to previous page
+StandardKey.SelectPreviousWord         // Extend selection to previous word
+StandardKey.SelectStartOfDocumen       // Extend selection to start of document
+StandardKey.SelectStartOfLine          // Extend selection to start of line
+StandardKey.Underline                  // Underline text
+StandardKey.Undo                       // Undo
+StandardKey.UnknownKey                 // Unbound key
+StandardKey.WhatsThis                  // Activate "what's this"
+StandardKey.ZoomIn                     // Zoom in
+StandardKey.ZoomOut                    // Zoom out
+StandardKey.FullScreen                 // Toggle the window state to/from full screen
+StandardKey.Cancel                     // Cancel the current operation
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML GLOBAL ITEMS
