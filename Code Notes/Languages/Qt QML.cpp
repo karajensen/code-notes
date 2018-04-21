@@ -649,7 +649,6 @@ QtObject {
 // COMPONENT
 // Instantiates QQmlComponent, Used for sourceComponent and contentItem properties
 Component {
-    id: component
     Rectangle {
         signal mySignal(int value)
     }
@@ -673,29 +672,6 @@ Binding {
     delayed: true // wait until event queue cleared before assigning
 }
 
-// CONTROL
-// Inherits Item
-Control {
-}
-
-// ABSTRACTBUTTON
-// Inherits Control
-AbstractButton {
-    id: myButton
-    text: "str"
-    action: myAction
-    checkable: true // defaults false
-    checked: true
-    icon.source: "qrc:///icon.png"
-    onClicked: {}
-}
-myButton.pressed
-
-// POPUP
-// Inherits QtObject
-Popup {
-}
-
 // RECTANGLE
 // Inherits Item
 Rectangle {
@@ -703,36 +679,6 @@ Rectangle {
     radius: 2
     border.color: "red"
     border.width: 1      
-}
-
-// PROGRESSBAR
-// Inherits Control
-ProgressBar {
-    maximumValue: 20
-    minimumValue: 0
-    style: ProgressBarStyle {
-        background: Rectangle {
-            radius: 2
-            color: "grey"
-            implicitWidth: 100
-            implicitHeight: 20
-        }
-        progress: Rectangle {
-            color: "blue"
-        }
-    }
-}
-
-// DIALOG
-// Inherits Popup
-Dialog {
-    visible: false // Turning on/off will show dialog window
-    title: "Title"
-    width: 300
-    height: 80
-    contentItem: Rectangle {
-        anchors.fill: parent
-    }
 }
 
 // MOUSEAREA
@@ -768,31 +714,66 @@ Repeater {
 
 // TIMER
 Timer {
-    id: myTimer
     interval: 500 // milliseconds
     running: true
     repeat: true
     triggeredOnStart: true // default false, triggered signal emitted once extra on timer start
     onTriggered: {}
 }
-myTimer.restart()
-myTimer.start()
-myTimer.stop()
+timer.restart()
+timer.start()
+timer.stop()
+  
+// INTVALIDATOR
+// Instantiates QIntValidator
+IntValidator {
+    bottom: -1 // default -infinity
+    top: 1 // default infinity
+} 
+  
+// DOUBLEVALIDATOR
+// Instantiates QDoubleValidator
+DoubleValidator {
+    bottom: -1.0 // default -infinity
+    top: 1.0 // default infinity
+    decimals: 1 // n digits after decimal point, default 1000
+    notation: DoubleValidator.ScientificNotation // default 
+}
+DoubleValidator.StandardNotation     // disables E in value
+DoubleValidator.ScientificNotation   // allow E in value
   
 // ACTION
 // Inherits QtObject, Can be used in MenuItem, Button, ToolButton 
 Action {
-    id: myAction
     checkable: true // defaults false
     checked: true
-    exclusiveGroup: myGroup // defaults null
     iconSource: "qrc:///icon.png"
     text: "str"
-    tooltip: "str"
     shortcut: StandardKey.Copy
     onTriggered: {}
     onToggled: {}
 }
+
+//===========================================================================================================
+// QML CONTROLS
+//===========================================================================================================
+
+// CONTROL
+// Inherits Item, base class for all controls
+Control {
+}
+
+// ABSTRACTBUTTON
+// Inherits Control, base class for all buttons
+AbstractButton {
+    text: "str"
+    action: myAction
+    checkable: true // defaults false
+    checked: true
+    icon.source: "qrc:///icon.png"
+    onClicked: {}
+}
+button.pressed
 
 // BUTTON
 // Inherits AbstractButton
@@ -800,23 +781,60 @@ Button {
 }
 
 // CHECKBOX
+// Inherits AbstractButton
 CheckBox {
-    text: "str"
-    checked: true
-}
-
-// MENU
-// Inherits Popup, Call using id.popup() to show at mouse position
-Menu {
-    id: myMenu
-    visible: false // context menu start off invisible
-    MenuSeparator { visible: true }
-    MenuItem { text: "str" }
 }
 
 // MENUITEM
 // Inherits AbstractButton
 MenuItem {
+}
+
+// PROGRESSBAR
+// Inherits Control
+ProgressBar {
+    maximumValue: 20
+    minimumValue: 0
+    style: ProgressBarStyle {
+        background: Rectangle {
+            radius: 2
+            color: "grey"
+            implicitWidth: 100
+            implicitHeight: 20
+        }
+        progress: Rectangle {
+            color: "blue"
+        }
+    }
+}
+
+//===========================================================================================================
+// QML POPUPS
+//===========================================================================================================
+
+// POPUP
+// Inherits QtObject, base class for all popups
+Popup {
+}
+
+// DIALOG
+// Inherits Popup
+Dialog {
+    visible: false // Turning on/off will show dialog window
+    title: "Title"
+    width: 300
+    height: 80
+    contentItem: Rectangle {
+        anchors.fill: parent
+    }
+}
+
+// MENU
+// Inherits Popup, Call using id.popup() to show at mouse position
+Menu {
+    visible: false // context menu start off invisible
+    MenuSeparator { visible: true }
+    MenuItem { text: "str" }
 }
 
 //===========================================================================================================
@@ -826,32 +844,22 @@ MenuItem {
 // TEXT
 // Inherits item
 Text {
-    text: "text"
-    bottomPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
-    leftPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
-    rightPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
-    topPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
-    padding: 1 // padding around the content, not part of contentHeight/contentHeight
+    wrapMode: Text.NoWrap // default
+    horizontalAlignment: Text.AlignHCenter
+    verticalAlignment: Text.AlignVCenter     
 }
 
 // TEXTINPUT
 // Inherits Item, single line of editable plain text
 TextInput {
-    id: input
-    text: "str"
-    displayText: "str" // Dependent on echo mode, holds input as editing
-    activeFocusOnPress: true // If gain active focus on a mouse press
-    autoScroll: true
-    bottomPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
-    leftPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
-    rightPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
-    topPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
-    padding: 1 // padding around the content, not part of contentHeight/contentHeight
-    color: "red" // text color
-    cursorDelegate: Rectangle {} // Override cursor
-    echoMode: TextInput.Normal
+    wrapMode: TextInput.NoWrap // default
     horizontalAlignment: TextInput.AlignHCenter
     verticalAlignment: TextInput.AlignVCenter
+    displayText: "str" // Dependent on echo mode, holds input as editing    
+    activeFocusOnPress: true // If gain active focus on a mouse press
+    autoScroll: true
+    cursorDelegate: Rectangle {} // Override cursor
+    echoMode: TextInput.Normal
     inputMask: ">AAAAA-AAAAA-AAAAA;#"
     inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhTime
     validator: myValidator
@@ -862,11 +870,9 @@ TextInput {
     passwordMaskDelay: 10 // ms delay before masking the character for echomode Password
     persistentSelection: true // Whether keep selection when focus lost, default false
     readOnly: true
-    renderType: Text.QtRendering // Default given by QQuickWindow::textRenderType
     selectByMouse: true // Allow mouse to select, default false
     selectedTextColor: "red" // text
     selectionColor: "red" // background
-    wrapMode: TextInput.NoWrap // default
     onAccepted() {} // when Return/Enter key pressed and text passed validation
     onEditingFinished() {} // when Return/Enter key pressed or focus lost and text passed validation
     onTextEdited() {} // whenever the text is edited by user, not explicitly set
@@ -875,8 +881,6 @@ input.acceptableInput // if validator/input mask has been set, true if valid, if
 input.canUndo // If writable and there are previous operations that can be undone
 input.canPaste // If writable and the content of the clipboard can be pasted into input
 input.canRedo // If writable and there are undone operations that can be redone
-input.contentHeight // height of the unclipped text
-input.contentWidth // width of the unclipped text
 input.cursorPosition // position of the cursor in input
 input.cursorRectangle // rectangle where the cursor is rendered within inout
 input.cursorVisible // True when input shows a cursor
@@ -907,6 +911,9 @@ input.undo() // Undos if possible
 // TEXTEDIT
 // Inherits Item
 TextEdit {
+    wrapMode: TextEdit.NoWrap // default
+    horizontalAlignment: TextEdit.AlignHCenter
+    verticalAlignment: TextEdit.AlignVCenter  
 }
   
 // LABEL
@@ -924,7 +931,17 @@ TextField {
 TextArea {
 }
 
-// Text / TextInput / TextEdit Shared Font Properties
+// Text / TextInput / TextEdit Shared Properties
+text: "str"
+color: "red" // text color
+renderType: Text.QtRendering // Default given by QQuickWindow::textRenderType
+contentHeight: 200 // height of the unclipped text
+contentWidth: 200 // width of the unclipped text
+bottomPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
+leftPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
+rightPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
+topPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
+padding: 1 // padding around the content, not part of contentHeight/contentHeight
 font.bold: true
 font.capitalization: Font.MixedCase // default, see QML font type for enums
 font.family: "Helvetica"
@@ -942,15 +959,29 @@ font.wordSpacing: 1 // real, spacing between words
   
 // Text RenderType Enum
 Text.QtRendering        // advanced features (transformations)
-Text.NativeRendering    // look native on the target platform, no advanced features (transformations)
+Text.NativeRendering    // look native on the target platform, no advanced features (transformations)  
+  
+// Text / TextInput / TextEdit Alignment Enums
+Text.AlignLeft      TextInput.AlignLeft      TextEdit.AlignLeft
+Text.AlignRight     TextInput.AlignRight     TextEdit.AlignRight
+Text.AlignHCenter   TextInput.AlignHCenter   TextEdit.AlignHCenter
+Text.AlignTop       TextInput.AlignTop       TextEdit.AlignTop
+Text.AlignBottom    TextInput.AlignBottom    TextEdit.AlignBottom
+Text.AlignVCenter   TextInput.AlignVCenter   TextEdit.AlignVCenter
 
-// TextInput Alignment Enum
-TextInput.AlignLeft
-TextInput.AlignRight
-TextInput.AlignHCenter
-TextInput.AlignTop
-TextInput.AlignBottom
-TextInput.AlignVCenter
+// Text / TextInput / TextEdit  WrapMode Enum
+Text.NoWrap             // no wrapping
+Text.WordWrap           // wrapping done on word boundaries only
+Text.WrapAnywhere       // wrapping is done at any point on a line, even in the middle of a word
+Text.Wrap               // if possible, Text.WordWrap, else Text.WrapAnywhere
+TextInput.NoWrap        // no wrapping
+TextInput.WordWrap      // wrapping done on word boundaries only
+TextInput.WrapAnywhere  // wrapping is done at any point on a line, even in the middle of a word
+TextInput.Wrap          // if possible, TextInput.WordWrap, else TextInput.WrapAnywhere
+TextEdit.NoWrap         // no wrapping
+TextEdit.WordWrap       // wrapping done on word boundaries only
+TextEdit.WrapAnywhere   // wrapping is done at any point on a line, even in the middle of a word
+TextEdit.Wrap           // if possible, TextEdit.WordWrap, else TextEdit.WrapAnywhere
 
 // TextInput InputMask Characters
 A    // ASCII alphabetic character required. A-Z, a-z
@@ -993,17 +1024,11 @@ Qt.ImhDialableCharactersOnly // Only characters suitable for phone dialing are a
 Qt.ImhEmailCharactersOnly    // Only characters suitable for email addresses are allowed
 Qt.ImhUrlCharactersOnly      // Only characters suitable for URLs are allowed
 
-// TextInput WrapMode Enum
-TextInput.NoWrap        // no wrapping
-TextInput.WordWrap      // wrapping done on word boundaries only
-TextInput.WrapAnywhere  // wrapping is done at any point on a line, even in the middle of a word
-TextInput.Wrap          // if possible, TextInput.WordWrap, else TextInput.WrapAnywhere
-
 // TextInput EchoMode Enum
 TextInput.Normal              // Displays the text as it is (default)
 TextInput.Password            // Displays platform-dependent password mask characters instead
 TextInput.NoEcho              // Displays nothing
-TextInput.PasswordEchoOnEdit  // Displays characters as they are entered while editing, otherwise password\
+TextInput.PasswordEchoOnEdit  // Displays characters as they are entered while editing, otherwise password
 
 // TextInput SelectionMode Enum
 TextInput.SelectCharacters    // Selects all characters between selection start/end pos
@@ -1014,29 +1039,7 @@ TextInput.CursorBetweenCharacters  // Returns the position between characters th
 TextInput.CursorOnCharacter        // Returns the position before the character that is nearest x
 
 //===========================================================================================================
-// QML VALIDATOR
-//===========================================================================================================
-  
-// INTVALIDATOR
-IntValidator {
-    bottom: -1 // default -infinity
-    top: 1 // default infinity
-} 
-  
-// DOUBLEVALIDATOR
-DoubleValidator {
-    bottom: -1.0 // default -infinity
-    top: 1.0 // default infinity
-    decimals: 1 // n digits after decimal point, default 1000
-    notation: DoubleValidator.ScientificNotation // default 
-}
-
-// Double Validator Notation Enum
-DoubleValidator.StandardNotation     // disables E in value
-DoubleValidator.ScientificNotation   // allow E in value
-
-//===========================================================================================================
-// QML SHORTCUTS
+// QML SHORTCUT
 //===========================================================================================================
   
 // SHORTCUT
@@ -1052,7 +1055,7 @@ Shortcut {
 Qt.WindowShortcut       // Active when its parent item is in an active top-level window
 Qt.ApplicationShortcut  // Active when one of the application's windows are active
   
-// STANDARD KEYS
+// Standard Key Flags
 StandardKey.AddTab                     // Add new tab
 StandardKey.Back                       // Navigate back
 StandardKey.Backspace                  // Delete previous character
