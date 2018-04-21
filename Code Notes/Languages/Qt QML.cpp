@@ -794,7 +794,7 @@ input.selectWord() // Selects word closest to the current cursor position
 input.undo() // Undos if possible
 
 // TEXTEDIT
-// Inherits Item
+// Inherits Item, multiple lines of editable formatted text
 TextEdit {
     wrapMode: TextEdit.NoWrap // default
     horizontalAlignment: TextEdit.AlignHCenter
