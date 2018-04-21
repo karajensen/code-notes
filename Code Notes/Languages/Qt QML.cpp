@@ -1133,13 +1133,31 @@ KEY HANDLING STEPS
 // MOUSEAREA
 // Inherits Item
 MouseArea {
-    hoverEnabled: true
-    acceptedButtons: Qt.RightButton | Qt.LeftButton
+    acceptedButtons: Qt.LeftButton // default
+    cursorShape: Qt.ArrowCursor // default
+    drag.target: item // Item to drag
+    drag.axis: Drag.XAxis // Axis mask
+    drag.minimumX: 1.0 // how far the target can be dragged along the axis
+    drag.maximumX: 1.0 // how far the target can be dragged along the axis
+    drag.minimumY: 1.0 // how far the target can be dragged along the axis
+    drag.maximumY: 1.0 // how far the target can be dragged along the axis
+    drag.filterChildren: true // drag can override descendant MouseAreas, so parent can handle drag
+    drag.threshold: 1 // determines the threshold in pixels of when the drag operation should start
+    drag.smoothed: true // target will be moved only after the drag operation has started, default true
+    enabled: true // overrides Item.enabled, only skips mouse events
+    hoverEnabled: true // whether hover events are handled
+    pressAndHoldInterval: // overrides the elapsed time in milliseconds before pressAndHold is emitted
     onPressed: {}
     onRelease: {}
     onClicked: {}
 }
-
+area.containsMouse // whether the mouse is currently inside the mouse area
+area.containsPress // pressed && containsMouse
+area.drag.active // if the target item is currently being dragged
+area.mouseX // local to area, valid only on press, or if hover enabled, if cursor inside area
+area.mouseY // local to area, valid only on press, or if hover enabled, if cursor inside area
+area.pressed // whether any of the acceptedButtons are currently pressed
+  
 // MOUSE EVENT
 // Use with MouseArea signals
 mouse.accepted // Set to true to stop propagation to parent
@@ -1150,6 +1168,25 @@ mouse.source // mouse event source enum
 mouse.wasHeld // If the mouse button has been held pressed longer the threshold (800ms)
 mouse.x // real, coordinate
 mouse.y // real, coordinate
+
+// KEY SIGNALS
+// Add to any Item, to stop propagation, do event.accepted = true
+Item {
+    Keys.onPressed: {} // Handle key pressed event when has active focus
+}
+
+// KEY EVENT
+// Use with Key signals
+event.accepted // Set to true to stop propagation to parent
+  
+// SHORTCUT
+Shortcut {
+    autoRepeat: true // default true
+    context: Qt.WindowShortcut // default
+    sequence: StandardKey.Copy
+    sequences: [StandardKey.Cut, StandardKey.Copy]
+    onActivated: {}
+}
 
 // MOUSE BUTTON FLAGS
 Qt.RightButton
@@ -1163,15 +1200,10 @@ Qt.MouseEventSynthesizedBySystemn      // Synthesized from touch or tablet event
 Qt.MouseEventSynthesizedByQt           // Synthesized from an unhandled touch or tablet event by Qt
 Qt.MouseEventSynthesizedByApplication  // Synthesized by the application
 
-// KEY SIGNALS
-// Add to any Item, to stop propagation, do event.accepted = true
-Item {
-    Keys.onPressed: {} // Handle key pressed event when has active focus
-}
-
-// KEY EVENT
-// Use with Key signals
-event.accepted // Set to true to stop propagation to parent
+// MOUSE DRAG AXIS MASK
+Drag.XAxis
+Drag.YAxis
+Drag.XAndYAxis
 
 // KEYBOARD MODIFIER FLAGS
 Qt.NoModifier 
@@ -1180,15 +1212,6 @@ Qt.ControlModifier
 Qt.AltModifier     
 Qt.MetaModifier   
 Qt.KeypadModifier
-  
-// SHORTCUT
-Shortcut {
-    autoRepeat: true // default true
-    context: Qt.WindowShortcut // default
-    sequence: StandardKey.Copy
-    sequences: [StandardKey.Cut, StandardKey.Copy]
-    onActivated: {}
-}
 
 // SHORTCUT CONTEXT ENUM
 Qt.WindowShortcut       // Active when its parent item is in an active top-level window
@@ -1262,6 +1285,27 @@ StandardKey.ZoomIn                     // Zoom in
 StandardKey.ZoomOut                    // Zoom out
 StandardKey.FullScreen                 // Toggle the window state to/from full screen
 StandardKey.Cancel                     // Cancel the current operation
+
+// CURSOR SHAPE ENUM
+Qt.WaitCursor
+Qt.IBeamCursor
+Qt.SizeVerCursor
+Qt.SizeHorCursor
+Qt.SizeBDiagCursor
+Qt.SizeFDiagCursor
+Qt.SizeAllCursor
+Qt.BlankCursor
+Qt.SplitVCursor
+Qt.SplitHCursor
+Qt.PointingHandCursor
+Qt.ForbiddenCursor
+Qt.WhatsThisCursor
+Qt.BusyCursor
+Qt.OpenHandCursor
+Qt.ClosedHandCursor
+Qt.DragCopyCursor
+Qt.DragMoveCursor
+Qt.DragLinkCursor
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML GLOBAL ITEMS
