@@ -571,6 +571,11 @@ Binding {
     delayed: true // wait until event queue cleared before assigning
 }
 
+// WORKERSCRIPT
+// Enables the use of threads
+WorkerScript {
+}
+
 // RECTANGLE
 // Inherits Item
 Rectangle {
@@ -1204,7 +1209,7 @@ myDelegate.PathView.view // Use to access pathView if delegate created outside i
 model // Role data for each delegate item, eg. model.role_name
 modelData // If view's model has no roles, use to access item data for delegate
 index // Index in view, can be -1 if removed from view
- 
+
 //===========================================================================================================
 // QML VIEWS
 //===========================================================================================================
@@ -1272,6 +1277,12 @@ XmlListModel {
 ObjectModel {
 }
 
+//===========================================================================================================
+// USING WITH WORKERSCRIPT
+//===========================================================================================================
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML INPUT HANDLING
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1295,6 +1306,10 @@ KEY HANDLING STEPS:
 4) If the Item accepts the key event, propagation stops
 5) If the Item declines, the event is sent to the Item's parent until the event is accepted or root reached
 **************************************************************************************************************/
+
+// FOCUSSCOPE
+FocusScope {
+}
 
 // MOUSEAREA
 // Inherits Item
@@ -1382,19 +1397,6 @@ Item {
     Keys.onYesPressed: {}
 }
 
-// FOCUSSCOPE
-FocusScope {
-}
-
-// SHORTCUT
-Shortcut {
-    autoRepeat: true // default true
-    context: Qt.WindowShortcut // default
-    sequence: StandardKey.Copy
-    sequences: [StandardKey.Cut, StandardKey.Copy]
-    onActivated: {}
-}
-
 // MOUSE EVENT
 // Use with MouseArea signals
 mouse.accepted // Set to true to stop propagation to parent
@@ -1440,11 +1442,6 @@ Qt.MouseEventSynthesizedBySystemn      // Synthesized from touch or tablet event
 Qt.MouseEventSynthesizedByQt           // Synthesized from an unhandled touch or tablet event by Qt
 Qt.MouseEventSynthesizedByApplication  // Synthesized by the application
 
-// Mouse Drag Axis Mask
-Drag.XAxis
-Drag.YAxis
-Drag.XAndYAxis
-
 // Mouse Cusor Shape Enum
 Qt.WaitCursor
 Qt.IBeamCursor
@@ -1474,9 +1471,41 @@ Qt.AltModifier
 Qt.MetaModifier   
 Qt.KeypadModifier
 
+//===========================================================================================================
+// SHORTCUTS
+//===========================================================================================================
+
+// SHORTCUT
+Shortcut {
+    autoRepeat: true // default true
+    context: Qt.WindowShortcut // default
+    sequence: StandardKey.Copy
+    sequences: [StandardKey.Cut, StandardKey.Copy]
+    onActivated: {}
+}
+
 // Shortcut Context Enum
 Qt.WindowShortcut       // Active when its parent item is in an active top-level window
 Qt.ApplicationShortcut  // Active when one of the application's windows are active
+
+//===========================================================================================================
+// DRAG / DROP
+//===========================================================================================================
+
+// DRAG ATTACHED PROPERTIES
+// For specifying drag and drop events for moved Items
+Item {
+}
+
+// DROPAREA
+// For specifying drag and drop handling in an area
+DropArea {
+}
+
+// Drag Axis Mask
+Drag.XAxis
+Drag.YAxis
+Drag.XAndYAxis
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML GLOBAL ITEMS
