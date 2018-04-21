@@ -639,6 +639,16 @@ Action {
     onToggled: {}
 }
 
+// ACTIONGROUP
+// Inherits QtObject, Groups actions together
+ActionGroup {
+}
+
+// BUTTONGROUP
+// Inherits QtObject, Mutually-exclusive group of checkable buttons
+ButtonGroup {
+}
+
 //===========================================================================================================
 // QML CONTROLS
 //===========================================================================================================
@@ -647,6 +657,68 @@ Action {
 // Inherits Item, base class for all controls
 Control {
 }
+
+// BUSYINDICATOR
+// Inherits Control, Indicates background activity
+BusyIndicator {
+}
+
+// COMBOBOX
+// Inherits Control, Combined button and popup list for selecting options
+ComboBox {
+}
+
+// SPINBOX
+// Inherits Control, Allows the user to select from a set of preset values
+SpinBox {
+}
+
+// DIAL
+// Inherits Control, Circular dial that is rotated to set a value
+Dial {
+}
+
+// PROGRESSBAR
+// Inherits Control, Indicates the progress of an operation
+ProgressBar {
+    maximumValue: 20
+    minimumValue: 0
+    style: ProgressBarStyle {
+        background: Rectangle {
+            radius: 2
+            color: "grey"
+            implicitWidth: 100
+            implicitHeight: 20
+        }
+        progress: Rectangle {
+            color: "blue"
+        }
+    }
+}
+
+// SLIDER
+// Inherits Control, Used to select a value by sliding a handle along a track
+Slider {
+}
+
+// RANGESLIDER
+// Inherits Control, Used to select a range of values by sliding two handles along a track
+RangeSlider {
+}
+
+// TUMBLER
+// Inherits Control, Spinnable wheel of items that can be selected
+Tumbler {
+}
+
+// SCROLLBAR
+// Inherits Control, Vertical or horizontal interactive scroll bar
+ScrollBar {
+}
+
+//===========================================================================================================
+// QML BUTTONS
+//===========================================================================================================
 
 // ABSTRACTBUTTON
 // Inherits Control, base class for all buttons
@@ -665,9 +737,29 @@ button.pressed
 Button {
 }
 
+// ROUNDBUTTON
+// Inherits AbstractButton, Button with rounded corners
+RoundButton {
+}
+
 // CHECKBOX
 // Inherits AbstractButton
 CheckBox {
+}
+
+// RADIOBUTTON
+// Inherits AbstractButton, Exclusive radio button that can be toggled on or off
+RadioButton {
+}
+
+// TABBUTTON
+// Inherits AbstractButton, Button with a look suitable for a TabBar
+TabButton {
+}
+
+// SWITCH
+// Inherits AbstractButton, Switch button that can be toggled on or off
+Switch {
 }
 
 // MENUITEM
@@ -675,22 +767,23 @@ CheckBox {
 MenuItem {
 }
 
-// PROGRESSBAR
-// Inherits Control
-ProgressBar {
-    maximumValue: 20
-    minimumValue: 0
-    style: ProgressBarStyle {
-        background: Rectangle {
-            radius: 2
-            color: "grey"
-            implicitWidth: 100
-            implicitHeight: 20
-        }
-        progress: Rectangle {
-            color: "blue"
-        }
-    }
+//===========================================================================================================
+// QML CONTAINERS
+//===========================================================================================================
+
+// CONTAINER
+// Inherits Control, Abstract base class for containers
+Container {
+}
+
+// MENUBAR
+// Inherits Container, Provides a window menu bar
+MenuBar {
+}
+
+// TABBAR
+// Inherits Container, Allows the user to switch between different views or subtasks
+TabBar {
 }
 
 //===========================================================================================================
@@ -720,6 +813,11 @@ Menu {
     visible: false // context menu start off invisible
     MenuSeparator { visible: true }
     MenuItem { text: "str" }
+}
+
+// TOOLTIP
+// Inherits Popup, Provides tool tips for any control
+ToolTip {
 }
 
 //===========================================================================================================
