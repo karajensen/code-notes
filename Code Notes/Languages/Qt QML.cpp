@@ -93,8 +93,8 @@ Item {
     /* Called when property has changed, for context Q_OBJECTs emit signal needed */
     onMyPropertyChanged: {}
   
-    /* Called when signal emitted */
-    onMySignal: { console.log(value); }
+    /* Called when signal emitted, 'value' arg passed in */
+    onMySignal: { value }
   
     /* Called when signal emitted, requires calling signal.connect */
     function mySlot(value) {}
@@ -557,7 +557,7 @@ Component {
 // Access a signal outside of the object that emits it, required for Loader items
 Connections {
     target: loader.item
-    onMySignal: { console.log(value); }
+    onMySignal: { value }
 }
 
 // BINDING
@@ -852,6 +852,34 @@ ToolTip {
 // QML TEXT
 //===========================================================================================================
 
+// TEXT / TEXTINPUT / TEXTEDIT SHARED PROPERTIES
+{
+    text: "str"
+    color: "red" // text color
+    renderType: Text.QtRendering // Default given by QQuickWindow::textRenderType
+    contentHeight: 200 // height of the unclipped text
+    contentWidth: 200 // width of the unclipped text
+    bottomPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
+    leftPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
+    rightPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
+    topPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
+    padding: 1 // padding around the content, not part of contentHeight/contentHeight
+    font.bold: true
+    font.capitalization: Font.MixedCase // default, see QML font type for enums
+    font.family: "Helvetica"
+    font.hintingPreference: Font.PreferDefaultHinting // default, see QML font type for enums
+    font.italic: true
+    font.kerning: true // Whether to auto adjust character spacing, default enabled
+    font.letterSpacing: 1 // real, spacing between characters
+    font.pointSize 16 // real, device independent
+    font.pixelSize: 5 // Overrides pointSize, int, device dependent
+    font.preferShaping: true // Whether to enable display/spacing rules, default enabled
+    font.strikeout: true
+    font.underline: true
+    font.weight: Font.Normal // default, see QML font type for enums
+    font.wordSpacing: 1 // real, spacing between words
+}
+
 // TEXT
 // Inherits item
 Text {
@@ -921,20 +949,30 @@ input.undo() // Undos if possible
 
 // TEXTEDIT
 // Inherits Item, multiple lines of editable formatted text
+// Requires Flickable or ScrollView to implement scrolling, following the cursor etc
 TextEdit {
     wrapMode: TextEdit.NoWrap // default
     horizontalAlignment: TextEdit.AlignHCenter
     verticalAlignment: TextEdit.AlignVCenter
     activeFocusOnPress: true // If gain active focus on a mouse press
+    baseUrl: "qrc:///folder/" // QML url of the qrc base location to resolve resources
     cursorDelegate: Rectangle {} // Override cursor
+    hoveredLink: "" // link string when the user hovers a link embedded in the text
+    inputMethodComposing: true // whether the textedit has partial text input from an input method
     inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhTime
     mouseSelectionMode: TextInput.SelectCharacters // requires selectByMouse property on
     overwriteMode: true // Whether text inserted will overrite (insert key behavior)
     persistentSelection: true // Whether keep selection when focus lost, default false
     readOnly: true
+    selectByKeyboard: true // User can use the keyboard to select text, default false if read-only
     selectByMouse: true // Allow mouse to select, default false
     selectedTextColor: "red" // text
     selectionColor: "red" // background
+    tabStopDistance: 1.0 // default distance, in device units, between tab stops
+    textFormat: TextEdit.PlainText // Text edit format enum
+    onEditingFinished: {} // when the text edit loses focus
+    linkActivated: { link } // when the user clicks on a link embedded in the text, link is string
+    linkHovered: { link } // when the user hovers on a link embedded in the text, link is string
 }
 edit.canUndo // If writable and there are previous operations that can be undone
 edit.canPaste // If writable and the content of the clipboard can be pasted into textedit
@@ -943,17 +981,22 @@ edit.cursorPosition // position of the cursor in textedit
 edit.cursorRectangle // rectangle where the cursor is rendered within textedit
 edit.cursorVisible // True when textedit shows a cursor
 edit.length // Length of text
+edit.lineCount // Total amount of lines in textedit
 edit.preeditText // partial text input from an input method
 edit.selectedText // currently selected text
 edit.selectionEnd // index after last character where selection ends in 'text', read-only
 edit.selectionStart // index of first character where selection starts in 'text', read-only
+edit.textDocument // Returns QQuickTextDocument, can be used to implement syntax highlighting
+edit.append("str") // Appends a new paragraph to text
 edit.clear() // clears text
 edit.copy() // Copies selected text to system clipboard
 edit.cut() // Cuts selected text to system clipboard
 edit.deselect() // Removes selection
-edit.getText(start, end) // Returns section of text between start and end positions
+edit.getFormattedText(start, end) // Returns formatted section of text between start/end positions
+edit.getText(start, end) // Returns section of text between start/end positions
 edit.insert(position, "str") // Inserts at position
 edit.isRightToLeft(start, end) // true if natural reading direction between start/end is right to left
+edit.linkAt(x, y) // Returns ink string at point x, y in content coordinates, empty if nothing there
 edit.moveCursorSelection(position, selectionMode) // Moves cursor and selects while moving
 edit.paste() // Replaces the currently selected text by the contents of the system clipboard
 edit.positionAt(x, y, cursorPosition) // Returns position from topleft of input based on cursorPosition
@@ -971,12 +1014,12 @@ Label {
 }
 
 // TEXTFIELD
-// Inherits TextInput
+// Inherits TextInput, Displays a single line of editable plain text.
 TextField {
 }
 
 // TEXTAREA
-// Inherits TextEdit
+// Inherits TextEdit, Displays multiple lines of editable formatted text
 TextArea {
 }
 
@@ -984,32 +1027,6 @@ TextArea {
 // Provides metrics for a given font and text
 TextMetrics {
 }
-
-// Text / TextInput / TextEdit Shared Properties
-text: "str"
-color: "red" // text color
-renderType: Text.QtRendering // Default given by QQuickWindow::textRenderType
-contentHeight: 200 // height of the unclipped text
-contentWidth: 200 // width of the unclipped text
-bottomPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
-leftPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
-rightPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
-topPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
-padding: 1 // padding around the content, not part of contentHeight/contentHeight
-font.bold: true
-font.capitalization: Font.MixedCase // default, see QML font type for enums
-font.family: "Helvetica"
-font.hintingPreference: Font.PreferDefaultHinting // default, see QML font type for enums
-font.italic: true
-font.kerning: true // Whether to auto adjust character spacing, default enabled
-font.letterSpacing: 1 // real, spacing between characters
-font.pointSize 16 // real, device independent
-font.pixelSize: 5 // Overrides pointSize, int, device dependent
-font.preferShaping: true // Whether to enable display/spacing rules, default enabled
-font.strikeout: true
-font.underline: true
-font.weight: Font.Normal // default, see QML font type for enums
-font.wordSpacing: 1 // real, spacing between words
   
 // Text / TextInput / TextEdit RenderType Enum
 Text.QtRendering        // advanced features (transformations)
@@ -1091,6 +1108,11 @@ TextInput.SelectWords         // Selects all words between selection start/end p
 // TextInput CursorPosition Enum
 TextInput.CursorBetweenCharacters  // Returns the position between characters that is nearest x
 TextInput.CursorOnCharacter        // Returns the position before the character that is nearest x
+
+// TextEdit Format Enum
+TextEdit.AutoText    // Will auto determine whether text should be treated as rich text
+TextEdit.PlainText   // Contains no formatting, only line breaks and spacing
+TextEdit.RichText    // Contains formatting (font sizes, colors, bolding, italics etc)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML DYNAMIC CREATION
@@ -1291,9 +1313,8 @@ ObjectModel {
 Qt.Key            http://doc.qt.io/qt-5/qt.html#Key-enum
 StandardKey.Key   http://doc.qt.io/qt-5/qkeysequence.html#StandardKey-enum
 
-ACTIVE FOCUS:
-• Item currently receives keyboard input
-• Or item is a FocusScope ancestor of the item that currently receives keyboard input
+TAB STOP: The location the cursor stops after the tab key is pressed
+ACTIVE FOCUS: Item or FocusScope child currently receiving keyboard input
 
 COMPOSED MOUSE EVENT:
 • Clicked, doubleClicked and pressAndHold, composed of basic mouse events like pressed
@@ -1332,15 +1353,15 @@ MouseArea {
     propagateComposedEvents: true // sends composed events to overlapping areas in lower visual stack order
     scrollGestureEnabled: true // whether responds to scroll gestures from non-mouse device, default true
     onCanceled: {} // When another item stole the mouse event handling
-    onClicked: {} // Composed event, Gives mouse event, Press and release both inside area
-    onDoubleClicked: {} // Composed event, Gives mouse event, Press followed by a release followed by a press
+    onClicked: { mouse } // Composed event, Press and release both inside area
+    onDoubleClicked: { mouse } // Composed event, Press followed by a release followed by a press
     onEntered: {} // Only on press unless hoved enabled, then on enter of area
     onExit: {} // Only on press unless hoved enabled, then on exit of area
-    onPositionChanged: {} // Gives mouse event, Only on press unless hoved enabled, then on mouse move in area
-    onPressed: {} // Gives mouse event, on press
-    onPressAndHold: {} // Composed event, Gives mouse event, press longer than 800 ms
-    onReleased: {} // Gives mouse event, on release 
-    onWheel: {} // Gives wheel event, mouse wheel and trackpad scroll gestures
+    onPositionChanged: { mouse } // Only on press unless hoved enabled, then on mouse move in area
+    onPressed: { mouse } // On press
+    onPressAndHold: { mouse } // Composed event, press longer than 800 ms
+    onReleased: { mouse } // On release 
+    onWheel: { wheel } // Mouse wheel and trackpad scroll gestures
 }
 area.containsMouse // whether the mouse is currently inside the mouse area
 area.containsPress // pressed && containsMouse
@@ -1355,46 +1376,46 @@ area.pressedButtons // mouse buttons currently pressed, can't be Qt.AllButtons
 Item {
     Keys.enabled: true // enable signals for this item, default true
     Keys.forwardTo: [item1, item2] // forwards event to each item, once accepted stops forwarding
-    Keys.onAsteriskPressed: {}
-    Keys.onBackPressed: {}
-    Keys.onBacktabPressed: {}
-    Keys.onCallPressed: {}
-    Keys.onCancelPressed: {}
-    Keys.onContext1Pressed: {}
-    Keys.onContext2Pressed: {}
-    Keys.onContext3Pressed: {}
-    Keys.onContext4Pressed: {}
-    Keys.onDeletePressed: {}
-    Keys.onDigit0Pressed: {}
-    Keys.onDigit1Pressed: {}
-    Keys.onDigit2Pressed: {}
-    Keys.onDigit3Pressed: {}
-    Keys.onDigit4Pressed: {}
-    Keys.onDigit5Pressed: {}
-    Keys.onDigit6Pressed: {}
-    Keys.onDigit7Pressed: {}
-    Keys.onDigit8Pressed: {}
-    Keys.onDigit9Pressed: {}
-    Keys.onDownPressed: {}
-    Keys.onEnterPressed: {}
-    Keys.onEscapePressed: {}
-    Keys.onFlipPressed: {}
-    Keys.onHangupPressed: {}
-    Keys.onLeftPressed: {}
-    Keys.onMenuPressed: {}
-    Keys.onNoPressed: {}
-    Keys.onPressed: {}
-    Keys.onReleased: {}
-    Keys.onReturnPressed: {}
-    Keys.onRightPressed: {}
-    Keys.onSelectPressed: {}
-    Keys.onShortcutOverride: {}
-    Keys.onSpacePressed: {}
-    Keys.onTabPressed: {}
-    Keys.onUpPressed: {}
-    Keys.onVolumeDownPressed: {}
-    Keys.onVolumeUpPressed: {}
-    Keys.onYesPressed: {}
+    Keys.onAsteriskPressed: { event }
+    Keys.onBackPressed: { event }
+    Keys.onBacktabPressed: { event }
+    Keys.onCallPressed: { event }
+    Keys.onCancelPressed: { event }
+    Keys.onContext1Pressed: { event }
+    Keys.onContext2Pressed: { event }
+    Keys.onContext3Pressed: { event }
+    Keys.onContext4Pressed: { event }
+    Keys.onDeletePressed: { event }
+    Keys.onDigit0Pressed: { event }
+    Keys.onDigit1Pressed: { event }
+    Keys.onDigit2Pressed: { event }
+    Keys.onDigit3Pressed: { event }
+    Keys.onDigit4Pressed: { event }
+    Keys.onDigit5Pressed: { event }
+    Keys.onDigit6Pressed: { event }
+    Keys.onDigit7Pressed: { event }
+    Keys.onDigit8Pressed: { event }
+    Keys.onDigit9Pressed: { event }
+    Keys.onDownPressed: { event }
+    Keys.onEnterPressed: { event }
+    Keys.onEscapePressed: { event }
+    Keys.onFlipPressed: { event }
+    Keys.onHangupPressed: { event }
+    Keys.onLeftPressed: { event }
+    Keys.onMenuPressed: { event }
+    Keys.onNoPressed: { event }
+    Keys.onPressed: { event }
+    Keys.onReleased: { event }
+    Keys.onReturnPressed: { event }
+    Keys.onRightPressed: { event }
+    Keys.onSelectPressed: { event }
+    Keys.onShortcutOverride: { event }
+    Keys.onSpacePressed: { event }
+    Keys.onTabPressed: { event }
+    Keys.onUpPressed: { event }
+    Keys.onVolumeDownPressed: { event }
+    Keys.onVolumeUpPressed: { event }
+    Keys.onYesPressed: { event }
 }
 
 // MOUSE EVENT
