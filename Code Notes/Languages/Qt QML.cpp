@@ -1134,29 +1134,52 @@ KEY HANDLING STEPS
 // Inherits Item
 MouseArea {
     hoverEnabled: true
-    acceptedButtons: Qt.RightButton | Qt.LeftButton | Qt.AllButtons
+    acceptedButtons: Qt.RightButton | Qt.LeftButton
     onPressed: {}
     onRelease: {}
     onClicked: {}
 }
 
 // MOUSE EVENT
-// Sent to MouseArea signals
-mouse.accepted
-mouse.button
-mouse.buttons
-mouse.modifiers
-mouse.source
-mouse.wasHeld
-mouse.x
-mouse.y
+// Use with MouseArea signals
+mouse.accepted // Set to true to stop propagation to parent
+mouse.button // button flag that caused the event, can't be Qt.AllButtons
+mouse.buttons // for mouse move events, all button flags held down
+mouse.modifiers // keyboard modifier flags
+mouse.source // mouse event source enum
+mouse.wasHeld // If the mouse button has been held pressed longer the threshold (800ms)
+mouse.x // real, coordinate
+mouse.y // real, coordinate
+
+// MOUSE BUTTON FLAGS
+Qt.RightButton
+Qt.LeftButton
+Qt.MiddleButton
+Qt.AllButtons
+
+// MOUSE EVENT SOURCE ENUM
+Qt.MouseEventNotSynthesized            // Actual mouse event from user
+Qt.MouseEventSynthesizedBySystemn      // Synthesized from touch or tablet event
+Qt.MouseEventSynthesizedByQt           // Synthesized from an unhandled touch or tablet event by Qt
+Qt.MouseEventSynthesizedByApplication  // Synthesized by the application
 
 // KEY SIGNALS
 // Add to any Item, to stop propagation, do event.accepted = true
 Item {
     Keys.onPressed: {} // Handle key pressed event when has active focus
 }
+
+// KEY EVENT
+// Use with Key signals
 event.accepted // Set to true to stop propagation to parent
+
+// KEYBOARD MODIFIER FLAGS
+Qt.NoModifier 
+Qt.ShiftModifier  
+Qt.ControlModifier
+Qt.AltModifier     
+Qt.MetaModifier   
+Qt.KeypadModifier
   
 // SHORTCUT
 Shortcut {
@@ -1166,6 +1189,8 @@ Shortcut {
     sequences: [StandardKey.Cut, StandardKey.Copy]
     onActivated: {}
 }
+
+// SHORTCUT CONTEXT ENUM
 Qt.WindowShortcut       // Active when its parent item is in an active top-level window
 Qt.ApplicationShortcut  // Active when one of the application's windows are active
   
