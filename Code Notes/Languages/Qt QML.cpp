@@ -846,9 +846,9 @@ TextInput {
     selectByMouse: true // Allow mouse to select, default false
     selectedTextColor: "red" // text
     selectionColor: "red" // background
-    onAccepted() {} // when Return/Enter key pressed and text passed validation
-    onEditingFinished() {} // when Return/Enter key pressed or focus lost and text passed validation
-    onTextEdited() {} // whenever the text is edited by user, not explicitly set
+    onAccepted: {} // when Return/Enter key pressed and text passed validation
+    onEditingFinished: {} // when Return/Enter key pressed or focus lost and text passed validation
+    onTextEdited: {} // whenever the text is edited by user, not explicitly set
 }
 input.acceptableInput // if validator/input mask has been set, true if valid, if not set, always true
 input.canUndo // If writable and there are previous operations that can be undone
@@ -1179,7 +1179,46 @@ area.pressedButtons // mouse buttons currently pressed, can't be Qt.AllButtons
 // KEY SIGNALS
 // Attached property, add to any Item
 Item {
-    Keys.onPressed: {} // Handle key pressed event when has active focus
+asteriskPressed(KeyEvent event)
+backPressed(KeyEvent event)
+backtabPressed(KeyEvent event)
+callPressed(KeyEvent event)
+cancelPressed(KeyEvent event)
+context1Pressed(KeyEvent event)
+context2Pressed(KeyEvent event)
+context3Pressed(KeyEvent event)
+context4Pressed(KeyEvent event)
+deletePressed(KeyEvent event)
+digit0Pressed(KeyEvent event)
+digit1Pressed(KeyEvent event)
+digit2Pressed(KeyEvent event)
+digit3Pressed(KeyEvent event)
+digit4Pressed(KeyEvent event)
+digit5Pressed(KeyEvent event)
+digit6Pressed(KeyEvent event)
+digit7Pressed(KeyEvent event)
+digit8Pressed(KeyEvent event)
+digit9Pressed(KeyEvent event)
+downPressed(KeyEvent event)
+enterPressed(KeyEvent event)
+escapePressed(KeyEvent event)
+flipPressed(KeyEvent event)
+hangupPressed(KeyEvent event)
+leftPressed(KeyEvent event)
+menuPressed(KeyEvent event)
+noPressed(KeyEvent event)
+pressed(KeyEvent event)
+released(KeyEvent event)
+returnPressed(KeyEvent event)
+rightPressed(KeyEvent event)
+selectPressed(KeyEvent event)
+shortcutOverride(KeyEvent event)
+spacePressed(KeyEvent event)
+tabPressed(KeyEvent event)
+upPressed(KeyEvent event)
+volumeDownPressed(KeyEvent event)
+volumeUpPressed(KeyEvent event)
+yesPressed(KeyEvent event
 }
 
 // MOUSE EVENT
