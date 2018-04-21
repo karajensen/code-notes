@@ -1137,21 +1137,26 @@ MouseArea {
     acceptedButtons: Qt.RightButton | Qt.LeftButton | Qt.AllButtons
     onPressed: {}
     onRelease: {}
-    onClicked: {
-        real clickX = mouse.x;
-        real clickY = mouse.y;
-        int button = mouse.button;
-    }
+    onClicked: {}
 }
 
-// KEY EVENT SIGNALS
-// Add to any Item, to stop propergation, do event.accepted = true
+// MOUSE EVENT
+// Sent to MouseArea signals
+mouse.accepted
+mouse.button
+mouse.buttons
+mouse.modifiers
+mouse.source
+mouse.wasHeld
+mouse.x
+mouse.y
+
+// KEY SIGNALS
+// Add to any Item, to stop propagation, do event.accepted = true
 Item {
-    /* Handle key pressed event when has active focus */
-    Keys.onPressed: {
-        event.accepted = true; // Don't send event to parent
-    }
+    Keys.onPressed: {} // Handle key pressed event when has active focus
 }
+event.accepted // Set to true to stop propagation to parent
   
 // SHORTCUT
 Shortcut {
@@ -1161,12 +1166,10 @@ Shortcut {
     sequences: [StandardKey.Cut, StandardKey.Copy]
     onActivated: {}
 }
-
-// Shortcut Context Enum
 Qt.WindowShortcut       // Active when its parent item is in an active top-level window
 Qt.ApplicationShortcut  // Active when one of the application's windows are active
   
-// Standard Key Flags
+// STANDARD KEY FLAGS
 StandardKey.AddTab                     // Add new tab
 StandardKey.Back                       // Navigate back
 StandardKey.Backspace                  // Delete previous character
