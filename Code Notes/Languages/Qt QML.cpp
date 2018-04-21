@@ -1253,15 +1253,6 @@ event.modifiers // keyboard modifier flags
 event.nativeScanCode // contains the native scan code of the key that was pressed
 event.text // Unicode text that the key generated
 event.matches(StandardKey.Undo) // Whether key event matches the given standard key
-  
-// SHORTCUT
-Shortcut {
-    autoRepeat: true // default true
-    context: Qt.WindowShortcut // default
-    sequence: StandardKey.Copy
-    sequences: [StandardKey.Cut, StandardKey.Copy]
-    onActivated: {}
-}
 
 // MOUSE BUTTON FLAGS
 Qt.RightButton
@@ -1280,19 +1271,7 @@ Drag.XAxis
 Drag.YAxis
 Drag.XAndYAxis
 
-// KEYBOARD MODIFIER FLAGS
-Qt.NoModifier 
-Qt.ShiftModifier  
-Qt.ControlModifier
-Qt.AltModifier     
-Qt.MetaModifier   
-Qt.KeypadModifier
-
-// SHORTCUT CONTEXT ENUM
-Qt.WindowShortcut       // Active when its parent item is in an active top-level window
-Qt.ApplicationShortcut  // Active when one of the application's windows are active
-  
-// CURSOR SHAPE ENUM
+// MOUSE CURSOR SHAPE ENUM
 Qt.WaitCursor
 Qt.IBeamCursor
 Qt.SizeVerCursor
@@ -1312,6 +1291,27 @@ Qt.ClosedHandCursor
 Qt.DragCopyCursor
 Qt.DragMoveCursor
 Qt.DragLinkCursor
+
+// KEYBOARD MODIFIER FLAGS
+Qt.NoModifier 
+Qt.ShiftModifier  
+Qt.ControlModifier
+Qt.AltModifier     
+Qt.MetaModifier   
+Qt.KeypadModifier
+
+// SHORTCUT
+Shortcut {
+    autoRepeat: true // default true
+    context: Qt.WindowShortcut // default
+    sequence: StandardKey.Copy
+    sequences: [StandardKey.Cut, StandardKey.Copy]
+    onActivated: {}
+}
+
+// SHORTCUT CONTEXT ENUM
+Qt.WindowShortcut       // Active when its parent item is in an active top-level window
+Qt.ApplicationShortcut  // Active when one of the application's windows are active
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML GLOBAL ITEMS
