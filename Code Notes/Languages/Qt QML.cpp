@@ -628,7 +628,7 @@ DoubleValidator.StandardNotation     // disables E in value
 DoubleValidator.ScientificNotation   // allow E in value
   
 // ACTION
-// Inherits QtObject, Can be used in MenuItem, Button, ToolButton 
+// Inherits QtObject, used in AbstractButton
 Action {
     checkable: true // defaults false
     checked: true
@@ -658,11 +658,6 @@ ButtonGroup {
 Control {
 }
 
-// BUSYINDICATOR
-// Inherits Control, Indicates background activity
-BusyIndicator {
-}
-
 // COMBOBOX
 // Inherits Control, Combined button and popup list for selecting options
 ComboBox {
@@ -676,6 +671,11 @@ SpinBox {
 // DIAL
 // Inherits Control, Circular dial that is rotated to set a value
 Dial {
+}
+
+// BUSYINDICATOR
+// Inherits Control, Indicates background activity
+BusyIndicator {
 }
 
 // PROGRESSBAR
@@ -776,6 +776,16 @@ MenuItem {
 Container {
 }
 
+// PANE
+// Inherits Control, Provides a background matching with the application style and theme
+Pane {
+}
+
+// FRAME
+// Inherits Pane, Visual frame for a logical group of controls
+Frame {
+}
+
 // MENUBAR
 // Inherits Container, Provides a window menu bar
 MenuBar {
@@ -784,6 +794,16 @@ MenuBar {
 // TABBAR
 // Inherits Container, Allows the user to switch between different views or subtasks
 TabBar {
+}
+
+// TOOLBAR
+// Inherits Pane, Container for context-sensitive controls
+ToolBar {
+}
+
+// GROUPBOX
+// Inherits Frame, Visual frame and title for a logical group of controls
+GroupBox {
 }
 
 //===========================================================================================================
