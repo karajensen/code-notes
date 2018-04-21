@@ -855,7 +855,7 @@ input.canUndo // If writable and there are previous operations that can be undon
 input.canPaste // If writable and the content of the clipboard can be pasted into input
 input.canRedo // If writable and there are undone operations that can be redone
 input.cursorPosition // position of the cursor in input
-input.cursorRectangle // rectangle where the cursor is rendered within inout
+input.cursorRectangle // rectangle where the cursor is rendered within input
 input.cursorVisible // True when input shows a cursor
 input.length // Length of text, if has inputMask will include mask characters
 input.preeditText // partial text input from an input method
@@ -886,9 +886,47 @@ input.undo() // Undos if possible
 TextEdit {
     wrapMode: TextEdit.NoWrap // default
     horizontalAlignment: TextEdit.AlignHCenter
-    verticalAlignment: TextEdit.AlignVCenter  
+    verticalAlignment: TextEdit.AlignVCenter
+    activeFocusOnPress: true // If gain active focus on a mouse press
+    cursorDelegate: Rectangle {} // Override cursor
+    inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhTime
+    mouseSelectionMode: TextInput.SelectCharacters // requires selectByMouse property on
+    overwriteMode: true // Whether text inserted will overrite (insert key behavior)
+    persistentSelection: true // Whether keep selection when focus lost, default false
+    readOnly: true
+    selectByMouse: true // Allow mouse to select, default false
+    selectedTextColor: "red" // text
+    selectionColor: "red" // background
 }
-  
+edit.canUndo // If writable and there are previous operations that can be undone
+edit.canPaste // If writable and the content of the clipboard can be pasted into textedit
+edit.canRedo // If writable and there are undone operations that can be redone
+edit.cursorPosition // position of the cursor in textedit
+edit.cursorRectangle // rectangle where the cursor is rendered within textedit
+edit.cursorVisible // True when textedit shows a cursor
+edit.length // Length of text
+edit.preeditText // partial text input from an input method
+edit.selectedText // currently selected text
+edit.selectionEnd // index after last character where selection ends in 'text', read-only
+edit.selectionStart // index of first character where selection starts in 'text', read-only
+edit.clear() // clears text
+edit.copy() // Copies selected text to system clipboard
+edit.cut() // Cuts selected text to system clipboard
+edit.deselect() // Removes selection
+edit.getText(start, end) // Returns section of text between start and end positions
+edit.insert(position, "str") // Inserts at position
+edit.isRightToLeft(start, end) // true if natural reading direction between start/end is right to left
+edit.moveCursorSelection(position, selectionMode) // Moves cursor and selects while moving
+edit.paste() // Replaces the currently selected text by the contents of the system clipboard
+edit.positionAt(x, y, cursorPosition) // Returns position from topleft of input based on cursorPosition
+edit.positionToRectangle(position) // Returns QML rect that cursor would occupy if placed at char position
+edit.redo() // Redos if possible
+edit.remove(start, end) // Removes section of text between start and end position
+edit.select(start, end) // Selects start to end char position, if out of range does no selection change
+edit.selectAll() // Causes all text to be selected
+edit.selectWord() // Selects word closest to the current cursor position
+edit.undo() // Undos if possible
+ 
 // LABEL
 // Inherits Text
 Label {
@@ -956,6 +994,26 @@ TextEdit.WordWrap       // wrapping done on word boundaries only
 TextEdit.WrapAnywhere   // wrapping is done at any point on a line, even in the middle of a word
 TextEdit.Wrap           // if possible, TextEdit.WordWrap, else TextEdit.WrapAnywhere
 
+// TextInput / TextEdit InputMethodHints Flags
+Qt.ImhNone                   // No hints
+Qt.ImhHiddenText             // Characters should be hidden, auto set when echoMode is TextInput.Password
+Qt.ImhSensitiveData          // Typed text should not be stored in persistent storage (dictionary lookup)
+Qt.ImhNoAutoUppercase        // Should not try to auto switch to upper case when a sentence ends
+Qt.ImhPreferNumbers          // Numbers are preferred (but not required)
+Qt.ImhPreferUppercase        // Upper case letters are preferred (but not required)
+Qt.ImhPreferLowercase        // Lower case letters are preferred (but not required)
+Qt.ImhNoPredictiveText       // Do not use predictive text (dictionary lookup) while typing
+Qt.ImhDate                   // The text editor functions as a date field
+Qt.ImhTime                   // The text editor functions as a time field.
+Qt.ImhMultiLine              // Don't stop input when Return or Enter key is pressed
+Qt.ImhDigitsOnly             // Only digits are allowed
+Qt.ImhFormattedNumbersOnly   // Only number input is allowed, includes decimal point and minus sign
+Qt.ImhUppercaseOnly          // Only upper case letter input is allowed
+Qt.ImhLowercaseOnly          // Only lower case letter input is allowed
+Qt.ImhDialableCharactersOnly // Only characters suitable for phone dialing are allowed
+Qt.ImhEmailCharactersOnly    // Only characters suitable for email addresses are allowed
+Qt.ImhUrlCharactersOnly      // Only characters suitable for URLs are allowed
+
 // TextInput InputMask Characters
 A    // ASCII alphabetic character required. A-Z, a-z
 a    // ASCII alphabetic character permitted but not required
@@ -976,26 +1034,6 @@ b    // Binary character permitted but not required
 <    // All following alphabetic characters are lowercased
 !    // Switch off case conversion
 \    // To escape the special characters listed above to use them as separators
-
-// TextInput InputMethodHints Flags
-Qt.ImhNone                   // No hints
-Qt.ImhHiddenText             // Characters should be hidden, auto set when echoMode is TextInput.Password
-Qt.ImhSensitiveData          // Typed text should not be stored in persistent storage (dictionary lookup)
-Qt.ImhNoAutoUppercase        // Should not try to auto switch to upper case when a sentence ends
-Qt.ImhPreferNumbers          // Numbers are preferred (but not required)
-Qt.ImhPreferUppercase        // Upper case letters are preferred (but not required)
-Qt.ImhPreferLowercase        // Lower case letters are preferred (but not required)
-Qt.ImhNoPredictiveText       // Do not use predictive text (dictionary lookup) while typing
-Qt.ImhDate                   // The text editor functions as a date field
-Qt.ImhTime                   // The text editor functions as a time field.
-Qt.ImhMultiLine              // Don't stop input when Return or Enter key is pressed
-Qt.ImhDigitsOnly             // Only digits are allowed
-Qt.ImhFormattedNumbersOnly   // Only number input is allowed, includes decimal point and minus sign
-Qt.ImhUppercaseOnly          // Only upper case letter input is allowed
-Qt.ImhLowercaseOnly          // Only lower case letter input is allowed
-Qt.ImhDialableCharactersOnly // Only characters suitable for phone dialing are allowed
-Qt.ImhEmailCharactersOnly    // Only characters suitable for email addresses are allowed
-Qt.ImhUrlCharactersOnly      // Only characters suitable for URLs are allowed
 
 // TextInput EchoMode Enum
 TextInput.Normal              // Displays the text as it is (default)
