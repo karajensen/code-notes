@@ -571,11 +571,6 @@ Binding {
     delayed: true // wait until event queue cleared before assigning
 }
 
-// FLICKABLE
-// Inherits Item, Provides a surface that can be "flicked"
-Flickable {
-}
-
 // RECTANGLE
 // Inherits Item
 Rectangle {
@@ -711,11 +706,6 @@ Tumbler {
 ScrollBar {
 }
 
-// SCROLLVIEW
-// Inherits Control, Auto uses Flickable if child has one
-ScrollView {
-}
-
 //===========================================================================================================
 // QML BUTTONS
 //===========================================================================================================
@@ -772,8 +762,13 @@ MenuItem {
 //===========================================================================================================
 
 // CONTAINER
-// Inherits Control, Abstract base class for containers
+// Inherits Control, Abstract base class for some containers
 Container {
+}
+
+// FLICKABLE
+// Inherits Item, Provides a surface that can be "flicked"
+Flickable {
 }
 
 // PANE
@@ -786,11 +781,15 @@ Pane {
 Frame {
 }
 
+// SCROLLVIEW
+// Inherits Control, Auto uses Flickable if child has one
+ScrollView {
+}
+
 // SWIPEVIEW
 // Inherits Container, Enables the user to navigate pages by swiping sideways
 SwipeView {
 }
-
 
 // MENUBAR
 // Inherits Container, Provides a window menu bar
@@ -1258,9 +1257,20 @@ SwipeDelegate {
 // QML MODELS
 //===========================================================================================================
 
+// LISTMODEL
+// free-form list data source
+ListModel {
+}
 
+// XMLLISTMODEL
+// read-only model using XPath expressions
+XmlListModel {
+}
 
-
+// OBJECTMODEL
+// Defines a set of items to be used as a model
+ObjectModel {
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML INPUT HANDLING
@@ -1418,24 +1428,24 @@ event.nativeScanCode // contains the native scan code of the key that was presse
 event.text // Unicode text that the key generated
 event.matches(StandardKey.Undo) // Whether key event matches the given standard key
 
-// MOUSE BUTTON FLAGS
+// Mouse Button Flags
 Qt.RightButton
 Qt.LeftButton
 Qt.MiddleButton
 Qt.AllButtons
 
-// MOUSE EVENT SOURCE ENUM
+// Mouse Event Source Enum
 Qt.MouseEventNotSynthesized            // Actual mouse event from user
 Qt.MouseEventSynthesizedBySystemn      // Synthesized from touch or tablet event
 Qt.MouseEventSynthesizedByQt           // Synthesized from an unhandled touch or tablet event by Qt
 Qt.MouseEventSynthesizedByApplication  // Synthesized by the application
 
-// MOUSE DRAG AXIS MASK
+// Mouse Drag Axis Mask
 Drag.XAxis
 Drag.YAxis
 Drag.XAndYAxis
 
-// MOUSE CURSOR SHAPE ENUM
+// Mouse Cusor Shape Enum
 Qt.WaitCursor
 Qt.IBeamCursor
 Qt.SizeVerCursor
@@ -1456,7 +1466,7 @@ Qt.DragCopyCursor
 Qt.DragMoveCursor
 Qt.DragLinkCursor
 
-// KEYBOARD MODIFIER FLAGS
+// Keyboard Modifier Flags
 Qt.NoModifier 
 Qt.ShiftModifier  
 Qt.ControlModifier
@@ -1464,7 +1474,7 @@ Qt.AltModifier
 Qt.MetaModifier   
 Qt.KeypadModifier
 
-// SHORTCUT CONTEXT ENUM
+// Shortcut Context Enum
 Qt.WindowShortcut       // Active when its parent item is in an active top-level window
 Qt.ApplicationShortcut  // Active when one of the application's windows are active
 
