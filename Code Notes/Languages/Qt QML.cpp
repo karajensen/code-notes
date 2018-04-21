@@ -571,6 +571,11 @@ Binding {
     delayed: true // wait until event queue cleared before assigning
 }
 
+// FLICKABLE
+// Inherits Item, Provides a surface that can be "flicked"
+Flickable {
+}
+
 // RECTANGLE
 // Inherits Item
 Rectangle {
@@ -598,6 +603,7 @@ Repeater {
 }
 
 // TIMER
+// Triggers a handler at a specified interval
 Timer {
     interval: 500 // milliseconds
     running: true
@@ -705,6 +711,11 @@ Tumbler {
 ScrollBar {
 }
 
+// SCROLLVIEW
+// Inherits Control, Auto uses Flickable if child has one
+ScrollView {
+}
+
 //===========================================================================================================
 // QML BUTTONS
 //===========================================================================================================
@@ -774,6 +785,12 @@ Pane {
 // Inherits Pane, Visual frame for a logical group of controls
 Frame {
 }
+
+// SWIPEVIEW
+// Inherits Container, Enables the user to navigate pages by swiping sideways
+SwipeView {
+}
+
 
 // MENUBAR
 // Inherits Container, Provides a window menu bar
@@ -1160,7 +1177,6 @@ ScrollView {
         }
         
         // Each item of the model is instantiated with the delegate
-        // Delegates outside listView can use  to access it
         delegate: Item {
             id: myDelegate
             property bool isHighlighted: mouseArea.containsMouse
@@ -1189,6 +1205,62 @@ myDelegate.PathView.view // Use to access pathView if delegate created outside i
 model // Role data for each delegate item, eg. model.role_name
 modelData // If view's model has no roles, use to access item data for delegate
 index // Index in view, can be -1 if removed from view
+ 
+//===========================================================================================================
+// QML VIEWS
+//===========================================================================================================
+
+// LISTVIEW
+// Inherits Flickable, Display items from a model in a list
+ListView {
+}
+
+// GRIDVIEW
+// Inherits Flickable, Display items from a model in a grid
+GridView {
+}
+
+// PATHVIEW
+// Inherits Item, Lays out model-provided items on a path
+PathView {
+}
+
+//===========================================================================================================
+// QML DELEGATES
+//===========================================================================================================
+
+// ITEMDELEGATE
+// Inherits AbstractButton, Basic item delegate
+ItemDelegate {
+}
+
+// CHECKDELEGATE
+// Inherits ItemDelegate, has check indicator that can be toggled on or off
+CheckDelegate {
+}
+
+// RADIODELEGATE
+// Inherits ItemDelegate, has radio indicator that can be toggled on or off
+RadioDelegate {
+}
+
+// SWITCHDELEGATE
+// Inherits ItemDelegate, has a switch indicator that can be toggled on or off
+SwitchDelegate {
+}
+
+// SWIPEDELEGATE
+// Inherits ItemDelegate, Swipable item delegate
+SwipeDelegate {
+}
+
+//===========================================================================================================
+// QML MODELS
+//===========================================================================================================
+
+
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML INPUT HANDLING
