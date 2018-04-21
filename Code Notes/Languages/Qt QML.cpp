@@ -1133,8 +1133,15 @@ Loader.Loading  // the QML source is currently being loaded
 Loader.Error    // an error occurred while loading the QML source
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QML VIEWS
+// QT MODELS / VIEWS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
+• Model: Contains the data and its structure
+• View: A container that displays the data. The view might display the data in a list or a grid.
+• Delegate: Determines how each element of data should appear in the view. Can also access each element.
+• Role: Used to access different attributes of a data element in the model
+**************************************************************************************************************/
 
 ScrollView {
     Layout.fillWidth: true
@@ -1153,7 +1160,9 @@ ScrollView {
         }
         
         // Each item of the model is instantiated with the delegate
+        // Delegates outside listView can use  to access it
         delegate: Item {
+            id: myDelegate
             property bool isHighlighted: mouseArea.containsMouse
             property bool isSelected: listView.currentIndex == index
             MouseArea {
@@ -1172,6 +1181,14 @@ ScrollView {
         }
     }
 }
+
+// DELEGATE PROPERTIES
+myDelegate.ListView.view // Use to access listView if delegate created outside it
+myDelegate.GridView.view // Use to access gridView if delegate created outside it
+myDelegate.PathView.view // Use to access pathView if delegate created outside it
+model // Role data for each delegate item, eg. model.role_name
+modelData // If view's model has no roles, use to access item data for delegate
+index // Index in view, can be -1 if removed from view
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML INPUT HANDLING
