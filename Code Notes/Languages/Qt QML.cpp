@@ -1122,7 +1122,11 @@ ACTIVE FOCUS:
 • Item currently receives keyboard input
 • Or item is a FocusScope ancestor of the item that currently receives keyboard input
 
-KEY HANDLING STEPS
+COMPOSED MOUSE EVENT:
+• Clicked, doubleClicked and pressAndHold, composed of basic mouse events like pressed
+• Changing the accepted property of the mouse parameter has no effect unless propagateComposedEvents true
+
+KEY HANDLING STEPS:
 1) Qt receives the key action and generates a key event
 2) If a QQuickWindow is the active window, the key event is delivered to it
 3) The key event is delivered to the Item with active focus. If none with focus then event ignored
@@ -1147,9 +1151,19 @@ MouseArea {
     enabled: true // overrides Item.enabled, only skips mouse events
     hoverEnabled: true // whether hover events are handled
     pressAndHoldInterval: // overrides the elapsed time in milliseconds before pressAndHold is emitted
-    onPressed: {}
-    onRelease: {}
-    onClicked: {}
+    preventStealing: true // prevents mouse events being stolen from area by parent, default false
+    propagateComposedEvents: true // sends composed events to overlapping areas in lower visual stack order
+    scrollGestureEnabled: true // whether responds to scroll gestures from non-mouse device, default true
+    onCanceled: {} // When another item stole the mouse event handling
+    onClicked: {} // Composed event, Gives mouse event, Press and release both inside area
+    onDoubleClicked: {} // Composed event, Gives mouse event, Press followed by a release followed by a press
+    onEntered: {} // Only on press unless hoved enabled, then on enter of area
+    onExit: {} // Only on press unless hoved enabled, then on exit of area
+    onPositionChanged: {} // Gives mouse event, Only on press unless hoved enabled, then on mouse move in area
+    onPressed: {} // Gives mouse event, on press
+    onPressAndHold: {} // Composed event, Gives mouse event, press longer than 800 ms
+    onReleased: {} // Gives mouse event, on release 
+    onWheel: {} // Gives wheel event, mouse wheel and trackpad scroll gestures
 }
 area.containsMouse // whether the mouse is currently inside the mouse area
 area.containsPress // pressed && containsMouse
@@ -1157,17 +1171,29 @@ area.drag.active // if the target item is currently being dragged
 area.mouseX // local to area, valid only on press, or if hover enabled, if cursor inside area
 area.mouseY // local to area, valid only on press, or if hover enabled, if cursor inside area
 area.pressed // whether any of the acceptedButtons are currently pressed
+area.pressedButtons // mouse buttons currently pressed, can't be Qt.AllButtons
   
 // MOUSE EVENT
 // Use with MouseArea signals
 mouse.accepted // Set to true to stop propagation to parent
 mouse.button // button flag that caused the event, can't be Qt.AllButtons
-mouse.buttons // for mouse move events, all button flags held down
+mouse.buttons // mouse buttons pressed when the event was generated
 mouse.modifiers // keyboard modifier flags
 mouse.source // mouse event source enum
 mouse.wasHeld // If the mouse button has been held pressed longer the threshold (800ms)
 mouse.x // real, coordinate
 mouse.y // real, coordinate
+
+// WHEEL EVENT
+// Use with MouseArea signals
+wheel.accepted // Set to true to stop propagation to parent
+wheel.angleDelta // QML point, degrees rotation in horizontal and vertical, up/right +, down/left -
+wheel.buttons // mouse buttons pressed when the event was generated
+wheel.inverted // whether the delta values delivered with the event are inverted
+wheel.modifiers // keyboard modifier flags
+wheel.pixelDelta // QML point, delta in screen pixels, only for high-resolution trackpad support
+wheel.x // real, coordinate
+wheel.y // real, coordinate
 
 // KEY SIGNALS
 // Add to any Item, to stop propagation, do event.accepted = true
