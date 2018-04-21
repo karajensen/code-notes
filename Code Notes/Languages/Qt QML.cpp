@@ -1176,9 +1176,11 @@ area.mouseY // local to area, valid only on press, or if hover enabled, if curso
 area.pressed // whether any of the acceptedButtons are currently pressed
 area.pressedButtons // mouse buttons currently pressed, can't be Qt.AllButtons
 
-// KEY SIGNALS
-// Attached property, add to any Item, each has key event
+// KEYS PROPERTIES
+// Attached properties, add to any Item, each signal has key event
 Item {
+    Keys.enabled: true // enable signals for this item, default true
+    Keys.forwardTo: [item1, item2] // forwards event to each item, once accepted stops forwarding
     Keys.onAsteriskPressed: {}
     Keys.onBackPressed: {}
     Keys.onBacktabPressed: {}
