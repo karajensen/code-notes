@@ -632,7 +632,7 @@ DoubleValidator.ScientificNotation   // allow E in value
 Action {
     checkable: true // defaults false
     checked: true
-    iconSource: "qrc:///icon.png"
+    icon.source: "qrc:///icon.png"
     text: "str"
     shortcut: StandardKey.Copy
     onTriggered: {}
@@ -681,19 +681,8 @@ BusyIndicator {
 // PROGRESSBAR
 // Inherits Control, Indicates the progress of an operation
 ProgressBar {
-    maximumValue: 20
-    minimumValue: 0
-    style: ProgressBarStyle {
-        background: Rectangle {
-            radius: 2
-            color: "grey"
-            implicitWidth: 100
-            implicitHeight: 20
-        }
-        progress: Rectangle {
-            color: "blue"
-        }
-    }
+    to: 20.0
+    from: 0.0
 }
 
 // SLIDER
@@ -813,18 +802,16 @@ GroupBox {
 // POPUP
 // Inherits QtObject, base class for all popups
 Popup {
+    visible: false // Turning on/off will show popup window
+    title: "Title"
+    width: 300
+    height: 80
+    contentItem: Rectangle {}
 }
 
 // DIALOG
 // Inherits Popup
 Dialog {
-    visible: false // Turning on/off will show dialog window
-    title: "Title"
-    width: 300
-    height: 80
-    contentItem: Rectangle {
-        anchors.fill: parent
-    }
 }
 
 // MENU
@@ -970,6 +957,11 @@ TextField {
 // TEXTAREA
 // Inherits TextEdit
 TextArea {
+}
+
+// TEXTMETRICS
+// Provides metrics for a given font and text
+TextMetrics {
 }
 
 // Text / TextInput / TextEdit Shared Properties
@@ -1291,6 +1283,19 @@ Item {
     Keys.onYesPressed: {}
 }
 
+// FOCUSSCOPE
+FocusScope {
+}
+
+// SHORTCUT
+Shortcut {
+    autoRepeat: true // default true
+    context: Qt.WindowShortcut // default
+    sequence: StandardKey.Copy
+    sequences: [StandardKey.Cut, StandardKey.Copy]
+    onActivated: {}
+}
+
 // MOUSE EVENT
 // Use with MouseArea signals
 mouse.accepted // Set to true to stop propagation to parent
@@ -1369,15 +1374,6 @@ Qt.ControlModifier
 Qt.AltModifier     
 Qt.MetaModifier   
 Qt.KeypadModifier
-
-// SHORTCUT
-Shortcut {
-    autoRepeat: true // default true
-    context: Qt.WindowShortcut // default
-    sequence: StandardKey.Copy
-    sequences: [StandardKey.Cut, StandardKey.Copy]
-    onActivated: {}
-}
 
 // SHORTCUT CONTEXT ENUM
 Qt.WindowShortcut       // Active when its parent item is in an active top-level window
