@@ -1177,48 +1177,48 @@ area.pressed // whether any of the acceptedButtons are currently pressed
 area.pressedButtons // mouse buttons currently pressed, can't be Qt.AllButtons
 
 // KEY SIGNALS
-// Attached property, add to any Item
+// Attached property, add to any Item, each has key event
 Item {
-asteriskPressed(KeyEvent event)
-backPressed(KeyEvent event)
-backtabPressed(KeyEvent event)
-callPressed(KeyEvent event)
-cancelPressed(KeyEvent event)
-context1Pressed(KeyEvent event)
-context2Pressed(KeyEvent event)
-context3Pressed(KeyEvent event)
-context4Pressed(KeyEvent event)
-deletePressed(KeyEvent event)
-digit0Pressed(KeyEvent event)
-digit1Pressed(KeyEvent event)
-digit2Pressed(KeyEvent event)
-digit3Pressed(KeyEvent event)
-digit4Pressed(KeyEvent event)
-digit5Pressed(KeyEvent event)
-digit6Pressed(KeyEvent event)
-digit7Pressed(KeyEvent event)
-digit8Pressed(KeyEvent event)
-digit9Pressed(KeyEvent event)
-downPressed(KeyEvent event)
-enterPressed(KeyEvent event)
-escapePressed(KeyEvent event)
-flipPressed(KeyEvent event)
-hangupPressed(KeyEvent event)
-leftPressed(KeyEvent event)
-menuPressed(KeyEvent event)
-noPressed(KeyEvent event)
-pressed(KeyEvent event)
-released(KeyEvent event)
-returnPressed(KeyEvent event)
-rightPressed(KeyEvent event)
-selectPressed(KeyEvent event)
-shortcutOverride(KeyEvent event)
-spacePressed(KeyEvent event)
-tabPressed(KeyEvent event)
-upPressed(KeyEvent event)
-volumeDownPressed(KeyEvent event)
-volumeUpPressed(KeyEvent event)
-yesPressed(KeyEvent event
+    Keys.onAsteriskPressed: {}
+    Keys.onBackPressed: {}
+    Keys.onBacktabPressed: {}
+    Keys.onCallPressed: {}
+    Keys.onCancelPressed: {}
+    Keys.onContext1Pressed: {}
+    Keys.onContext2Pressed: {}
+    Keys.onContext3Pressed: {}
+    Keys.onContext4Pressed: {}
+    Keys.onDeletePressed: {}
+    Keys.onDigit0Pressed: {}
+    Keys.onDigit1Pressed: {}
+    Keys.onDigit2Pressed: {}
+    Keys.onDigit3Pressed: {}
+    Keys.onDigit4Pressed: {}
+    Keys.onDigit5Pressed: {}
+    Keys.onDigit6Pressed: {}
+    Keys.onDigit7Pressed: {}
+    Keys.onDigit8Pressed: {}
+    Keys.onDigit9Pressed: {}
+    Keys.onDownPressed: {}
+    Keys.onEnterPressed: {}
+    Keys.onEscapePressed: {}
+    Keys.onFlipPressed: {}
+    Keys.onHangupPressed: {}
+    Keys.onLeftPressed: {}
+    Keys.onMenuPressed: {}
+    Keys.onNoPressed: {}
+    Keys.onPressed: {}
+    Keys.onReleased: {}
+    Keys.onReturnPressed: {}
+    Keys.onRightPressed: {}
+    Keys.onSelectPressed: {}
+    Keys.onShortcutOverride: {}
+    Keys.onSpacePressed: {}
+    Keys.onTabPressed: {}
+    Keys.onUpPressed: {}
+    Keys.onVolumeDownPressed: {}
+    Keys.onVolumeUpPressed: {}
+    Keys.onYesPressed: {}
 }
 
 // MOUSE EVENT
