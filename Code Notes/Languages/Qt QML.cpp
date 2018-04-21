@@ -957,7 +957,7 @@ font.underline: true
 font.weight: Font.Normal // default, see QML font type for enums
 font.wordSpacing: 1 // real, spacing between words
   
-// Text RenderType Enum
+// Text / TextInput / TextEdit RenderType Enum
 Text.QtRendering        // advanced features (transformations)
 Text.NativeRendering    // look native on the target platform, no advanced features (transformations)  
   
