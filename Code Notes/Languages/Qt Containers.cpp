@@ -172,7 +172,10 @@ ref.begin() / ref.end() // iterator or const_iterator
 ref.rBegin() / ref.rEnd() // reverse_iterator or const_reverse_iterator
 ref.cbegin() / ref.cend() // const_iterator
 ref.constBegin() / ref.constEnd() // const_iterator
-ref.crbegin() / ref.crEnd() // const_reverse_iterator    
+ref.crbegin() / ref.crEnd() // const_reverse_iterator
+  
+// QByteArray
+// Used to store both raw bytes (including '\0's) and traditional 8-bit '\0'-terminated strings
     
 // QTextStream
 QTextStream(&str) << "str" << value; // QString streamstream
@@ -191,6 +194,15 @@ lst.lastIndexOf(regex, i) // Returns index of last match from regex backwards fr
 lst.removeDuplicates() // Removes all duplicate strings, doesn't require sorting
 lst.replaceInStrings("str1", "str2", caseFlag) // Replace 'str1' with 'str2' in all strings
 lst.sort(case) // Sort all strings using std::sort
+  
+// QLocale
+// Converts between numbers and their string representations in various languages
+  
+// QRegularExpression
+// Provides pattern matching using regular expressions
+  
+// QRegExp
+// Provides pattern matching using regular expressions
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT VARIANT
