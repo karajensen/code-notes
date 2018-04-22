@@ -3,9 +3,9 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // VARIABLE MODIFIERS
-//• Attempt to access an undeclared variable results in a ReferenceError exception
-//• Type determined by assignment, undefined if not assigned, type changes with assigning
-//• Undefined value converts to NaN when used as a number, false when used as a boolean
+// Attempt to access an undeclared variable results in a ReferenceError exception
+// Type determined by assignment, undefined if not assigned, type changes with assigning
+// Undefined value converts to NaN when used as a number, false when used as a boolean
 value = true;         // Global variable
 var value = true;     // Local variable to function, rest of function can see even if inside block scope
 const value = true;   // Same as var but const, must be initialized
@@ -20,7 +20,8 @@ typeof value === "string"
   
 // OBJECTS
 obj = null;                       // Null object
-obj = { x: 2, y : 1 };            // Object with parameters, keys don't require "
+obj = { x: 2, y : 1 };            // Object with properties/attributes
+obj = { "x": 2, "y" : 1 };        // Object with properties/attributes
 obj.x /*or*/ obj["x"]             // Access object attributes, key requires "
 obj = obj || "default value";
   
@@ -107,9 +108,29 @@ if (index > -1) {
 // FUNCTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function MyFunction(a, b) { return 0; } // Return optional
-MyFunction("MyText");                   // Any arguments to right not used become null
-MyFunction({a:"MyText", b:5});          // Using named arguments
+/*************************************************************************************************************
+• Always pass by value, but for object/arrays, the "value" is a reference to the object
+• Changing the value of a variable never changes the underlying primitive or object, 
+  it just points the variable to a new primitive or object
+• Changing a property of an object referenced by a variable does change the underlying object
+**************************************************************************************************************/
+
+// FUNCTION
+function fn(a, b) { return 0; } // Return optional, can use 'arguments' array inside fn which holds a/b
+fn("MyValue");                  // Any arguments to right not used become null
+fn({ a:"MyValue", b:0 });       // Using named arguments
+
+// FUNCTION EXPRESSIONS
+var fn = function(value) { return value; };
+fn("MyValue");
+
+// NESTED FUNCTION
+function fnOuter(a, b) {
+  function fnInner(x) {
+    return x;
+  }
+  return fnInner(a) + fnInner(b);
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CLASSES
