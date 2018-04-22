@@ -351,6 +351,7 @@ auto pair = qMakePair(v1, v2);
 pair.first;
 pair.second;
 
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT MODELS / VIEWS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -454,6 +455,34 @@ QQuickView view;
 view.rootContext()->setContextProperty("context_model", &model);
 view.setSource(QUrl("qrc:/main.qml"));
 view.show();
+
+// QModelIndex
+
+// QPersistentModelIndex
+
+// QAbstractItemModel
+// Inherits QObject, Abstract interface for item model classes
+
+// QAbstractTableModel
+// Inherits QAbstractItemModel, Can be subclassed to create table models
+
+// QAbstractListModel
+// Inherits QAbstractItemModel, Can be subclassed to create one-dimensional list models
+
+// QStringListModel
+// Inherits QAbstractListModel, Model that supplies strings to views
+
+// QAbstractProxyModel
+// Inherits QAbstractItemModel, Base class for proxy item models that can do sorting, filtering etc
+
+// QIdentityProxyModel
+// Inherits QAbstractProxyModel, Proxies its source model unmodified
+
+// QSortFilterProxyModel
+// Inherits QAbstractProxyModel, support for sorting/filtering data passed between another model and a view
+
+// QItemSelectionModel
+// Instantiated By ItemSelectionModel, Inherits QObject, keeps track of a view's selected items
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT WIDGETS
