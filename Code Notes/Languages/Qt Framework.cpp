@@ -110,7 +110,6 @@ public slots: // can be protected/private
     void mySlot(MyFn fn);            // Can do
 };
 
-// QOBJECT
 obj.objectName // Property; User-defined name of object instance, blank as default
 obj.setProperty("value", v); // Return true if existed and set, auto creates if doesn't exist only for obj
 obj.property("value") // Returns QVariant, invalid if doesn't exist
@@ -136,7 +135,7 @@ qobject_cast<MyClass*>(obj); // dynamic_cast without requiring RTTI
 emit obj.mySignal() // Emit a signal, need to call emit whenever Q_PROPERTY changes to update QML
 MyClass::staticMetaObject // QMetaObject for class
     
-// QMETAOBJECT
+// QMetaObject
 metaObj.propertyCount() // Number of properties, not including dynamic properties
 metaObj.className() // Returns class name as const char*
 metaObj.methodCount() // Number of methods including inherited, signals, slots
@@ -144,7 +143,7 @@ metaObj.enumeratorCount() // Number of enums including inherited
 metaObj.enumerator(index) // Get QMetaEnum from index
 metaObj.indexOfEnumerator(name) // Get index of enum from name, or -1 if not found
 
-// QMETAENUM
+// QMetaEnum
 QMetaEnum metaEnum(QMetaEnum::fromType<MyClass::MyEnum>());
 metaEnum.valueToKey(MyClass::ONE)
 metaEnum.keyToValue("ONE")
@@ -351,6 +350,12 @@ auto pair = qMakePair(v1, v2);
 pair.first;
 pair.second;
 
+// QSettings
+// Provides persistent platform-independent application settings
+
+// QTimer
+// Provides repetitive and single-shot timers
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT MODELS / VIEWS
@@ -554,7 +559,7 @@ layout.addWidget(spinBox, r, c); // Add a widget to the layout, automatically pa
 // Avoid calling winId; triggers creation of a native window, resulting in reduced performance
 
 // QQuickItem
-// Inherits QObject, instantiated by Item QML component
+// Inherits QObject, instantiated by Item
 // Properties have accessors item.property() and item.setProperty()
 item.activeFocus // Read only, whether item has active focus
 item.activeFocusOnTab // Whether included in active focus on tab, default false
@@ -616,6 +621,9 @@ item.window() // Return QQuickWindow* in which this item is rendered
  
 // QQuickPaintedItem
 // Inherits QQuickItem, allows rendering content using QPainter
+    
+// QQmlComponent
+// Inherits QObject, instantiated by Component
 
 // QQmlEngine
 qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyGlobals", 1, 0, "MyGlobal")
