@@ -661,8 +661,46 @@ ButtonGroup {
 
 // CONTROL
 // Inherits Item, base class for all controls
+// Controls (except non-interactive indicators) do not let clicks/touches through to children
 Control {
+    bottomPadding: 1 // padding around the contentItem, overrides 'padding'
+    leftPadding: 1 // padding around the contentItem, overrides 'padding'
+    rightPadding: 1 // padding around the contentItem, overrides 'padding'
+    topPadding: 1 // padding around the contentItem, overrides 'padding'
+    padding: 1 // padding around the contentItem
+    background: Rectangle {}
+    contentItem: Label {} // Item automatically resized to fit within the padding of the control
+    focusPolicy: Qt.NoFocus // Control focus policy enum, the way the control accepts focus
+    font: Qt.font() // QML font used
+    hoverEnabled: true // Whether the control accepts hover events
+    locale : Locale
+    mirrored : bool
+    palette : palette
+    spacing : real
+    visualFocus : bool
+    wheelEnabled : bool
 }
+control.availableHeight // height available to the contentItem after deducting vertical padding
+control.availableWidth // width available to the contentItem after deducting horizontal padding
+control.focusReason // Holds the reason of the last focus change, Control focus reason enum
+control.hovered // Whether the control is hovered
+
+// Control Focus Policy Enum
+Qt.TabFocus     // The control accepts focus by tabbing
+Qt.ClickFocus   // The control accepts focus by clicking
+Qt.StrongFocus  // The control accepts focus by both tabbing and clicking
+Qt.WheelFocus   // The control accepts focus by tabbing, clicking, and using the mouse wheel
+Qt.NoFocus      // The control does not accept focus
+
+// Control Focus Reason Enum
+Qt.MouseFocusReason         // A mouse action occurred
+Qt.TabFocusReason           // The Tab key was pressed
+Qt.BacktabFocusReason       // A Backtab occurred, may also include Tab + Shift/Control keys
+Qt.ActiveWindowFocusReason  // The window system made this window either active or inactive
+Qt.PopupFocusReason         // Application opened/closed a pop-up that grabbed/released the keyboard focus
+Qt.ShortcutFocusReason      // The user typed a label's buddy shortcut
+Qt.MenuBarFocusReason       // The menu bar took focus
+Qt.OtherFocusReason         // Another reason, usually application-specific
 
 // COMBOBOX
 // Inherits Control, Combined button and popup list for selecting options
