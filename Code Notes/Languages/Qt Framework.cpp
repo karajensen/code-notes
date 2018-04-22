@@ -662,6 +662,49 @@ if(file.open(QIODevice::ReadOnly))
     }
 }
 
+// QDir
+// Provides access to directory structures and their contents
+QDir dir("Folder/Folder") // Root directory
+dir.exists() // Whether root directly exists
+dir.setNameFilters(QStringList("*.qml", "*.txt")) // Extension types to filter searches with
+dir.entryList(nameFilters, filterFlags, sortFlags) // Search directory recursively, returns QStringList
+dir.entryList(nameFilters) // Not using any args will use the stored filterFlags/sortFlags
+dir.entryList(filterFlags, sortFlags) // Search directory recursively with filter flags, returns QStringList
+dir.entryList() // Not using any args will use the stored filterFlags/sortFlags
+
+// QDir Filter Flags
+QDir::NoFilter         // No filter flag used
+QDir::Dirs             // Apply filters to directory names
+QDir::AllDirs          // Don't apply the filters to directory names
+QDir::Files            // List files
+QDir::Drives           // List disk drives
+QDir::NoSymLinks       // Do not list symbolic links
+QDir::NoDotAndDotDot   // NoDot | NoDotDot
+QDir::NoDot            // Do not list the special entry "."
+QDir::NoDotDot         // Do not list the special entry ".."
+QDir::AllEntries       // Dirs | Files | Drives
+QDir::Readable         // List files which application has read access
+QDir::Writable         // List files which application has write access
+QDir::Executable       // List files which application has execute access
+QDir::Modified         // Only list files that have been modified
+QDir::Hidden           // List hidden files
+QDir::System           // List system files
+QDir::CaseSensitive    // The filter should be case sensitive
+    
+// QDir Sort Flags
+QDir::NoSort           // No sorting
+QDir::Name             // Sort by name
+QDir::Time             // Sort by time (modification time)
+QDir::Size             // Sort by file size
+QDir::Type             // Sort by file type (extension)
+QDir::Unsorted         // Do not sort
+QDir::NoSort           // Not sorted by default
+QDir::DirsFirst        // Put the directories first, then the files
+QDir::DirsLast         // Put the files first, then the directories
+QDir::Reversed         // Reverse the sort order
+QDir::IgnoreCase       // Sort case-insensitively
+QDir::LocaleAware      // Sort using the current locale settings
+    
 // QIODevice
 // base interface class of all I/O devices
 
