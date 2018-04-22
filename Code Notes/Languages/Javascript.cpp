@@ -45,10 +45,29 @@ else if(!(myInt != n) || (myInt < n)) { }
 else { }
   
 // LOOPS
-for (i = 1; i <= n; i++) { }
-while(bool) { }
+for (i = 1; i <= n; i++) { break; }
+while(bool) { continue; }
 do { } while (bool)
-for (var key in myArray){ var x = myArray[key] } // safe way to iterate, using i++ may create key
+for (var key in arr) { var x = arr[key]; } // safe way to iterate, using i++ may create key
+for (var value of arr) { var x = value; } // iterate over values
+for (var key in obj) { var x = obj[key]; } // iterate over object property keys
+for (var value in obj) { var x = value; } // iterate over object property values
+
+// SWITCH STATEMENTS
+switch (myString) {
+  case "one":
+    break;
+  case "two":
+    break;
+  default:
+}
+switch (myInt) {
+  case 0:
+    break;
+  case 1:
+    break;
+  default:
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // STRINGS
@@ -113,10 +132,15 @@ var myObj = new MyClass(b);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 try {
+  throw "My Exception"
+  throw { toString: function() { return "My Exception"; } };
 }
 catch(ex) {
     alert(ex.toString());
     throw ex; // rethrow same exception so console can log it
+}
+finally {
+  return true; // if finally returns, any return used in catch is overridden
 }
 
 alert("Message");
