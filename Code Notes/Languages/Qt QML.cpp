@@ -222,7 +222,7 @@ property int myAttr: myObj.a // Will not update when 'a' updates
 // LIST
 // list of QML objects, not a Javascript array
 // Auto converts to/from QmlListProperty
-property list myList: [] 
+property list myList
 myList.length // item count in list
 myList[index] // access item
   
@@ -344,6 +344,29 @@ myColor.hsvValue
 myColor.hslHue
 myColor.hslSaturation
 myColor.hslLightness
+
+// PALETTE
+// Each property is QML color
+property palette myPalette
+myPalette.alternateBase // Alternate background color in item views with alternating row colors
+myPalette.base // Background color for text editor controls and items views
+myPalette.brightText // Text color that contrasts well with palette.dark, used on  highlighted buttons
+myPalette.button // General button background color
+myPalette.buttonText // Foreground color used with the palette.button color
+myPalette.dark // Darker than palette.button
+myPalette.highlight // Color to indicate a selected item or the current item
+myPalette.highlightedText // Text color that contrasts with palette.highlight
+myPalette.light // Lighter than palette.button
+myPalette.link // Text color used for hyperlinks
+myPalette.linkVisited // Text color used for already visited hyperlinks
+myPalette.mid // Between palette.button and palette.dark
+myPalette.midlight // Between palette.button and palette.light
+myPalette.shadow // A very dark color
+myPalette.text // Foreground color used with palette.base
+myPalette.toolTipBase // Used as the background color for tooltips
+myPalette.toolTipText // Used as the foreground color for tooltips
+myPalette.window // General background color
+myPalette.windowText // General foreground color
 
 //===========================================================================================================
 // QML MATH
@@ -673,17 +696,17 @@ Control {
     focusPolicy: Qt.NoFocus // Control focus policy enum, the way the control accepts focus
     font: Qt.font() // QML font used
     hoverEnabled: true // Whether the control accepts hover events
-    locale : Locale
-    mirrored : bool
-    palette : palette
-    spacing : real
-    visualFocus : bool
-    wheelEnabled : bool
+    locale: Locale {} // Locale specific properties for formatting data and numbers
+    mirrored: true // Whether the control is mirrored
+    spacing: 1.0 // Spacing for control, each derived class uses it differently
+    wheelEnabled: true // Whether the control handles wheel events, default false
 }
-control.availableHeight // height available to the contentItem after deducting vertical padding
-control.availableWidth // width available to the contentItem after deducting horizontal padding
+control.availableHeight // Height available to the contentItem after deducting vertical padding
+control.availableWidth // Width available to the contentItem after deducting horizontal padding
 control.focusReason // Holds the reason of the last focus change, Control focus reason enum
 control.hovered // Whether the control is hovered
+control.palette // QML palette used for control, default application palette, changing also changes children
+control.visualFocus // If has activefocus and with FocusReason Tab, Backtab or Shortcut
 
 // Control Focus Policy Enum
 Qt.TabFocus     // The control accepts focus by tabbing
