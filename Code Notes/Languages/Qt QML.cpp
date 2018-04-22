@@ -1360,12 +1360,14 @@ XmlListModel {
 ObjectModel {
 }
 
-//===========================================================================================================
-// USING WITH WORKERSCRIPT
-//===========================================================================================================
-
-
-
+// ITEMSELECTIONMODEL
+// Instantiates QItemSelectionModel, Allows keeping the selection state of multiple views in sync
+// QML views do not use QModelIndex, need to convert to it when using ItemSelectionModel
+ItemSelectionModel {
+}
+var modelIndex = model.index(view.currentIndex, 0) // Get QModelIndex from view
+ism.select(modelIndex, ItemSelectionModel.Select | ItemSelectionModel.Current)
+  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML INPUT HANDLING
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
