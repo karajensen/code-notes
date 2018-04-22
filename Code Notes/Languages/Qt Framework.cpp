@@ -356,6 +356,9 @@ pair.second;
 // QTimer
 // Provides repetitive and single-shot timers
 
+// QUrl
+// Interface for working with URLs
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT MODELS / VIEWS
@@ -461,6 +464,10 @@ view.rootContext()->setContextProperty("context_model", &model);
 view.setSource(QUrl("qrc:/main.qml"));
 view.show();
 
+//===========================================================================================================
+// QT MODELS
+//===========================================================================================================
+
 // QModelIndex
 
 // QPersistentModelIndex
@@ -477,6 +484,13 @@ view.show();
 // QStringListModel
 // Inherits QAbstractListModel, Model that supplies strings to views
 
+// QItemSelectionModel
+// Instantiated By ItemSelectionModel, Inherits QObject, keeps track of a view's selected items
+
+//===========================================================================================================
+// QT PROXY MODELS
+//===========================================================================================================
+
 // QAbstractProxyModel
 // Inherits QAbstractItemModel, Base class for proxy item models that can do sorting, filtering etc
 
@@ -486,8 +500,12 @@ view.show();
 // QSortFilterProxyModel
 // Inherits QAbstractProxyModel, support for sorting/filtering data passed between another model and a view
 
-// QItemSelectionModel
-// Instantiated By ItemSelectionModel, Inherits QObject, keeps track of a view's selected items
+//===========================================================================================================
+// DRAG / DROP
+//===========================================================================================================
+
+// QMimeData
+// container for data that records information about its MIME type
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT WIDGETS
@@ -644,3 +662,12 @@ if(file.open(QIODevice::ReadOnly))
         line = stream.readLine();
     }
 }
+
+// QIODevice
+// base interface class of all I/O devices
+
+// QDataStream
+// serialization of binary data to a QIODevice
+
+// QFile
+// Interface for reading from and writing to files
