@@ -654,19 +654,34 @@ DoubleValidator.ScientificNotation   // allow E in value
 // ACTION
 // Inherits QtObject, used in AbstractButton
 Action {
+    ActionGroup.group: myAction // Add the action to the group
     checkable: true // defaults false
     checked: true
+    icon.width: 100 // maximum width of the icon
+    icon.height: 100 // maximum height of the icon
+    icon.color: "red" // tints with colour    
     icon.source: "qrc:///icon.png"
     text: "str"
     shortcut: StandardKey.Copy
-    onTriggered: {}
-    onToggled: {}
+    onTriggered: { source }
+    onToggled: { source }
 }
+action.toggle(source) // Toggle the action/emit signal, source defaults to null
+action.trigger(source) // Trigger the action/emit signal, source defaults to null
 
 // ACTIONGROUP
 // Inherits QtObject, Groups actions together
+// Can add items as children, through ActionGroup.group attached property or addAction()
 ActionGroup {
+    Action { checkable: true } // Add action as children, 'checkable' required
+    checkedAction: myAction // Currently selected/checked action
+    enabled: true // False disables all actions, true enables except for those explicity disabled
+    exclusive: true // Default true, if false checkedAction is always null
+    onTriggered: { action } // When an action is triggered
 }
+group.actions // list<Action> of actions
+group.addAction(myAction) // Add an action
+group.removeAction(myAction) // Remove an action
 
 // BUTTONGROUP
 // Inherits QtObject, Mutually-exclusive group of checkable buttons
@@ -1561,6 +1576,7 @@ Qt.KeypadModifier
 //===========================================================================================================
 
 // SHORTCUT
+// Takes StandardKey.Key or Key String eg. "Ctrl+E,Ctrl+W"
 Shortcut {
     autoRepeat: true // default true
     context: Qt.WindowShortcut // default
