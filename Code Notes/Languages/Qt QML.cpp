@@ -633,23 +633,9 @@ timer.restart()
 timer.start()
 timer.stop()
   
-// INTVALIDATOR
-// Instantiates QIntValidator
-IntValidator {
-    bottom: -1 // default -infinity
-    top: 1 // default infinity
-} 
-  
-// DOUBLEVALIDATOR
-// Instantiates QDoubleValidator
-DoubleValidator {
-    bottom: -1.0 // default -infinity
-    top: 1.0 // default infinity
-    decimals: 1 // n digits after decimal point, default 1000
-    notation: DoubleValidator.ScientificNotation // default 
-}
-DoubleValidator.StandardNotation     // disables E in value
-DoubleValidator.ScientificNotation   // allow E in value
+//===========================================================================================================
+// QML ACTIONS
+//===========================================================================================================
   
 // ACTION
 // Inherits QtObject, used in AbstractButton
@@ -682,11 +668,6 @@ ActionGroup {
 group.actions // list<Action> of actions
 group.addAction(myAction) // Add an action
 group.removeAction(myAction) // Remove an action
-
-// BUTTONGROUP
-// Inherits QtObject, Mutually-exclusive group of checkable buttons
-ButtonGroup {
-}
 
 //===========================================================================================================
 // QML CONTROLS
@@ -831,6 +812,11 @@ Switch {
 // MENUITEM
 // Inherits AbstractButton
 MenuItem {
+}
+
+// BUTTONGROUP
+// Inherits QtObject, Mutually-exclusive group of checkable buttons
+ButtonGroup {
 }
 
 //===========================================================================================================
@@ -1190,6 +1176,28 @@ TextInput.CursorOnCharacter        // Returns the position before the character 
 TextEdit.AutoText    // Will auto determine whether text should be treated as rich text
 TextEdit.PlainText   // Contains no formatting, only line breaks and spacing
 TextEdit.RichText    // Contains formatting (font sizes, colors, bolding, italics etc)
+
+//===========================================================================================================
+// QML VALIDATORS
+//===========================================================================================================
+  
+// INTVALIDATOR
+// Instantiates QIntValidator
+IntValidator {
+    bottom: -1 // default -infinity
+    top: 1 // default infinity
+} 
+  
+// DOUBLEVALIDATOR
+// Instantiates QDoubleValidator
+DoubleValidator {
+    bottom: -1.0 // default -infinity
+    top: 1.0 // default infinity
+    decimals: 1 // n digits after decimal point, default 1000
+    notation: DoubleValidator.ScientificNotation // default 
+}
+DoubleValidator.StandardNotation     // disables E in value
+DoubleValidator.ScientificNotation   // allow E in value
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML DYNAMIC CREATION
