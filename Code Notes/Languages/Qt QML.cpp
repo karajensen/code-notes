@@ -594,11 +594,6 @@ Binding {
     delayed: true // wait until event queue cleared before assigning
 }
 
-// WORKERSCRIPT
-// Enables the use of threads
-WorkerScript {
-}
-
 // RECTANGLE
 // Inherits Item
 Rectangle {
@@ -1732,3 +1727,16 @@ MODEL/VIEW OPTIMIZATIONS
 • Use view cacheBuffer property to allow asynchronous creation and buffering of
   delegates outside of the visible area, at a memory usage increase cost
 **************************************************************************************************************/
+  
+// WORKERSCRIPT
+// Run operations in a new thread to prevent blocking of main GUI thread
+// Share their own seperate Javascript heap, only allocated if WorkerScript is used
+WorkerScript {
+    source: "Script.js" // Script file to run in a seperate thread
+    onMessage: { console.log(messageObject.result); } // Get reply from the script
+}
+// Script.js
+WorkerScript.onMessage = function(message) {
+    // Can send as: boolean, number, string, JavaScript object/array, ListModel objects
+    WorkerScript.sendMessage({ "result": 0 });
+}
