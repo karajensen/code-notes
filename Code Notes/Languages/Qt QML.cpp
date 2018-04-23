@@ -835,6 +835,7 @@ Container {
 // FLICKABLE
 // Inherits Item, Provides a surface that can be "flicked"
 Flickable {
+    ScrollBar.vertical: ScrollBar { } // Add a vertical scrollbar
 }
 
 // PANE
