@@ -57,14 +57,16 @@ Dependency walker for 32/64 bit modules (dll,exe) and builds heirarchical tree
 diagrams of all dependent modules, shows exported functions
 
 CONSOLE COMMANDS:
-dir /w                         // gives directory contents
-mklink /J "dst" "src"          // dst final folder must not exist and be named the same as src final folder
-cd path                        // move up a folder or switch to absolute path
-cd ..                          // move down a folder
-start.                         // open folder
-mkdir "path"                   // create new folder
-rmdir "path" /s /q             // delete a non-empty folder
-xcopy "src" "dst" /e /i /h     // copy folder at src to dst, dst final folder must not exist
+dir /w                            // gives directory contents
+mklink /J "dst" "src"             // dst final folder must not exist and be named the same as src final folder
+cd path                           // move up a folder or switch to absolute path
+cd ..                             // move down a folder
+start.                            // open folder
+mkdir "path"                      // create new folder
+rmdir "path" /s /q                // delete a non-empty folder
+del "file"                        // delete a file
+xcopy "src" "dst" /e /i /h        // copy folder at src to dst, dst final folder must not exist
+echo f | xcopy "src" "dst" /f /y  // copy src file to dst file
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MAC DEVELOPMENT
