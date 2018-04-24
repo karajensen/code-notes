@@ -694,7 +694,7 @@ Control {
 }
 control.availableHeight // Height available to the contentItem after deducting vertical padding
 control.availableWidth // Width available to the contentItem after deducting horizontal padding
-control.focusReason // Holds the reason of the last focus change, Control focus reason enum
+control.focusReason // Holds the reason of the last focus change, Input Focus Reason enum
 control.hovered // Whether the control is hovered
 control.palette // QML palette used for control, default application palette, changing also changes children
 control.visualFocus // If has activefocus and with FocusReason Tab, Backtab or Shortcut
@@ -705,16 +705,6 @@ Qt.ClickFocus   // The control accepts focus by clicking
 Qt.StrongFocus  // The control accepts focus by both tabbing and clicking
 Qt.WheelFocus   // The control accepts focus by tabbing, clicking, and using the mouse wheel
 Qt.NoFocus      // The control does not accept focus
-
-// Control Focus Reason Enum
-Qt.MouseFocusReason         // A mouse action occurred
-Qt.TabFocusReason           // The Tab key was pressed
-Qt.BacktabFocusReason       // A Backtab occurred, may also include Tab + Shift/Control keys
-Qt.ActiveWindowFocusReason  // The window system made this window either active or inactive
-Qt.PopupFocusReason         // Application opened/closed a pop-up that grabbed/released the keyboard focus
-Qt.ShortcutFocusReason      // The user typed a label's buddy shortcut
-Qt.MenuBarFocusReason       // The menu bar took focus
-Qt.OtherFocusReason         // Another reason, usually application-specific
 
 // COMBOBOX
 // Inherits Control, Combined button and popup list for selecting options
@@ -951,7 +941,7 @@ line.width // Can modify to change width of line
 line.height // Can modify to change height of line 
 
 // TEXT
-// Inherits item
+// Inherits item, Styled text label
 Text {
     wrapMode: Text.NoWrap // default
     horizontalAlignment: Text.AlignHCenter
@@ -1101,21 +1091,39 @@ edit.selectWord() // Selects word closest to the current cursor position
 edit.undo() // Undos if possible
  
 // LABEL
-// Inherits Text
+// Inherits Text, Styled text label
 Label {
-    background: Rectangle {} // If no size set, automatically follows the control's size
+    background: Rectangle {} // If no size set, auto follows the control's size, must set implicit sizes
 }
-lbl.palette // QML palette used for control, default application palette, changing also changes children
+lbl.palette // QML palette used for control, default application palette
 
 // TEXTFIELD
-// Inherits TextInput, Displays a single line of editable plain text.
+// Inherits TextInput, Displays a single line of editable plain text
 TextField {
+    background: Rectangle {} // If no size set, auto follows the control's size, must set implicit sizes
+    hoverEnabled: true // Whether the control accepts hover events
+    placeholderText: "str" // Text shown before user inputs
+    onPressAndHold: { event } // MouseEvent given on a long press
+    onPressed: { event } // MouseEvent given on press
+    onReleased: { event } // MouseEvent given on release
 }
-
+field.focusReason // Holds the reason of the last focus change, Input Focus Reason enum
+field.hovered // Whether the control is hovered
+field.palette // QML palette used for control, default application palette
+  
 // TEXTAREA
 // Inherits TextEdit, Displays multiple lines of editable formatted text
 TextArea {
+    background: Rectangle {} // If no size set, auto follows the control's size, must set implicit sizes
+    hoverEnabled: true // Whether the control accepts hover events
+    placeholderText: "str" // Text shown before user inputs
+    onPressAndHold: { event } // MouseEvent given on a long press
+    onPressed: { event } // MouseEvent given on press
+    onReleased: { event } // MouseEvent given on release
 }
+area.focusReason // Holds the reason of the last focus change, Input Focus Reason enum
+area.hovered // Whether the control is hovered
+area.palette // QML palette used for control, default application palette
 
 // TEXTMETRICS
 // Provides metrics for a given font and text
@@ -1646,6 +1654,16 @@ Qt.ControlModifier
 Qt.AltModifier     
 Qt.MetaModifier   
 Qt.KeypadModifier
+
+// Input Focus Reason Enum
+Qt.MouseFocusReason         // A mouse action occurred
+Qt.TabFocusReason           // The Tab key was pressed
+Qt.BacktabFocusReason       // A Backtab occurred, may also include Tab + Shift/Control keys
+Qt.ActiveWindowFocusReason  // The window system made this window either active or inactive
+Qt.PopupFocusReason         // Application opened/closed a pop-up that grabbed/released the keyboard focus
+Qt.ShortcutFocusReason      // The user typed a label's buddy shortcut
+Qt.MenuBarFocusReason       // The menu bar took focus
+Qt.OtherFocusReason         // Another reason, usually application-specific
 
 //===========================================================================================================
 // SHORTCUTS
