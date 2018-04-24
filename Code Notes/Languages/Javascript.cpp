@@ -113,6 +113,7 @@ if (index > -1) {
 • Changing the value of a variable never changes the underlying primitive or object, 
   it just points the variable to a new primitive or object
 • Changing a property of an object referenced by a variable does change the underlying object
+• Parameters of functions default to undefined
 **************************************************************************************************************/
 
 // FUNCTION
@@ -125,11 +126,36 @@ var fn = function(value) { return value; };
 fn("MyValue");
 
 // NESTED FUNCTION
+// Inner function has access to outer variables
 function fnOuter(a, b) {
-  function fnInner(x) {
-    return x;
+  function fnInner() {
+    return a + b;
   }
   return fnInner(a) + fnInner(b);
+}
+
+// ARROW FUNCTIONS
+// Shorthand way of writing function expression
+function(s) { return s.length; } /*or*/ s => s.length
+
+
+// FUNCTION ARGUMENTS
+// iterate through arguments, not an array, but has index/length
+function fn(arg1, arg2) {
+   for (i = 0; i < arguments.length; i++) {
+      console.log(arguments[i])
+   }
+}
+
+// DEFAULT PARAMETERS
+// If no default param, defaults to undefined
+function fn(a, b = 0) {
+}
+
+// REST PARAMETERS
+// Represent an indefinite number of arguments as an array
+function fn(value, ...args) {
+  args.map(x => console.log(x));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
