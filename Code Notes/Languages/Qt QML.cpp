@@ -770,10 +770,21 @@ AbstractButton {
     checkable: true // defaults false
     checked: true
     display: AbstractButton.IconOnly // Abstract Button Display Enum
+    icon.width: 100 // maximum width of the icon
+    icon.height: 100 // maximum height of the icon
+    icon.color: "red" // tints with colour    
     icon.source: "qrc:///icon.png"
-    onClicked: {}
+    onCanceled: {} // When loses mouse grab when pressed or not inside button when released emitted
+    onClicked: {} // When button is clicked by user via touch, mouse or keyboard
+    onDoubleClicked: {} // When button is double clicked by user via touch or mouse
+    onPressAndHold: {} // When the button is pressed and held down by user via touch or mouse
+    onPressed: {} // When button is pressed by user via touch, mouse, or keyboard
+    onReleased: {} // When button is released by user via touch, mouse, or keyboard
+    onToggled: {} // When checkable button is toggled by the user via touch, mouse, or keyboard
 }
-button.pressed
+button.down // Whether button visually down
+button.pressed // Read-only, whether button visually down
+button.toggle() // Toggles the checked state of the button
 
 // Abstract Button Display Enum
 AbstractButton.IconOnly	
