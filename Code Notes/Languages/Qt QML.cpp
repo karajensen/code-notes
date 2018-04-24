@@ -280,7 +280,7 @@ Qt.qsTrIdNoOp(id) // Marks id for dynamic translation, returns id
 property date myDate: "2020-12-31"
   
 // Takes JavaScript Date or QML date, returns date as string
-// Format defaults Qt.SystemLocaleShortDate, can be enum or string
+// Format defaults Qt.SystemLocaleShortDate, can be Date Format Enum or Date Format String
 Qt.formatDate(date, format)
 Qt.formatDateTime(date, format)
 Qt.formatTime(date, format)
@@ -466,17 +466,17 @@ myFont.italic // Whether italic
 myFont.underline // Whether has underline
 myFont.pointSize // real, device independent
 myFont.pixelSize // Overrides pointSize, int, device dependent
-myFont.weight // Weight enum
+myFont.weight // Font Weighting Enum
 myFont.overline // Whether has overline
 myFont.strikeout // Whether line through it
-myFont.capitalization // Capitalization Rendering enum
+myFont.capitalization // Font Capitalization Enum
 myFont.letterSpacing // real, spacing between characters
 myFont.wordSpacing // real, spacing between words
 myFont.kerning // Whether to auto adjust character spacing, default enabled
 myFont.preferShaping // Whether to enable display/spacing rules, default enabled
-myFont.hintingPreference // Hinting preference enum
+myFont.hintingPreference // Font Hinting Enum
 
-// Font Weighting
+// Font Weighting Enum
 Font.Thin          0
 Font.ExtraLight    12
 Font.Light         25
@@ -487,14 +487,14 @@ Font.Bold          75
 Font.ExtraBold     81
 Font.Black         87
   
-// Font Capitalization
+// Font Capitalization Enum
 Font.MixedCase       // No change
 Font.AllUppercase    // Render in all uppercase
 Font.AllLowercase    // Render in all lowercase
 Font.SmallCaps       // Render in all small-caps
 Font.Capitalize      // Render with the first character of each word as uppercase
   
-// Font Hinting
+// Font Hinting Enum
 // Adjusts an outline (non-rastor) font so it lines up with a rasterized grid
 // Important for displaying small text, only used with "NativeRendering"
 Font.PreferDefaultHinting    // default hinting level
@@ -508,7 +508,7 @@ Font.PreferFullHinting       // hinting in both horizontal and vertical directio
 
 // LAYOUT ATTACHED PROPERTIES
 // Use these on any components inside the layout
-Layout.alignment // Alignment type flags
+Layout.alignment // Layout Alignment Flags
 Layout.bottomMargin // Overrides margin property if set
 Layout.column // column position of an item in a GridLayout
 Layout.columnSpan // column span of an item in a GridLayout
@@ -527,7 +527,7 @@ Layout.row // row position of an item in a GridLayout
 Layout.rowSpan // row span of an item in a GridLayout
 Layout.topMargin // Overrides margin property if set
 
-// Layout Alignment Types
+// Layout Alignment Flags
 Qt.AlignLeft
 Qt.AlignHCenter
 Qt.AlignRight
@@ -594,15 +594,6 @@ Binding {
     delayed: true // wait until event queue cleared before assigning
 }
 
-// RECTANGLE
-// Inherits Item
-Rectangle {
-    color: "red"
-    radius: 2
-    border.color: "red"
-    border.width: 1      
-}
-
 // REPEATER
 // Inherits Item, Usually in Row/Column, instantiates n items
 // creates all of its delegate items when the repeater is first created
@@ -632,6 +623,21 @@ Timer {
 timer.restart()
 timer.start()
 timer.stop()
+  
+// RECTANGLE
+// Inherits Item
+Rectangle {
+    color: "red"
+    radius: 2
+    antialiasing: true // Default true if using radius, false otherwise, gives performance hit
+    border.color: "red"
+    border.width: 1
+    gradient: Gradient {}
+}
+
+// GRADIENT
+Gradient {
+}
   
 //===========================================================================================================
 // QML ACTIONS
@@ -684,7 +690,7 @@ Control {
     padding: 1 // padding around the contentItem
     background: Rectangle {}
     contentItem: Label {} // Item automatically resized to fit within the padding of the control
-    focusPolicy: Qt.NoFocus // Control focus policy enum, the way the control accepts focus
+    focusPolicy: Qt.NoFocus // Control Focus Policy Enum, the way the control accepts focus
     font: Qt.font() // QML font used
     hoverEnabled: true // Whether the control accepts hover events
     locale: Locale {} // Locale specific properties for formatting data and numbers
@@ -729,8 +735,6 @@ BusyIndicator {
 // PROGRESSBAR
 // Inherits Control, Indicates the progress of an operation
 ProgressBar {
-    to: 20.0
-    from: 0.0
 }
 
 // SLIDER
@@ -762,12 +766,19 @@ ScrollBar {
 AbstractButton {
     text: "str"
     action: myAction
+    autoExclusive: true // checkable btns with same parent auto-group, doesn't affect if part of ButtonGroup
     checkable: true // defaults false
     checked: true
+    display: AbstractButton.IconOnly // Abstract Button Display Enum
     icon.source: "qrc:///icon.png"
     onClicked: {}
 }
 button.pressed
+
+// Abstract Button Display Enum
+AbstractButton.IconOnly	
+AbstractButton.TextOnly
+AbstractButton.TextBesideIcon
 
 // BUTTON
 // Inherits AbstractButton
@@ -909,7 +920,7 @@ ToolTip {
 {
     text: "str"
     color: "red" // text color
-    renderType: Text.QtRendering // Default given by QQuickWindow::textRenderType
+    renderType: Text.QtRendering // RenderType Enum, Default given by QQuickWindow::textRenderType
     contentHeight: 200 // height of the unclipped text
     contentWidth: 200 // width of the unclipped text
     bottomPadding: 1.0 // padding around the content, not part of contentHeight, overrides 'padding'
@@ -943,23 +954,23 @@ line.height // Can modify to change height of line
 // TEXT
 // Inherits item, Styled text label
 Text {
-    wrapMode: Text.NoWrap // default
-    horizontalAlignment: Text.AlignHCenter
-    verticalAlignment: Text.AlignVCenter
+    wrapMode: Text.NoWrap // default, Wrap Mode Enum
+    horizontalAlignment: Text.AlignHCenter // Alignment Enum
+    verticalAlignment: Text.AlignVCenter // Alignment Enum
     baseUrl: "http://qt-project.org/" // Used to resolve relative URLs within the text (eg. images/logo.png)
     clip: true // Whether the text is clipped
-    elide: Text.ElideNone // Elide Mode enum (default)
-    fontSizeMode: Text.FixedSize // Font Size Mode enum (default)
+    elide: Text.ElideNone // default, Elide Mode Enum
+    fontSizeMode: Text.FixedSize // default, Font Size Mode Enum
     hoveredLink: "" // link string when the user hovers a link embedded in the text
     lineHeight: 1.0 // Text line height, in pixels or a multiplier depending on lineHeightMode
-    lineHeightMode: Text.ProportionalHeight // Light height mode enum (default)
+    lineHeightMode: Text.ProportionalHeight // default, Line Height Mode Enum
     linkColor: "red" // Color of links in the text, RichText unsupported
     maximumLineCount: 1 // Limit the number of lines that the text item will show, RichText unsupported
     minimumPixelSize: 1 // Minimum font pixel size, requires !Text.FixedSize and font.pixelSize != -1
     minimumPointSize: 1 // Minimum font point size, requires !Text.FixedSize and font.pointSize != -1
     style: Text.Normal // Text Style Enum
     styleColor: "red" // Color used depending on style property
-    textFormat: Text.PlainText // Text edit format enum
+    textFormat: Text.PlainText // Text Format Enum
     onLineLaidOut: { line } // Emitted for each line of text that is laid out during the layout process
     onLinkActivated: { link } // when the user clicks on a link embedded in the text, link is string
     onLinkHovered: { link } // when the user hovers on a link embedded in the text, link is string    
@@ -973,19 +984,19 @@ text.linkAt(x, y) // Returns ink string at point x, y in content coordinates, em
 // TEXTINPUT
 // Inherits Item, single line of editable plain text
 TextInput {
-    wrapMode: TextInput.NoWrap // default
-    horizontalAlignment: TextInput.AlignHCenter
-    verticalAlignment: TextInput.AlignVCenter
+    wrapMode: TextInput.NoWrap // default, Wrap Mode Enum
+    horizontalAlignment: TextInput.AlignHCenter // Alignment Enum
+    verticalAlignment: TextInput.AlignVCenter // Alignment Enum
     displayText: "str" // Dependent on echo mode, holds input as editing    
     activeFocusOnPress: true // If gain active focus on a mouse press
     autoScroll: true
     cursorDelegate: Rectangle {} // Override cursor
-    echoMode: TextInput.Normal
-    inputMask: ">AAAAA-AAAAA-AAAAA;#"
-    inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhTime
+    echoMode: TextInput.Normal // Echo Mode Enum
+    inputMask: ">AAAAA-AAAAA-AAAAA;#" // Input Mask Characters
+    inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhTime // Input Method Hints Flags
     validator: myValidator
     maximumLength: 100 // truncates/prevents input, default 32767
-    mouseSelectionMode: TextInput.SelectCharacters // requires selectByMouse property on
+    mouseSelectionMode: TextInput.SelectCharacters // Requires selectByMouse true, Selection Mode Enum
     overwriteMode: true // Whether text inserted will overrite (insert key behavior)
     passwordCharacter: "*" // Character used with echomode Password, only first char is used
     passwordMaskDelay: 10 // ms delay before masking the character for echomode Password
@@ -1020,7 +1031,7 @@ input.insert(position, "str") // Inserts at position
 input.isRightToLeft(start, end) // true if natural reading direction between start/end is right to left
 input.moveCursorSelection(position, selectionMode) // Moves cursor and selects while moving
 input.paste() // Replaces the currently selected text by the contents of the system clipboard
-input.positionAt(x, y, cursorPosition) // Returns position from topleft of input based on cursorPosition
+input.positionAt(x, y, cursorPosition) // Returns position from topleft of input based on Cursor Position Enum
 input.positionToRectangle(position) // Returns QML rect that cursor would occupy if placed at char position
 input.redo() // Redos if possible
 input.remove(start, end) // Removes section of text between start and end position
@@ -1033,16 +1044,16 @@ input.undo() // Undos if possible
 // Inherits Item, multiple lines of editable formatted text
 // Requires Flickable or ScrollView to implement scrolling, following the cursor etc
 TextEdit {
-    wrapMode: TextEdit.NoWrap // default
-    horizontalAlignment: TextEdit.AlignHCenter
-    verticalAlignment: TextEdit.AlignVCenter
+    wrapMode: TextEdit.NoWrap // default, Wrap Mode Enum
+    horizontalAlignment: TextEdit.AlignHCenter // Alignment Enum
+    verticalAlignment: TextEdit.AlignVCenter // Alignment Enum
     activeFocusOnPress: true // If gain active focus on a mouse press
     baseUrl: "http://qt-project.org/" // Used to resolve relative URLs within the text (eg. images/logo.png)
     cursorDelegate: Rectangle {} // Override cursor
     hoveredLink: "" // link string when the user hovers a link embedded in the text
     inputMethodComposing: true // whether the textedit has partial text input from an input method
-    inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhTime
-    mouseSelectionMode: TextInput.SelectCharacters // requires selectByMouse property on
+    inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhTime // Input Method Hints Flags
+    mouseSelectionMode: TextInput.SelectCharacters // Requires selectByMouse true, Selection Mode Enum
     overwriteMode: true // Whether text inserted will overrite (insert key behavior)
     persistentSelection: true // Whether keep selection when focus lost, default false
     readOnly: true
@@ -1051,7 +1062,7 @@ TextEdit {
     selectedTextColor: "red" // text
     selectionColor: "red" // background
     tabStopDistance: 1.0 // default distance, in device units, between tab stops
-    textFormat: TextEdit.PlainText // Text edit format enum
+    textFormat: TextEdit.PlainText // Text Format Enum
     onEditingFinished: {} // when the text edit loses focus
     onLinkActivated: { link } // when the user clicks on a link embedded in the text, link is string
     onLinkHovered: { link } // when the user hovers on a link embedded in the text, link is string
@@ -1059,7 +1070,7 @@ TextEdit {
 edit.canUndo // If writable and there are previous operations that can be undone
 edit.canPaste // If writable and the content of the clipboard can be pasted into textedit
 edit.canRedo // If writable and there are undone operations that can be redone
-edit.cursorPosition // position of the cursor in textedit
+edit.cursorPosition // position of the cursor in textedit, Cursor Position Enum
 edit.cursorRectangle // rectangle where the cursor is rendered within textedit
 edit.cursorVisible // True when textedit shows a cursor
 edit.length // Length of text
@@ -1132,7 +1143,7 @@ TextMetrics {
 }
 metrics.advanceWidth // Distance from the position of str where the next string should be drawn in pixels
 metrics.boundingRect // Bounding rectangle of str
-metrics.elide // Elide mode enum
+metrics.elide // Elide Mode Enum
 metrics.elideWidth // Largest width str can have in pixels before eliding will occur
 metrics.elidedText // Elided version of the string
 metrics.font // QML font used for the metrics calculations
@@ -1144,7 +1155,7 @@ metrics.width // Width of the bounding rectangle
 Text.QtRendering        // advanced features (transformations)
 Text.NativeRendering    // look native on the target platform, no advanced features (transformations)  
   
-// Text / TextInput / TextEdit Alignment Enums
+// Text / TextInput / TextEdit Alignment Enum
 Text.AlignLeft      TextInput.AlignLeft      TextEdit.AlignLeft
 Text.AlignRight     TextInput.AlignRight     TextEdit.AlignRight
 Text.AlignHCenter   TextInput.AlignHCenter   TextEdit.AlignHCenter
@@ -1152,7 +1163,7 @@ Text.AlignTop       TextInput.AlignTop       TextEdit.AlignTop
 Text.AlignBottom    TextInput.AlignBottom    TextEdit.AlignBottom
 Text.AlignVCenter   TextInput.AlignVCenter   TextEdit.AlignVCenter
 
-// Text / TextInput / TextEdit WrapMode Enum
+// Text / TextInput / TextEdit Wrap Mode Enum
 Text.NoWrap             // no wrapping
 Text.WordWrap           // wrapping done on word boundaries only
 Text.WrapAnywhere       // wrapping is done at any point on a line, even in the middle of a word
@@ -1172,7 +1183,7 @@ Qt.ElideLeft            // For example: "...World"
 Qt.ElideMiddle          // For example: "He...ld"
 Qt.ElideRight           // For example: "Hello..."
 
-// Text / TextEdit Format Enum
+// Text / TextEdit Text Format Enum
 // PlainText/StyledText offer better performance at cost of formatting
 TextEdit.AutoText       // Will auto determine whether text should be treated as rich text
 TextEdit.PlainText      // Contains no formatting, only line breaks and spacing
@@ -1182,7 +1193,13 @@ Text.PlainText          // Contains no formatting, only line breaks and spacing
 Text.RichText           // Contains formatting (font sizes, colors, bolding, italics etc)
 Text.StyledText         // Optimized RichText format with some formatting 
 
-// TextInput / TextEdit InputMethodHints Flags
+// TextInput / TextEdit Selection Mode Enum
+TextInput.SelectCharacters    // Selects all characters between selection start/end pos
+TextInput.SelectWords         // Selects all words between selection start/end pos, partial words included
+TextEdit.SelectCharacters     // Selects all characters between selection start/end pos
+TextEdit.SelectWords          // Selects all words between selection start/end pos, partial words included
+
+// TextInput / TextEdit Input Method Hints Flags
 Qt.ImhNone                   // No hints
 Qt.ImhHiddenText             // Characters should be hidden, auto set when echoMode is TextInput.Password
 Qt.ImhSensitiveData          // Typed text should not be stored in persistent storage (dictionary lookup)
@@ -1202,7 +1219,7 @@ Qt.ImhDialableCharactersOnly // Only characters suitable for phone dialing are a
 Qt.ImhEmailCharactersOnly    // Only characters suitable for email addresses are allowed
 Qt.ImhUrlCharactersOnly      // Only characters suitable for URLs are allowed
 
-// TextInput InputMask Characters
+// TextInput Input Mask Characters
 A    // ASCII alphabetic character required. A-Z, a-z
 a    // ASCII alphabetic character permitted but not required
 N    // ASCII alphanumeric character required. A-Z, a-z, 0-9
@@ -1223,17 +1240,13 @@ b    // Binary character permitted but not required
 !    // Switch off case conversion
 \    // To escape the special characters listed above to use them as separators
 
-// TextInput EchoMode Enum
+// TextInput Echo Mode Enum
 TextInput.Normal              // Displays the text as it is (default)
 TextInput.Password            // Displays platform-dependent password mask characters instead
 TextInput.NoEcho              // Displays nothing
 TextInput.PasswordEchoOnEdit  // Displays characters as they are entered while editing, otherwise password
 
-// TextInput SelectionMode Enum
-TextInput.SelectCharacters    // Selects all characters between selection start/end pos
-TextInput.SelectWords         // Selects all words between selection start/end pos, partial words included
-
-// TextInput CursorPosition Enum
+// TextInput Cursor Position Enum
 TextInput.CursorBetweenCharacters  // Returns the position between characters that is nearest x
 TextInput.CursorOnCharacter        // Returns the position before the character that is nearest x
 
