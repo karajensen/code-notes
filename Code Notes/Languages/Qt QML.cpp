@@ -922,11 +922,11 @@ ToolTip {
     renderType: Text.QtRendering // Default given by QQuickWindow::textRenderType
     contentHeight: 200 // height of the unclipped text
     contentWidth: 200 // width of the unclipped text
-    bottomPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
-    leftPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
-    rightPadding: 1 // padding around the content, not part of contentWidth, overrides 'padding'
-    topPadding: 1 // padding around the content, not part of contentHeight, overrides 'padding'
-    padding: 1 // padding around the content, not part of contentHeight/contentHeight
+    bottomPadding: 1.0 // padding around the content, not part of contentHeight, overrides 'padding'
+    leftPadding: 1.0 // padding around the content, not part of contentWidth, overrides 'padding'
+    rightPadding: 1.0 // padding around the content, not part of contentWidth, overrides 'padding'
+    topPadding: 1.0 // padding around the content, not part of contentHeight, overrides 'padding'
+    padding: 1.0 // padding around the content, not part of contentHeight/contentHeight
     font.bold: true
     font.capitalization: Font.MixedCase // default, see QML font type for enums
     font.family: "Helvetica"
@@ -943,13 +943,42 @@ ToolTip {
     font.wordSpacing: 1 // real, spacing between words
 }
 
+// TEXTLINE
+// lineLaidOut signal object
+line.number // Read-only property
+line.x / line.y // Can modify to change position of line
+line.width // Can modify to change width of line
+line.height // Can modify to change height of line 
+
 // TEXT
 // Inherits item
 Text {
     wrapMode: Text.NoWrap // default
     horizontalAlignment: Text.AlignHCenter
-    verticalAlignment: Text.AlignVCenter     
+    verticalAlignment: Text.AlignVCenter
+    baseUrl: "http://qt-project.org/" // Used to resolve relative URLs within the text (eg. images/logo.png)
+    clip: true // Whether the text is clipped
+    elide: Text.ElideNone // Elide Mode enum (default)
+    fontSizeMode: Text.FixedSize // Font Size Mode enum (default)
+    hoveredLink: "" // link string when the user hovers a link embedded in the text
+    lineHeight: 1.0 // Text line height, in pixels or a multiplier depending on lineHeightMode
+    lineHeightMode: Text.ProportionalHeight // Light height mode enum (default)
+    linkColor: "red" // Color of links in the text, RichText unsupported
+    maximumLineCount: 1 // Limit the number of lines that the text item will show, RichText unsupported
+    minimumPixelSize: 1 // Minimum font pixel size, requires !Text.FixedSize and font.pixelSize != -1
+    minimumPointSize: 1 // Minimum font point size, requires !Text.FixedSize and font.pointSize != -1
+    style: Text.Normal // Text Style Enum
+    styleColor: "red" // Color used depending on style property
+    textFormat: Text.PlainText // Text edit format enum
+    onLineLaidOut: { line } // Emitted for each line of text that is laid out during the layout process
+    onLinkActivated: { link } // when the user clicks on a link embedded in the text, link is string
+    onLinkHovered: { link } // when the user hovers on a link embedded in the text, link is string    
 }
+text.advance // pixel distance from first char of text to first char of another Text if in a text flow
+text.lineCount // Number of lines visible in the text item
+text.truncated // If the text has been truncated due to maximumLineCount or elid, RichText unsupported
+text.forceLayout() // Triggers a re-layout of the displayed text
+text.linkAt(x, y) // Returns ink string at point x, y in content coordinates, empty if nothing there
 
 // TEXTINPUT
 // Inherits Item, single line of editable plain text
@@ -1018,7 +1047,7 @@ TextEdit {
     horizontalAlignment: TextEdit.AlignHCenter
     verticalAlignment: TextEdit.AlignVCenter
     activeFocusOnPress: true // If gain active focus on a mouse press
-    baseUrl: "qrc:///folder/" // QML url of the qrc base location to resolve resources
+    baseUrl: "http://qt-project.org/" // Used to resolve relative URLs within the text (eg. images/logo.png)
     cursorDelegate: Rectangle {} // Override cursor
     hoveredLink: "" // link string when the user hovers a link embedded in the text
     inputMethodComposing: true // whether the textedit has partial text input from an input method
@@ -1034,8 +1063,8 @@ TextEdit {
     tabStopDistance: 1.0 // default distance, in device units, between tab stops
     textFormat: TextEdit.PlainText // Text edit format enum
     onEditingFinished: {} // when the text edit loses focus
-    linkActivated: { link } // when the user clicks on a link embedded in the text, link is string
-    linkHovered: { link } // when the user hovers on a link embedded in the text, link is string
+    onLinkActivated: { link } // when the user clicks on a link embedded in the text, link is string
+    onLinkHovered: { link } // when the user hovers on a link embedded in the text, link is string
 }
 edit.canUndo // If writable and there are previous operations that can be undone
 edit.canPaste // If writable and the content of the clipboard can be pasted into textedit
@@ -1074,7 +1103,9 @@ edit.undo() // Undos if possible
 // LABEL
 // Inherits Text
 Label {
+    background: Rectangle {} // If no size set, automatically follows the control's size
 }
+lbl.palette // QML palette used for control, default application palette, changing also changes children
 
 // TEXTFIELD
 // Inherits TextInput, Displays a single line of editable plain text.
@@ -1089,7 +1120,17 @@ TextArea {
 // TEXTMETRICS
 // Provides metrics for a given font and text
 TextMetrics {
+    text: "str"
 }
+metrics.advanceWidth // Distance from the position of str where the next string should be drawn in pixels
+metrics.boundingRect // Bounding rectangle of str
+metrics.elide // Elide mode enum
+metrics.elideWidth // Largest width str can have in pixels before eliding will occur
+metrics.elidedText // Elided version of the string
+metrics.font // QML font used for the metrics calculations
+metrics.height // Height of the bounding rectangle
+metrics.tightBoundingRect // Tight bounding rectangle of str
+metrics.width // Width of the bounding rectangle
   
 // Text / TextInput / TextEdit RenderType Enum
 Text.QtRendering        // advanced features (transformations)
@@ -1103,7 +1144,7 @@ Text.AlignTop       TextInput.AlignTop       TextEdit.AlignTop
 Text.AlignBottom    TextInput.AlignBottom    TextEdit.AlignBottom
 Text.AlignVCenter   TextInput.AlignVCenter   TextEdit.AlignVCenter
 
-// Text / TextInput / TextEdit  WrapMode Enum
+// Text / TextInput / TextEdit WrapMode Enum
 Text.NoWrap             // no wrapping
 Text.WordWrap           // wrapping done on word boundaries only
 Text.WrapAnywhere       // wrapping is done at any point on a line, even in the middle of a word
@@ -1116,6 +1157,22 @@ TextEdit.NoWrap         // no wrapping
 TextEdit.WordWrap       // wrapping done on word boundaries only
 TextEdit.WrapAnywhere   // wrapping is done at any point on a line, even in the middle of a word
 TextEdit.Wrap           // if possible, TextEdit.WordWrap, else TextEdit.WrapAnywhere
+
+// Text / TextMetrics Elide Mode Enum
+Qt.ElideNone            // No eliding
+Qt.ElideLeft            // For example: "...World"
+Qt.ElideMiddle          // For example: "He...ld"
+Qt.ElideRight           // For example: "Hello..."
+
+// Text / TextEdit Format Enum
+// PlainText/StyledText offer better performance at cost of formatting
+TextEdit.AutoText       // Will auto determine whether text should be treated as rich text
+TextEdit.PlainText      // Contains no formatting, only line breaks and spacing
+TextEdit.RichText       // Contains formatting (font sizes, colors, bolding, italics etc)
+Text.AutoText           // Will auto determine whether text should be treated as rich text
+Text.PlainText          // Contains no formatting, only line breaks and spacing
+Text.RichText           // Contains formatting (font sizes, colors, bolding, italics etc)
+Text.StyledText         // Optimized RichText format with some formatting 
 
 // TextInput / TextEdit InputMethodHints Flags
 Qt.ImhNone                   // No hints
@@ -1172,10 +1229,21 @@ TextInput.SelectWords         // Selects all words between selection start/end p
 TextInput.CursorBetweenCharacters  // Returns the position between characters that is nearest x
 TextInput.CursorOnCharacter        // Returns the position before the character that is nearest x
 
-// TextEdit Format Enum
-TextEdit.AutoText    // Will auto determine whether text should be treated as rich text
-TextEdit.PlainText   // Contains no formatting, only line breaks and spacing
-TextEdit.RichText    // Contains formatting (font sizes, colors, bolding, italics etc)
+// Text Font Size Mode Enum
+Text.FixedSize       // The size specified by font.pixelSize or font.pointSize is used
+Text.HorizontalFit   // Largest size up to set max that fits the width of the item without wrapping is used
+Text.VerticalFit     // Largest size up to set max that fits the height of the item is used
+Text.Fit             // Largest size up to set max that fits within the width/height of the item is used
+
+// Text Line Height Mode Enum
+Text.ProportionalHeight  // Use a multiplier for line height (eg. 2.0 doubles height)
+Text.FixedHeight         // Use a fixed pixel height
+
+// Text Style Enum
+Text.Normal
+Text.Outline
+Text.Raised
+Text.Sunken
 
 //===========================================================================================================
 // QML VALIDATORS
