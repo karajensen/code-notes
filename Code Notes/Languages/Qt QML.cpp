@@ -64,8 +64,8 @@ SCENE GRAPH THREADED RENDER LOOP:
     
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import MyEnums 1.0
-import MyGlobals 1.0
+import MyEnums 1.0    // Requires registering with QQmlEngine
+import MyGlobals 1.0  // Requires registering with QQmlEngine
 import "MyJavascript.js" as MyJS
   
 // ITEM
@@ -77,8 +77,8 @@ Item {
     property int myProperty: myFunction    // if properties used in function changes, re-evaluates myProperty
     property int myProperty: { return 0; } // if properties used in function changes, re-evaluates myProperty
     property int myProperty: MyJS.fn       // Use function from imported javascript file
-    property int myProperty: MyGlobal.fn   // Use function from global singleton
-    property int myProperty: MyEnum.ONE    // Use int type for enums
+    property int myProperty: MyGlobal.fn   // Use function from global singleton, Requires registering with QQmlEngine
+    property int myProperty: MyEnum.ONE    // Use int type for enums, Requires registering with QQmlEngine
     property int myProperty: myObj.value   // Context Q_OBJECT with Q_PROPERTY 'value' with NOTIFY
     readonly property int myProperty: 0    // read-only property
     property alias myAlias: myProperty     // reference for property
@@ -183,7 +183,7 @@ item.mapToItem(item2, x, y) // Converts item local coords into item2 local coord
 item.nextItemInFocusChain(forward) // Returns item next in the focus chain, forward optional
 
 // MyGlobal.qml
-// Requires registering to enable as global
+// Requires registering with QQmlEngine
 pragma Singleton
 import QtQuick 2.4
 QtObject {
