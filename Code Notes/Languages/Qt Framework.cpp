@@ -300,7 +300,7 @@ pair.second;
 **************************************************************************************************************/
 
 // CREATING CUSTOM MODEL
-class MyModel : public QAbstractListModel
+class MyModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
@@ -390,6 +390,15 @@ public:
         }
     }
     
+    insertRows()
+    insertColumns()
+    setData()
+    setItemData()
+    removeRows()
+    removeRow()
+    removeColumns()
+    removeColumn()
+    
 private:
     std::vector<MyItem> m_items;
 };
@@ -434,37 +443,49 @@ private:
 // DRAG / DROP
 //===========================================================================================================
 
-class MyModel : public QAbstractListModel
+// All are optional, re-implementing some require others to also be implemented
+class MyModel : public QAbstractItemModel
 {
-    ....
-    
-    // Optional: Default checks if data has at least one format in the list of mimeTypes() 
+    // Default checks if data has at least one format in the list of mimeTypes() 
     // and if action is in supportedDropActions(), only re-implement if needing custom checking
     virtual bool canDropMimeData(const QMimeData* data, Qt::DropAction action, 
                                 int row, int column, const QModelIndex& parent) const override
     {
-        return true;
     }
     
-    // Optional: Default returns Qt::CopyAction, Returns the supported Drop Action Flags
-    Qt::DropActions supportedDropActions() const
-    {
-    }
-     
-    // Returns true if the data and action were handled by the model; otherwise returns false
-    virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, 
-                              int row, int column, const QModelIndex& parent) override
+    // Default returns Qt::CopyAction, Returns the supported Drop Action Flags
+    virtual Qt::DropActions supportedDropActions() const override
     {
     }
     
     // Serializes the items at indexes to MimeData
+    // Default uses mime type "application/x-qabstractitemmodeldatalist"
     virtual QMimeData* mimeData(const QModelIndexList& indexes) const override
     {
     }
     
     // Returns the supported Mime types
+    // Default returns mime type "application/x-qabstractitemmodeldatalist"
     virtual QStringList mimeTypes() const override
     {
+    }    
+     
+    // Default tries to insert the items of data either as siblings or children of an item
+    // Returns true if the data and action were handled by the model; otherwise returns false
+    virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, 
+                              int row, int column, const QModelIndex& parent) override
+    {
+        // Using Default Encoding of MimeData
+        QByteArray encoded = qMimeData->data("application/x-qabstractitemmodeldatalist");
+        QDataStream stream(&encoded, QIODevice::ReadOnly);
+        while (!stream.atEnd())
+        {
+            int row, col;
+            QMap<int,  QVariant> roleDataMap;
+            stream >> row >> col >> roleDataMap;
+        }   
+        
+        // Using Custom Encoding of MimeData
     }
  }
  
