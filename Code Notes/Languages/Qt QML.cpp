@@ -85,10 +85,10 @@ Item {
     property alias myAlias: myProperty     // reference for property    
     signal mySignal(int value)             // call with item.mySignal(0)
       
-    /* Called when the item has been instantiated */
+    /* Attached Property, Called when the item has been instantiated */
     Component.onCompleted: {}
 
-    /* Called when the item is destroyed */
+    /* Attached Property, Called when the item is destroyed */
     Component.onDestruction: {}
 
     /* Called when property has changed, for context Q_OBJECTs emit signal needed */
@@ -854,6 +854,7 @@ Container {
 // Inherits Item, Provides a surface that can be "flicked"
 Flickable {
     ScrollBar.vertical: ScrollBar { } // Add a vertical scrollbar
+    ScrollBar.horizontal: ScrollBar { } // Add a horizontal scrollbar
 }
 
 // PANE
@@ -1359,7 +1360,7 @@ Loader.Error    // an error occurred while loading the QML source
 
 ScrollView {
     Layout.fillWidth: true
-    Layout.fillHeight: true
+    Layout.fillHeight: true 
     ListView {
         id: listView
         Layout.fillWidth: true
@@ -1375,9 +1376,11 @@ ScrollView {
         
         // Each item of the model is instantiated with the delegate
         delegate: Item {
-            id: myDelegate
+            id: del
             property bool isHighlighted: mouseArea.containsMouse
             property bool isSelected: listView.currentIndex == index
+            property bool isSelected: ListView.isCurrentItem // Alternative
+              
             MouseArea {
                 id: mouseArea
                 anchors.fill: parent
@@ -1394,14 +1397,6 @@ ScrollView {
         }
     }
 }
-
-// DELEGATE PROPERTIES
-myDelegate.ListView.view // Use to access listView if delegate created outside it
-myDelegate.GridView.view // Use to access gridView if delegate created outside it
-myDelegate.PathView.view // Use to access pathView if delegate created outside it
-model // Role data for each delegate item, eg. model.role_name
-modelData // If view's model has no roles, use to access item data for delegate
-index // Index in view, can be -1 if removed from view
 
 //===========================================================================================================
 // QML VIEWS
@@ -1426,9 +1421,34 @@ PathView {
 // QML DELEGATES
 //===========================================================================================================
 
+// DELEGATE PROPERTIES
+// Given to any delegate Item, don't have to use ItemDelegate type
+Item {
+    ListView.onAdd: {} // Emitted immediately after an item is added to the view
+    ListView.onRemove: {} // Emitted immediately before an item is removed from the view
+    GridView.onAdd: {} // Emitted immediately after an item is added to the view
+    GridView.onRemove: {} // Emitted immediately before an item is removed from the view  
+} 
+del.model // Role data for each delegate item, eg. model.role_name
+del.modelData // If view's model has no roles, use to access item data for delegate
+del.index // Index in view, can be -1 if removed from view
+del.ListView.view // Use to access listView if delegate created outside it
+del.ListView.isCurrentItem // Whether the delegate is the currently selected item
+del.ListView.delayRemove // Whether the delegate has to delay destruction (eg. to finish animation)
+del.ListView.nextSection // Section property name string of the next item
+del.ListView.previousSection  // Section property name string of the previous item
+del.ListView.section // Section property name of the item
+del.GridView.view // Use to access gridView if delegate created outside it
+del.GridView.isCurrentItem // Whether the delegate is the currently selected item
+del.GridView.delayRemove // Whether the delegate has to delay destruction (eg. to finish animation)
+del.PathView.view // Use to access pathView if delegate created outside it
+del.PathView.isCurrentItem // Whether the delegate is the currently selected item
+del.PathView.onPath // Whether the item is currently on the path
+
 // ITEMDELEGATE
 // Inherits AbstractButton, Basic item delegate
 ItemDelegate {
+    highlighted: ListView.isCurrentItem // set whether the delegate is highlighted
 }
 
 // CHECKDELEGATE
@@ -1544,7 +1564,7 @@ area.mouseY // local to area, valid only on press, or if hover enabled, if curso
 area.pressed // whether any of the acceptedButtons are currently pressed
 area.pressedButtons // mouse buttons currently pressed, can't be Qt.AllButtons
 
-// KEYS (ATTACHED)
+// KEYS
 // Add to any Item, each signal has key event
 Item {
     Keys.enabled: true // enable signals for this item, default true
@@ -1679,7 +1699,7 @@ Qt.ApplicationShortcut  // Active when one of the application's windows are acti
 // QML DRAG / DROP
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// DRAG (ATTACHED)
+// DRAG
 // For specifying drag and drop events for moved Items
 // Change in item's position will generate a drag event sent to any DropArea that intersects new position
 Item {
@@ -1724,9 +1744,7 @@ Drag.Automatic    // Start drags automatically
 Drag.Internal     // Start backwards compatible drags automatically
 
 // Drag Axis Mask
-Drag.XAxis
-Drag.YAxis
-Drag.XAndYAxis
+Drag.XAxis    Drag.YAxis    Drag.XAndYAxis
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML GLOBAL ITEMS
