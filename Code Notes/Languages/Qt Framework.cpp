@@ -333,7 +333,7 @@ public:
     /* Not needed for QAbstractListModel, Default column = 0 if not using it */
     virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override
     {
-        return QModelIndex();
+        return hasIndex(row, column, parent) ? createIndex(row, column) : QModelIndex();
     }
 
     /* Not needed for QAbstractListModel */
@@ -477,12 +477,14 @@ private:
 // Inherits QAbstractProxyModel, support for sorting/filtering data passed between another model and a view
 
 //===========================================================================================================
-// DRAG / DROP
+// CUSTOM DRAG / DROP ENCODING
 //===========================================================================================================
 
 // All are optional, re-implementing some require others to also be implemented
 class MyModel : public QAbstractItemModel
 {
+    static constexpr const char* MimeKey = "application/my-model-item";
+
     // Default checks if data has at least one format in the list of mimeTypes() 
     // and if action is in supportedDropActions(), only re-implement if needing custom checking
     virtual bool canDropMimeData(const QMimeData* data, Qt::DropAction action, 
@@ -505,6 +507,9 @@ class MyModel : public QAbstractItemModel
     // Default returns mime type "application/x-qabstractitemmodeldatalist"
     virtual QStringList mimeTypes() const override
     {
+        QStringList result = QAbstractItemModel::mimeTypes();
+        result.push_back(MimeKey); // Add custom key to supported types
+        return result;    
     }    
      
     // Default tries to insert the items of data either as siblings or children of an item
@@ -520,13 +525,9 @@ class MyModel : public QAbstractItemModel
             int row, col;
             QMap<int,  QVariant> roleDataMap;
             stream >> row >> col >> roleDataMap;
-        }   
+        }
         
         // Using Custom Encoding of MimeData
-        
-        
-        
-        
     }
  }
  
