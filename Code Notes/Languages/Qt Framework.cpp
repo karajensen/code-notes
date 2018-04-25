@@ -397,32 +397,15 @@ public:
         MyRole1 = Qt::UserRole + 1,
         MyRole2
     };
-
-    /* @return the amount of rows in the model */
-    virtual int rowCount(const QModelIndex& parent = QModelIndex()) const override
-    {
-        Q_UNUSED(parent);
-        return static_cast<int>(m_items.size());    
-    }
     
-    /* @return the amount of columns in the model, not needed if using QAbstractListModel*/
-    virtual int columnCount(const QModelIndex& parent = QModelIndex()) const override
+    /* @return the supported roles for this model */
+    virtual QHash<int, QByteArray> roleNames() const override
     {
-        Q_UNUSED(parent);
-        return 0;
+        QHash<int, QByteArray> roles;
+        roles[MyRole1] = "role_one";
+        roles[MyRole2] = "role_two";
+        return roles;    
     }
-    
-    /* Not needed for QAbstractListModel, Default column = 0 if not using it */
-    virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override
-    {
-        return hasIndex(row, column, parent) ? createIndex(row, column) : QModelIndex();
-    }
-
-    /* Not needed for QAbstractListModel */
-    virtual QModelIndex parent(const QModelIndex& child = QModelIndex()) const override
-    {
-        return QModelIndex();
-    }    
     
     /* Sets data for an item at index using the given role */
     virtual bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override
@@ -460,16 +443,32 @@ public:
             }
         }
         return QVariant();    
+    }    
+
+    /* @return the amount of rows in the model */
+    virtual int rowCount(const QModelIndex& parent = QModelIndex()) const override
+    {
+        Q_UNUSED(parent);
+        return static_cast<int>(m_items.size());    
     }
     
-    /* @return the supported roles for this model */
-    virtual QHash<int, QByteArray> roleNames() const override
+    /* Not needed if using QAbstractListModel, Return the amount of columns in the model*/
+    virtual int columnCount(const QModelIndex& parent = QModelIndex()) const override
     {
-        QHash<int, QByteArray> roles;
-        roles[MyRole1] = "role_one";
-        roles[MyRole2] = "role_two";
-        return roles;    
+        return parent.isValid() ? 0 : 1;
     }
+    
+    /* Not needed for QAbstractListModel, Default column = 0 if not using it */
+    virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override
+    {
+        return hasIndex(row, column, parent) ? createIndex(row, column) : QModelIndex();
+    }
+
+    /* Not needed for QAbstractListModel */
+    virtual QModelIndex parent(const QModelIndex& child = QModelIndex()) const override
+    {
+        return QModelIndex();
+    }    
     
     /* @return row index converted to an item */
     MyItem* rowToItem(int row) const
