@@ -477,15 +477,9 @@ myFont.preferShaping // Whether to enable display/spacing rules, default enabled
 myFont.hintingPreference // Font Hinting Enum
 
 // Font Weighting Enum
-Font.Thin          0
-Font.ExtraLight    12
-Font.Light         25
-Font.Normal        50
-Font.Medium        57
-Font.DemiBold      63
-Font.Bold          75
-Font.ExtraBold     81
-Font.Black         87
+Font.Thin          Font.Normal       Font.Bold       
+Font.ExtraLight    Font.Medium       Font.ExtraBold  
+Font.Light         Font.DemiBold     Font.Black
   
 // Font Capitalization Enum
 Font.MixedCase       // No change
@@ -528,12 +522,9 @@ Layout.rowSpan // row span of an item in a GridLayout
 Layout.topMargin // Overrides margin property if set
 
 // Layout Alignment Flags
-Qt.AlignLeft
-Qt.AlignHCenter
-Qt.AlignRight
-Qt.AlignTop
-Qt.AlignVCenter
-Qt.AlignBottom
+Qt.AlignLeft       Qt.AlignTop
+Qt.AlignHCenter    Qt.AlignVCenter
+Qt.AlignRight      Qt.AlignBottom
 Qt.AlignBaseline
 
 // ROWLAYOUT
@@ -1290,10 +1281,8 @@ Text.ProportionalHeight  // Use a multiplier for line height (eg. 2.0 doubles he
 Text.FixedHeight         // Use a fixed pixel height
 
 // Text Style Enum
-Text.Normal
-Text.Outline
-Text.Raised
-Text.Sunken
+Text.Normal      Text.Raised
+Text.Outline     Text.Sunken
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML DYNAMIC CREATION
@@ -1634,46 +1623,28 @@ event.nativeScanCode // contains the native scan code of the key that was presse
 event.text // Unicode text that the key generated
 event.matches(StandardKey.Undo) // Whether key event matches the given standard key
 
-// Mouse Button Flags
-Qt.RightButton
-Qt.LeftButton
-Qt.MiddleButton
-Qt.AllButtons
-
 // Mouse Event Source Enum
 Qt.MouseEventNotSynthesized            // Actual mouse event from user
 Qt.MouseEventSynthesizedBySystemn      // Synthesized from touch or tablet event
 Qt.MouseEventSynthesizedByQt           // Synthesized from an unhandled touch or tablet event by Qt
 Qt.MouseEventSynthesizedByApplication  // Synthesized by the application
+  
+// Mouse Button Flags
+Qt.RightButton          Qt.MiddleButton
+Qt.LeftButton           Qt.AllButtons
 
 // Mouse Cusor Shape Enum
-Qt.WaitCursor
-Qt.IBeamCursor
-Qt.SizeVerCursor
-Qt.SizeHorCursor
-Qt.SizeBDiagCursor
-Qt.SizeFDiagCursor
-Qt.SizeAllCursor
-Qt.BlankCursor
-Qt.SplitVCursor
-Qt.SplitHCursor
-Qt.PointingHandCursor
-Qt.ForbiddenCursor
-Qt.WhatsThisCursor
-Qt.BusyCursor
-Qt.OpenHandCursor
-Qt.ClosedHandCursor
-Qt.DragCopyCursor
-Qt.DragMoveCursor
-Qt.DragLinkCursor
+Qt.BlankCursor          Qt.ForbiddenCursor        Qt.SizeAllCursor
+Qt.BusyCursor           Qt.OpenHandCursor         Qt.SplitVCursor
+Qt.ClosedHandCursor     Qt.PointingHandCursor     Qt.SplitHCursor
+Qt.DragCopyCursor       Qt.SizeVerCursor          Qt.WaitCursor
+Qt.DragMoveCursor       Qt.SizeHorCursor          Qt.WhatsThisCursor
+Qt.DragLinkCursor       Qt.SizeBDiagCursor
+Qt.IBeamCursor          Qt.SizeFDiagCursor
 
 // Keyboard Modifier Flags
-Qt.NoModifier 
-Qt.ShiftModifier  
-Qt.ControlModifier
-Qt.AltModifier     
-Qt.MetaModifier   
-Qt.KeypadModifier
+Qt.NoModifier           Qt.ControlModifier        Qt.MetaModifier
+Qt.ShiftModifier        Qt.AltModifier            Qt.KeypadModifier
 
 // Input Focus Reason Enum
 Qt.MouseFocusReason         // A mouse action occurred
