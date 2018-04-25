@@ -96,7 +96,7 @@ public:
     const MyValue& getValue() const { return m_value; }
     void setValue(const MyValue& value) { m_value = value; }
     
-   // Enums must start with capital letter
+    // Enums must start with capital letter
     enum MyEnum { ONE, TWO, THREE };
     enum MyFlag { One=0x01, Two=0x02, Three=0x04 };
     
@@ -156,14 +156,24 @@ metaEnum.keyToValue("ONE")
 Q_DECLARE_TYPEINFO(MyClass, Q_COMPLEX_TYPE) // Default
 Q_DECLARE_TYPEINFO(MyClass::MyEnum, Q_PRIMITIVE_TYPE)
 Q_DECLARE_TYPEINFO(MyClass, Q_MOVABLE_TYPE)
-QTypeInfoQuery<MyClass>::isRelocatable
+QTypeInfoQuery<MyClass>::isRelocatable // Query type info
 
-// REGISTERING OBJECTS
+// REGISTERING OBJECT WITH VARIANT
 // Macro must be outside all namespaces
+// Allows use with variant: myVariant.value<MyClass>()
 // Not needed for: MyClass*, qt smart pointers/container with MyClass, if using Q_ENUM/Q_FLAG/Q_GADGET
-Q_DECLARE_METATYPE(MyClass) // Allows use with variant: myVariant.value<MyClass>()
-qRegisterMetaType<MyClass>(); // Allows use with signals/slots/property system
-    
+Q_DECLARE_METATYPE(MyClass)
+
+// REGISTERING OBJECT WITH PROPERTY SYSTEM
+// Allows use with signals/slots/property system
+qRegisterMetaType<MyClass>();
+
+// REGISTERING OBJECT FOR STREAMING
+// Allows use with drag/drop systems
+qRegisterMetaTypeStreamOperatorss<MyClass>("MyClass");
+QDataStream& operator<<(QDataStream& out, const MyClass& obj);
+QDataStream& operator>>(QDataStream& in, MyClass& obj);
+
 // REGISTERING ENUMS
 // Macro must be outside all namespaces
 // QML use 'import MyEnums 1.0' and 'MyEnum.ONE'
@@ -254,6 +264,218 @@ ptr.isNull();            // Returns if null
 ptr.data();              // Returns T*
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT COMPONENTS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// QWindow
+// Window for non-widgets based applications (QML)
+// If has a parent, becomes a native child window of their parent window
+// Uses QBackingStore for rendering with QPainter using QSurface::RasterSurface
+// Or can use QOpenGLContext for rendering with OpenGL using QSurface::OpenGLSurface
+
+// QPair<T1, T2>
+auto pair = qMakePair(v1, v2);
+pair.first;
+pair.second;
+
+// QSettings
+// Provides persistent platform-independent application settings
+
+// QTimer
+// Provides repetitive and single-shot timers
+
+// QUrl
+// Interface for working with URLs
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT MODELS / VIEWS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
+• Model: Contains the data and its structure
+• View: A container that displays the data. The view might display the data in a list or a grid.
+• Delegate: Determines how each element of data should appear in the view. Can also access each element.
+• Role: Used to access different attributes of a data element in the model
+• MimeData: MIME-encoded data for the Model's items, used for drag-drop
+**************************************************************************************************************/
+
+// CREATING CUSTOM MODEL
+class MyModel : public QAbstractListModel
+{
+    Q_OBJECT
+public:
+    virtual ~MyModel() = default;
+    MyModel(QObject* parent = nullptr)
+        : QAbstractListModel(parent)
+    {
+        // Batch create all new items here
+    }
+
+    enum ModelRoles
+    {
+        MyRole1 = Qt::UserRole + 1,
+        MyRole2
+    };
+
+    /* @return the amount of rows in the model */
+    virtual int rowCount(const QModelIndex& parent = QModelIndex()) const override
+    {
+        Q_UNUSED(parent);
+        return static_cast<int>(m_items.size());    
+    }
+    
+    /* @return data for an item at index using the given role */
+    virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override
+    {
+        if (index.row() >= 0 && index.row() < static_cast<int>(m_items.size()))
+        {
+            const auto& item = m_items[index.row()];
+            if (role == Role1)
+            {
+                return item->getRole1();
+            }
+            else if (role == Role2)
+            {
+                return item->getRole2();
+            }
+        }
+        return QVariant();    
+    }
+    
+    /* @return the supported roles for this model */
+    virtual QHash<int, QByteArray> roleNames() const override
+    {
+        QHash<int, QByteArray> roles;
+        roles[MyRole1] = "role_one";
+        roles[MyRole2] = "role_two";
+        return roles;    
+    }
+    
+    /* @return row index converted to an item */
+    MyItem* rowToItem(int row) const
+    {
+        return row >= 0 && row < static_cast<int>(m_items.size())
+            ? m_items[row].get() : nullptr;
+    }
+    
+    /* A function invokable from QML that modifies data from the model */
+    Q_INVOKABLE void qmlFunction(int row)
+    {
+        if (auto item = rowToItem(row))
+        {
+            item->doSomethingToChangeData();
+            const auto& modelIndex = index(row);
+            emit dataChanged(modelIndex, modelIndex);
+        }
+    }
+    
+    /* A function that creates a new item */
+    void createItem()
+    {
+        beginInsertRows(QModelIndex(), rowCount(), rowCount());
+        m_items.push_back(std::make_unique<MyItem>());
+        endInsertRows();
+    }
+
+    /* A function that deletes an item */
+    void deleteItem(int row)
+    {
+        if (row >= 0 && row < static_cast<int>(m_items.size()))
+        {
+            beginRemoveRows(QModelIndex(), row, row);
+            auto itr = m_items.begin();
+            std::advance(itr, row);
+            m_items.erase(itr);
+            endRemoveRows();
+        }
+    }
+    
+private:
+    std::vector<MyItem> m_items;
+};
+
+//===========================================================================================================
+// QT MODELS
+//===========================================================================================================
+
+// QModelIndex
+
+// QPersistentModelIndex
+
+// QAbstractItemModel
+// Inherits QObject, Abstract interface for item model classes
+
+// QAbstractTableModel
+// Inherits QAbstractItemModel, Can be subclassed to create table models
+
+// QAbstractListModel
+// Inherits QAbstractItemModel, Can be subclassed to create one-dimensional list models
+
+// QStringListModel
+// Inherits QAbstractListModel, Model that supplies strings to views
+
+// QItemSelectionModel
+// Instantiated By ItemSelectionModel, Inherits QObject, keeps track of a view's selected items
+
+//===========================================================================================================
+// QT PROXY MODELS
+//===========================================================================================================
+
+// QAbstractProxyModel
+// Inherits QAbstractItemModel, Base class for proxy item models that can do sorting, filtering etc
+
+// QIdentityProxyModel
+// Inherits QAbstractProxyModel, Proxies its source model unmodified
+
+// QSortFilterProxyModel
+// Inherits QAbstractProxyModel, support for sorting/filtering data passed between another model and a view
+
+//===========================================================================================================
+// DRAG / DROP
+//===========================================================================================================
+
+class MyModel : public QAbstractListModel
+{
+    ....
+    
+    // Optional: Default checks if data has at least one format in the list of mimeTypes() 
+    // and if action is in supportedDropActions(), only re-implement if needing custom checking
+    virtual bool canDropMimeData(const QMimeData* data, Qt::DropAction action, 
+                                int row, int column, const QModelIndex& parent) const override
+    {
+        return true;
+    }
+    
+    // Optional: Default returns Qt::CopyAction, Returns the supported Drop Action Flags
+    Qt::DropActions supportedDropActions() const
+    {
+    }
+     
+    // Returns true if the data and action were handled by the model; otherwise returns false
+    virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, 
+                              int row, int column, const QModelIndex& parent) override
+    {
+    }
+    
+    // Serializes the items at indexes to MimeData
+    virtual QMimeData* mimeData(const QModelIndexList& indexes) const override
+    {
+    }
+    
+    // Returns the supported Mime types
+    virtual QStringList mimeTypes() const override
+    {
+    }
+ }
+ 
+// Drop Action Flags
+Qt::CopyAction         // Copy the data to the target
+Qt::MoveAction         // Move the data from the source to the target
+Qt::LinkAction         // Create a link from the source to the target
+Qt::IgnoreAction       // Ignore the action (do nothing with the data)
+Qt::TargetMoveAction   // OS specfic action
+ 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT EVENT SYSTEM
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -334,178 +556,7 @@ public:
     static QEvent::Type CustomEventType;
 };
 QEvent::Type MyCustomEvent::CustomEventType = static_cast<QEvent::Type>(QEvent::registerEventType());
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT COMPONENTS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// QWindow
-// Window for non-widgets based applications (QML)
-// If has a parent, becomes a native child window of their parent window
-// Uses QBackingStore for rendering with QPainter using QSurface::RasterSurface
-// Or can use QOpenGLContext for rendering with OpenGL using QSurface::OpenGLSurface
-
-// QPair<T1, T2>
-auto pair = qMakePair(v1, v2);
-pair.first;
-pair.second;
-
-// QSettings
-// Provides persistent platform-independent application settings
-
-// QTimer
-// Provides repetitive and single-shot timers
-
-// QUrl
-// Interface for working with URLs
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT MODELS / VIEWS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*************************************************************************************************************
-• Model: Contains the data and its structure
-• View: A container that displays the data. The view might display the data in a list or a grid.
-• Delegate: Determines how each element of data should appear in the view. Can also access each element.
-• Role: Used to access different attributes of a data element in the model
-**************************************************************************************************************/
-
-// CREATING CUSTOM MODEL
-class MyModel : public QAbstractListModel
-{
-    Q_OBJECT
-public:
-    virtual ~MyModel() = default;
-    MyModel(QObject* parent = nullptr)
-        : QAbstractListModel(parent)
-    {
-    }
-
-    enum ModelRoles
-    {
-        MyRole1 = Qt::UserRole + 1,
-        MyRole2
-    };
-
-    virtual int rowCount(const QModelIndex& parent = QModelIndex()) const override
-    {
-        Q_UNUSED(parent);
-        return static_cast<int>(m_items.size());    
-    }
     
-    virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override
-    {
-        if (index.row() >= 0 && index.row() < static_cast<int>(m_items.size()))
-        {
-            const auto& item = m_items[index.row()];
-            if (role == Role1)
-            {
-                return item->getRole1();
-            }
-            else if (role == Role2)
-            {
-                return item->getRole2();
-            }
-        }
-        return QVariant();    
-    }
-    
-    virtual QHash<int, QByteArray> roleNames() const override
-    {
-        QHash<int, QByteArray> roles;
-        roles[MyRole1] = "role_one";
-        roles[MyRole2] = "role_two";
-        return roles;    
-    }
-    
-    MyItem* rowToItem(int row) const
-    {
-        return row >= 0 && row < static_cast<int>(m_items.size())
-            ? m_items[row].get() : nullptr;
-    }
-    
-    Q_INVOKABLE void qmlFunction(int row)
-    {
-        if (auto item = rowToItem(row))
-        {
-            item->doSomethingToChangeData();
-            const auto& modelIndex = index(row);
-            emit dataChanged(modelIndex, modelIndex);
-        }
-    }
-    
-    void createItem()
-    {
-        beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        m_items.push_back(std::make_unique<MyItem>());
-        endInsertRows();
-    }
-
-    void deleteItem(int row)
-    {
-        if (row >= 0 && row < static_cast<int>(m_items.size()))
-        {
-            beginRemoveRows(QModelIndex(), row, row);
-            auto itr = m_items.begin();
-            std::advance(itr, row);
-            m_items.erase(itr);
-            endRemoveRows();
-        }
-    }    
-
-private:
-    std::vector<MyItem> m_items;
-};
-
-// ATTACHING MODEL TO QML VIEW
-QQuickView view;
-view.rootContext()->setContextProperty("context_model", &model);
-view.setSource(QUrl("qrc:/main.qml"));
-view.show();
-
-//===========================================================================================================
-// QT MODELS
-//===========================================================================================================
-
-// QModelIndex
-
-// QPersistentModelIndex
-
-// QAbstractItemModel
-// Inherits QObject, Abstract interface for item model classes
-
-// QAbstractTableModel
-// Inherits QAbstractItemModel, Can be subclassed to create table models
-
-// QAbstractListModel
-// Inherits QAbstractItemModel, Can be subclassed to create one-dimensional list models
-
-// QStringListModel
-// Inherits QAbstractListModel, Model that supplies strings to views
-
-// QItemSelectionModel
-// Instantiated By ItemSelectionModel, Inherits QObject, keeps track of a view's selected items
-
-//===========================================================================================================
-// QT PROXY MODELS
-//===========================================================================================================
-
-// QAbstractProxyModel
-// Inherits QAbstractItemModel, Base class for proxy item models that can do sorting, filtering etc
-
-// QIdentityProxyModel
-// Inherits QAbstractProxyModel, Proxies its source model unmodified
-
-// QSortFilterProxyModel
-// Inherits QAbstractProxyModel, support for sorting/filtering data passed between another model and a view
-
-//===========================================================================================================
-// DRAG / DROP
-//===========================================================================================================
-
-// QMimeData
-// container for data that records information about its MIME type
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT WIDGETS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -568,6 +619,10 @@ layout.addWidget(spinBox, r, c); // Add a widget to the layout, automatically pa
 
 // QQuickView 
 // Wrapper for QQuickWindow to automatically load and display a QML scene from an url
+QQuickView view;
+view.rootContext()->setContextProperty("context_model", model); // Attach an QAbstractItemModel* to QML
+view.setSource(QUrl("qrc:/main.qml"));
+view.show();
 
 // QQuickWidget
 // Wrapper for QQuickWindow to automatically load and display a QML scene from an url
@@ -647,7 +702,7 @@ qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyGlobals", 1, 0, "MyGlob
 qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum") // MyEnum must be in Q_OBJECT class
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT FILESYSTEM
+// QT FILE SYSTEM
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Read from a file, no need to close it
