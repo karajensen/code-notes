@@ -299,8 +299,7 @@ pair.second;
 • MimeData: MIME-encoded data for the Model's items, used for drag-drop
 **************************************************************************************************************/
 
-// CREATING CUSTOM MODEL
-class MyModel : public QAbstractItemModel
+class MyModel : public QAbstractItemModel // QAbstractListModel
 {
     Q_OBJECT
 public:
@@ -324,6 +323,45 @@ public:
         return static_cast<int>(m_items.size());    
     }
     
+    /* @return the amount of columns in the model, not needed if using QAbstractListModel*/
+    virtual int columnCount(const QModelIndex& parent = QModelIndex()) const override
+    {
+        Q_UNUSED(parent);
+        return 0;
+    }
+    
+    /* Not needed for QAbstractListModel, Default column = 0 if not using it */
+    virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override
+    {
+        return QModelIndex();
+    }
+
+    /* Not needed for QAbstractListModel */
+    virtual QModelIndex parent(const QModelIndex& child = QModelIndex()) const override
+    {
+        return QModelIndex();
+    }    
+    
+    /* Sets data for an item at index using the given role */
+    virtual bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override
+    {
+        if (index.row() >= 0 && index.row() < static_cast<int>(m_items.size()))
+        {
+            const auto& item = m_items[index.row()];
+            if (role == Role1)
+            {
+                item->setRole1(value);
+                return true;
+            }
+            else if (role == Role2)
+            {
+                item->setRole2(value);
+                return true;
+            }
+        }
+        return false;
+    }
+   
     /* @return data for an item at index using the given role */
     virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override
     {
@@ -358,6 +396,14 @@ public:
             ? m_items[row].get() : nullptr;
     }
     
+    /* @return item converted to row index */
+    int itemToRow(const WorkerItem* item) const
+    {
+        const auto itr = std::find_if(m_items.begin(), m_items.end(), 
+            [item](const auto& itemPtr) { return itemPtr.get() == item; });
+        return itr != m_items.end() ? std::distance(m_items.begin(), itr) : -1;
+    }    
+    
     /* A function invokable from QML that modifies data from the model */
     Q_INVOKABLE void qmlFunction(int row)
     {
@@ -389,15 +435,6 @@ public:
             endRemoveRows();
         }
     }
-    
-    insertRows()
-    insertColumns()
-    setData()
-    setItemData()
-    removeRows()
-    removeRow()
-    removeColumns()
-    removeColumn()
     
 private:
     std::vector<MyItem> m_items;
@@ -486,6 +523,10 @@ class MyModel : public QAbstractItemModel
         }   
         
         // Using Custom Encoding of MimeData
+        
+        
+        
+        
     }
  }
  
