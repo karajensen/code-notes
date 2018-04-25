@@ -117,7 +117,7 @@ Item {
             PropertyChanges { target: item; myProperty: 2 }
             when: myFunction
         }
-    ]
+    ]  
 }
 item.mySignal.connect(mySlot) // Connect signal and slot
 item.activeFocus // Read only, whether item has active focus
@@ -175,6 +175,7 @@ item.childAt(x, y) // Returns first visible QML Item child found at point within
 item.contains(point) // If item contains QML point (in local coordinates)
 item.forceActiveFocus(reason) // Focuses item and any parent FocusScopes, reason optional
 item.grabToImage(callback, targetSize) // Grabs the item into an in-memory image
+item.grabToImage(function(result) { result.saveToFile("/Folder/image.png"); }) // Save as image
 item.mapFromGlobal(x, y) // Converts global coords into item local coords, retuns QML point
 item.mapFromItem(item2, x, y, w, h) // Converts item2 local coords into item local coords, retuns QML rect
 item.mapFromItem(item2, x, y) // Converts item2 local coords into item local coords, retuns QML point
