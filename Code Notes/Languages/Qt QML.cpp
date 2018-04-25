@@ -1554,7 +1554,7 @@ area.mouseY // local to area, valid only on press, or if hover enabled, if curso
 area.pressed // whether any of the acceptedButtons are currently pressed
 area.pressedButtons // mouse buttons currently pressed, can't be Qt.AllButtons
 
-// KEY ATTACHED PROPERTIES
+// KEYS (ATTACHED)
 // Add to any Item, each signal has key event
 Item {
     Keys.enabled: true // enable signals for this item, default true
@@ -1707,15 +1707,54 @@ Qt.ApplicationShortcut  // Active when one of the application's windows are acti
 // DRAG / DROP
 //===========================================================================================================
 
-// DRAG ATTACHED PROPERTIES
+// DRAG (ATTACHED)
 // For specifying drag and drop events for moved Items
+// Change in item's position will generate a drag event sent to any DropArea that intersects new position
 Item {
+    Drag.dragType: Drag.Internal // Default, Drag Type Enum
+    Drag.imageSource: "qrc:///icon.png" // Shown during drag event
+    Drag.mimeData: { "text/plain": "Copied text" } //  Map of mimeData that is used during startDrag
+    Drag.proposedAction: Qt.CopyAction // Recommended return value of Drag.drop(), Drag Action Flags
+    Drag.supportedActions: Qt.CopyAction // Return values of Drag.drop() supported, Drag Action Flags
+    Drag.source:
+    Drag.active:
+    Drag.hotSpot:
+    Drag.keys:
+    Drag.target:
+}
+
+// Using Dragged Item as Image Source
+Rectangle {
+    Drag.active: dragArea.drag.active
+    Drag.dragType: Drag.Automatic
+    Drag.supportedActions: Qt.CopyAction
+    Drag.mimeData: { "text/plain": "Copied text" }
+    Text { text: "Some Text" }
+    MouseArea {
+        id: dragArea
+        anchors.fill: parent
+        drag.target: parent
+        onPressed: parent.grabToImage(function(result) {
+            parent.Drag.imageSource = result.url;
+        })
+    }
 }
 
 // DROPAREA
 // For specifying drag and drop handling in an area
 DropArea {
 }
+
+// Drag/Drop Action Flags
+Qt.CopyAction      // Copy the data to the target
+Qt.MoveAction      // Move the data from the source to the target
+Qt.LinkAction      // Create a link from the source to the target.
+Qt.IgnoreAction    // Ignore the action (do nothing with the data).
+
+// Drag Type Enum
+Drag.None         // Do not start drags automatically
+Drag.Automatic    // Start drags automatically
+Drag.Internal     // Start backwards compatible drags automatically
 
 // Drag Axis Mask
 Drag.XAxis
