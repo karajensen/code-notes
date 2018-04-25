@@ -232,4 +232,4 @@ Math.pow(a,n) // aⁿ
   
 // JAVASCRIPT OBJECT NOTATION (JSON)
 JSON.parse('{"x":1, "y":0}'); // Creates object with properties x/y
-JSON.stringify( {x: 1, y: 0 })); // Outputs string "{"x":5,"y":6}"
+JSON.stringify( {x: 1, y: 0 })); // Outputs string "{"x":1,"y":0}"
