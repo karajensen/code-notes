@@ -17,14 +17,7 @@ x !== y                           // not equal value or not equal type
 value !== null                    // Use === when comparing with null
 typeof value !== "undefined"      // Use === when comparing with undefined
 typeof value === "string" 
-  
-// OBJECTS
-obj = null;                       // Null object
-obj = { x: 2, y : 1 };            // Object with properties/attributes
-obj = { "x": 2, "y" : 1 };        // Object with properties/attributes
-obj.x /*or*/ obj["x"]             // Access object attributes, key requires "
-obj = obj || "default value";
-  
+    
 // CONVERSIONS
 myString = myInt.toString();
 myString = myInt + "MyString";   // Auto converts and concatenates
@@ -86,6 +79,9 @@ str.replace(str1, str2);          // Replace str1 with str2, returns new string
 str.split(",")                    // Returns array of string without seperator
 str.slice(start, end)             // Index to [start, end), end optional
   
+escape("str")   // Returns new string with escaped version eg. " becomes \"
+unescape("str") // Returns new string with unescaped version eg. \" becomes "
+  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ARRAYS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,6 +99,20 @@ var index = myArray.indexOf(key); // returns -1 if cannot find key
 if (index > -1) {
     myArray.splice(index, n);     // number of keys to remove
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// OBJECTS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+obj = null;                       // Null object
+obj = { x: 2, y : 1 };            // Object with properties/attributes
+obj = { "x": 2, "y" : 1 };        // Object with properties/attributes
+obj.x /*or*/ obj["x"]             // Access object attributes, key requires "
+obj = obj || "default value";     // If null use default value
+
+eval("x = 0;"); // Evaluates JavaScript code represented as a string
+uneval(obj) // Creates a string representation of the source code of an Object
+eval(uneval(obj)); // Make deep copy of object
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS
@@ -201,38 +211,25 @@ if(result){ } // result will be null or 0 if cancel clicked
 // LIBRARIES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-eval("x = 0;"); // Evaluates JavaScript code represented as a string
-uneval(obj) // Creates a string representation of the source code of an Object
-eval(uneval(obj)); // Make deep copy of object
-
 isFinite(value); // Determines whether the passed value is a finite number
-isNaN(value)
-The isNaN() function determines whether a value is NaN or not. Note: coercion inside the isNaN function has interesting rules; you may alternatively want to use Number.isNaN(), as defined in ECMAScript 2015, or you can use typeof to determine if the value is Not-A-Number.
+isNaN(value); // Determines whether a value is NaN or not
 
-parseFloat()
-The parseFloat() function parses a string argument and returns a floating point number.
-
-parseInt()
-The parseInt() function parses a string argument and returns an integer of the specified radix (the base in mathematical numeral systems).
-
-decodeURI()
-The decodeURI() function decodes a Uniform Resource Identifier (URI) previously created by encodeURI or by a similar routine.
-
-decodeURIComponent()
-The decodeURIComponent() method decodes a Uniform Resource Identifier (URI) component previously created by encodeURIComponent or by a similar routine.
-
-encodeURI()
-The encodeURI() method encodes a Uniform Resource Identifier (URI) by replacing each instance of certain characters by one, two, three, or four escape sequences representing the UTF-8 encoding of the character (will only be four escape sequences for characters composed of two "surrogate" characters).
-
-encodeURIComponent()
-The encodeURIComponent() method encodes a Uniform Resource Identifier (URI) component by replacing each instance of certain characters by one, two, three, or four escape sequences representing the UTF-8 encoding of the character (will only be four escape sequences for characters composed of two "surrogate" characters).
-
-escape() 
-The deprecated escape() method computes a new string in which certain characters have been replaced by a hexadecimal escape sequence. Use encodeURI or encodeURIComponent instead.
-
-unescape() 
-The deprecated unescape() method computes a new string in which hexadecimal escape sequences are replaced with the character that it represents. The escape sequences might be introduced by a function like escape. Because unescape() is deprecated, use decodeURI() or decodeURIComponent instead
-
+// MATHS
 Math.max(a,b)
+Math.min(a,b)
 Math.abs(a)
-Math.random()  // random number [0, 1)
+Math.random() // random number [0, 1)
+Math.PI
+Math.ceil(a)
+Math.floor(a)
+Math.round(a)
+Math.sign(a)
+Math.sqrt(a)
+Math.sin(a) // Radians
+Math.cos(a) // Radians
+Math.tan(a) // Radians
+Math.pow(a,n) // aⁿ
+  
+// JAVASCRIPT OBJECT NOTATION (JSON)
+JSON.parse('{"x":1, "y":0}'); // Creates object with properties x/y
+JSON.stringify( {x: 1, y: 0 })); // Outputs string "{"x":5,"y":6}"
