@@ -1703,9 +1703,9 @@ Shortcut {
 Qt.WindowShortcut       // Active when its parent item is in an active top-level window
 Qt.ApplicationShortcut  // Active when one of the application's windows are active
 
-//===========================================================================================================
-// DRAG / DROP
-//===========================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML DRAG / DROP
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // DRAG (ATTACHED)
 // For specifying drag and drop events for moved Items
@@ -1716,11 +1716,6 @@ Item {
     Drag.mimeData: { "text/plain": "Copied text" } //  Map of mimeData that is used during startDrag
     Drag.proposedAction: Qt.CopyAction // Recommended return value of Drag.drop(), Drag Action Flags
     Drag.supportedActions: Qt.CopyAction // Return values of Drag.drop() supported, Drag Action Flags
-    Drag.source:
-    Drag.active:
-    Drag.hotSpot:
-    Drag.keys:
-    Drag.target:
 }
 
 // Using Dragged Item as Image Source
