@@ -301,11 +301,12 @@ data.text() // Returns QString or empty
 data.urls() // Returns QList<QUrl> or empty
     
 // Mime Types
-"application/x-color"   QColor          QVariant::Color
-"text/uri-list"         QList<QUrl>     QVariant::Url 
-"text/html"             QString         QVariant::String
-"text/plain"            QString         QVariant::String
-"image/ *"              QImage          QVariant::Image
+"application/x-qabstractitemmodeldatalist"
+"application/x-color"                          // QColor      
+"text/uri-list"                                // QList<QUrl> 
+"text/html"                                    // QString
+"text/plain"                                   // QString
+"image/ *"                                     // QImage      
   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT CONTAINERS
