@@ -215,6 +215,7 @@ lst.sort(case) // Sort all strings using std::sort
 
 QVariant variant // Null variant
 QVariant variant("str")
+qvariant_cast<T>(variant) // Returns T, same as variant.value<T>()
 variant.canConvert<T>() // Whether can cast, T doesn't have to be variant type
 variant.convert<T>() // Cast variant to type, returns true if success
 variant.clear() // Convert to type QMetaType::UnknownType and free up any resources
