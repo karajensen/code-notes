@@ -77,11 +77,12 @@ Item {
     property int myProperty: myFunction    // if properties used in function changes, re-evaluates myProperty
     property int myProperty: { return 0; } // if properties used in function changes, re-evaluates myProperty
     property int myProperty: MyJS.fn       // Use function from imported javascript file
-    property int myProperty: MyGlobal.fn   // Use function from global singleton, Requires registering with QQmlEngine
+    property int myProperty: MyGlobal.fn   // Use function from singleton, Requires registering with QQmlEngine
     property int myProperty: MyEnum.ONE    // Use int type for enums, Requires registering with QQmlEngine
+    property var myProperty: myObj         // Context Q_OBJECT, Requires registering with QQuickView
     property int myProperty: myObj.value   // Context Q_OBJECT with Q_PROPERTY 'value' with NOTIFY
     readonly property int myProperty: 0    // read-only property
-    property alias myAlias: myProperty     // reference for property
+    property alias myAlias: myProperty     // reference for property    
     signal mySignal(int value)             // call with item.mySignal(0)
       
     /* Called when the item has been instantiated */
