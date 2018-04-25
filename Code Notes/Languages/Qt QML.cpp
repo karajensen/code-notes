@@ -377,18 +377,18 @@ myPalette.windowText // General foreground color
 // Attributes do not have signals, use onMyMatChanged instead
 property matrix4x4 myMat: Qt.matrix4x4(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
 myMat.m11...myMat.m44
+myMat.column(index) // returns vector4d, zero-based index
+myMat.determinant() // returns real
+myMat.fuzzyEquals(myMat2, epsilon) // epsilon is real
+myMat.inverted() // returns myMat inverted
+myMat.minus(myMat2) // myMat - myMat2
+myMat.plus(myMat2) // myMat + myMat2
+myMat.row(index) // returns vector4d, zero-based index
 myMat.times(myMat2) // multiplying myMat with myMat4
 myMat.times(myVec) // transforming vector3d or vector4d with the 4x4 matrix
 myMat.times(value) // multiply matrix by real scalar
-myMat.plus(myMat2) // myMat + myMat2
-myMat.minus(myMat2) // myMat - myMat2
-myMat.row(index) // returns vector4d, zero-based index
-myMat.column(index) // returns vector4d, zero-based index
-myMat.determinant() // returns real
-myMat.inverted() // returns myMat inverted
-myMat.transposed() // returns myMat transposed
-myMat.fuzzyEquals(myMat2, epsilon) // epsilon is real
 myMat.toString()
+myMat.transposed() // returns myMat transposed
 
 // QUATERNION
 // Attributes do not have signals, use onMyQuatChanged instead
@@ -1287,6 +1287,15 @@ Text.Normal      Text.Raised
 Text.Outline     Text.Sunken
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML ANIMATION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// TRANSITION
+// Defines animated transitions that occur on state changes
+Transition {
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML DYNAMIC CREATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
@@ -1404,8 +1413,52 @@ ScrollView {
 
 // LISTVIEW
 // Inherits Flickable, Display items from a model in a list
+// Delegates are instantiated as needed and may be destroyed at any time
 ListView {
+    add: Transition {} // Used when item is added to view (but not on init/model change)
+    addDisplaced: Transition {} // Used when items are displaced when item is added to view
+    displaced: Transition {} // Used when items are displaced, overridden by addDisplaced etc.
+    cacheBuffer: 20 // Explicitly set the buffer size for caching delegates outside the view
+    currentIndex: 0 // Index of currently selected item, -1 is no selection
+    currentSection: "section1" // Section that is currently at the beginning of the view
+    effectiveLayoutDirection: Qt.LeftToRight // default, View Layout Direction Enum
+    delegate: Component {} // Template defining each item instantiated by the view
+    footer: Component {} // Component to use as the footer
+    footerItem: Item {} // Item to use as the footer
+    footerPositioning: ListView.InlineFooter // ListView Footer Positioning Enum
+    header: Component {} // Component to use as the header
+    headerItem: Item {} // Item to use as the header
+    headerPositioning: ListView.InlineHeader // ListView Header Positioning Enum
+    highlight: Component {} // Only creates one which follows selected item
+    highlightItem: Item {} // Only creates one which follows selected item
+    highlightFollowsCurrentItem: true // Whether highlight positioning is managed by view
+    highlightMoveDuration: -1 // Default -1, take as many seconds as needed
+    highlightMoveVelocity: 400 // Default 400 pixels/second
+    highlightRangeMode: ListView.NoHighlightRange // Default, ListView Highlight Range Enum
+    highlightResizeDuration:
+    highlightResizeVelocity:
+    keyNavigationEnabled:
+    keyNavigationWraps:
+    layoutDirection:
+    model:
+    move:
+    moveDisplaced:
+    orientation:
+    populate:
+    preferredHighlightBegin:
+    preferredHighlightEnd:
+    remove:
+    removeDisplaced:
+    section.property:
+    section.criteria:
+    section.delegate:
+    section.labelPositioning:
+    snapMode:
+    spacing:
+    verticalLayoutDirection:    
 }
+view.count // Number of items in the view
+view.currentItem // Currently selected Item, null is no selection
 
 // GRIDVIEW
 // Inherits Flickable, Display items from a model in a grid
@@ -1416,6 +1469,24 @@ GridView {
 // Inherits Item, Lays out model-provided items on a path
 PathView {
 }
+
+// View Layout Direction Enum
+Qt.LeftToRight   // Items will be laid out from left to right
+Qt.RightToLeft   // Items will be laid out from right to left
+  
+// ListView Header/Footer Positioning Enum
+ListView.InlineFooter    // Positioned at the end, connected/will move as a normal item
+ListView.OverlayFooter   // Positioned at the end, won't move
+ListView.PullBackFooter  // Positioned at the end, can be pushed/pulled
+ListView.InlineHeader    // Positioned at the start, connected/will move as a normal item
+ListView.OverlayHeader   // Positioned at the start, won't move
+ListView.PullBackHeader  // Positioned at the start, can be pushed/pulled
+
+// ListView Highlight Range Enum
+ListView.ApplyRange            // Can move outside of range at the end of list or due to mouse interaction
+ListView.StrictlyEnforceRange  // Never move outside range, changes selected item if outside range
+ListView.NoHighlightRange      // No range used
+
 
 //===========================================================================================================
 // QML DELEGATES
