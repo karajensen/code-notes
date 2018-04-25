@@ -211,6 +211,7 @@ lst.sort(case) // Sort all strings using std::sort
 /*************************************************************************************************************
 • Holds a single value of a type, need to register type to use it
 • For Q_PRIMITIVE_TYPE objects doesn't call constructor/destructor
+• To use custom types, must be registered with Q_DECLARE_METATYPE
 • See http://doc.qt.io/qt-5/qvariant-obsolete.html#Type-enum for Variant Type Enum
 **************************************************************************************************************/
 
@@ -266,6 +267,45 @@ variant.toUuid() // QUuid
 variant.type() // Returns QVariant::Type
 variant.typeName() // Returns const char* or 0 if invalid
 variant.value<T>() // If the value cannot be converted a default-constructed value will be returned
+  
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT MIME DATA
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+/*************************************************************************************************************
+• Used to describe information that can be stored in clipboard / transferred via drag and drop mechanism
+• To use custom types, must be registered with Q_DECLARE_METATYPE / qRegisterMetaTypeStreamOperators 
+**************************************************************************************************************/
+
+QMimeData data;
+data.colorData() // Returns QVariant with QColor or null if can't return a color
+data.data(mimeType) // Returns QByteArray from type
+data.formats() // Returns QStringList of mimeTypes supported by the object
+data.hasColor() // Returns true if object can return a color
+data.hasFormat(mimeType) // Returns true if the object can return data for the MIME type specified by mimeType
+data.hasHtml() // Returns true if the object can return HTML
+data.hasImage() // Returns true if the object can return an image
+data.hasText() // Returns true if the object can return plain text
+data.hasUrls() // Returns true if the object can return a list of urls
+data.html() // Returns QString if the data stored in the object is HTML, else empty
+data.imageData() // Returns QVariant with QImage or null if can't return an image
+data.removeFormat(mimeType) // Removes the data entry for mimeType in the object
+data.retrieveData(mimeType, variantType) // Returns QVariant, see Variant section for Variant Type Enum
+data.setColorData(color) // Takes QVariant with QColor
+data.setData(mimeType, data) // Takes QByteArray, sets data for mime type
+data.setHtml(html) // Takes QString
+data.setImageData(image) // Takes QVariant with QImage
+data.setText(text) // Takes QString
+data.setUrls(urls) // Takes QList<QUrl>
+data.text() // Returns QString or empty
+data.urls() // Returns QList<QUrl> or empty
+    
+// Mime Types
+"application/x-color"   QColor          QVariant::Color
+"text/uri-list"         QList<QUrl>     QVariant::Url 
+"text/html"             QString         QVariant::String
+"text/plain"            QString         QVariant::String
+"image/ *"              QImage          QVariant::Image
   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT CONTAINERS
