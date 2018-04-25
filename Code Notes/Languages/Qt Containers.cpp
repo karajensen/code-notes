@@ -211,6 +211,7 @@ lst.sort(case) // Sort all strings using std::sort
 /*************************************************************************************************************
 • Holds a single value of a type, need to register type to use it
 • For Q_PRIMITIVE_TYPE objects doesn't call constructor/destructor
+• See http://doc.qt.io/qt-5/qvariant-obsolete.html#Type-enum for Variant Type Enum
 **************************************************************************************************************/
 
 QVariant variant // Null variant
