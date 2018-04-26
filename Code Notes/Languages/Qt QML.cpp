@@ -944,6 +944,8 @@ ToolTip {
     text: "str"
     color: "red" // text color
     renderType: Text.QtRendering // RenderType Enum, Default given by QQuickWindow::textRenderType
+    horizontalAlignment: <T>.AlignHCenter // Alignment Enum
+    verticalAlignment: <T>.AlignVCenter // Alignment Enum    
     contentHeight: 200 // height of the unclipped text
     contentWidth: 200 // width of the unclipped text
     bottomPadding: 1.0 // padding around the content, not part of contentHeight, overrides 'padding'
@@ -965,6 +967,7 @@ ToolTip {
     font.underline: true
     font.weight: Font.Normal // default, see QML font type for enums
     font.wordSpacing: 1 // real, spacing between words
+    wrapMode: <T>.NoWrap // default, Wrap Mode Enum    
 }
 
 // TEXTLINE
@@ -977,9 +980,6 @@ line.height // Can modify to change height of line
 // TEXT
 // Inherits item, Styled text label
 Text {
-    wrapMode: Text.NoWrap // default, Wrap Mode Enum
-    horizontalAlignment: Text.AlignHCenter // Alignment Enum
-    verticalAlignment: Text.AlignVCenter // Alignment Enum
     baseUrl: "http://qt-project.org/" // Used to resolve relative URLs within the text (eg. images/logo.png)
     clip: true // Whether the text is clipped
     elide: Text.ElideNone // default, Elide Mode Enum
@@ -1007,9 +1007,6 @@ text.linkAt(x, y) // Returns ink string at point x, y in content coordinates, em
 // TEXTINPUT
 // Inherits Item, single line of editable plain text
 TextInput {
-    wrapMode: TextInput.NoWrap // default, Wrap Mode Enum
-    horizontalAlignment: TextInput.AlignHCenter // Alignment Enum
-    verticalAlignment: TextInput.AlignVCenter // Alignment Enum
     displayText: "str" // Dependent on echo mode, holds input as editing    
     activeFocusOnPress: true // If gain active focus on a mouse press
     autoScroll: true
@@ -1067,9 +1064,6 @@ input.undo() // Undos if possible
 // Inherits Item, multiple lines of editable formatted text
 // Requires Flickable or ScrollView to implement scrolling, following the cursor etc
 TextEdit {
-    wrapMode: TextEdit.NoWrap // default, Wrap Mode Enum
-    horizontalAlignment: TextEdit.AlignHCenter // Alignment Enum
-    verticalAlignment: TextEdit.AlignVCenter // Alignment Enum
     activeFocusOnPress: true // If gain active focus on a mouse press
     baseUrl: "http://qt-project.org/" // Used to resolve relative URLs within the text (eg. images/logo.png)
     cursorDelegate: Rectangle {} // Override cursor
@@ -1179,48 +1173,35 @@ Text.QtRendering        // advanced features (transformations)
 Text.NativeRendering    // look native on the target platform, no advanced features (transformations)  
   
 // Text / TextInput / TextEdit Alignment Enum
-Text.AlignLeft      TextInput.AlignLeft      TextEdit.AlignLeft
-Text.AlignRight     TextInput.AlignRight     TextEdit.AlignRight
-Text.AlignHCenter   TextInput.AlignHCenter   TextEdit.AlignHCenter
-Text.AlignTop       TextInput.AlignTop       TextEdit.AlignTop
-Text.AlignBottom    TextInput.AlignBottom    TextEdit.AlignBottom
-Text.AlignVCenter   TextInput.AlignVCenter   TextEdit.AlignVCenter
+<T>.AlignLeft   
+<T>.AlignRight  
+<T>.AlignHCenter
+<T>.AlignTop    
+<T>.AlignBottom 
+<T>.AlignVCenter
 
 // Text / TextInput / TextEdit Wrap Mode Enum
-Text.NoWrap             // no wrapping
-Text.WordWrap           // wrapping done on word boundaries only
-Text.WrapAnywhere       // wrapping is done at any point on a line, even in the middle of a word
-Text.Wrap               // if possible, Text.WordWrap, else Text.WrapAnywhere
-TextInput.NoWrap        // no wrapping
-TextInput.WordWrap      // wrapping done on word boundaries only
-TextInput.WrapAnywhere  // wrapping is done at any point on a line, even in the middle of a word
-TextInput.Wrap          // if possible, TextInput.WordWrap, else TextInput.WrapAnywhere
-TextEdit.NoWrap         // no wrapping
-TextEdit.WordWrap       // wrapping done on word boundaries only
-TextEdit.WrapAnywhere   // wrapping is done at any point on a line, even in the middle of a word
-TextEdit.Wrap           // if possible, TextEdit.WordWrap, else TextEdit.WrapAnywhere
+<T>.NoWrap         // no wrapping
+<T>.WordWrap       // wrapping done on word boundaries only
+<T>.WrapAnywhere   // wrapping is done at any point on a line, even in the middle of a word
+<T>.Wrap           // if possible, Text.WordWrap, else Text.WrapAnywhere
 
 // Text / TextMetrics Elide Mode Enum
-Qt.ElideNone            // No eliding
-Qt.ElideLeft            // For example: "...World"
-Qt.ElideMiddle          // For example: "He...ld"
-Qt.ElideRight           // For example: "Hello..."
+Qt.ElideNone       // No eliding
+Qt.ElideLeft       // For example: "...World"
+Qt.ElideMiddle     // For example: "He...ld"
+Qt.ElideRight      // For example: "Hello..."
 
 // Text / TextEdit Text Format Enum
 // PlainText/StyledText offer better performance at cost of formatting
-TextEdit.AutoText       // Will auto determine whether text should be treated as rich text
-TextEdit.PlainText      // Contains no formatting, only line breaks and spacing
-TextEdit.RichText       // Contains formatting (font sizes, colors, bolding, italics etc)
-Text.AutoText           // Will auto determine whether text should be treated as rich text
-Text.PlainText          // Contains no formatting, only line breaks and spacing
-Text.RichText           // Contains formatting (font sizes, colors, bolding, italics etc)
-Text.StyledText         // Optimized RichText format with some formatting 
+<T>.AutoText       // Will auto determine whether text should be treated as rich text
+<T>.PlainText      // Contains no formatting, only line breaks and spacing
+<T>.RichText       // Contains formatting (font sizes, colors, bolding, italics etc)
+Text.StyledText    // Optimized RichText format with some formatting 
 
 // TextInput / TextEdit Selection Mode Enum
-TextInput.SelectCharacters    // Selects all characters between selection start/end pos
-TextInput.SelectWords         // Selects all words between selection start/end pos, partial words included
-TextEdit.SelectCharacters     // Selects all characters between selection start/end pos
-TextEdit.SelectWords          // Selects all words between selection start/end pos, partial words included
+<T>.SelectCharacters  // Selects all characters between selection start/end pos
+<T>.SelectWords       // Selects all words between selection start/end pos, partial words included
 
 // TextInput / TextEdit Input Method Hints Flags
 Qt.ImhNone                   // No hints
@@ -1412,42 +1393,37 @@ ScrollView {
 // QML VIEWS
 //===========================================================================================================
 
-// LISTVIEW
-// Inherits Flickable, Display items from a model in a list
-// Delegates are instantiated as needed and may be destroyed at any time
-ListView {
-    cacheBuffer: 20 // Explicitly set the buffer size for caching delegates outside the view
+// LISTVIEW / GRIDVIEW / PATHVIEW SHARED PROPERTIES
+{
     currentIndex: 0 // Index of currently selected item, -1 is no selection
-    currentSection: "section1" // Section that is currently at the beginning of the view
     delegate: Component {} // Template defining each item instantiated by the view
+    highlight: Component {} // Only creates one which follows selected item
+    highlightItem: Item {} // Only creates one which follows selected item 
+    highlightMoveDuration: -1 // Default -1, take as many seconds as needed
+    highlightRangeMode: <T>.NoHighlightRange // Default, View Highlight Range Enum
+    preferredHighlightBegin: 1.0 // Preferred range of the highlight, affected by highlightRangeMode
+    preferredHighlightEnd: 2.0 // Preferred range of the highlight, affected by highlightRangeMode
+    snapMode: <T>.NoSnap // default, View Snap Mode Enum
+    model: myModel // Contains data to display            
+}
+view.currentItem // Currently selected Item, null is no selection
+view.count // Number of items in the view
+view.indexAt(x, y) // Returns index of item containing the point x, y in content coords, or -1
+view.itemAt(x, y) // Returns item containing the point x, y in content coords, or null
+view.positionViewAtIndex(index, mode) // Positions at index by View Position View Mode Enum
+
+// LISTVIEW / GRIDVIEW SHARED PROPERTIES
+{
+    cacheBuffer: 20 // Explicitly set the buffer size for caching delegates outside the view 
     footer: Component {} // Component to use as the footer
     footerItem: Item {} // Item to use as the footer
-    footerPositioning: ListView.InlineFooter // ListView Footer Positioning Enum
     header: Component {} // Component to use as the header
     headerItem: Item {} // Item to use as the header
-    headerPositioning: ListView.InlineHeader // ListView Header Positioning Enum
-    highlight: Component {} // Only creates one which follows selected item
-    highlightItem: Item {} // Only creates one which follows selected item
     highlightFollowsCurrentItem: true // Whether highlight positioning is managed by view
-    highlightMoveDuration: -1 // Default -1, take as many seconds as needed
-    highlightMoveVelocity: 400 // Default 400 pixels/second
-    highlightRangeMode: ListView.NoHighlightRange // Default, ListView Highlight Range Enum
-    highlightResizeDuration: -1 // Default -1, take as many seconds as needed
-    highlightResizeVelocity: 400 // Default 400 pixels/second
     keyNavigationEnabled: true // Whether the key navigation enabled, bound to Flickable.interactive
     keyNavigationWraps: true // Key navigation that puts selection out of bounds will wrap
     layoutDirection: Qt.LeftToRight // default, View Layout Direction Enum
-    model: myModel // Contains data to display
-    orientation: ListView.Vertical // ListView Orientation Enum
-    preferredHighlightBegin: 1.0 // Preferred range of the highlight, affected by highlightRangeMode
-    preferredHighlightEnd: 2.0 // Preferred range of the highlight, affected by highlightRangeMode
-    section.property: "section" // Name of section
-    section.criteria: ViewSection.FullString // default, View Section Criteria Enum
-    section.delegate: Component {} // Instantiated for each section header
-    section.labelPositioning: ViewSection.InlineLabels // default, View Section Positioning
-    snapMode: ListView.NoSnap // default, ListView Snap Mode Enum
-    spacing: 0 // default, Spacing between items
-    verticalLayoutDirection: ListView.TopToBottom // default, ListView Vertical Layout Direction Enum
+    verticalLayoutDirection: <T>.TopToBottom // default, View Vertical Layout Direction Enum   
     add: Transition {} // On add of an item
     addDisplaced: Transition {} // On move of items when displaced from an item add
     displaced: Transition {} // On generic displace of items, overridden by add/moveDisplaced
@@ -1457,43 +1433,104 @@ ListView {
     remove: Transition {} // On remove of an item
     removeDisplaced: Transition {} // On move of items when displaced from an item remove 
 }
-view.count // Number of items in the view
-view.currentItem // Currently selected Item, null is no selection
-view.decrementCurrentIndex() // Decrements the current index, will wrap depending on keyNavigationWraps
 view.forceLayout() // Forces an update of the view, otherwise updates batched to happen once per frame
-view.incrementCurrentIndex() // Increments the current index, will wrap depending on keyNavigationWraps
-view.indexAt(x, y) // Returns index of item containing the point x, y in content coords, or -1
-view.itemAt(x, y) // Returns item containing the point x, y in content coords, or null
 view.positionViewAtBeginning() // Positions the view at the beginning
 view.positionViewAtEnd() // Positions the view at the end
-view.positionViewAtIndex(index, mode) // Positions at index by ListView Position View Mode Enum
+  
+// LISTVIEW
+// Inherits Flickable, Display items from a model in a list
+// Delegates are instantiated as needed and may be destroyed at any time
+ListView {
+    currentSection: "section" // Section that is currently at the beginning of the view
+    footerPositioning: ListView.InlineFooter // ListView Footer Positioning Enum
+    headerPositioning: ListView.InlineHeader // ListView Header Positioning Enum
+    highlightMoveVelocity: 400 // Default 400 pixels/second
+    highlightResizeDuration: -1 // Default -1, take as many seconds as needed
+    highlightResizeVelocity: 400 // Default 400 pixels/second
+    orientation: ListView.Vertical // ListView Orientation Enum
+    section.property: "section" // Name of section
+    section.criteria: ViewSection.FullString // default, View Section Criteria Enum
+    section.delegate: Component {} // Instantiated for each section header
+    section.labelPositioning: ViewSection.InlineLabels // default, View Section Positioning
+    spacing: 0 // default, Spacing between items
+}
+view.decrementCurrentIndex() // Decrements the current index, will wrap depending on keyNavigationWraps
+view.incrementCurrentIndex() // Increments the current index, will wrap depending on keyNavigationWraps
   
 // GRIDVIEW
 // Inherits Flickable, Display items from a model in a grid
 GridView {
+    cellHeight:
+    cellWidth:
+    displayMarginBeginning:
+    displayMarginEnd:
+    flow:
 }
+view.moveCurrentIndexDown()
+view.moveCurrentIndexLeft()
+view.moveCurrentIndexRight()
+view.moveCurrentIndexUp()
 
 // PATHVIEW
 // Inherits Item, Lays out model-provided items on a path
 PathView {
+    cacheItemCount:
+    dragMargin:
+    dragging:
+    flickDeceleration:
+    flicking:
+    interactive:
+    maximumFlickVelocity:
+    movementDirection:
+    moving:
+    offset:
+    path:
+    pathItemCount:
+    onDragEnded: {}
+    onDragStarted: {}
+    onFlickEnded: {}
+    onFlickStarted: {}
+    onMovementEnded: {}
+    onMovementStarted: {}
 }
-
-// View Section Positioning
-ViewSection.InlineLabels         // Section labels scroll inline
-ViewSection.CurrentLabelAtStart  // Section labels stick to top when scrolling
-ViewSection.NextLabelAtEnd       // Section labels stick to end when scrolling
+view.decrementCurrentIndex() // Decrements the current index
+view.incrementCurrentIndex() // Increments the current index
 
 // View Layout Direction Enum
 Qt.LeftToRight   // Items will be laid out from left to right
 Qt.RightToLeft   // Items will be laid out from right to left
   
+// View Section Positioning
+ViewSection.InlineLabels         // Section labels scroll inline
+ViewSection.CurrentLabelAtStart  // Section labels stick to top when scrolling
+ViewSection.NextLabelAtEnd       // Section labels stick to end when scrolling
+  
 // View Section Criteria Enum
 ViewSection.FullString      // Sections created based on the section.property value
 ViewSection.FirstCharacter  // Sections created based on the first char of the section.property value
 
-// ListView Vertical Layout Direction Enum
-ListView.TopToBottom  // Items laid out top to bottom
-ListView.BottomToTop  // Items laid out bottom to top
+// ListView / GridView / PathView Snap Mode Enum
+// How the view scrolling will settle following a drag or flick
+<T>.NoSnap       // Stops anywhere within the visible area
+<T>.SnapToItem   // Settles with an item aligned with the start of the view
+<T>.SnapOneItem  // Settles no more than one item away from first visible item on mouse release
+
+// ListView / GridView / PathView Highlight Range Enum
+<T>.ApplyRange            // Can move outside of range at the end of list or due to mouse interaction
+<T>.StrictlyEnforceRange  // Never move outside range, changes selected item if outside range
+<T>.NoHighlightRange      // No range used
+
+// ListView / GridView / PathView Position View Mode Enum
+<T>.Beginning    // Position at start
+<T>.Center       // Position at center
+<T>.End          // Position at end
+<T>.Visible      // Ensure a part of the item is visible
+<T>.Contain      // Ensure the entire item is visible
+<T>.SnapPosition // Position at preferredHighlightBegin, only for StrictlyEnforceRange or !NoSnap
+
+// ListView / GridView Vertical Layout Direction Enum
+<T>.TopToBottom  // Items laid out top to bottom
+<T>.BottomToTop  // Items laid out bottom to top
 
 // ListView Header/Footer Positioning Enum
 ListView.InlineFooter    // Positioned at the end, connected/will move as a normal item
@@ -1503,28 +1540,9 @@ ListView.InlineHeader    // Positioned at the start, connected/will move as a no
 ListView.OverlayHeader   // Positioned at the start, won't move
 ListView.PullBackHeader  // Positioned at the start, can be pushed/pulled
 
-// ListView Highlight Range Enum
-ListView.ApplyRange            // Can move outside of range at the end of list or due to mouse interaction
-ListView.StrictlyEnforceRange  // Never move outside range, changes selected item if outside range
-ListView.NoHighlightRange      // No range used
-
 // ListView Orientation Enum
 ListView.Horizontal   // Items are laid out horizontally
 ListView.Vertical     // Items are laid out vertically
-
-// ListView Snap Mode Enum
-// How the view scrolling will settle following a drag or flick
-ListView.NoSnap       // Stops anywhere within the visible area
-ListView.SnapToItem   // Settles with an item aligned with the start of the view
-ListView.SnapOneItem  // Settles no more than one item away from first visible item on mouse release
-
-// ListView Position View Mode Enum
-ListView.Beginning    // Position at start
-ListView.Center       // Position at center
-ListView.End          // Position at end
-ListView.Visible      // Ensure a part of the item is visible
-ListView.Contain      // Ensure the entire item is visible
-ListView.SnapPosition // Position at preferredHighlightBegin, only for StrictlyEnforceRange or !NoSnap
 
 //===========================================================================================================
 // QML DELEGATES
