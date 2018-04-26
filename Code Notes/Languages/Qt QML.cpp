@@ -1416,13 +1416,9 @@ ScrollView {
 // Inherits Flickable, Display items from a model in a list
 // Delegates are instantiated as needed and may be destroyed at any time
 ListView {
-    add: Transition {} // Used when item is added to view (but not on init/model change)
-    addDisplaced: Transition {} // Used when items are displaced when item is added to view
-    displaced: Transition {} // Used when items are displaced, overridden by addDisplaced etc.
     cacheBuffer: 20 // Explicitly set the buffer size for caching delegates outside the view
     currentIndex: 0 // Index of currently selected item, -1 is no selection
     currentSection: "section1" // Section that is currently at the beginning of the view
-    effectiveLayoutDirection: Qt.LeftToRight // default, View Layout Direction Enum
     delegate: Component {} // Template defining each item instantiated by the view
     footer: Component {} // Component to use as the footer
     footerItem: Item {} // Item to use as the footer
@@ -1436,31 +1432,42 @@ ListView {
     highlightMoveDuration: -1 // Default -1, take as many seconds as needed
     highlightMoveVelocity: 400 // Default 400 pixels/second
     highlightRangeMode: ListView.NoHighlightRange // Default, ListView Highlight Range Enum
-    highlightResizeDuration:
-    highlightResizeVelocity:
-    keyNavigationEnabled:
-    keyNavigationWraps:
-    layoutDirection:
-    model:
-    move:
-    moveDisplaced:
-    orientation:
-    populate:
-    preferredHighlightBegin:
-    preferredHighlightEnd:
-    remove:
-    removeDisplaced:
-    section.property:
-    section.criteria:
-    section.delegate:
-    section.labelPositioning:
-    snapMode:
-    spacing:
-    verticalLayoutDirection:    
+    highlightResizeDuration: -1 // Default -1, take as many seconds as needed
+    highlightResizeVelocity: 400 // Default 400 pixels/second
+    keyNavigationEnabled: true // Whether the key navigation enabled, bound to Flickable.interactive
+    keyNavigationWraps: true // Key navigation that puts selection out of bounds will wrap
+    layoutDirection: Qt.LeftToRight // default, View Layout Direction Enum
+    model: myModel // Contains data to display
+    orientation: ListView.Vertical // ListView Orientation Enum
+    preferredHighlightBegin: 1.0 // Preferred range of the highlight, affected by highlightRangeMode
+    preferredHighlightEnd: 2.0 // Preferred range of the highlight, affected by highlightRangeMode
+    section.property: "section" // Name of section
+    section.criteria: ViewSection.FullString // default, View Section Criteria Enum
+    section.delegate: Component {} // Instantiated for each section header
+    section.labelPositioning: ViewSection.InlineLabels // default, View Section Positioning
+    snapMode: ListView.NoSnap // default, ListView Snap Mode Enum
+    spacing: 0 // default, Spacing between items
+    verticalLayoutDirection: ListView.TopToBottom // default, ListView Vertical Layout Direction Enum
+    add: Transition {} // On add of an item
+    addDisplaced: Transition {} // On move of items when displaced from an item add
+    displaced: Transition {} // On generic displace of items, overridden by add/moveDisplaced
+    move: Transition {} // On move of an item
+    moveDisplaced: Transition {} // On move of items when displaced from an item move
+    populate: Transition {} // On initial populate of items
+    remove: Transition {} // On remove of an item
+    removeDisplaced: Transition {} // On move of items when displaced from an item remove 
 }
 view.count // Number of items in the view
 view.currentItem // Currently selected Item, null is no selection
-
+view.decrementCurrentIndex() // Decrements the current index, will wrap depending on keyNavigationWraps
+view.forceLayout() // Forces an update of the view, otherwise updates batched to happen once per frame
+view.incrementCurrentIndex() // Increments the current index, will wrap depending on keyNavigationWraps
+view.indexAt(x, y) // Returns index of item containing the point x, y in content coords, or -1
+view.itemAt(x, y) // Returns item containing the point x, y in content coords, or null
+view.positionViewAtBeginning() // Positions the view at the beginning
+view.positionViewAtEnd() // Positions the view at the end
+view.positionViewAtIndex(index, mode) // Positions at index by ListView Position View Mode Enum
+  
 // GRIDVIEW
 // Inherits Flickable, Display items from a model in a grid
 GridView {
@@ -1471,10 +1478,23 @@ GridView {
 PathView {
 }
 
+// View Section Positioning
+ViewSection.InlineLabels         // Section labels scroll inline
+ViewSection.CurrentLabelAtStart  // Section labels stick to top when scrolling
+ViewSection.NextLabelAtEnd       // Section labels stick to end when scrolling
+
 // View Layout Direction Enum
 Qt.LeftToRight   // Items will be laid out from left to right
 Qt.RightToLeft   // Items will be laid out from right to left
   
+// View Section Criteria Enum
+ViewSection.FullString      // Sections created based on the section.property value
+ViewSection.FirstCharacter  // Sections created based on the first char of the section.property value
+
+// ListView Vertical Layout Direction Enum
+ListView.TopToBottom  // Items laid out top to bottom
+ListView.BottomToTop  // Items laid out bottom to top
+
 // ListView Header/Footer Positioning Enum
 ListView.InlineFooter    // Positioned at the end, connected/will move as a normal item
 ListView.OverlayFooter   // Positioned at the end, won't move
@@ -1488,6 +1508,23 @@ ListView.ApplyRange            // Can move outside of range at the end of list o
 ListView.StrictlyEnforceRange  // Never move outside range, changes selected item if outside range
 ListView.NoHighlightRange      // No range used
 
+// ListView Orientation Enum
+ListView.Horizontal   // Items are laid out horizontally
+ListView.Vertical     // Items are laid out vertically
+
+// ListView Snap Mode Enum
+// How the view scrolling will settle following a drag or flick
+ListView.NoSnap       // Stops anywhere within the visible area
+ListView.SnapToItem   // Settles with an item aligned with the start of the view
+ListView.SnapOneItem  // Settles no more than one item away from first visible item on mouse release
+
+// ListView Position View Mode Enum
+ListView.Beginning    // Position at start
+ListView.Center       // Position at center
+ListView.End          // Position at end
+ListView.Visible      // Ensure a part of the item is visible
+ListView.Contain      // Ensure the entire item is visible
+ListView.SnapPosition // Position at preferredHighlightBegin, only for StrictlyEnforceRange or !NoSnap
 
 //===========================================================================================================
 // QML DELEGATES
@@ -1507,9 +1544,9 @@ del.index // Index in view, can be -1 if removed from view
 del.ListView.view // Use to access listView if delegate created outside it
 del.ListView.isCurrentItem // Whether the delegate is the currently selected item
 del.ListView.delayRemove // Whether the delegate has to delay destruction (eg. to finish animation)
-del.ListView.nextSection // Section property name string of the next item
-del.ListView.previousSection  // Section property name string of the previous item
-del.ListView.section // Section property name of the item
+del.ListView.nextSection // Section string of the next item
+del.ListView.previousSection  // Section string of the previous item
+del.ListView.section // Section string of the item
 del.GridView.view // Use to access gridView if delegate created outside it
 del.GridView.isCurrentItem // Whether the delegate is the currently selected item
 del.GridView.delayRemove // Whether the delegate has to delay destruction (eg. to finish animation)
@@ -1646,21 +1683,9 @@ Item {
     Keys.onBacktabPressed: { event }
     Keys.onCallPressed: { event }
     Keys.onCancelPressed: { event }
-    Keys.onContext1Pressed: { event }
-    Keys.onContext2Pressed: { event }
-    Keys.onContext3Pressed: { event }
-    Keys.onContext4Pressed: { event }
+    Keys.onContext1Pressed: { event } // Supports Context1 to Context4
     Keys.onDeletePressed: { event }
-    Keys.onDigit0Pressed: { event }
-    Keys.onDigit1Pressed: { event }
-    Keys.onDigit2Pressed: { event }
-    Keys.onDigit3Pressed: { event }
-    Keys.onDigit4Pressed: { event }
-    Keys.onDigit5Pressed: { event }
-    Keys.onDigit6Pressed: { event }
-    Keys.onDigit7Pressed: { event }
-    Keys.onDigit8Pressed: { event }
-    Keys.onDigit9Pressed: { event }
+    Keys.onDigit0Pressed: { event } // Supports Digit0 to Digit9
     Keys.onDownPressed: { event }
     Keys.onEnterPressed: { event }
     Keys.onEscapePressed: { event }
