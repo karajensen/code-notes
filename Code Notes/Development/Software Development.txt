@@ -129,6 +129,7 @@ git remote show origin                     // Show remote branch of local and UR
 git branch -m oldBranch newBranch          // Rename a local branch
 git submodule init                         // Initialise all submodules
 git submodule update --recursive           // Update all submodules, recursive optional
+git config --global --edit                 // Show the git config file
 
 INITIALISING GIT
 git config --global user.name "Kara Jensen"
