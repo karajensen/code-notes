@@ -2,7 +2,7 @@
 // JAVASCRIPT
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// VARIABLE MODIFIERS
+// VARIABLES
 // Attempt to access an undeclared variable results in a ReferenceError exception
 // Type determined by assignment, undefined if not assigned, type changes with assigning
 // Undefined value converts to NaN when used as a number, false when used as a boolean
@@ -11,12 +11,22 @@ var value = true;     // Local variable to function, rest of function can see ev
 const value = true;   // Same as var but const, must be initialized
 let value = true;     // Local variable to scope, rest of function cannot see
 
-// VARIABLE COMPARISON
-x === y                           // equal value and equal type
-x !== y                           // not equal value or not equal type
-value !== null                    // Use === when comparing with null
-typeof value !== "undefined"      // Use === when comparing with undefined
-typeof value === "string" 
+// OPERATORS
+x++ / ++x
+x ** y                           // x ^ y
+x == y                           // equal value only
+x === y                          // equal value and equal type
+x !== y                          // not equal value or not equal type
+value !== null                   // Use === when comparing with null
+typeof value !== "undefined"     // Use === when comparing with undefined 
+
+// VARIABLE TYPES
+"undefined"
+"object"
+"string" 
+"boolean"
+"number"
+"function"
     
 // CONVERSIONS
 myString = myInt.toString();
@@ -93,26 +103,18 @@ myArray.length
 myArray[0] = "myEntry";
 myArray["one"] = 2.0;             // creates new entry if key doesn't exist
 "one" in myArray                  // returns true if 'one' is a key in myArray
+    
+// DESTRUCTURING
+var arr = ['one', 'two', 'three'];
+var [one, two, three] = arr // Assign each member to their own variable
+var a, b;
+[a, ...b] = [1, 2, 3]; // a = 1, b = [2,3]
 
-// Remove key from array
+// REMOVE KEY
 var index = myArray.indexOf(key); // returns -1 if cannot find key
 if (index > -1) {
-    myArray.splice(index, n);     // number of keys to remove
+    myArray.splice(index, n); // number of keys to remove
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// OBJECTS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-obj = null;                       // Null object
-obj = { x: 2, y : 1 };            // Object with properties/attributes
-obj = { "x": 2, "y" : 1 };        // Object with properties/attributes
-obj.x /*or*/ obj["x"]             // Access object attributes, key requires "
-obj = obj || "default value";     // If null use default value
-
-eval("x = 0;"); // Evaluates JavaScript code represented as a string
-uneval(obj) // Creates a string representation of the source code of an Object
-eval(uneval(obj)); // Make deep copy of object
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS
@@ -124,6 +126,7 @@ eval(uneval(obj)); // Make deep copy of object
   it just points the variable to a new primitive or object
 • Changing a property of an object referenced by a variable does change the underlying object
 • Parameters of functions default to undefined
+• 'this' is calling object in a method, use as normal object
 **************************************************************************************************************/
 
 // FUNCTION
@@ -148,7 +151,6 @@ function fnOuter(a, b) {
 // Shorthand way of writing function expression
 function(s) { return s.length; } /*or*/ s => s.length
 
-
 // FUNCTION ARGUMENTS
 // iterate through arguments, not an array, but has index/length
 function fn(arg1, arg2) {
@@ -169,10 +171,9 @@ function fn(value, ...args) {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// CLASSES
+// OBJECT / CLASSES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// No constructors/destructors
 function MyClass(b) 
 {
     this.myMember = b; 
@@ -182,7 +183,21 @@ function MyClass(b)
         this.myMember = a;
     }
 }
-var myObj = new MyClass(b);
+
+var obj = new MyClass(b);
+var obj = null;                   // Null object
+var obj = { x: 2, y : 1 };        // Object with properties/attributes
+var obj = { "x": 2, "y" : 1 };    // Object with properties/attributes
+
+obj.x /*or*/ obj["x"];            // Access object properties, key requires "
+obj = obj || "default value";     // If null use default value
+"x" in obj;                       // returns true if 'x' is a property in myArray
+obj instanceof MyClass            // Returns true if instance of MyClass
+    
+eval("x = 0;"); // Evaluates JavaScript code represented as a string
+uneval(obj) // Creates a string representation of the source code of an Object
+eval(uneval(obj)); // Make deep copy of object
+delete obj // Delete the object
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ERROR HANDLING
