@@ -228,8 +228,18 @@ if(result){ } // result will be null or 0 if cancel clicked
 // LIBRARIES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-isFinite(value); // Determines whether the passed value is a finite number
-isNaN(value); // Determines whether a value is NaN or not
+// NUMBER
+Number.MAX_VALUE
+Number.MIN_VALUE
+Number.POSITIVE_INFINITY
+Number.NEGATIVE_INFINITY
+Number.NaN
+Number.EPSILON
+Number.MIN_SAFE_INTEGER
+Number.MAX_SAFE_INTEGER
+Number.isFinite()
+Number.isInteger()
+Number.isNaN()
 
 // MATHS
 Math.max(a,b)
@@ -246,6 +256,21 @@ Math.sin(a) // Radians
 Math.cos(a) // Radians
 Math.tan(a) // Radians
 Math.pow(a,n) // aⁿ
+    
+// DATE
+var date = new Date(); // Current day/time
+var date = new Date(1995, 11, 25);
+var date = new Date(1995, 11, 25, 13, 30, 0);
+var date = new Date("December 25, 1995");
+var date = new Date("December 25, 1995 13:30:00");
+date.getTime();
+date.setTime(Date.parse("December 25, 1995"));
+date.getMonth(); // Returns 11
+date.getFullYear(); // Returns 1995
+date.setFullYear(1995);
+date.getHours()
+date.getMinutes()
+date.getSeconds()
   
 // JAVASCRIPT OBJECT NOTATION (JSON)
 JSON.parse('{"x":1, "y":0}'); // Creates object with properties x/y
