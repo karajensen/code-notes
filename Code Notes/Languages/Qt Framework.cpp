@@ -177,7 +177,7 @@ QDataStream& operator>>(QDataStream& in, MyClass& obj);
 // REGISTERING ENUMS
 // Macro must be outside all namespaces
 // QML use 'import MyEnums 1.0' and 'MyEnum.ONE'
-Q_ENUMS(MyClass::MyEnum)
+Q_ENUM(MyClass::MyEnum)
 qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum");
 
 // CONNECT SIGNALS/SLOTS
