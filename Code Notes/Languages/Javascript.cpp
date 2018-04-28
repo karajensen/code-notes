@@ -174,14 +174,16 @@ function fn(value, ...args) {
 // OBJECT / CLASSES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function MyClass(b) 
-{
-    this.myMember = b; 
+class MyClass extends MyBaseClass {
 
-    this.MyMethod = function(a)
-    {
-        this.myMember = a;
+    constructor(value) {
+        super(value); // Call base constructor
+        this.x = 0;
     }
+    
+    static staticMethod() {
+        return 0;
+  }
 }
 
 var obj = new MyClass(b);
