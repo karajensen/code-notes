@@ -604,6 +604,13 @@ Repeater {
     Text { text: "Data: " + modelData.role_name }
 }
 
+// STATEGROUP
+// State support for non QML Item derived components, see Item for State {}
+StateGroup {
+    state: "state1" // QString state name, default empty
+    states: [State { name: "state1" }, State { name: "state2" }]
+}
+
 // TIMER
 // Triggers a handler at a specified interval
 Timer {
