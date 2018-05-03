@@ -454,11 +454,18 @@ Mask8  = 128   0x080    0x00000080    10000000    1 << 7    b7
 // REGULAR EXPRESSIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-*             0 or more occurrences of the preceding item
-+             1 or more occurrences of the preceding item
+*             Matches the preceding expression 0 or more times
++             Matches the preceding expression 1 or more times
+?             Matches the preceding expression 0 or 1 time
 ^             Matches beginning of input
 $             Matches end of input
 \             Put before regex char to make normal char
+.             Matches any single character except the newline character
+(x)           Capturing parentheses; Matches expression x and remembers the match
+(?:x)         Matches expression x but does not remember the match
+x(?=y)        Lookahead; Matches 'x' only if 'x' is followed by 'y'
+x(?!y)        Negated lookahead; Matches 'x' only if 'x' is not followed by 'y'
+x|y           Matches 'x', or 'y' (if there is no match for 'x')
 
 abc           Search for substring 'abc'
 ab*c          Search for a, then 0 or more of b, then c
