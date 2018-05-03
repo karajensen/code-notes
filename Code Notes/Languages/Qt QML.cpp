@@ -1460,32 +1460,30 @@ view.incrementCurrentIndex() // Increments the current index, will wrap dependin
 // GRIDVIEW
 // Inherits Flickable, Display items from a model in a grid
 GridView {
-    cellHeight:
-    cellWidth:
-    displayMarginBeginning:
-    displayMarginEnd:
-    flow:
+    cellHeight: 100 // default, height of each cell in the grid
+    cellWidth: 100 // default, width of each cell in the grid
+    flow: GridView.FlowLeftToRight // default, GridView Flow Enum
 }
-view.moveCurrentIndexDown()
-view.moveCurrentIndexLeft()
-view.moveCurrentIndexRight()
-view.moveCurrentIndexUp()
+view.moveCurrentIndexDown() // Moves selected down one, will wrap if keyNavigationWraps is true
+view.moveCurrentIndexLeft() // Moves selected left one, will wrap if keyNavigationWraps is true
+view.moveCurrentIndexRight() // Moves selected right one, will wrap if keyNavigationWraps is true
+view.moveCurrentIndexUp() // Moves selected up one, will wrap if keyNavigationWraps is true
 
 // PATHVIEW
 // Inherits Item, Lays out model-provided items on a path
 PathView {
-    cacheItemCount:
-    dragMargin:
-    dragging:
-    flickDeceleration:
-    flicking:
-    interactive:
-    maximumFlickVelocity:
-    movementDirection:
-    moving:
-    offset:
-    path:
-    pathItemCount:
+    cacheItemCount
+    dragMargin
+    dragging
+    flickDeceleration
+    flicking
+    interactive
+    maximumFlickVelocity
+    movementDirection
+    moving
+    offset
+    path
+    pathItemCount
     onDragEnded: {}
     onDragStarted: {}
     onFlickEnded: {}
@@ -1511,9 +1509,9 @@ ViewSection.FirstCharacter  // Sections created based on the first char of the s
 
 // ListView / GridView / PathView Snap Mode Enum
 // How the view scrolling will settle following a drag or flick
-<T>.NoSnap       // Stops anywhere within the visible area
-<T>.SnapToItem   // Settles with an item aligned with the start of the view
-<T>.SnapOneItem  // Settles no more than one item away from first visible item on mouse release
+<T>.NoSnap         // Stops anywhere within the visible area
+<T>.SnapToItem     // Settles with an item aligned with the start of the view
+<T>.SnapOneItem    // Settles no more than one item away from first visible item on mouse release
 
 // ListView / GridView / PathView Highlight Range Enum
 <T>.ApplyRange            // Can move outside of range at the end of list or due to mouse interaction
@@ -1521,28 +1519,32 @@ ViewSection.FirstCharacter  // Sections created based on the first char of the s
 <T>.NoHighlightRange      // No range used
 
 // ListView / GridView / PathView Position View Mode Enum
-<T>.Beginning    // Position at start
-<T>.Center       // Position at center
-<T>.End          // Position at end
-<T>.Visible      // Ensure a part of the item is visible
-<T>.Contain      // Ensure the entire item is visible
-<T>.SnapPosition // Position at preferredHighlightBegin, only for StrictlyEnforceRange or !NoSnap
+<T>.Beginning      // Position at start
+<T>.Center         // Position at center
+<T>.End            // Position at end
+<T>.Visible        // Ensure a part of the item is visible
+<T>.Contain        // Ensure the entire item is visible
+<T>.SnapPosition   // Position at preferredHighlightBegin, only for StrictlyEnforceRange or !NoSnap
 
 // ListView / GridView Vertical Layout Direction Enum
-<T>.TopToBottom  // Items laid out top to bottom
-<T>.BottomToTop  // Items laid out bottom to top
+<T>.TopToBottom    // Items laid out top to bottom
+<T>.BottomToTop    // Items laid out bottom to top
 
 // ListView Header/Footer Positioning Enum
-ListView.InlineFooter    // Positioned at the end, connected/will move as a normal item
-ListView.OverlayFooter   // Positioned at the end, won't move
-ListView.PullBackFooter  // Positioned at the end, can be pushed/pulled
-ListView.InlineHeader    // Positioned at the start, connected/will move as a normal item
-ListView.OverlayHeader   // Positioned at the start, won't move
-ListView.PullBackHeader  // Positioned at the start, can be pushed/pulled
+ListView.InlineFooter      // Positioned at the end, connected/will move as a normal item
+ListView.OverlayFooter     // Positioned at the end, won't move
+ListView.PullBackFooter    // Positioned at the end, can be pushed/pulled
+ListView.InlineHeader      // Positioned at the start, connected/will move as a normal item
+ListView.OverlayHeader     // Positioned at the start, won't move
+ListView.PullBackHeader    // Positioned at the start, can be pushed/pulled
 
 // ListView Orientation Enum
-ListView.Horizontal   // Items are laid out horizontally
-ListView.Vertical     // Items are laid out vertically
+ListView.Horizontal        // Items are laid out horizontally
+ListView.Vertical          // Items are laid out vertically
+
+// GridView Flow Enum
+GridView.FlowLeftToRight   // Items are laid out from left to right, and the view scrolls vertically
+GridView.FlowTopToBottom   // Items are laid out from top to bottom, and the view scrolls horizontally
 
 //===========================================================================================================
 // QML DELEGATES
