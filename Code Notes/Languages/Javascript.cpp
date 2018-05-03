@@ -77,6 +77,7 @@ switch (myInt) {
 // STRINGS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// STRING
 // Each char is 16-bit unsigned integer (UTF-16) and immutable
 str = new String("MyString");
 str = "MyString\n";               // Allows using escaped characters
@@ -99,10 +100,13 @@ str.endsWith(str1);               // If ends with str1
 str.startsWith(str1);             // If starts with str1
 str.lastIndexOf(str1, start);     // Returns index from start index searching backwards
 str.indexOf(str1, start);         // Returns index from start index searching forwards
-
-escape("str")   // Returns new string with escaped version eg. " becomes \"
-unescape("str") // Returns new string with unescaped version eg. \" becomes "
-  
+escape("str")      // Returns new string with escaped version eg. " becomes \"
+unescape("str")    // Returns new string with unescaped version eg. \" becomes "
+    
+// REGULAR EXPRESSIONS
+var re = /ab+c/; // Literal exp can improve performance
+var re = new RegExp('ab+c');
+    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ARRAYS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
