@@ -467,6 +467,12 @@ x(?=y)        Lookahead; Matches 'x' only if 'x' is followed by 'y'
 x(?!y)        Negated lookahead; Matches 'x' only if 'x' is not followed by 'y'
 x|y           Matches 'x', or 'y' (if there is no match for 'x')
 
+EXAMPLES
+\w{2}         2 letters
+\s*           Arbitrary number of spaces
+\d{5}         5 digits
+//.*?\n       All between // and \n
+//.*?$        All between // and end
 abc           Search for substring 'abc'
 ab*c          Search for a, then 0 or more of b, then c
 ab+c          Search for a, then 1 or more of b, then c
