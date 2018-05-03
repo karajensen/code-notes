@@ -1,13 +1,13 @@
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls 2.0
+import QtQuick.Controls 1.4 as Controls1
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.2
 import SampleModel 1.0
 
 Rectangle {
     id: root
-    width: 560
+    width: 1060
     height: 260
 
     /** Style properties */
@@ -36,7 +36,7 @@ Rectangle {
 
             ColumnLayout {
                 anchors.fill: parent
-                ScrollView {
+                Controls1.ScrollView {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     ListView {
@@ -53,7 +53,9 @@ Rectangle {
                             visible: false
                             MenuItem {
                                 text: "Start"
-                                iconSource: "qrc:///start.png"
+                                icon.source: "qrc:///start.png"
+                                icon.width: iconsSize
+                                icon.height: iconsSize
                                 enabled: {
                                     return listView.currentItem != null && listView.currentItem.canStart()
                                 }
@@ -63,7 +65,9 @@ Rectangle {
                             }
                             MenuItem {
                                 text: "Pause"
-                                iconSource: "qrc:///pause.png"
+                                icon.source: "qrc:///pause.png"
+                                icon.width: iconsSize
+                                icon.height: iconsSize
                                 enabled: {
                                     return listView.currentItem != null && listView.currentItem.canPause()
                                 }
@@ -73,7 +77,9 @@ Rectangle {
                             }
                             MenuItem {
                                 text: "Stop"
-                                iconSource: "qrc:///stop.png"
+                                icon.source: "qrc:///stop.png"
+                                icon.width: iconsSize
+                                icon.height: iconsSize
                                 enabled: {
                                     return listView.currentItem != null && listView.currentItem.canStop()
                                 }
@@ -83,7 +89,9 @@ Rectangle {
                             }
                             MenuItem {
                                 text: "Delete"
-                                iconSource: "qrc:///trashbin.png"
+                                icon.source: "qrc:///delete.png"
+                                icon.width: iconsSize
+                                icon.height: iconsSize
                                 onTriggered: {
                                     context_model.deleteItem(listView.currentIndex);
                                 }
@@ -164,8 +172,8 @@ Rectangle {
                                         Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
                                         height: 20
                                         width: 100
-                                        maximumValue: role_maxstep
-                                        minimumValue: 0
+                                        from: 0
+                                        to: role_maxstep
                                         property alias containsMouse: mouseAreaBar.containsMouse
                                         
                                         property var roleStep: role_step
@@ -181,27 +189,13 @@ Rectangle {
                                             onPressed: { onMousePress(); }
                                             onClicked: { onMouseClick(mouse); }
                                         }                                       
-                                        
-                                        style: ProgressBarStyle {
-                                            id: style
-                                            background: Rectangle {
-                                                radius: 2
-                                                color: midShade
-                                                border.color: darkShade
-                                                border.width: 1
-                                                implicitWidth: 100
-                                                implicitHeight: 20
-                                            }
-                                            progress: Rectangle {
-                                                color: midHighlight
-                                                border.color: darkHighlight
-                                            }
-                                        }
                                     }
                                     Button {
                                         Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
                                         Layout.fillHeight: true
-                                        iconSource: "qrc:///start.png"
+                                        icon.source: "qrc:///start.png"
+                                        icon.width: iconsSize
+                                        icon.height: iconsSize
                                         width: iconsSize
                                         height: iconsSize
                                         enabled: canStart()
@@ -211,7 +205,9 @@ Rectangle {
                                     }
                                     Button {
                                         Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-                                        iconSource: "qrc:///pause.png"
+                                        icon.source: "qrc:///pause.png"
+                                        icon.width: iconsSize
+                                        icon.height: iconsSize
                                         width: iconsSize
                                         height: iconsSize
                                         enabled: canPause()
@@ -221,7 +217,9 @@ Rectangle {
                                     }
                                     Button {
                                         Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-                                        iconSource: "qrc:///stop.png"
+                                        icon.source: "qrc:///stop.png"
+                                        icon.width: iconsSize
+                                        icon.height: iconsSize
                                         width: iconsSize
                                         height: iconsSize
                                         enabled: canStop()
@@ -231,7 +229,9 @@ Rectangle {
                                     }
                                     Button {
                                         Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-                                        iconSource: "qrc:///delete.png"
+                                        icon.source: "qrc:///delete.png"
+                                        icon.width: iconsSize
+                                        icon.height: iconsSize
                                         width: iconsSize
                                         height: iconsSize
                                         onClicked: {

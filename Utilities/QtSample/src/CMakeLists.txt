@@ -6,7 +6,7 @@ if(CMAKE_PREFIX_PATH)
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
     # Instruct CMake to run moc automatically when needed.
     set(CMAKE_AUTOMOC ON)
-    
+
     # For now, just copy what we need for this project
     file(COPY ${CMAKE_PREFIX_PATH}/bin/opengl32sw.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
     file(COPY ${CMAKE_PREFIX_PATH}/bin/opengl32sw.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)	
@@ -22,6 +22,16 @@ if(CMAKE_PREFIX_PATH)
     file(COPY ${CMAKE_PREFIX_PATH}/bin/Qt5Network.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
     file(COPY ${CMAKE_PREFIX_PATH}/bin/Qt5Quickd.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
     file(COPY ${CMAKE_PREFIX_PATH}/bin/Qt5Quick.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+
+    # QtQuick Controls 2.0
+    file(COPY ${CMAKE_PREFIX_PATH}/bin/Qt5QuickControls2d.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+    file(COPY ${CMAKE_PREFIX_PATH}/bin/Qt5QuickControls2.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+    file(COPY ${CMAKE_PREFIX_PATH}/bin/Qt5QuickTemplates2d.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+    file(COPY ${CMAKE_PREFIX_PATH}/bin/Qt5QuickTemplates2.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+    file(COPY ${CMAKE_PREFIX_PATH}/qml/QtQuick.2/qtquick2plugind.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+    file(COPY ${CMAKE_PREFIX_PATH}/qml/QtQuick.2/qtquick2plugin.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
+    file(COPY ${CMAKE_PREFIX_PATH}/qml/QtQuick/Controls.2/qtquickcontrols2plugind.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
+    file(COPY ${CMAKE_PREFIX_PATH}/qml/QtQuick/Controls.2/qtquickcontrols2plugin.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
 
     set(SRC_LIST main.cpp
                  sampleItem.h
