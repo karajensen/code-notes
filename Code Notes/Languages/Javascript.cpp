@@ -77,18 +77,29 @@ switch (myInt) {
 // STRINGS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Each char is 16-bit unsigned integer (UTF-16) and immutable
 str = new String("MyString");
 str = "MyString\n";               // Allows using escaped characters
 str = `String Template`           // Allows using escaped characters and multiline
+str.charAt(index);                // Returns char at index
 str.toUpperCase();                // Returns upper case of string
 str.toLowerCase();                // Returns lower case of string
 str.indexOf("substring");         // Returns first index of or -1 if not found
 str.length                        // Number of characters in string
-str.substr(0, 3);                 // Generate substring from index 0 to 3
 str.replace(str1, str2);          // Replace str1 with str2, returns new string
 str.split(",")                    // Returns array of string without seperator
-str.slice(start, end)             // Index to [start, end), end optional
-  
+str.slice(start, end)             // Returns string between index [start, end), end optional
+str.trim()                        // Returns string, trims whitespace from the beginning and end
+str.repeat(count);                // Returns string as str repeated count times
+str.substr(start, length);        // Returns string, length optional, start is index
+str.substring(start, end);        // Returns string, end optional, start/end are index
+str.concat(str1, str2);           // Returns string, takes any amount of strings and adds them
+str.includes(str1, start);        // Whether str1 is in str, search starts from start index
+str.endsWith(str1);               // If ends with str1
+str.startsWith(str1);             // If starts with str1
+str.lastIndexOf(str1, start);     // Returns index from start index searching backwards
+str.indexOf(str1, start);         // Returns index from start index searching forwards
+
 escape("str")   // Returns new string with escaped version eg. " becomes \"
 unescape("str") // Returns new string with unescaped version eg. \" becomes "
   
