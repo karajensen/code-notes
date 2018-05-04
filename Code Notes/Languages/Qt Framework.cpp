@@ -416,11 +416,13 @@ public:
             if (role == Role1)
             {
                 item->setRole1(value);
+                emit dataChanged(index, index);
                 return true;
             }
             else if (role == Role2)
             {
                 item->setRole2(value);
+                emit dataChanged(index, index);
                 return true;
             }
         }
@@ -483,7 +485,7 @@ public:
         const auto itr = std::find_if(m_items.begin(), m_items.end(), 
             [item](const auto& itemPtr) { return itemPtr.get() == item; });
         return itr != m_items.end() ? std::distance(m_items.begin(), itr) : -1;
-    }    
+    }
     
     /* A function invokable from QML that modifies data from the model */
     Q_INVOKABLE void qmlFunction(int row)
@@ -531,6 +533,42 @@ private:
 
 // QAbstractItemModel
 // Inherits QObject, Abstract interface for item model classes
+// Parent is always const QModelIndex&
+model.beginInsertColumns(parent, first, last)
+model.endInsertColumns()
+model.beginMoveColumns(srcParent, srcFirst, srcLast, dstParent, dstChild)
+model.endMoveColumns()
+model.beginRemoveColumns(parent, first, last)
+model.endRemoveColumns()
+model.beginInsertRows(parent, first, last)
+model.endInsertRows()
+model.beginMoveRows(srcParent, srcFirst, srcLast, dstParent, dstChild)
+model.endMoveRows()
+model.beginRemoveRows(parent, first, last)
+model.endRemoveRows()
+model.beginResetModel()
+model.endResetModel()
+model.changePersistentIndex(from, to)
+model.changePersistentIndexList(from, to)
+model.hasIndex(row, column, parent) // Parent optional
+emit dataChanged(topLeft, botRight, roles) // Roles optional
+emit headerDataChanged(orientation, first, last)
+emit columnsAboutToBeInserted(parent, first, last) // Auto emitted
+emit columnsInserted(parent, first, last) // Auto emitted
+emit columnsAboutToBeMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Auto emitted
+emit columnsMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Auto emitted
+emit columnsAboutToBeRemoved(parent, first, last) // Auto emitted
+emit columnsRemoved(parent, first, last) // Auto emitted
+emit rowsAboutToBeInserted(parent, first, last) // Auto emitted
+emit rowsInserted(parent, first, last) // Auto emitted
+emit rowsAboutToBeMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Auto emitted
+emit rowsMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Auto emitted
+emit rowsAboutToBeRemoved(parent, first, last) // Auto emitted
+emit rowsRemoved(parent, first, last) // Auto emitted
+emit layoutAboutToBeChanged(parents, hint) // Both optional
+emit layoutChanged(parents, hint) // Both optional
+emit modelAboutToBeReset()
+emit modelReset()
 
 // QAbstractTableModel
 // Inherits QAbstractItemModel, Can be subclassed to create table models
