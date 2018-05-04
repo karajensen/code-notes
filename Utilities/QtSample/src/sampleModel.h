@@ -15,6 +15,8 @@ class SampleModel : public QAbstractItemModel
 public:
     SampleModel(QObject* parent = nullptr);
     virtual ~SampleModel();
+    static void qmlRegisterTypes();
+    void tick();
 
     enum ModelRoles
     {
@@ -25,35 +27,28 @@ public:
         MaxStepRole,
     };
 
-    /**
-    * Register this type with QML
-    */
-    static void qmlRegisterTypes();
-
     /** 
-    * Ticks the model to allow step values
-    */
-    void tick();
-
-    /**
-    * QML invokable functions to be used on sample items
-    */
-    Q_INVOKABLE void createItem(const QString& name);
-    Q_INVOKABLE void deleteItem(int row);
-    Q_INVOKABLE void startItemProgress(int row);
-    Q_INVOKABLE void stopItemProgress(int row);
-    Q_INVOKABLE void pauseItemProgress(int row);
-
-    /** 
-    * @see QAbstractItemModel 
+    * Required QAbstractItemModel 
     */
     virtual int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     virtual int columnCount(const QModelIndex& parent = QModelIndex()) const override;
     virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
-    virtual bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
-    virtual QHash<int, QByteArray> roleNames() const override;
     virtual QModelIndex index(int row, int column = 0, const QModelIndex& parent = QModelIndex()) const override;
     virtual QModelIndex parent(const QModelIndex& child) const override;
+
+    /**
+    * Optional QAbstractItemModel
+    */
+    virtual QHash<int, QByteArray> roleNames() const override;
+    virtual bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
+    //virtual bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+    //virtual bool insertColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override;
+    //virtual bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+    //virtual bool removeColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override;
+    //virtual bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild) override;
+    //virtual bool moveColumns(const QModelIndex &sourceParent, int sourceColumn, int count, const QModelIndex &destinationParent, int destinationChild) override;
+    //virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+    //virtual bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role = Qt::EditRole) override;
 
     /**
     * Drag and drop
@@ -63,6 +58,15 @@ public:
     //virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
     //virtual bool canDropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) const override;
     //virtual QMimeData* mimeData(const QModelIndexList& indexes) const override;
+
+    /**
+    * QML invokable functions to be used on sample items
+    */
+    Q_INVOKABLE void createItem(const QString& name);
+    Q_INVOKABLE void deleteItem(int row);
+    Q_INVOKABLE void startItemProgress(int row);
+    Q_INVOKABLE void stopItemProgress(int row);
+    Q_INVOKABLE void pauseItemProgress(int row);
 
 private:
     SampleItem* rowToItem(int row) const;
