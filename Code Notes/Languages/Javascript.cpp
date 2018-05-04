@@ -100,8 +100,8 @@ str.endsWith(str1);               // If ends with str1
 str.startsWith(str1);             // If starts with str1
 str.lastIndexOf(str1, start);     // Returns index from start index searching backwards
 str.indexOf(str1, start);         // Returns index from start index searching forwards
-escape("str")      // Returns new string with escaped version eg. " becomes \"
-unescape("str")    // Returns new string with unescaped version eg. \" becomes "
+escape(str)                       // Returns new string with escaped version eg. " becomes \"
+unescape(str)                     // Returns new string with unescaped version eg. \" becomes "
     
 // REGULAR EXPRESSIONS
 var regex = /ab+c/; // Literal exp can improve performance
