@@ -104,8 +104,17 @@ escape("str")      // Returns new string with escaped version eg. " becomes \"
 unescape("str")    // Returns new string with unescaped version eg. \" becomes "
     
 // REGULAR EXPRESSIONS
-var re = /ab+c/; // Literal exp can improve performance
-var re = new RegExp('ab+c');
+var regex = /ab+c/; // Literal exp can improve performance
+var regex = /ab+c/i; // Literal exp with flags
+var regex = new RegExp('ab+c', 'flags'); // flags optional
+regex.exec(str) // Tests str and returns string array of matches or null
+regex.test(str) // Tests str and returns boolean if match found
+regex.source // Regex string
+
+// Regex Flags
+g   // Global search
+i   // Case-insensitive search
+m   // Multi-line search
     
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ARRAYS
