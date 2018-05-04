@@ -1557,6 +1557,14 @@ GridView.FlowTopToBottom   // Items are laid out from top to bottom, and the vie
 // QML DELEGATES
 //===========================================================================================================
 
+// DELEGATE DEFAULT ROLES
+display       // Qt::DisplayRole   
+decoration    // Qt::DecorationRole
+edit          // Qt::EditRole      
+toolTip       // Qt::ToolTipRole   
+statusTip     // Qt::StatusTipRole 
+whatsThis     // Qt::WhatsThisRole 
+
 // DELEGATE PROPERTIES
 // Given to any delegate Item, don't have to use ItemDelegate type
 Item {
