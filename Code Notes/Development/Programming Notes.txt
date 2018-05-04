@@ -454,28 +454,43 @@ Mask8  = 128   0x080    0x00000080    10000000    1 << 7    b7
 // REGULAR EXPRESSIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-*             Matches the preceding expression 0 or more times
-+             Matches the preceding expression 1 or more times
-?             Matches the preceding expression 0 or 1 time
-^             Matches beginning of input
-$             Matches end of input
-\             Put before regex char to make normal char
-.             Matches any single character except the newline character
-(x)           Capturing parentheses; Matches expression x and remembers the match
-(?:x)         Matches expression x but does not remember the match
-x(?=y)        Lookahead; Matches 'x' only if 'x' is followed by 'y'
-x(?!y)        Negated lookahead; Matches 'x' only if 'x' is not followed by 'y'
-x|y           Matches 'x', or 'y' (if there is no match for 'x')
+• [x][regex char][x][regex char]... Each regex char works on previous expression 'x' up to previous regex char
+
+*                Matches the preceding expression 0 or more times
++                Matches the preceding expression 1 or more times
+?                Matches the preceding expression 0 or 1 time
+^                Matches beginning of input
+$                Matches end of input
+\                Put before regex char to make normal char
+.                Matches any single character except the newline character
+(x)              Capturing parentheses; Matches expression x and remembers the match
+(?:x)            Matches expression x but does not remember the match
+x(?=y)           Lookahead; Matches 'x' only if 'x' is followed by 'y'
+x(?!y)           Negated lookahead; Matches 'x' only if 'x' is not followed by 'y'
+x|y              Matches 'x', or 'y' (if there is no match for 'x')
+{n}              Matches exactly n occurrences of the preceding expression
+{n,}             Matches at least n occurrences of the preceding expression
+[]               Character set; Matches any character inside []
+[^]              Negated character set; matches anything that is not enclosed in the brackets
+
+\d               Matches a digit character. Equivalent to [0-9]
+\D               Matches a non-digit character. Equivalent to [^0-9]
+\s               Matches a single white space character, including space, tab, form feed, line feed
+\S               Matches a single character other than white space
+\t               Matches a tab
+\w               Matches any alphanumeric character including the underscore. Equivalent to [A-Za-z0-9_]
+\W               Matches any non-alphanumeric character/underscore. Equivalent to [^A-Za-z0-9_]
 
 EXAMPLES
-\w{2}         2 letters
-\s*           Arbitrary number of spaces
-\d{5}         5 digits
-//.*?\n       All between // and \n
-//.*?$        All between // and end
-abc           Search for substring 'abc'
-ab*c          Search for a, then 0 or more of b, then c
-ab+c          Search for a, then 1 or more of b, then c
+\w{2}            2 letters
+\s*              Arbitrary number of spaces
+\d{5}            5 digits
+//.*?\n          All between // and \n
+//.*?$           All between // and end
+abc              Search for substring 'abc'
+ab*c             Search for a, then 0 or more of b, then c
+ab+c             Search for a, then 1 or more of b, then c
+[abc] or [a-c]   Search for any that has a, b and/or c
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // EXCEPTIONS
