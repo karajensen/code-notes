@@ -1568,25 +1568,18 @@ whatsThis     // Qt::WhatsThisRole
 // DELEGATE PROPERTIES
 // Given to any delegate Item, don't have to use ItemDelegate type
 Item {
-    ListView.onAdd: {} // Emitted immediately after an item is added to the view
-    ListView.onRemove: {} // Emitted immediately before an item is removed from the view
-    GridView.onAdd: {} // Emitted immediately after an item is added to the view
-    GridView.onRemove: {} // Emitted immediately before an item is removed from the view  
+    <T>.onAdd: {} // Emitted immediately after an item is added to the view for List/GridView
+    <T>.onRemove: {} // Emitted immediately before an item is removed from the view for List/GridView
 } 
 del.model // Role data for each delegate item, eg. model.role_name
 del.modelData // If view's model has no roles, use to access item data for delegate
 del.index // Index in view, can be -1 if removed from view
-del.ListView.view // Use to access listView if delegate created outside it
-del.ListView.isCurrentItem // Whether the delegate is the currently selected item
-del.ListView.delayRemove // Whether the delegate has to delay destruction (eg. to finish animation)
+del.<T>.view // Use to access List/Grid/PathView if delegate created outside it
+del.<T>.isCurrentItem // Whether the delegate is the currently selected item of List/Grid/PathView
+del.<T>.delayRemove // Whether delegate has to delay destruction (eg. to finish animation) of List/GridView
 del.ListView.nextSection // Section string of the next item
 del.ListView.previousSection  // Section string of the previous item
 del.ListView.section // Section string of the item
-del.GridView.view // Use to access gridView if delegate created outside it
-del.GridView.isCurrentItem // Whether the delegate is the currently selected item
-del.GridView.delayRemove // Whether the delegate has to delay destruction (eg. to finish animation)
-del.PathView.view // Use to access pathView if delegate created outside it
-del.PathView.isCurrentItem // Whether the delegate is the currently selected item
 del.PathView.onPath // Whether the item is currently on the path
 
 // ITEMDELEGATE
