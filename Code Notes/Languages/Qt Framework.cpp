@@ -528,47 +528,114 @@ private:
 //===========================================================================================================
 
 // QModelIndex
+// Created/obtained from QAbstractItemModel::createIndex / QAbstractItemModel::index
+// Should be used immediately and then discarded
+QModelIndex index; // Create an invalid index
+index.column() // Column of the index
+index.data(role) // Default role Qt::DisplayRole, returns QVariant of item at index
+index.flags() // Returns Qt::ItemFlags for the item at index
+index.internalId() // Returns quintptr used by model to associate the index with the internal data
+index.internalPointer() // Returns void* used by model to associate the index with the internal data
+index.isValid() // Valid index belongs to a model, and has non-negative row and column numbers
+index.model() // Returns const QAbstractItemModel*, do not const_cast
+index.parent() // Returns QModelIndex
+index.row() // Row of the index
+index.sibling(row, column) // Returns QModelIndex
 
 // QPersistentModelIndex
+// Can be safely stored, model will auto update all saved if index invalidation change occurs
+QPersistentModelIndex pindex(index); 
+pindex.column() // Column of the index
+pindex.data(role) // Default role Qt::DisplayRole, returns QVariant of item at index
+pindex.flags() // Returns Qt::ItemFlags for the item at index
+pindex.isValid() // Valid index belongs to a model, and has non-negative row and column numbers
+pindex.model() // Returns const QAbstractItemModel*, do not const_cast
+pindex.parent() // Returns QModelIndex
+pindex.row() // Row of the index
+pindex.sibling(row, column) // Returns QModelIndex
 
 // QAbstractItemModel
 // Inherits QObject, Abstract interface for item model classes
-// Parent is always const QModelIndex&
+// Parent/index is always const QModelIndex&
+// Drag-drop methods in Model Drag / Drop section
 model.beginInsertColumns(parent, first, last)
-model.endInsertColumns()
-model.beginMoveColumns(srcParent, srcFirst, srcLast, dstParent, dstChild)
-model.endMoveColumns()
-model.beginRemoveColumns(parent, first, last)
-model.endRemoveColumns()
 model.beginInsertRows(parent, first, last)
-model.endInsertRows()
+model.beginMoveColumns(srcParent, srcFirst, srcLast, dstParent, dstChild)
 model.beginMoveRows(srcParent, srcFirst, srcLast, dstParent, dstChild)
-model.endMoveRows()
+model.beginRemoveColumns(parent, first, last)
 model.beginRemoveRows(parent, first, last)
-model.endRemoveRows()
 model.beginResetModel()
-model.endResetModel()
+model.buddy(index) // Returns QModelIndex
+model.canFetchMore(parent)
 model.changePersistentIndex(from, to)
 model.changePersistentIndexList(from, to)
-model.hasIndex(row, column, parent) // Parent optional
-emit dataChanged(topLeft, botRight, roles) // Roles optional
-emit headerDataChanged(orientation, first, last)
-emit columnsAboutToBeInserted(parent, first, last) // Auto emitted
-emit columnsInserted(parent, first, last) // Auto emitted
-emit columnsAboutToBeMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Auto emitted
-emit columnsMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Auto emitted
-emit columnsAboutToBeRemoved(parent, first, last) // Auto emitted
-emit columnsRemoved(parent, first, last) // Auto emitted
-emit rowsAboutToBeInserted(parent, first, last) // Auto emitted
-emit rowsInserted(parent, first, last) // Auto emitted
-emit rowsAboutToBeMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Auto emitted
-emit rowsMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Auto emitted
-emit rowsAboutToBeRemoved(parent, first, last) // Auto emitted
-emit rowsRemoved(parent, first, last) // Auto emitted
+model.createIndex(row, column, ptr) // Returns QModelIndex, ptr optional
+model.createIndex(row, column, id) // Returns QModelIndex
+model.columnCount(parent) // parent optional
+model.data(index, role) // Default role Qt::DisplayRole, returns QVariant
+model.endInsertColumns()
+model.endInsertRows()
+model.endMoveColumns()
+model.endMoveRows()
+model.endRemoveColumns()
+model.endRemoveRows()
+model.endResetModel()
+model.fetchMore(parent)
+model.flags(index) // Returns Qt::ItemFlags
+model.hasChildren(parent) // parent optional
+model.hasIndex(row, column, parent) // parent optional
+model.headerData(section, orientation, role) // Default role Qt::DisplayRole
+model.index(row, column, parent) // parent optional, returns QModelIndex
+model.insertColumn(column, parent) // parent optional, calls insertColumns
+model.insertColumns(column, count, parent) // parent optional
+model.insertRow(row, parent) // parent optional, calls insertRows
+model.insertRows(row, count, parent) // parent optional
+model.itemData(index) // Returns QMap<int, QVariant>
+model.match(start, role, value, hits, matchflags) // Returns QModelIndexList, hits/matchFlags optional
+model.moveColumn(srcParent, srcColumn, dstParent, dstChild) // calls moveColumns
+model.moveColumns(srcParent, srcColumn, count, dstParent, dstChild)
+model.moveRow(srcParent, srcRow, dstParent, dstChild) // calls moveRows
+model.moveRows(srceParent, srcRow, count, dstParent, dstChild)
+model.parent(index) // Returns QModelIndex
+model.persistentIndexList() // Returns QModelIndexList
+model.removeColumn(column, parent) // parent optional, calls removeColumns
+model.removeColumns(column, count, parent) // parent optional
+model.removeRow(row, parent) // parent optional, calls removeRows
+model.removeRows(row, count, parent) // parent optional
+model.roleNames() const // Returns QHash<int, QByteArray>
+model.rowCount(parent) // parent optional
+model.setData(index, value, role) // Default role Qt::EditRole
+model.setHeaderData(section, orientation, value, role) // Default role Qt::EditRole
+model.setItemData(index, roles)
+model.sibling(row, column, index) // Returns QModelIndex
+model.sort(column, order) // Order default Qt::AscendingOrder
+model.span(index) // Returns QSize
+emit dataChanged(topLeft, botRight, roles) // Roles optional, Emitted by setData
+emit headerDataChanged(orientation, first, last) // Emitted by setHeaderData
+emit columnsAboutToBeInserted(parent, first, last) // Emitted by beginInsertColumns
+emit columnsInserted(parent, first, last) // Emitted by endInsertColumns
+emit columnsAboutToBeMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Emitted by beginMoveColumns
+emit columnsMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Emitted by endMoveColumns
+emit columnsAboutToBeRemoved(parent, first, last) // Emitted by beginRemoveColumns
+emit columnsRemoved(parent, first, last) // Emitted by endRemoveColumns
+emit rowsAboutToBeInserted(parent, first, last) // Emitted by beginInsertRows
+emit rowsInserted(parent, first, last) // Emitted by endInsertRows
+emit rowsAboutToBeMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Emitted by beginMoveRows
+emit rowsMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Emitted by endMoveRows
+emit rowsAboutToBeRemoved(parent, first, last) // Emitted by beginRemoveRows
+emit rowsRemoved(parent, first, last) // Emitted by endRemoveRows
 emit layoutAboutToBeChanged(parents, hint) // Both optional
 emit layoutChanged(parents, hint) // Both optional
-emit modelAboutToBeReset()
-emit modelReset()
+emit modelAboutToBeReset() // Emitted by beginResetModel
+emit modelReset() // Emitted by endResetModel
+    
+// QAbstractItemModel Default Roles
+Qt::DisplayRole         // display
+Qt::DecorationRole      // decoration
+Qt::EditRole            // edit
+Qt::ToolTipRole         // toolTip
+Qt::StatusTipRole       // statusTip
+Qt::WhatsThisRole       // whatsThis
 
 // QAbstractTableModel
 // Inherits QAbstractItemModel, Can be subclassed to create table models
@@ -596,7 +663,7 @@ emit modelReset()
 // Inherits QAbstractProxyModel, support for sorting/filtering data passed between another model and a view
 
 //===========================================================================================================
-// CUSTOM DRAG / DROP ENCODING
+// MODEL DRAG / DROP
 //===========================================================================================================
 
 // All are optional, re-implementing some require others to also be implemented
