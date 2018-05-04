@@ -639,10 +639,14 @@ Qt::WhatsThisRole       // whatsThis
 
 // QAbstractTableModel
 // Inherits QAbstractItemModel, Can be subclassed to create table models
-
+// Re-implements: dropMimeData, flags, index, sibling
+QAbstractTableModel model;
+    
 // QAbstractListModel
 // Inherits QAbstractItemModel, Can be subclassed to create one-dimensional list models
-
+// Re-implements: dropMimeData, flags, index, sibling
+QAbstractListModel model;
+    
 // QStringListModel
 // Inherits QAbstractListModel, Model that supplies strings to views
 
