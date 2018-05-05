@@ -565,7 +565,7 @@ model.beginMoveRows(srcParent, srcFirst, srcLast, dstParent, dstChild) // Move s
 model.beginRemoveColumns(parent, first, last) // Remove columns between first to last
 model.beginRemoveRows(parent, first, last) // Remove rows between first to last
 model.beginResetModel()
-model.buddy(index) // Returns QModelIndex
+model.buddy(index) // Returns QModelIndex for item to edit instead of selected one. Auto called?
 model.canFetchMore(parent)
 model.changePersistentIndex(from, to)
 model.changePersistentIndexList(from, to)
