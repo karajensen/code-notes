@@ -58,8 +58,8 @@ public:
     virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
     virtual bool canDropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) const override;
     virtual QMimeData* mimeData(const QModelIndexList& indexes) const override;
-    virtual Qt::DropActions SampleModel::supportedDropActions() const override;
-    virtual Qt::DropActions SampleModel::supportedDragActions() const override;
+    virtual Qt::DropActions supportedDropActions() const override;
+    virtual Qt::DropActions supportedDragActions() const override;
 
     /**
     * Custom Methods
