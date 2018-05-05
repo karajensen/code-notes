@@ -52,10 +52,6 @@ else { }
 for (i = 1; i <= n; i++) { break; }
 while(bool) { continue; }
 do { } while (bool)
-for (var key in arr) { var x = arr[key]; } // safe way to iterate, using i++ may create key
-for (var value of arr) { var x = value; } // iterate over values
-for (var key in obj) { var x = obj[key]; } // iterate over object property keys
-for (var value in obj) { var x = value; } // iterate over object property values
 
 // SWITCH STATEMENTS
 switch (myString) {
@@ -71,73 +67,6 @@ switch (myInt) {
   case 1:
     break;
   default:
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// STRINGS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// STRING
-// Each char is 16-bit unsigned integer (UTF-16) and immutable
-str = new String("MyString");
-str = "MyString\n";               // Allows using escaped characters
-str = `String Template`           // Allows using escaped characters and multiline
-str.charAt(index);                // Returns char at index
-str.toUpperCase();                // Returns upper case of string
-str.toLowerCase();                // Returns lower case of string
-str.indexOf("substring");         // Returns first index of or -1 if not found
-str.length                        // Number of characters in string
-str.replace(str1, str2);          // Replace str1 with str2, returns new string
-str.split(",")                    // Returns array of string without seperator
-str.slice(start, end)             // Returns string between index [start, end), end optional
-str.trim()                        // Returns string, trims whitespace from the beginning and end
-str.repeat(count);                // Returns string as str repeated count times
-str.substr(start, length);        // Returns string, length optional, start is index
-str.substring(start, end);        // Returns string, end optional, start/end are index
-str.concat(str1, str2);           // Returns string, takes any amount of strings and adds them
-str.includes(str1, start);        // Whether str1 is in str, search starts from start index
-str.endsWith(str1);               // If ends with str1
-str.startsWith(str1);             // If starts with str1
-str.lastIndexOf(str1, start);     // Returns index from start index searching backwards
-str.indexOf(str1, start);         // Returns index from start index searching forwards
-escape(str)                       // Returns new string with escaped version eg. " becomes \"
-unescape(str)                     // Returns new string with unescaped version eg. \" becomes "
-    
-// REGULAR EXPRESSIONS
-var regex = /ab+c/; // Literal exp can improve performance
-var regex = /ab+c/i; // Literal exp with flags
-var regex = new RegExp('ab+c', 'flags'); // flags optional
-regex.exec(str) // Tests str and returns string array of matches or null
-regex.test(str) // Tests str and returns boolean if match found
-regex.source // Regex string
-
-// Regex Flags
-g   // Global search
-i   // Case-insensitive search
-m   // Multi-line search
-    
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ARRAYS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
-myArray = new Array();
-myArray = ["a","b","c",];         // Last , not needed and ignored
-myArray = [, ,];                  // Adds undefined for the empty element between , ,
-myArray.length 
-myArray[0] = "myEntry";
-myArray["one"] = 2.0;             // creates new entry if key doesn't exist
-"one" in myArray                  // returns true if 'one' is a key in myArray
-    
-// DESTRUCTURING
-var arr = ['one', 'two', 'three'];
-var [one, two, three] = arr // Assign each member to their own variable
-var a, b;
-[a, ...b] = [1, 2, 3]; // a = 1, b = [2,3]
-
-// REMOVE KEY
-var index = myArray.indexOf(key); // returns -1 if cannot find key
-if (index > -1) {
-    myArray.splice(index, n); // number of keys to remove
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -215,6 +144,9 @@ var obj = null;                   // Null object
 var obj = { x: 2, y : 1 };        // Object with properties/attributes
 var obj = { "x": 2, "y" : 1 };    // Object with properties/attributes
 
+for (var key in obj) { var x = obj[key]; } // iterate over object property keys
+for (var value of obj) { var x = value; } // iterate over object property values
+            
 obj.x /*or*/ obj["x"];            // Access object properties, key requires "
 obj = obj || "default value";     // If null use default value
 "x" in obj;                       // returns true if 'x' is a property in myArray
@@ -247,6 +179,79 @@ console.error("Message");
 
 result = prompt("Question Text", "Default Answer");
 if(result){ } // result will be null or 0 if cancel clicked
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// STRINGS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// STRING
+// Each char is 16-bit unsigned integer (UTF-16) and immutable
+str = new String("MyString");
+str = "MyString\n";               // Allows using escaped characters
+str = `String Template`           // Allows using escaped characters and multiline
+str.charAt(index);                // Returns char at index
+str.toUpperCase();                // Returns upper case of string
+str.toLowerCase();                // Returns lower case of string
+str.indexOf("substring");         // Returns first index of or -1 if not found
+str.length                        // Number of characters in string
+str.replace(str1, str2);          // Replace str1 with str2, returns new string
+str.split(",")                    // Returns array of string without seperator
+str.slice(start, end)             // Returns string between index [start, end), end optional
+str.trim()                        // Returns string, trims whitespace from the beginning and end
+str.repeat(count);                // Returns string as str repeated count times
+str.substr(start, length);        // Returns string, length optional, start is index
+str.substring(start, end);        // Returns string, end optional, start/end are index
+str.concat(str1, str2);           // Returns string, takes any amount of strings and adds them
+str.includes(str1, start);        // Whether str1 is in str, search starts from start index
+str.endsWith(str1);               // If ends with str1
+str.startsWith(str1);             // If starts with str1
+str.lastIndexOf(str1, start);     // Returns index from start index searching backwards
+str.indexOf(str1, start);         // Returns index from start index searching forwards
+escape(str)                       // Returns new string with escaped version eg. " becomes \"
+unescape(str)                     // Returns new string with unescaped version eg. \" becomes "
+    
+// REGULAR EXPRESSIONS
+var regex = /ab+c/; // Literal exp can improve performance
+var regex = /ab+c/i; // Literal exp with flags
+var regex = new RegExp('ab+c', 'flags'); // flags optional
+regex.exec(str) // Tests str and returns string array of matches or null
+regex.test(str) // Tests str and returns boolean if match found
+regex.source // Regex string
+
+// Regex Flags
+g   // Global search
+i   // Case-insensitive search
+m   // Multi-line search
+    
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ARRAYS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+arr = new Array("a","b", 3.0);
+arr = Array("a","b", 3.0);
+arr = Array(2);               // Creates array with size 2, not an item with value 2
+arr = ["a","b", 3.0,];        // Last , not needed and ignored
+arr = [, ,];                  // Adds undefined for the empty element between , , 
+arr[0] = "myEntry";           // creates new entry if key doesn't exist
+arr["0"] = "myEntry";         // adds to array object, not actual array list (doesn't affect length)
+arr.length                    // length of array list
+    
+// ITERATING
+for (var i = 0; i < arr.length; i++) { var x = arr[i]; } 
+arr.forEach(value => var x = value)); // skips unassigned values, keeps manual undefined assigned
+arr.forEach(function(value) { var x = value; } // skips unassigned values, keeps manual undefined assigned
+    
+// DESTRUCTURING
+var arr = ['one', 'two', 'three'];
+var [one, two, three] = arr // Assign each member to their own variable
+var a, b;
+[a, ...b] = [1, 2, 3]; // a = 1, b = [2,3]
+
+// REMOVE KEY
+var index = myArray.indexOf(key); // returns -1 if cannot find key
+if (index > -1) {
+    myArray.splice(index, n); // number of keys to remove
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // LIBRARIES
