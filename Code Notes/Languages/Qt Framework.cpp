@@ -564,34 +564,33 @@ model.beginMoveColumns(srcParent, srcFirst, srcLast, dstParent, dstChild) // Mov
 model.beginMoveRows(srcParent, srcFirst, srcLast, dstParent, dstChild) // Move srcFirst-srcLast to dstChild
 model.beginRemoveColumns(parent, first, last) // Remove columns between first to last
 model.beginRemoveRows(parent, first, last) // Remove rows between first to last
-model.beginResetModel()
+model.beginResetModel() // full model reset
 model.buddy(index) // Returns QModelIndex for item to edit instead of selected one. Auto called?
-model.canFetchMore(parent)
-model.changePersistentIndex(from, to)
-model.changePersistentIndexList(from, to)
-model.createIndex(row, column, ptr) // Returns QModelIndex, ptr optional
-model.createIndex(row, column, id) // Returns QModelIndex
-model.columnCount(parent) // parent optional
+model.changePersistentIndex(src, dst) // Updates persistent index at src to dst
+model.changePersistentIndexList(src, dst) // Updates persistent QModelIndexList at src to dst
+model.createIndex(row, column) // Returns QModelIndex
+model.columnCount(parent) // parent optional, amount of columns
 model.data(index, role) // Default role Qt::DisplayRole, returns QVariant
-model.endInsertColumns()
-model.endInsertRows()
-model.endMoveColumns()
-model.endMoveRows()
-model.endRemoveColumns()
-model.endRemoveRows()
-model.endResetModel()
-model.fetchMore(parent)
-model.flags(index) // Returns Qt::ItemFlags
-model.hasChildren(parent) // parent optional
-model.hasIndex(row, column, parent) // parent optional
-model.headerData(section, orientation, role) // Default role Qt::DisplayRole
+model.endInsertColumns() // end beginInsertColumns
+model.endInsertRows() // end beginInsertRows
+model.endMoveColumns() // end beginMoveColumns
+model.endMoveRows() // end beginMoveRows
+model.endRemoveColumns() // end beginRemoveColumns
+model.endRemoveRows() // end beginRemoveRows
+model.endResetModel() // end beginResetModel
+model.flags(index) // Returns Qt::ItemFlags for item
+model.hasChildren(parent) // parent optional, whether parent has child items
+model.hasIndex(row, column, parent) // parent optional, whether index is valid
+model.headerData(section, orientation, role) // Default role Qt::DisplayRole, Qt::Orientation, returns QVariant
 model.index(row, column, parent) // parent optional, returns QModelIndex
-model.insertColumn(column, parent) // parent optional, calls insertColumns
-model.insertColumns(column, count, parent) // parent optional
-model.insertRow(row, parent) // parent optional, calls insertRows
-model.insertRows(row, count, parent) // parent optional
-model.itemData(index) // Returns QMap<int, QVariant>
-model.match(start, role, value, hits, matchflags) // Returns QModelIndexList, hits/matchFlags optional
+model.insertColumn(index, parent) // parent optional, calls insertColumns
+model.insertColumns(index, count, parent) // parent optional, inserts count columns before index
+model.insertRow(index, parent) // parent optional, calls insertRows
+model.insertRows(index, count, parent) // parent optional, inserts count rows before index
+model.itemData(index) // Returns QMap<int, QVariant> of all roles with their values
+model.match(index, role, value) // Returns QModelIndexList of first item in index's column with role with value
+model.match(index, role, value, hits) // Number of items to look for, use -1 to return all matches
+model.match(index, role, value, hits, flags) // Qt::MatchFlags with default Qt::MatchStartsWith | Qt::MatchWrap
 model.moveColumn(srcParent, srcColumn, dstParent, dstChild) // calls moveColumns
 model.moveColumns(srcParent, srcColumn, count, dstParent, dstChild)
 model.moveRow(srcParent, srcRow, dstParent, dstChild) // calls moveRows
@@ -603,7 +602,7 @@ model.removeColumns(column, count, parent) // parent optional
 model.removeRow(row, parent) // parent optional, calls removeRows
 model.removeRows(row, count, parent) // parent optional
 model.roleNames() const // Returns QHash<int, QByteArray>
-model.rowCount(parent) // parent optional
+model.rowCount(parent) // parent optional, amount of rows
 model.setData(index, value, role) // Default role Qt::EditRole
 model.setHeaderData(section, orientation, value, role) // Default role Qt::EditRole
 model.setItemData(index, roles)
@@ -629,13 +628,41 @@ emit layoutChanged(parents, hint) // Both optional
 emit modelAboutToBeReset() // Emitted by beginResetModel
 emit modelReset() // Emitted by endResetModel
     
-// QAbstractItemModel Default Roles
-Qt::DisplayRole         // display
-Qt::DecorationRole      // decoration
-Qt::EditRole            // edit
-Qt::ToolTipRole         // toolTip
-Qt::StatusTipRole       // statusTip
-Qt::WhatsThisRole       // whatsThis
+// QAbstractItemModel Qt::Orientation
+Qt::Horizontal   
+Qt::Vertical
+    
+// QAbstractItemModel Qt::ItemFlags
+Qt::NoItemFlags           // No properties
+Qt::ItemIsSelectable      // Can be selected
+Qt::ItemIsEditable        // Can be edited
+Qt::ItemIsDragEnabled     // Can be dragged
+Qt::ItemIsDropEnabled     // Can be used as a drop target
+Qt::ItemIsUserCheckable   // Can be checked or unchecked by the user
+Qt::ItemIsEnabled         // Can interact with the item
+Qt::ItemIsAutoTristate    // State depends on the state of its children (eg. checked if children are checked)
+Qt::ItemNeverHasChildren  // Item never has child items. This is used for optimization purposes only
+Qt::ItemIsUserTristate    // The user can cycle through three separate states
+    
+// QAbstractItemModel Qt::ItemDataRole
+Qt::DisplayRole           // display, QString
+Qt::DecorationRole        // decoration, QColor, QIcon or QPixmap
+Qt::EditRole              // edit, QString
+Qt::ToolTipRole           // toolTip, QString
+Qt::StatusTipRole         // statusTip, QString
+Qt::WhatsThisRole         // whatsThis, QString
+
+// QAbstractItemModel Qt::MatchFlags
+Qt::MatchExactly          // Performs QVariant-based matching
+Qt::MatchFixedString      // Performs string-based matching, case-insensitive unless MatchCaseSensitive flag
+Qt::MatchContains         // The search term is contained in the item
+Qt::MatchStartsWith       // The search term matches the start of the item
+Qt::MatchEndsWith         // The search term matches the end of the item
+Qt::MatchCaseSensitive    // The search is case sensitive
+Qt::MatchRegExp           // Performs string-based matching using a regular expression as the search term
+Qt::MatchWildcard         // Performs string-based matching using a string with wildcards as the search term
+Qt::MatchWrap             // Perform a search that wraps around so all items are searched
+Qt::MatchRecursive        // Searches the entire hierarchy including children
 
 // QAbstractTableModel
 // Inherits QAbstractItemModel, Can be subclassed to create table models
