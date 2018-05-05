@@ -1621,15 +1621,16 @@ model.match(index, role, value) // Returns QModelIndexList of first item in inde
 model.match(index, role, value, hits) // Number of items to look for, use -1 to return all matches
 model.match(index, role, value, hits, flags) // MatchFlags with default Qt.MatchStartsWith | Qt.MatchWrap
 model.headerData(section, orientation, role) // Default role display, Orientation Enum, returns QVariant
-model.setData
+model.setData(index, value, role) // Default role edit, true if successful
 model.data(index, role) // Default role display, returns QVariant
 model.hasChildren(parent) // parent optional, whether parent has child items
 model.columnCount(parent) // parent optional, amount of columns
 model.rowCount(parent) // parent optional, amount of rows
-model.sibling
+model.sibling(row, column, index) // Returns QModelIndex, row/column relative to index
 model.hasChildren(parent) // parent optional, whether parent has child items
 model.index(row, column, parent) // parent optional, returns QModelIndex
 model.hasIndex(row, column, parent) // parent optional, whether index is valid
+model.parent(index) // Returns QModelIndex
 
 // LISTMODEL
 // free-form list data source
