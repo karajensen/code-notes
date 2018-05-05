@@ -411,7 +411,7 @@ pindex.sibling(row, column) // Returns QModelIndex
 // QAbstractItemModel
 // Inherits QObject, Abstract interface for item model classes
 // Parent/index is always const QModelIndex&
-// Drag-drop methods in Model Drag / Drop section
+// See sample qt app for Drag-drop methods
 model.beginInsertColumns(parent, first, last) // Insert new columns between first to last
 model.beginInsertRows(parent, first, last) // Insert new rows between first to last
 model.beginMoveColumns(srcParent, srcFirst, srcLast, dstParent, dstChild) // Move srcFirst-srcLast to dstChild
