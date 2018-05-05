@@ -381,152 +381,6 @@ pair.second;
 • MimeData: MIME-encoded data for the Model's items, used for drag-drop
 **************************************************************************************************************/
 
-class MyModel : public QAbstractItemModel // QAbstractListModel
-{
-    Q_OBJECT
-public:
-    virtual ~MyModel() = default;
-    MyModel(QObject* parent = nullptr)
-        : QAbstractListModel(parent)
-    {
-        // Batch create all new items here
-    }
-
-    enum ModelRoles
-    {
-        MyRole1 = Qt::UserRole + 1,
-        MyRole2
-    };
-    
-    /* @return the supported roles for this model */
-    virtual QHash<int, QByteArray> roleNames() const override
-    {
-        QHash<int, QByteArray> roles;
-        roles[MyRole1] = "role_one";
-        roles[MyRole2] = "role_two";
-        return roles;    
-    }
-    
-    /* Sets data for an item at index using the given role */
-    virtual bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override
-    {
-        if (index.row() >= 0 && index.row() < static_cast<int>(m_items.size()))
-        {
-            const auto& item = m_items[index.row()];
-            if (role == Role1)
-            {
-                item->setRole1(value);
-                emit dataChanged(index, index);
-                return true;
-            }
-            else if (role == Role2)
-            {
-                item->setRole2(value);
-                emit dataChanged(index, index);
-                return true;
-            }
-        }
-        return false;
-    }
-   
-    /* @return data for an item at index using the given role */
-    virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override
-    {
-        if (index.row() >= 0 && index.row() < static_cast<int>(m_items.size()))
-        {
-            const auto& item = m_items[index.row()];
-            if (role == Role1)
-            {
-                return item->getRole1();
-            }
-            else if (role == Role2)
-            {
-                return item->getRole2();
-            }
-        }
-        return QVariant();    
-    }    
-
-    /* @return the amount of rows in the model */
-    virtual int rowCount(const QModelIndex& parent = QModelIndex()) const override
-    {
-        Q_UNUSED(parent);
-        return static_cast<int>(m_items.size());    
-    }
-    
-    /* Not needed if using QAbstractListModel, Return the amount of columns in the model*/
-    virtual int columnCount(const QModelIndex& parent = QModelIndex()) const override
-    {
-        return parent.isValid() ? 0 : 1;
-    }
-    
-    /* Not needed for QAbstractListModel, Default column = 0 if not using it */
-    virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override
-    {
-        return hasIndex(row, column, parent) ? createIndex(row, column) : QModelIndex();
-    }
-
-    /* Not needed for QAbstractListModel */
-    virtual QModelIndex parent(const QModelIndex& child = QModelIndex()) const override
-    {
-        return QModelIndex();
-    }    
-    
-    /* @return row index converted to an item */
-    MyItem* rowToItem(int row) const
-    {
-        return row >= 0 && row < static_cast<int>(m_items.size())
-            ? m_items[row].get() : nullptr;
-    }
-    
-    /* @return item converted to row index */
-    int itemToRow(const WorkerItem* item) const
-    {
-        const auto itr = std::find_if(m_items.begin(), m_items.end(), 
-            [item](const auto& itemPtr) { return itemPtr.get() == item; });
-        return itr != m_items.end() ? std::distance(m_items.begin(), itr) : -1;
-    }
-    
-    /* A function invokable from QML that modifies data from the model */
-    Q_INVOKABLE void qmlFunction(int row)
-    {
-        if (auto item = rowToItem(row))
-        {
-            item->doSomethingToChangeData();
-            const auto& modelIndex = index(row);
-            emit dataChanged(modelIndex, modelIndex);
-        }
-    }
-    
-    /* A function that creates a new item */
-    void createItem()
-    {
-        beginInsertRows(QModelIndex(), rowCount(), rowCount());
-        m_items.push_back(std::make_unique<MyItem>());
-        endInsertRows();
-    }
-
-    /* A function that deletes an item */
-    void deleteItem(int row)
-    {
-        if (row >= 0 && row < static_cast<int>(m_items.size()))
-        {
-            beginRemoveRows(QModelIndex(), row, row);
-            auto itr = m_items.begin();
-            std::advance(itr, row);
-            m_items.erase(itr);
-            endRemoveRows();
-        }
-    }
-    
-private:
-    std::vector<MyItem> m_items;
-};
-
-//===========================================================================================================
-// QT MODELS
-//===========================================================================================================
-
 // QModelIndex
 // Created/obtained from QAbstractItemModel::createIndex / QAbstractItemModel::index
 // Should be used immediately and then discarded
@@ -651,6 +505,15 @@ model.stringList() // Return QStringList
 // QItemSelectionModel
 // Instantiated By ItemSelectionModel, Inherits QObject, keeps track of a view's selected items
 
+// QAbstractProxyModel
+// Inherits QAbstractItemModel, Base class for proxy item models that can do sorting, filtering etc
+
+// QIdentityProxyModel
+// Inherits QAbstractProxyModel, Proxies its source model unmodified
+
+// QSortFilterProxyModel
+// Inherits QAbstractProxyModel, support for sorting/filtering data passed between another model and a view
+
 // QAbstractItemModel Qt::Orientation
 Qt::Horizontal   
 Qt::Vertical
@@ -691,73 +554,6 @@ Qt::MatchWildcard         // Performs string-based matching using a string with 
 Qt::MatchWrap             // Perform a search that wraps around so all items are searched
 Qt::MatchRecursive        // Searches the entire hierarchy including children
 
-//===========================================================================================================
-// QT PROXY MODELS
-//===========================================================================================================
-
-// QAbstractProxyModel
-// Inherits QAbstractItemModel, Base class for proxy item models that can do sorting, filtering etc
-
-// QIdentityProxyModel
-// Inherits QAbstractProxyModel, Proxies its source model unmodified
-
-// QSortFilterProxyModel
-// Inherits QAbstractProxyModel, support for sorting/filtering data passed between another model and a view
-
-//===========================================================================================================
-// MODEL DRAG / DROP
-//===========================================================================================================
-
-// All are optional, re-implementing some require others to also be implemented
-class MyModel : public QAbstractItemModel
-{
-    static constexpr const char* MimeKey = "application/my-model-item";
-
-    // Default checks if data has at least one format in the list of mimeTypes() 
-    // and if action is in supportedDropActions(), only re-implement if needing custom checking
-    virtual bool canDropMimeData(const QMimeData* data, Qt::DropAction action, 
-                                int row, int column, const QModelIndex& parent) const override
-    {
-    }
-    
-    // Default returns Qt::CopyAction, Returns the supported Drop Action Flags
-    virtual Qt::DropActions supportedDropActions() const override
-    {
-    }
-    
-    // Serializes the items at indexes to MimeData
-    // Default uses mime type "application/x-qabstractitemmodeldatalist"
-    virtual QMimeData* mimeData(const QModelIndexList& indexes) const override
-    {
-    }
-    
-    // Returns the supported Mime types
-    // Default returns mime type "application/x-qabstractitemmodeldatalist"
-    virtual QStringList mimeTypes() const override
-    {
-        QStringList result = QAbstractItemModel::mimeTypes();
-        result.push_back(MimeKey); // Add custom key to supported types
-        return result;    
-    }    
-     
-    // Default tries to insert the items of data either as siblings or children of an item
-    // Returns true if the data and action were handled by the model; otherwise returns false
-    virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, 
-                              int row, int column, const QModelIndex& parent) override
-    {
-        // Using Default Encoding of MimeData
-        QByteArray encoded = qMimeData->data("application/x-qabstractitemmodeldatalist");
-        QDataStream stream(&encoded, QIODevice::ReadOnly);
-        while (!stream.atEnd())
-        {
-            int row, col;
-            QMap<int,  QVariant> roleDataMap;
-            stream >> row >> col >> roleDataMap;
-        }
-        // Using Custom Encoding of MimeData
-    }
-}
- 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT WIDGETS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
