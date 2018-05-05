@@ -558,12 +558,12 @@ pindex.sibling(row, column) // Returns QModelIndex
 // Inherits QObject, Abstract interface for item model classes
 // Parent/index is always const QModelIndex&
 // Drag-drop methods in Model Drag / Drop section
-model.beginInsertColumns(parent, first, last) // first to last indexes that will be inserted to
-model.beginInsertRows(parent, first, last) // first to last indexes that will be inserted to
-model.beginMoveColumns(srcParent, srcFirst, srcLast, dstParent, dstChild) 
-model.beginMoveRows(srcParent, srcFirst, srcLast, dstParent, dstChild)
-model.beginRemoveColumns(parent, first, last)
-model.beginRemoveRows(parent, first, last)
+model.beginInsertColumns(parent, first, last) // Insert new columns between first to last
+model.beginInsertRows(parent, first, last) // Insert new rows between first to last
+model.beginMoveColumns(srcParent, srcFirst, srcLast, dstParent, dstChild) // Move srcFirst-srcLast to dstChild
+model.beginMoveRows(srcParent, srcFirst, srcLast, dstParent, dstChild) // Move srcFirst-srcLast to dstChild
+model.beginRemoveColumns(parent, first, last) // Remove columns between first to last
+model.beginRemoveRows(parent, first, last) // Remove rows between first to last
 model.beginResetModel()
 model.buddy(index) // Returns QModelIndex
 model.canFetchMore(parent)
