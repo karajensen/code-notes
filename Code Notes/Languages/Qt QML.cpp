@@ -1612,6 +1612,21 @@ SwipeDelegate {
 // QML MODELS
 //===========================================================================================================
 
+// DERIVED QABSTRACTITEMMODELS
+model.fetchMore
+model.canFetchMore
+model.match
+model.headerData
+model.setData
+model.data
+model.hasChildren
+model.columnCount
+model.rowCount
+model.sibling
+model.parent
+model.index
+model.hasIndex
+
 // LISTMODEL
 // free-form list data source
 ListModel {
