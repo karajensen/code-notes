@@ -1,6 +1,6 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
-import QtQuick.Controls 1.4 as Controls1
+import QtQuick.Controls 2.3
+import QtQuick.Controls 1.4 as ControlsLegacy
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.2
 import SampleModel 1.0
@@ -36,7 +36,7 @@ Rectangle {
 
             ColumnLayout {
                 anchors.fill: parent
-                Controls1.ScrollView {
+                ControlsLegacy.ScrollView {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     ListView {

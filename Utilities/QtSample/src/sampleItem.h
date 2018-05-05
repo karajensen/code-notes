@@ -30,6 +30,7 @@ public:
     void stop();
     void pause();
 
+    void setName(const QString& name);
     const QString& getName() const;
     QString getStateAsString() const;
     State getState() const;

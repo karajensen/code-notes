@@ -89,3 +89,8 @@ void SampleItem::setState(State state)
         }
     }
 }
+
+void SampleItem::setName(const QString& name)
+{
+    m_name = name;
+}

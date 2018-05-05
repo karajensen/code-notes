@@ -16,7 +16,6 @@ public:
     SampleModel(QObject* parent = nullptr);
     virtual ~SampleModel();
     static void qmlRegisterTypes();
-    void tick();
 
     enum ModelRoles
     {
@@ -41,6 +40,7 @@ public:
     */
     virtual QHash<int, QByteArray> roleNames() const override;
     virtual bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
+    //virtual QMap<int, QVariant> itemData(const QModelIndex &index) const override;
     //virtual bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
     //virtual bool insertColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override;
     //virtual bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
@@ -51,26 +51,28 @@ public:
     //virtual bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role = Qt::EditRole) override;
 
     /**
-    * Drag and drop
+    * Drag and Drop
     */
     static constexpr const char* MimeKey = "application/sample-model-item";
     virtual QStringList mimeTypes() const override;
-    //virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
-    //virtual bool canDropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) const override;
-    //virtual QMimeData* mimeData(const QModelIndexList& indexes) const override;
+    virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
+    virtual bool canDropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) const override;
+    virtual QMimeData* mimeData(const QModelIndexList& indexes) const override;
+    virtual Qt::DropActions SampleModel::supportedDropActions() const override;
+    virtual Qt::DropActions SampleModel::supportedDragActions() const override;
 
     /**
-    * QML invokable functions to be used on sample items
+    * Custom Methods
     */
     Q_INVOKABLE void createItem(const QString& name);
     Q_INVOKABLE void deleteItem(int row);
     Q_INVOKABLE void startItemProgress(int row);
     Q_INVOKABLE void stopItemProgress(int row);
     Q_INVOKABLE void pauseItemProgress(int row);
-
-private:
     SampleItem* rowToItem(int row) const;
     int itemToRow(const SampleItem* item) const;
+    void tick();
 
+private:
     std::vector<std::unique_ptr<SampleItem>> m_items;
 };
