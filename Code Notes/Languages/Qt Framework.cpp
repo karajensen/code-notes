@@ -581,7 +581,7 @@ model.endResetModel() // end beginResetModel
 model.flags(index) // Returns Qt::ItemFlags for item
 model.hasChildren(parent) // parent optional, whether parent has child items
 model.hasIndex(row, column, parent) // parent optional, whether index is valid
-model.headerData(section, orientation, role) // Default role Qt::DisplayRole, Qt::Orientation, returns QVariant
+model.headerData(section, orientation, role) // Default role Qt::DisplayRole, Qt::Orientation enum
 model.index(row, column, parent) // parent optional, returns QModelIndex
 model.insertColumn(index, parent) // parent optional, calls insertColumns
 model.insertColumns(index, count, parent) // parent optional, inserts count columns before index
@@ -592,23 +592,22 @@ model.match(index, role, value) // Returns QModelIndexList of first item in inde
 model.match(index, role, value, hits) // Number of items to look for, use -1 to return all matches
 model.match(index, role, value, hits, flags) // Qt::MatchFlags with default Qt::MatchStartsWith | Qt::MatchWrap
 model.moveColumn(srcParent, srcColumn, dstParent, dstChild) // calls moveColumns
-model.moveColumns(srcParent, srcColumn, count, dstParent, dstChild)
+model.moveColumns(srcParent, srcColumn, count, dstParent, dstChild) // Move srcFirst-srcLast to dstChild
 model.moveRow(srcParent, srcRow, dstParent, dstChild) // calls moveRows
-model.moveRows(srceParent, srcRow, count, dstParent, dstChild)
+model.moveRows(srceParent, srcRow, count, dstParent, dstChild) // Move srcFirst-srcLast to dstChild
 model.parent(index) // Returns QModelIndex
-model.persistentIndexList() // Returns QModelIndexList
-model.removeColumn(column, parent) // parent optional, calls removeColumns
-model.removeColumns(column, count, parent) // parent optional
-model.removeRow(row, parent) // parent optional, calls removeRows
-model.removeRows(row, count, parent) // parent optional
-model.roleNames() const // Returns QHash<int, QByteArray>
+model.persistentIndexList() // Returns QModelIndexList of indexes stored as persistent indexes
+model.removeColumn(index, parent) // parent optional, calls removeColumns
+model.removeColumns(index, count, parent) // parent optional
+model.removeRow(index, parent) // parent optional, calls removeRows
+model.removeRows(index, count, parent) // parent optional, removes count rows starting at index
+model.roleNames() const // Returns QHash<int, QByteArray> of model's roles
 model.rowCount(parent) // parent optional, amount of rows
-model.setData(index, value, role) // Default role Qt::EditRole
-model.setHeaderData(section, orientation, value, role) // Default role Qt::EditRole
-model.setItemData(index, roles)
-model.sibling(row, column, index) // Returns QModelIndex
-model.sort(column, order) // Order default Qt::AscendingOrder
-model.span(index) // Returns QSize
+model.setData(index, value, role) // Default role Qt::EditRole, true if successful
+model.setHeaderData(section, orientation, value, role) // Default role Qt::EditRole, Qt::Orientation enum
+model.setItemData(index, roles) // Calls setData for every role in roles for index 
+model.sibling(row, column, index) // Returns QModelIndex, row/column relative to index
+model.sort(column, order) // Order default Qt::AscendingOrder, not implemented
 emit dataChanged(topLeft, botRight, roles) // Roles optional, Emitted by setData
 emit headerDataChanged(orientation, first, last) // Emitted by setHeaderData
 emit columnsAboutToBeInserted(parent, first, last) // Emitted by beginInsertColumns
@@ -628,9 +627,37 @@ emit layoutChanged(parents, hint) // Both optional
 emit modelAboutToBeReset() // Emitted by beginResetModel
 emit modelReset() // Emitted by endResetModel
     
+// QAbstractTableModel
+// Inherits QAbstractItemModel, Can be subclassed to create table models
+// Re-implements: dropMimeData, flags, index, sibling
+QAbstractTableModel model;
+    
+// QAbstractListModel
+// Inherits QAbstractItemModel, Can be subclassed to create one-dimensional list models
+// Re-implements: dropMimeData, flags, index, sibling
+QAbstractListModel model;
+    
+// QStringListModel
+// Inherits QAbstractListModel, Model that supplies strings to views
+// Re-implements: data, flags, insertRows, removeRows, rowCount, setData, sibling, sort, supportedDropActions
+QStringListModel model;
+QStringListModel model(strings); // const QStringList&
+model.setStringList(strings); // set the strings
+model.stringList() // Return QStringList
+
+// QHelpIndexModel
+// Inherits QStringListModel, supplies index keywords to views
+
+// QItemSelectionModel
+// Instantiated By ItemSelectionModel, Inherits QObject, keeps track of a view's selected items
+
 // QAbstractItemModel Qt::Orientation
 Qt::Horizontal   
 Qt::Vertical
+
+// QAbstractItemModel Qt::SortOrder
+Qt::AscendingOrder
+Qt::DescendingOrder
     
 // QAbstractItemModel Qt::ItemFlags
 Qt::NoItemFlags           // No properties
@@ -663,22 +690,6 @@ Qt::MatchRegExp           // Performs string-based matching using a regular expr
 Qt::MatchWildcard         // Performs string-based matching using a string with wildcards as the search term
 Qt::MatchWrap             // Perform a search that wraps around so all items are searched
 Qt::MatchRecursive        // Searches the entire hierarchy including children
-
-// QAbstractTableModel
-// Inherits QAbstractItemModel, Can be subclassed to create table models
-// Re-implements: dropMimeData, flags, index, sibling
-QAbstractTableModel model;
-    
-// QAbstractListModel
-// Inherits QAbstractItemModel, Can be subclassed to create one-dimensional list models
-// Re-implements: dropMimeData, flags, index, sibling
-QAbstractListModel model;
-    
-// QStringListModel
-// Inherits QAbstractListModel, Model that supplies strings to views
-
-// QItemSelectionModel
-// Instantiated By ItemSelectionModel, Inherits QObject, keeps track of a view's selected items
 
 //===========================================================================================================
 // QT PROXY MODELS
@@ -916,6 +927,15 @@ dir.entryList(nameFilters, filterFlags, sortFlags) // Search directory recursive
 dir.entryList(nameFilters) // Not using any args will use the stored filterFlags/sortFlags
 dir.entryList(filterFlags, sortFlags) // Search directory recursively with filter flags, returns QStringList
 dir.entryList() // Not using any args will use the stored filterFlags/sortFlags
+    
+// QIODevice
+// base interface class of all I/O devices
+
+// QDataStream
+// serialization of binary data to a QIODevice
+
+// QFile
+// Interface for reading from and writing to files
 
 // QDir Filter Flags
 QDir::NoFilter         // No filter flag used
@@ -949,12 +969,3 @@ QDir::DirsLast         // Put the files first, then the directories
 QDir::Reversed         // Reverse the sort order
 QDir::IgnoreCase       // Sort case-insensitively
 QDir::LocaleAware      // Sort using the current locale settings
-    
-// QIODevice
-// base interface class of all I/O devices
-
-// QDataStream
-// serialization of binary data to a QIODevice
-
-// QFile
-// Interface for reading from and writing to files
