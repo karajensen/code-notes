@@ -62,8 +62,8 @@ SCENE GRAPH THREADED RENDER LOOP:
 9) Meanwhile GUI is free to advance animations, process events, etc
 **************************************************************************************************************/
     
-import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.3
+import QtQuick.Controls 1.4 as ControlsLegacy
 import MyEnums 1.0    // Requires registering with QQmlEngine
 import MyGlobals 1.0  // Requires registering with QQmlEngine
 import "MyJavascript.js" as MyJS
@@ -99,6 +99,9 @@ Item {
   
     /* Called when signal emitted, requires calling signal.connect */
     function mySlot(value) {}
+    
+    /* Use a specific namespace control */
+    ControlsLegacy.Rectangle {}
 
     /* Javascript custom function */
     function myFunction(x, y) {
@@ -906,8 +909,8 @@ GroupBox {
 }
 
 // SPLITVIEW
-// No QML Controls 2 version, need to copy from version 1 as just inherits Item
-SplitView {
+// No QML Controls 2 version
+ControlsLegacy.SplitView {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1558,12 +1561,12 @@ GridView.FlowTopToBottom   // Items are laid out from top to bottom, and the vie
 //===========================================================================================================
 
 // DELEGATE DEFAULT ROLES
-display       // Qt::DisplayRole   
-decoration    // Qt::DecorationRole
-edit          // Qt::EditRole      
-toolTip       // Qt::ToolTipRole   
-statusTip     // Qt::StatusTipRole 
-whatsThis     // Qt::WhatsThisRole 
+display       // Qt::DisplayRole, QString
+decoration    // Qt::DecorationRole, QColor, QIcon or QPixmap
+edit          // Qt::EditRole, QString    
+toolTip       // Qt::ToolTipRole, QString  
+statusTip     // Qt::StatusTipRole, QString
+whatsThis     // Qt::WhatsThisRole, QString
 
 // DELEGATE PROPERTIES
 // Given to any delegate Item, don't have to use ItemDelegate type
@@ -1613,19 +1616,20 @@ SwipeDelegate {
 //===========================================================================================================
 
 // DERIVED QABSTRACTITEMMODELS
-model.fetchMore
-model.canFetchMore
-model.match
-model.headerData
+// Parent is const QModelIndex&, get using model.index
+model.match(index, role, value) // Returns QModelIndexList of first item in index's column with role with value
+model.match(index, role, value, hits) // Number of items to look for, use -1 to return all matches
+model.match(index, role, value, hits, flags) // MatchFlags with default Qt.MatchStartsWith | Qt.MatchWrap
+model.headerData(section, orientation, role) // Default role display, Orientation Enum, returns QVariant
 model.setData
-model.data
-model.hasChildren
-model.columnCount
-model.rowCount
+model.data(index, role) // Default role display, returns QVariant
+model.hasChildren(parent) // parent optional, whether parent has child items
+model.columnCount(parent) // parent optional, amount of columns
+model.rowCount(parent) // parent optional, amount of rows
 model.sibling
-model.parent
-model.index
-model.hasIndex
+model.hasChildren(parent) // parent optional, whether parent has child items
+model.index(row, column, parent) // parent optional, returns QModelIndex
+model.hasIndex(row, column, parent) // parent optional, whether index is valid
 
 // LISTMODEL
 // free-form list data source
@@ -1650,6 +1654,22 @@ ItemSelectionModel {
 var modelIndex = model.index(view.currentIndex, 0) // Get QModelIndex from view
 ism.select(modelIndex, ItemSelectionModel.Select | ItemSelectionModel.Current)
   
+// QAbstractItemModel Orientation Enum
+Qt.Horizontal   
+Qt.Vertical
+
+// QAbstractItemModel MatchFlags
+Qt.MatchExactly          // Performs QVariant-based matching
+Qt.MatchFixedString      // Performs string-based matching, case-insensitive unless MatchCaseSensitive flag
+Qt.MatchContains         // The search term is contained in the item
+Qt.MatchStartsWith       // The search term matches the start of the item
+Qt.MatchEndsWith         // The search term matches the end of the item
+Qt.MatchCaseSensitive    // The search is case sensitive
+Qt.MatchRegExp           // Performs string-based matching using a regular expression as the search term
+Qt.MatchWildcard         // Performs string-based matching using a string with wildcards as the search term
+Qt.MatchWrap             // Perform a search that wraps around so all items are searched
+Qt.MatchRecursive        // Searches the entire hierarchy including children
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML INPUT HANDLING
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
