@@ -145,17 +145,17 @@ var obj = { x: 2, y : 1 };        // Object with properties/attributes
 var obj = { "x": 2, "y" : 1 };    // Object with properties/attributes
 
 for (var key in obj) { var x = obj[key]; } // iterate over object property keys
-for (var value of obj) { var x = value; } // iterate over object property values
+for (var value of obj) { var x = value; }  // iterate over object property values
             
 obj.x /*or*/ obj["x"];            // Access object properties, key requires "
 obj = obj || "default value";     // If null use default value
 "x" in obj;                       // returns true if 'x' is a property in myArray
 obj instanceof MyClass            // Returns true if instance of MyClass
     
-eval("x = 0;"); // Evaluates JavaScript code represented as a string
-uneval(obj) // Creates a string representation of the source code of an Object
-eval(uneval(obj)); // Make deep copy of object
-delete obj // Delete the object
+eval("x = 0;");     // Evaluates JavaScript code represented as a string
+uneval(obj)         // Creates a string representation of the source code of an Object
+eval(uneval(obj));  // Make deep copy of object
+delete obj          // Delete the object
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ERROR HANDLING
