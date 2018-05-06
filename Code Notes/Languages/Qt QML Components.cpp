@@ -387,6 +387,16 @@ Menu {
 // TOOLTIP
 // Inherits Popup, Provides tool tips for any control
 ToolTip {
+   text: "str" // text to show
+   delay: 0 // delay in ms after which the tool tip is shown, default 0, negative shown immediately
+   timeout: -1 // timeout in ms after which the tool tip is hidden, default -1, 0 hidden immediately
+}
+Item {
+    ToolTip.visible: true // Whether currently visible
+    ToolTip.text: "str" // text to show
+    ToolTip.delay: 0 // delay in ms after which the tool tip is shown, default 0, negative shown immediately
+    ToolTip.timeout: -1 // timeout in ms after which the tool tip is hidden, default -1, 0 hidden immediately
+    ToolTip.toolTip: myToolTip
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
