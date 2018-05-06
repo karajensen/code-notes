@@ -226,32 +226,54 @@ m   // Multi-line search
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ARRAYS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
-arr = new Array("a","b", 3.0);
-arr = Array("a","b", 3.0);
-arr = Array(2);               // Creates array with size 2, not an item with value 2
-arr = ["a","b", 3.0,];        // Last , not needed and ignored
-arr = [, ,];                  // Adds undefined for the empty element between , , 
-arr[0] = "myEntry";           // creates new entry if key doesn't exist
-arr["0"] = "myEntry";         // adds to array object, not actual array list (doesn't affect length)
-arr.length                    // length of array list
+   
+arr = new Array("a","b", 3.0)
+arr = Array("a","b", 3.0)
+arr = Array(2)                     // Creates array with size 2, not an item with value 2
+arr = ["a","b", 3.0,]              // Last , not needed and ignored
+arr = [, ,]                        // Adds undefined for the empty element between , , 
+arr[0] = "myEntry"                 // Creates new entry if key doesn't exist
+arr["0"] = "myEntry"               // Adds to array object, not actual array list (doesn't affect length)
+arr.length                         // Length of array list
+arr.concat(arr2)                   // Joins two arrays and returns a new array
+arr.join("str")                    // Joins all items using delim and returns a string
+arr.push(0)                        // Adds one or more elements to the end of an array, returns arr length
+arr.pop()                          // Remove from end of array and return its value
+arr.shift()                        // Remove from front of array and return its value
+arr.unshift(0)                     // Adds one or more elements to the front of an array, returns arr length
+arr.slice(start, end)              // starts at index start and extracts all elements until index end
+arr.splice(index, n)               // Remove n items starting from index, returns removed items
+arr.splice(index, n, 0, 1)         // Additional args inserted after remove at index
+arr.reverse()                      // Reverses array in-place
+arr.indexOf(0, start)              // Returns index of first value 0 found from optional start index
+arr.lastIndexOf(0, start)          // Returns index of first value 0 found backwards from optional start index
+arr.map(x => return x * 2)         // Returns new array from transformed items
+arr.filter(x => return true)       // Returns new array from all items that return true
+arr.every(x => return true)        // Returns true if all item callbacks return true
+arr.some(x => return true)         // Returns true if at least one item callback returns true
+arr.reduce(a,b => return a+b)      // Iterates over all elements, returns single combined value
+arr.reduceRight(a,b => return a+b) // Iterates over all elements backwards, returns single combined value
+    
+// SORTING
+// Sorts array ascending order in-place
+arr.sort()
+arr.sort(function(a, b) {
+    if (a < b) return -1;
+    if (a > b) return 1;
+    return 0;
+})
     
 // ITERATING
+// Only forEach skips unassigned values, though keeps manual undefined assigned
 for (var i = 0; i < arr.length; i++) { var x = arr[i]; } 
-arr.forEach(value => var x = value)); // skips unassigned values, keeps manual undefined assigned
-arr.forEach(function(value) { var x = value; } // skips unassigned values, keeps manual undefined assigned
+arr.forEach(value => var x = value)); 
+arr.forEach(function(value) { var x = value; }
     
 // DESTRUCTURING
 var arr = ['one', 'two', 'three'];
 var [one, two, three] = arr // Assign each member to their own variable
 var a, b;
 [a, ...b] = [1, 2, 3]; // a = 1, b = [2,3]
-
-// REMOVE KEY
-var index = myArray.indexOf(key); // returns -1 if cannot find key
-if (index > -1) {
-    myArray.splice(index, n); // number of keys to remove
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // LIBRARIES
