@@ -11,33 +11,10 @@ QSTRINGBUILDER
 • At final result, amount of memory required is known and allocated only once
 • Using QT_USE_QSTRINGBUILDER will auto convert all + to %
 
-FORMAT CHARACTERS
-e   format as [-]9.9e[+|-]999
-E   format as [-]9.9E[+|-]999
-f   format as [-]9.9
-g   use e or f format, whichever is the most concise
-G   use E or f format, whichever is the most concise 
-
-DEFINES
 QT_NO_CAST_FROM_ASCII                 Disables auto conversion from C strings to QString
 QT_RESTRICTED_CAST_FROM_ASCII         Allows auto conversion from char/char arrays, disables rest
 QT_NO_CAST_TO_ASCII                   Disables automatic conversion from QString to C strings
 QT_USE_QSTRINGBUILDER                 Auto converts all QString + to use QStringBuilder %
-
-SECTION FLAGS
-QString::SectionSkipEmpty             Ignore empty sections; don't include in section count
-QString::SectionIncludeLeadingSep     Include any leading delims in the result string
-QString::SectionIncludeTrailingSep    Include any trailing delims in the result string
-QString::SectionCaseInsensitiveSeps   Compare the delims case-insensitively
-QString::SectionDefault               Empty sections counted, pre/post delims not included and case sensitive
-
-SPLIT FLAGS                            
-QString::KeepEmptyParts	              If a field is empty, keep it in the result
-QString::SkipEmptyParts	              If a field is empty, don't include it in the result                          
-  
-CASE FLAGS
-Qt::CaseInsensitive                   Lower and upper characters treated the same
-Qt::CaseSensitive                     Lower and upper characters not treated the same
 **************************************************************************************************************/
 
 QChar::Null // null terminator character \0
@@ -57,29 +34,29 @@ str.chop(n) // Removes n chars from end of the string, if n >= size, string beco
 str.chopped(n) // Removes n chars from end of the string and returns QString copy, n >= size is undefined
 str.clear() // Makes string empty
 str.compare("str", caseFlag) // Returns 0 if they match 
-str.contains("a", caseFlag) // Returns true if contains substring 'a'
-str.count("a", caseFlag) // Returns count of substring, will count overlaps
+str.contains("str", caseFlag) // Returns true if contains substring str
+str.count("str", caseFlag) // Returns count of substring, will count overlaps
 str.count() / str.length() / str.size() // Amount of characters minus \0
 str.data() // Returns QChar* or const QChar*
-str.endsWith("a", caseFlag) // Returns true if ends with 'a'
+str.endsWith("str", caseFlag) // Returns true if ends with str
 str.fill('c', n) // Resizes string to n and fills with character, without n will fill to current size
 str.front() // Returns QChar (const version) or QCharRef at back, undefined on empty string
-str.indexOf("a", i) // Searches for 'a' from index i, returns index, or -1 if not found
-str.insert(n, "a") // Inserts 'a' at index n, returns QString&, auto resizes if n >= size
+str.indexOf("str", i) // Searches for str from index i, returns index, or -1 if not found
+str.insert(n, "str") // Inserts str at index n, returns QString&, auto resizes if n >= size
 str.isEmpty() // Returns true if has no characters
 str.isNull() // Returns true if null (default constructor)
 str.isRightToLeft() // Returns true if string is to be read right to left
-str.lastIndexOf("a", i) // Searches for 'a' backwards from index i, returns index, or -1 if not found
+str.lastIndexOf("str", i) // Searches for str backwards from index i, returns index, or -1 if not found
 str.left(n) // Returns QString with only n characters starting from left
 str.leftJustified(n, 'c') // Returns QString of n width, any extra chars padded with fill 'c'
 str.leftRef(n) // Returns QStringRef of n left most characters
 str.mid(i, n) // Returns QString starting at index i for n optional characters
 str.midRef(i, n) // Returns QStringRef starting at index i for n optional characters    
-str.prepend("a") / str.push_front("a") // Adds to start of str and returns QString&
+str.prepend("str") / str.push_front("str") // Adds to start of str and returns QString&
 str.remove(i, n) // Removes n characters from index i, returns QString&, if i+n >= size will truncate
-str.remove("a", caseFlag) // Removes every occurance of "a" and returns QString&
+str.remove("str", caseFlag) // Removes every occurance of str and returns QString&
 str.repeated(n) // Returns QString repeated n times
-str.replace(i, n, "a") // Replaces from index i over n characters with "a" and returns QString& 
+str.replace(i, n, "str") // Replaces from index i over n characters with str and returns QString& 
 str.replace("a", "b", caseFlag) // Replaces all instances of "a" with "b"
 str.reserve(n) // Reserve capacity for n characters
 str.resize(n) // Sets size of string to n characters, new characters are uninitialized
@@ -89,13 +66,13 @@ str.rightJustified(n, 'c') // Returns QString of n width from end, any extra cha
 str.rightRef(n) // Returns QStringRef of n right most characters
 str.section(',', s1, s2, sectionFlag) // For string ",,a,b,," will take section s1 to s2 where a=1, b=2 etc
 str.setNum(integer) // Converts integer to QString
-str.setNum(double, format, precision) // Converts floating point number to QString
+str.setNum(double, format, precision) // Converts floating point number to QString, Format Characters
 str.setRawData(qchar, n) // Takes const QChar*, does not copy, qchar must stay alive, n = size
 str.shrink_to_fit() / str.squeeze() // Removes unused capacity
 str.simplified() // Returns QString with no start/end whitespace, any \t\n\v\f\r all replaced with single space
 str.split(" ", splitFlag, caseFlag) // Returns QStringList split by delim, default keeps empty entries
 str.splitRef(" ", splitFlag, caseFlag) // Same as split, but returns QVector<QStringRef>, requires str alive
-str.startsWith("a", caseFlag) // Returns true if starts with 'a'
+str.startsWith("str", caseFlag) // Returns true if starts with str
 str.toLower() / str.toCaseFolded() // Returns lower case QString
 str.toUpper() // Returns upper case QString
 str.toHtmlEscaped() // Converts a string for use in HTML with metacharacters < > & " replaced
@@ -123,7 +100,7 @@ QString::asprintf("%i", n) // QString version of printf, uses same modifiers
 QString::compare(str1, str2, caseFlag) // Returns 0 if they match, comparing char codes
 QString::localeAwareCompare(str1, str2) // Returns 0 if they match, comparing actual words
 QString::number(integer) // Converts integer to QString
-QString::number(double, format, precision) // Converts floating point number to QString
+QString::number(double, format, precision) // Converts floating point number to QString, Format Characters
     
 // QStringRef
 // Most overload using QChar, QRegularExpression, QRegExp
@@ -137,23 +114,23 @@ ref.chop(n) // Removes n chars from end of the string, if n >= size, string beco
 ref.chopped(n) // Removes n chars from end of the string and returns QStringRef, n >= size is undefined
 ref.clear() // Makes reference empty
 ref.compare("str", caseFlag) // Returns 0 if they match 
-ref.contains("a", caseFlag) // Returns true if contains substring 'a'
-ref.count("a", caseFlag) // Returns count of substring, will count overlaps
+ref.contains("str", caseFlag) // Returns true if contains substring str
+ref.count("str", caseFlag) // Returns count of substring, will count overlaps
 ref.count() / ref.length() / ref.size() // Amount of characters minus \0
 ref.data() // Returns const QChar*
-ref.endsWith("a", caseFlag) // Returns true if ends with 'a'
+ref.endsWith("str", caseFlag) // Returns true if ends with str
 ref.front() // Returns QChar at front, undefined on empty string
-ref.indexOf("a", i) // Searches for 'a' from index i, returns index, or -1 if not found
+ref.indexOf("str", i) // Searches for str from index i, returns index, or -1 if not found
 ref.isEmpty() // Returns true if has no characters
 ref.isNull() // Returns true if null (default constructor)
 ref.isRightToLeft() // Returns true if string is to be read right to left
-ref.lastIndexOf("a", i) // Searches for 'a' backwards from index i, returns index, or -1 if not found
+ref.lastIndexOf("str", i) // Searches for str backwards from index i, returns index, or -1 if not found
 ref.left(n) // Returns QStringRef with only n characters starting from left
 ref.mid(i, n) // Returns QStringRef starting at index i for n optional characters
 ref.position() // Returns index the ref starts in the actual string
 ref.right(n) // Returns QStringRef with only n characters starting from right
 ref.split(" ", splitFlag, caseFlag) // Returns QVector<QStringRef> split by delim, default keeps empty entries
-ref.startsWith("a", caseFlag) // Returns true if starts with 'a'
+ref.startsWith("str", caseFlag) // Returns true if starts with str
 ref.string() // Returns full const QString* or 0 if doesn't reference anything
 ref.toDouble(&ok) // Converts to double or 0.0 if fails, can include characters + - g e .
 ref.toFloat(&ok) // Converts to float or 0.0 if fails, can include characters + - g e .
@@ -181,7 +158,7 @@ ref.crbegin() / ref.crEnd() // const_reverse_iterator
 QByteArray arr("str")
 QByteArray arr(data) // Does deep copy of const char* and adds on a \0
 QByteArray arr(n, 'c') // Fills n size with character c
-arr.append(arr2) // If non-empty, makes deep copy of arr2 and adds to arr, if empty, implicitly shares
+arr.append(arr2) / arr.push_back(arr2) // If non-empty, makes deep copy of arr2 and adds to arr
 arr.append(n, 'c') // Adds n size with character c to end
 arr.at(index) // Returns char at index position i
 arr.back() // Returns char if const, QByteRef if non-const
@@ -197,6 +174,47 @@ arr.endsWith(arr2) // Whether arr ends with arr2
 arr.fill('c', n) // Resizes string to n and fills with character, without n will fill to current size
 arr.front() // Returns char if const, QByteRef if non-const
 arr.indexOf(arr2, i) // Searches for arr2 from index i, returns index, or -1 if not found
+arr.insert(n, arr2) // Inserts arr2 at index n, returns QByteArray&, auto resizes if n >= size
+arr.isEmpty() // Returns true if has no items
+arr.isNull() // Returns true if null (default constructor)
+arr.lastIndexOf(arr2, i) // Searches for arr2 backwards from index i, returns index, or -1 if not found
+arr.left(n) // Returns QByteArray with only n characters starting from left
+arr.leftJustified(n, 'c') // Returns QByteArray of n width, any extra chars padded with fill 'c'
+arr.mid(i, n) // Returns QByteArray starting at index i for n optional characters
+arr.number(n) // Converts number to QByteArray
+arr.number(double, format, precision) // Converts floating point number to QByteArray, Format Characters
+arr.prepend(arr2) / str.push_front(arr2) // Adds to start of arr
+arr.remove(i, n) // Removes n bytes from index i, returns QByteArray&, if i+n >= size will truncate
+arr.repeated(n) // Returns QByteArray repeated n times
+arr.replace(i, n, arr2) // Replaces from index i over n characters with arr2 and returns QByteArray& 
+arr.replace("a", "b") // Replaces all instances of "a" or 'a' with "b" or 'b'
+arr.reserve(n) // Reserve capacity for n characters
+arr.resize(n) // Sets size to n characters, new characters are uninitialized
+arr.right(n) // Returns QByteArray with only n characters starting from right
+arr.rightJustified(n, 'c') // Returns QByteArray of n width from end, any extra chars padded with fill 'c'
+arr.setNum(integer) // Converts integer to QString
+arr.setNum(double, format, precision) // Converts floating point number to QByteArray, Format Characters
+arr.setRawData(cstr, n) // Takes const char*, does not copy, cstr must stay alive, n = size
+arr.shrink_to_fit() / arr.squeeze() // Removes unused capacity
+arr.simplified() // Returns QByteArray with no start/end whitespace, any \t\n\v\f\r all replaced with single space
+arr.split(" ") // Returns QList<QByteArray> split by delim
+arr.startsWith(arr2) // Returns true if starts with arr2
+arr.toBase64(options) // Returns QByteArray copy encoded, QByteArray Base64 Options Enum optional
+arr.toHex() // Returns QByteArray copy encoded
+arr.toDouble(&ok) // Converts to double or 0.0 if fails, can include characters + - g e .
+arr.toFloat(&ok) // Converts to float or 0.0 if fails, can include characters + - g e .
+arr.toInt(&ok, base = 10) // Converts to int or 0, 0x in str will use hexadecimal base
+arr.toLong(&ok, base = 10) // Converts to long or 0, 0x in str will use hexadecimal base
+arr.toLongLong(&ok, base = 10) // Converts to long long or 0, 0x in str will use hexadecimal base
+arr.toShort(&ok, base = 10) // Converts to short or 0, 0x in str will use hexadecimal base
+arr.toUInt(&ok, base = 10) // Converts to unsigned int or 0, 0x in str will use hexadecimal base 
+arr.toULong(&ok, base = 10) // Converts to unsigned long or 0, 0x in str will use hexadecimal base
+arr.toULongLong(&ok, base = 10) // Converts to unsigned long long or 0, 0x in str will use hexadecimal base
+arr.toUShort(&ok, base = 10) // Converts to unsigned short or 0, 0x in str will use he
+arr.toLower() // Returns lower case QByteArray
+arr.toUpper() // Returns upper case QByteArray
+arr.trimmed() // Returns QByteArray with no pre/post whitespaces
+arr.truncate(i) // Removes all characters from index i onwards
 arr.begin() / arr.end() // iterator or const_iterator
 arr.rBegin() / arr.rEnd() // reverse_iterator or const_reverse_iterator
 arr.cbegin() / arr.cend() // const_iterator
@@ -205,12 +223,6 @@ arr.crbegin() / arr.crEnd() // const_reverse_iterator
 QByteArray::fromBase64(arr, options) // Returns Base64 decoded copy, QByteArray Base64 Options Enum optional
 QByteArray::fromHex(arr) // Returns Hex decoded copy
 QByteArray::fromRawData(data) // Returns QByteArray with data without any deep copy
-  
-// QByteArray Base64 Options Enum
-QByteArray::Base64Encoding       // The regular Base64 alphabet
-QByteArray::Base64UrlEncoding    // An alternate alphabet which replaces two characters to be URL friendly
-QByteArray::KeepTrailingEquals   // Make data always a size multiple of four by keeping trailing equal characters
-QByteArray::OmitTrailingEquals   // Omits adding the padding equal signs at the end of the encoded data
   
 // QTextStream
 QTextStream(&str) << "str" << value; // QString streamstream
@@ -238,6 +250,34 @@ lst.sort(case) // Sort all strings using std::sort
   
 // QRegExp
 // Provides pattern matching using regular expressions
+  
+// QString / QByteArray Format Characters
+e   // format as [-]9.9e[+|-]999
+E   // format as [-]9.9E[+|-]999
+f   // format as [-]9.9
+g   // use e or f format, whichever is the most concise
+G   // use E or f format, whichever is the most concise 
+
+// QString Section Flags
+QString::SectionSkipEmpty             // Ignore empty sections; don't include in section count
+QString::SectionIncludeLeadingSep     // Include any leading delims in the result string
+QString::SectionIncludeTrailingSep    // Include any trailing delims in the result string
+QString::SectionCaseInsensitiveSeps   // Compare the delims case-insensitively
+QString::SectionDefault               // Empty sections counted, pre/post delims not included and case sensitive
+
+// QString Split Flags                           
+QString::KeepEmptyParts	         // If a field is empty, keep it in the result
+QString::SkipEmptyParts	         // If a field is empty, don't include it in the result                          
+  
+// QString Case Flags
+Qt::CaseInsensitive              // Lower and upper characters treated the same
+Qt::CaseSensitive                // Lower and upper characters not treated the same
+
+// QByteArray Base64 Options Enum
+QByteArray::Base64Encoding       // The regular Base64 alphabet
+QByteArray::Base64UrlEncoding    // An alternate alphabet which replaces two characters to be URL friendly
+QByteArray::KeepTrailingEquals   // Make data always a size multiple of four by keeping trailing equal characters
+QByteArray::OmitTrailingEquals   // Omits adding the padding equal signs at the end of the encoded data
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT VARIANT
