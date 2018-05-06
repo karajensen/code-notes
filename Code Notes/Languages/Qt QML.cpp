@@ -808,14 +808,72 @@ Qt.ApplicationShortcut  // Active when one of the application's windows are acti
 // For specifying drag and drop events for moved Items
 // Change in item's position will generate a drag event sent to any DropArea that intersects new position
 Item {
+    Drag.active: true // Whether a drag event sequence is currently active
     Drag.dragType: Drag.Internal // Default, Drag Type Enum
     Drag.imageSource: "qrc:///icon.png" // Shown during drag event
+    Drag.hotSpot: "0,0" // Default, drag position relative to the top left of the item
+    Drag.keys: [] // List of keys that can be used by a DropArea to filter drag events
     Drag.mimeData: { "text/plain": "Copied text" } //  Map of mimeData that is used during startDrag
     Drag.proposedAction: Qt.CopyAction // Recommended return value of Drag.drop(), Drag Action Flags
     Drag.supportedActions: Qt.CopyAction // Return values of Drag.drop() supported, Drag Action Flags
+    Drag.source: myItem // Object identified to drag events as the source of the events
+    Drag.target: myItem // When active, last object to accept an enter event from the dragged item
+    Drag.onDragFinished: { dropAction } // Drag/Drop Action Flags, emitted when a drag finishes 
+    Drag.onDragStarted: {} // Emitted when a drag starts
 }
 
-// Using Dragged Item as Image Source
+// DROPAREA
+// For specifying drag and drop handling in an area
+DropArea {
+    keys: [] // No keys = any source, otherwise source must also have supported keys set
+    onDropped: { drop } // DragEvent, when drop event occurs within the bounds
+    onEntered: { drag } // DragEvent, when drop event enters within the bounds
+    onExited: { } // When drop event exits the bounds
+    onPositionChanged: { drag } // DragEvent, when the position of a drag has changed
+}
+area.drag.x / area.drag.y // Coordinates of the last drag event
+area.drag.source // Object source of a drag
+area.containsDrag // whether the DropArea currently contains any dragged items
+
+// DRAGEVENT
+event.x / event.y // x/y coordinate of a drag event
+event.accepted // Whether the drag event was accepted by a handler
+event.action // Drag/Drop Action Flags to perform on an accepted drop
+event.colorData  // holds QML color data, if any
+event.drag.source // Object source of a drag
+event.formats // stringlist of mime type formats contained in the drag data
+event.hasColor // holds whether the drag event contains a color item
+event.hasHtml // holds whether the drag event contains a html item
+event.hasText // holds whether the drag event contains a text item
+event.hasUrls // holds whether the drag event contains one or more url items
+event.html // holds html data, if any
+event.keys // stringlist of keys identifying the data type or source of a drag event
+event.proposedAction // flags container of Drag/Drop Action Flags proposed by the drag source
+event.supportedActions // flags container of Drag/Drop Action Flags supported by the drag source
+event.text // holds text data, if any
+event.urls // holds a list of urls, if any
+event.accept() // Accepts the drag event
+event.acceptProposedAction() // Accepts the drag event with the proposedAction
+event.getDataAsArrayBuffer(format) // Returns data of format, format should be in property formats stringlist
+event.getDataAsString(format) // Returns data of format, format should be in property formats stringlist
+
+// Drag/Drop Action Flags
+Qt.CopyAction      // Copy the data to the target
+Qt.MoveAction      // Move the data from the source to the target
+Qt.LinkAction      // Create a link from the source to the target.
+Qt.IgnoreAction    // Ignore the action (do nothing with the data).
+
+// Drag Type Enum
+Drag.None          // Do not start drags automatically
+Drag.Automatic     // Start drags automatically
+Drag.Internal      // Start backwards compatible drags automatically
+
+// Drag Axis Mask
+Drag.XAxis
+Drag.YAxis
+Drag.XAndYAxis
+
+// Using Dragged Item as Image Source Example
 Rectangle {
     Drag.active: dragArea.drag.active
     Drag.dragType: Drag.Automatic
@@ -831,25 +889,6 @@ Rectangle {
         })
     }
 }
-
-// DROPAREA
-// For specifying drag and drop handling in an area
-DropArea {
-}
-
-// Drag/Drop Action Flags
-Qt.CopyAction      // Copy the data to the target
-Qt.MoveAction      // Move the data from the source to the target
-Qt.LinkAction      // Create a link from the source to the target.
-Qt.IgnoreAction    // Ignore the action (do nothing with the data).
-
-// Drag Type Enum
-Drag.None         // Do not start drags automatically
-Drag.Automatic    // Start drags automatically
-Drag.Internal     // Start backwards compatible drags automatically
-
-// Drag Axis Mask
-Drag.XAxis    Drag.YAxis    Drag.XAndYAxis
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML GLOBAL ITEMS
