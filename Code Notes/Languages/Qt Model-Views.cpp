@@ -350,24 +350,24 @@ model.setData(index, value, role) // Default role Qt::EditRole, true if successf
 model.setHeaderData(section, orientation, value, role) // Default role Qt::EditRole, Qt::Orientation enum
 
 // QAbstractItemModel Signals
-dataChanged(topLeft, botRight, roles) // Roles optional, Emitted by setData
-headerDataChanged(orientation, first, last) // Emitted by setHeaderData
-columnsAboutToBeInserted(parent, first, last) // Emitted by beginInsertColumns
-columnsInserted(parent, first, last) // Emitted by endInsertColumns
-columnsAboutToBeMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Emitted by beginMoveColumns
-columnsMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Emitted by endMoveColumns
-columnsAboutToBeRemoved(parent, first, last) // Emitted by beginRemoveColumns
-columnsRemoved(parent, first, last) // Emitted by endRemoveColumns
-rowsAboutToBeInserted(parent, first, last) // Emitted by beginInsertRows
-rowsInserted(parent, first, last) // Emitted by endInsertRows
-rowsAboutToBeMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Emitted by beginMoveRows
-rowsMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Emitted by endMoveRows
-rowsAboutToBeRemoved(parent, first, last) // Emitted by beginRemoveRows
-rowsRemoved(parent, first, last) // Emitted by endRemoveRows
-layoutAboutToBeChanged(parents, hint) // Both optional
-layoutChanged(parents, hint) // Both optional
-modelAboutToBeReset() // Emitted by beginResetModel
-modelReset() // Emitted by endResetModel
+emit dataChanged(topLeft, botRight, roles) // Roles optional, Emitted by setData
+emit headerDataChanged(orientation, first, last) // Emitted by setHeaderData
+emit columnsAboutToBeInserted(parent, first, last) // Emitted by beginInsertColumns
+emit columnsInserted(parent, first, last) // Emitted by endInsertColumns
+emit columnsAboutToBeMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Emitted by beginMoveColumns
+emit columnsMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Emitted by endMoveColumns
+emit columnsAboutToBeRemoved(parent, first, last) // Emitted by beginRemoveColumns
+emit columnsRemoved(parent, first, last) // Emitted by endRemoveColumns
+emit rowsAboutToBeInserted(parent, first, last) // Emitted by beginInsertRows
+emit rowsInserted(parent, first, last) // Emitted by endInsertRows
+emit rowsAboutToBeMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Emitted by beginMoveRows
+emit rowsMoved(srcParent, srcFirst, srcLast, dstParent, dstChild) // Emitted by endMoveRows
+emit rowsAboutToBeRemoved(parent, first, last) // Emitted by beginRemoveRows
+emit rowsRemoved(parent, first, last) // Emitted by endRemoveRows
+emit layoutAboutToBeChanged(parents, hint) // Both optional
+emit layoutChanged(parents, hint) // Both optional
+emit modelAboutToBeReset() // Emitted by beginResetModel
+emit modelReset() // Emitted by endResetModel
     
 // QAbstractTableModel
 // Inherits QAbstractItemModel, Can be subclassed to create table models
@@ -395,7 +395,18 @@ model.stringList() // Return QStringList
 
 // QAbstractProxyModel
 // Inherits QAbstractItemModel, Base class for proxy item models that can do sorting, filtering etc
-
+// To subclass, override mapFromSource() and mapToSource()
+// Re-implements: buddy, data, flags, hasChildren, headerData, itemData, revert, setData, 
+//                setHeaderData, setItemData, sibling, sort, drag/drop methods
+model.sourceModel // Takes QAbstractItemModel*
+model.mapSelectionFromSource(srcSel) // map src to proxy selections, takes/returns QItemSelection
+model.mapSelectionToSource(proxySel) // map proxy to src selections, takes/returns QItemSelection
+model.mapToSource(srcIndex) // map src to proxy index, takes/returns QModelIndex 
+model.mapFromSource(proxyIndex) // map proxy to src index, takes/returns QModelIndex 
+model.setSourceModel(srcModel) // Takes QAbstractItemModel*
+model.sourceModel() // Returns QAbstractItemModel*
+emit sourceModelChanged() // Emitted when source model is changed
+    
 // QIdentityProxyModel
 // Inherits QAbstractProxyModel, Proxies its source model unmodified
 
