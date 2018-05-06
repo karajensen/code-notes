@@ -62,8 +62,10 @@ SCENE GRAPH THREADED RENDER LOOP:
 9) Meanwhile GUI is free to advance animations, process events, etc
 **************************************************************************************************************/
     
+import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.3
 import QtQuick.Controls 1.4 as ControlsLegacy
+import QtQuick.Dialogs 1.2 as DialogLegacy
 import MyEnums 1.0    // Requires registering with QQmlEngine
 import MyGlobals 1.0  // Requires registering with QQmlEngine
 import "MyJavascript.js" as MyJS
