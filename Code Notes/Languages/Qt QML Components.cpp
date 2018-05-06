@@ -220,6 +220,7 @@ Tumbler {
 // SCROLLBAR
 // Inherits Control, Vertical or horizontal interactive scroll bar
 ScrollBar {
+    contentItem.opacity: 1 // Make always visible
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
