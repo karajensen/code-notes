@@ -127,6 +127,11 @@ function fn(value, ...args) {
 // OBJECT / CLASSES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*************************************************************************************************************
+PROTOTYPE CHAINING
+• Inheritance in Javascript wherebeach object has a prototype property of its base, last link is 'null'
+**************************************************************************************************************/
+
 // CLASS
 class MyClass extends MyBaseClass {
     constructor(value) {
@@ -147,7 +152,7 @@ function MyClass(value) {
     this.fn = function() {
     }
 }
-// Prototype Chaining: MyClass inherits MyBaseClass's prototype
+// MyClass inherits MyBaseClass's prototype
 MyBaseClass.prototype = { z : 2.0 }
 MyClass.prototype = new MyBaseClass();
 
