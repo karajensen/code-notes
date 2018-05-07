@@ -149,8 +149,7 @@ class MyClass extends MyBaseClass {
 // Constructor Function
 function MyClass(value) {
     this.x = 0;
-    this.fn = function() {
-    }
+    this.fn = function() { }
 }
 // MyClass inherits MyBaseClass's prototype
 MyBaseClass.prototype = { z : 2.0 }
