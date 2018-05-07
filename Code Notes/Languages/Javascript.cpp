@@ -230,6 +230,7 @@ m   // Multi-line search
 arr = new Array("a","b", 3.0)
 arr = Array("a","b", 3.0)
 arr = Array(2)                     // Creates array with size 2, not an item with value 2
+arr = Array.from(set)              // Create array from a set
 arr = ["a","b", 3.0,]              // Last , not needed and ignored
 arr = [, ,]                        // Adds undefined for the empty element between , , 
 arr[0] = "myEntry"                 // Creates new entry if key doesn't exist
@@ -276,11 +277,34 @@ var a, b;
 [a, ...b] = [1, 2, 3]; // a = 1, b = [2,3]
             
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// MAPS / SETS
+// MAPS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            
-            
+var map = new Map()
+map.set('key', 1.0) // Key can be any type
+map.size
+map.get('key') // Returns value or undefined
+map.has('key')
+map.delete('key')
+map.clear()
+
+// ITERATING
+for (var [key, value] of map) {
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SETS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+var set = new Set()
+set.add(value) // can add any type and have multiple different types
+set.has(value)
+set.delete(value)
+set.size
+
+// ITERATING
+for (let item of mySet) {
+}
             
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // LIBRARIES
