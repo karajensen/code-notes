@@ -1,7 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////////////
-//UTILITIES
+// UTILITIES
 //////////////////////////////////////////////////////////////////////////////////////
 
-TONE MAPPING		 Converts HDR color to LDR color
+QT SAMPLE            Small Qt app for experimentation
+TONE MAPPING         Converts HDR color to LDR color
 COLOUR BLENDER       Converts RGB and HSV and blends two colors together
 WRAPPER              C++/CLI Wrapper template between C# and C++ 
