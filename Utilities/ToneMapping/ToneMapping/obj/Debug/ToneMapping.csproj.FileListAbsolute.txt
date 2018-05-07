@@ -1,0 +1,9 @@
+D:\Projects\CodeNotes\Utilities\ToneMapping\ToneMapping\bin\Debug\WindowsFormsApplication1.exe.config
+D:\Projects\CodeNotes\Utilities\ToneMapping\ToneMapping\bin\Debug\WindowsFormsApplication1.exe
+D:\Projects\CodeNotes\Utilities\ToneMapping\ToneMapping\bin\Debug\WindowsFormsApplication1.pdb
+D:\Projects\CodeNotes\Utilities\ToneMapping\ToneMapping\obj\Debug\ToneMapping.csprojResolveAssemblyReference.cache
+D:\Projects\CodeNotes\Utilities\ToneMapping\ToneMapping\obj\Debug\WindowsFormsApplication1.ToneMapping.resources
+D:\Projects\CodeNotes\Utilities\ToneMapping\ToneMapping\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+D:\Projects\CodeNotes\Utilities\ToneMapping\ToneMapping\obj\Debug\ToneMapping.csproj.GenerateResource.Cache
+D:\Projects\CodeNotes\Utilities\ToneMapping\ToneMapping\obj\Debug\WindowsFormsApplication1.exe
+D:\Projects\CodeNotes\Utilities\ToneMapping\ToneMapping\obj\Debug\WindowsFormsApplication1.pdb
