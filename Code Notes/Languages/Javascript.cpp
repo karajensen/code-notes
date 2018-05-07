@@ -127,35 +127,64 @@ function fn(value, ...args) {
 // OBJECT / CLASSES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// CLASS
 class MyClass extends MyBaseClass {
-
     constructor(value) {
         super(value); // Call base constructor
         this.x = 0;
     }
     
-    static staticMethod() {
-        return 0;
-  }
+    function fn() { }
+    get getFn() { return this.x; }
+    set setFn(value) { this.x = value; }
+    static staticFn() { return 0; }
 }
 
-var obj = new MyClass(b);
-var obj = null;                   // Null object
-var obj = { x: 2, y : 1 };        // Object with properties/attributes
-var obj = { "x": 2, "y" : 1 };    // Object with properties/attributes
+// FUNCTION CLASS
+// Constructor Function
+function MyClass(value) {
+    this.x = 0;
+    this.fn = function() {
+    }
+}
+// Prototype Chaining: MyClass inherits MyBaseClass's prototype
+MyBaseClass.prototype = { z : 2.0 }
+MyClass.prototype = new MyBaseClass();
 
+// OBJECTS
+var obj = new MyClass(2)
+var obj = Object.create(MyClass)
+var obj = {}                      // Empty object
+var obj = null                    // Null object
+var obj = { x: 2, y : 1 }
+var obj = { "x": 2, "y" : 1 }
+var obj = { fn: function() {} }
+var obj = { obj2: { x: 2 } }
+
+obj.x /*or*/ obj["x"]             // Access/create object properties
+obj.prototype.z                   // Access/create shared object properties for all MyBaseClass
+obj = obj || "default value"      // If null use default value
+"x" in obj                        // returns true if 'x' is a property in myArray
+obj instanceof MyClass            // Returns true if instance of MyClass
+delete obj                        // Delete the object
+delete obj.x                      // Delete the object property
+Object.Keys(obj)                  // Returns array of property keys where enumerable is true
+Object.getOwnPropertyNames(obj)   // Returns array of property keys
+    
 for (var key in obj) { var x = obj[key]; } // iterate over object property keys
 for (var value of obj) { var x = value; }  // iterate over object property values
             
-obj.x /*or*/ obj["x"];            // Access object properties, key requires "
-obj = obj || "default value";     // If null use default value
-"x" in obj;                       // returns true if 'x' is a property in myArray
-obj instanceof MyClass            // Returns true if instance of MyClass
+eval("x = 0;")                    // Evaluates JavaScript code represented as a string
+uneval(obj)                       // Creates a string representation of the source code of an Object
+eval(uneval(obj))                 // Make deep copy of object
     
-eval("x = 0;");     // Evaluates JavaScript code represented as a string
-uneval(obj)         // Creates a string representation of the source code of an Object
-eval(uneval(obj));  // Make deep copy of object
-delete obj          // Delete the object
+// ENUMERABLE PROPERTIES
+// Properties automatically enumerable for normal assign/creation
+// Non-enumerable do not show in for...in loops or Object.Keys
+Object.defineProperties(obj, {
+    x: { enumerable: true, value: 2 },
+    y: { enumerable: false, value: 1 },
+});
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ERROR HANDLING
