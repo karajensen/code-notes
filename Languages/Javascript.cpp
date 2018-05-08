@@ -178,6 +178,8 @@ Object.getOwnPropertyNames(obj)   // Returns array of property keys
 Object.assign(dstObj, srcObj)     // Copies enumerable properties from src to dst, return dst
 Object.freeze(obj)                // Prevent obj from deleting or changing properties
 Object.isFrozen(obj)              // Whether freeze is on the object
+Object.seal(obj)                  // Prevent obj from deleting properties
+Object.isSealed(obj)              // Whether seal is on the object
     
 eval("x = 0;")                    // Evaluates JavaScript code represented as a string
 uneval(obj)                       // Creates a string representation of the source code of an Object
