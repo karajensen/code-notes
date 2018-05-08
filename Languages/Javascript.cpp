@@ -172,15 +172,20 @@ obj = obj || "default value"      // If null use default value
 obj instanceof MyClass            // Returns true if instance of MyClass
 delete obj                        // Delete the object
 delete obj.x                      // Delete the object property
-Object.Keys(obj)                  // Returns array of property keys where enumerable is true
-Object.getOwnPropertyNames(obj)   // Returns array of property keys
     
-for (var key in obj) { var x = obj[key]; } // iterate over object property keys
-for (var value of obj) { var x = value; }  // iterate over object property values
-            
+Object.keys(obj)                  // Returns array of property keys where enumerable is true
+Object.getOwnPropertyNames(obj)   // Returns array of property keys
+Object.assign(dstObj, srcObj)     // Copies enumerable properties from src to dst, return dst
+Object.freeze(obj)                // Prevent obj from deleting or changing properties
+Object.isFrozen(obj)              // Whether freeze is on the object
+    
 eval("x = 0;")                    // Evaluates JavaScript code represented as a string
 uneval(obj)                       // Creates a string representation of the source code of an Object
 eval(uneval(obj))                 // Make deep copy of object
+    
+// ITERATING PROPERTIES
+for (var key in obj) { var x = obj[key]; } // iterate over object property keys
+for (var value of obj) { var x = value; }  // iterate over object property values
     
 // ENUMERABLE PROPERTIES
 // Properties automatically enumerable for normal assign/creation
