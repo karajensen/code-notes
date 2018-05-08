@@ -173,6 +173,8 @@ obj instanceof MyClass            // Returns true if instance of MyClass
 delete obj                        // Delete the object
 delete obj.x                      // Delete the object property
     
+Object.entries(obj)               // Returns array of [key, value] pairs where enumerable is true
+Object.values(obj)                // Returns array of property values where enumerable is true
 Object.keys(obj)                  // Returns array of property keys where enumerable is true
 Object.getOwnPropertyNames(obj)   // Returns array of property keys
 Object.assign(dstObj, srcObj)     // Copies enumerable properties from src to dst, return dst
@@ -191,7 +193,7 @@ for (var value of obj) { var x = value; }  // iterate over object property value
     
 // ENUMERABLE PROPERTIES
 // Properties automatically enumerable for normal assign/creation
-// Non-enumerable do not show in for...in loops or Object.Keys
+// Non-enumerable do not show in for...in loops
 Object.defineProperties(obj, {
     x: { enumerable: true, value: 2 },
     y: { enumerable: false, value: 1 },
