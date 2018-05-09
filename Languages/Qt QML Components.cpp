@@ -365,12 +365,59 @@ ControlsLegacy.SplitView {
 // POPUP
 // Inherits QtObject, base class for all popups
 Popup {
+    activeFocus : bool
+    availableHeight : real
+    availableWidth : real
+    background : Item
+    bottomMargin : real
+    bottomPadding : real
+    clip : bool
+    closePolicy : enumeration
+    contentChildren : list<Item>
+    contentData : list<Object>
+    contentHeight : real
+    contentItem : Item
+    contentWidth : real
+    dim : bool
+    enabled : bool
+    enter : Transition
+    exit : Transition
+    focus : bool
+    font : font
+    implicitHeight : real
+    implicitWidth : real
+    leftMargin : real
+    leftPadding : real
+    locale : Locale
+    margins : real
+    mirrored : bool
+    modal : bool
+    opacity : real
+    opened : bool
+    padding : real
+    palette : palette
+    parent : Item
+    rightMargin : real
+    rightPadding : real
+    scale : real
+    spacing : real
+    topMargin : real
+    topPadding : real
+    transformOrigin : enumeration
     visible: false // Turning on/off will show popup window
-    title: "Title"
-    width: 300
-    height: 80
-    contentItem: Rectangle {}
+    width: 200
+    height: 200
+    x: 50
+    y: 50
+    z: 50
+    onAboutToHide: {}
+    onAboutToShow: {}
+    onClosed: {}
+    onOpened: {}
 }
+popupclose()
+popupforceActiveFocus(reason)
+popup.open()
 
 // DIALOG
 // Inherits Popup
