@@ -365,7 +365,7 @@ ControlsLegacy.SplitView {
 // POPUP
 // Inherits QtObject, base class for all popups
 Popup {
-    activeFocus : bool
+    activeFocus: true // Read only, whether item has active focus
     availableHeight : real
     availableWidth : real
     background : Item
