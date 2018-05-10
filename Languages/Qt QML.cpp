@@ -1002,6 +1002,7 @@ PROPERTY BINDING OPTIMZATIONS:
 JAVASCRIPT OPTIMIZATIONS:
 • Avoid using eval() if at all possible
 • Do not delete properties of objects
+• Trying to access nonexistent properties will always traverse the full prototype chain
 
 COMPONENT OPTIMIZATIONS:
 • If a component has a custom property, it becomes its own implicit type. 
