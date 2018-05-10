@@ -127,13 +127,8 @@ function fn(value, ...args) {
 // OBJECT / CLASSES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*************************************************************************************************************
-PROTOTYPE CHAINING
-• Inheritance in Javascript wherebeach object has a prototype property of its base, last link is 'null'
-**************************************************************************************************************/
-
 // CLASS
-class MyClass extends MyBaseClass {
+class MyClass extends MyBaseClass { // MyBaseClass becomes prototype
     constructor(value) {
         super(value); // Call base constructor
         this.x = 0;
@@ -146,18 +141,15 @@ class MyClass extends MyBaseClass {
 }
 
 // FUNCTION CLASS
-// Constructor Function
-function MyClass(value) {
+function MyClass(value) { // Constructor Function
     this.x = 0;
     this.fn = function() { }
 }
-// MyClass inherits MyBaseClass's prototype
-MyBaseClass.prototype = { z : 2.0 }
 MyClass.prototype = new MyBaseClass();
 
 // OBJECTS
 var obj = new MyClass(2)
-var obj = Object.create(MyClass)
+var obj = Object.create(obj2)     // Creates object with obj2 as its prototype
 var obj = {}                      // Empty object
 var obj = null                    // Null object
 var obj = { x: 2, y : 1 }
@@ -190,6 +182,12 @@ eval(uneval(obj))                 // Make deep copy of object
 // ITERATING PROPERTIES
 for (var key in obj) { var x = obj[key]; } // iterate over object property keys
 for (var value of obj) { var x = value; }  // iterate over object property values
+
+// PROTOTYPE CHAINING
+// Inheritance in Javascript where each object has a prototype property of its base, last link is 'null'
+// When looking up a property, searches down hierarchy as well, returns first match
+obj.prototype.x = 2.0 // overshadowed by obj.x if exists
+obj.prototype = obj2 // set base class, breaks chain
     
 // ENUMERABLE PROPERTIES
 // Properties automatically enumerable for normal assign/creation
