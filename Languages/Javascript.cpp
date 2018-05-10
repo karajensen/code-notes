@@ -145,11 +145,10 @@ function MyClass(value) { // Constructor Function
     this.x = 0;
     this.fn = function() { }
 }
-MyClass.prototype = new MyBaseClass();
+MyClass.prototype = new MyBaseClass(); // Set prototype for all instances
 
 // OBJECTS
 var obj = new MyClass(2)
-var obj = Object.create(obj2)     // Creates object with obj2 as its prototype
 var obj = {}                      // Empty object
 var obj = null                    // Null object
 var obj = { x: 2, y : 1 }
@@ -158,13 +157,13 @@ var obj = { fn: function() {} }
 var obj = { obj2: { x: 2 } }
 
 obj.x /*or*/ obj["x"]             // Access/create object properties
-obj.prototype.z                   // Access/create shared object properties for all MyBaseClass
 obj = obj || "default value"      // If null use default value
-"x" in obj                        // returns true if 'x' is a property in myArray
+"x" in obj                        // If 'x' is a property in obj
+obj.hasOwnProperty("x")           // If 'x' is a property in obj, doesn't search prototype chain
 obj instanceof MyClass            // Returns true if instance of MyClass
 delete obj                        // Delete the object
 delete obj.x                      // Delete the object property
-    
+Object.getPrototypeOf(obj)        // Returns the prototype of obj
 Object.entries(obj)               // Returns array of [key, value] pairs where enumerable is true
 Object.values(obj)                // Returns array of property values where enumerable is true
 Object.keys(obj)                  // Returns array of property keys where enumerable is true
@@ -175,6 +174,7 @@ Object.isFrozen(obj)              // Whether freeze is on the object
 Object.seal(obj)                  // Prevent obj from deleting properties
 Object.isSealed(obj)              // Whether seal is on the object
     
+// OBJECT DEEP COPY
 eval("x = 0;")                    // Evaluates JavaScript code represented as a string
 uneval(obj)                       // Creates a string representation of the source code of an Object
 eval(uneval(obj))                 // Make deep copy of object
@@ -186,8 +186,8 @@ for (var value of obj) { var x = value; }  // iterate over object property value
 // PROTOTYPE CHAINING
 // Inheritance in Javascript where each object has a prototype property of its base, last link is 'null'
 // When looking up a property, searches down hierarchy as well, returns first match
-obj.prototype.x = 2.0 // overshadowed by obj.x if exists
-obj.prototype = obj2 // set base class, breaks chain
+MyClass.prototype.x = 2.0 // overshadowed by obj.x if exists, sets for all instances
+Object.getPrototypeOf(obj).x = 2.0 // overshadowed by obj.x if exists, sets only for obj
     
 // ENUMERABLE PROPERTIES
 // Properties automatically enumerable for normal assign/creation
