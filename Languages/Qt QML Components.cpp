@@ -103,6 +103,128 @@ DoubleValidator {
 }
 DoubleValidator.StandardNotation     // disables E in value
 DoubleValidator.ScientificNotation   // allow E in value
+   
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML LAYOUTS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// LAYOUT ATTACHED PROPERTIES
+// Use these on any components inside the layout
+Layout.alignment // Layout Alignment Flags
+Layout.bottomMargin // Overrides margin property if set
+Layout.column // column position of an item in a GridLayout
+Layout.columnSpan // column span of an item in a GridLayout
+Layout.fillHeight // Uses preferredHeight if false
+Layout.fillWidth // Uses preferredWidth if false
+Layout.leftMargin // Overrides margin property if set
+Layout.margins // Spacing between items
+Layout.maximumHeight // Number.POSITIVE_INFINITY default
+Layout.maximumWidth // Number.POSITIVE_INFINITY default
+Layout.minimumHeight // 0 default
+Layout.minimumWidth // 0 default
+Layout.preferredHeight // if -1 (default), will be ignored, and item's implicitHeight used instead
+Layout.preferredWidth // if -1 (default), will be ignored, and item's implicitWidth used instead
+Layout.rightMargin // Overrides margin property if set
+Layout.row // row position of an item in a GridLayout
+Layout.rowSpan // row span of an item in a GridLayout
+Layout.topMargin // Overrides margin property if set
+
+// ROWLAYOUT
+// Inherits Item, Aligns elements after each other in a single row
+RowLayout {
+    anchors.fill: parent // Still use anchors on base
+    layoutDirection: Qt.LeftToRight // default, Layout Direction Enum, item add/insert direction
+    spacing: 5 // default, spacing between each cell
+}
+
+// ROW
+// Inherits Item, Positions its child items along a single row
+Row {
+    bottomPadding: 1.0 // padding around the content, overrides 'padding'
+    leftPadding: 1.0 // padding around the content, overrides 'padding'
+    rightPadding: 1.0 // padding around the content, overrides 'padding'
+    topPadding: 1.0 // padding around the content, overrides 'padding'
+    padding: 1.0 // padding around the content
+    spacing: 0 // default, amount in pixels left empty between adjacent items
+    layoutDirection: Qt.LeftToRight // default, Layout Direction Enum, item add/insert direction
+    add: Transition {} // Effect to apply when items added/visibility changed
+    move: Transition {} // Effect to apply when items move
+    populate: Transition {} // Effect to apply when first populated with items
+    onPositioningComplete: {} // When positioning has been completed
+}
+row.forceLayout() // Triggers an update instead of waiting for scheduled one
+
+// COLUMNLAYOUT
+// Inherits Item, Aligns elements after each other in a single column
+ColumnLayout {
+    anchors.fill: parent // Still use anchors on base
+    layoutDirection: Qt.LeftToRight // default, Layout Direction Enum, item add/insert direction
+    spacing: 5 // default, spacing between each cell
+}
+
+// COLUMN
+// Inherits Item, Positions its child items along a single column
+Column {
+    bottomPadding: 1.0 // padding around the content, overrides 'padding'
+    leftPadding: 1.0 // padding around the content, overrides 'padding'
+    rightPadding: 1.0 // padding around the content, overrides 'padding'
+    topPadding: 1.0 // padding around the content, overrides 'padding'
+    padding: 1.0 // padding around the content
+    spacing: 0 // default, amount in pixels left empty between adjacent items
+    add: Transition {} // Effect to apply when items added/visibility changed
+    move: Transition {} // Effect to apply when items move
+    populate: Transition {} // Effect to apply when first populated with items
+    onPositioningComplete: {} // When positioning has been completed
+}
+column.forceLayout() // Triggers an update instead of waiting for scheduled one
+
+// GRIDLAYOUT
+// Inherits Item, Aligns elements in a grid with n columns
+GridLayout {
+    anchors.fill: parent // Still use anchors on base
+    columnSpacing: 5 // default, spacing between each column
+    columns: 3 // column limit if flow is GridLayout.LeftToRight, default is no limit
+    flow: <T>.LeftToRight // default, GridLayout Flow Enum, item wrapping with columns/rows properties
+    layoutDirection: Qt.LeftToRight // default, Layout Direction Enum, item add/insert direction
+    rowSpacing: 5 // default, spacing between each row
+    rows: 3 // row limit if flow is GridLayout.LeftToRight, default is no limit
+}
+
+// GRID
+// Inherits Item, Positions its child items in grid formation
+Column {
+    bottomPadding: 1.0 // padding around the content, overrides 'padding'
+    leftPadding: 1.0 // padding around the content, overrides 'padding'
+    rightPadding: 1.0 // padding around the content, overrides 'padding'
+    topPadding: 1.0 // padding around the content, overrides 'padding'
+    padding: 1.0 // padding around the content
+    columnSpacing: 1 // default not set, spacing in pixels between columns
+    columns: 4 // default, number of columns in grid
+    flow: <T>.LeftToRight // default, Grid Flow Enum, item wrapping with columns/rows properties
+    layoutDirection: Qt.LeftToRight // default, Layout Direction Enum, item add/insert direction
+    rowSpacing: 1 // default not set, spacing in pixels between rows
+    rows: 4 // default, number of rows in grid    
+    spacing: 0 // default, amount in pixels left empty between adjacent items    
+    add: Transition {} // Effect to apply when items added/visibility changed
+    move: Transition {} // Effect to apply when items move
+    populate: Transition {} // Effect to apply when first populated with items
+    onPositioningComplete: {} // When positioning has been completed
+}
+grid.forceLayout() // Triggers an update instead of waiting for scheduled one
+
+// Layout Alignment Flags
+Qt.AlignLeft       Qt.AlignTop
+Qt.AlignHCenter    Qt.AlignVCenter
+Qt.AlignRight      Qt.AlignBottom
+Qt.AlignBaseline
+
+// Layout Direction Enum
+Qt.LeftToRight
+Qt.RightToLeft
+
+// Grid / GridLayout Flow Enum
+<T>.LeftToRight
+<T>.TopToBottom
   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML ACTIONS
