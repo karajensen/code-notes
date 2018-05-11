@@ -504,59 +504,6 @@ Font.PreferVerticalHinting   // no horizontal hinting, but align in the vertical
 Font.PreferFullHinting       // hinting in both horizontal and vertical directions
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QML LAYOUTS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// LAYOUT ATTACHED PROPERTIES
-// Use these on any components inside the layout
-Layout.alignment // Layout Alignment Flags
-Layout.bottomMargin // Overrides margin property if set
-Layout.column // column position of an item in a GridLayout
-Layout.columnSpan // column span of an item in a GridLayout
-Layout.fillHeight // Uses preferredHeight if false
-Layout.fillWidth // Uses preferredWidth if false
-Layout.leftMargin // Overrides margin property if set
-Layout.margins // Spacing between items
-Layout.maximumHeight // Number.POSITIVE_INFINITY default
-Layout.maximumWidth // Number.POSITIVE_INFINITY default
-Layout.minimumHeight // 0 default
-Layout.minimumWidth // 0 default
-Layout.preferredHeight // if -1 (default), will be ignored, and item's implicitHeight used instead
-Layout.preferredWidth // if -1 (default), will be ignored, and item's implicitWidth used instead
-Layout.rightMargin // Overrides margin property if set
-Layout.row // row position of an item in a GridLayout
-Layout.rowSpan // row span of an item in a GridLayout
-Layout.topMargin // Overrides margin property if set
-
-// Layout Alignment Flags
-Qt.AlignLeft       Qt.AlignTop
-Qt.AlignHCenter    Qt.AlignVCenter
-Qt.AlignRight      Qt.AlignBottom
-Qt.AlignBaseline
-
-// ROWLAYOUT
-// Inherits Item, Aligns elements after each other in a single row
-RowLayout {
-    spacing: 5
-    anchors.fill: parent // Still use anchors on base
-}
-
-// COLUMNLAYOUT
-// Inherits Item, Aligns elements after each other in a single column
-ColumnLayout {
-    spacing: 5
-    anchors.fill: parent // Still use anchors on base
-}
-
-// GRIDLAYOUT
-// Inherits Item, Aligns elements in a grid with n columns
-GridLayout {
-    columns: 3
-    spacing: 5
-    anchors.fill: parent // Still use anchors on base
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML DYNAMIC CREATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
