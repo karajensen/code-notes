@@ -212,6 +212,24 @@ Column {
 }
 grid.forceLayout() // Triggers an update instead of waiting for scheduled one
 
+// FLOW
+// Inherits Item, Positions its children side by side, wrapping as necessary
+Flow {
+    bottomPadding: 1.0 // padding around the content, overrides 'padding'
+    leftPadding: 1.0 // padding around the content, overrides 'padding'
+    rightPadding: 1.0 // padding around the content, overrides 'padding'
+    topPadding: 1.0 // padding around the content, overrides 'padding'
+    padding: 1.0 // padding around the content
+    flow: <T>.LeftToRight // default, Grid Flow Enum, item wrapping with columns/rows properties
+    layoutDirection: Qt.LeftToRight // default, Layout Direction Enum, item add/insert direction
+    spacing: 0 // default, amount in pixels left empty between adjacent items    
+    add: Transition {} // Effect to apply when items added/visibility changed
+    move: Transition {} // Effect to apply when items move
+    populate: Transition {} // Effect to apply when first populated with items    
+    onPositioningComplete: {} // When positioning has been completed
+}
+flow.forceLayout() // Triggers an update instead of waiting for scheduled one
+
 // Layout Alignment Flags
 Qt.AlignLeft       Qt.AlignTop
 Qt.AlignHCenter    Qt.AlignVCenter
@@ -222,7 +240,7 @@ Qt.AlignBaseline
 Qt.LeftToRight
 Qt.RightToLeft
 
-// Grid / GridLayout Flow Enum
+// Flow / Grid / GridLayout Flow Enum
 <T>.LeftToRight
 <T>.TopToBottom
   
@@ -488,44 +506,44 @@ ControlsLegacy.SplitView {
 // Inherits QtObject, base class for all popups
 Popup {
     activeFocus: true // Read only, whether item has active focus
-    availableHeight : real
-    availableWidth : real
-    background : Item
-    bottomMargin : real
-    bottomPadding : real
-    clip : bool
-    closePolicy : enumeration
-    contentChildren : list<Item>
-    contentData : list<Object>
-    contentHeight : real
-    contentItem : Item
-    contentWidth : real
-    dim : bool
-    enabled : bool
-    enter : Transition
-    exit : Transition
-    focus : bool
-    font : font
-    implicitHeight : real
-    implicitWidth : real
-    leftMargin : real
-    leftPadding : real
-    locale : Locale
-    margins : real
-    mirrored : bool
-    modal : bool
-    opacity : real
-    opened : bool
-    padding : real
-    palette : palette
-    parent : Item
-    rightMargin : real
-    rightPadding : real
-    scale : real
-    spacing : real
-    topMargin : real
-    topPadding : real
-    transformOrigin : enumeration
+    availableHeight
+    availableWidth
+    background
+    bottomMargin
+    bottomPadding
+    clip
+    closePolicy
+    contentChildren
+    contentData
+    contentHeight
+    contentItem
+    contentWidth
+    dim
+    enabled
+    enter
+    exit
+    focus
+    font
+    implicitHeight
+    implicitWidth
+    leftMargin
+    leftPadding
+    locale
+    margins
+    mirrored
+    modal
+    opacity
+    opened
+    padding
+    palette
+    parent
+    rightMargin
+    rightPadding
+    scale
+    spacing
+    topMargin
+    topPadding
+    transformOrigin
     visible: false // Turning on/off will show popup window
     width: 200
     height: 200
@@ -537,8 +555,8 @@ Popup {
     onClosed: {}
     onOpened: {}
 }
-popupclose()
-popupforceActiveFocus(reason)
+popup.close()
+popup.forceActiveFocus(reason)
 popup.open()
 
 // DIALOG
