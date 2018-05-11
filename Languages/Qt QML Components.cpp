@@ -427,15 +427,19 @@ TabButton {
 Switch {
 }
 
-// MENUITEM
-// Inherits AbstractButton
-MenuItem {
-}
-
 // BUTTONGROUP
 // Inherits QtObject, Mutually-exclusive group of checkable buttons
 ButtonGroup {
 }
+
+// MENUITEM
+// Inherits AbstractButton
+MenuItem {
+   menu: myMenu // Parent menu of the item
+   subMenu: Menu {} // Submenu to show if a submenu
+   onTriggered: {} // Emitted when the menu item is triggered by the user
+}
+menuItem.highlighted // Whether is highlighted by the user
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML CONTAINERS
@@ -565,12 +569,40 @@ Dialog {
 }
 
 // MENU
-// Inherits Popup, Call using id.popup() to show at mouse position
+// Inherits Popup, For context and popup menus
 Menu {
-    visible: false // context menu start off invisible
-    MenuSeparator { visible: true }
-    MenuItem { text: "str" }
+    cascade: true // default true for desktops, whether submenus offset or fill over parent menus
+    currentIndex: 0 // Index of highlighted item
+    overlap: 1 // Pixels the menu horizontally overlaps its parent menu, only for cascade
+    title: "title"
+    MenuSeparator { } // Inherits Control
+    MenuItem { }  // See Button Section
 }
+menu.contentData // list<Object> of children of the menu
+menu.contentModel // model for the menu to use in a view
+menu.count // Number of menu children
+menu.actionAt(index) // Returns Action or null at index
+menu.addAction(action) // Appends an Action
+menu.addItem(item) // Appends an Item
+menu.addMenu(menu) // Appends a submenu Menu
+menu.dismiss() // Closes all menus in the hierarchy that this menu belongs to
+menu.insertAction(index, action) // Insert Action at index
+menu.insertItem(index, item) // Insert Item at index
+menu.insertMenu(index, menu) // Insert a submenu Menu at index
+menu.itemAt(index) // Returns Item at index
+menu.menuAt(index) // Returns Menu at index
+menu.moveItem(from, to) // Moves an item from one index to another
+menu.popup(parent, x, y) // Show at x,y in parent coordinate system
+menu.popup(x, y) // Show at x,y in menu's coordinate system
+menu.popup(parent, pos) // Show at QML point in parent coordinate system
+menu.popup(pos) // Show at QML point in menu's coordinate system
+menu.popup(parent) // Centers over the parent item
+menu.removeAction(action) // Removes Action
+menu.removeItem(item) // Removes Item
+menu.removeMenu(menu) // Removes submenu Menu
+menu.takeAction(index) // Removes and returns Action at index
+menu.takeItem(index) // Removes and returns MenuItem at index
+menu.takeMenu(index) // Removes and returns Menu at index
 
 // TOOLTIP
 // Inherits Popup, Provides tool tips for any control
