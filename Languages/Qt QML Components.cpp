@@ -510,13 +510,19 @@ ControlsLegacy.SplitView {
 // Inherits QtObject, base class for all popups
 Popup {
     activeFocus: true // Read only, whether item has active focus
-    availableHeight
-    availableWidth
-    background
-    bottomMargin
-    bottomPadding
-    clip
-    closePolicy
+    background: Item {} // If no size set, auto follows the control's size, must set implicit sizes if using
+    bottomMargin: -1 // default no margin
+    leftMargin: -1 // default no margin
+    rightMargin: -1 // default no margin
+    topMargin: -1 // default no margin
+    margins: -1 // default no margins
+    bottomPadding: 1 // padding around the contentItem, overrides 'padding'
+    leftPadding: 1 // padding around the contentItem, overrides 'padding'
+    rightPadding: 1 // padding around the contentItem, overrides 'padding'
+    topPadding: 1 // padding around the contentItem, overrides 'padding'
+    padding: 1 // padding around the contentItem
+    clip: false // default, whether clipping is enabled
+    closePolicy: Popup.CloseOnEscape|Popup.CloseOnPressOutside // default, Popup Close Policy Enum
     contentChildren
     contentData
     contentHeight
@@ -530,23 +536,15 @@ Popup {
     font
     implicitHeight
     implicitWidth
-    leftMargin
-    leftPadding
     locale
-    margins
     mirrored
     modal
     opacity
     opened
-    padding
     palette
     parent
-    rightMargin
-    rightPadding
     scale
-    spacing
-    topMargin
-    topPadding
+    spacing    
     transformOrigin
     visible: false // Turning on/off will show popup window
     width: 200
@@ -559,9 +557,19 @@ Popup {
     onClosed: {}
     onOpened: {}
 }
+popup.availableHeight // height available to contentItem after deducting vertical padding popup height
+popup.availableWidth // width available to contentItem after deducting horizontal padding popup width
 popup.close()
 popup.forceActiveFocus(reason)
 popup.open()
+   
+// Popup Close Policy Enum
+Popup.NoAutoClose                  // The popup will only close when manually instructed
+Popup.CloseOnPressOutside          // The popup will close when mouse is pressed outside of it
+Popup.CloseOnPressOutsideParent    // The popup will close when mouse is pressed outside of its parent
+Popup.CloseOnReleaseOutside        // The popup will close when mouse is released outside of it
+Popup.CloseOnReleaseOutsideParent  // The popup will close when mouse is released outside of its parent
+Popup.CloseOnEscape                // The popup will close when escape key is pressed while has active focus
 
 // DIALOG
 // Inherits Popup
@@ -805,7 +813,7 @@ edit.undo() // Undos if possible
 // LABEL
 // Inherits Text, Styled text label
 Label {
-    background: Rectangle {} // If no size set, auto follows the control's size, must set implicit sizes
+    background: Rectangle {} // If no size set, auto follows the control's size, must set implicit sizes if using
 }
 lbl.palette // QML palette used for control, default application palette
 
