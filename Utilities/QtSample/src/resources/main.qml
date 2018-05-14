@@ -153,7 +153,7 @@ Rectangle {
                                     Layout.fillWidth: true
                                     Layout.fillHeight: true
                                     Layout.alignment: Qt.AlignVCenter
-									Layout.margins: marginSize
+                                    Layout.margins: marginSize
                                     text: role_name
                                     font.bold: true
                                     font.pointSize: smallFont
@@ -161,7 +161,7 @@ Rectangle {
                                 Text {
                                     Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
                                     Layout.fillHeight: true
-									Layout.margins: marginSize
+                                    Layout.margins: marginSize
                                     width: 100
                                     text: role_state_desc
                                     font.pointSize: smallFont
@@ -169,8 +169,8 @@ Rectangle {
                                 ProgressBar {
                                     id: progressBar
                                     Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-									Layout.fillHeight: true
-									Layout.margins: marginSize
+                                    Layout.fillHeight: true
+                                    Layout.margins: marginSize
                                     width: 100
                                     from: 0
                                     to: role_maxstep
@@ -192,9 +192,9 @@ Rectangle {
                                 }
                                 Button {
                                     Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-									Layout.preferredHeight: iconsSize
-									Layout.preferredWidth: iconsSize
-									padding: 0
+                                    Layout.preferredHeight: iconsSize
+                                    Layout.preferredWidth: iconsSize
+                                    padding: 0
                                     icon.source: "qrc:///start.png"
                                     enabled: canStart()
                                     onClicked: {
@@ -203,9 +203,9 @@ Rectangle {
                                 }
                                 Button {
                                     Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-									Layout.preferredHeight: iconsSize
-									Layout.preferredWidth: iconsSize
-									padding: 0
+                                    Layout.preferredHeight: iconsSize
+                                    Layout.preferredWidth: iconsSize
+                                    padding: 0
                                     icon.source: "qrc:///pause.png"
                                     enabled: canPause()
                                     onClicked: {
@@ -214,9 +214,9 @@ Rectangle {
                                 }
                                 Button {
                                     Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-									Layout.preferredHeight: iconsSize
-									Layout.preferredWidth: iconsSize
-									padding: 0
+                                    Layout.preferredHeight: iconsSize
+                                    Layout.preferredWidth: iconsSize
+                                    padding: 0
                                     icon.source: "qrc:///stop.png"
                                     enabled: canStop()
                                     onClicked: {
@@ -225,18 +225,18 @@ Rectangle {
                                 }
                                 Button {
                                     Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-									Layout.preferredHeight: iconsSize
-									Layout.preferredWidth: iconsSize
-									Layout.margins: marginSize
-									padding: 0
+                                    Layout.preferredHeight: iconsSize
+                                    Layout.preferredWidth: iconsSize
+                                    Layout.margins: marginSize
+                                    padding: 0
                                     icon.source: "qrc:///delete.png"
                                     onClicked: {
                                         context_model.deleteItem(index)
                                     }
                                 }
-								Item {
-									Layout.margins: marginSize
-								}
+                                Item {
+                                    Layout.margins: marginSize
+                                }
                             }
                         }
                     }
@@ -265,65 +265,65 @@ Rectangle {
         }
     }
 
-	ApplicationWindow {
-		id: createWindow
-		width: 300
-		height: 80
-		title: "Create Item"
-		visible: false
+    ApplicationWindow {
+        id: createWindow
+        width: 300
+        height: 80
+        title: "Create Item"
+        visible: false
 
-		onVisibleChanged: {
-		    textInput.text = "";
-		    if(visible) {
-		        textInput.focus = true;
-		    }
-		    else {
-		        listView.focus = true;
-		    }
-		}
+        onVisibleChanged: {
+            textInput.text = "";
+            if(visible) {
+                textInput.focus = true;
+            }
+            else {
+                listView.focus = true;
+            }
+        }
 
-		Rectangle {
-		    anchors.fill: parent
-		    color: darkShade
-		    Rectangle {
-		        anchors.margins: marginSize
-		        anchors.fill: parent
-		        color: lightShade
-		        ColumnLayout {
-		            anchors.fill: parent
-		            TextInput {
-		                id: textInput
-		                Layout.fillWidth: true
-		                Layout.fillHeight: true
-		                font.pointSize: largeFont
-		                padding: marginSize
-		                maximumLength: 25
-		                selectionColor: darkHighlight
-		                selectByMouse: true
-		            }
-		            RowLayout {
-		                Layout.fillWidth: true
-		                Button {
-		                    Layout.preferredHeight: root.buttonHeight
-		                    Layout.fillWidth: true
-		                    text: "Create"
-		                    onClicked: {
-		                        context_model.createItem(textInput.displayText)
-		                        createWindow.visible = false;
-		                        listView.positionViewAtEnd()
-		                    }
-		                }
-		                Button {
-		                    Layout.preferredHeight: root.buttonHeight
-		                    Layout.fillWidth: true
-		                    text: "Cancel"
-		                    onClicked: {
-		                        createWindow.visible = false;
-		                    }
-		                }
-		            }
-		        }
-		    }
-		}
-	}
+        Rectangle {
+            anchors.fill: parent
+            color: darkShade
+            Rectangle {
+                anchors.margins: marginSize
+                anchors.fill: parent
+                color: lightShade
+                ColumnLayout {
+                    anchors.fill: parent
+                    TextInput {
+                        id: textInput
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        font.pointSize: largeFont
+                        padding: marginSize
+                        maximumLength: 25
+                        selectionColor: darkHighlight
+                        selectByMouse: true
+                    }
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Button {
+                            Layout.preferredHeight: root.buttonHeight
+                            Layout.fillWidth: true
+                            text: "Create"
+                            onClicked: {
+                                context_model.createItem(textInput.displayText)
+                                createWindow.visible = false;
+                                listView.positionViewAtEnd()
+                            }
+                        }
+                        Button {
+                            Layout.preferredHeight: root.buttonHeight
+                            Layout.fillWidth: true
+                            text: "Cancel"
+                            onClicked: {
+                                createWindow.visible = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
