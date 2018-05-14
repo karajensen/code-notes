@@ -1,17 +1,16 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.3
-import QtQuick.Dialogs 1.2 as DialogLegacy
 import SampleModel 1.0
 
 Rectangle {
     id: root
-    width: 1060
+    width: 560
     height: 260
 
     /** Style properties */
     property int buttonHeight: 30
-    property int rowHeight: 30
+    property int rowHeight: 25
     property color darkShade: "#DDDDDD"
     property color midShade: "#DFDFDF"
     property color lightAltShade: "#F5F5F5"
@@ -19,8 +18,8 @@ Rectangle {
     property color darkHighlight: "#8EACFF"
     property color midHighlight: "#B2C6FF"
     property color lightHighlight: "#E0E8FF"
-    property int smallFont: 10
-    property int largeFont: 14
+    property int smallFont: 8
+    property int largeFont: 10
     property int marginSize: 4
     property int iconsSize: 16
 
@@ -149,28 +148,29 @@ Rectangle {
 
                             RowLayout {
                                 anchors.fill: parent
-                                anchors.margins: marginSize
+
                                 Text {
                                     Layout.fillWidth: true
                                     Layout.fillHeight: true
                                     Layout.alignment: Qt.AlignVCenter
+									Layout.margins: marginSize
                                     text: role_name
                                     font.bold: true
-                                    verticalAlignment: Text.AlignVCenter
                                     font.pointSize: smallFont
                                 }
                                 Text {
                                     Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
                                     Layout.fillHeight: true
+									Layout.margins: marginSize
                                     width: 100
                                     text: role_state_desc
-                                    verticalAlignment: Text.AlignVCenter
                                     font.pointSize: smallFont
                                 }
                                 ProgressBar {
                                     id: progressBar
                                     Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-                                    height: 20
+									Layout.fillHeight: true
+									Layout.margins: marginSize
                                     width: 100
                                     from: 0
                                     to: role_maxstep
@@ -192,12 +192,10 @@ Rectangle {
                                 }
                                 Button {
                                     Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-                                    Layout.fillHeight: true
+									Layout.preferredHeight: iconsSize
+									Layout.preferredWidth: iconsSize
+									padding: 0
                                     icon.source: "qrc:///start.png"
-                                    icon.width: iconsSize
-                                    icon.height: iconsSize
-                                    width: iconsSize
-                                    height: iconsSize
                                     enabled: canStart()
                                     onClicked: {
                                         context_model.startItemProgress(index)
@@ -205,11 +203,10 @@ Rectangle {
                                 }
                                 Button {
                                     Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+									Layout.preferredHeight: iconsSize
+									Layout.preferredWidth: iconsSize
+									padding: 0
                                     icon.source: "qrc:///pause.png"
-                                    icon.width: iconsSize
-                                    icon.height: iconsSize
-                                    width: iconsSize
-                                    height: iconsSize
                                     enabled: canPause()
                                     onClicked: {
                                         context_model.pauseItemProgress(index)
@@ -217,11 +214,10 @@ Rectangle {
                                 }
                                 Button {
                                     Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+									Layout.preferredHeight: iconsSize
+									Layout.preferredWidth: iconsSize
+									padding: 0
                                     icon.source: "qrc:///stop.png"
-                                    icon.width: iconsSize
-                                    icon.height: iconsSize
-                                    width: iconsSize
-                                    height: iconsSize
                                     enabled: canStop()
                                     onClicked: {
                                         context_model.stopItemProgress(index)
@@ -229,77 +225,18 @@ Rectangle {
                                 }
                                 Button {
                                     Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+									Layout.preferredHeight: iconsSize
+									Layout.preferredWidth: iconsSize
+									Layout.margins: marginSize
+									padding: 0
                                     icon.source: "qrc:///delete.png"
-                                    icon.width: iconsSize
-                                    icon.height: iconsSize
-                                    width: iconsSize
-                                    height: iconsSize
                                     onClicked: {
                                         context_model.deleteItem(index)
                                     }
                                 }
-                            }
-                        }
-                    }
-                }
-
-                DialogLegacy.Dialog {
-                    id: createDialog
-                    visible: false
-                    title: "Create New Sample Item"
-                    width: 300
-                    height: 80
-
-                    onVisibleChanged: {
-                        textInput.text = "";
-                        if(visible) {
-                            textInput.focus = true;
-                        }
-                        else {
-                            listView.focus = true;
-                        }
-                    }
-
-                    contentItem: Rectangle {
-                        anchors.fill: parent
-                        color: darkShade
-                        Rectangle {
-                            anchors.margins: marginSize
-                            anchors.fill: parent
-                            color: lightShade
-                            ColumnLayout {
-                                anchors.fill: parent
-                                TextInput {
-                                    id: textInput
-                                    Layout.fillWidth: true
-                                    Layout.fillHeight: true
-                                    font.pointSize: largeFont
-                                    padding: marginSize
-                                    maximumLength: 25
-                                    selectionColor: darkHighlight
-                                    selectByMouse: true
-                                }
-                                RowLayout {
-                                    Layout.fillWidth: true
-                                    Button {
-                                        Layout.preferredHeight: root.buttonHeight
-                                        Layout.fillWidth: true
-                                        text: "Create"
-                                        onClicked: {
-                                            context_model.createItem(textInput.displayText)
-                                            createDialog.visible = false;
-                                            listView.positionViewAtEnd()
-                                        }
-                                    }
-                                    Button {
-                                        Layout.preferredHeight: root.buttonHeight
-                                        Layout.fillWidth: true
-                                        text: "Cancel"
-                                        onClicked: {
-                                            createDialog.visible = false;
-                                        }
-                                    }
-                                }
+								Item {
+									Layout.margins: marginSize
+								}
                             }
                         }
                     }
@@ -312,7 +249,7 @@ Rectangle {
                         Layout.preferredHeight: root.buttonHeight
                         text: "Create Item"
                         onClicked: {
-                            createDialog.visible = true;
+                            createWindow.visible = true;
                         }
                     }
                     Button {
@@ -327,4 +264,66 @@ Rectangle {
             }
         }
     }
+
+	ApplicationWindow {
+		id: createWindow
+		width: 300
+		height: 80
+		title: "Create Item"
+		visible: false
+
+		onVisibleChanged: {
+		    textInput.text = "";
+		    if(visible) {
+		        textInput.focus = true;
+		    }
+		    else {
+		        listView.focus = true;
+		    }
+		}
+
+		Rectangle {
+		    anchors.fill: parent
+		    color: darkShade
+		    Rectangle {
+		        anchors.margins: marginSize
+		        anchors.fill: parent
+		        color: lightShade
+		        ColumnLayout {
+		            anchors.fill: parent
+		            TextInput {
+		                id: textInput
+		                Layout.fillWidth: true
+		                Layout.fillHeight: true
+		                font.pointSize: largeFont
+		                padding: marginSize
+		                maximumLength: 25
+		                selectionColor: darkHighlight
+		                selectByMouse: true
+		            }
+		            RowLayout {
+		                Layout.fillWidth: true
+		                Button {
+		                    Layout.preferredHeight: root.buttonHeight
+		                    Layout.fillWidth: true
+		                    text: "Create"
+		                    onClicked: {
+		                        context_model.createItem(textInput.displayText)
+		                        createWindow.visible = false;
+		                        listView.positionViewAtEnd()
+		                    }
+		                }
+		                Button {
+		                    Layout.preferredHeight: root.buttonHeight
+		                    Layout.fillWidth: true
+		                    text: "Cancel"
+		                    onClicked: {
+		                        createWindow.visible = false;
+		                    }
+		                }
+		            }
+		        }
+		    }
+		}
+	}
 }
