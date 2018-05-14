@@ -400,7 +400,10 @@ AbstractButton.TextBesideIcon
 // BUTTON
 // Inherits AbstractButton
 Button {
+    autoRepeat: false // default, whether repeats pressed, released and clicked signals
+    flat: false // default, whether draws a background when pressed or checked
 }
+btn.highlighted // Whether button is highlighted
 
 // ROUNDBUTTON
 // Inherits AbstractButton, Button with rounded corners
