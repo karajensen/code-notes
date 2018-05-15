@@ -499,7 +499,56 @@ Container {
 Flickable {
     ScrollBar.vertical: ScrollBar { } // Add a vertical scrollbar
     ScrollBar.horizontal: ScrollBar { } // Add a horizontal scrollbar
+    atXBeginning
+    atXEnd
+    atYBeginning
+    atYEnd
+    bottomMargin
+    boundsBehavior
+    boundsMovement
+    contentHeight
+    contentItem
+    contentWidth
+    contentX
+    contentY
+    dragging
+    draggingHorizontally
+    draggingVertically
+    flickDeceleration
+    flickableDirection
+    flicking
+    flickingHorizontally
+    flickingVertically
+    horizontalOvershoot
+    horizontalVelocity
+    interactive
+    leftMargin
+    maximumFlickVelocity
+    moving
+    movingHorizontally
+    movingVertically
+    originX
+    originY
+    pixelAligned
+    pressDelay
+    rebound
+    rightMargin
+    topMargin
+    verticalOvershoot
+    verticalVelocity
+    visibleArea.xPosition
+    visibleArea.widthRatio
+    visibleArea.yPosition
+    visibleArea.heightRatio
+    onFlickEnded: {}
+    onFlickStarted: {}
+    onMovementEnded: {}
+    onMovementStarted: {}
 }
+flick.cancelFlick()
+flick.flick(xVelocity, yVelocity)
+flick.resizeContent(width, height, center)
+flick.returnToBounds()
 
 // PANE
 // Inherits Control, Provides a background matching with the application style and theme
