@@ -282,11 +282,44 @@ ObjectModel {
 
 // ITEMSELECTIONMODEL
 // Instantiates QItemSelectionModel, Allows keeping the selection state of multiple views in sync
-// QML views do not use QModelIndex, need to convert to it when using ItemSelectionModel
+// Parent/Index is QModelIndex, QML views do not use QModelIndex, need to convert to it
 ItemSelectionModel {
+    currentIndex
+    hasSelection
+    model
+    selectedIndexes
+    onCurrentChanged(current, previous)
+    onSelectionChanged(selected, deselected)
 }
-var modelIndex = model.index(view.currentIndex, 0) // Get QModelIndex from view
-ism.select(modelIndex, ItemSelectionModel.Select | ItemSelectionModel.Current)
+ism.model.index(view.currentIndex, 0) // Returns QModelIndex from view to use with ism
+ism.clear()
+ism.clearCurrentIndex()
+ism.clearSelection()
+ism.columnIntersectsSelection(column, parent)
+ism.isColumnSelected(column, parent)
+ism.isRowSelected(row, parent)
+ism.isSelected(index)
+ism.reset()
+ism.rowIntersectsSelection(row, parent)
+ism.select(selection, flags) // Takes QItemSelection, Item Selection Model Flags
+ism.select(index, flags) // Item Selection Model Flags
+ism.selectedColumns(row) // Returns QModelIndexList
+ism.selectedRows(column) // Returns QModelIndexList
+ism.selection() // Returns QItemSelection
+ism.setCurrentIndex(index, flags) // Item Selection Model Flags
+    
+// Item Selection Model Flags
+ItemSelectionModel.NoUpdate        // No selection will be made
+ItemSelectionModel.Clear           // The complete selection will be cleared
+ItemSelectionModel.Select          // All specified indexes will be selected
+ItemSelectionModel.Deselect        // All specified indexes will be deselected
+ItemSelectionModel.Toggle          // All specified indexes will be selected/deselected depending on state
+ItemSelectionModel.Current         // The current selection will be updated
+ItemSelectionModel.Rows            // All indexes will be expanded to span rows
+ItemSelectionModel.Columns         // All indexes will be expanded to span columns
+ItemSelectionModel.SelectCurrent   // Select | Current
+ItemSelectionModel.ToggleCurrent   // Toggle | Current
+ItemSelectionModel.ClearAndSelect  // Clear | Select
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT MODELS
