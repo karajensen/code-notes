@@ -70,39 +70,80 @@ Timer {
 timer.restart()
 timer.start()
 timer.stop()
-  
-// RECTANGLE
-// Inherits Item
-Rectangle {
-    color: "red"
-    radius: 2
-    antialiasing: true // Default true if using radius, false otherwise, gives performance hit
-    border.color: "red"
-    border.width: 1
-    gradient: Gradient {}
-}
 
-// GRADIENT
-Gradient {
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML WINDOWS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+// WINDOW ATTACHED PROPERTIES
+Item {
+    Window.active
+    Window.activeFocusItem
+    Window.contentItem
+    Window.height
+    Window.visibility
+    Window.width
+    Window.window
+    ApplicationWindow.activeFocusControl
+    ApplicationWindow.contentItem
+    ApplicationWindow.footer
+    ApplicationWindow.header
+    ApplicationWindow.menuBar
+    ApplicationWindow.window
 }
+   
+// WINDOW
+// Instantiates QQuickWindow, Creates a new top-level window 
+Window {
+    active
+    activeFocusItem
+    color
+    contentItem
+    contentOrientation
+    data
+    flags
+    height
+    maximumHeight
+    maximumWidth
+    minimumHeight
+    minimumWidth
+    modality
+    opacity
+    screen
+    title
+    visibility
+    visible
+    width
+    x
+    y
+    onClosing: {}
+}
+window.alert(msec)
+window.close()
+window.hide()
+window.lower()
+window.raise()
+window.requestActivate()
+window.show()
+window.showFullScreen()
+window.showMaximized()
+window.showMinimized()
+window.showNormal()
 
-// INTVALIDATOR
-// Instantiates QIntValidator
-IntValidator {
-    bottom: -1 // default -infinity
-    top: 1 // default infinity
-} 
-  
-// DOUBLEVALIDATOR
-// Instantiates QDoubleValidator
-DoubleValidator {
-    bottom: -1.0 // default -infinity
-    top: 1.0 // default infinity
-    decimals: 1 // n digits after decimal point, default 1000
-    notation: DoubleValidator.ScientificNotation // default 
+// APPLICATIONWINDOW
+// Inherits Window, Styled top-level window
+ApplicationWindow {
+    activeFocusControl
+    background
+    contentData
+    contentItem
+    font
+    footer
+    header
+    locale
+    menuBar
+    palette
 }
-DoubleValidator.StandardNotation     // disables E in value
-DoubleValidator.ScientificNotation   // allow E in value
    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML LAYOUTS
@@ -964,9 +1005,46 @@ Text.Normal      Text.Raised
 Text.Outline     Text.Sunken
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QML ANIMATION
+// QML VALIDATORS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// INTVALIDATOR
+// Instantiates QIntValidator
+IntValidator {
+    bottom: -1 // default -infinity
+    top: 1 // default infinity
+} 
+  
+// DOUBLEVALIDATOR
+// Instantiates QDoubleValidator
+DoubleValidator {
+    bottom: -1.0 // default -infinity
+    top: 1.0 // default infinity
+    decimals: 1 // n digits after decimal point, default 1000
+    notation: DoubleValidator.ScientificNotation // default 
+}
+DoubleValidator.StandardNotation     // disables E in value
+DoubleValidator.ScientificNotation   // allow E in value
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML GRAPHICS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// RECTANGLE
+// Inherits Item
+Rectangle {
+    color: "red"
+    radius: 2
+    antialiasing: true // Default true if using radius, false otherwise, gives performance hit
+    border.color: "red"
+    border.width: 1
+    gradient: Gradient {}
+}
+
+// GRADIENT
+Gradient {
+}
+   
 // TRANSITION
 // Defines animated transitions that occur on state changes
 Transition {
