@@ -402,7 +402,20 @@ Tumbler {
 // Inherits Control, Vertical or horizontal interactive scroll bar
 ScrollBar {
     contentItem.opacity: 1 // Make always visible
+    active
+    horizontal
+    interactive
+    orientation
+    policy
+    position
+    pressed
+    size
+    snapMode
+    stepSize
+    vertical
 }
+bar.increase()
+bar.decrease()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML BUTTONS
@@ -492,7 +505,22 @@ menuItem.highlighted // Whether is highlighted by the user
 // CONTAINER
 // Inherits Control, Abstract base class for some containers
 Container {
+    contentChildren
+    contentData
+    contentModel
+    count
+    currentIndex
+    currentItem
 }
+cont.addItem(Item item)
+cont.decrementCurrentIndex()
+cont.incrementCurrentIndex()
+cont.insertItem(index, item)
+cont.itemAt(index) // Returns Item
+cont.moveItem(from, to)
+cont.removeItem(item)
+cont.setCurrentIndex(index)
+cont.takeItem(index) // Returns Item
 
 // FLICKABLE
 // Inherits Item, Provides a surface that can be "flicked"
@@ -553,21 +581,15 @@ flick.returnToBounds()
 // PANE
 // Inherits Control, Provides a background matching with the application style and theme
 Pane {
+    contentChildren
+    contentData
+    contentHeight
+    contentWidth
 }
 
 // FRAME
 // Inherits Pane, Visual frame for a logical group of controls
 Frame {
-}
-
-// SCROLLVIEW
-// Inherits Control, Auto uses Flickable if child has one
-ScrollView {
-}
-
-// SWIPEVIEW
-// Inherits Container, Enables the user to navigate pages by swiping sideways
-SwipeView {
 }
 
 // MENUBAR
@@ -590,9 +612,43 @@ ToolBar {
 GroupBox {
 }
 
+// DIALOGBUTTONBOX
+// Inherits Container, A button box used in dialogs
+DialogButtonBox {
+    delegate: Button { // Use DialogButtonBox.buttonBox for parent if floating delegate
+        DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
+    }   
+    alignment
+    position
+    standardButtons
+    onAccepted: {}
+    onApplied: {}
+    onClicked: { button }
+    onDiscarded: {}
+    onHelpRequested: {}
+    onRejected: {}
+    onReset: {}
+}
+box.standardButton(button) // Returns AbstractButton
+
 // SPLITVIEW
 // No QML Controls 2 version
 ControlsLegacy.SplitView {
+    handleDelegate
+    orientation
+    resizing
+}
+view.addItem(item)
+view.removeItem(item)
+   
+// SCROLLVIEW
+// Inherits Control, Auto uses Flickable if child has one
+ScrollView {
+}
+
+// SWIPEVIEW
+// Inherits Container, Enables the user to navigate pages by swiping sideways
+SwipeView {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -639,12 +695,12 @@ Popup {
     scale
     spacing    
     transformOrigin
-    visible: false // Turning on/off will show popup window
-    width: 200
-    height: 200
-    x: 50
-    y: 50
-    z: 50
+    visible
+    width
+    height
+    x
+    y
+    z
     onAboutToHide: {}
     onAboutToShow: {}
     onClosed: {}
@@ -665,9 +721,24 @@ Popup.CloseOnReleaseOutsideParent  // The popup will close when mouse is release
 Popup.CloseOnEscape                // The popup will close when escape key is pressed while has active focus
 
 // DIALOG
-// Inherits Popup
+// Inherits Popup, Popup with standard buttons and a title
 Dialog {
+    footer
+    header
+    result
+    standardButtons
+    title
+    onAccepted: {}
+    onApplied: {}
+    onDiscarded: {}
+    onHelpRequested: {}
+    onRejected: {}
+    onReset: {}
 }
+dialog.accept()
+dialog.done(result)
+dialog.reject()
+dialog.standardButton(button) // Returns AbstractButton
 
 // MENU
 // Inherits Popup, For context and popup menus
