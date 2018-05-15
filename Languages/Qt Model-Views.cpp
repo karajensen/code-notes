@@ -288,8 +288,8 @@ ItemSelectionModel {
     hasSelection
     model
     selectedIndexes
-    onCurrentChanged(current, previous)
-    onSelectionChanged(selected, deselected)
+    onCurrentChanged: { current, previous }
+    onSelectionChanged: { selected, deselected }
 }
 ism.model.index(view.currentIndex, 0) // Returns QModelIndex from view to use with ism
 ism.clear()
