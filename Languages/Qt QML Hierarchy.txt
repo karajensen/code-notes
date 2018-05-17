@@ -1,0 +1,45 @@
+
+                                                                   QQuickItem       
+                                                                       |
+                                                                      Item          
+                                                                       |
+       ------------------------------------------------------------------------------------------------------------------------------------
+       |                                                    |                                             |          |         |          |
+    Repeater                                             Control                                       Flickable    Text    TextInput   TextEdit 
+   PathView                                                 |                                             |          |         |          |
+   MouseArea            ----------------------------------------------------------------------         ListView     Label   TextField   TextArea
+   RowLayout            |                        |                        |                  |         GridView
+      Row            ComboBox              AbstractButton              Container            Pane            
+  ColumnLayout       SpinBox                     |                        |                  |
+     Column         ScrollView            ----------------             SwipeView          ---------
+   GridLayout        ScrollBar            |              |          DialogButtonBox       |       |
+     Grid              Dial             Button      ItemDelegate       MenuBar          Frame   ToolBar               
+     Flow          BusyIndicator      RoundButton        |              TabBar            |                          
+   Rectangle       ProgressBar         CheckBox     CheckDelegate                      GroupBox                       
+                     Slider           RadioButton   RadioDelegate                                            
+                   RangeSlider         TabButton    SwitchDelegate                                                    
+                     Tumbler            Switch      SwipeDelegate                                                     
+                                       MenuItem                                                                       
+                                                                    
+                                                                       
+
+     ?????                 QtObject            QQuickWindow        QDoubleValidator    QIntValidator   QQmlComponent   QItemSelectionModel
+       |                      |                    |                     |                  |               |                  |
+     Timer               --------------           Window            DoubleValidator     IntValidator     Component      ItemSelectionModel 
+   FocusScope            |            |             |
+    DropArea        ButtonGroup     Popup      ApplicationWindow 
+  WorkerScript        Action          |               
+   ObjectModel      ActionGroup     Dialog      
+  XmlListModel                       Menu   
+   ListModel                        ToolTip
+  Connections                     
+    Binding                               
+  StateGroup
+  
+  
+  
+  
+  
+  
+  
+  
