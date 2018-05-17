@@ -233,7 +233,7 @@ GridLayout {
 
 // GRID
 // Inherits Item, Positions its child items in grid formation
-Column {
+Grid {
     bottomPadding: 1.0 // padding around the content, overrides 'padding'
     leftPadding: 1.0 // padding around the content, overrides 'padding'
     rightPadding: 1.0 // padding around the content, overrides 'padding'
