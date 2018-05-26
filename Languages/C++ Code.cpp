@@ -36,7 +36,7 @@ auto* str = L"Wide-string literal"
 int myArray[9] = { 1, 2 };
 
 //2D ARRAYS
-//creates an arrow with 2 rows, 2 columns
+//creates an array with 2 rows, 2 columns
 //memory layout is row-major: [1 | 2 | 3 | 4] in continuous block
 int myArray[2][2] 
 {
