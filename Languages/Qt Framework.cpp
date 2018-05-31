@@ -149,7 +149,7 @@ metaEnum.valueToKey(MyClass::ONE)
 metaEnum.keyToValue("ONE")
 
 // OBJECT TYPE INFO
-// Macro must be outside all namespaces
+// Macro must be outside all namespaces, placed after class in .h
 // Q_PRIMITIVE_TYPE leaves obj memory unitialised, means trivally copyable
 // Q_MOVABLE_TYPE uses std::memcpy rather than copy ctor to move obs around, means trivally relocatable
 // Q_MOVABLE_TYPE does shallow move; don't use for types that self refer (pimpl with ptr back to parent)
@@ -159,7 +159,7 @@ Q_DECLARE_TYPEINFO(MyClass, Q_MOVABLE_TYPE)
 QTypeInfoQuery<MyClass>::isRelocatable // Query type info
 
 // REGISTERING OBJECT WITH VARIANT
-// Macro must be outside all namespaces
+// Macro must be outside all namespaces, placed after class in .h
 // Allows use with variant: myVariant.value<MyClass>()
 // Not needed for: MyClass*, qt smart pointers/container with MyClass, if using Q_ENUM/Q_FLAG/Q_GADGET
 Q_DECLARE_METATYPE(MyClass)
