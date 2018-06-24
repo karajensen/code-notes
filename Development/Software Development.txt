@@ -85,6 +85,15 @@ cd ..                // move down a folder
 ./myfile.sh          // run the file
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// LINUX DEVELOPMENT
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+TERMINAL COMMANDS:
+sudo chmod +x filename         // turn into an exe
+xdg-open ./                    // open folder
+xkill                          // kill process
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GIT SOURCE CONTROL
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 • If uncommited changes are on a branch, new branches checked out will take those changes
@@ -134,6 +143,9 @@ git config --global --edit                 // Show the git config file
 INITIALISING GIT
 git config --global user.name "Kara Jensen"
 git config --global user.email mail@karajensen.com
+git config --global --add merge.tool kdiff3
+git config --global --add mergetool.kdiff3.path "C:/Program Files/KDiff3/kdiff3.exe"
+git config --global --add mergetool.kdiff3.trustExitCode false
 git config --global --add diff.guitool kdiff3
 git config --global --add difftool.kdiff3.path "C:/Program Files/KDiff3/kdiff3.exe"
 git config --global --add difftool.kdiff3.trustExitCode false
@@ -240,7 +252,7 @@ WORKFLOW
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ENVIRONMENT VARIABLES:
-$(SolutionDir)\
+$(SolutionDir)
 $(ProjectName)
 $(Configuration)
 
@@ -248,15 +260,10 @@ COMPILIER OPTIONS:
 /GS           Prevent returning after a function has trashed the stack                        
 /NXCOMPAT     Makes the data in the heap/stack non-executable
 /DYNAMICBASE  Extra security with no run time cost
-/ZI           Program Database for Edit And Continue, disables /Zo
-/Zi           Program Data, enables /Zo for VS2015
+/ZI           Program Database (PDB) for Edit And Continue, disables /Zo
+/Zi           Program Database (PDB), enables /Zo
+/Z7           Debug information becomes part of obj files
 /Zo           Generate enhanced debug information for release builds (PBDs get larger)
-
-DEBUGGING IN RELEASE:
-• In C/C++ Options set Debug Information Format to C7 compatible (/Z7) or Program Database (/Zi)
-• In Linker General set Enable Incremental Linking to No (/INCREMENTAL:NO)
-• In Linker Debugging set Generate Debug Info to Yes (/DEBUG)
-• In Linker Optimization set References to Yes (/OPT:REF)
 
 PREPROCESSOR OPTIONS:
 _DEBUG
@@ -289,6 +296,33 @@ file(COPY ${SRC_PATH}/folder/file.txt DESTINATION ${DST_PATH}/folder)
 add_executable(my_exe_name ${SRC_LIST})
 
 error("This is an error")
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// GIT BASH
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+MY_VAR="MyVariable"
+PLATFORM_TYPE=`uname -s`
+
+# Gap after [ required else compilation error
+if [ `expr substr $PLATFORM_TYPE 1 10` == "MINGW64_NT" ]; then
+    echo "Windows Found"
+elif [ `uname -s` = 'Linux' ]
+    echo "Linux Found"
+else
+    echo "Unknown"
+fi
+
+export MY_ENV_VARIABLE="${MY_VAR}"    # Set env variable for bash instance
+setx MY_ENV_VARIABLE "${MY_VAR}       # Set env variable for system, bash not updated
+if [ ! -z "${MY_ENV_VARIABLE}" ]      # If env variable doesn't exist
+if [ -f "${CL_PATH}" ]                # If file exists
+read -p "Press any key to exit..."    # Pause the console
+
+# Windows commands
+cmd //c copy ${MY_PATH} c:\\Folder\\file.exe
+cmd //c del c:\\Folder\\file.exe
+cmd //c "xcopy c:\dev\tools\WindowsDev\clcache\4.1.0\clcache x86 /e /i /h"
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MSBUILD
