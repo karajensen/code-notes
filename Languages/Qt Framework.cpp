@@ -161,15 +161,15 @@ Q_DECLARE_TYPEINFO(MyClass::MyEnum, Q_PRIMITIVE_TYPE)
 Q_DECLARE_TYPEINFO(MyClass, Q_MOVABLE_TYPE)
 QTypeInfoQuery<MyClass>::isRelocatable // Query type info
 
-// REGISTERING OBJECT WITH VARIANT
-// Macro must be outside all namespaces, placed after class in .h
-// Allows use with variant: myVariant.value<MyClass>()
-// Not needed for: MyClass*, qt smart pointers/container with MyClass, if using Q_ENUM/Q_FLAG/Q_GADGET
-Q_DECLARE_METATYPE(MyClass)
-
-// REGISTERING OBJECT WITH PROPERTY SYSTEM
-// Allows use with signals/slots/property system
-qRegisterMetaType<MyClass>();
+// REGISTERING OBJECT
+// Macros must be outside all namespaces, placed after class in .h
+// Not needed for: MyClass* as derives from QObject*, qt smart pointers/container with MyClass
+Q_DECLARE_METATYPE(MyClass) // Allows use with variant: myVariant.value<MyClass>()
+Q_ENUM(MyClass::MyEnum) // Also allows use in property system
+Q_FLAG(MyClass::MyFlag) // Also allows use in property system
+qRegisterMetaType<MyClass>(); // Allows use with signals/slots/property system
+qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyClass"); // use 'import MyInclude 1.0' and MyClass {}
+qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyEnum"); // use 'import MyInclude 1.0' and 'MyEnum.ONE'
 
 // REGISTERING OBJECT FOR STREAMING
 // Allows use with drag/drop systems
@@ -177,13 +177,7 @@ qRegisterMetaTypeStreamOperatorss<MyClass>("MyClass");
 QDataStream& operator<<(QDataStream& out, const MyClass& obj);
 QDataStream& operator>>(QDataStream& in, MyClass& obj);
 
-// REGISTERING ENUMS
-// Macro must be outside all namespaces
-// QML use 'import MyEnums 1.0' and 'MyEnum.ONE'
-Q_ENUM(MyClass::MyEnum)
-qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum");
-
-// Q_INVOKABLE
+// Q_INVOKABLE QOBJECTS
 // If returning a QObject* owned by cpp without a parent, must notify engine else QML will take ownership
 QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership);
 
@@ -196,6 +190,14 @@ QObject::connect(sender, &Sender::mySignal, reciever, &Receiver::mySlot);
 QObject::connect(sender, &Sender::mySignal, reciever, [](){});
 QObject::connect(sender, SIGNAL(mySignal()), reciever, SLOT(mySlot()));
 QObject::connect(sender, SIGNAL(mySignalArgs(int,float)), reciever, SLOT(mySlotArgs(int,float)));
+
+// AUTO DISCONNECT SLOT FROM SIGNAL AFTER USE
+QObject::connect(sender, &Sender::mySignal, [](){});
+auto connection = std::make_shared<QMetaObject::Connection>();
+*connection = QObject::connect(sender, &Sender::mySignal, [this, connection]()
+{
+    QObject::disconnect(*connection);
+});
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT SMART POINTERS
