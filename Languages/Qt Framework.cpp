@@ -188,11 +188,11 @@ QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership);
 // Use normalised form from moc cpp for SIGNAL/SLOT macros, otherwise performance hit
 QObject::connect(sender, &Sender::mySignal, reciever, &Receiver::mySlot);
 QObject::connect(sender, &Sender::mySignal, reciever, [](){});
+QObject::connect(sender, &Sender::mySignal, [](){});
 QObject::connect(sender, SIGNAL(mySignal()), reciever, SLOT(mySlot()));
 QObject::connect(sender, SIGNAL(mySignalArgs(int,float)), reciever, SLOT(mySlotArgs(int,float)));
 
 // AUTO DISCONNECT SLOT FROM SIGNAL AFTER USE
-QObject::connect(sender, &Sender::mySignal, [](){});
 auto connection = std::make_shared<QMetaObject::Connection>();
 *connection = QObject::connect(sender, &Sender::mySignal, [this, connection]()
 {
