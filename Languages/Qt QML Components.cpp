@@ -5,53 +5,58 @@
 // ITEM
 // Base for most QML components, instantiates QQuickItem
 Item {
-item.activeFocusOnTab // Whether included in active focus on tab, default false
-item.antialiasing // Whether antialiasing enable, default false
-item.baselineOffset // Position offset, default 0, used for text
-item.clip // Whether clipping enabled, default false, hides part of item/children, performance hit
-item.enabled // Recursive, whether the item receives mouse and keyboard events
-item.focus // Whether item has input focus
-item.height // Actual height of item
-item.width // Actual width of item
-item.implicitHeight // Default height of the Item if no height is specified
-item.implicitWidth // Default width of the Item if no width is specified
-item.opacity // Alpha of item, values outside [0,1] clamped
-item.objectName // Inherited from QObject
-item.parent // returns Item, visual parent of the item
-item.rotation // rotation of the item in degrees clockwise around its transformOrigin, default 0
-item.scale // size of item, negative mirror's item, default 1
-item.smooth // Image interpolation, true is linear, false is nearest neighbour, default true
-item.transformOrigin // TransformOrigin type which scale/rotate use
-item.visible // Recursive, whether item is rendered
-item.x / item.y / item.z // Position and stacking depth of item, negative z draws under parent
-item.anchors // Sub options: top, bottom, left, right, horizontalCenter, verticalCenter, baseLine
-item.anchors.fill // Takes QML Item parent or sibling, set to undefined to detach
-item.anchors.centerIn // Takes QML Item parent or sibling, set to undefined to detach
-item.anchors.margins // Set value for all margins
-item.anchors.topMargin // Set value for top margin
-item.anchors.bottomMargin // Set value for bottom margin
-item.anchors.leftMargin // Set value for left margin
-item.anchors.rightMargin // Set value for right margin
-item.anchors.horizontalCenterOffset // Value offset from horizontal center
-item.anchors.verticalCenterOffset // Value offset from vertical center
-item.anchors.baselineOffset // Value offset from position
-item.anchors.alignWhenCentered // forces centered anchors to align to a whole pixel, default true
-item.layer.effect // Component, typically a ShaderEffect component
-item.layer.enabled // Whether the item is layered or not, disabled by default
-item.layer.format // Enum, internal OpenGL format of the texture
-item.layer.mipmap // Whether mipmaps are generated for the texture
-item.layer.samplerName // Name of the effect's source texture property
-item.layer.samples // Enum, allows requesting multisampled rendering in the layer
-item.layer.smooth // Whether the layer is smoothly transformed
-item.layer.sourceRect // The rectangular area of the item that should be rendered into the texture
-item.layer.textureMirroring // Enum, how the generated OpenGL texture should be mirrored
-item.layer.textureSize // Pixel size of the layers texture, if empty (default) uses item's size
-item.layer.wrapMode // Enum, OpenGL wrap modes associated with the texture
-item.state // QString state name, default empty
-item.transform // list<Transform>, list of transformations to apply
-item.transitions // list<Transition>, transitions to be applied to the item whenever it changes its state
+    activeFocusOnTab // Whether included in active focus on tab, default false
+    antialiasing // Whether antialiasing enable, default false
+    baselineOffset // Position offset, default 0, used for text
+    clip // Whether clipping enabled, default false, hides part of item/children, performance hit
+    enabled // Recursive, whether the item receives mouse and keyboard events
+    focus // Whether item has input focus
+    height // Actual height of item
+    width // Actual width of item
+    implicitHeight // Default height of the Item if no height is specified
+    implicitWidth // Default width of the Item if no width is specified
+    opacity // Alpha of item, values outside [0,1] clamped
+    objectName // Inherited from QObject
+    parent // returns Item, visual parent of the item
+    rotation // rotation of the item in degrees clockwise around its transformOrigin, default 0
+    scale // size of item, negative mirror's item, default 1
+    smooth // Image interpolation, true is linear, false is nearest neighbour, default true
+    transformOrigin // TransformOrigin type which scale/rotate use
+    visible // Recursive, whether item is rendered
+    x / y / z // Position and stacking depth of item, negative z draws under parent
+    anchors.top
+    anchors.bottom
+    anchors.right
+    anchors.left
+    anchors.horizontalCenter
+    anchors.verticalCenter
+    anchors.baseLine
+    anchors.fill // Takes QML Item parent or sibling, set to undefined to detach
+    anchors.centerIn // Takes QML Item parent or sibling, set to undefined to detach
+    anchors.margins // Set value for all margins
+    anchors.topMargin // Set value for top margin
+    anchors.bottomMargin // Set value for bottom margin
+    anchors.leftMargin // Set value for left margin
+    anchors.rightMargin // Set value for right margin
+    anchors.horizontalCenterOffset // Value offset from horizontal center
+    anchors.verticalCenterOffset // Value offset from vertical center
+    anchors.baselineOffset // Value offset from position
+    anchors.alignWhenCentered // forces centered anchors to align to a whole pixel, default true
+    layer.effect // Component, typically a ShaderEffect component
+    layer.enabled // Whether the item is layered or not, disabled by default
+    layer.format // Enum, internal OpenGL format of the texture
+    layer.mipmap // Whether mipmaps are generated for the texture
+    layer.samplerName // Name of the effect's source texture property
+    layer.samples // Enum, allows requesting multisampled rendering in the layer
+    layer.smooth // Whether the layer is smoothly transformed
+    layer.sourceRect // The rectangular area of the item that should be rendered into the texture
+    layer.textureMirroring // Enum, how the generated OpenGL texture should be mirrored
+    layer.textureSize // Pixel size of the layers texture, if empty (default) uses item's size
+    layer.wrapMode // Enum, OpenGL wrap modes associated with the texture
+    state // QString state name, default empty
+    transform // list<Transform>, list of transformations to apply
+    transitions // list<Transition>, transitions to be applied to the item whenever it changes its state
 
-  
     /* list<State>, if multiple 'when' true, first is chosen */
     states: [
         State {
