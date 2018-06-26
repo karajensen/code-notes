@@ -183,6 +183,10 @@ QDataStream& operator>>(QDataStream& in, MyClass& obj);
 Q_ENUM(MyClass::MyEnum)
 qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum");
 
+// Q_INVOKABLE
+// If returning a QObject* owned by cpp without a parent, must notify engine else QML will take ownership
+QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership);
+
 // CONNECT SIGNALS/SLOTS
 // Returns QMetaObject::Connection for disconnecting, or can call QObject::disconnect with same signature
 // Can duplicate connections, multiple signals are then emitted, all are broken with single disconnect call 
@@ -515,6 +519,7 @@ item.window() // Return QQuickWindow* in which this item is rendered
 // QQmlEngine
 qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyGlobals", 1, 0, "MyGlobal")
 qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum") // MyEnum must be in Q_OBJECT class
+setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Static, Must be used on cpp QObjects without parents
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT FILE SYSTEM
