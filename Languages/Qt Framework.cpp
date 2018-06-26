@@ -148,9 +148,9 @@ metaObj.indexOfEnumerator(name) // Get index of enum from name, or -1 if not fou
 QMetaEnum metaEnum(QMetaEnum::fromType<MyClass::MyEnum>());
 metaEnum.valueToKey(MyClass::ONE, &isValid) // Returns const char* or null if not found, optional bool
 metaEnum.keyToValue("ONE", &isValid) // Returns int or -1 if not found, optional bool
+metaEnum.keyCount() // Returns number of keys/values
 metaEnum.key(index) // Returns const char* key from int index, or null if doesn't exist
-metaEnum.keyCount() // Returns number of keys
-metaEnum.value(index) // Returns value with the given index, or returns -1 if none found
+metaEnum.value(index) // Returns int value with the given index, or returns -1 if none found
 
 // OBJECT TYPE INFO
 // Macro must be outside all namespaces, placed after class in .h
