@@ -84,7 +84,8 @@ class MyClass : public QObject
 {
     Q_OBJECT // required for all moc provided features
     Q_CLASSINFO("Author", "Name") // attach additional name/value pairs to the class's meta-object
-
+    Q_DISABLE_COPY(MyClass) // Required for singleton classes
+     
 public:
     MyClass(QObject *parent = 0) { }
     
@@ -161,15 +162,13 @@ Q_DECLARE_TYPEINFO(MyClass::MyEnum, Q_PRIMITIVE_TYPE)
 Q_DECLARE_TYPEINFO(MyClass, Q_MOVABLE_TYPE)
 QTypeInfoQuery<MyClass>::isRelocatable // Query type info
 
-// REGISTERING OBJECT
+// REGISTERING OBJECT WITH VARIANT
 // Macros must be outside all namespaces, placed after class in .h
 // Not needed for: MyClass* as derives from QObject*, qt smart pointers/container with MyClass
 Q_DECLARE_METATYPE(MyClass) // Allows use with variant: myVariant.value<MyClass>()
 Q_ENUM(MyClass::MyEnum) // Also allows use in property system
 Q_FLAG(MyClass::MyFlag) // Also allows use in property system
 qRegisterMetaType<MyClass>(); // Allows use with signals/slots/property system
-qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyClass"); // use 'import MyInclude 1.0' and MyClass {}
-qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyEnum"); // use 'import MyInclude 1.0' and 'MyEnum.ONE'
 
 // REGISTERING OBJECT FOR STREAMING
 // Allows use with drag/drop systems
@@ -435,6 +434,17 @@ layout.addWidget(spinBox, r, c); // Add a widget to the layout, automatically pa
 // QT QUICK
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// REGISTERING OBJECTS WITH QML
+// Requires registration with Variant
+qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyClass"); // use 'import MyInclude 1.0' and MyClass {}
+qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyEnum"); // use 'import MyInclude 1.0' and 'MyEnum.ONE'
+
+// REGISTERING SINGLETONS WITH QML
+// Will be owned by QML, use 'import MyInclude 1.0' and 'MySingleton.Member'
+qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyInclude", 1, 0, "MySingleton")
+qmlRegisterSingletonType("MyInclude", 1, 0, "MySingleton", 
+    [](QQmlEngine*, QJSEngine*)->QObject* { return new MySingleton(); });
+    
 // QQuickWindow
 // Inherits QWindow, window for QML applications
 
@@ -519,8 +529,6 @@ item.window() // Return QQuickWindow* in which this item is rendered
 // Inherits QObject, instantiated by Component
 
 // QQmlEngine
-qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyGlobals", 1, 0, "MyGlobal")
-qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum") // MyEnum must be in Q_OBJECT class
 setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Static, Must be used on cpp QObjects without parents
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
