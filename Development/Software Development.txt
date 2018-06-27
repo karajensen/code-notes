@@ -288,19 +288,27 @@ cmake -G "Visual Studio 14 2015 Win64" -DCMAKE_PREFIX_PATH=C:/Qt/Qt5.6.1/5.6/msv
 
 cmake_minimum_required(VERSION 2.8.11)
 project(my_project_name)
+add_executable(my_exe_name ${SRC_LIST})
 
+# Set release with debug info on Windows
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi /Od /Ob0")
+set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF /OPT:ICF")
+
+# VARIABLES
 set(MY_VARIABLE ON)        # Bool variable
 set(MY_PATH c:/folder)     # String variable
 set(SRC_LIST a.cpp b.cpp)  # String list
 
+# CONDITION LOGIC
 if(MY_VARIABLE)
 else()
 endif()
 
+# FILE SYSTEM
 file(COPY ${SRC_PATH}/folder/file.txt DESTINATION ${DST_PATH}/folder)
+file(GLOB_RECURSE MY_FILES "folder/*.ext") # Sets MY_FILES as list
 
-add_executable(my_exe_name ${SRC_LIST})
-
+# MESSAGING
 error("My message ${MY_VARIABLE}")
 message("My message ${MY_VARIABLE}")
 
@@ -308,9 +316,11 @@ message("My message ${MY_VARIABLE}")
 // GIT BASH
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+# VARIABLES
 MY_VAR="MyVariable"
 PLATFORM_TYPE=`uname -s`
 
+# CONDITION LOGIC
 # Gap after [ required else compilation error
 if [ `expr substr $PLATFORM_TYPE 1 10` == "MINGW64_NT" ]; then
     echo "Windows Found"
@@ -320,16 +330,17 @@ else
     echo "Unknown"
 fi
 
+# BASH COMMANDS
 export MY_ENV_VARIABLE="${MY_VAR}"    # Set env variable for bash instance
-setx MY_ENV_VARIABLE "${MY_VAR}       # Set env variable for system, bash not updated
 if [ ! -z "${MY_ENV_VARIABLE}" ]      # If env variable doesn't exist
 if [ -f "${CL_PATH}" ]                # If file exists
 read -p "Press any key to exit..."    # Pause the console
 
-# Windows commands
+# WINDOWS COMMANDS
 cmd //c copy ${MY_PATH} c:\\Folder\\file.exe
 cmd //c del c:\\Folder\\file.exe
 cmd //c "xcopy c:\dev\tools\WindowsDev\clcache\4.1.0\clcache x86 /e /i /h"
+setx MY_ENV_VARIABLE "${MY_VAR}       # Set env variable for system, bash not updated
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MSBUILD
