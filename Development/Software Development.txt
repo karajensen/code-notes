@@ -3,7 +3,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 LIBRARY: Set of functions, organized in classes, that does some work and then returns control to the client
-FRAMEWORK: An abstract design that you need to insert into, through inheritance or callbacks, that the framework then calls
+FRAMEWORK: Abstract design you need to insert into through inheritance/callbacks, that the framework then calls
 TOOLKIT: More focused library, used almost exclusively for graphical widgets, and GUI components
 
 AGILE METHODOLOGY
@@ -171,6 +171,12 @@ build/
 doc/*.txt
 # Don't ignore file
 !build/MyFile.txt
+
+GIT MERGING
+LOCAL    Head of current branch on the machine that you are using
+REMOTE   Head of the remote branch that you are trying to merge into your local branch
+BASE     The common ancestor of REMOTE and LOCAL
+MERGED   The tag / HEAD object after the merge, this is saved as a new commit
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // SVN SOURCE CONTROL
