@@ -301,7 +301,8 @@ file(COPY ${SRC_PATH}/folder/file.txt DESTINATION ${DST_PATH}/folder)
 
 add_executable(my_exe_name ${SRC_LIST})
 
-error("This is an error")
+error("My message ${MY_VARIABLE}")
+message("My message ${MY_VARIABLE}")
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GIT BASH
