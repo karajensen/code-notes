@@ -86,9 +86,11 @@ str.toUInt(&ok, base = 10) // Converts to unsigned int or 0, 0x in str will use 
 str.toULong(&ok, base = 10) // Converts to unsigned long or 0, 0x in str will use hexadecimal base
 str.toULongLong(&ok, base = 10) // Converts to unsigned long long or 0, 0x in str will use hexadecimal base
 str.toUShort(&ok, base = 10) // Converts to unsigned short or 0, 0x in str will use hexadecimal base
-str.toLocal8Bit().constData() // Convert to const char* using system's local encoding, null string returns \0
-str.toUtf8().constData() // Convert to const char* using UTF-8 encoding, null string returns \0
+str.toLocal8Bit().constData() // Convert to ANSI const char*, null string returns \0
+str.toUtf8().constData() // Convert to Utf8 const char*, null string returns \0
 str.toWCharArray(arr) // Fills wchar_t*, arr must be preallocated, returns length of arr, does not add \0
+str.toStdWString() // Returns std::wstring
+str.toStdString() // Returns std::string using toUtf8()
 str.trimmed() // Returns QString with no pre/post whitespaces
 str.truncate(i) // Removes all characters from index i onwards
 str.begin() / str.end() // iterator or const_iterator
@@ -101,6 +103,11 @@ QString::compare(str1, str2, caseFlag) // Returns 0 if they match, comparing cha
 QString::localeAwareCompare(str1, str2) // Returns 0 if they match, comparing actual words
 QString::number(integer) // Converts integer to QString
 QString::number(double, format, precision) // Converts floating point number to QString, Format Characters
+QString::fromWCharArray(str, size) // Copies const wchar_t* to QString
+QString::fromLocal8Bit(str, size) // Copies ANSI const char* to QString
+QString::fromUtf8(str, size) // Copies Utf8 const char* to QString
+QString::fromStdString(str) // Copies std::string using fromUtf8 to QString
+QString::fromStdWString(str) // Copies std::wstring to QString
     
 // QStringRef
 // Most overload using QChar, QRegularExpression, QRegExp
