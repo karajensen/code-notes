@@ -19,6 +19,7 @@ x === y                          // equal value and equal type
 x !== y                          // not equal value or not equal type
 value !== null                   // Use === when comparing with null
 typeof value !== "undefined"     // Use === when comparing with undefined 
+!!x                              // Forces boolean type for object, 0/null/undefined becomes false
 
 // VARIABLE TYPES
 "undefined"
