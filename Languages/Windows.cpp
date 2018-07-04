@@ -19,7 +19,8 @@ if(length == 0){ /*show error*/ }
 std::wstring result(buffer);
 delete [] buffer;
 
-/** Get last error as string */
+/** Get last error as string
+https://www.codeproject.com/Tips/479880/GetLastError-as-std-string */
 DWORD error = GetLastError();
 if (error)
 {
