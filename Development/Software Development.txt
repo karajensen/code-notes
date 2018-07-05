@@ -76,6 +76,10 @@ echo f | xcopy "src" "dst" /f /y  // copy src file to dst file
 • Use Xcode for IDE and Cocoa for framework
 • Graphics API is OpenGL
 
+ENABLE VIEW HIDDEN FILES
+defaults write com.apple.finder AppleShowAllFiles -bool true
+killall Finder
+
 TERMINAL COMMANDS:
 pwd                  // gives name of folder currently in
 ls                   // gives directory contents
