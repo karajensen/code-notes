@@ -354,6 +354,30 @@ public:
 QEvent::Type MyCustomEvent::CustomEventType = static_cast<QEvent::Type>(QEvent::registerEventType());
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT BASIC TYPES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+qint8        // signed char, guaranteed to be 8-bit
+qint16       // signed short, guaranteed to be 16-bit
+qint32       // signed int, guaranteed to be 32-bit
+qint64       // signed long long int (__int64 on Windows), guaranteed to be 64-bit, use Q_INT64_C to create
+qintptr      // signed integral type for representing pointers
+qlonglong    // same as qint64
+qptrdiff     // signed integral type for representing pointer differences.
+qreal        // double unless Qt is configured with the -qreal float
+qsizetype    // size_t
+quint8       // unsigned char, guaranteed to be 8-bit
+quint16      // unsigned short, guaranteed to be 16-bit
+quint32      // unsigned int, guaranteed to be 32-bit
+quint64      // unsigned long long int (__int64 on Windows), guaranteed to be 64-bit, use Q_UINT64_C to create
+quintptr     // unsigned integral type for representing pointers
+qulonglong   // same as quint64
+uchar        // generic typedef for unsigned char
+uint         // generic typedef for unsigned int
+ulong        // generic typedef for unsigned long
+ushort       // generic typedef for unsigned short
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT COMPONENTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -531,6 +555,33 @@ item.window() // Return QQuickWindow* in which this item is rendered
 // QQmlEngine
 setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Static, Must be used on cpp QObjects without parents
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT ALGORITHMS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+// QtMath
+qAcos(v) // Takes qreal radians, returns qreal
+qAsin(v) // Takes qreal radians, returns qreal
+qAtan2(y, x) // Takes qreal radians, returns qreal
+qAtan(v) // Takes qreal radians, returns qreal
+qCeil(v) // Takes qreal, returns int
+qCos(v) // Takes qreal radians, returns qreal
+qDegreesToRadians(v) // Takes float/double degrees, returns float/double radians
+qExp(v) // Takes qreal, feturns qreal eᵛ
+qFabs(v) // Takes qreal, returns absolute qreal value
+qFloor(v) // Takes qreal, returns floored int
+qLn(v) // Takes qreal, returns qreal natural log of v
+qNextPowerOfTwo(v) // Takes/returns quint32/qint32/quint64/qint64, returns nearest power of two greater than v
+qPow(x, y) // Takes qreal, returns xʸ
+qRadiansToDegrees(v) // Takes float/double degrees, returns float/double degrees
+qSin(v) // Takes qreal radians, returns qreal
+qSqrt(v) // Takes qreal, returns square root qreal
+qTan(v) // Takes qreal radians, returns qreal
+    
+// QtGlobal
+    
+// QtAlgorithm
+    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT FILE SYSTEM
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
