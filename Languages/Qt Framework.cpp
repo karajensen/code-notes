@@ -28,7 +28,6 @@ int main(int argc, char *argv[])
     app.exec(); // Start the event loop
 }
 
-forever { break; }
 qDebug() << "Message\n"; // Prints to stderr output
 Q_ASSERT(expression);
 Q_ASSERT_X(expression, "divide", "division by zero");
@@ -690,7 +689,6 @@ QDir::LocaleAware      // Sort using the current locale settings
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*************************************************************************************************************
-
 QOBJECTS
 • Has thread affinity: lives on a specific thread, query using obj.thread()
 • Must have same thread as parent, obj.setParent will fail if not
@@ -703,5 +701,4 @@ SIGNALS / SLOTS
 • Becomes QueuedConnection if signal/slot objects have different thread affinity
 • Signals must not be sent from the same object across threads unless that object is thread safe
 • QueuedConnection signals will be sent to slot object's event queue and called synchronously
-
 **************************************************************************************************************/
