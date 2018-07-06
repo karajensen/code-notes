@@ -684,3 +684,17 @@ QDir::DirsLast         // Put the files first, then the directories
 QDir::Reversed         // Reverse the sort order
 QDir::IgnoreCase       // Sort case-insensitively
 QDir::LocaleAware      // Sort using the current locale settings
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT THREADING
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
+
+SIGNALS / SLOTS
+• QObject::connect default is AutoConnection and thread safe
+• Becomes QueuedConnection if signal/slot objects have different thread affinity
+• Signals must not be sent from the same object across threads unless that object is thread safe
+• QueuedConnection signals will be sent to slot object's event queue and called synchronously
+• 
+**************************************************************************************************************/
