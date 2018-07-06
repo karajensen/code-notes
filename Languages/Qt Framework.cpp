@@ -87,10 +87,11 @@ class MyClass : public QObject
      
 public:
     MyClass(QObject *parent = 0) { }
-    
-    Q_INVOKABLE void myFn() { }
     Q_PROPERTY(MyValue value MEMBER m_value NOTIFY myValueSignal)
     Q_PROPERTY(MyValue value READ getValue WRITE setValue NOTIFY mySignal)
+    
+    // Returning QObject* gives QML ownership, must notify QML engine if has cpp ownershio
+    Q_INVOKABLE QObject* myFn() { }
     
     // Can be inherited/virtual
     const MyValue& getValue() const { return m_value; }
@@ -174,10 +175,6 @@ qRegisterMetaType<MyClass>(); // Allows use with signals/slots/property system
 qRegisterMetaTypeStreamOperatorss<MyClass>("MyClass");
 QDataStream& operator<<(QDataStream& out, const MyClass& obj);
 QDataStream& operator>>(QDataStream& in, MyClass& obj);
-
-// Q_INVOKABLE QOBJECTS
-// If returning a QObject* owned by cpp without a parent, must notify engine else QML will take ownership
-QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership);
 
 // CONNECT SIGNALS/SLOTS
 // Returns QMetaObject::Connection for disconnecting, or can call QObject::disconnect with same signature
@@ -467,7 +464,18 @@ qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyEnum"); // use 'import MyInclude 
 qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyInclude", 1, 0, "MySingleton")
 qmlRegisterSingletonType("MyInclude", 1, 0, "MySingleton", 
     [](QQmlEngine*, QJSEngine*)->QObject* { return new MySingleton(); });
-    
+
+// AUTO REGISTERED CONTAINERS
+// Other basic types need QList<QVariant>, custom types need QList<QObject*>
+QList<int>       QVector<int>        std::vector<int>
+QList<qreal>     QVector<qreal>      std::vector<qreal>
+QList<bool>      QVector<bool>       std::vector<bool>
+QList<QUrl>      QVector<QUrl>       std::vector<QUrl>
+QList<QString>   QVector<QString>    std::vector<QString>
+QStringList
+QList<QVariant>
+QList<QObject*>
+
 // QQuickWindow
 // Inherits QWindow, window for QML applications
 
