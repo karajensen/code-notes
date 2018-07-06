@@ -691,10 +691,17 @@ QDir::LocaleAware      // Sort using the current locale settings
 
 /*************************************************************************************************************
 
+QOBJECTS
+• Has thread affinity: lives on a specific thread, query using obj.thread()
+• Must have same thread as parent, obj.setParent will fail if not
+• Will recieve queued signals/event from same or other threads, slot is always called in own thread
+• If no thread affinity or in thread without event loop, cannot process queued signals/events
+• Can change with object.moveToThread(), must not have a parent, all children auto changed too
+
 SIGNALS / SLOTS
 • QObject::connect default is AutoConnection and thread safe
 • Becomes QueuedConnection if signal/slot objects have different thread affinity
 • Signals must not be sent from the same object across threads unless that object is thread safe
 • QueuedConnection signals will be sent to slot object's event queue and called synchronously
-• 
+
 **************************************************************************************************************/
