@@ -90,8 +90,9 @@ public:
     Q_PROPERTY(MyValue value MEMBER m_value NOTIFY myValueSignal)
     Q_PROPERTY(MyValue value READ getValue WRITE setValue NOTIFY mySignal)
     
-    // Returning QObject* gives QML ownership, must notify QML engine if has cpp ownershio
-    Q_INVOKABLE QObject* myFn() { }
+    // Returning QObject* gives QML ownership whether new used or not
+    // Must notify QML engine if has cpp ownership else crashes
+    Q_INVOKABLE QObject* myFn() { return new MyClass(); }
     
     // Can be inherited/virtual
     const MyValue& getValue() const { return m_value; }
