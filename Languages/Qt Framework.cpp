@@ -188,12 +188,33 @@ QObject::connect(sender, &Sender::mySignal, [](){});
 QObject::connect(sender, SIGNAL(mySignal()), reciever, SLOT(mySlot()));
 QObject::connect(sender, SIGNAL(mySignalArgs(int,float)), reciever, SLOT(mySlotArgs(int,float)));
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT OBJECT ALGORITHMS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // AUTO DISCONNECT SLOT FROM SIGNAL AFTER USE
 auto connection = std::make_shared<QMetaObject::Connection>();
 *connection = QObject::connect(sender, &Sender::mySignal, [this, connection]()
 {
     QObject::disconnect(*connection);
-});
+}
+                               
+// INVOKING A METHOD FROM QOBJECT
+auto metaObject = myObj->metaObject();
+auto methodIndex = metaObject->indexOfMethod("myFn(QVariant,bool)");
+if (methodIndex != -1)
+{
+    QMetaMethod method = metaObject->method(methodIndex);
+    if(method.isValid())
+    {
+        QVariant variant;
+        if (method.invoke(myObj, Q_RETURN_ARG(QVariant, variant), 
+            Q_ARG(QVariant, QVariant::fromValue(true)), Q_ARG(bool, false)))
+        {
+            return variant.value<bool>();
+        }
+    }
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT SMART POINTERS
