@@ -189,34 +189,6 @@ QObject::connect(sender, SIGNAL(mySignal()), reciever, SLOT(mySlot()));
 QObject::connect(sender, SIGNAL(mySignalArgs(int,float)), reciever, SLOT(mySlotArgs(int,float)));
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT OBJECT ALGORITHMS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// AUTO DISCONNECT SLOT FROM SIGNAL AFTER USE
-auto connection = std::make_shared<QMetaObject::Connection>();
-*connection = QObject::connect(sender, &Sender::mySignal, [this, connection]()
-{
-    QObject::disconnect(*connection);
-}
-                               
-// INVOKING A METHOD FROM QOBJECT
-auto metaObject = myObj->metaObject();
-auto methodIndex = metaObject->indexOfMethod("myFn(QVariant,bool)");
-if (methodIndex != -1)
-{
-    QMetaMethod method = metaObject->method(methodIndex);
-    if(method.isValid())
-    {
-        QVariant variant;
-        if (method.invoke(myObj, Q_RETURN_ARG(QVariant, variant), 
-            Q_ARG(QVariant, QVariant::fromValue(true)), Q_ARG(bool, false)))
-        {
-            return variant.value<bool>();
-        }
-    }
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT SMART POINTERS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
@@ -585,68 +557,6 @@ item.window() // Return QQuickWindow* in which this item is rendered
 setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Static, Must be used on cpp QObjects without parents
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT ALGORITHMS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-// QtMath
-qAcos(v) // Takes qreal radians, returns qreal
-qAsin(v) // Takes qreal radians, returns qreal
-qAtan2(y, x) // Takes qreal radians, returns qreal
-qAtan(v) // Takes qreal radians, returns qreal
-qCeil(v) // Takes qreal, returns int
-qCos(v) // Takes qreal radians, returns qreal
-qDegreesToRadians(v) // Takes float/double degrees, returns float/double radians
-qExp(v) // Takes qreal, feturns qreal eᵛ
-qFabs(v) // Takes qreal, returns absolute qreal value
-qFloor(v) // Takes qreal, returns floored int
-qLn(v) // Takes qreal, returns qreal natural log of v
-qNextPowerOfTwo(v) // Takes/returns quint32/qint32/quint64/qint64, returns nearest power of two greater than v
-qPow(x, y) // Takes qreal, returns xʸ
-qRadiansToDegrees(v) // Takes float/double degrees, returns float/double degrees
-qSin(v) // Takes qreal radians, returns qreal
-qSqrt(v) // Takes qreal, returns square root qreal
-qTan(v) // Takes qreal radians, returns qreal
-    
-// QtGlobal
-qAbs(v) // Templated, returns absolute value of v
-qAsConst(v) // Templated, takes T& and returns const T&
-qBound(min, v, max) // Templated, returns v clamped
-qConstOverload<T>(&MyClass::fn) // Converts address to const version
-qNonConstOverload<T>(&MyClass::fn) // Converts address to non-const version
-qOverload<T>(&MyClass::fn) // Converts address to an overloaded version
-qEnvironmentVariable(name) // Returns QString of env var with name
-qEnvironmentVariable(name, default) // Returns QString of env var with name or default if doesn't exist
-qEnvironmentVariableIntValue(name, &ok) // Returns int of env var with name, ok set to false if doesn't exist
-qEnvironmentVariableIsEmpty(name) // Returns if env var with name is empty
-qEnvironmentVariableIsSet(name) // Returns if env var with name is set
-qgetenv(name) // Returns env var with name as QByteArray
-qputenv(name, value) // Sets env var with value const QByteArray&, will create, returns false if failed
-qunsetenv(name) // Deletes the env var, returns true if success
-qFuzzyCompare(a, b) // Takes double/float, returns true if considered equal
-qFuzzyIsNull(v) // Takes double/float, returns truen if absolute value of v is within 0.000000000001 of 0.0
-qInf() // Returns the bit pattern for an infinite number as a double
-qInstallMessageHandler(handler) // Install a new QtMessageHandler, returns the old one
-qIsFinite(v) // Takes double/float, returns if v is a finite number
-qIsInf(v) // Takes double/float, returns if v is an infinite number
-qIsNaN(v) // Takes double/float, returns if v is not an number
-qMax(a, b) // Templated, returns max of a and b
-qMin(a, b) // Templated, returns min of a and b
-qQNaN() // Returns the bit pattern of a quiet NaN as a double
-qRound64(v) // Takes double/float, rounds (0.5 -> 1.0), returns qint64
-qRound(v) // Takes double/float, rounds (0.5 -> 1.0), returns int
-qSNaN() // Returns the bit pattern of a signalling NaN as a double
-qVersion() // Returns the version number of Qt
-qtTrId(id) // Finds and returns a translated QString
-    
-// QtAlgorithm
-// STL algorithms should be used for Qt containers rather than deprecated QtAlgorithm
-qCountLeadingZeroBits(v) // Takes all quints, returns uint of no. of consecutive zero bits
-qCountTrailingZeroBits(v) // Takes all quints, returns uint of no. of consecutive zero bits
-qDeleteAll(begin, end) // Takes container iterator with pointers, calls delete on pointers, doesn't clear
-qDeleteAll(container) // Takes container with pointers, calls delete on pointers, doesn't clear
-qPopulationCount(v) // Takes all quints, returns no. of bits set in v, or the 'Hamming Weight of v'
-    
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT FILE SYSTEM
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -732,3 +642,89 @@ SIGNALS / SLOTS
 • Signals must not be sent from the same object across threads unless that object is thread safe
 • QueuedConnection signals will be sent to slot object's event queue and called synchronously
 **************************************************************************************************************/
+    
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT ALGORITHMS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+// QtMath
+qAcos(v) // Takes qreal radians, returns qreal
+qAsin(v) // Takes qreal radians, returns qreal
+qAtan2(y, x) // Takes qreal radians, returns qreal
+qAtan(v) // Takes qreal radians, returns qreal
+qCeil(v) // Takes qreal, returns int
+qCos(v) // Takes qreal radians, returns qreal
+qDegreesToRadians(v) // Takes float/double degrees, returns float/double radians
+qExp(v) // Takes qreal, feturns qreal eᵛ
+qFabs(v) // Takes qreal, returns absolute qreal value
+qFloor(v) // Takes qreal, returns floored int
+qLn(v) // Takes qreal, returns qreal natural log of v
+qNextPowerOfTwo(v) // Takes/returns quint32/qint32/quint64/qint64, returns nearest power of two greater than v
+qPow(x, y) // Takes qreal, returns xʸ
+qRadiansToDegrees(v) // Takes float/double degrees, returns float/double degrees
+qSin(v) // Takes qreal radians, returns qreal
+qSqrt(v) // Takes qreal, returns square root qreal
+qTan(v) // Takes qreal radians, returns qreal
+    
+// QtGlobal
+qAbs(v) // Templated, returns absolute value of v
+qAsConst(v) // Templated, takes T& and returns const T&
+qBound(min, v, max) // Templated, returns v clamped
+qConstOverload<T>(&MyClass::fn) // Converts address to const version
+qNonConstOverload<T>(&MyClass::fn) // Converts address to non-const version
+qOverload<T>(&MyClass::fn) // Converts address to an overloaded version
+qEnvironmentVariable(name) // Returns QString of env var with name
+qEnvironmentVariable(name, default) // Returns QString of env var with name or default if doesn't exist
+qEnvironmentVariableIntValue(name, &ok) // Returns int of env var with name, ok set to false if doesn't exist
+qEnvironmentVariableIsEmpty(name) // Returns if env var with name is empty
+qEnvironmentVariableIsSet(name) // Returns if env var with name is set
+qgetenv(name) // Returns env var with name as QByteArray
+qputenv(name, value) // Sets env var with value const QByteArray&, will create, returns false if failed
+qunsetenv(name) // Deletes the env var, returns true if success
+qFuzzyCompare(a, b) // Takes double/float, returns true if considered equal
+qFuzzyIsNull(v) // Takes double/float, returns truen if absolute value of v is within 0.000000000001 of 0.0
+qInf() // Returns the bit pattern for an infinite number as a double
+qInstallMessageHandler(handler) // Install a new QtMessageHandler, returns the old one
+qIsFinite(v) // Takes double/float, returns if v is a finite number
+qIsInf(v) // Takes double/float, returns if v is an infinite number
+qIsNaN(v) // Takes double/float, returns if v is not an number
+qMax(a, b) // Templated, returns max of a and b
+qMin(a, b) // Templated, returns min of a and b
+qQNaN() // Returns the bit pattern of a quiet NaN as a double
+qRound64(v) // Takes double/float, rounds (0.5 -> 1.0), returns qint64
+qRound(v) // Takes double/float, rounds (0.5 -> 1.0), returns int
+qSNaN() // Returns the bit pattern of a signalling NaN as a double
+qVersion() // Returns the version number of Qt
+qtTrId(id) // Finds and returns a translated QString
+    
+// QtAlgorithm
+// STL algorithms should be used for Qt containers rather than deprecated QtAlgorithm
+qCountLeadingZeroBits(v) // Takes all quints, returns uint of no. of consecutive zero bits
+qCountTrailingZeroBits(v) // Takes all quints, returns uint of no. of consecutive zero bits
+qDeleteAll(begin, end) // Takes container iterator with pointers, calls delete on pointers, doesn't clear
+qDeleteAll(container) // Takes container with pointers, calls delete on pointers, doesn't clear
+qPopulationCount(v) // Takes all quints, returns no. of bits set in v, or the 'Hamming Weight of v'
+
+// AUTO DISCONNECT SLOT FROM SIGNAL AFTER USE
+auto connection = std::make_shared<QMetaObject::Connection>();
+*connection = QObject::connect(sender, &Sender::mySignal, [this, connection]()
+{
+    QObject::disconnect(*connection);
+}
+                               
+// INVOKING A METHOD FROM QOBJECT
+auto metaObject = myObj->metaObject();
+auto methodIndex = metaObject->indexOfMethod("myFn(QVariant,bool)");
+if (methodIndex != -1)
+{
+    QMetaMethod method = metaObject->method(methodIndex);
+    if(method.isValid())
+    {
+        QVariant variant;
+        if (method.invoke(myObj, Q_RETURN_ARG(QVariant, variant), 
+            Q_ARG(QVariant, QVariant::fromValue(true)), Q_ARG(bool, false)))
+        {
+            return variant.value<bool>();
+        }
+    }
+}
