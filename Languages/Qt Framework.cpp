@@ -445,6 +445,93 @@ QGridLayout layout;
 layout.addWidget(spinBox, r, c); // Add a widget to the layout, automatically parents and resizes
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT FILE SYSTEM
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Read from a file, no need to close it
+QFile file("myFile.txt");
+if(file.open(QIODevice::ReadOnly))
+{
+    QTextStream stream(&file);
+    QString line = stream.readLine(); // read the next line
+    while(!line.isNull())
+    {
+        line = stream.readLine();
+    }
+}
+
+// QDir
+// Provides access to directory structures and their contents
+QDir dir("Folder/Folder") // Root directory
+dir.exists() // Whether root directly exists
+dir.setNameFilters(QStringList("*.qml", "*.txt")) // Extension types to filter searches with
+dir.entryList(nameFilters, filterFlags, sortFlags) // Search directory recursively, returns QStringList
+dir.entryList(nameFilters) // Not using any args will use the stored filterFlags/sortFlags
+dir.entryList(filterFlags, sortFlags) // Search directory recursively with filter flags, returns QStringList
+dir.entryList() // Not using any args will use the stored filterFlags/sortFlags
+    
+// QIODevice
+// base interface class of all I/O devices
+
+// QDataStream
+// serialization of binary data to a QIODevice
+
+// QFile
+// Interface for reading from and writing to files
+
+// QDir Filter Flags
+QDir::NoFilter         // No filter flag used
+QDir::Dirs             // Apply filters to directory names
+QDir::AllDirs          // Don't apply the filters to directory names
+QDir::Files            // List files
+QDir::Drives           // List disk drives
+QDir::NoSymLinks       // Do not list symbolic links
+QDir::NoDotAndDotDot   // NoDot | NoDotDot
+QDir::NoDot            // Do not list the special entry "."
+QDir::NoDotDot         // Do not list the special entry ".."
+QDir::AllEntries       // Dirs | Files | Drives
+QDir::Readable         // List files which application has read access
+QDir::Writable         // List files which application has write access
+QDir::Executable       // List files which application has execute access
+QDir::Modified         // Only list files that have been modified
+QDir::Hidden           // List hidden files
+QDir::System           // List system files
+QDir::CaseSensitive    // The filter should be case sensitive
+    
+// QDir Sort Flags
+QDir::NoSort           // No sorting
+QDir::Name             // Sort by name
+QDir::Time             // Sort by time (modification time)
+QDir::Size             // Sort by file size
+QDir::Type             // Sort by file type (extension)
+QDir::Unsorted         // Do not sort
+QDir::NoSort           // Not sorted by default
+QDir::DirsFirst        // Put the directories first, then the files
+QDir::DirsLast         // Put the files first, then the directories
+QDir::Reversed         // Reverse the sort order
+QDir::IgnoreCase       // Sort case-insensitively
+QDir::LocaleAware      // Sort using the current locale settings
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT THREADING
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
+QOBJECTS
+• Has thread affinity: lives on a specific thread, query using obj.thread()
+• Must have same thread as parent, obj.setParent will fail if not
+• Will recieve queued signals/event from same or other threads, slot is always called in own thread
+• If no thread affinity or in thread without event loop, cannot process queued signals/events
+• Can change with object.moveToThread(), must not have a parent, all children auto changed too
+
+SIGNALS / SLOTS
+• QObject::connect default is AutoConnection and thread safe
+• Becomes QueuedConnection if signal/slot objects have different thread affinity
+• Signals must not be sent from the same object across threads unless that object is thread safe
+• QueuedConnection signals will be sent to slot object's event queue and called synchronously
+**************************************************************************************************************/
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT QUICK / QML
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -539,11 +626,12 @@ setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Static, Must be used on c
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**************************************************************************************************************
-• 
+• Data passed via Q_PROPERTY or Q_INVOKABLE
+• Data assumed cpp ownership except for Q_INVOKABLE functions returning parentless QObject*
+• Must register custom types to use in QML, not needed for qt smart pointers/container with type
 **************************************************************************************************************/
  
 // AUTO REGISTERED TYPES
-// All assummed cpp ownership except for Q_INVOKABLE functions returning parentless QObject*
 bool              bool
 unsigned int/int  int
 double            double
@@ -562,12 +650,14 @@ QQuaternion       quaternion
 QVector2D         vector2d
 QVector3D         vector3d
 QVector4D         vector4d
+QByteArray        ArrayBuffer (Javascript)
 QObject*          object
 
 // AUTO REGISTERED CONTAINERS
-// Convert to javascript Array or Map
+// Converts to javascript Array or Map
 // Other basic types need QList<QVariant>/QVariantList, custom types need QList<QObject*>
-// Avoid std::vectors as Q_PROPERTY as they are copied each access 
+// Avoid std::vectors as they are copied each access whether Q_PROPERTY or Q_INVOKABLE
+// Q_PROPERTY container more expensive to read/write than Q_INVOKABLE returned container
 QList<int>        QVector<int>        std::vector<int>
 QList<qreal>      QVector<qreal>      std::vector<qreal>
 QList<bool>       QVector<bool>       std::vector<bool>
@@ -590,93 +680,6 @@ qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyInclude", 1, 0, "MySing
 qmlRegisterSingletonType("MyInclude", 1, 0, "MySingleton", 
     [](QQmlEngine*, QJSEngine*)->QObject* { return new MySingleton(); });
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT FILE SYSTEM
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Read from a file, no need to close it
-QFile file("myFile.txt");
-if(file.open(QIODevice::ReadOnly))
-{
-    QTextStream stream(&file);
-    QString line = stream.readLine(); // read the next line
-    while(!line.isNull())
-    {
-        line = stream.readLine();
-    }
-}
-
-// QDir
-// Provides access to directory structures and their contents
-QDir dir("Folder/Folder") // Root directory
-dir.exists() // Whether root directly exists
-dir.setNameFilters(QStringList("*.qml", "*.txt")) // Extension types to filter searches with
-dir.entryList(nameFilters, filterFlags, sortFlags) // Search directory recursively, returns QStringList
-dir.entryList(nameFilters) // Not using any args will use the stored filterFlags/sortFlags
-dir.entryList(filterFlags, sortFlags) // Search directory recursively with filter flags, returns QStringList
-dir.entryList() // Not using any args will use the stored filterFlags/sortFlags
-    
-// QIODevice
-// base interface class of all I/O devices
-
-// QDataStream
-// serialization of binary data to a QIODevice
-
-// QFile
-// Interface for reading from and writing to files
-
-// QDir Filter Flags
-QDir::NoFilter         // No filter flag used
-QDir::Dirs             // Apply filters to directory names
-QDir::AllDirs          // Don't apply the filters to directory names
-QDir::Files            // List files
-QDir::Drives           // List disk drives
-QDir::NoSymLinks       // Do not list symbolic links
-QDir::NoDotAndDotDot   // NoDot | NoDotDot
-QDir::NoDot            // Do not list the special entry "."
-QDir::NoDotDot         // Do not list the special entry ".."
-QDir::AllEntries       // Dirs | Files | Drives
-QDir::Readable         // List files which application has read access
-QDir::Writable         // List files which application has write access
-QDir::Executable       // List files which application has execute access
-QDir::Modified         // Only list files that have been modified
-QDir::Hidden           // List hidden files
-QDir::System           // List system files
-QDir::CaseSensitive    // The filter should be case sensitive
-    
-// QDir Sort Flags
-QDir::NoSort           // No sorting
-QDir::Name             // Sort by name
-QDir::Time             // Sort by time (modification time)
-QDir::Size             // Sort by file size
-QDir::Type             // Sort by file type (extension)
-QDir::Unsorted         // Do not sort
-QDir::NoSort           // Not sorted by default
-QDir::DirsFirst        // Put the directories first, then the files
-QDir::DirsLast         // Put the files first, then the directories
-QDir::Reversed         // Reverse the sort order
-QDir::IgnoreCase       // Sort case-insensitively
-QDir::LocaleAware      // Sort using the current locale settings
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT THREADING
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*************************************************************************************************************
-QOBJECTS
-• Has thread affinity: lives on a specific thread, query using obj.thread()
-• Must have same thread as parent, obj.setParent will fail if not
-• Will recieve queued signals/event from same or other threads, slot is always called in own thread
-• If no thread affinity or in thread without event loop, cannot process queued signals/events
-• Can change with object.moveToThread(), must not have a parent, all children auto changed too
-
-SIGNALS / SLOTS
-• QObject::connect default is AutoConnection and thread safe
-• Becomes QueuedConnection if signal/slot objects have different thread affinity
-• Signals must not be sent from the same object across threads unless that object is thread safe
-• QueuedConnection signals will be sent to slot object's event queue and called synchronously
-**************************************************************************************************************/
-    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT ALGORITHMS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
