@@ -445,53 +445,8 @@ QGridLayout layout;
 layout.addWidget(spinBox, r, c); // Add a widget to the layout, automatically parents and resizes
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT QUICK
+// QT QUICK / QML
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// AUTO REGISTERED TYPES
-// All assummed cpp ownership except for Q_INVOKABLE functions returning parentless QObject*
-bool              bool
-unsigned int/int  int
-double            double
-float/qreal       real
-QString           string
-QUrl              url
-QColor            color
-QFont             font
-QDate             date
-QPoint/QPointF    point
-QSize/QSizeF      size
-QRect/QRectF      rect
-QMatrix4x4        matrix4x4
-QQuaternion       quaternion
-QVector2D         vector2d
-QVector3D         vector3d
-QVector4D         vector4d
-QObject*          object
-
-// AUTO REGISTERED CONTAINERS
-// Other basic types need QList<QVariant>, custom types need QList<QObject*>
-QList<int>        QVector<int>        std::vector<int>
-QList<qreal>      QVector<qreal>      std::vector<qreal>
-QList<bool>       QVector<bool>       std::vector<bool>
-QList<QUrl>       QVector<QUrl>       std::vector<QUrl>
-QList<QString>    QVector<QString>    std::vector<QString>
-QStringList
-QList<QVariant>
-QVariantList
-QVariantMap
-QList<QObject*>
-
-// REGISTERING OBJECTS WITH QML
-// Requires registration with Variant
-qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyClass"); // use 'import MyInclude 1.0' and MyClass {}
-qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyEnum"); // use 'import MyInclude 1.0' and 'MyEnum.ONE'
-
-// REGISTERING SINGLETONS WITH QML
-// Will be owned by QML, use 'import MyInclude 1.0' and 'MySingleton.Member'
-qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyInclude", 1, 0, "MySingleton")
-qmlRegisterSingletonType("MyInclude", 1, 0, "MySingleton", 
-    [](QQmlEngine*, QJSEngine*)->QObject* { return new MySingleton(); });
 
 // QQuickWindow
 // Inherits QWindow, window for QML applications
@@ -578,6 +533,62 @@ item.window() // Return QQuickWindow* in which this item is rendered
 
 // QQmlEngine
 setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Static, Must be used on cpp QObjects without parents
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT QUICK / QML DATA CONVERSIONS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**************************************************************************************************************
+• 
+**************************************************************************************************************/
+ 
+// AUTO REGISTERED TYPES
+// All assummed cpp ownership except for Q_INVOKABLE functions returning parentless QObject*
+bool              bool
+unsigned int/int  int
+double            double
+float/qreal       real
+QString           string
+QUrl              url
+QColor            color
+QFont             font
+QDate             date
+QDate/QTime       Date (javascript)
+QPoint/QPointF    point
+QSize/QSizeF      size
+QRect/QRectF      rect
+QMatrix4x4        matrix4x4
+QQuaternion       quaternion
+QVector2D         vector2d
+QVector3D         vector3d
+QVector4D         vector4d
+QObject*          object
+
+// AUTO REGISTERED CONTAINERS
+// Convert to javascript Array or Map
+// Other basic types need QList<QVariant>/QVariantList, custom types need QList<QObject*>
+// Avoid std::vectors as Q_PROPERTY as they are copied each access 
+QList<int>        QVector<int>        std::vector<int>
+QList<qreal>      QVector<qreal>      std::vector<qreal>
+QList<bool>       QVector<bool>       std::vector<bool>
+QList<QUrl>       QVector<QUrl>       std::vector<QUrl>
+QList<QString>    QVector<QString>    std::vector<QString>
+QStringList
+QList<QVariant>
+QVariantList
+QVariantMap
+QList<QObject*>
+
+// REGISTERING OBJECTS WITH QML
+// Requires registration with Variant
+qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyClass"); // use 'import MyInclude 1.0' and MyClass {}
+qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyEnum"); // use 'import MyInclude 1.0' and 'MyEnum.ONE'
+
+// REGISTERING SINGLETONS WITH QML
+// Will be owned by QML, use 'import MyInclude 1.0' and 'MySingleton.Member'
+qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyInclude", 1, 0, "MySingleton")
+qmlRegisterSingletonType("MyInclude", 1, 0, "MySingleton", 
+    [](QQmlEngine*, QJSEngine*)->QObject* { return new MySingleton(); });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT FILE SYSTEM
