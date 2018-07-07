@@ -665,7 +665,7 @@ QList<QUrl>       QVector<QUrl>       std::vector<QUrl>
 QList<QString>    QVector<QString>    std::vector<QString>
 QStringList
 QList<QVariant> (QVariantList)
-QMap<QString, (QVariantMap)
+QMap<QString, QVariant> (QVariantMap)
 QList<QObject*>
 
 // REGISTERING OBJECTS WITH QML
