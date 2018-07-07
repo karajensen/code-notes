@@ -295,6 +295,7 @@ QByteArray::OmitTrailingEquals   // Omits adding the padding equal signs at the 
 • Holds a single value of a type, need to register type to use it
 • For Q_PRIMITIVE_TYPE objects doesn't call constructor/destructor
 • To use custom types, must be registered with Q_DECLARE_METATYPE
+• QVariantList is typedef for QList<QVariant>, QVariantMap is typedef for QMap<QString, QVariant>
 • See http://doc.qt.io/qt-5/qvariant-obsolete.html#Type-enum for Variant Type Enum
 **************************************************************************************************************/
 
