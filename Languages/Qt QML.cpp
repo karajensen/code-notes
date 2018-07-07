@@ -847,8 +847,8 @@ console.exception("Message") // prints message and stack trace
 
 /************************************************************************************************************
 PROPERTY OPTIMIZATIONS:
-• Avoid declaring with var keyword unless type is QVariantMap/variant
-• Using a propery resolves it; faster to store result in local and access that
+• Avoid declaring with var keyword unless needed
+• Using a propery accesses it through cpp; faster to store result in local and access that
       var rectColor = rect.color; // resolve the common base.
       printValue("red", rectColor.r);
       printValue("green", rectColor.g)
@@ -879,7 +879,7 @@ JAVASCRIPT OPTIMIZATIONS:
 • Trying to access nonexistent properties will always traverse the full prototype chain
 
 COMPONENT OPTIMIZATIONS:
-• If a component has a custom property, it becomes its own implicit type. 
+• If a component has a custom property, it becomes its own implicit type
   If more than one of these used, move to own file to save memory
 • Consider using an asynchronous Loader component
 • Prefer Item over invisible Rectangles
