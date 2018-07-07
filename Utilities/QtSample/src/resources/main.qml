@@ -51,7 +51,11 @@ Rectangle {
 
                     onModelChanged: {
                         if(model) {
-                            for(var i = 0; i < 5; i++) {
+                            console.log(model.gadgetTest.id + " " + typeof(model.gadgetTest));
+                            console.log(Test.Enum.ONE + " " + Test.Enum.TWO + " " + Test.Enum.THREE);
+                            console.log(ObjectEnum.ONE + " " + ObjectEnum.TWO + " " + ObjectEnum.THREE);
+
+                            for(var i = 0; i < 3; i++) {
                                 console.log(model.intListTest[i] + " " + typeof(model.intListTest[i]));
                                 console.log(model.colorListTest[i] + " " + typeof(model.colorListTest[i]));
                                 console.log(model.objectListTest[i].id + " " + typeof(model.objectListTest[i]));

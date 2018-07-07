@@ -2,6 +2,7 @@
 #include "SampleItem.h"
 #include <qqml.h>
 #include <qqmlengine.h>
+#include <qvariant.h>
 
 SampleModel::~SampleModel() = default;
 SampleModel::SampleModel(QObject* parent)
@@ -16,7 +17,17 @@ void SampleModel::qmlRegisterTypes()
     qmlRegisterType<SampleItem>("SampleModel", 1, 0, "SampleItemState");
 
     // Register to allow TestObject {} in QML
-    qmlRegisterType<TestObject>("SampleModel", 1, 0, "TestObject");
+    qmlRegisterType<Test::Object>("SampleModel", 1, 0, "TestObject");
+
+    // Allow gadget value-type to be used with variant/property system/QML
+    qRegisterMetaType<Test::Gadget>();
+
+    // Allow Test::Object::Enum to be used in QML
+    qmlRegisterType<Test::Object>("SampleModel", 1, 0, "ObjectEnum");
+
+    // Allow Test::Enum to be used in QML
+    qmlRegisterUncreatableMetaObject(Test::staticMetaObject, "SampleModel", 1, 0,
+        "Test", "Error msg if try to create MyEnum object");
 }
 
 //===========================================================================================================
@@ -25,23 +36,23 @@ void SampleModel::qmlRegisterTypes()
 
 QObject* SampleModel::returnObject()
 {
-    return new TestObject();
+    return new Test::Object();
 }
 
 QList<QObject*> SampleModel::returnObjectList()
 {
-    QList<QObject*> list = { new TestObject() };
+    QList<QObject*> list = { new Test::Object() };
     QQmlEngine::setObjectOwnership(list.back(), QQmlEngine::JavaScriptOwnership);
     return list;
 }
 
 void SampleModel::fillTestItems()
 {
-    for (int i = 0; i < 5; ++i)
+    for (int i = 0; i < 3; ++i)
     {
         m_intListTest.append(i);
         m_colorListTest.append(QColor(i, i, i));
-        m_objectListTest.append(new TestObject(i));
+        m_objectListTest.append(new Test::Object(i));
     }
 }
 

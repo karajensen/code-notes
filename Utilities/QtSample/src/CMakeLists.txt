@@ -38,6 +38,7 @@ if(CMAKE_PREFIX_PATH)
                  sampleItem.cpp
                  sampleModel.h
                  sampleModel.cpp
+				 testClasses.h
                  resources/main.qml)
 
     find_package(Qt5 COMPONENTS Core Widgets Quick)
