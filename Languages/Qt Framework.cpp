@@ -655,13 +655,6 @@ setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Static, Must be used on c
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT QUICK / QML DATA CONVERSIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/**************************************************************************************************************
-• Data passed via Q_PROPERTY or Q_INVOKABLE
-• Data assumed cpp ownership except for Q_INVOKABLE functions returning parentless QObject*
-• Avoid std::vectors as they are copied each access whether Q_PROPERTY or Q_INVOKABLE
-• Q_PROPERTY container more expensive to read/write than Q_INVOKABLE returned container
-**************************************************************************************************************/
  
 // AUTO REGISTERED TYPES
 bool              bool
@@ -698,7 +691,10 @@ QList<QVariant> (QVariantList)
 QMap<QString, QVariant> (QVariantMap)
 QList<QObject*>
 
-// REGISTERING OBJECTS WITH QML
+// USING OBJECTS WITH QML
+// Data passed via Q_PROPERTY or Q_INVOKABLE
+// Avoid std::vectors as they are copied each access whether Q_PROPERTY or Q_INVOKABLE
+// Q_PROPERTY container more expensive to read/write than Q_INVOKABLE returned container
 // QGadgets: to use, needs Q_GADGET registration with Variant/Property system and is passed by value
 // QObjects: to use, doesn't need any registration and is passed as QObject*, be aware of ownership
 Q_PROPERTY(QList<QObject*> objList MEMBER m_objList) // Has cpp owernship
@@ -715,7 +711,8 @@ qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyClass");
 
 // REGISTERING CLASS ENUMS WITH QML
 // Requires Q_ENUM registration with Variant
-// Does not need further registration to use for class property/signals, does if want to use globally?
+// Does not need further registration to use for class property/signals
+// Requires further registration to use named enums in QML
 // use 'import MyInclude 1.0' / 'MyClassEnum.ONE'
 qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyClassEnum"); 
 
