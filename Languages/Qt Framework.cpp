@@ -667,19 +667,17 @@ QList<QObject*>
 
 // USING Q_PROPERTY / Q_INVOKABLE QOBJECTS WITH QML
 // No need to register MyClass if passing as QObject*/QList<QObject*> with Q_PROPERTY/Q_INVOKABLE
-Q_PROPERTY(QList<QObject*> objList MEMBER m_objList) // Does not auto give QML ownership
-Q_PROPERTY(QObject* obj MEMBER m_obj) // Does not auto give QML ownership
-Q_INVOKABLE QObject* myFn() 
+Q_PROPERTY(QList<QObject*> objList MEMBER m_objList) // Has cpp owernship
+Q_PROPERTY(QObject* obj MEMBER m_obj) // Has cpp owernship
+Q_INVOKABLE QObject* myFn() // Returning parentless QObject* has qml ownership
 { 
-    // Returning parentless QObject* auto gives QML ownership
-    QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership);
+    QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership); // force cpp ownership
     return myObj;
 }
-QList<QObject*> myFn()
+Q_INVOKABLE QList<QObject*> myFn() // Returning parentless QList<QObject*> has cpp ownership
 {
-    // Returning parentless QList<QObject*> does not auto give QML ownership
     QList<QObject*> list = { new TestObject() };
-    QQmlEngine::setObjectOwnership(list.back(), QQmlEngine::JavaScriptOwnership);
+    QQmlEngine::setObjectOwnership(list.back(), QQmlEngine::JavaScriptOwnership); // force QML ownership
     return list;
 }
 
