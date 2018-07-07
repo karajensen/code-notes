@@ -652,21 +652,20 @@ QQuaternion       quaternion
 QVector2D         vector2d
 QVector3D         vector3d
 QVector4D         vector4d
-QByteArray        ArrayBuffer (Javascript)
-QObject*          object
+QByteArray        ArrayBuffer (javascript)
+QObject*          var
 
 // AUTO REGISTERED CONTAINERS
-// Converts to javascript Array or Map
-// Other basic types need QList<QVariant>/QVariantList
+// Converts to modified javascript Array or Map (see QML 'var')
+// Other basic types need QVariantList/QVariantMap
 QList<int>        QVector<int>        std::vector<int>
 QList<qreal>      QVector<qreal>      std::vector<qreal>
 QList<bool>       QVector<bool>       std::vector<bool>
 QList<QUrl>       QVector<QUrl>       std::vector<QUrl>
 QList<QString>    QVector<QString>    std::vector<QString>
 QStringList
-QList<QVariant>
-QVariantList
-QVariantMap
+QList<QVariant> (QVariantList)
+QMap<QString, (QVariantMap)
 QList<QObject*>
 
 // REGISTERING OBJECTS WITH QML
@@ -674,6 +673,8 @@ QList<QObject*>
 // Pass as QObject* / QList<QObject*>
 // use 'import MyInclude 1.0' and MyClass {}
 qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyClass");
+
+// REGISTERING VALUE TYPES WITH QML
 
 // REGISTERING ENUMS WITH QML
 // Requires registration with Variant 
