@@ -2,6 +2,93 @@
 // QML COMPONENTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// ITEM
+// Base for most QML components, instantiates QQuickItem
+Item {
+    activeFocusOnTab // Whether included in active focus on tab, default false
+    antialiasing // Whether antialiasing enable, default false
+    baselineOffset // Position offset, default 0, used for text
+    clip // Whether clipping enabled, default false, hides part of item/children, performance hit
+    enabled // Recursive, whether the item receives mouse and keyboard events
+    focus // Whether item has input focus
+    height // Actual height of item
+    width // Actual width of item
+    implicitHeight // Default height of the Item if no height is specified
+    implicitWidth // Default width of the Item if no width is specified
+    opacity // Alpha of item, values outside [0,1] clamped
+    objectName // Inherited from QObject
+    parent // returns Item, visual parent of the item
+    rotation // rotation of the item in degrees clockwise around its transformOrigin, default 0
+    scale // size of item, negative mirror's item, default 1
+    smooth // Image interpolation, true is linear, false is nearest neighbour, default true
+    transformOrigin // TransformOrigin type which scale/rotate use
+    visible // Recursive, whether item is rendered
+    x / y / z // Position and stacking depth of item, negative z draws under parent
+    anchors.top
+    anchors.bottom
+    anchors.right
+    anchors.left
+    anchors.horizontalCenter
+    anchors.verticalCenter
+    anchors.baseLine
+    anchors.fill // Takes QML Item parent or sibling, set to undefined to detach
+    anchors.centerIn // Takes QML Item parent or sibling, set to undefined to detach
+    anchors.margins // Set value for all margins
+    anchors.topMargin // Set value for top margin
+    anchors.bottomMargin // Set value for bottom margin
+    anchors.leftMargin // Set value for left margin
+    anchors.rightMargin // Set value for right margin
+    anchors.horizontalCenterOffset // Value offset from horizontal center
+    anchors.verticalCenterOffset // Value offset from vertical center
+    anchors.baselineOffset // Value offset from position
+    anchors.alignWhenCentered // forces centered anchors to align to a whole pixel, default true
+    layer.effect // Component, typically a ShaderEffect component
+    layer.enabled // Whether the item is layered or not, disabled by default
+    layer.format // Enum, internal OpenGL format of the texture
+    layer.mipmap // Whether mipmaps are generated for the texture
+    layer.samplerName // Name of the effect's source texture property
+    layer.samples // Enum, allows requesting multisampled rendering in the layer
+    layer.smooth // Whether the layer is smoothly transformed
+    layer.sourceRect // The rectangular area of the item that should be rendered into the texture
+    layer.textureMirroring // Enum, how the generated OpenGL texture should be mirrored
+    layer.textureSize // Pixel size of the layers texture, if empty (default) uses item's size
+    layer.wrapMode // Enum, OpenGL wrap modes associated with the texture
+    state // QString state name, default empty
+    transform // list<Transform>, list of transformations to apply
+    transitions // list<Transition>, transitions to be applied to the item whenever it changes its state
+
+    /* list<State>, if multiple 'when' true, first is chosen */
+    states: [
+        State {
+            name: "state1" 
+            PropertyChanges { target: item; myProperty: 1 } 
+            when: myBoolProperty
+        },
+        State { 
+            name: "state2" 
+            PropertyChanges { target: item; myProperty: 2 }
+            when: myFunction
+        }
+    ]  
+}
+item.activeFocus // Read only, whether item has active focus
+item.childrenRect // Read only, QML rect collective position and size of the item's children
+item.data // list<Object> of both visual children and resources
+item.resources // list<Object>, contains non-visual children
+item.visibleChildren // list<Item>, contains visual children
+item.childAt(x, y) // Returns first visible QML Item child found at point within item coord system
+item.contains(point) // If item contains QML point (in local coordinates)
+item.forceActiveFocus(reason) // Focuses item and any parent FocusScopes, reason optional
+item.grabToImage(callback, targetSize) // Grabs the item into an in-memory image
+item.grabToImage(function(result) { result.saveToFile("/Folder/image.png"); }) // Save as image
+item.mapFromGlobal(x, y) // Converts global coords into item local coords, retuns QML point
+item.mapFromItem(item2, x, y, w, h) // Converts item2 local coords into item local coords, retuns QML rect
+item.mapFromItem(item2, x, y) // Converts item2 local coords into item local coords, retuns QML point
+item.mapToGlobal(x, y) // Converts item local coords into global coords, returns QML point
+item.mapToItem(item2, x, y, w, h) // Converts item local coords into item2 local coords, returns QML rect
+item.mapToItem(item2, x, y) // Converts item local coords into item2 local coords, returns QML point
+item.nextItemInFocusChain(forward) // Returns item next in the focus chain, forward optional
+
 // QTOBJECT
 // lightweight non-visual element
 QtObject {

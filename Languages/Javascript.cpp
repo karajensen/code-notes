@@ -19,6 +19,7 @@ x === y                          // equal value and equal type
 x !== y                          // not equal value or not equal type
 value !== null                   // Use === when comparing with null
 typeof value !== "undefined"     // Use === when comparing with undefined 
+!!x                              // Forces boolean type for object, 0/null/undefined becomes false
 
 // VARIABLE TYPES
 "undefined"
@@ -294,6 +295,7 @@ arr.every(x => return true)        // Returns true if all item callbacks return 
 arr.some(x => return true)         // Returns true if at least one item callback returns true
 arr.reduce(a,b => return a+b)      // Iterates over all elements, returns single combined value
 arr.reduceRight(a,b => return a+b) // Iterates over all elements backwards, returns single combined value
+delete arr[i]                      // Only sets element to undefined, use splice instead to actually remove
     
 // SORTING
 // Sorts array ascending order in-place

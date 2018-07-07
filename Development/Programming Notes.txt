@@ -92,11 +92,6 @@ ORDER OF EXPRESSION EVALUATION
 • Order is left to right where right is only done if left is true: if(left && right)
 • Doesn't work with bitwise operators
 
-CHARACTER ENCODING
-• ASCII Represents English characters as numbers from 0 to 127 in 1 byte
-• UTF-8 (Unicode) backward compatibly with ASCII and use 1 byte- other characters require 2-4 bytes
-• UTF-16 (Unicode) better when not using ASCII- can represent some characters with less memory than UTF-8
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // PROGRAM EXECUTION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -545,3 +540,20 @@ LATENCY: Time taken for packets to travel from the client -> server -> client, m
 |                |                                 |   Harder to cheat                       |
 |                |                                 |   Single world state in control         |
 ----------------------------------------------------------------------------------------------
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// TEXT ENCODING
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ASCII: Characters from 0 to 127 in 7 bits
+ANSI: Characters from 0 to 256 in 8 bits
+UTF-8: Unicode characters as a sequence of 1, 2, 3, or 4 bytes, backwards compatible with ASCII/ANSI
+UTF-16: Encodes most Unicode characters as 2 bytes, and some as 4 bytes
+Unicode: UTF-8 / UTF-16 / UTF-32
+
+WINDOWS:
+• API only supports ANSI in the user's locale (char*/MessageBoxA) or UTF-16, (wchar_t*/MessageBoxW)
+• MBSC option enables 'A' ANSI API versions and Unicode option enables 'W' UTF-16 API versions
+• STL file manipulation/streams take in std::string for ANSI and std::wstring for UTF-16
+• If have an UTF-8 encoded path that contain non-ANSI characters, must convert to UTF-16 for API 
+• The STL std::wstring overloads are Windows only, not supported on other OS

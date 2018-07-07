@@ -69,9 +69,7 @@ import QtQuick.Dialogs 1.2 as DialogLegacy
 import MyEnums 1.0    // Requires registering with QQmlEngine
 import MyGlobals 1.0  // Requires registering with QQmlEngine
 import "MyJavascript.js" as MyJS
-  
-// ITEM
-// Base for most QML components, instantiates QQuickItem
+
 Item {
     id: item                               // unique id of item, can be used to access it
     property int myProperty: 0             // custom property
@@ -83,6 +81,7 @@ Item {
     property int myProperty: MyEnum.ONE    // Use int type for enums, Requires registering with QQmlEngine
     property var myProperty: myObj         // Context Q_OBJECT, Requires registering with QQuickView
     property int myProperty: myObj.value   // Context Q_OBJECT with Q_PROPERTY 'value' with NOTIFY
+    property Item myItem: Rectangle {}     // QML component as a property
     readonly property int myProperty: 0    // read-only property
     property alias myAlias: myProperty     // reference for property    
     signal mySignal(int value)             // call with item.mySignal(0)
@@ -108,86 +107,9 @@ Item {
     /* Javascript custom function */
     function myFunction(x, y) {
         return x + y;
-    }
-  
-    /* Item states, if multiple 'when' true, first is chosen */
-    states: [
-        State {
-            name: "state1" 
-            PropertyChanges { target: item; myProperty: 1 } 
-            when: myBoolProperty
-        },
-        State { 
-            name: "state2" 
-            PropertyChanges { target: item; myProperty: 2 }
-            when: myFunction
-        }
-    ]  
+    }  
 }
-item.mySignal.connect(mySlot) // Connect signal and slot
-item.activeFocus // Read only, whether item has active focus
-item.activeFocusOnTab // Whether included in active focus on tab, default false
-item.antialiasing // Whether antialiasing enable, default false
-item.baselineOffset // Position offset, default 0, used for text
-item.childrenRect // Read only, QML rect collective position and size of the item's children
-item.clip // Whether clipping enabled, default false, hides part of item/children, performance hit
-item.enabled // Recursive, whether the item receives mouse and keyboard events
-item.focus // Whether item has input focus
-item.height // Actual height of item
-item.width // Actual width of item
-item.implicitHeight // Default height of the Item if no height is specified
-item.implicitWidth // Default width of the Item if no width is specified
-item.opacity // Alpha of item, values outside [0,1] clamped
-item.objectName // Inherited from QObject
-item.parent // returns Item, visual parent of the item
-item.rotation // rotation of the item in degrees clockwise around its transformOrigin, default 0
-item.scale // size of item, negative mirror's item, default 1
-item.smooth // Image interpolation, true is linear, false is nearest neighbour, default true
-item.transformOrigin // TransformOrigin type which scale/rotate use
-item.visible // Recursive, whether item is rendered
-item.x / item.y / item.z // Position and stacking depth of item, negative z draws under parent
-item.anchors // Sub options: top, bottom, left, right, horizontalCenter, verticalCenter, baseLine
-item.anchors.fill // Takes QML Item parent or sibling, set to undefined to detach
-item.anchors.centerIn // Takes QML Item parent or sibling, set to undefined to detach
-item.anchors.margins // Set value for all margins
-item.anchors.topMargin // Set value for top margin
-item.anchors.bottomMargin // Set value for bottom margin
-item.anchors.leftMargin // Set value for left margin
-item.anchors.rightMargin // Set value for right margin
-item.anchors.horizontalCenterOffset // Value offset from horizontal center
-item.anchors.verticalCenterOffset // Value offset from vertical center
-item.anchors.baselineOffset // Value offset from position
-item.anchors.alignWhenCentered // forces centered anchors to align to a whole pixel, default true
-item.data // list<Object> of both visual children and resources
-item.layer.effect // Component, typically a ShaderEffect component
-item.layer.enabled // Whether the item is layered or not, disabled by default
-item.layer.format // Enum, internal OpenGL format of the texture
-item.layer.mipmap // Whether mipmaps are generated for the texture
-item.layer.samplerName // Name of the effect's source texture property
-item.layer.samples // Enum, allows requesting multisampled rendering in the layer
-item.layer.smooth // Whether the layer is smoothly transformed
-item.layer.sourceRect // The rectangular area of the item that should be rendered into the texture
-item.layer.textureMirroring // Enum, how the generated OpenGL texture should be mirrored
-item.layer.textureSize // Pixel size of the layers texture, if empty (default) uses item's size
-item.layer.wrapMode // Enum, OpenGL wrap modes associated with the texture
-item.resources // list<Object>, contains non-visual children
-item.state // QString state name, default empty
-item.states // list<State>, list of possible states for this item
-item.transform // list<Transform>, list of transformations to apply
-item.transitions // list<Transition>, transitions to be applied to the item whenever it changes its state
-item.visibleChildren // list<Item>, contains visual children
-item.childAt(x, y) // Returns first visible QML Item child found at point within item coord system
-item.contains(point) // If item contains QML point (in local coordinates)
-item.forceActiveFocus(reason) // Focuses item and any parent FocusScopes, reason optional
-item.grabToImage(callback, targetSize) // Grabs the item into an in-memory image
-item.grabToImage(function(result) { result.saveToFile("/Folder/image.png"); }) // Save as image
-item.mapFromGlobal(x, y) // Converts global coords into item local coords, retuns QML point
-item.mapFromItem(item2, x, y, w, h) // Converts item2 local coords into item local coords, retuns QML rect
-item.mapFromItem(item2, x, y) // Converts item2 local coords into item local coords, retuns QML point
-item.mapToGlobal(x, y) // Converts item local coords into global coords, returns QML point
-item.mapToItem(item2, x, y, w, h) // Converts item local coords into item2 local coords, returns QML rect
-item.mapToItem(item2, x, y) // Converts item local coords into item2 local coords, returns QML point
-item.nextItemInFocusChain(forward) // Returns item next in the focus chain, forward optional
+item.mySignal.connect(mySlot) // Connect signal and slot, forward optional
 
 // MyGlobal.qml
 // Requires registering with QQmlEngine
@@ -215,17 +137,22 @@ property bool myBool: true
 property double myDouble: 0.0
 property int myInt: 0
 property real myReal: 0.0
-
+  
 // VAR
-// Use for holding Javascript types, QVariantMap and variant
-// Object attributes do not send signal or update bindings when changed
+// Use for holding Javascript objects, QObjects, Qt containers and variant
+// Javascript object attributes do not send signal or update bindings when changed
+// Qt container arrays become javascript arrays with a few differences:
+//   - delete myArray[i] sets element as default constructed instead of undefined
+//   - resizing larger will default construct elements instead of be undefined
+//   - Using index > INT_MAX will fail as Qt container class indexing is signed, not unsigned
 property var myFn: (function() { return 0; }) // Javascript function
-property var myArray: [1, 2, 3, "a", "b"] // Javascript array
 property var myObj: { "a":0, "b":1 } // Javascript object
 property var myObj: ({ a:0, b:1 }) // Javascript object, requires () without "
 property var myObj: new Object({ "a":0, "b":1 }) // Javascript object
 property int myAttr: myObj.a // Will not update when 'a' updates
-
+property var myArray: [1, 2, 3, "a", "b"] // Javascript array
+property var myArray: myObj.myQtContainerArray // Javascript modified array
+  
 // LIST
 // list of QML objects, not a Javascript array
 // Auto converts to/from QmlListProperty
@@ -920,8 +847,8 @@ console.exception("Message") // prints message and stack trace
 
 /************************************************************************************************************
 PROPERTY OPTIMIZATIONS:
-• Avoid declaring with var keyword unless type is QVariantMap/variant
-• Using a propery resolves it; faster to store result in local and access that
+• Avoid declaring with var keyword unless needed
+• Using a propery accesses it through cpp; faster to store result in local and access that
       var rectColor = rect.color; // resolve the common base.
       printValue("red", rectColor.r);
       printValue("green", rectColor.g)
@@ -952,7 +879,7 @@ JAVASCRIPT OPTIMIZATIONS:
 • Trying to access nonexistent properties will always traverse the full prototype chain
 
 COMPONENT OPTIMIZATIONS:
-• If a component has a custom property, it becomes its own implicit type. 
+• If a component has a custom property, it becomes its own implicit type
   If more than one of these used, move to own file to save memory
 • Consider using an asynchronous Loader component
 • Prefer Item over invisible Rectangles

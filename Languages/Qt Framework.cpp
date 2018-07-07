@@ -28,7 +28,6 @@ int main(int argc, char *argv[])
     app.exec(); // Start the event loop
 }
 
-forever { break; }
 qDebug() << "Message\n"; // Prints to stderr output
 Q_ASSERT(expression);
 Q_ASSERT_X(expression, "divide", "division by zero");
@@ -84,13 +83,13 @@ class MyClass : public QObject
 {
     Q_OBJECT // required for all moc provided features
     Q_CLASSINFO("Author", "Name") // attach additional name/value pairs to the class's meta-object
-
+    Q_DISABLE_COPY(MyClass) // Required for singleton classes
+     
 public:
     MyClass(QObject *parent = 0) { }
-    
-    Q_INVOKABLE void myFn() { }
     Q_PROPERTY(MyValue value MEMBER m_value NOTIFY myValueSignal)
     Q_PROPERTY(MyValue value READ getValue WRITE setValue NOTIFY mySignal)
+    Q_INVOKABLE void myFn() { }
     
     // Can be inherited/virtual
     const MyValue& getValue() const { return m_value; }
@@ -145,11 +144,14 @@ metaObj.indexOfEnumerator(name) // Get index of enum from name, or -1 if not fou
 
 // QMetaEnum
 QMetaEnum metaEnum(QMetaEnum::fromType<MyClass::MyEnum>());
-metaEnum.valueToKey(MyClass::ONE)
-metaEnum.keyToValue("ONE")
+metaEnum.valueToKey(MyClass::ONE) // Returns const char* or null if not found
+metaEnum.keyToValue("ONE", &isValid) // Returns int or -1 if not found, optional bool
+metaEnum.keyCount() // Returns number of keys/values
+metaEnum.key(index) // Returns const char* key from int index, or null if doesn't exist
+metaEnum.value(index) // Returns int value with the given index, or returns -1 if none found
 
 // OBJECT TYPE INFO
-// Macro must be outside all namespaces
+// Macro must be outside all namespaces, placed after class in .h
 // Q_PRIMITIVE_TYPE leaves obj memory unitialised, means trivally copyable
 // Q_MOVABLE_TYPE uses std::memcpy rather than copy ctor to move obs around, means trivally relocatable
 // Q_MOVABLE_TYPE does shallow move; don't use for types that self refer (pimpl with ptr back to parent)
@@ -159,26 +161,18 @@ Q_DECLARE_TYPEINFO(MyClass, Q_MOVABLE_TYPE)
 QTypeInfoQuery<MyClass>::isRelocatable // Query type info
 
 // REGISTERING OBJECT WITH VARIANT
-// Macro must be outside all namespaces
-// Allows use with variant: myVariant.value<MyClass>()
-// Not needed for: MyClass*, qt smart pointers/container with MyClass, if using Q_ENUM/Q_FLAG/Q_GADGET
-Q_DECLARE_METATYPE(MyClass)
-
-// REGISTERING OBJECT WITH PROPERTY SYSTEM
-// Allows use with signals/slots/property system
-qRegisterMetaType<MyClass>();
+// Macros must be outside all namespaces, placed after class in .h
+// Not needed for: MyClass* as derives from QObject*, qt smart pointers/container with MyClass
+Q_DECLARE_METATYPE(MyClass) // Allows use with variant: myVariant.value<MyClass>()
+Q_ENUM(MyClass::MyEnum) // Also allows use in property system
+Q_FLAG(MyClass::MyFlag) // Also allows use in property system
+qRegisterMetaType<MyClass>(); // Allows use with signals/slots/property system
 
 // REGISTERING OBJECT FOR STREAMING
 // Allows use with drag/drop systems
 qRegisterMetaTypeStreamOperatorss<MyClass>("MyClass");
 QDataStream& operator<<(QDataStream& out, const MyClass& obj);
 QDataStream& operator>>(QDataStream& in, MyClass& obj);
-
-// REGISTERING ENUMS
-// Macro must be outside all namespaces
-// QML use 'import MyEnums 1.0' and 'MyEnum.ONE'
-Q_ENUM(MyClass::MyEnum)
-qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum");
 
 // CONNECT SIGNALS/SLOTS
 // Returns QMetaObject::Connection for disconnecting, or can call QObject::disconnect with same signature
@@ -187,6 +181,7 @@ qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum");
 // Use normalised form from moc cpp for SIGNAL/SLOT macros, otherwise performance hit
 QObject::connect(sender, &Sender::mySignal, reciever, &Receiver::mySlot);
 QObject::connect(sender, &Sender::mySignal, reciever, [](){});
+QObject::connect(sender, &Sender::mySignal, [](){});
 QObject::connect(sender, SIGNAL(mySignal()), reciever, SLOT(mySlot()));
 QObject::connect(sender, SIGNAL(mySignalArgs(int,float)), reciever, SLOT(mySlotArgs(int,float)));
 
@@ -346,6 +341,30 @@ public:
 QEvent::Type MyCustomEvent::CustomEventType = static_cast<QEvent::Type>(QEvent::registerEventType());
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT BASIC TYPES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+qint8        // signed char, guaranteed to be 8-bit
+qint16       // signed short, guaranteed to be 16-bit
+qint32       // signed int, guaranteed to be 32-bit
+qint64       // signed long long int (__int64 on Windows), guaranteed to be 64-bit, use Q_INT64_C to create
+qintptr      // signed integral type for representing pointers
+qlonglong    // same as qint64
+qptrdiff     // signed integral type for representing pointer differences.
+qreal        // double unless Qt is configured with the -qreal float
+qsizetype    // size_t
+quint8       // unsigned char, guaranteed to be 8-bit
+quint16      // unsigned short, guaranteed to be 16-bit
+quint32      // unsigned int, guaranteed to be 32-bit
+quint64      // unsigned long long int (__int64 on Windows), guaranteed to be 64-bit, use Q_UINT64_C to create
+quintptr     // unsigned integral type for representing pointers
+qulonglong   // same as quint64
+uchar        // generic typedef for unsigned char
+uint         // generic typedef for unsigned int
+ulong        // generic typedef for unsigned long
+ushort       // generic typedef for unsigned short
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT COMPONENTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -423,7 +442,94 @@ QGridLayout layout;
 layout.addWidget(spinBox, r, c); // Add a widget to the layout, automatically parents and resizes
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT QUICK
+// QT FILE SYSTEM
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Read from a file, no need to close it
+QFile file("myFile.txt");
+if(file.open(QIODevice::ReadOnly))
+{
+    QTextStream stream(&file);
+    QString line = stream.readLine(); // read the next line
+    while(!line.isNull())
+    {
+        line = stream.readLine();
+    }
+}
+
+// QDir
+// Provides access to directory structures and their contents
+QDir dir("Folder/Folder") // Root directory
+dir.exists() // Whether root directly exists
+dir.setNameFilters(QStringList("*.qml", "*.txt")) // Extension types to filter searches with
+dir.entryList(nameFilters, filterFlags, sortFlags) // Search directory recursively, returns QStringList
+dir.entryList(nameFilters) // Not using any args will use the stored filterFlags/sortFlags
+dir.entryList(filterFlags, sortFlags) // Search directory recursively with filter flags, returns QStringList
+dir.entryList() // Not using any args will use the stored filterFlags/sortFlags
+    
+// QIODevice
+// base interface class of all I/O devices
+
+// QDataStream
+// serialization of binary data to a QIODevice
+
+// QFile
+// Interface for reading from and writing to files
+
+// QDir Filter Flags
+QDir::NoFilter         // No filter flag used
+QDir::Dirs             // Apply filters to directory names
+QDir::AllDirs          // Don't apply the filters to directory names
+QDir::Files            // List files
+QDir::Drives           // List disk drives
+QDir::NoSymLinks       // Do not list symbolic links
+QDir::NoDotAndDotDot   // NoDot | NoDotDot
+QDir::NoDot            // Do not list the special entry "."
+QDir::NoDotDot         // Do not list the special entry ".."
+QDir::AllEntries       // Dirs | Files | Drives
+QDir::Readable         // List files which application has read access
+QDir::Writable         // List files which application has write access
+QDir::Executable       // List files which application has execute access
+QDir::Modified         // Only list files that have been modified
+QDir::Hidden           // List hidden files
+QDir::System           // List system files
+QDir::CaseSensitive    // The filter should be case sensitive
+    
+// QDir Sort Flags
+QDir::NoSort           // No sorting
+QDir::Name             // Sort by name
+QDir::Time             // Sort by time (modification time)
+QDir::Size             // Sort by file size
+QDir::Type             // Sort by file type (extension)
+QDir::Unsorted         // Do not sort
+QDir::NoSort           // Not sorted by default
+QDir::DirsFirst        // Put the directories first, then the files
+QDir::DirsLast         // Put the files first, then the directories
+QDir::Reversed         // Reverse the sort order
+QDir::IgnoreCase       // Sort case-insensitively
+QDir::LocaleAware      // Sort using the current locale settings
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT THREADING
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
+QOBJECTS
+• Has thread affinity: lives on a specific thread, query using obj.thread()
+• Must have same thread as parent, obj.setParent will fail if not
+• Will recieve queued signals/event from same or other threads, slot is always called in own thread
+• If no thread affinity or in thread without event loop, cannot process queued signals/events
+• Can change with object.moveToThread(), must not have a parent, all children auto changed too
+
+SIGNALS / SLOTS
+• QObject::connect default is AutoConnection and thread safe
+• Becomes QueuedConnection if signal/slot objects have different thread affinity
+• Signals must not be sent from the same object across threads unless that object is thread safe
+• QueuedConnection signals will be sent to slot object's event queue and called synchronously
+**************************************************************************************************************/
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT QUICK / QML
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // QQuickWindow
@@ -510,73 +616,172 @@ item.window() // Return QQuickWindow* in which this item is rendered
 // Inherits QObject, instantiated by Component
 
 // QQmlEngine
-qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyGlobals", 1, 0, "MyGlobal")
-qmlRegisterType<MyClass>("MyEnums", 1, 0, "MyEnum") // MyEnum must be in Q_OBJECT class
+setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Static, Must be used on cpp QObjects without parents
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT FILE SYSTEM
+// QT QUICK / QML DATA CONVERSIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Read from a file, no need to close it
-QFile file("myFile.txt");
-if(file.open(QIODevice::ReadOnly))
+/**************************************************************************************************************
+• Data passed via Q_PROPERTY or Q_INVOKABLE
+• Data assumed cpp ownership except for Q_INVOKABLE functions returning parentless QObject*
+• Must register custom types to use in QML, not needed for qt smart pointers/container with type
+• Avoid std::vectors as they are copied each access whether Q_PROPERTY or Q_INVOKABLE
+• Q_PROPERTY container more expensive to read/write than Q_INVOKABLE returned container
+**************************************************************************************************************/
+ 
+// AUTO REGISTERED TYPES
+bool              bool
+unsigned int/int  int
+double            double
+float/qreal       real
+QString           string
+QUrl              url
+QColor            color
+QFont             font
+QDate             date
+QDate/QTime       Date (javascript)
+QPoint/QPointF    point
+QSize/QSizeF      size
+QRect/QRectF      rect
+QMatrix4x4        matrix4x4
+QQuaternion       quaternion
+QVector2D         vector2d
+QVector3D         vector3d
+QVector4D         vector4d
+QByteArray        ArrayBuffer (javascript)
+QObject*          var
+
+// AUTO REGISTERED CONTAINERS
+// Converts to modified javascript Array or Map (see QML 'var')
+// Other basic types need QVariantList/QVariantMap
+QList<int>        QVector<int>        std::vector<int>
+QList<qreal>      QVector<qreal>      std::vector<qreal>
+QList<bool>       QVector<bool>       std::vector<bool>
+QList<QUrl>       QVector<QUrl>       std::vector<QUrl>
+QList<QString>    QVector<QString>    std::vector<QString>
+QStringList
+QList<QVariant> (QVariantList)
+QMap<QString, QVariant> (QVariantMap)
+QList<QObject*>
+
+// USING Q_PROPERTY / Q_INVOKABLE QOBJECTS WITH QML
+// No need to register MyClass if passing as QObject*/QList<QObject*> with Q_PROPERTY/Q_INVOKABLE
+Q_PROPERTY(QList<QObject*> objList MEMBER m_objList) // Does not auto give QML ownership
+Q_PROPERTY(QObject* obj MEMBER m_obj) // Does not auto give QML ownership
+Q_INVOKABLE QObject* myFn() 
+{ 
+    // Returning parentless QObject* auto gives QML ownership
+    QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership);
+    return myObj;
+}
+QList<QObject*> myFn()
 {
-    QTextStream stream(&file);
-    QString line = stream.readLine(); // read the next line
-    while(!line.isNull())
-    {
-        line = stream.readLine();
-    }
+    // Returning parentless QList<QObject*> does not auto give QML ownership
+    QList<QObject*> list = { new TestObject() };
+    QQmlEngine::setObjectOwnership(list.back(), QQmlEngine::JavaScriptOwnership);
+    return list;
 }
 
-// QDir
-// Provides access to directory structures and their contents
-QDir dir("Folder/Folder") // Root directory
-dir.exists() // Whether root directly exists
-dir.setNameFilters(QStringList("*.qml", "*.txt")) // Extension types to filter searches with
-dir.entryList(nameFilters, filterFlags, sortFlags) // Search directory recursively, returns QStringList
-dir.entryList(nameFilters) // Not using any args will use the stored filterFlags/sortFlags
-dir.entryList(filterFlags, sortFlags) // Search directory recursively with filter flags, returns QStringList
-dir.entryList() // Not using any args will use the stored filterFlags/sortFlags
+// REGISTERING CUSTOM OBJECTS WITH QML
+// Must register to use as QML component: use 'import MyInclude 1.0' and MyClass {}
+qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyClass");
+
+// REGISTERING CUSTOM VALUE TYPES WITH QML
+
+// REGISTERING ENUMS WITH QML
+// Requires registration with Variant 
+// use 'import MyInclude 1.0' and 'MyEnum.ONE'
+qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyEnum"); 
+
+// REGISTERING SINGLETONS WITH QML
+// Will be owned by QML, use 'import MyInclude 1.0' and 'MySingleton.Member'
+qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyInclude", 1, 0, "MySingleton")
+qmlRegisterSingletonType("MyInclude", 1, 0, "MySingleton", 
+    [](QQmlEngine*, QJSEngine*)->QObject* { return new MySingleton(); });
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT ALGORITHMS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-// QIODevice
-// base interface class of all I/O devices
-
-// QDataStream
-// serialization of binary data to a QIODevice
-
-// QFile
-// Interface for reading from and writing to files
-
-// QDir Filter Flags
-QDir::NoFilter         // No filter flag used
-QDir::Dirs             // Apply filters to directory names
-QDir::AllDirs          // Don't apply the filters to directory names
-QDir::Files            // List files
-QDir::Drives           // List disk drives
-QDir::NoSymLinks       // Do not list symbolic links
-QDir::NoDotAndDotDot   // NoDot | NoDotDot
-QDir::NoDot            // Do not list the special entry "."
-QDir::NoDotDot         // Do not list the special entry ".."
-QDir::AllEntries       // Dirs | Files | Drives
-QDir::Readable         // List files which application has read access
-QDir::Writable         // List files which application has write access
-QDir::Executable       // List files which application has execute access
-QDir::Modified         // Only list files that have been modified
-QDir::Hidden           // List hidden files
-QDir::System           // List system files
-QDir::CaseSensitive    // The filter should be case sensitive
+// QtMath
+qAcos(v) // Takes qreal radians, returns qreal
+qAsin(v) // Takes qreal radians, returns qreal
+qAtan2(y, x) // Takes qreal radians, returns qreal
+qAtan(v) // Takes qreal radians, returns qreal
+qCeil(v) // Takes qreal, returns int
+qCos(v) // Takes qreal radians, returns qreal
+qDegreesToRadians(v) // Takes float/double degrees, returns float/double radians
+qExp(v) // Takes qreal, feturns qreal eᵛ
+qFabs(v) // Takes qreal, returns absolute qreal value
+qFloor(v) // Takes qreal, returns floored int
+qLn(v) // Takes qreal, returns qreal natural log of v
+qNextPowerOfTwo(v) // Takes/returns quint32/qint32/quint64/qint64, returns nearest power of two greater than v
+qPow(x, y) // Takes qreal, returns xʸ
+qRadiansToDegrees(v) // Takes float/double degrees, returns float/double degrees
+qSin(v) // Takes qreal radians, returns qreal
+qSqrt(v) // Takes qreal, returns square root qreal
+qTan(v) // Takes qreal radians, returns qreal
     
-// QDir Sort Flags
-QDir::NoSort           // No sorting
-QDir::Name             // Sort by name
-QDir::Time             // Sort by time (modification time)
-QDir::Size             // Sort by file size
-QDir::Type             // Sort by file type (extension)
-QDir::Unsorted         // Do not sort
-QDir::NoSort           // Not sorted by default
-QDir::DirsFirst        // Put the directories first, then the files
-QDir::DirsLast         // Put the files first, then the directories
-QDir::Reversed         // Reverse the sort order
-QDir::IgnoreCase       // Sort case-insensitively
-QDir::LocaleAware      // Sort using the current locale settings
+// QtGlobal
+qAbs(v) // Templated, returns absolute value of v
+qAsConst(v) // Templated, takes T& and returns const T&
+qBound(min, v, max) // Templated, returns v clamped
+qConstOverload<T>(&MyClass::fn) // Converts address to const version
+qNonConstOverload<T>(&MyClass::fn) // Converts address to non-const version
+qOverload<T>(&MyClass::fn) // Converts address to an overloaded version
+qEnvironmentVariable(name) // Returns QString of env var with name
+qEnvironmentVariable(name, default) // Returns QString of env var with name or default if doesn't exist
+qEnvironmentVariableIntValue(name, &ok) // Returns int of env var with name, ok set to false if doesn't exist
+qEnvironmentVariableIsEmpty(name) // Returns if env var with name is empty
+qEnvironmentVariableIsSet(name) // Returns if env var with name is set
+qgetenv(name) // Returns env var with name as QByteArray
+qputenv(name, value) // Sets env var with value const QByteArray&, will create, returns false if failed
+qunsetenv(name) // Deletes the env var, returns true if success
+qFuzzyCompare(a, b) // Takes double/float, returns true if considered equal
+qFuzzyIsNull(v) // Takes double/float, returns truen if absolute value of v is within 0.000000000001 of 0.0
+qInf() // Returns the bit pattern for an infinite number as a double
+qInstallMessageHandler(handler) // Install a new QtMessageHandler, returns the old one
+qIsFinite(v) // Takes double/float, returns if v is a finite number
+qIsInf(v) // Takes double/float, returns if v is an infinite number
+qIsNaN(v) // Takes double/float, returns if v is not an number
+qMax(a, b) // Templated, returns max of a and b
+qMin(a, b) // Templated, returns min of a and b
+qQNaN() // Returns the bit pattern of a quiet NaN as a double
+qRound64(v) // Takes double/float, rounds (0.5 -> 1.0), returns qint64
+qRound(v) // Takes double/float, rounds (0.5 -> 1.0), returns int
+qSNaN() // Returns the bit pattern of a signalling NaN as a double
+qVersion() // Returns the version number of Qt
+qtTrId(id) // Finds and returns a translated QString
+    
+// QtAlgorithm
+// STL algorithms should be used for Qt containers rather than deprecated QtAlgorithm
+qCountLeadingZeroBits(v) // Takes all quints, returns uint of no. of consecutive zero bits
+qCountTrailingZeroBits(v) // Takes all quints, returns uint of no. of consecutive zero bits
+qDeleteAll(begin, end) // Takes container iterator with pointers, calls delete on pointers, doesn't clear
+qDeleteAll(container) // Takes container with pointers, calls delete on pointers, doesn't clear
+qPopulationCount(v) // Takes all quints, returns no. of bits set in v, or the 'Hamming Weight of v'
+
+// AUTO DISCONNECT SLOT FROM SIGNAL AFTER USE
+auto connection = std::make_shared<QMetaObject::Connection>();
+*connection = QObject::connect(sender, &Sender::mySignal, [this, connection]()
+{
+    QObject::disconnect(*connection);
+}
+                               
+// INVOKING A METHOD FROM QOBJECT
+auto metaObject = myObj->metaObject();
+auto methodIndex = metaObject->indexOfMethod("myFn(QVariant,bool)");
+if (methodIndex != -1)
+{
+    QMetaMethod method = metaObject->method(methodIndex);
+    if(method.isValid())
+    {
+        QVariant variant;
+        if (method.invoke(myObj, Q_RETURN_ARG(QVariant, variant), 
+            Q_ARG(QVariant, QVariant::fromValue(true)), Q_ARG(bool, false)))
+        {
+            return variant.value<bool>();
+        }
+    }
+}
