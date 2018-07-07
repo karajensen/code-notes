@@ -629,6 +629,8 @@ setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Static, Must be used on c
 • Data passed via Q_PROPERTY or Q_INVOKABLE
 • Data assumed cpp ownership except for Q_INVOKABLE functions returning parentless QObject*
 • Must register custom types to use in QML, not needed for qt smart pointers/container with type
+• Avoid std::vectors as they are copied each access whether Q_PROPERTY or Q_INVOKABLE
+• Q_PROPERTY container more expensive to read/write than Q_INVOKABLE returned container
 **************************************************************************************************************/
  
 // AUTO REGISTERED TYPES
@@ -655,9 +657,7 @@ QObject*          object
 
 // AUTO REGISTERED CONTAINERS
 // Converts to javascript Array or Map
-// Other basic types need QList<QVariant>/QVariantList, custom types need QList<QObject*>
-// Avoid std::vectors as they are copied each access whether Q_PROPERTY or Q_INVOKABLE
-// Q_PROPERTY container more expensive to read/write than Q_INVOKABLE returned container
+// Other basic types need QList<QVariant>/QVariantList
 QList<int>        QVector<int>        std::vector<int>
 QList<qreal>      QVector<qreal>      std::vector<qreal>
 QList<bool>       QVector<bool>       std::vector<bool>
@@ -671,6 +671,7 @@ QList<QObject*>
 
 // REGISTERING OBJECTS WITH QML
 // Requires registration with Variant
+// Pass as QObject* / QList<QObject*>
 qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyClass"); // use 'import MyInclude 1.0' and MyClass {}
 qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyEnum"); // use 'import MyInclude 1.0' and 'MyEnum.ONE'
 
