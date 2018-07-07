@@ -89,10 +89,7 @@ public:
     MyClass(QObject *parent = 0) { }
     Q_PROPERTY(MyValue value MEMBER m_value NOTIFY myValueSignal)
     Q_PROPERTY(MyValue value READ getValue WRITE setValue NOTIFY mySignal)
-    
-    // Returning parentless QObject* gives QML ownership whether new used or not
-    // Must notify QML engine if has cpp ownership else crashes
-    Q_INVOKABLE QObject* myFn() { return new MyClass(); }
+    Q_INVOKABLE void myFn() { }
     
     // Can be inherited/virtual
     const MyValue& getValue() const { return m_value; }
@@ -668,13 +665,29 @@ QList<QVariant> (QVariantList)
 QMap<QString, QVariant> (QVariantMap)
 QList<QObject*>
 
-// REGISTERING OBJECTS WITH QML
-// Requires registration with Variant
-// Pass as QObject* / QList<QObject*>
-// use 'import MyInclude 1.0' and MyClass {}
+// USING Q_PROPERTY / Q_INVOKABLE QOBJECTS WITH QML
+// No need to register MyClass if passing as QObject*/QList<QObject*> with Q_PROPERTY/Q_INVOKABLE
+Q_PROPERTY(QList<QObject*> objList MEMBER m_objList) // Does not auto give QML ownership
+Q_PROPERTY(QObject* obj MEMBER m_obj) // Does not auto give QML ownership
+Q_INVOKABLE QObject* myFn() 
+{ 
+    // Returning parentless QObject* auto gives QML ownership
+    QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership);
+    return myObj;
+}
+QList<QObject*> myFn()
+{
+    // Returning parentless QList<QObject*> does not auto give QML ownership
+    QList<QObject*> list = { new TestObject() };
+    QQmlEngine::setObjectOwnership(list.back(), QQmlEngine::JavaScriptOwnership);
+    return list;
+}
+
+// REGISTERING CUSTOM OBJECTS WITH QML
+// Must register to use as QML component: use 'import MyInclude 1.0' and MyClass {}
 qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyClass");
 
-// REGISTERING VALUE TYPES WITH QML
+// REGISTERING CUSTOM VALUE TYPES WITH QML
 
 // REGISTERING ENUMS WITH QML
 // Requires registration with Variant 
