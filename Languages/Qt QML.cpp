@@ -137,17 +137,22 @@ property bool myBool: true
 property double myDouble: 0.0
 property int myInt: 0
 property real myReal: 0.0
-
+  
 // VAR
-// Use for holding Javascript types, QVariantMap and variant
-// Object attributes do not send signal or update bindings when changed
+// Use for holding Javascript objects, QObjects, Qt containers and variant
+// Javascript object attributes do not send signal or update bindings when changed
+// Qt container arrays become javascript arrays with a few differences:
+//   - delete myArray[i] sets element as default constructed instead of undefined
+//   - resizing larger will default construct elements instead of be undefined
+//   - Using index > INT_MAX will fail as Qt container class indexing is signed, not unsigned
 property var myFn: (function() { return 0; }) // Javascript function
-property var myArray: [1, 2, 3, "a", "b"] // Javascript array
 property var myObj: { "a":0, "b":1 } // Javascript object
 property var myObj: ({ a:0, b:1 }) // Javascript object, requires () without "
 property var myObj: new Object({ "a":0, "b":1 }) // Javascript object
 property int myAttr: myObj.a // Will not update when 'a' updates
-
+property var myArray: [1, 2, 3, "a", "b"] // Javascript array
+property var myArray: myObj.myQtContainerArray // Javascript modified array
+  
 // LIST
 // list of QML objects, not a Javascript array
 // Auto converts to/from QmlListProperty
