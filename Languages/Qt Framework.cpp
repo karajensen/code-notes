@@ -672,8 +672,13 @@ QList<QObject*>
 // REGISTERING OBJECTS WITH QML
 // Requires registration with Variant
 // Pass as QObject* / QList<QObject*>
-qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyClass"); // use 'import MyInclude 1.0' and MyClass {}
-qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyEnum"); // use 'import MyInclude 1.0' and 'MyEnum.ONE'
+// use 'import MyInclude 1.0' and MyClass {}
+qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyClass");
+
+// REGISTERING ENUMS WITH QML
+// Requires registration with Variant 
+// use 'import MyInclude 1.0' and 'MyEnum.ONE'
+qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyEnum"); 
 
 // REGISTERING SINGLETONS WITH QML
 // Will be owned by QML, use 'import MyInclude 1.0' and 'MySingleton.Member'
