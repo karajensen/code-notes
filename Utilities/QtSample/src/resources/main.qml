@@ -32,6 +32,12 @@ Rectangle {
             anchors.fill: parent
             color: lightShade
 
+            TestObject {
+                Component.onCompleted: {
+                    console.log("Created Custom Test Object")
+                }
+            }
+
             ColumnLayout {
                 anchors.fill: parent
                 ListView {
@@ -42,6 +48,17 @@ Rectangle {
                     clip: true
                     currentIndex: 0
                     focus: true
+
+                    onModelChanged: {
+                        if(model) {
+                            for(var i = 0; i < 5; i++) {
+                                console.log(model.intListTest[i] + " " + typeof(model.intListTest[i]));
+                                console.log(model.colorListTest[i] + " " + typeof(model.colorListTest[i]));
+                                console.log(model.objectListTest[i].id + " " + typeof(model.objectListTest[i]));
+                            }
+                            var test = model.returnObjectList();
+                        }
+                    }
 
                     ScrollBar.vertical: ScrollBar {
                         contentItem.opacity: 1

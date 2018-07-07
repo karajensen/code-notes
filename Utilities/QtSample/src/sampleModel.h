@@ -5,12 +5,18 @@
 #include <qbytearray.h>
 #include <qdatastream.h>
 #include <qmimedata.h>
+#include <qcolor.h>
 
 class SampleItem;
+class TestObject;
 
 class SampleModel : public QAbstractItemModel
 {
     Q_OBJECT
+
+    Q_PROPERTY(QList<int> intListTest MEMBER m_intListTest)
+    Q_PROPERTY(QVariantList colorListTest MEMBER m_colorListTest)
+    Q_PROPERTY(QList<QObject*> objectListTest MEMBER m_objectListTest)
 
 public:
     SampleModel(QObject* parent = nullptr);
@@ -73,6 +79,45 @@ public:
     int itemToRow(const SampleItem* item) const;
     void tick();
 
+    /**
+    * Test Methods
+    */
+    void fillTestItems();
+    Q_INVOKABLE QObject* returnObject();
+    Q_INVOKABLE QList<QObject*> returnObjectList();
+
 private:
+
     std::vector<std::unique_ptr<SampleItem>> m_items;
+
+    QList<int> m_intListTest;
+    QVariantList m_colorListTest;
+    QList<QObject*> m_objectListTest;
+};
+
+/**
+* Test object class
+*/
+class TestObject : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(int id MEMBER m_id)
+
+public:
+    TestObject(int ID = -1, QObject* parent = nullptr)
+        : QObject(parent)
+        , m_id(ID)
+    {
+    }
+
+    ~TestObject()
+    {
+    }
+
+    Q_INVOKABLE int fn()
+    {
+        return m_id;
+    }
+
+    int m_id = 0;
 };

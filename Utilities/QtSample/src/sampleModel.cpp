@@ -1,16 +1,48 @@
 #include "SampleModel.h"
 #include "SampleItem.h"
 #include <qqml.h>
+#include <qqmlengine.h>
 
 SampleModel::~SampleModel() = default;
 SampleModel::SampleModel(QObject* parent)
     : QAbstractItemModel(parent)
 {
+    fillTestItems();
 }
 
 void SampleModel::qmlRegisterTypes()
 {
+    // Register to allow SampleItemState enum in QML
     qmlRegisterType<SampleItem>("SampleModel", 1, 0, "SampleItemState");
+
+    // Register to allow TestObject {} in QML
+    qmlRegisterType<TestObject>("SampleModel", 1, 0, "TestObject");
+}
+
+//===========================================================================================================
+// Test Methods
+//===========================================================================================================
+
+QObject* SampleModel::returnObject()
+{
+    return new TestObject();
+}
+
+QList<QObject*> SampleModel::returnObjectList()
+{
+    QList<QObject*> list = { new TestObject() };
+    QQmlEngine::setObjectOwnership(list.back(), QQmlEngine::JavaScriptOwnership);
+    return list;
+}
+
+void SampleModel::fillTestItems()
+{
+    for (int i = 0; i < 5; ++i)
+    {
+        m_intListTest.append(i);
+        m_colorListTest.append(QColor(i, i, i));
+        m_objectListTest.append(new TestObject(i));
+    }
 }
 
 //===========================================================================================================
