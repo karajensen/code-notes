@@ -1248,6 +1248,11 @@ Rectangle {
     gradient: Gradient {}
 }
 
+// IMAGE
+// SVG must have <style type="text/css"> not <style>
+Image {
+}
+
 // GRADIENT
 Gradient {
 }
