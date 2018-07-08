@@ -57,6 +57,7 @@ Dependency walker for 32/64 bit modules (dll,exe) and builds heirarchical tree
 diagrams of all dependent modules, shows exported functions
 
 CONSOLE COMMANDS:
+%cd%                              // current directory
 dir /w                            // gives directory contents
 mklink /J "dst" "src"             // dst final folder must not exist and be named the same as src final folder
 cd path                           // move up a folder or switch to absolute path
