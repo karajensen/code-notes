@@ -297,10 +297,6 @@ cmake_minimum_required(VERSION 2.8.11)
 project(my_project_name)
 add_executable(my_exe_name ${SRC_LIST})
 
-# Set release with debug info on Windows
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi /Od /Ob0")
-set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF /OPT:ICF")
-
 # VARIABLES
 set(MY_VARIABLE ON)        # Bool variable
 set(MY_PATH c:/folder)     # String variable
@@ -318,6 +314,26 @@ file(GLOB_RECURSE MY_FILES "folder/*.ext") # Sets MY_FILES as list
 # MESSAGING
 error("My message ${MY_VARIABLE}")
 message("My message ${MY_VARIABLE}")
+
+# SET RELEASE WITH DEBUG INFO ON WINDOWS
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi /Od /Ob0")
+set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF /OPT:ICF")
+
+# FIND ALL CPP/H FILES AND SHOW IN VISUAL STUDIO
+set(_src_root_path "${CMAKE_CURRENT_SOURCE_DIR}")
+file(
+    GLOB_RECURSE _source_list 
+    LIST_DIRECTORIES false
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    "${_src_root_path}/*.c*"
+    "${_src_root_path}/*.h*"
+)
+add_library(MySources ${_source_list}) # or add_executable
+foreach(_source IN ITEMS ${_source_list})
+    get_filename_component(_source_path "${_source}" PATH)
+    string(REPLACE "/" "\\" _source_path_msvc "${_source_path}")
+    source_group("${_source_path_msvc}" FILES "${_source}")
+endforeach()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GIT BASH
