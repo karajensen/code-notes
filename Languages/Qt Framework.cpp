@@ -79,8 +79,10 @@ CONSTANT   Optional, makes readonly
 FINAL      Optional, can enable optimizations, indicates shouldn't override though not enforced by moc
 **************************************************************************************************************/
 
-namespace Ns
+namespace N
 {
+    Q_NAMESPACE
+    
 // OBJECTS
 class MyClass : public QObject
 {
@@ -161,9 +163,9 @@ obj.isWindowType() // Whether obj inherits QWindow
 obj.parent() // Returns QObject*
 obj.setParent(obj2) // Sets parent
 obj.thread() // Returns QThread* where the object lives
-qobject_cast<MyClass*>(obj); // dynamic_cast without requiring RTTI
+qobject_cast<N::MyClass*>(obj); // dynamic_cast without requiring RTTI
 emit obj.mySignal() // Emit a signal, need to call emit whenever Q_PROPERTY changes to update QML
-Ns::MyClass::staticMetaObject // QMetaObject for class
+N::MyClass::staticMetaObject // QMetaObject for class
     
 // QMetaObject
 metaObj.propertyCount() // Number of properties, not including dynamic properties
@@ -174,8 +176,8 @@ metaObj.enumerator(index) // Get QMetaEnum from index
 metaObj.indexOfEnumerator(name) // Get index of enum from name, or -1 if not found
 
 // QMetaEnum
-QMetaEnum metaEnum(QMetaEnum::fromType<Ns::MyEnum>());
-metaEnum.valueToKey(Ns::ONE) // Returns const char* or null if not found
+QMetaEnum metaEnum(QMetaEnum::fromType<N::MyEnum>());
+metaEnum.valueToKey(N::MyEnum::ONE) // Returns const char* or null if not found
 metaEnum.keyToValue("ONE", &isValid) // Returns int or -1 if not found, optional bool
 metaEnum.keyCount() // Returns number of keys/values
 metaEnum.key(index) // Returns const char* key from int index, or null if doesn't exist
@@ -186,25 +188,23 @@ metaEnum.value(index) // Returns int value with the given index, or returns -1 i
 // Q_PRIMITIVE_TYPE leaves obj memory unitialised, means trivally copyable
 // Q_MOVABLE_TYPE uses std::memcpy rather than copy ctor to move obs around, means trivally relocatable
 // Q_MOVABLE_TYPE does shallow move; don't use for types that self refer (pimpl with ptr back to parent)
-Q_DECLARE_TYPEINFO(Ns::MyClass, Q_COMPLEX_TYPE) // Default
-Q_DECLARE_TYPEINFO(Ns::MyEnum, Q_PRIMITIVE_TYPE)
-Q_DECLARE_TYPEINFO(Ns::MyGadget, Q_MOVABLE_TYPE)
-QTypeInfoQuery<Ns::MyClass>::isRelocatable // Query type info
+Q_DECLARE_TYPEINFO(N::MyClass, Q_COMPLEX_TYPE) // Default
+Q_DECLARE_TYPEINFO(N::MyEnum, Q_PRIMITIVE_TYPE)
+Q_DECLARE_TYPEINFO(N::MyGadget, Q_MOVABLE_TYPE)
+QTypeInfoQuery<N::MyClass>::isRelocatable // Query type info
 
 // REGISTERING WITH VARIANT
 // Macros must be placed after class in .h
 // QObject classes can only register MyClass*, not MyClass as must be copy-constructable
 // Container don't need to be registered for variant, but undefined if used in QML; Use QVariantList instead
-Q_DECLARE_METATYPE(Ns::MyGadget) // Allows use with variant: myVariant.value<Ns::MyGadget>()
-qRegisterMetaType<Ns::MyGadget>(); // Allows use with property system
-Q_ENUM(MyClass::MyEnum) // Registers with variant and property system
-Q_FLAG(MyClass::MyFlag) // Registers with variant and property system
-Q_ENUM_NS(MyEnum) // Registers with variant and property system
-Q_FLAG_NS(MyFlag) // Registers with variant and property system
+Q_DECLARE_METATYPE(MyGadget) // Allows use with variant: myVariant.value<N::MyGadget>()
+qRegisterMetaType<N::MyGadget>(); // Allows use with property system
+Q_ENUM(MyEnum) // Registers with variant and property system, _NS version for Q_NAMESPACE
+Q_FLAG(MyFlag) // Registers with variant and property system, _NS version for Q_NAMESPACE
 
 // REGISTERING FOR STREAMING
 // Allows use with drag/drop systems
-qRegisterMetaTypeStreamOperators<Ns::MyClass>("MyClass");
+qRegisterMetaTypeStreamOperators<N::MyClass>("MyClass");
 QDataStream& operator<<(QDataStream& out, const MyClass& obj);
 QDataStream& operator>>(QDataStream& in, MyClass& obj);
 
@@ -707,20 +707,20 @@ QQmlEngine::setObjectOwnership(myObj, QQmlEngine::JavaScriptOwnership); // Force
 // REGISTERING COMPONENTS WITH QML
 // To create QML Component, must be QObject derived
 // use 'import MyInclude 1.0' / MyClass {}
-qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyClass");
+qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClass");
 
 // REGISTERING CLASS ENUMS WITH QML
 // Requires Q_ENUM registration with Variant
 // Does not need further registration to use for class property/signals
 // Requires further registration to use named enums in QML
 // use 'import MyInclude 1.0' / 'MyClassEnum.ONE'
-qmlRegisterType<MyClass>("MyInclude", 1, 0, "MyClassEnum"); 
+qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClassEnum"); 
 
 // REGISTERING Q_NAMESPACE ENUMS WITH QML
 // Requires Q_ENUM_NS registration with Variant
-// use 'import MyInclude 1.0' / 'Ns.MyEnum.ONE'
-qmlRegisterUncreatableMetaObject(Ns::staticMetaObject, "MyInclude", 1, 0,
-    "Ns", "Error msg if try to create MyEnum object");
+// use 'import MyInclude 1.0' / 'N.MyEnum.ONE'
+qmlRegisterUncreatableMetaObject(N::staticMetaObject, "MyInclude", 1, 0,
+    "N", "Error msg if try to create MyEnum object");
 
 // REGISTERING SINGLETONS WITH QML
 // Will be owned by QML, use 'import MyInclude 1.0' and 'MySingleton.Member'
