@@ -264,8 +264,7 @@ inclusive_scan(S1, E1, S2) //same as partial_sum except non-associative containe
 //===============================================================================================================
     
 // STD::WSTRING TO/FROM STD::STRING
-string str(wstr.begin(),  wstr.end());
-wstring wstr(str.begin(), str.end());
+// Requires #include <codecvt>
 str = wstring_convert<codecvt_utf8<wchar_t>>().to_bytes(wstr);
 wstr = wstring_convert<codecvt_utf8<wchar_t>>().from_bytes(str);
     
