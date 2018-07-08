@@ -67,6 +67,8 @@ rmdir "path" /s /q                // delete a non-empty folder
 del "file"                        // delete a file
 xcopy "src" "dst" /e /i /h        // copy folder at src to dst, dst final folder must not exist
 echo f | xcopy "src" "dst" /f /y  // copy src file to dst file
+myFile.bat >C:\output.txt         // Output results to file, overwrites
+myFile.bat >>C:\output.txt        // Output results to file, appends
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MAC DEVELOPMENT
