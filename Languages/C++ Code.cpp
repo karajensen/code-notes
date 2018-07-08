@@ -335,6 +335,7 @@ for (int i = 0; i < 5; ++i){}
 for (int i = 0, int j = 2; i < j; i = i + 15, j-- ){}
 
 //FOR EACH LOOP
+// Only computes expression after : once
 for (double x : myDoubleArray){ x += 1.0; }     //by-val
 for (double &x : myDoubleArray){ x += 1.0; }    //by-ref
 for (auto x : myVectorArray){ DoSomething(x); } //with stl containers
@@ -535,6 +536,7 @@ namespace B
 
 // INCLUDE GUARDS
 #ifdef DEFINED
+#if defined(DEFINED) || defined(MYCLASS_H_)
 #ifndef MYCLASS_H_
 #define MYCLASS_H_
 #define MACRO(A) ((A)+(A)) //use parathesis around any parameters 
