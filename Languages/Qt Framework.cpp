@@ -18,6 +18,8 @@ QtTest               Classes for unit testing Qt applications and libraries
 QtWidgets            Classes to extend Qt GUI with C++ widgets
 **************************************************************************************************************/
 
+QT_FORWARD_DECLARE_CLASS(QQuickItem)
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -43,15 +45,10 @@ QOBJECTS:
 • Meta Object Compilier (moc) uses Q_OBJECT macro to generate extra data
 • Ability to use qobject_cast, signals, slots, property system
 
-QOBJECT LIMITATIONS:
-• Only signals and slots can live in the signals and slots sections
+MOC QOBJECT LIMITATIONS:
 • Multiple Inheritance requires QObject to be first
 • Moc doesn't support virtual inheritance
-• Moc doesn't support templates with Q_OBJECT/signals/slots
-• Moc doesn't expand #define: cannot use a macro to declare a signal/slot or used as a signal/slot parameter
-• Function Pointers cannot be direct signal/slot Parameters, work-around is to typedef it
-• Enums/typedefs cannot be forward decl for signal/slot parameters
-• Nested Classes cannot have signals or slots
+• Moc doesn't support templates with Q_OBJECT
 
 PARENT-CHILD RELATIONSHIP:
 • Parent needs to be explicitly deleted, either by delete or stack scope
@@ -63,11 +60,6 @@ IMPLICIT SHARING (COPY-ON-WRITE):
 • Automatically detaches the object from a shared block when object changes and ref count is > 1
 • Qt classes use it internally, doesn't require a shared data pointer for it to happen
 • Can be dangerous for iterators when container detaches from shared block:
-
-SIGNALS/SLOTS:
-• On signal emit, all slots in order of connection are immediately notified, can't be async
-• Type safe: The signature of a signal must match the signature of the receiving slot
-• No return values, slots can be virtual/pure virtual
 
 PROPERTY SYSTEM:
 MEMBER     Required if READ not used
@@ -105,15 +97,6 @@ public:
     // Can be inherited/virtual
     const MyValue& getValue() const { return m_value; }
     void setValue(const MyValue& value) { m_value = value; }
-    
-signals:
-    void mySignal();
-    void myValueSignal(const MyValue& value);
-
-public slots: // can be protected/private
-    void mySlot();
-    void mySlot(void (*fn)(void *)); // Cannot do
-    void mySlot(MyFn fn);            // Can do
 };
     
 // ENUMS
@@ -164,7 +147,6 @@ obj.parent() // Returns QObject*
 obj.setParent(obj2) // Sets parent
 obj.thread() // Returns QThread* where the object lives
 qobject_cast<N::MyClass*>(obj); // dynamic_cast without requiring RTTI
-emit obj.mySignal() // Emit a signal, need to call emit whenever Q_PROPERTY changes to update QML
 N::MyClass::staticMetaObject // QMetaObject for class
     
 // QMetaObject
@@ -208,16 +190,69 @@ qRegisterMetaTypeStreamOperators<N::MyClass>("MyClass");
 QDataStream& operator<<(QDataStream& out, const MyClass& obj);
 QDataStream& operator>>(QDataStream& in, MyClass& obj);
 
-// CONNECT SIGNALS/SLOTS
-// Returns QMetaObject::Connection for disconnecting, or can call QObject::disconnect with same signature
-// Can duplicate connections, multiple signals are then emitted, all are broken with single disconnect call 
-// Signatures must match: SIGNAL/SLOT macros give runtime error, functions give compile error
-// Use normalised form from moc cpp for SIGNAL/SLOT macros, otherwise performance hit
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SIGNALS / SLOTS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
+• Can only be used by Q_OBJECT, not Q_GADGET, due to moc requirements
+• On signal emit, all slots in order of connection are immediately notified, can't be async
+• Type safe: The signature of a signal must match the signature of the receiving slot
+• No return values, slots can be virtual/pure virtual
+• Default argument type must match between signals/slots, don't have to both have default
+
+MOC SIGNAL LIMITATIONS:
+• Only signals and slots can live in the signals and slots sections
+• Moc doesn't support templates with signals/slots
+• Moc doesn't expand #define: cannot use a macro to declare a signal/slot or used as a signal/slot parameter
+• Function Pointers cannot be direct signal/slot Parameters, work-around is to typedef it
+• Enums/typedefs cannot be forward decl for signal/slot parameters
+• Nested Classes cannot have signals or slots
+
+CONNECTING:
+• Returns QMetaObject::Connection or can call QObject::disconnect with same signature
+• QObject destruction auto disconnects signals/slots
+• Can duplicate connections, multiple signals are then emitted, all are broken with single disconnect call 
+• Signatures must match: SIGNAL/SLOT macros give runtime error, functions give compile error
+• Use normalised form from moc cpp for SIGNAL/SLOT macros, otherwise performance hit
+• Thread safe to connect/disconnect, thread safe when connection invoked if Qt::QueuedConnection is set
+**************************************************************************************************************/
+
+Class MyClass : QObject
+{
+    Q_OBJECT
+    
+signals:
+    void mySignal();
+    void myValueSignal(const MyValue& value);
+
+public slots: // can be protected/private
+    void mySlot();
+    void mySlot(void (*fn)(void *)); // Cannot do
+    void mySlot(MyFn fn);            // Can do    
+};
+
+emit obj.mySignal() // Emit a signal, need to call emit whenever Q_PROPERTY changes to update QML
 QObject::connect(sender, &Sender::mySignal, reciever, &Receiver::mySlot);
 QObject::connect(sender, &Sender::mySignal, reciever, [](){});
 QObject::connect(sender, &Sender::mySignal, [](){});
 QObject::connect(sender, SIGNAL(mySignal()), reciever, SLOT(mySlot()));
 QObject::connect(sender, SIGNAL(mySignalArgs(int,float)), reciever, SLOT(mySlotArgs(int,float)));
+QObject::connect(sender, &Sender::mySignal, reciever, &Receiver::mySlot);
+QObject::disconnect(connection);
+
+// OVERLOADING SIGNALS/SLOTS
+// Cannot use qOverload for Windows: https://bugreports.qt.io/browse/QTBUG-61667
+void(MyClass1::*signal)(int) = &MyClass1::mySignal;
+void(MyClass2::*slot)(int) = &MyClass2::mySlot;
+QObject::connect(obj1, signal, obj2, slot);
+
+// AUTO DISCONNECT SLOT FROM SIGNAL AFTER USE
+auto connection = std::make_shared<QMetaObject::Connection>();
+*connection = QObject::connect(sender, &Sender::mySignal, [this, connection]()
+{
+    QObject::disconnect(*connection);
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT SMART POINTERS
@@ -710,8 +745,8 @@ QList<bool>       QVector<bool>       std::vector<bool>
 QList<QUrl>       QVector<QUrl>       std::vector<QUrl>
 QList<QString>    QVector<QString>    std::vector<QString>
 QStringList
-QList<QVariant> (QVariantList)
-QMap<QString, QVariant> (QVariantMap)
+QList<QVariant> (typedef QVariantList)
+QMap<QString, QVariant> (typedef QVariantMap)
 QList<QObject*>
 
 // USING OBJECTS WITH QML
@@ -778,9 +813,9 @@ qTan(v) // Takes qreal radians, returns qreal
 qAbs(v) // Templated, returns absolute value of v
 qAsConst(v) // Templated, takes T& and returns const T&
 qBound(min, v, max) // Templated, returns v clamped
-qConstOverload<T>(&MyClass::fn) // Converts address to const version
-qNonConstOverload<T>(&MyClass::fn) // Converts address to non-const version
-qOverload<T>(&MyClass::fn) // Converts address to an overloaded version
+qConstOverload<Arg1, Arg2>(&MyClass::fn) // Converts address to const version
+qNonConstOverload<Arg1, Arg2>(&MyClass::fn) // Converts address to non-const version
+qOverload<Arg1, Arg2>(&MyClass::fn) // Converts address to an overloaded version
 qEnvironmentVariable(name) // Returns QString of env var with name
 qEnvironmentVariable(name, default) // Returns QString of env var with name or default if doesn't exist
 qEnvironmentVariableIntValue(name, &ok) // Returns int of env var with name, ok set to false if doesn't exist
@@ -812,13 +847,6 @@ qCountTrailingZeroBits(v) // Takes all quints, returns uint of no. of consecutiv
 qDeleteAll(begin, end) // Takes container iterator with pointers, calls delete on pointers, doesn't clear
 qDeleteAll(container) // Takes container with pointers, calls delete on pointers, doesn't clear
 qPopulationCount(v) // Takes all quints, returns no. of bits set in v, or the 'Hamming Weight of v'
-
-// AUTO DISCONNECT SLOT FROM SIGNAL AFTER USE
-auto connection = std::make_shared<QMetaObject::Connection>();
-*connection = QObject::connect(sender, &Sender::mySignal, [this, connection]()
-{
-    QObject::disconnect(*connection);
-}
                                
 // INVOKING A METHOD FROM QOBJECT
 auto metaObject = myObj->metaObject();
