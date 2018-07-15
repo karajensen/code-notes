@@ -138,6 +138,19 @@ Repeater {
     Text { text: "Data: " + modelData.role_name }
 }
 
+// INSTANTIATOR
+// Dynamically create objects parented to the Instantiator
+Instantiator {
+   active: true // Changing will create/destroy objects
+   asynchronous: true 
+   model: myModel
+   delegate: Rectangle { index } // delegate Component to be instantiated, int index avaliable
+   onObjectAdded: { index, object }
+   onObjectRemoved: { index, object }
+}
+instantiator.count // Number of current objects
+instantiator.objectAt(index) // Takes int index, returns QtObject
+
 // STATEGROUP
 // State support for non QML Item derived components, see Item for State {}
 StateGroup {
