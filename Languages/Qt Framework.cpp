@@ -417,10 +417,33 @@ pair.second;
 // Provides persistent platform-independent application settings
 
 // QTimer
-// Provides repetitive and single-shot timers
+// Provides repetitive and single-shot timers, takes milliseconds
+// Interval of 0 will time out as soon as all events in the event queue have been processed
+QTimer timer;
+timer.isActive(); // Whether timer is currently running
+timer.interval(); // Get int interval time in ms
+timer.setInterval(ms); // Set int interval time in ms
+timer.remainingTime(); // Returns int time left in ms
+timer.isSingleShot(); // Get whether only ticks once and turns itself off
+timer.setSingleShot(true); // Set whether only ticks once and turns itself off 
+timer.timerType(); // Returns TimerType Enum
+timer.setTimerType(type); // Sets TimerType Enum
+timer.intervalAsDuration(); // Returns std::chrono::milliseconds for interval
+timer.remainingTimeAsDuration(); // Returns std::chrono::milliseconds for time left 
+timer.start(ms); // Starts or restarts the timer with a timeout interval of optional ms
+timer.stop(); // Stops the timer
+QTimer::singleShot(ms, fn); // Internally creates timer which calls slot when done
+QTimer::singleShot(ms, type, fn); // Internally creates timer which calls slot when done for TimerType Enum
+QTimer::singleShot(ms, receiver, SLOT(mySlot())); // Internally creates timer which calls slot when done
+connect(timer, SIGNAL(timeout()), fn); // timeout signal called when interval reached
 
 // QUrl
 // Interface for working with URLs
+                                  
+// QTimer TimerType Enum
+Qt::PreciseTimer        // Try to keep millisecond accuracy
+Qt::CoarseTimer         // Try to keep accuracy within 5% of the desired interval
+Qt::VeryCoarseTimer     // Only keep full second accuracy
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT WIDGETS
@@ -442,19 +465,19 @@ QLabel lbl("Message"); // Allows use of html tags to customise text
 
 // QPushButton
 QPushButton btn("Text");
-QObject::connect(button, SIGNAL(clicked()), &app, SLOT(myFn()));  // Connect to button's click event
+QObject::connect(button, SIGNAL(clicked()), fn);  // Connect to button's click event
 
 // QSpinBox
 QSpinBox spinbox;
 spinbox.setRange(min, max);
 spinBox.setValue(value);
-QObject::connect(spinBox, SIGNAL(valueChanged(int)), &app, SLOT(myFn(int)));
+QObject::connect(spinBox, SIGNAL(valueChanged(int)), fn);
 
 // QSlider 
 QSlider slider(Qt::Horizontal);
 slider.setRange(min, max);
 slider.setValue(value);
-QObject::connect(slider, SIGNAL(valueChanged(int)), &app, SLOT(myFn(int)));
+QObject::connect(slider, SIGNAL(valueChanged(int)), fn);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT LAYOUTS
