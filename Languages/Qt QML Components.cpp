@@ -836,6 +836,14 @@ Menu {
     title: "title"
     MenuSeparator { } // Inherits Control
     MenuItem { }  // See Button Section
+    
+    // Create menu items from a model
+    Instantiator {
+       model: myModel
+       MenuItem { text: model.text }
+       onObjectAdded: menu.insertItem(index, object)
+       onObjectRemoved: menu.removeItem(object)
+    }
 }
 menu.contentData // list<Object> of children of the menu
 menu.contentModel // model for the menu to use in a view
