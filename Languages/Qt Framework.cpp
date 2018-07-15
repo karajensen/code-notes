@@ -42,7 +42,7 @@ Q_ASSERT_X(expression, "divide", "division by zero");
 QOBJECTS:
 • Base class of all Qt objects, organised in an object tree
 • Doesn't have a copy constructor or assignment operator
-• Meta Object Compilier (moc) uses Q_OBJECT macro to generate extra data
+• Meta Object Compilier code generator uses Q_OBJECT macro to generate moc cpp file
 • Ability to use qobject_cast, signals, slots, property system
 
 MOC QOBJECT LIMITATIONS:
@@ -221,25 +221,48 @@ CONNECTING:
 Class MyClass : QObject
 {
     Q_OBJECT
+    void setValue(int value);
     
-signals:
+signals: // is only public, use QPrivateSignal to make private
     void mySignal();
-    void myValueSignal(const MyValue& value);
+    void mySignal(int value);
+    void mySignal(int value, QPrivateSignal);
 
 public slots: // can be protected/private
     void mySlot();
+    void mySlot(int value);
+    void mySlot(int value, QPrivateSignal);
+    
     void mySlot(void (*fn)(void *)); // Cannot do
-    void mySlot(MyFn fn);            // Can do    
+    void mySlot(MyFn fn);            // Can do
 };
 
-emit obj.mySignal() // Emit a signal, need to call emit whenever Q_PROPERTY changes to update QML
-QObject::connect(sender, &Sender::mySignal, reciever, &Receiver::mySlot);
-QObject::connect(sender, &Sender::mySignal, reciever, [](){});
-QObject::connect(sender, &Sender::mySignal, [](){});
-QObject::connect(sender, SIGNAL(mySignal()), reciever, SLOT(mySlot()));
-QObject::connect(sender, SIGNAL(mySignalArgs(int,float)), reciever, SLOT(mySlotArgs(int,float)));
-QObject::connect(sender, &Sender::mySignal, reciever, &Receiver::mySlot);
+void MyClass::setValue(int value)
+{
+    if (value != m_value) 
+    {
+        // Emit a signal, need to call emit whenever Q_PROPERTY changes to update QML
+        m_value = value;
+        emit valueChanged(value);
+    }
+}
+
+// CONNECTION
+QObject::connect(sender, &Sender::mySignal, reciever, &Receiver::mySlot, type);
+QObject::connect(sender, &Sender::mySignal, reciever, [](){}, type);
+QObject::connect(sender, &Sender::mySignal, [](){}, type);
+QObject::connect(sender, SIGNAL(mySignal()), reciever, SLOT(mySlot()), type);
+QObject::connect(sender, SIGNAL(mySignalArgs(int,float)), reciever, SLOT(mySlotArgs(int,float)), type);
+QObject::disconnect(sender, &Sender::mySignal, reciever, &Receiver::mySlot);
 QObject::disconnect(connection);
+
+// CONNECTION TYPE FLAGS
+// Optional, AutoConnection is default
+Qt::AutoConnection           // Objects with same thread affinity use DirectConnection, else QueuedConnection
+Qt::DirectConnection         // Slot invoked immediately when signal emitted and executed in signaller's thread     
+Qt::QueuedConnection         // Slot invoked in event loop of receiver's thread and executed in reciever's thread
+Qt::BlockingQueuedConnection // QueuedConnection except signalling thread blocks until the slot returns
+Qt::UniqueConnection         // Connect will fail if same connection already exists, can combine with other flags
 
 // OVERLOADING SIGNALS/SLOTS
 // Cannot use qOverload for Windows: https://bugreports.qt.io/browse/QTBUG-61667
