@@ -122,6 +122,12 @@ struct MyFunctor
     bool operator()(int x) { return x > 0; }
 }
 
+//STD::FUNCTION
+//Allows all function objects to be stored in single type
+//Slower and bigger than using actual function object types (lambda, functors, pointers)
+std::function<double(int)> myFn = [](int x){ return x+2.0; }
+std::function<double(int)> myFn = &MyFunction;
+
 //LAMBDAS
 //If inside a class, may become friends to access/capture internals
 //Lamda creates a closure object which holds captured vars
@@ -139,11 +145,12 @@ auto myLambda = [var = MyClass()](){}       // create var of type MyClass
 auto myLambda = [var = std::move(obj)](){}  // move obj to be only used inside closure
 auto myLambda = [var = std::move(vec)](){}  // move vector of objects to use inside closure
 
-//STD::FUNCTION
-//Allows all function objects to be stored in single type
-//Slower and bigger than using actual function object types (lambda, functors, pointers)
-std::function<double(int)> myFn = [](int x){ return x+2.0; }
-std::function<double(int)> myFn = &MyFunction;
+//LAMBDA RECURSION
+std::function<int(int)> fn;
+fn = [&fn](int value)->int 
+{
+    return value < 0 ? fn(--value) : 0;
+};
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BINDING FUNCTIONS
