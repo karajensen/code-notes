@@ -265,7 +265,8 @@ WORKFLOW
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 VARIABLE WATCH
-str.c_str(),s8      For utf-8 string str
+str.c_str(),s8                       For utf-8 string str
+(char*)str.d + str.d->offset,su      For QString
 
 ENVIRONMENT VARIABLES:
 $(SolutionDir)
@@ -300,13 +301,18 @@ cmake_minimum_required(VERSION 2.8.11)
 project(my_project_name)
 add_executable(my_exe_name ${SRC_LIST})
 
+# DEFINES
+add_definitions(-DMY_DEFINE)
+add_definitions(-DMY_DEFINE="${MY_VARIABLE}")
+
 # VARIABLES
 set(MY_VARIABLE ON)        # Bool variable
 set(MY_PATH c:/folder)     # String variable
 set(SRC_LIST a.cpp b.cpp)  # String list
 
 # CONDITION LOGIC
-if(MY_VARIABLE)
+if(MY_VARIABLE OR MY_VARIABLE2 AND MY_VARIABLE3)
+elseif(MY_VARIABLE)
 else()
 endif()
 
