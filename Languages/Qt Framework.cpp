@@ -576,13 +576,13 @@ if(file.open(QIODevice::ReadOnly))
 // If path is a directory, treat as filepath but without a name/extension
 QFileInfo info(path)
 info.absoluteDir() // Returns QDir using absolutePath()
-info.absoluteFilePath() // Returns the file's full path as absolute QString, keeps dots/symlinks
-info.absolutePath() // Returns file without the filename as absolute QString, keeps dots/symlinks
-info.baseName() // Returns the file's name without directory or extensions
+info.absoluteFilePath() // Returns path as absolute QString, keeps dots/symlinks
+info.absolutePath() // Returns path without the filename as absolute QString, keeps dots/symlinks
+info.baseName() // Returns the filename without directory or extensions
 info.birthTime() // Returns QDateTime of date and time when the file was created
-info.canonicalFilePath() // Returns the file's full path as absolute QString, removes dots/symlinks 
-info.canonicalPath() // Returns file without the filename as absolute QString, removes dots/symlinks
-info.completeBaseName() // Returns the file's name as QString without directory or last extension
+info.canonicalFilePath() // Returns path QString, removes dots/symlinks 
+info.canonicalPath() // Returns path without the filename as absolute QString, removes dots/symlinks
+info.completeBaseName() // Returns the filename as QString without directory or last extension
 info.completeSuffix() // Returns all extensions as QString, does not start with '.'
 info.dir() // Returns parent directory as QDir, even if info holds a directory         
 info.exists() // Returns true if file exists
@@ -607,17 +607,47 @@ info.suffix() // Returns final extension of file, without the .
 QFileInfo::exists(path) // Returns true if file exists, faster than QFileInfo(path).exists()
 
 // QDir
-// Provides access to directory structures and their contents
-// All entryList calls return just the folder/file name, need to add base path
+// Can hold both directories and files
+// All entryList calls return just the folder/filename, need to use absoluteFilePath
 QDir dir(path) // Root directory
-                               
-dir.exists() // Whether path exists
-dir.mkdir() 
-dir.setNameFilters(QStringList("*.qml", "*.txt")) // Extension types to filter searches with
+dir.absoluteFilePath(filename) // Use with entryList to make into absolute path
+dir.absolutePath() // Returns path as absolute, may have symlink but no dots
+dir.canonicalPath() // Returns path without symlinks and dots
+dir.cd(path) // Cd to a path, can use . and ..
+dir.cdUp() // Move up one directory
+dir.count() // Returns uint total amount of files/folders in path
+dir.dirName() // Returns name of directory
 dir.entryList(nameFilters, filterFlags, sortFlags) // Search directory recursively, returns QStringList
 dir.entryList(nameFilters) // Not using any args will use the stored filterFlags/sortFlags
 dir.entryList(filterFlags, sortFlags) // Search directory recursively with filter flags, returns QStringList
 dir.entryList() // Not using any args will use the stored filterFlags/sortFlags
+dir.exists() // Whether path exists
+dir.isAbsolute() // Whether path is absolute
+dir.isEmpty(filters) // Optional filters, whether directory is empty
+dir.isReadable() // Returns true if readable
+dir.isRelative() // Returns true if path is relative
+dir.isRoot() // Returns true if path is a system root directory
+dir.makeAbsolute() // Makes the path absolute if needed
+dir.mkdir(folder) // Make a folder under path, returns true if success
+dir.mkpath(path) // Make a path under path, will create all folders if needed, returns true if success
+dir.path() // Returns path, keeps symlinks but removes dots
+dir.remove(filename) // Removes file in path, returns true if success
+dir.removeRecursively() // Removes path including all children, returns true if success
+dir.rename(oldFileName, newFileName) // Renames a file, returns true if success
+dir.setNameFilters(QStringList("*.qml", "*.txt")) // Extension types to filter searches with
+dir.setSorting(sortFlags) // Flags to use with entryList
+QDir::cleanPath(path) // Returns normalized path; removes dots, seperators become single /, keeps symlinks
+QDir::current() // Returns application's current directory as QString
+QDir::currentPath() // Returns application's current path as QString                               
+QDir::drives() // Returns QFileInfoList of all root drives in the system
+QDir::home() // Returns user's home directory as QString
+QDir::homePath() // Returns the absolute path of the user's home directory as QString
+QDir::listSeparator() // Returns native path list seperator ; or :
+QDir::root() // Returns root directory as QDir
+QDir::rootPath() // Returns the absolute path of the root directory (eg. c:/)
+QDir::separator() // Returns QChar native directory seperator
+QDir::temp() // Returns folder for temp files as QDir
+QDir::toNativeSeparators(path) // Converts seperators to native seperator
     
 // QIODevice
 // base interface class of all I/O devices
