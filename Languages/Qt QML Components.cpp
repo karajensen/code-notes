@@ -501,21 +501,39 @@ Tumbler {
 // SCROLLBAR
 // Inherits Control, Vertical or horizontal interactive scroll bar
 ScrollBar {
-    contentItem.opacity: 1 // Make always visible
-    active
-    horizontal
-    interactive
-    orientation
-    policy
-    position
-    pressed
-    size
-    snapMode
-    stepSize
-    vertical
+    horizontal: true // Whether horizontal
+    interactive: true // Default, whether interactible
+    orientation: Qt.Vertical // Default, ScrollBar Orientation Enum
+    policy: ScrollBar.AsNeeded // Default, ScrollBar Policy Enum
+    position: 0.5 // Position of scroll [0.0, 1.0]
+    size: 0.5 // Size of scroll [0.0, 1.0]
+    snapMode: ScrollBar.NoSnap // Default, ScrollBar SnapMode Enum
+    stepSize: 0.0 // Default, Snap step size
+    vertical: true // Whether vertical
 }
-bar.increase()
-bar.decrease()
+bar.active // When it's pressed or the attached Flickable is moving
+bar.pressed // When the user is pressing it
+bar.increase() // Increases the position by stepSize or 0.1 if stepSize is 0.0
+bar.decrease() // Decreases the position by stepSize or 0.1 if stepSize is 0.0
+
+// Adding ScrollBar to Flickable / ScrollView
+ScrollBar.vertical: ScrollBar { } // Add a vertical scrollbar
+ScrollBar.horizontal: ScrollBar { } // Add a horizontal scrollbar
+Keys.onUpPressed: scrollBar.decrease()
+Keys.onDownPressed: scrollBar.increase() 
+    
+// ScrollBar SnapMode Enum
+ScrollBar.NoSnap         // The scrollbar does not snap
+ScrollBar.SnapAlways     // The scrollbar snaps while dragged
+ScrollBar.SnapOnRelease  // The scrollbar does not snap while being dragged, but only after released
+    
+// ScrollBar Policy Enum
+ScrollBar.AsNeeded	     // The scroll bar is only shown when the content is too large to fit
+ScrollBar.AlwaysOff	     // The scroll bar is never shown
+ScrollBar.AlwaysOn	     // The scroll bar is always shown
+    
+// ScrollBar Orientation Enum
+Qt.Vertical    Q.Horizontal
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML BUTTONS
@@ -624,9 +642,7 @@ cont.takeItem(index) // Returns Item
 
 // FLICKABLE
 // Inherits Item, Provides a surface that can be "flicked"
-Flickable {
-    ScrollBar.vertical: ScrollBar { } // Add a vertical scrollbar
-    ScrollBar.horizontal: ScrollBar { } // Add a horizontal scrollbar
+Flickable {    
     atXBeginning
     atXEnd
     atYBeginning
@@ -671,7 +687,7 @@ Flickable {
     onFlickEnded: {}
     onFlickStarted: {}
     onMovementEnded: {}
-    onMovementStarted: {}
+    onMovementStarted: {}   
 }
 flick.cancelFlick()
 flick.flick(xVelocity, yVelocity)
@@ -742,9 +758,14 @@ view.addItem(item)
 view.removeItem(item)
    
 // SCROLLVIEW
-// Inherits Control, Auto uses Flickable if child has one
+// Inherits Control, Auto uses Flickable if child
 ScrollView {
+    clip: true // defaults off, clips contents when scrolling outside width/height
+    contentHeight: 100 // Height of the scrollable content, if not set, auto calculated based off contents
+    contentWidth: 100 // Width of the scrollable content, if not set, auto calculated based off contents
 }
+scroll.contentChildren // list<Item> of children, does not include non-visual QML objects
+scroll.contentData //  list<Object> of children, does include non-visual QML objects
 
 // SWIPEVIEW
 // Inherits Container, Enables the user to navigate pages by swiping sideways
