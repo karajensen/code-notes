@@ -571,11 +571,48 @@ if(file.open(QIODevice::ReadOnly))
         line = stream.readLine();
     }
 }
+                               
+// QFileInfo
+// If path is a directory, treat as filepath but without a name/extension
+QFileInfo info(path)
+info.absoluteDir() // Returns QDir using absolutePath()
+info.absoluteFilePath() // Returns the file's full path as absolute QString, keeps dots/symlinks
+info.absolutePath() // Returns file without the filename as absolute QString, keeps dots/symlinks
+info.baseName() // Returns the file's name without directory or extensions
+info.birthTime() // Returns QDateTime of date and time when the file was created
+info.canonicalFilePath() // Returns the file's full path as absolute QString, removes dots/symlinks 
+info.canonicalPath() // Returns file without the filename as absolute QString, removes dots/symlinks
+info.completeBaseName() // Returns the file's name as QString without directory or last extension
+info.completeSuffix() // Returns all extensions as QString, does not start with '.'
+info.dir() // Returns parent directory as QDir, even if info holds a directory         
+info.exists() // Returns true if file exists
+info.fileName() // Returns full file name as QString including all extensions
+info.filePath() // Returns path (which may be absolute or relative)
+info.isAbsolute() // Returns true if path is absolute
+info.isDir() // Returns true if path is a directory
+info.isExecutable() // Returns true if path is an executable
+info.isFile() // Returns true if path is a file
+info.isHidden() // Returns true if path is hidden
+info.isNativePath() // Returns true if path can be used with the OS native file system, minus encoding requirements
+info.isReadable() // Returns true if user can read the file
+info.isRelative() // Returns true if path is relative
+info.isSymLink() // Returns true if path is a symlink
+info.isWritable() // Returns true if path is writable
+info.lastModified() // Returns QDateTime when path was last modified
+info.lastRead() // Returns QDateTime when path was last accessed
+info.makeAbsolute() // Converts a relative path to absolute if needed
+info.path() // Returns path without the filename (which may be absolute or relative)
+info.size() // Returns qint64 of size in bytes
+info.suffix() // Returns final extension of file, without the .
+QFileInfo::exists(path) // Returns true if file exists, faster than QFileInfo(path).exists()
 
 // QDir
 // Provides access to directory structures and their contents
-QDir dir("Folder/Folder") // Root directory
-dir.exists() // Whether root directly exists
+// All entryList calls return just the folder/file name, need to add base path
+QDir dir(path) // Root directory
+                               
+dir.exists() // Whether path exists
+dir.mkdir() 
 dir.setNameFilters(QStringList("*.qml", "*.txt")) // Extension types to filter searches with
 dir.entryList(nameFilters, filterFlags, sortFlags) // Search directory recursively, returns QStringList
 dir.entryList(nameFilters) // Not using any args will use the stored filterFlags/sortFlags
