@@ -538,7 +538,27 @@ cb.textAt(index)
 // SPINBOX
 // Inherits Control, Allows the user to select from a set of preset values
 SpinBox {
+    down.pressed
+    down.indicator
+    down.hovered
+    editable
+    from
+    inputMethodComposing
+    inputMethodHints
+    stepSize
+    textFromValue
+    to
+    up.pressed
+    up.indicator
+    up.hovered
+    validator
+    value
+    valueFromText
+    wrap
+    onValueModified: {}
 }
+sb.increase()
+sb.decrease()
 
 ------------------------------------------------------------------------------------------------------------
 
@@ -571,9 +591,33 @@ BusyIndicator {
 
 ------------------------------------------------------------------------------------------------------------
 
+// SCROLLINDICATOR
+// Inherits Control, Vertical or horizontal non-interactive scroll indicator.
+ScrollIndicator {
+    active
+    horizontal
+    orientation
+    position
+    size
+    vertical
+}
+
+Flickable {
+    ScrollIndicator.vertical: ScrollIndicator { }
+    ScrollIndicator.horizontal: ScrollIndicator { }
+}
+    
+------------------------------------------------------------------------------------------------------------
+
 // PROGRESSBAR
 // Inherits Control, Indicates the progress of an operation
 ProgressBar {
+    from
+    indeterminate
+    position
+    to
+    value
+    visualPosition
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -581,14 +625,56 @@ ProgressBar {
 // SLIDER
 // Inherits Control, Used to select a value by sliding a handle along a track
 Slider {
+    from 
+    handle
+    horizontal
+    live
+    orientation
+    position
+    pressed
+    snapMode
+    stepSize
+    to
+    value
+    vertical
+    visualPosition
+    onMoved: {}
 }
+slider.decrease()
+slider.increase()
+slider.valueAt(real position)
 
 ------------------------------------------------------------------------------------------------------------
 
 // RANGESLIDER
 // Inherits Control, Used to select a range of values by sliding two handles along a track
 RangeSlider {
+    first.value
+    first.position
+    first.visualPosition
+    first.handle
+    first.pressed
+    first.hovered
+    from
+    horizontal
+    live
+    orientation
+    second.value
+    second.position
+    second.visualPosition
+    second.handle
+    second.pressed
+    second.hovered
+    snapMode
+    stepSize
+    to
+    vertical
 }
+slider.first.decrease()
+slider.first.increase()
+slider.second.decrease()
+slider.second.increase()
+slider.setValues(firstValue, secondValue)
 
 ------------------------------------------------------------------------------------------------------------
 
@@ -626,10 +712,12 @@ bar.increase() // Increases the position by stepSize or 0.1 if stepSize is 0.0
 bar.decrease() // Decreases the position by stepSize or 0.1 if stepSize is 0.0
 
 // Adding ScrollBar to Flickable / ScrollView
-ScrollBar.vertical: ScrollBar { } // Add a vertical scrollbar
-ScrollBar.horizontal: ScrollBar { } // Add a horizontal scrollbar
-Keys.onUpPressed: scrollBar.decrease()
-Keys.onDownPressed: scrollBar.increase() 
+Flickable {
+    ScrollBar.vertical: ScrollBar { } // Add a vertical scrollbar
+    ScrollBar.horizontal: ScrollBar { } // Add a horizontal scrollbar
+    Keys.onUpPressed: scrollBar.decrease()
+    Keys.onDownPressed: scrollBar.increase() 
+}
     
 // ScrollBar SnapMode Enum
 ScrollBar.NoSnap         // The scrollbar does not snap
@@ -703,6 +791,7 @@ btn.highlighted // Whether button is highlighted
 // ROUNDBUTTON
 // Inherits AbstractButton, Button with rounded corners
 RoundButton {
+    radius
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -969,12 +1058,62 @@ ScrollView {
 }
 scroll.contentChildren // list<Item> of children, does not include non-visual QML objects
 scroll.contentData //  list<Object> of children, does include non-visual QML objects
+    
+------------------------------------------------------------------------------------------------------------
+   
+// STACKVIEW
+// Inherits Control, Provides a stack-based navigation mode
+StackView {
+    busy
+    currentItem
+    depth
+    empty
+    initialItem
+    popEnter
+    popExit
+    pushEnter
+    pushExit
+    replaceEnter
+    replaceExit
+        
+    // StackView Attached Properties for each child
+    pushEnter: Item {
+        StackView.index
+        StackView.status
+        StackView.view
+        StackView.visible
+        StackView.onActivated: {}
+        StackView.onActivating: {}
+        StackView.onDeactivated: {}
+        StackView.onDeactivating: {}
+        StackView.onRemoved: {}
+    }
+}
+view.clear(transition)
+ view.find(callback, behavior)
+view.get(index, behavior)
+view.pop(item, operation)
+view.push(item, properties, operation)
+view.replace(target, item, properties, operation)
 
 ------------------------------------------------------------------------------------------------------------
     
 // SWIPEVIEW
 // Inherits Container, Enables the user to navigate pages by swiping sideways
 SwipeView {
+    horizontal
+    interactive
+    orientation
+    vertical
+        
+    // SwipeView Attached Properties for each child
+    Item {
+        index
+        isCurrentItem
+        isNextItem
+        isPreviousItem
+        view
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
