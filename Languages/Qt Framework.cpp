@@ -720,8 +720,10 @@ SIGNALS / SLOTS
 // QQuickView 
 // Wrapper for QQuickWindow to automatically load and display a QML scene from an url
 QQuickView view;
-view.rootContext()->setContextProperty("context_model", model); // Attach an QAbstractItemModel* to QML
+view.rootContext(); // Returns QQmlContext*
 view.setSource(QUrl("qrc:/main.qml"));
+view.setTitle("title");
+view.setResizeMode(QQuickView::SizeRootObjectToView);
 view.show();
 
 // QQuickWidget
@@ -796,9 +798,12 @@ item.window() // Return QQuickWindow* in which this item is rendered
     
 // QQmlComponent
 // Inherits QObject, instantiated by Component
+                               
+// QQmlContext
+context.setContextProperty("context_model", model); // Sends to QML, does not update if QML already loaded
 
 // QQmlEngine
-setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Static, Must be used on cpp QObjects without parents
+QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Must be used on cpp QObjects without parents
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT QUICK / QML DATA CONVERSIONS
