@@ -57,7 +57,7 @@ Item {
     layer.textureMirroring // Enum, how the generated OpenGL texture should be mirrored
     layer.textureSize // Pixel size of the layers texture, if empty (default) uses item's size
     layer.wrapMode // Enum, OpenGL wrap modes associated with the texture
-        
+   
     /* list<State>, if multiple 'when' true, first is chosen */
     states: [
         State {
@@ -1415,13 +1415,31 @@ Rectangle {
     gradient: Gradient {}
 }
 
+// Slice off rounded corners on one side
+Item {
+    anchors.fill: parent
+    clip: true
+    Rectangle {
+        anchors.fill: parent
+        anchors.topMargin: -radius
+        radius: 10
+    }
+}    
+
 ------------------------------------------------------------------------------------------------------------
 
 // IMAGE
 // SVG must have <style type="text/css"> not <style>
 Image {
+    
+    // Image with rounded corners
+    OpacityMask {
+        maskSource: Rectangle {
+            anchors.fill: parent
+            radius: 6
+        }  
+    }
 }
-
 
 ------------------------------------------------------------------------------------------------------------
 
