@@ -1422,6 +1422,70 @@ Rectangle {
 Image {
 }
 
+
+------------------------------------------------------------------------------------------------------------
+
+// TRANSITION
+// Defines animated transitions that occur on state changes
+Transition {
+}
+
+------------------------------------------------------------------------------------------------------------
+   
+// BLEND
+// Inherits Item, QtGraphicalEffects, Merges two source items by using a blend mode
+Blend {
+}
+ 
+------------------------------------------------------------------------------------------------------------
+ 
+// BRIGHTNESSCONTRAST
+// Inherits Item, QtGraphicalEffects, Adjusts brightness and contrast
+BrightnessContrast {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// COLOROVERLAY
+// Inherits Item, QtGraphicalEffects, Alters the colors of the source item by applying an overlay color
+ColorOverlay {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// COLORIZE
+// Inherits Item, QtGraphicalEffects, Sets the color in the HSL color space
+Colorize {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// DESATURATE
+// Inherits Item, QtGraphicalEffects, Reduces the saturation of the colors
+Desaturate {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// GAMMAADJUST
+// Inherits Item, QtGraphicalEffects, Alters the luminance of the source item
+GammaAdjust {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// HUESATURATION
+// Inherits Item, QtGraphicalEffects, Alters the source item colors in the HSL color space
+HueSaturation {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// LEVELADJUST
+// Inherits Item, QtGraphicalEffects, Adjusts color levels in the RGBA color space
+LevelAdjust {
+}
+
 ------------------------------------------------------------------------------------------------------------
 
 // GRADIENT
@@ -1429,17 +1493,132 @@ Gradient {
 }
 
 ------------------------------------------------------------------------------------------------------------
-    
-// OPACITYMASK
-// Inherits Item, Uses QtGraphicalEffects
-OpacityMask {
+
+// CONICALGRADIENT
+// Inherits Item, QtGraphicalEffects, Draws a conical gradient
+ConicalGradient {
 }
-
-
 
 ------------------------------------------------------------------------------------------------------------
-   
-// TRANSITION
-// Defines animated transitions that occur on state changes
-Transition {
+
+// LINEARGRADIENT
+// Inherits Item, QtGraphicalEffects, Draws a linear gradient
+LinearGradient {
 }
+
+------------------------------------------------------------------------------------------------------------
+
+// RADIALGRADIENT
+// Inherits Item, QtGraphicalEffects, Draws a radial gradient
+RadialGradient {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// DISPLACE
+// Inherits Item, QtGraphicalEffects, Moves the pixels of the source item according to a displacement map
+Displace {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// DROPSHADOW
+// Inherits Item, QtGraphicalEffects, Generates a soft shadow behind the source item
+DropShadow {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// INNERSHADOW
+// Inherits Item, QtGraphicalEffects, Generates a colorized and blurred shadow inside the source
+InnerShadow {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// FASTBLUR
+// Inherits Item, QtGraphicalEffects, Applies a fast blur effect to one or more source items
+FastBlur {
+    id: fastBlur
+    radius: 64 // Amount of blurring [0,64]
+    source: ShaderEffectSource {
+        sourceItem: myItem // Can't be parent of fastBlur
+        sourceRect: Qt.rect(0, 0, fastBlur.width, fastBlur.height)
+    }
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// GAUSSIANBLUR
+// Inherits Item, QtGraphicalEffects, Applies a higher quality blur effect
+GaussianBlur {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// MASKEDBLUR
+// Inherits Item, QtGraphicalEffects, Applies a blur effect with a varying intesity
+MaskedBlur {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// RECURSIVEBLUR
+// Inherits Item, QtGraphicalEffects, Blurs repeatedly, providing a strong blur effect
+RecursiveBlur {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// DIRECTIONALBLUR
+// Inherits Item, QtGraphicalEffects, Applies blur effect to the specified direction
+DirectionalBlur {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// RADIALBLUR
+// Inherits Item, QtGraphicalEffects, Applies blur in a circular direction around the item center point
+RadialBlur {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// ZOOMBLUR
+// Inherits Item, QtGraphicalEffects, Applies directional blur effect towards source items center point
+ZoomBlur {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// GLOW
+// Inherits Item, QtGraphicalEffects, Generates a halo like glow around the source item
+Glow {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// RECTANGULARGLOW
+// Inherits Item, QtGraphicalEffects, Generates a blurred and colorized rectangle
+RectangularGlow {
+}
+
+------------------------------------------------------------------------------------------------------------
+    
+// OPACITYMASK
+// Inherits Item, QtGraphicalEffects, Masks the source item with another item
+// By default only draws parts of source inside maskSource
+OpacityMask {
+    cached: false // Default, caches results, use if not animated, improves performance
+    invert: false // Default, inverts the mask to only draw what's outside it
+    maskSource: Rectangle {}
+    source: myItem // Can't be parent of OpacityMask
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// THRESHOLDMASK
+// Inherits Item, QtGraphicalEffects, Masks the source item with another item and applies a threshold value
+ThresholdMask {
+}
+    
