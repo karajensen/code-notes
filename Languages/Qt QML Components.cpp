@@ -504,7 +504,34 @@ Qt.NoFocus      // The control does not accept focus
 // COMBOBOX
 // Inherits Control, Combined button and popup list for selecting options
 ComboBox {
+    acceptableInput
+    count
+    currentIndex
+    currentText
+    delegate
+    displayText
+    down
+    editText
+    editable
+    flat
+    highlightedIndex 
+    indicator
+    inputMethodComposing
+    inputMethodHints
+    model
+    popup
+    pressed
+    textRole
+    validator
+    onAccepted: {}
+    onActivated: { index }
+    onHighlighted: { index }
 }
+cb.decrementCurrentIndex()
+cb.find(text, flags)
+cb.incrementCurrentIndex()
+cb.selectAll()
+cb.textAt(index)
 
 ------------------------------------------------------------------------------------------------------------
 
@@ -518,13 +545,28 @@ SpinBox {
 // DIAL
 // Inherits Control, Circular dial that is rotated to set a value
 Dial {
+    angle
+    from
+    handle
+    live
+    position
+    pressed
+    snapMode
+    stepSize
+    to
+    value
+    wrap
+    onMoved: {}
 }
+dial.increase()
+dial.decrease()
 
 ------------------------------------------------------------------------------------------------------------
 
 // BUSYINDICATOR
 // Inherits Control, Indicates background activity
 BusyIndicator {
+    running
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -553,6 +595,14 @@ RangeSlider {
 // TUMBLER
 // Inherits Control, Spinnable wheel of items that can be selected
 Tumbler {
+    count
+    currentIndex
+    currentItem
+    delegate
+    model
+    moving
+    visibleItemCount
+    wrap
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -593,6 +643,16 @@ ScrollBar.AlwaysOn	     // The scroll bar is always shown
     
 // ScrollBar Orientation Enum
 Qt.Vertical    Q.Horizontal
+
+------------------------------------------------------------------------------------------------------------
+
+// TOOLSEPARATOR
+// Inherits Control, Separates a group of items in a toolbar from adjacent items
+ToolSeparator {
+    horizontal
+    orientation
+    vertical
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML BUTTONS
@@ -650,6 +710,8 @@ RoundButton {
 // CHECKBOX
 // Inherits AbstractButton
 CheckBox {
+    checkState
+    tristate
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -671,6 +733,8 @@ TabButton {
 // SWITCH
 // Inherits AbstractButton, Switch button that can be toggled on or off
 Switch {
+    position
+    visualPosition
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -678,6 +742,17 @@ Switch {
 // BUTTONGROUP
 // Inherits QtObject, Mutually-exclusive group of checkable buttons
 ButtonGroup {
+    buttons
+    checkedButton
+    exclusive
+    onClicked: { button }
+}
+grp.addButton(button)
+grp.removeButton(button)
+    
+// ButtonGroup Attached Properties
+AbstractButton {
+    ButtonGroup.group
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -690,6 +765,17 @@ MenuItem {
    onTriggered: {} // Emitted when the menu item is triggered by the user
 }
 menuItem.highlighted // Whether is highlighted by the user
+
+------------------------------------------------------------------------------------------------------------
+
+// MENUBARITEM
+// Inherits AbstractButton
+MenuBarItem {
+    highlighted
+    menu
+    menuBar
+    onTriggered: {}
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML CONTAINERS
@@ -794,13 +880,32 @@ Frame {
 // MENUBAR
 // Inherits Container, Provides a window menu bar
 MenuBar {
+    contentHeight
+    contentWidth
+    delegate
+    menus
 }
+menu.addMenu(menu)
+menu.insertMenu(index, menu)
+menu.menuAt(index)
+menu.removeMenu(menu)
+menu.takeMenu(index)
 
 ------------------------------------------------------------------------------------------------------------
 
 // TABBAR
 // Inherits Container, Allows the user to switch between different views or subtasks
 TabBar {
+    contentHeight
+    contentWidth
+    position
+        
+    // TabBar Attached poperties to every button child
+    TabButton {
+        TabBar.index
+        TabBar.position
+        TabBar.tabBar
+    }
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -808,6 +913,7 @@ TabBar {
 // TOOLBAR
 // Inherits Pane, Container for context-sensitive controls
 ToolBar {
+    position
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -815,6 +921,8 @@ ToolBar {
 // GROUPBOX
 // Inherits Frame, Visual frame and title for a logical group of controls
 GroupBox {
+    label
+    title
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1023,6 +1131,17 @@ Item {
     ToolTip.delay: 0 // delay in ms after which the tool tip is shown, default 0, negative shown immediately
     ToolTip.timeout: -1 // timeout in ms after which the tool tip is hidden, default -1, 0 hidden immediately
     ToolTip.toolTip: myToolTip
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// DRAWER
+// Inherits Popup, Side panel that can be opened and closed using a swipe gesture
+Drawer {
+    dragMargin
+    edge
+    interactive
+    position
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
