@@ -1090,7 +1090,7 @@ StackView {
     }
 }
 view.clear(transition)
- view.find(callback, behavior)
+view.find(callback, behavior)
 view.get(index, behavior)
 view.pop(item, operation)
 view.push(item, properties, operation)
