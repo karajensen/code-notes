@@ -494,14 +494,14 @@ QTimer::singleShot(ms, fn); // Internally creates timer which calls slot when do
 QTimer::singleShot(ms, type, fn); // Internally creates timer which calls slot when done for TimerType Enum
 QTimer::singleShot(ms, receiver, SLOT(mySlot())); // Internally creates timer which calls slot when done
 connect(timer, SIGNAL(timeout()), fn); // timeout signal called when interval reached
-
-// QUrl
-// Interface for working with URLs
                                   
 // QTimer TimerType Enum
 Qt::PreciseTimer        // Try to keep millisecond accuracy
 Qt::CoarseTimer         // Try to keep accuracy within 5% of the desired interval
 Qt::VeryCoarseTimer     // Only keep full second accuracy
+                               
+// QUrl
+// Interface for working with URLs
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT WIDGETS
