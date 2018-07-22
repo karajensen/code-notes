@@ -42,7 +42,11 @@ Item {
     anchors.verticalCenterOffset // Value offset from vertical center
     anchors.baselineOffset // Value offset from position
     anchors.alignWhenCentered // forces centered anchors to align to a whole pixel, default true
-    layer.effect // Component, typically a ShaderEffect component
+    state // QString state name, default empty
+    transform // list<Transform>, list of transformations to apply
+    transitions // list<Transition>, transitions to be applied to the item whenever it changes its state
+
+    layer.effect: OpacityMask {} // QtGraphicalEffects
     layer.enabled // Whether the item is layered or not, disabled by default
     layer.format // Enum, internal OpenGL format of the texture
     layer.mipmap // Whether mipmaps are generated for the texture
@@ -53,10 +57,7 @@ Item {
     layer.textureMirroring // Enum, how the generated OpenGL texture should be mirrored
     layer.textureSize // Pixel size of the layers texture, if empty (default) uses item's size
     layer.wrapMode // Enum, OpenGL wrap modes associated with the texture
-    state // QString state name, default empty
-    transform // list<Transform>, list of transformations to apply
-    transitions // list<Transition>, transitions to be applied to the item whenever it changes its state
-
+        
     /* list<State>, if multiple 'when' true, first is chosen */
     states: [
         State {
@@ -89,11 +90,15 @@ item.mapToItem(item2, x, y, w, h) // Converts item local coords into item2 local
 item.mapToItem(item2, x, y) // Converts item local coords into item2 local coords, returns QML point
 item.nextItemInFocusChain(forward) // Returns item next in the focus chain, forward optional
 
+------------------------------------------------------------------------------------------------------------
+    
 // QTOBJECT
 // lightweight non-visual element
 QtObject {
    objectName: "name"
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // COMPONENT
 // Instantiates QQmlComponent, Used for sourceComponent and contentItem properties
@@ -103,12 +108,16 @@ Component {
     }
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // CONNECTIONS
 // Access a signal outside of the object that emits it, required for Loader items
 Connections {
     target: loader.item
     onMySignal: { value }
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // BINDING
 // Will become active and assign value to myProperty when myBoolean becomes true
@@ -120,6 +129,8 @@ Binding {
     value: 10 // Can be value, another property etc
     delayed: true // wait until event queue cleared before assigning
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // REPEATER
 // Inherits Item, Usually in Row/Column, instantiates n items
@@ -138,6 +149,8 @@ Repeater {
     Text { text: "Data: " + modelData.role_name }
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // INSTANTIATOR
 // Dynamically create objects parented to the Instantiator
 Instantiator {
@@ -151,12 +164,16 @@ Instantiator {
 instantiator.count // Number of current objects
 instantiator.objectAt(index) // Takes int index, returns QtObject
 
+------------------------------------------------------------------------------------------------------------
+    
 // STATEGROUP
 // State support for non QML Item derived components, see Item for State {}
 StateGroup {
     state: "state1" // QString state name, default empty
     states: [State { name: "state1" }, State { name: "state2" }]
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // TIMER
 // Triggers a handler at a specified interval
@@ -170,27 +187,10 @@ Timer {
 timer.restart()
 timer.start()
 timer.stop()
-
+    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML WINDOWS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   
-// WINDOW ATTACHED PROPERTIES
-Item {
-    Window.active
-    Window.activeFocusItem
-    Window.contentItem
-    Window.height
-    Window.visibility
-    Window.width
-    Window.window
-    ApplicationWindow.activeFocusControl
-    ApplicationWindow.contentItem
-    ApplicationWindow.footer
-    ApplicationWindow.header
-    ApplicationWindow.menuBar
-    ApplicationWindow.window
-}
    
 // WINDOW
 // Instantiates QQuickWindow, Creates a new top-level window 
@@ -229,6 +229,19 @@ window.showFullScreen()
 window.showMaximized()
 window.showMinimized()
 window.showNormal()
+    
+// Window Attached Properties
+Item {
+    Window.active
+    Window.activeFocusItem
+    Window.contentItem
+    Window.height
+    Window.visibility
+    Window.width
+    Window.window
+}
+
+------------------------------------------------------------------------------------------------------------
 
 // APPLICATIONWINDOW
 // Inherits Window, Styled top-level window
@@ -243,6 +256,16 @@ ApplicationWindow {
     locale
     menuBar
     palette
+}
+
+// ApplicationWindow Attached Properties
+Item {
+    ApplicationWindow.activeFocusControl
+    ApplicationWindow.contentItem
+    ApplicationWindow.footer
+    ApplicationWindow.header
+    ApplicationWindow.menuBar
+    ApplicationWindow.window
 }
    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -269,6 +292,8 @@ Layout.rightMargin // Overrides margin property if set
 Layout.row // row position of an item in a GridLayout
 Layout.rowSpan // row span of an item in a GridLayout
 Layout.topMargin // Overrides margin property if set
+    
+------------------------------------------------------------------------------------------------------------
 
 // ROWLAYOUT
 // Inherits Item, Aligns elements after each other in a single row
@@ -277,6 +302,8 @@ RowLayout {
     layoutDirection: Qt.LeftToRight // default, Layout Direction Enum, item add/insert direction
     spacing: 5 // default, spacing between each cell
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // ROW
 // Inherits Item, Positions its child items along a single row
@@ -295,6 +322,8 @@ Row {
 }
 row.forceLayout() // Triggers an update instead of waiting for scheduled one
 
+------------------------------------------------------------------------------------------------------------
+
 // COLUMNLAYOUT
 // Inherits Item, Aligns elements after each other in a single column
 ColumnLayout {
@@ -302,6 +331,8 @@ ColumnLayout {
     layoutDirection: Qt.LeftToRight // default, Layout Direction Enum, item add/insert direction
     spacing: 5 // default, spacing between each cell
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // COLUMN
 // Inherits Item, Positions its child items along a single column
@@ -319,6 +350,8 @@ Column {
 }
 column.forceLayout() // Triggers an update instead of waiting for scheduled one
 
+------------------------------------------------------------------------------------------------------------
+
 // GRIDLAYOUT
 // Inherits Item, Aligns elements in a grid with n columns
 GridLayout {
@@ -330,6 +363,8 @@ GridLayout {
     rowSpacing: 5 // default, spacing between each row
     rows: 3 // row limit if flow is GridLayout.LeftToRight, default is no limit
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // GRID
 // Inherits Item, Positions its child items in grid formation
@@ -353,6 +388,8 @@ Grid {
 }
 grid.forceLayout() // Triggers an update instead of waiting for scheduled one
 
+------------------------------------------------------------------------------------------------------------
+
 // FLOW
 // Inherits Item, Positions its children side by side, wrapping as necessary
 Flow {
@@ -370,6 +407,8 @@ Flow {
     onPositioningComplete: {} // When positioning has been completed
 }
 flow.forceLayout() // Triggers an update instead of waiting for scheduled one
+
+------------------------------------------------------------------------------------------------------------
 
 // Layout Alignment Flags
 Qt.AlignLeft       Qt.AlignTop
@@ -406,6 +445,8 @@ Action {
 }
 action.toggle(source) // Toggle the action/emit signal, source defaults to null
 action.trigger(source) // Trigger the action/emit signal, source defaults to null
+
+------------------------------------------------------------------------------------------------------------
 
 // ACTIONGROUP
 // Inherits QtObject, Groups actions together
@@ -458,45 +499,63 @@ Qt.StrongFocus  // The control accepts focus by both tabbing and clicking
 Qt.WheelFocus   // The control accepts focus by tabbing, clicking, and using the mouse wheel
 Qt.NoFocus      // The control does not accept focus
 
+------------------------------------------------------------------------------------------------------------
+
 // COMBOBOX
 // Inherits Control, Combined button and popup list for selecting options
 ComboBox {
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // SPINBOX
 // Inherits Control, Allows the user to select from a set of preset values
 SpinBox {
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // DIAL
 // Inherits Control, Circular dial that is rotated to set a value
 Dial {
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // BUSYINDICATOR
 // Inherits Control, Indicates background activity
 BusyIndicator {
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // PROGRESSBAR
 // Inherits Control, Indicates the progress of an operation
 ProgressBar {
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // SLIDER
 // Inherits Control, Used to select a value by sliding a handle along a track
 Slider {
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // RANGESLIDER
 // Inherits Control, Used to select a range of values by sliding two handles along a track
 RangeSlider {
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // TUMBLER
 // Inherits Control, Spinnable wheel of items that can be selected
 Tumbler {
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // SCROLLBAR
 // Inherits Control, Vertical or horizontal interactive scroll bar
@@ -569,6 +628,8 @@ AbstractButton.IconOnly
 AbstractButton.TextOnly
 AbstractButton.TextBesideIcon
 
+------------------------------------------------------------------------------------------------------------
+
 // BUTTON
 // Inherits AbstractButton
 Button {
@@ -577,35 +638,49 @@ Button {
 }
 btn.highlighted // Whether button is highlighted
 
+------------------------------------------------------------------------------------------------------------
+
 // ROUNDBUTTON
 // Inherits AbstractButton, Button with rounded corners
 RoundButton {
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // CHECKBOX
 // Inherits AbstractButton
 CheckBox {
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // RADIOBUTTON
 // Inherits AbstractButton, Exclusive radio button that can be toggled on or off
 RadioButton {
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // TABBUTTON
 // Inherits AbstractButton, Button with a look suitable for a TabBar
 TabButton {
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // SWITCH
 // Inherits AbstractButton, Switch button that can be toggled on or off
 Switch {
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // BUTTONGROUP
 // Inherits QtObject, Mutually-exclusive group of checkable buttons
 ButtonGroup {
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // MENUITEM
 // Inherits AbstractButton
@@ -640,6 +715,8 @@ cont.removeItem(item)
 cont.setCurrentIndex(index)
 cont.takeItem(index) // Returns Item
 
+------------------------------------------------------------------------------------------------------------
+    
 // FLICKABLE
 // Inherits Item, Provides a surface that can be "flicked"
 Flickable {    
@@ -693,6 +770,8 @@ flick.cancelFlick()
 flick.flick(xVelocity, yVelocity)
 flick.resizeContent(width, height, center)
 flick.returnToBounds()
+    
+------------------------------------------------------------------------------------------------------------
 
 // PANE
 // Inherits Control, Provides a background matching with the application style and theme
@@ -703,30 +782,42 @@ Pane {
     contentWidth
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // FRAME
 // Inherits Pane, Visual frame for a logical group of controls
 Frame {
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // MENUBAR
 // Inherits Container, Provides a window menu bar
 MenuBar {
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // TABBAR
 // Inherits Container, Allows the user to switch between different views or subtasks
 TabBar {
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // TOOLBAR
 // Inherits Pane, Container for context-sensitive controls
 ToolBar {
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // GROUPBOX
 // Inherits Frame, Visual frame and title for a logical group of controls
 GroupBox {
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // DIALOGBUTTONBOX
 // Inherits Container, A button box used in dialogs
@@ -747,6 +838,8 @@ DialogButtonBox {
 }
 box.standardButton(button) // Returns AbstractButton
 
+------------------------------------------------------------------------------------------------------------
+    
 // SPLITVIEW
 // No QML Controls 2 version
 ControlsLegacy.SplitView {
@@ -756,6 +849,8 @@ ControlsLegacy.SplitView {
 }
 view.addItem(item)
 view.removeItem(item)
+    
+------------------------------------------------------------------------------------------------------------
    
 // SCROLLVIEW
 // Inherits Control, Auto uses Flickable if child
@@ -767,6 +862,8 @@ ScrollView {
 scroll.contentChildren // list<Item> of children, does not include non-visual QML objects
 scroll.contentData //  list<Object> of children, does include non-visual QML objects
 
+------------------------------------------------------------------------------------------------------------
+    
 // SWIPEVIEW
 // Inherits Container, Enables the user to navigate pages by swiping sideways
 SwipeView {
@@ -841,6 +938,8 @@ Popup.CloseOnReleaseOutside        // The popup will close when mouse is release
 Popup.CloseOnReleaseOutsideParent  // The popup will close when mouse is released outside of its parent
 Popup.CloseOnEscape                // The popup will close when escape key is pressed while has active focus
 
+------------------------------------------------------------------------------------------------------------
+    
 // DIALOG
 // Inherits Popup, Popup with standard buttons and a title
 Dialog {
@@ -861,6 +960,8 @@ dialog.done(result)
 dialog.reject()
 dialog.standardButton(button) // Returns AbstractButton
 
+------------------------------------------------------------------------------------------------------------
+    
 // MENU
 // Inherits Popup, For context and popup menus
 Menu {
@@ -904,6 +1005,8 @@ menu.removeMenu(menu) // Removes submenu Menu
 menu.takeAction(index) // Removes and returns Action at index
 menu.takeItem(index) // Removes and returns MenuItem at index
 menu.takeMenu(index) // Removes and returns Menu at index
+    
+------------------------------------------------------------------------------------------------------------
 
 // TOOLTIP
 // Inherits Popup, Provides tool tips for any control
@@ -912,6 +1015,8 @@ ToolTip {
    delay: 0 // delay in ms after which the tool tip is shown, default 0, negative shown immediately
    timeout: -1 // timeout in ms after which the tool tip is hidden, default -1, 0 hidden immediately
 }
+
+// ToolTip Attached Properties
 Item {
     ToolTip.visible: true // Whether currently visible
     ToolTip.text: "str" // text to show
@@ -955,6 +1060,8 @@ Item {
     wrapMode: <T>.NoWrap // default, Wrap Mode Enum    
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // TEXTLINE
 // lineLaidOut signal object
 line.number // Read-only property
@@ -962,6 +1069,8 @@ line.x / line.y // Can modify to change position of line
 line.width // Can modify to change width of line
 line.height // Can modify to change height of line 
 
+------------------------------------------------------------------------------------------------------------
+    
 // TEXT
 // Inherits item, Styled text label
 Text {
@@ -989,6 +1098,8 @@ text.truncated // If the text has been truncated due to maximumLineCount or elid
 text.forceLayout() // Triggers a re-layout of the displayed text
 text.linkAt(x, y) // Returns ink string at point x, y in content coordinates, empty if nothing there
 
+------------------------------------------------------------------------------------------------------------
+    
 // TEXTINPUT
 // Inherits Item, single line of editable plain text
 TextInput {
@@ -1044,6 +1155,8 @@ input.select(start, end) // Selects start to end char position, if out of range 
 input.selectAll() // Causes all text to be selected
 input.selectWord() // Selects word closest to the current cursor position
 input.undo() // Undos if possible
+    
+------------------------------------------------------------------------------------------------------------
 
 // TEXTEDIT
 // Inherits Item, multiple lines of editable formatted text
@@ -1103,6 +1216,8 @@ edit.selectAll() // Causes all text to be selected
 edit.selectWord() // Selects word closest to the current cursor position
 edit.undo() // Undos if possible
  
+------------------------------------------------------------------------------------------------------------
+    
 // LABEL
 // Inherits Text, Styled text label
 Label {
@@ -1110,6 +1225,8 @@ Label {
 }
 lbl.palette // QML palette used for control, default application palette
 
+------------------------------------------------------------------------------------------------------------
+    
 // TEXTFIELD
 // Inherits TextInput, Displays a single line of editable plain text
 TextField {
@@ -1123,6 +1240,8 @@ TextField {
 field.focusReason // Holds the reason of the last focus change, Input Focus Reason enum
 field.hovered // Whether the control is hovered
 field.palette // QML palette used for control, default application palette
+  
+------------------------------------------------------------------------------------------------------------
   
 // TEXTAREA
 // Inherits TextEdit, Displays multiple lines of editable formatted text
@@ -1138,6 +1257,8 @@ area.focusReason // Holds the reason of the last focus change, Input Focus Reaso
 area.hovered // Whether the control is hovered
 area.palette // QML palette used for control, default application palette
 
+------------------------------------------------------------------------------------------------------------
+    
 // TEXTMETRICS
 // Provides metrics for a given font and text
 TextMetrics {
@@ -1152,6 +1273,8 @@ metrics.font // QML font used for the metrics calculations
 metrics.height // Height of the bounding rectangle
 metrics.tightBoundingRect // Tight bounding rectangle of str
 metrics.width // Width of the bounding rectangle
+    
+------------------------------------------------------------------------------------------------------------
   
 // Text / TextInput / TextEdit RenderType Enum
 Text.QtRendering        // advanced features (transformations)
@@ -1264,6 +1387,8 @@ IntValidator {
     top: 1 // default infinity
 } 
   
+------------------------------------------------------------------------------------------------------------
+
 // DOUBLEVALIDATOR
 // Instantiates QDoubleValidator
 DoubleValidator {
@@ -1290,14 +1415,29 @@ Rectangle {
     gradient: Gradient {}
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // IMAGE
 // SVG must have <style type="text/css"> not <style>
 Image {
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // GRADIENT
 Gradient {
 }
+
+------------------------------------------------------------------------------------------------------------
+    
+// OPACITYMASK
+// Inherits Item, Uses QtGraphicalEffects
+OpacityMask {
+}
+
+
+
+------------------------------------------------------------------------------------------------------------
    
 // TRANSITION
 // Defines animated transitions that occur on state changes
