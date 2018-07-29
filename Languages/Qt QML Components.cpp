@@ -1711,6 +1711,10 @@ Transition {
 // BLEND
 // Inherits Item, QtGraphicalEffects, Merges two source items by using a blend mode
 Blend {
+    cached
+    foregroundSource
+    mode
+    source
 }
  
 ------------------------------------------------------------------------------------------------------------
@@ -1718,6 +1722,10 @@ Blend {
 // BRIGHTNESSCONTRAST
 // Inherits Item, QtGraphicalEffects, Adjusts brightness and contrast
 BrightnessContrast {
+    brightness
+    cached
+    contrast
+    source    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1732,6 +1740,9 @@ ColorOverlay {
 // COLORIZE
 // Inherits Item, QtGraphicalEffects, Sets the color in the HSL color space
 Colorize {
+    cached
+    color
+    source    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1739,6 +1750,9 @@ Colorize {
 // DESATURATE
 // Inherits Item, QtGraphicalEffects, Reduces the saturation of the colors
 Desaturate {
+    cached
+    desaturation
+    source    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1746,6 +1760,9 @@ Desaturate {
 // GAMMAADJUST
 // Inherits Item, QtGraphicalEffects, Alters the luminance of the source item
 GammaAdjust {
+    cached
+    gamma
+    source    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1753,6 +1770,11 @@ GammaAdjust {
 // HUESATURATION
 // Inherits Item, QtGraphicalEffects, Alters the source item colors in the HSL color space
 HueSaturation {
+    cached
+    hue
+    lightness 
+    saturation
+    source
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1760,6 +1782,13 @@ HueSaturation {
 // LEVELADJUST
 // Inherits Item, QtGraphicalEffects, Adjusts color levels in the RGBA color space
 LevelAdjust {
+    cached
+    gamma
+    maximumInput
+    maximumOutput
+    minimumInput
+    minimumOutput
+    source    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1773,6 +1802,12 @@ Gradient {
 // CONICALGRADIENT
 // Inherits Item, QtGraphicalEffects, Draws a conical gradient
 ConicalGradient {
+    angle
+    cached
+    gradient
+    horizontalOffset
+    source
+    verticalOffset    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1780,6 +1815,11 @@ ConicalGradient {
 // LINEARGRADIENT
 // Inherits Item, QtGraphicalEffects, Draws a linear gradient
 LinearGradient {
+    cached
+    end
+    gradient
+    source
+    start    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1787,6 +1827,14 @@ LinearGradient {
 // RADIALGRADIENT
 // Inherits Item, QtGraphicalEffects, Draws a radial gradient
 RadialGradient {
+    angle
+    cached
+    gradient
+    horizontalOffset
+    horizontalRadius
+    source
+    verticalOffset
+    verticalRadius    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1794,6 +1842,10 @@ RadialGradient {
 // DISPLACE
 // Inherits Item, QtGraphicalEffects, Moves the pixels of the source item according to a displacement map
 Displace {
+    cached
+    displacement
+    displacementSource
+    source    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1801,6 +1853,15 @@ Displace {
 // DROPSHADOW
 // Inherits Item, QtGraphicalEffects, Generates a soft shadow behind the source item
 DropShadow {
+    cached
+    color
+    horizontalOffset
+    radius
+    samples
+    source
+    spread
+    transparentBorder
+    verticalOffset    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1808,6 +1869,15 @@ DropShadow {
 // INNERSHADOW
 // Inherits Item, QtGraphicalEffects, Generates a colorized and blurred shadow inside the source
 InnerShadow {
+    cached
+    color
+    fast
+    horizontalOffset
+    radius
+    samples
+    source
+    spread
+    verticalOffset
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1817,6 +1887,8 @@ InnerShadow {
 FastBlur {
     id: fastBlur
     radius: 64 // Amount of blurring [0,64]
+    cached
+    transparentBorder   
     source: ShaderEffectSource {
         sourceItem: myItem // Can't be parent of fastBlur
         sourceRect: Qt.rect(0, 0, fastBlur.width, fastBlur.height)
@@ -1828,6 +1900,12 @@ FastBlur {
 // GAUSSIANBLUR
 // Inherits Item, QtGraphicalEffects, Applies a higher quality blur effect
 GaussianBlur {
+    cached
+    deviation
+    radius
+    samples
+    source
+    transparentBorder    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1835,6 +1913,11 @@ GaussianBlur {
 // MASKEDBLUR
 // Inherits Item, QtGraphicalEffects, Applies a blur effect with a varying intesity
 MaskedBlur {
+    cached
+    maskSource
+    radius
+    samples
+    source    
 }
 
 ------------------------------------------------------------------------------------------------------------
