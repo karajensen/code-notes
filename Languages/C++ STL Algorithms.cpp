@@ -49,6 +49,7 @@ auto doLam = [](const auto& obj) { obj.NonConstMethod(); };
 auto boolLam = [](const auto& obj) ->bool { return o.Exists(); };
 auto equalLam = [](const auto& obj1, const auto& obj2) -> bool { return obj1 == obj2; };
 auto sortLam = [](const auto& obj1, const auto& obj2) -> bool { return obj1.myInt < obj2.myInt; };
+auto reverseSortLam = [](const auto& obj1, const auto& obj2) -> bool { return obj1.myInt > obj2.myInt; };
 auto createLam = []() -> int { return rand()%10; }
 struct DelFunctor { template<typename T> void operator()(const T* ptr) const { delete ptr; ptr = nullptr; } };
 
