@@ -3,6 +3,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*************************************************************************************************************
+Source: https://code.woboq.org/qt5/
 QtCore               Core non-graphical classes used by other modules
 QtGUI                Base classes for graphical user interface (GUI) components. Includes OpenGL
 QtMultimedia         Classes for audio, video, radio and camera functionality
@@ -580,8 +581,8 @@ info.absoluteFilePath() // Returns path as absolute QString, keeps dots/symlinks
 info.absolutePath() // Returns path without the filename as absolute QString, keeps dots/symlinks
 info.baseName() // Returns the filename without directory or extensions
 info.birthTime() // Returns QDateTime of date and time when the file was created
-info.canonicalFilePath() // Returns path QString, removes dots/symlinks 
-info.canonicalPath() // Returns path without the filename as absolute QString, removes dots/symlinks
+info.canonicalFilePath() // Returns path QString, removes dots/symlinks, empty if doesn't exist 
+info.canonicalPath() // Returns path without filename QString, removes dots/symlinks, empty if doesn't exist
 info.completeBaseName() // Returns the filename as QString without directory or last extension
 info.completeSuffix() // Returns all extensions as QString, does not start with '.'
 info.dir() // Returns parent directory as QDir, even if info holds a directory         
@@ -612,7 +613,7 @@ QFileInfo::exists(path) // Returns true if file exists, faster than QFileInfo(pa
 QDir dir(path) // Root directory
 dir.absoluteFilePath(filename) // Use with entryList to make into absolute path
 dir.absolutePath() // Returns path as absolute, may have symlink but no dots
-dir.canonicalPath() // Returns path without symlinks and dots
+dir.canonicalPath() // Returns path without symlinks and dots, empty if doesn't exist
 dir.cd(path) // Cd to a path, can use . and ..
 dir.cdUp() // Move up one directory
 dir.count() // Returns uint total amount of files/folders in path
@@ -931,6 +932,8 @@ qMin(a, b) // Templated, returns min of a and b
 qQNaN() // Returns the bit pattern of a quiet NaN as a double
 qRound64(v) // Takes double/float, rounds (0.5 -> 1.0), returns qint64
 qRound(v) // Takes double/float, rounds (0.5 -> 1.0), returns int
+qPrintable(str) // Takes QString, does str.toLocal8Bit().constData()
+qUtf8Printable(str) // Takes QString, does str.toUtf8().constData()
 qSNaN() // Returns the bit pattern of a signalling NaN as a double
 qVersion() // Returns the version number of Qt
 qtTrId(id) // Finds and returns a translated QString
