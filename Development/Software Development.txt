@@ -135,6 +135,7 @@ git checkout filename.ext                  // Revert changes to file
 git log                                    // List commits and commitIDs
 git --no-pager log > log.txt               // Save list of commits and commitIDs to a file
 git push                                   // Push local changes to remote branch
+git push -f                                // Push local changes to remote branch, required for soft resets
 git push origin master                     // Push local changes to master branch
 git pull origin ParentBranch               // Merge remote branch into current branch
 git mergetool                              // Fix merge conflicts
@@ -146,6 +147,8 @@ git branch -m oldBranch newBranch          // Rename a local branch
 git submodule init                         // Initialise all submodules
 git submodule update --recursive           // Update all submodules, recursive optional
 git config --global --edit                 // Show the git config file
+git commit --amend -e                      // Add changes to previous commit in local repro
+git reset --soft HEAD~NUMBER OF COMMITS    // Soft reset: Remove all commits, puts all changes into git add
 
 INITIALISING GIT
 git config --global user.name "Kara Jensen"
