@@ -1808,6 +1808,12 @@ Image {
 // import QtQuick 2.11
 // Defines animated transitions that occur on state changes
 Transition {
+    animations
+    enabled
+    from
+    reversible
+    running
+    to    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1840,6 +1846,9 @@ BrightnessContrast {
 // import QtGraphicalEffects 1.0    
 // Inherits Item, Alters the colors of the source item by applying an overlay color
 ColorOverlay {
+    cached
+    color
+    source    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -2049,6 +2058,12 @@ MaskedBlur {
 // import QtGraphicalEffects 1.0    
 // Inherits Item, Blurs repeatedly, providing a strong blur effect
 RecursiveBlur {
+    cached
+    loops
+    progress
+    radius
+    source
+    transparentBorder    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -2057,6 +2072,12 @@ RecursiveBlur {
 // import QtGraphicalEffects 1.0    
 // Inherits Item, Applies blur effect to the specified direction
 DirectionalBlur {
+    angle
+    cached
+    length
+    samples
+    source
+    transparentBorder    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -2065,6 +2086,13 @@ DirectionalBlur {
 // import QtGraphicalEffects 1.0    
 // Inherits Item, Applies blur in a circular direction around the item center point
 RadialBlur {
+    angle
+    cached
+    horizontalOffset
+    samples
+    source
+    transparentBorder
+    verticalOffset    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -2073,6 +2101,13 @@ RadialBlur {
 // import QtGraphicalEffects 1.0    
 // Inherits Item, Applies directional blur effect towards source items center point
 ZoomBlur {
+    cached
+    horizontalOffset 
+    length
+    samples
+    source
+    transparentBorder
+    verticalOffset    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -2081,6 +2116,13 @@ ZoomBlur {
 // import QtGraphicalEffects 1.0    
 // Inherits Item, Generates a halo like glow around the source item
 Glow {
+    cached
+    color
+    radius
+    samples
+    source
+    spread
+    transparentBorder    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -2089,6 +2131,11 @@ Glow {
 // import QtGraphicalEffects 1.0    
 // Inherits Item, Generates a blurred and colorized rectangle
 RectangularGlow {
+    cached
+    color
+    cornerRadius
+    glowRadius
+    spread    
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -2110,11 +2157,21 @@ OpacityMask {
 // import QtGraphicalEffects 1.0    
 // Inherits Item, Masks the source item with another item and applies a threshold value
 ThresholdMask {
+    cached
+    maskSource
+    source
+    spread
+    threshold
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML SHAPES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML LOCATION
