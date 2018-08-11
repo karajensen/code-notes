@@ -379,6 +379,10 @@ Math.sqrt(a)
 Math.sin(a) // Radians
 Math.cos(a) // Radians
 Math.tan(a) // Radians
+Math.asin(a) // Radians
+Math.acos(a) // Radians
+Math.atan(a) // Radians    
+Math.atan2(x, y) // Radians            
 Math.pow(a,n) // aⁿ
     
 // DATE
