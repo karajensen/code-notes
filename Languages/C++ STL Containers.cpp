@@ -7,38 +7,38 @@
 //===============================================================================================================
 /*************************************************************************************************************
 VECTOR
-• random access to elements
-• keeps values in one chunk of continuous memory
+â€¢ random access to elements
+â€¢ keeps values in one chunk of continuous memory
 
 DEQUE
-• double ended queue with random access
-• stores data in various chucks with pointers to keep track of next lot
-• not safe with pointer maths as memory not all in one piece
+â€¢ double ended queue with random access
+â€¢ stores data in various chucks with pointers to keep track of next lot
+â€¢ not safe with pointer maths as memory not all in one piece
 
 LIST/FORWARD LIST
-• List: doubly-linked list with iteration in both directions
-• Forward List: single-linked lists with iteration only forward
-• Forward list smaller and more effecient
-• not safe with pointer maths as memory not all in one piece
-• no random access, must iterate through list
-• search slow due to waiting for spread out data to be fetched into the cache
-• Handles large, complex elements well
+â€¢ List: doubly-linked list with iteration in both directions
+â€¢ Forward List: single-linked lists with iteration only forward
+â€¢ Forward list smaller and more effecient
+â€¢ not safe with pointer maths as memory not all in one piece
+â€¢ no random access, must iterate through list
+â€¢ search slow due to waiting for spread out data to be fetched into the cache
+â€¢ Handles large, complex elements well
 
 STRING
-• Stored on the stack (Short String Optimization) if capacity <= 15 characters else on the heap
-• Moving strings with SSO has no performance gain over copying them
-• If on the stack and string grows can be moved to the heap
-• Data for strings not guaranteed to be stored in continuous memory
-• Internal representation of string not guaranteed to end with null character
+â€¢ Stored on the stack (Short String Optimization) if capacity <= 15 characters else on the heap
+â€¢ Moving strings with SSO has no performance gain over copying them
+â€¢ If on the stack and string grows can be moved to the heap
+â€¢ Data for strings not guaranteed to be stored in continuous memory
+â€¢ Internal representation of string not guaranteed to end with null character
 
 VECTOR<BOOL>
-• Not a STL container and doesn't hold bools
-• Each element occupies single bit and represents bitfields
-• Can't create pointers/references to individual bits so uses proxy
-• vector<bool>::iterator is not random-access, forward or bi-directional
-• deque<bool> actually contains bool; vector<bool> was an experiment
-• Saves space but slower as requires going through proxy object
-• Don't use auto when accessing members as type chosen is std::vector<bool>::reference
+â€¢ Not a STL container and doesn't hold bools
+â€¢ Each element occupies single bit and represents bitfields
+â€¢ Can't create pointers/references to individual bits so uses proxy
+â€¢ vector<bool>::iterator is not random-access, forward or bi-directional
+â€¢ deque<bool> actually contains bool; vector<bool> was an experiment
+â€¢ Saves space but slower as requires going through proxy object
+â€¢ Don't use auto when accessing members as type chosen is std::vector<bool>::reference
 
 --------------------------------------------------------------------------
 SINGLE DATA:
@@ -71,49 +71,49 @@ Random Access:   vector              < deque
 //===============================================================================================================
 /*************************************************************************************************************
 QUEUE
-• first-in-first-out
-• no iteration/random access
-• built on top of deque using inline functions
+â€¢ first-in-first-out
+â€¢ no iteration/random access
+â€¢ built on top of deque using inline functions
 
 PRIORITY-QUEUE
-• first-in-first-out
-• no iteration/random access
-• sorted in terms of most important using heap search
-• built on top of vector & heap structure using inline functions 
+â€¢ first-in-first-out
+â€¢ no iteration/random access
+â€¢ sorted in terms of most important using heap search
+â€¢ built on top of vector & heap structure using inline functions 
 
 STACK
-• last-in-first-out
-• no iteration/random access
-• built on top of deque using inline functions
+â€¢ last-in-first-out
+â€¢ no iteration/random access
+â€¢ built on top of deque using inline functions
 
 HEAP
-• created using a vector/deque container
-• Element with highest value is always at top of heap
-• Fast insertion of new elements
+â€¢ created using a vector/deque container
+â€¢ Element with highest value is always at top of heap
+â€¢ Fast insertion of new elements
 **************************************************************************************************************/
 
 //===============================================================================================================
 // ASSOCIATIVE CONTAINERS
 //===============================================================================================================
 /*************************************************************************************************************
-• Default sort function is operator< and is auto sorted when new key is inserted
-• Keys are const and should not be changed as this affects the sort order
+â€¢ Default sort function is operator< and is auto sorted when new key is inserted
+â€¢ Keys are const and should not be changed as this affects the sort order
 
 MAP
-• Based on balanced binary tree
-• Sorted from lowest to highest with their key
-• has a O(logN) lookup and insert time
-• Multi map can have multiple values to the one key
+â€¢ Based on balanced binary tree
+â€¢ Sorted from lowest to highest with their key
+â€¢ has a O(logN) lookup and insert time
+â€¢ Multi map can have multiple values to the one key
 
 UNORDERED MAP
-• Based on hash table
-• Not sorted
-• Fast for accessing individual elements by key
+â€¢ Based on hash table
+â€¢ Not sorted
+â€¢ Fast for accessing individual elements by key
 
 SET
-• Elements themselves are the keys
-• Elements in a set are always sorted from lower to higher
-• Multi set can have multiple values to the one key
+â€¢ Elements themselves are the keys
+â€¢ Elements in a set are always sorted from lower to higher
+â€¢ Multi set can have multiple values to the one key
 **************************************************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -475,30 +475,30 @@ mybits.to_string()  // returns a string representation (1101101)
 
 /*************************************************************************************************************
 INPUT ITERATOR
-• iterator that a program can use to read only
-• single pass, one way iterator; can't back up once incremented
-• each time one moves through container, different order of moving through elements
+â€¢ iterator that a program can use to read only
+â€¢ single pass, one way iterator; can't back up once incremented
+â€¢ each time one moves through container, different order of moving through elements
 
 OUTPUT ITERATOR
-• iterator that a program can use to write only
-• single pass, one way iterator; can't back up once incremented
-• each time one moves through container, different order of moving through elements
+â€¢ iterator that a program can use to write only
+â€¢ single pass, one way iterator; can't back up once incremented
+â€¢ each time one moves through container, different order of moving through elements
 
 FORWARD ITERATOR
-• Goes through sequence in same order each time
-• Multi pass, can still access prior elements once incremented
-• Read and write abilities
+â€¢ Goes through sequence in same order each time
+â€¢ Multi pass, can still access prior elements once incremented
+â€¢ Read and write abilities
 
 BIDIRECTIONAL ITERATOR
-• Goes through sequence in same order each time
-• Multi pass, Can increment and decrement
-• Read and write abilities
+â€¢ Goes through sequence in same order each time
+â€¢ Multi pass, Can increment and decrement
+â€¢ Read and write abilities
 
 RANDOM ACCESS ITERATOR
-• Goes through sequence in same order each time
-• Can jump to any element in container
-• Multi pass, Can increment and decrement
-• Read and write abilities
+â€¢ Goes through sequence in same order each time
+â€¢ Can jump to any element in container
+â€¢ Multi pass, Can increment and decrement
+â€¢ Read and write abilities
 
 --------------------------------------------------------------------
 Capability    Input   Output   Forward  Bidirectional Random Access
@@ -517,64 +517,64 @@ ITERATOR TYPES
 ===============================================================================================================
 
 CONTAINER ITERATORS
-• Vector/Array/Deque: Random Access Iterator
-• List: Bidirectional Iterator
-• Forward List: Forward Iterator
-• Map: Bidirectional Iterator
-• Queue/Stack: No Iteration
+â€¢ Vector/Array/Deque: Random Access Iterator
+â€¢ List: Bidirectional Iterator
+â€¢ Forward List: Forward Iterator
+â€¢ Map: Bidirectional Iterator
+â€¢ Queue/Stack: No Iteration
 
 BACK INSERT ITERATOR
-• Output iterator
-• inserts items at the end of the container. 
-• calls .push_back(), only used with containers that have it (vector, deque, string, list)
-• For set/maps, only affects insertion performance as values are sorted
+â€¢ Output iterator
+â€¢ inserts items at the end of the container. 
+â€¢ calls .push_back(), only used with containers that have it (vector, deque, string, list)
+â€¢ For set/maps, only affects insertion performance as values are sorted
 
 FRONT INSERT ITERATOR
-• Output iterator
-• inserts items at the front of the container.
-• calls .push_front(), only used with containers that have it (deque, list)
-• For set/maps, only affects insertion performance as values are sorted
+â€¢ Output iterator
+â€¢ inserts items at the front of the container.
+â€¢ calls .push_front(), only used with containers that have it (deque, list)
+â€¢ For set/maps, only affects insertion performance as values are sorted
 
 INSERT ITERATOR
-• Output iterator
-• inserts items in front of the location specified as an argument
-• For set/maps, only affects insertion performance as values are sorted
+â€¢ Output iterator
+â€¢ inserts items in front of the location specified as an argument
+â€¢ For set/maps, only affects insertion performance as values are sorted
 
 OSTREAM ITERATOR
-• Output iterator
-• ineffecient due to lots of error checking/formatting
+â€¢ Output iterator
+â€¢ ineffecient due to lots of error checking/formatting
 
 OSTREAMBUF ITERATOR
-• Output iterator
-• Faster than ostream_iterator
+â€¢ Output iterator
+â€¢ Faster than ostream_iterator
 
 ISTREAM ITERATOR
-• Input iterator
-• ineffecient due to lots of error checking/formatting
+â€¢ Input iterator
+â€¢ ineffecient due to lots of error checking/formatting
 
 ISTREAMBUF ITERATOR
-• Input iterator
-• Faster than istream_iterator, doesn't skip over any character
-• directly grabs what's next in stream buffer, no extra checking/formatting
+â€¢ Input iterator
+â€¢ Faster than istream_iterator, doesn't skip over any character
+â€¢ directly grabs what's next in stream buffer, no extra checking/formatting
 
 ===============================================================================================================
 ITERATOR INVALIDATION
 ===============================================================================================================
 
 VECTOR/PRIORITY-QUEUE
-• Insertion: Before point of insertion unaffected unless container size is 
+â€¢ Insertion: Before point of insertion unaffected unless container size is 
   greather than previous capacity and vector needs to be recopied.
-• Erasure: All after point of erase are invalidated.
+â€¢ Erasure: All after point of erase are invalidated.
 
 DEQUE/QUEUE/STACK
-• Insertion: All invalidated unless inserted member is at the front or back in
+â€¢ Insertion: All invalidated unless inserted member is at the front or back in
   which iterators are invalidated and references are not.
-• Erasure: All invalidated unless erased member is at the front or back in
+â€¢ Erasure: All invalidated unless erased member is at the front or back in
   which only the member erased is invalidated.
 
 LIST/MAP/SET
-• Inerstion: All unaffected.
-• Erasure: Only the erased member is invalidated.
+â€¢ Inerstion: All unaffected.
+â€¢ Erasure: Only the erased member is invalidated.
 **************************************************************************************************************/
 
 std::end(O) //iterator pointing at one past end of container object
@@ -584,11 +584,11 @@ std::distance(itr1, itr2) //returns int distance between 2 iterators, it2 must b
 
 //ITERATING OVER CONTAINER
 auto endItr = myVec.end(); // to prevent recomputing each iteration
-for (vector<int>::iterator itr = myVec.begin(); itr != endItr; ++itr)
+for (auto itr = myVec.begin(); itr != endItr; ++itr)
     itr->myMethod();
 
 auto endItr = myVec.rend(); // to prevent recomputing each iteration
-for (vector<int>::reverse_iterator itr = myVec.rbegin(); itr = endItr; ++itr)
+for (auto itr = myVec.rbegin(); itr != endItr; ++itr)
     itr->myMethod();
 
 for (auto& item : myVec)
