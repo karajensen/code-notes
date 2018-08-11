@@ -3,6 +3,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // ITEM
+// import QtQuick 2.11
 // Base for most QML components, instantiates QQuickItem
 Item {
     activeFocusOnTab // Whether included in active focus on tab, default false
@@ -93,6 +94,7 @@ item.nextItemInFocusChain(forward) // Returns item next in the focus chain, forw
 ------------------------------------------------------------------------------------------------------------
     
 // QTOBJECT
+// import QtQml 2.11
 // lightweight non-visual element
 QtObject {
    objectName: "name"
@@ -101,6 +103,7 @@ QtObject {
 ------------------------------------------------------------------------------------------------------------
 
 // COMPONENT
+// import QtQml 2.11
 // Instantiates QQmlComponent, Used for sourceComponent and contentItem properties
 Component {
     Rectangle {
@@ -111,6 +114,7 @@ Component {
 ------------------------------------------------------------------------------------------------------------
 
 // CONNECTIONS
+// import QtQml 2.11
 // Access a signal outside of the object that emits it, required for Loader items
 Connections {
     target: loader.item
@@ -120,6 +124,7 @@ Connections {
 ------------------------------------------------------------------------------------------------------------
 
 // BINDING
+// import QtQml 2.11
 // Will become active and assign value to myProperty when myBoolean becomes true
 // When active, will disable any direct bindings myProperty may have until myBoolean is false
 Binding {
@@ -133,8 +138,10 @@ Binding {
 ------------------------------------------------------------------------------------------------------------
 
 // REPEATER
+// import QtQuick 2.11
 // Inherits Item, Usually in Row/Column, instantiates n items
 // creates all of its delegate items when the repeater is first created
+// Changing model or setting to null will destroy all previous items
 Repeater {
     id: repeater
     model: 3
@@ -152,6 +159,7 @@ Repeater {
 ------------------------------------------------------------------------------------------------------------
 
 // INSTANTIATOR
+// import QtQml 2.11
 // Dynamically create objects parented to the Instantiator
 Instantiator {
    active: true // Changing will create/destroy objects
@@ -167,6 +175,7 @@ instantiator.objectAt(index) // Takes int index, returns QtObject
 ------------------------------------------------------------------------------------------------------------
     
 // STATEGROUP
+// import QtQuick 2.11
 // State support for non QML Item derived components, see Item for State {}
 StateGroup {
     state: "state1" // QString state name, default empty
@@ -176,6 +185,7 @@ StateGroup {
 ------------------------------------------------------------------------------------------------------------
 
 // TIMER
+// import QtQml 2.11
 // Triggers a handler at a specified interval
 Timer {
     interval: 500 // milliseconds
@@ -193,6 +203,7 @@ timer.stop()
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    
 // WINDOW
+// import QtQuick.Window 2.11
 // Instantiates QQuickWindow, Creates a new top-level window 
 Window {
     active
@@ -244,6 +255,7 @@ Item {
 ------------------------------------------------------------------------------------------------------------
 
 // APPLICATIONWINDOW
+// import QtQuick.Controls 1.4
 // Inherits Window, Styled top-level window
 ApplicationWindow {
     activeFocusControl
@@ -296,6 +308,7 @@ Layout.topMargin // Overrides margin property if set
 ------------------------------------------------------------------------------------------------------------
 
 // ROWLAYOUT
+// import QtQuick.Layouts 1.11
 // Inherits Item, Aligns elements after each other in a single row
 RowLayout {
     anchors.fill: parent // Still use anchors on base
@@ -306,6 +319,7 @@ RowLayout {
 ------------------------------------------------------------------------------------------------------------
 
 // ROW
+// import QtQuick 2.11
 // Inherits Item, Positions its child items along a single row
 Row {
     bottomPadding: 1.0 // padding around the content, overrides 'padding'
@@ -325,6 +339,7 @@ row.forceLayout() // Triggers an update instead of waiting for scheduled one
 ------------------------------------------------------------------------------------------------------------
 
 // COLUMNLAYOUT
+// import QtQuick.Layouts 1.11
 // Inherits Item, Aligns elements after each other in a single column
 ColumnLayout {
     anchors.fill: parent // Still use anchors on base
@@ -335,6 +350,7 @@ ColumnLayout {
 ------------------------------------------------------------------------------------------------------------
 
 // COLUMN
+// import QtQuick 2.11
 // Inherits Item, Positions its child items along a single column
 Column {
     bottomPadding: 1.0 // padding around the content, overrides 'padding'
@@ -353,6 +369,7 @@ column.forceLayout() // Triggers an update instead of waiting for scheduled one
 ------------------------------------------------------------------------------------------------------------
 
 // GRIDLAYOUT
+// import QtQuick.Layouts 1.11
 // Inherits Item, Aligns elements in a grid with n columns
 GridLayout {
     anchors.fill: parent // Still use anchors on base
@@ -367,6 +384,7 @@ GridLayout {
 ------------------------------------------------------------------------------------------------------------
 
 // GRID
+// import QtQuick 2.11
 // Inherits Item, Positions its child items in grid formation
 Grid {
     bottomPadding: 1.0 // padding around the content, overrides 'padding'
@@ -391,6 +409,7 @@ grid.forceLayout() // Triggers an update instead of waiting for scheduled one
 ------------------------------------------------------------------------------------------------------------
 
 // FLOW
+// import QtQuick 2.11
 // Inherits Item, Positions its children side by side, wrapping as necessary
 Flow {
     bottomPadding: 1.0 // padding around the content, overrides 'padding'
@@ -429,6 +448,7 @@ Qt.RightToLeft
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
 // ACTION
+// import QtQuick.Controls 2.4
 // Inherits QtObject, used in AbstractButton
 Action {
     ActionGroup.group: myAction // Add the action to the group
@@ -449,6 +469,7 @@ action.trigger(source) // Trigger the action/emit signal, source defaults to nul
 ------------------------------------------------------------------------------------------------------------
 
 // ACTIONGROUP
+// import QtQuick.Controls 2.4
 // Inherits QtObject, Groups actions together
 // Can add items as children, through ActionGroup.group attached property or addAction()
 ActionGroup {
@@ -467,6 +488,7 @@ group.removeAction(myAction) // Remove an action
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // CONTROL
+// import QtQuick.Controls 2.4
 // Inherits Item, base class for all controls
 // Controls (except non-interactive indicators) do not let clicks/touches through to children
 Control {
@@ -502,6 +524,7 @@ Qt.NoFocus      // The control does not accept focus
 ------------------------------------------------------------------------------------------------------------
 
 // COMBOBOX
+// import QtQuick.Controls 2.4
 // Inherits Control, Combined button and popup list for selecting options
 ComboBox {
     acceptableInput
@@ -536,6 +559,7 @@ cb.textAt(index)
 ------------------------------------------------------------------------------------------------------------
 
 // SPINBOX
+// import QtQuick.Controls 2.4
 // Inherits Control, Allows the user to select from a set of preset values
 SpinBox {
     down.pressed
@@ -563,6 +587,7 @@ sb.decrease()
 ------------------------------------------------------------------------------------------------------------
 
 // DIAL
+// import QtQuick.Controls 2.4
 // Inherits Control, Circular dial that is rotated to set a value
 Dial {
     angle
@@ -584,6 +609,7 @@ dial.decrease()
 ------------------------------------------------------------------------------------------------------------
 
 // BUSYINDICATOR
+// import QtQuick.Controls 2.4
 // Inherits Control, Indicates background activity
 BusyIndicator {
     running
@@ -592,6 +618,7 @@ BusyIndicator {
 ------------------------------------------------------------------------------------------------------------
 
 // SCROLLINDICATOR
+// import QtQuick.Controls 2.4
 // Inherits Control, Vertical or horizontal non-interactive scroll indicator.
 ScrollIndicator {
     active
@@ -610,6 +637,7 @@ Flickable {
 ------------------------------------------------------------------------------------------------------------
 
 // PROGRESSBAR
+// import QtQuick.Controls 2.4
 // Inherits Control, Indicates the progress of an operation
 ProgressBar {
     from
@@ -623,6 +651,7 @@ ProgressBar {
 ------------------------------------------------------------------------------------------------------------
 
 // SLIDER
+// import QtQuick.Controls 2.4
 // Inherits Control, Used to select a value by sliding a handle along a track
 Slider {
     from 
@@ -647,6 +676,7 @@ slider.valueAt(real position)
 ------------------------------------------------------------------------------------------------------------
 
 // RANGESLIDER
+// import QtQuick.Controls 2.4
 // Inherits Control, Used to select a range of values by sliding two handles along a track
 RangeSlider {
     first.value
@@ -679,6 +709,7 @@ slider.setValues(firstValue, secondValue)
 ------------------------------------------------------------------------------------------------------------
 
 // TUMBLER
+// import QtQuick.Controls 2.4
 // Inherits Control, Spinnable wheel of items that can be selected
 Tumbler {
     count
@@ -694,6 +725,7 @@ Tumbler {
 ------------------------------------------------------------------------------------------------------------
 
 // SCROLLBAR
+// import QtQuick.Controls 2.4
 // Inherits Control, Vertical or horizontal interactive scroll bar
 ScrollBar {
     horizontal: true // Whether horizontal
@@ -735,6 +767,7 @@ Qt.Vertical    Q.Horizontal
 ------------------------------------------------------------------------------------------------------------
 
 // TOOLSEPARATOR
+// import QtQuick.Controls 2.4
 // Inherits Control, Separates a group of items in a toolbar from adjacent items
 ToolSeparator {
     horizontal
@@ -747,6 +780,7 @@ ToolSeparator {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // ABSTRACTBUTTON
+// import QtQuick.Controls 2.4
 // Inherits Control, base class for all buttons
 AbstractButton {
     text: "str"
@@ -779,6 +813,7 @@ AbstractButton.TextBesideIcon
 ------------------------------------------------------------------------------------------------------------
 
 // BUTTON
+// import QtQuick.Controls 2.4
 // Inherits AbstractButton
 Button {
     autoRepeat: false // default, whether repeats pressed, released and clicked signals
@@ -789,6 +824,7 @@ btn.highlighted // Whether button is highlighted
 ------------------------------------------------------------------------------------------------------------
 
 // ROUNDBUTTON
+// import QtQuick.Controls 2.4
 // Inherits AbstractButton, Button with rounded corners
 RoundButton {
     radius
@@ -797,6 +833,7 @@ RoundButton {
 ------------------------------------------------------------------------------------------------------------
 
 // CHECKBOX
+// import QtQuick.Controls 2.4
 // Inherits AbstractButton
 CheckBox {
     checkState
@@ -806,6 +843,7 @@ CheckBox {
 ------------------------------------------------------------------------------------------------------------
 
 // RADIOBUTTON
+// import QtQuick.Controls 2.4
 // Inherits AbstractButton, Exclusive radio button that can be toggled on or off
 RadioButton {
 }
@@ -813,6 +851,7 @@ RadioButton {
 ------------------------------------------------------------------------------------------------------------
 
 // TABBUTTON
+// import QtQuick.Controls 2.4
 // Inherits AbstractButton, Button with a look suitable for a TabBar
 TabButton {
 }
@@ -820,6 +859,7 @@ TabButton {
 ------------------------------------------------------------------------------------------------------------
 
 // SWITCH
+// import QtQuick.Controls 2.4
 // Inherits AbstractButton, Switch button that can be toggled on or off
 Switch {
     position
@@ -829,6 +869,7 @@ Switch {
 ------------------------------------------------------------------------------------------------------------
 
 // BUTTONGROUP
+// import QtQuick.Controls 2.4
 // Inherits QtObject, Mutually-exclusive group of checkable buttons
 ButtonGroup {
     buttons
@@ -847,6 +888,7 @@ AbstractButton {
 ------------------------------------------------------------------------------------------------------------
 
 // MENUITEM
+// import QtQuick.Controls 2.4    
 // Inherits AbstractButton
 MenuItem {
    menu: myMenu // Parent menu of the item
@@ -858,6 +900,7 @@ menuItem.highlighted // Whether is highlighted by the user
 ------------------------------------------------------------------------------------------------------------
 
 // MENUBARITEM
+// import QtQuick.Controls 2.4    
 // Inherits AbstractButton
 MenuBarItem {
     highlighted
@@ -871,6 +914,7 @@ MenuBarItem {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // CONTAINER
+// import QtQuick.Controls 2.4
 // Inherits Control, Abstract base class for some containers
 Container {
     contentChildren
@@ -893,6 +937,7 @@ cont.takeItem(index) // Returns Item
 ------------------------------------------------------------------------------------------------------------
     
 // FLICKABLE
+// import QtQuick 2.11    
 // Inherits Item, Provides a surface that can be "flicked"
 Flickable {    
     atXBeginning
@@ -949,6 +994,7 @@ flick.returnToBounds()
 ------------------------------------------------------------------------------------------------------------
 
 // PANE
+// import QtQuick.Controls 2.4
 // Inherits Control, Provides a background matching with the application style and theme
 Pane {
     contentChildren
@@ -960,6 +1006,7 @@ Pane {
 ------------------------------------------------------------------------------------------------------------
 
 // FRAME
+// import QtQuick.Controls 2.4    
 // Inherits Pane, Visual frame for a logical group of controls
 Frame {
 }
@@ -967,6 +1014,7 @@ Frame {
 ------------------------------------------------------------------------------------------------------------
 
 // MENUBAR
+// import QtQuick.Controls 2.4
 // Inherits Container, Provides a window menu bar
 MenuBar {
     contentHeight
@@ -983,6 +1031,7 @@ menu.takeMenu(index)
 ------------------------------------------------------------------------------------------------------------
 
 // TABBAR
+// import QtQuick.Controls 2.4
 // Inherits Container, Allows the user to switch between different views or subtasks
 TabBar {
     contentHeight
@@ -1000,6 +1049,7 @@ TabBar {
 ------------------------------------------------------------------------------------------------------------
 
 // TOOLBAR
+// import QtQuick.Controls 2.4
 // Inherits Pane, Container for context-sensitive controls
 ToolBar {
     position
@@ -1008,6 +1058,7 @@ ToolBar {
 ------------------------------------------------------------------------------------------------------------
 
 // GROUPBOX
+// import QtQuick.Controls 2.4
 // Inherits Frame, Visual frame and title for a logical group of controls
 GroupBox {
     label
@@ -1017,6 +1068,7 @@ GroupBox {
 ------------------------------------------------------------------------------------------------------------
 
 // DIALOGBUTTONBOX
+// import QtQuick.Controls 2.4
 // Inherits Container, A button box used in dialogs
 DialogButtonBox {
     delegate: Button { // Use DialogButtonBox.buttonBox for parent if floating delegate
@@ -1038,6 +1090,7 @@ box.standardButton(button) // Returns AbstractButton
 ------------------------------------------------------------------------------------------------------------
     
 // SPLITVIEW
+// import QtQuick.Controls 1.4
 // No QML Controls 2 version
 ControlsLegacy.SplitView {
     handleDelegate
@@ -1050,6 +1103,7 @@ view.removeItem(item)
 ------------------------------------------------------------------------------------------------------------
    
 // SCROLLVIEW
+// import QtQuick.Controls 2.4
 // Inherits Control, Auto uses Flickable if child
 ScrollView {
     clip: true // defaults off, clips contents when scrolling outside width/height
@@ -1062,6 +1116,7 @@ scroll.contentData //  list<Object> of children, does include non-visual QML obj
 ------------------------------------------------------------------------------------------------------------
    
 // STACKVIEW
+// import QtQuick.Controls 2.4
 // Inherits Control, Provides a stack-based navigation mode
 StackView {
     busy
@@ -1099,6 +1154,7 @@ view.replace(target, item, properties, operation)
 ------------------------------------------------------------------------------------------------------------
     
 // SWIPEVIEW
+// import QtQuick.Controls 2.4
 // Inherits Container, Enables the user to navigate pages by swiping sideways
 SwipeView {
     horizontal
@@ -1121,6 +1177,7 @@ SwipeView {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // POPUP
+// import QtQuick.Controls 2.4
 // Inherits QtObject, base class for all popups
 Popup {
     activeFocus: true // Read only, whether item has active focus
@@ -1188,6 +1245,7 @@ Popup.CloseOnEscape                // The popup will close when escape key is pr
 ------------------------------------------------------------------------------------------------------------
     
 // DIALOG
+// import QtQuick.Controls 2.4
 // Inherits Popup, Popup with standard buttons and a title
 Dialog {
     footer
@@ -1210,6 +1268,7 @@ dialog.standardButton(button) // Returns AbstractButton
 ------------------------------------------------------------------------------------------------------------
     
 // MENU
+// import QtQuick.Controls 2.4
 // Inherits Popup, For context and popup menus
 Menu {
     cascade: true // default true for desktops, whether submenus offset or fill over parent menus
@@ -1256,6 +1315,7 @@ menu.takeMenu(index) // Removes and returns Menu at index
 ------------------------------------------------------------------------------------------------------------
 
 // TOOLTIP
+// import QtQuick.Controls 2.4
 // Inherits Popup, Provides tool tips for any control
 ToolTip {
    text: "str" // text to show
@@ -1275,6 +1335,7 @@ Item {
 ------------------------------------------------------------------------------------------------------------
 
 // DRAWER
+// import QtQuick.Controls 2.4
 // Inherits Popup, Side panel that can be opened and closed using a swipe gesture
 Drawer {
     dragMargin
@@ -1330,6 +1391,7 @@ line.height // Can modify to change height of line
 ------------------------------------------------------------------------------------------------------------
     
 // TEXT
+// import QtQuick 2.11
 // Inherits item, Styled text label
 Text {
     baseUrl: "http://qt-project.org/" // Used to resolve relative URLs within the text (eg. images/logo.png)
@@ -1359,6 +1421,7 @@ text.linkAt(x, y) // Returns ink string at point x, y in content coordinates, em
 ------------------------------------------------------------------------------------------------------------
     
 // TEXTINPUT
+// import QtQuick 2.11
 // Inherits Item, single line of editable plain text
 TextInput {
     displayText: "str" // Dependent on echo mode, holds input as editing    
@@ -1417,6 +1480,7 @@ input.undo() // Undos if possible
 ------------------------------------------------------------------------------------------------------------
 
 // TEXTEDIT
+// import QtQuick 2.11
 // Inherits Item, multiple lines of editable formatted text
 // Requires Flickable or ScrollView to implement scrolling, following the cursor etc
 TextEdit {
@@ -1477,6 +1541,7 @@ edit.undo() // Undos if possible
 ------------------------------------------------------------------------------------------------------------
     
 // LABEL
+// import QtQuick.Controls 2.4
 // Inherits Text, Styled text label
 Label {
     background: Rectangle {} // If no size set, auto follows the control's size, must set implicit sizes if using
@@ -1486,6 +1551,7 @@ lbl.palette // QML palette used for control, default application palette
 ------------------------------------------------------------------------------------------------------------
     
 // TEXTFIELD
+// import QtQuick.Controls 2.4    
 // Inherits TextInput, Displays a single line of editable plain text
 TextField {
     background: Rectangle {} // If no size set, auto follows the control's size, must set implicit sizes
@@ -1502,6 +1568,7 @@ field.palette // QML palette used for control, default application palette
 ------------------------------------------------------------------------------------------------------------
   
 // TEXTAREA
+// import QtQuick.Controls 2.4
 // Inherits TextEdit, Displays multiple lines of editable formatted text
 TextArea {
     background: Rectangle {} // If no size set, auto follows the control's size, must set implicit sizes
@@ -1518,6 +1585,7 @@ area.palette // QML palette used for control, default application palette
 ------------------------------------------------------------------------------------------------------------
     
 // TEXTMETRICS
+// import QtQuick 2.11
 // Provides metrics for a given font and text
 TextMetrics {
     text: "str"
@@ -1639,6 +1707,7 @@ Text.Outline     Text.Sunken
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // INTVALIDATOR
+// import QtQuick 2.11
 // Instantiates QIntValidator
 IntValidator {
     bottom: -1 // default -infinity
@@ -1648,6 +1717,7 @@ IntValidator {
 ------------------------------------------------------------------------------------------------------------
 
 // DOUBLEVALIDATOR
+// import QtQuick 2.11
 // Instantiates QDoubleValidator
 DoubleValidator {
     bottom: -1.0 // default -infinity
@@ -1663,6 +1733,7 @@ DoubleValidator.ScientificNotation   // allow E in value
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // RECTANGLE
+// import QtQuick 2.11
 // Inherits Item
 Rectangle {
     color: "red"
@@ -1687,8 +1758,25 @@ Item {
 ------------------------------------------------------------------------------------------------------------
 
 // IMAGE
+// import QtQuick 2.11
 // SVG must have <style type="text/css"> not <style>
+// Can have artifacts if some graphics effects are children
 Image {
+    asynchronous
+    autoTransform
+    cache
+    fillMode
+    horizontalAlignment
+    mipmap
+    mirror
+    paintedHeight
+    paintedWidth
+    progress
+    smooth
+    source
+    sourceSize
+    status
+    verticalAlignment
     
     // Image with rounded corners
     OpacityMask {
@@ -1702,6 +1790,7 @@ Image {
 ------------------------------------------------------------------------------------------------------------
 
 // TRANSITION
+// import QtQuick 2.11
 // Defines animated transitions that occur on state changes
 Transition {
 }
@@ -1709,7 +1798,8 @@ Transition {
 ------------------------------------------------------------------------------------------------------------
    
 // BLEND
-// Inherits Item, QtGraphicalEffects, Merges two source items by using a blend mode
+// import QtGraphicalEffects 1.0
+// Inherits Item, Merges two source items by using a blend mode
 Blend {
     cached
     foregroundSource
@@ -1720,7 +1810,8 @@ Blend {
 ------------------------------------------------------------------------------------------------------------
  
 // BRIGHTNESSCONTRAST
-// Inherits Item, QtGraphicalEffects, Adjusts brightness and contrast
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Adjusts brightness and contrast
 BrightnessContrast {
     brightness
     cached
@@ -1731,14 +1822,16 @@ BrightnessContrast {
 ------------------------------------------------------------------------------------------------------------
 
 // COLOROVERLAY
-// Inherits Item, QtGraphicalEffects, Alters the colors of the source item by applying an overlay color
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Alters the colors of the source item by applying an overlay color
 ColorOverlay {
 }
 
 ------------------------------------------------------------------------------------------------------------
 
 // COLORIZE
-// Inherits Item, QtGraphicalEffects, Sets the color in the HSL color space
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Sets the color in the HSL color space
 Colorize {
     cached
     color
@@ -1748,7 +1841,8 @@ Colorize {
 ------------------------------------------------------------------------------------------------------------
 
 // DESATURATE
-// Inherits Item, QtGraphicalEffects, Reduces the saturation of the colors
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Reduces the saturation of the colors
 Desaturate {
     cached
     desaturation
@@ -1758,7 +1852,8 @@ Desaturate {
 ------------------------------------------------------------------------------------------------------------
 
 // GAMMAADJUST
-// Inherits Item, QtGraphicalEffects, Alters the luminance of the source item
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Alters the luminance of the source item
 GammaAdjust {
     cached
     gamma
@@ -1768,7 +1863,8 @@ GammaAdjust {
 ------------------------------------------------------------------------------------------------------------
 
 // HUESATURATION
-// Inherits Item, QtGraphicalEffects, Alters the source item colors in the HSL color space
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Alters the source item colors in the HSL color space
 HueSaturation {
     cached
     hue
@@ -1780,7 +1876,8 @@ HueSaturation {
 ------------------------------------------------------------------------------------------------------------
 
 // LEVELADJUST
-// Inherits Item, QtGraphicalEffects, Adjusts color levels in the RGBA color space
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Adjusts color levels in the RGBA color space
 LevelAdjust {
     cached
     gamma
@@ -1794,13 +1891,16 @@ LevelAdjust {
 ------------------------------------------------------------------------------------------------------------
 
 // GRADIENT
+// import QtQuick 2.11
 Gradient {
+    stops
 }
 
 ------------------------------------------------------------------------------------------------------------
 
 // CONICALGRADIENT
-// Inherits Item, QtGraphicalEffects, Draws a conical gradient
+// import QtGraphicalEffects 1.0
+// Inherits Item, Draws a conical gradient
 ConicalGradient {
     angle
     cached
@@ -1813,7 +1913,8 @@ ConicalGradient {
 ------------------------------------------------------------------------------------------------------------
 
 // LINEARGRADIENT
-// Inherits Item, QtGraphicalEffects, Draws a linear gradient
+// import QtGraphicalEffects 1.0
+// Inherits Item, Draws a linear gradient
 LinearGradient {
     cached
     end
@@ -1825,7 +1926,8 @@ LinearGradient {
 ------------------------------------------------------------------------------------------------------------
 
 // RADIALGRADIENT
-// Inherits Item, QtGraphicalEffects, Draws a radial gradient
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Draws a radial gradient
 RadialGradient {
     angle
     cached
@@ -1840,7 +1942,8 @@ RadialGradient {
 ------------------------------------------------------------------------------------------------------------
 
 // DISPLACE
-// Inherits Item, QtGraphicalEffects, Moves the pixels of the source item according to a displacement map
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Moves the pixels of the source item according to a displacement map
 Displace {
     cached
     displacement
@@ -1851,7 +1954,8 @@ Displace {
 ------------------------------------------------------------------------------------------------------------
 
 // DROPSHADOW
-// Inherits Item, QtGraphicalEffects, Generates a soft shadow behind the source item
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Generates a soft shadow behind the source item
 DropShadow {
     cached
     color
@@ -1867,7 +1971,8 @@ DropShadow {
 ------------------------------------------------------------------------------------------------------------
 
 // INNERSHADOW
-// Inherits Item, QtGraphicalEffects, Generates a colorized and blurred shadow inside the source
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Generates a colorized and blurred shadow inside the source
 InnerShadow {
     cached
     color
@@ -1883,7 +1988,8 @@ InnerShadow {
 ------------------------------------------------------------------------------------------------------------
 
 // FASTBLUR
-// Inherits Item, QtGraphicalEffects, Applies a fast blur effect to one or more source items
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Applies a fast blur effect to one or more source items
 FastBlur {
     id: fastBlur
     radius: 64 // Amount of blurring [0,64]
@@ -1898,7 +2004,8 @@ FastBlur {
 ------------------------------------------------------------------------------------------------------------
 
 // GAUSSIANBLUR
-// Inherits Item, QtGraphicalEffects, Applies a higher quality blur effect
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Applies a higher quality blur effect
 GaussianBlur {
     cached
     deviation
@@ -1911,7 +2018,8 @@ GaussianBlur {
 ------------------------------------------------------------------------------------------------------------
 
 // MASKEDBLUR
-// Inherits Item, QtGraphicalEffects, Applies a blur effect with a varying intesity
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Applies a blur effect with a varying intesity
 MaskedBlur {
     cached
     maskSource
@@ -1923,49 +2031,56 @@ MaskedBlur {
 ------------------------------------------------------------------------------------------------------------
 
 // RECURSIVEBLUR
-// Inherits Item, QtGraphicalEffects, Blurs repeatedly, providing a strong blur effect
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Blurs repeatedly, providing a strong blur effect
 RecursiveBlur {
 }
 
 ------------------------------------------------------------------------------------------------------------
 
 // DIRECTIONALBLUR
-// Inherits Item, QtGraphicalEffects, Applies blur effect to the specified direction
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Applies blur effect to the specified direction
 DirectionalBlur {
 }
 
 ------------------------------------------------------------------------------------------------------------
 
 // RADIALBLUR
-// Inherits Item, QtGraphicalEffects, Applies blur in a circular direction around the item center point
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Applies blur in a circular direction around the item center point
 RadialBlur {
 }
 
 ------------------------------------------------------------------------------------------------------------
 
 // ZOOMBLUR
-// Inherits Item, QtGraphicalEffects, Applies directional blur effect towards source items center point
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Applies directional blur effect towards source items center point
 ZoomBlur {
 }
 
 ------------------------------------------------------------------------------------------------------------
 
 // GLOW
-// Inherits Item, QtGraphicalEffects, Generates a halo like glow around the source item
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Generates a halo like glow around the source item
 Glow {
 }
 
 ------------------------------------------------------------------------------------------------------------
 
 // RECTANGULARGLOW
-// Inherits Item, QtGraphicalEffects, Generates a blurred and colorized rectangle
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Generates a blurred and colorized rectangle
 RectangularGlow {
 }
 
 ------------------------------------------------------------------------------------------------------------
     
 // OPACITYMASK
-// Inherits Item, QtGraphicalEffects, Masks the source item with another item
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Masks the source item with another item
 // By default only draws parts of source inside maskSource
 OpacityMask {
     cached: false // Default, caches results, use if not animated, improves performance
@@ -1977,7 +2092,17 @@ OpacityMask {
 ------------------------------------------------------------------------------------------------------------
 
 // THRESHOLDMASK
-// Inherits Item, QtGraphicalEffects, Masks the source item with another item and applies a threshold value
+// import QtGraphicalEffects 1.0    
+// Inherits Item, Masks the source item with another item and applies a threshold value
 ThresholdMask {
 }
-    
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML SHAPES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML LOCATION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
