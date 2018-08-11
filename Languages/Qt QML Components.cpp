@@ -132,6 +132,7 @@ Component {
 // Access a signal outside of the object that emits it, required for Loader items
 Connections {
     target: loader.item
+    ignoreUnknownSignals: true // if onMySignal does not exist, do not produce runtime errors
     onMySignal: { value }
 }
 
