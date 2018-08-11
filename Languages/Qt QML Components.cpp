@@ -2168,10 +2168,57 @@ ThresholdMask {
 // QML SHAPES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// SHAPE
+// import QtQuick.Shapes 1.0
+// Inherits Item, defines area which any child paths will be drawn
+Shape {
+    asynchronous
+    containsMode
+    data
+    rendererType
+    status
+    vendorExtensionsEnabled
+}
 
+// PATH
+// import QtQuick 2.11
+Path {
+    closed
+    pathElements
+    startX
+    startY
+}
 
+// SHAPEPATH
+// import QtQuick.Shapes 1.0
+// Inherits Path
+// First PathLine draws from startX/Y to x/y, next PathLine draws from previous to x/y etc.
+// Can't be used with MouseArea (only Shape can)
+ShapePath {
+    capStyle
+    dashOffset
+    dashPattern: [3, 2] // [n * strokeWidth dash, n * strokeWidth blank]
+    fillColor
+    fillGradient
+    fillRule
+    joinStyle
+    miterLimit
+    strokeColor
+    strokeWidth: 2
+    strokeStyle: ShapePath.DashLine
+               
+    PathLine { 
+        x
+        y
+    }
 
-
+    PathArc {
+        x
+        y
+        radiusX
+        radiusY
+    }
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML LOCATION
