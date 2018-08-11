@@ -520,11 +520,14 @@ FocusScope {
 
 // MOUSEAREA
 // Inherits Item
+// Only rectangle, can be child of Item or map items but not ShapePath
+// Can be transformed though will call onPositionChanged when transform applied
+// Do mouse.accepted = false; to send events to parent
 MouseArea {
     acceptedButtons: Qt.LeftButton // default
     cursorShape: Qt.ArrowCursor // default
     drag.target: item // Item to drag
-    drag.axis: Drag.XAxis // Axis mask
+    drag.axis: Drag.XAxis // Axis mask, does not rotate
     drag.minimumX: 1.0 // how far the target can be dragged along the axis
     drag.maximumX: 1.0 // how far the target can be dragged along the axis
     drag.minimumY: 1.0 // how far the target can be dragged along the axis
