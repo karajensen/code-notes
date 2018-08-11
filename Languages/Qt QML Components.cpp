@@ -2180,6 +2180,8 @@ Shape {
     vendorExtensionsEnabled
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // PATH
 // import QtQuick 2.11
 Path {
@@ -2188,6 +2190,8 @@ Path {
     startX
     startY
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // SHAPEPATH
 // import QtQuick.Shapes 1.0
@@ -2236,6 +2240,8 @@ coord.longitude // double
 coord.distanceTo(coord2) // returns real distance in meters
 coord.azimuth(coord2) // returns real angle [0, 360) of vector betweens coordinate to up vector
 coord.atDistanceAndAzimuth(distance, angle) // returns coord distance (m) along vector at angle from up vector
+    
+------------------------------------------------------------------------------------------------------------
 
 // MAP
 // import QtLocation 5.11
@@ -2285,6 +2291,8 @@ map.removeMapParameter(parameter) // Remove MapParameter
 map.setBearing(bearing, coordinate)
 map.toCoordinate(position, clipToViewPort) // Returns coordinate, out of bounds is NaN unless clip is false
     
+------------------------------------------------------------------------------------------------------------    
+    
 // MAPCIRCLE
 // import QtLocation 5.11
 // Auto transforms with Map if added to it
@@ -2297,6 +2305,8 @@ MapCircle {
     radius
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // MAPPOLYGON
 // import QtLocation 5.11
 // Auto transforms with Map if added to it
@@ -2307,6 +2317,8 @@ MapPolygon {
     color
     path
 }
+
+------------------------------------------------------------------------------------------------------------
 
 // MAPRECTANGLE
 // import QtLocation 5.11
@@ -2320,6 +2332,8 @@ MapRectangle {
     topLeft    
 }
 
+------------------------------------------------------------------------------------------------------------
+
 // MAPQUICKITEM
 // import QtLocation 5.11
 // Auto translates (no scaling) with Map if added to it
@@ -2330,6 +2344,8 @@ MapQuickItem {
     sourceItem
     zoomLevel
 }    
+
+------------------------------------------------------------------------------------------------------------
 
 // MapItemGroup 
 // import QtLocation 5.11
