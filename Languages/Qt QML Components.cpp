@@ -2223,3 +2223,116 @@ ShapePath {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML LOCATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// COORDINATE
+// import QtPositioning 5.11
+// Auto converts to/from QGeoCoordinate
+property var coord: QtPositioning.coordinate()
+property var coord: QtPositioning.coordinate(latitude, longitue, altitude)
+coord.altitude // double
+coord.isValid // const bool
+coord.latitude // double
+coord.longitude // double
+coord.distanceTo(coord2) // returns real distance in meters
+coord.azimuth(coord2) // returns real angle [0, 360) of vector betweens coordinate to up vector
+coord.atDistanceAndAzimuth(distance, angle) // returns coord distance (m) along vector at angle from up vector
+
+// MAP
+// import QtLocation 5.11
+// Values like center will not be valid until mapReady is true
+Map {
+    activeMapType
+    bearing
+    center
+    color
+    copyrightsVisible
+    error
+    errorString
+    fieldOfView
+    gesture
+    mapItems
+    mapParameters
+    mapReady 
+    maximumFieldOfView
+    maximumTilt
+    maximumZoomLevel
+    minimumFieldOfView
+    minimumTilt
+    minimumZoomLevel
+    plugin
+    supportedMapTypes
+    tilt
+    visibleRegion
+    zoomLevel    
+}
+map.addMapItem(item) // Add MapItem
+map.addMapItemGroup(itemGroup) // Add MapItemGroup
+map.addMapItemView(itemView) // Add MapItemView
+map.addMapParameter(parameter) // Add MapParameter
+map.alignCoordinateToPoint(coordinate, point)
+map.clearData()
+map.clearMapItems()
+map.clearMapParameters()
+map.fitViewportToMapItems()
+map.fitViewportToVisibleMapItems()
+map.fromCoordinate(coordinate, clipToViewPort) // Returns point, out of bounds is NaN unless clip is false
+map.pan(dx, dy)
+map.prefetchData()
+map.removeMapItem(item) // Remove MapItem
+map.removeMapItemGroup(itemGroup) // Remove MapItemGroup
+map.removeMapItemView(itemView) // Remove MapItemView
+map.removeMapParameter(parameter) // Remove MapParameter
+map.setBearing(bearing, coordinate)
+map.toCoordinate(position, clipToViewPort) // Returns coordinate, out of bounds is NaN unless clip is false
+    
+// MAPCIRCLE
+// import QtLocation 5.11
+// Auto transforms with Map if added to it
+MapCircle {
+    center: QtPositioning.coordinate()
+    border.width
+    border.color
+    color
+    opacity
+    radius
+}
+
+// MAPPOLYGON
+// import QtLocation 5.11
+// Auto transforms with Map if added to it
+// Modifying elements of path does not auto update path, have to reassign whole path
+MapPolygon {
+    border.width
+    border.color
+    color
+    path
+}
+
+// MAPRECTANGLE
+// import QtLocation 5.11
+// Auto transforms with Map if added to it
+MapRectangle {
+    border.width 
+    border.color
+    bottomRight
+    color
+    opacity
+    topLeft    
+}
+
+// MAPQUICKITEM
+// import QtLocation 5.11
+// Auto translates (no scaling) with Map if added to it
+// Requires zoomLevel to be set for scaling
+MapQuickItem {
+    anchorPoint
+    coordinate
+    sourceItem
+    zoomLevel
+}    
+
+// MapItemGroup 
+// import QtLocation 5.11
+// Groups any map items together, can add to map as a single group
+MapItemGroup {
+}
