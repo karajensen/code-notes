@@ -98,6 +98,7 @@ view.positionViewAtBeginning() // Positions the view at the beginning
 view.positionViewAtEnd() // Positions the view at the end
   
 // LISTVIEW
+// import QtQuick 2.11
 // Inherits Flickable, Display items from a model in a list
 // Delegates are instantiated as needed and may be destroyed at any time
 ListView {
@@ -118,6 +119,7 @@ view.decrementCurrentIndex() // Decrements the current index, will wrap dependin
 view.incrementCurrentIndex() // Increments the current index, will wrap depending on keyNavigationWraps
   
 // GRIDVIEW
+// import QtQuick 2.11    
 // Inherits Flickable, Display items from a model in a grid
 GridView {
     cellHeight: 100 // default, height of each cell in the grid
@@ -130,6 +132,7 @@ view.moveCurrentIndexRight() // Moves selected right one, will wrap if keyNaviga
 view.moveCurrentIndexUp() // Moves selected up one, will wrap if keyNavigationWraps is true
 
 // PATHVIEW
+// import QtQuick 2.11    
 // Inherits Item, Lays out model-provided items on a path
 PathView {
     cacheItemCount
@@ -236,27 +239,32 @@ del.ListView.section // Section string of the item
 del.PathView.onPath // Whether the item is currently on the path
 
 // ITEMDELEGATE
+// import QtQuick.Controls 2.4
 // Inherits AbstractButton, Basic item delegate
 ItemDelegate {
     highlighted: ListView.isCurrentItem // set whether the delegate is highlighted
 }
 
 // CHECKDELEGATE
+// import QtQuick.Controls 2.4
 // Inherits ItemDelegate, has check indicator that can be toggled on or off
 CheckDelegate {
 }
 
 // RADIODELEGATE
+// import QtQuick.Controls 2.4
 // Inherits ItemDelegate, has radio indicator that can be toggled on or off
 RadioDelegate {
 }
 
 // SWITCHDELEGATE
+// import QtQuick.Controls 2.4
 // Inherits ItemDelegate, has a switch indicator that can be toggled on or off
 SwitchDelegate {
 }
 
 // SWIPEDELEGATE
+// import QtQuick.Controls 2.4
 // Inherits ItemDelegate, Swipable item delegate
 SwipeDelegate {
 }
@@ -266,21 +274,25 @@ SwipeDelegate {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // LISTMODEL
+// import QtQml.Models 2.11
 // free-form list data source
 ListModel {
 }
 
 // XMLLISTMODEL
+// import QtQuick.XmlListModel 2.11
 // read-only model using XPath expressions
 XmlListModel {
 }
 
 // OBJECTMODEL
+// import QtQml.Models 2.11
 // Defines a set of items to be used as a model
 ObjectModel {
 }
 
 // ITEMSELECTIONMODEL
+// import QtQml.Models 2.11
 // Instantiates QItemSelectionModel, Allows keeping the selection state of multiple views in sync
 // Parent/Index is QModelIndex, QML views do not use QModelIndex, need to convert to it
 ItemSelectionModel {
