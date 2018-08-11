@@ -44,9 +44,8 @@ Item {
     anchors.baselineOffset // Value offset from position
     anchors.alignWhenCentered // forces centered anchors to align to a whole pixel, default true
     state // QString state name, default empty
-    transform // list<Transform>, list of transformations to apply
-    transitions // list<Transition>, transitions to be applied to the item whenever it changes its state
-
+    transitions // list<Transition>, transitions to be applied to the item whenever it changes its state     
+        
     layer.effect: OpacityMask {} // QtGraphicalEffects
     layer.enabled // Whether the item is layered or not, disabled by default
     layer.format // Enum, internal OpenGL format of the texture
@@ -58,6 +57,21 @@ Item {
     layer.textureMirroring // Enum, how the generated OpenGL texture should be mirrored
     layer.textureSize // Pixel size of the layers texture, if empty (default) uses item's size
     layer.wrapMode // Enum, OpenGL wrap modes associated with the texture
+        
+    /* list<Transform>, list of transformations to apply */
+    transform: [  
+        Rotation // rotate item around its center, requires item id
+        {
+            angle: angleDegrees
+            origin.x: item.width / 2
+            origin.y: item.height / 2
+        },
+        Translate // using x/y will change center of item, requires item id
+        {
+            x: -item.width / 2
+            y: -item.height / 2
+        }
+    ]           
    
     /* list<State>, if multiple 'when' true, first is chosen */
     states: [
