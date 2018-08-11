@@ -314,12 +314,12 @@ public:
 
 private:
 
-   class MyClassPimpl; 
-   std::unique_ptr<MyClassPimpl> m_pimpl;
+   class MyClassImpl; 
+   std::unique_ptr<MyClassImpl> m_impl;
 };
 
 // Internal class lives in .cpp file
-class MyClass::MyClassPimpl
+class MyClass::MyClassImpl
 {
 public:
 
@@ -331,14 +331,14 @@ public:
  
 // Creation of internal class in .cpp
 MyClass::MyClass():  
-    m_pimpl(new MyClassPimpl())
+    m_impl(new MyClassImpl())
 {
 }
 
 // Calling of internal class in .cpp
 void MyClass::MyMethod()
 {
-   m_pimpl->MyMethod();
+   m_impl->MyMethod();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
