@@ -360,6 +360,12 @@ Layout.row // row position of an item in a GridLayout
 Layout.rowSpan // row span of an item in a GridLayout
 Layout.topMargin // Overrides margin property if set
     
+// POSITIONER ATTACHED PROPERTIES
+// Attach to top-level children within a Column, Row, Flow or Grid
+Positioner.index
+Positioner.isFirstItem
+Positioner.isLastItem
+    
 ------------------------------------------------------------------------------------------------------------
 
 // ROWLAYOUT
@@ -1783,6 +1789,15 @@ DoubleValidator {
 DoubleValidator.StandardNotation     // disables E in value
 DoubleValidator.ScientificNotation   // allow E in value
 
+------------------------------------------------------------------------------------------------------------
+    
+// REGEXPVALIDATOR
+// import QtQuick 2.11
+// Instantiates QRegExpValidator
+RegExpValidator {
+    regExp
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML GRAPHICS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1840,6 +1855,28 @@ Image {
             radius: 6
         }  
     }
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// BORDERIMAGE
+// import QtQuick 2.11
+// Inherits Item, paints a border based on an image
+BorderImage {
+    asynchronous
+    border.left 
+    border.right 
+    border.top 
+    border.bottom 
+    cache
+    horizontalTileMode
+    mirror
+    progress
+    smooth
+    source
+    sourceSize 
+    status
+    verticalTileMode
 }
 
 ------------------------------------------------------------------------------------------------------------
