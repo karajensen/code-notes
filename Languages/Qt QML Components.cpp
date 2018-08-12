@@ -76,13 +76,11 @@ Item {
     /* list<State>, if multiple 'when' true, first is chosen */
     states: [
         State {
-            name: "state1" 
-            PropertyChanges { target: item; myProperty: 1 } 
+            name: "state1"
             when: myBoolProperty
         },
         State { 
             name: "state2" 
-            PropertyChanges { target: item; myProperty: 2 }
             when: myFunction
         }
     ]  
@@ -186,7 +184,49 @@ Instantiator {
 }
 instantiator.count // Number of current objects
 instantiator.objectAt(index) // Takes int index, returns QtObject
-
+    
+------------------------------------------------------------------------------------------------------------
+    
+// STATE
+// import QtQuick 2.11
+State {
+    extend: "state1" // state to inherit all changes from
+    name: "state2" // name of state
+    when: myBoolean // when the state should be triggered
+        
+    /* Change all properties except parent and some anchors */
+    PropertyChanges {
+        target: item // item to change when state triggered
+        explicit
+        restoreEntryValues
+        myProperty: 2 
+    }
+    
+    /* Change some anchors */
+    AnchorChange {
+        anchors.left
+        anchors.right
+        anchors.horizontalCenter
+        anchors.top
+        anchors.bottom
+        anchors.verticalCenter
+        anchors.baseline
+        target
+    }
+    
+    /* Change parent */
+    ParentChange {
+        height: 0.0 // New height after parent change
+        parent: item // New parent
+        rotation: 0.0 // New rotation after parent change
+        scale: 0.0 // New scale after parent change
+        target: item // Item to reparent
+        width: 0.0 // New width after parent change
+        x: 0.0 // New offset from new parent
+        y: 0.0 // New offset from new parent
+    }
+}
+    
 ------------------------------------------------------------------------------------------------------------
     
 // STATEGROUP
