@@ -152,13 +152,13 @@ Binding {
 
 // REPEATER
 // import QtQuick 2.11
-// Inherits Item, Usually in Row/Column, instantiates n items
+// Inherits Item, instantiates n items
 // creates all of its delegate items when the repeater is first created
 // Changing model or setting to null will destroy all previous items
 Repeater {
     id: repeater
     model: 3
-    Text { text: "Item " + indeX + "/" + repeater.count }
+    Text { text: "Item " + index + "/" + repeater.count }
 }
 Repeater {
     model: ["one", "two", "three"]
