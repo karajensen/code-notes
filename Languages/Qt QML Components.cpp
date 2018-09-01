@@ -128,6 +128,7 @@ Component {
 // CONNECTIONS
 // import QtQml 2.11
 // Access a signal outside of the object that emits it, required for Loader items
+// Signals auto disconnected when Connections object destroyed
 Connections {
     target: loader.item
     ignoreUnknownSignals: true // if onMySignal does not exist, do not produce runtime errors
