@@ -8,6 +8,7 @@ QML MEMORY ALLOCATION
 • WorkerScripts share their own seperate Javascript heap, only allocated if WorkerScript is used
 • Adding custom properties makes it an implicit type of the component (allocates memory for new type) 
 • Not adding custom properties makes it an explicit type of the component (shares memory for type)
+• Order of children OnCompleted is undefined, parent OnCompleted called when all children OnCompleted are called
 
 C++ HEAP ALLOCATIONS:
 • Overhead of the QML engine (implementation data structures, context information)
