@@ -109,7 +109,8 @@ Item {
         return x + y;
     }  
 }
-item.mySignal.connect(mySlot) // Connect signal and slot, forward optional
+item.mySignal.connect(mySlot)     // Connect signal and slot, forward optional, no auto disconnect
+item.mySignal.disconnect(mySlot)  // Signals must be disconnected
 
 // MyGlobal.qml
 // Requires registering with QQmlEngine
