@@ -84,12 +84,13 @@ defaults write com.apple.finder AppleShowAllFiles -bool true
 killall Finder
 
 TERMINAL COMMANDS:
-pwd                  // gives name of folder currently in
-ls                   // gives directory contents
-open .               // open folder
-cd folder            // move up a folder
-cd ..                // move down a folder
-./myfile.sh          // run the file
+pwd                     // gives name of folder currently in
+ls                      // gives directory contents
+open .                  // open folder
+cd folder               // move up a folder
+cd ..                   // move down a folder
+./myfile.sh             // run the file
+open ~/.bash_profile    // open file to add/edit environment variables
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // LINUX DEVELOPMENT
