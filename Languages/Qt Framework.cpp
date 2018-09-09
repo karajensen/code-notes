@@ -87,7 +87,6 @@ public:
     MyClass(QObject *parent = 0) { }
     Q_PROPERTY(MyValue value MEMBER m_value NOTIFY myValueSignal)
     Q_PROPERTY(MyValue value READ getValue WRITE setValue NOTIFY mySignal)
-    Q_INVOKABLE void myFn() { }
     
     enum class MyClassEnum { ONE, TWO, THREE };
     Q_ENUM(MyClassEnum)
@@ -95,9 +94,10 @@ public:
     enum MyClassFlag { One=0x01, Two=0x02, Three=0x04 };
     Q_ENUM(MyClassFlag)
     
-    // Can be inherited/virtual
+    // Can be overloaded, virtual, pure virtual, with defaults
     const MyValue& getValue() const { return m_value; }
     void setValue(const MyValue& value) { m_value = value; }
+    Q_INVOKABLE void myFn() { }
 };
     
 // ENUMS
@@ -503,6 +503,9 @@ Qt::VeryCoarseTimer     // Only keep full second accuracy
                                
 // QUrl
 // Interface for working with URLs
+url.clear(); // clears the URL
+url.toLocalFile() // Convert QUrl to local file path, normalizes seperators to /
+QUrl::fromLocalFile(path) // Convert a local file path to QUrl
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT WIDGETS
