@@ -2425,8 +2425,41 @@ MapQuickItem {
 
 ------------------------------------------------------------------------------------------------------------
 
-// MapItemGroup 
+// MAPITEMGROUP 
 // import QtLocation 5.11
 // Groups any map items together, can add to map as a single group
 MapItemGroup {
 }
+
+------------------------------------------------------------------------------------------------------------
+    
+// POSITIONSOURCE
+// import QtPositioning 5.11
+// Provides the device's current position, C++ equivalent is QGeoPositionInfoSource 
+PositionSource {
+    updateInterval: 1000 // When to query the user position again
+    active: true // Whether to query user position
+    preferredPositioningMethods: PositionSource.AllPositioningMethods // Position Source Method Enum
+    onUpdateTimeout: {} // emitted if the position could not be retrieved within a certain amount of time
+}
+
+src.position // Last known device position, updates in intervals when start() is called
+src.sourceError // Position Source Error Enum
+src.supportedPositioningMethods // Position Source Method Enum
+src.start() // Start polling for device position
+src.stop() // Stop polling for device position
+src.update() // Request a single update
+
+// Position Source Method Enum
+PositionSource.NoPositioningMethods            // No positioning methods supported (no source)
+PositionSource.SatellitePositioningMethods     // Satellite-based positioning methods such as GPS are supported
+PositionSource.NonSatellitePositioningMethods  // Non-satellite-based methods are supported
+PositionSource.AllPositioningMethods           // Both satellite-based and non-satellite methods are supported
+
+// Position Source Error Enum
+PositionSource.AccessError         // Application lacked the required privileges
+PositionSource.ClosedError         // Connection / location services were closed
+PositionSource.NoError             // No error has occurred
+PositionSource.UnknownSourceError  // An unidentified error occurred
+PositionSource.SocketError         // An error occurred while connecting to an nmea source using a socket
+
