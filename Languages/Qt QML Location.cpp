@@ -30,9 +30,7 @@ Map {
     center: QtPositioning.coordinate(0, 0) // Positions the map at coord, invalid coord is ignored
     color: "red" // Background color of map
     copyrightsVisible: true // Default, render copyright overlap
-    fieldOfView: 
-    gesture
-    mapItems
+    fieldOfView: 45.0 // Default degrees, field of view of the camera used to look at the map
     mapParameters
     mapReady 
     maximumFieldOfView
@@ -44,13 +42,41 @@ Map {
     supportedMapTypes
     tilt
     visibleRegion
-    zoomLevel    
+    zoomLevel
+        
+    // MapGestureArea
+    // Provides Map gesture interaction
+    gesture {
+        acceptedGestures
+        enabled
+        flickDeceleration
+        maximumZoomLevelChange
+        panActive
+        pinchActive
+        preventStealing 
+        rotationActive
+        tiltActive
+        onFlickFinished()
+        onFlickStarted()
+        onPanFinished()
+        onPanStarted()
+        onPinchFinished: { event }
+        onPinchStarted: { event }
+        onPinchUpdated: { event }
+        onRotationFinished: { event }
+        onRotationStarted: { event }
+        onRotationUpdated: { event }
+        onTiltFinished: { event }
+        onTiltStarted: { event }
+        onTiltUpdated: { event }
+    }
         
     plugin: Plugin {
         name: "osm" // "mapboxgl", "esri", "osm" or custom
     }
 }
 
+map.mapItems // list<MapItem> of all items that have been added to map
 map.error // Last Mapping Provider Error Enum
 map.errorString // Last mapping provider error
 map.addMapItem(item) // Add MapItem
@@ -72,7 +98,7 @@ map.removeMapItemView(itemView) // Remove MapItemView
 map.removeMapParameter(parameter) // Remove MapParameter
 map.setBearing(bearing, coordinate)
 map.toCoordinate(position, clipToViewPort) // Returns coordinate, out of bounds is NaN unless clip is false
-    
+
 // Mapping Provider Error Enum
 Map.NoError                          // No error has occurred
 Map.NotSupportedError                // Plugin property was not set or no mapping manager in plugin
