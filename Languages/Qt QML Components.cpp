@@ -85,6 +85,7 @@ Item {
         }
     ]  
 }
+
 item.activeFocus // Read only, whether item has active focus
 item.childrenRect // Read only, QML rect collective position and size of the item's children
 item.data // list<Object> of both visual children and resources
@@ -183,6 +184,7 @@ Instantiator {
    onObjectAdded: { index, object }
    onObjectRemoved: { index, object }
 }
+
 instantiator.count // Number of current objects
 instantiator.objectAt(index) // Takes int index, returns QtObject
     
@@ -250,6 +252,7 @@ Timer {
     triggeredOnStart: true // default false, triggered signal emitted once extra on timer start
     onTriggered: {}
 }
+
 timer.restart()
 timer.start()
 timer.stop()
@@ -285,6 +288,7 @@ Window {
     y
     onClosing: {}
 }
+
 window.alert(msec)
 window.close()
 window.hide()
@@ -396,6 +400,7 @@ Row {
     populate: Transition {} // Effect to apply when first populated with items
     onPositioningComplete: {} // When positioning has been completed
 }
+
 row.forceLayout() // Triggers an update instead of waiting for scheduled one
 
 ------------------------------------------------------------------------------------------------------------
@@ -426,6 +431,7 @@ Column {
     populate: Transition {} // Effect to apply when first populated with items
     onPositioningComplete: {} // When positioning has been completed
 }
+
 column.forceLayout() // Triggers an update instead of waiting for scheduled one
 
 ------------------------------------------------------------------------------------------------------------
@@ -466,6 +472,7 @@ Grid {
     populate: Transition {} // Effect to apply when first populated with items
     onPositioningComplete: {} // When positioning has been completed
 }
+
 grid.forceLayout() // Triggers an update instead of waiting for scheduled one
 
 ------------------------------------------------------------------------------------------------------------
@@ -487,6 +494,7 @@ Flow {
     populate: Transition {} // Effect to apply when first populated with items    
     onPositioningComplete: {} // When positioning has been completed
 }
+
 flow.forceLayout() // Triggers an update instead of waiting for scheduled one
 
 ------------------------------------------------------------------------------------------------------------
@@ -525,6 +533,7 @@ Action {
     onTriggered: { source }
     onToggled: { source }
 }
+
 action.toggle(source) // Toggle the action/emit signal, source defaults to null
 action.trigger(source) // Trigger the action/emit signal, source defaults to null
 
@@ -541,6 +550,7 @@ ActionGroup {
     exclusive: true // Default true, if false checkedAction is always null
     onTriggered: { action } // When an action is triggered
 }
+
 group.actions // list<Action> of actions
 group.addAction(myAction) // Add an action
 group.removeAction(myAction) // Remove an action
@@ -569,6 +579,7 @@ Control {
     spacing: 1.0 // Spacing for control, each derived class uses it differently
     wheelEnabled: true // Whether the control handles wheel events, default false
 }
+
 control.availableHeight // Height available to the contentItem after deducting vertical padding
 control.availableWidth // Width available to the contentItem after deducting horizontal padding
 control.focusReason // Holds the reason of the last focus change, Input Focus Reason enum
@@ -612,6 +623,7 @@ ComboBox {
     onActivated: { index }
     onHighlighted: { index }
 }
+
 cb.decrementCurrentIndex()
 cb.find(text, flags)
 cb.incrementCurrentIndex()
@@ -643,6 +655,7 @@ SpinBox {
     wrap
     onValueModified: {}
 }
+
 sb.increase()
 sb.decrease()
 
@@ -665,6 +678,7 @@ Dial {
     wrap
     onMoved: {}
 }
+
 dial.increase()
 dial.decrease()
 
@@ -731,6 +745,7 @@ Slider {
     visualPosition
     onMoved: {}
 }
+
 slider.decrease()
 slider.increase()
 slider.valueAt(real position)
@@ -762,6 +777,7 @@ RangeSlider {
     to
     vertical
 }
+
 slider.first.decrease()
 slider.first.increase()
 slider.second.decrease()
@@ -800,6 +816,7 @@ ScrollBar {
     stepSize: 0.0 // Default, Snap step size
     vertical: true // Whether vertical
 }
+
 bar.active // When it's pressed or the attached Flickable is moving
 bar.pressed // When the user is pressing it
 bar.increase() // Increases the position by stepSize or 0.1 if stepSize is 0.0
@@ -863,6 +880,7 @@ AbstractButton {
     onReleased: {} // When button is released by user via touch, mouse, or keyboard
     onToggled: {} // When checkable button is toggled by the user via touch, mouse, or keyboard
 }
+
 button.down // Whether button visually down
 button.pressed // Read-only, whether button visually down
 button.toggle() // Toggles the checked state of the button
@@ -881,6 +899,7 @@ Button {
     autoRepeat: false // default, whether repeats pressed, released and clicked signals
     flat: false // default, whether draws a background when pressed or checked
 }
+
 btn.highlighted // Whether button is highlighted
 
 ------------------------------------------------------------------------------------------------------------
@@ -939,6 +958,7 @@ ButtonGroup {
     exclusive
     onClicked: { button }
 }
+
 grp.addButton(button)
 grp.removeButton(button)
     
@@ -957,6 +977,7 @@ MenuItem {
    subMenu: Menu {} // Submenu to show if a submenu
    onTriggered: {} // Emitted when the menu item is triggered by the user
 }
+
 menuItem.highlighted // Whether is highlighted by the user
 
 ------------------------------------------------------------------------------------------------------------
@@ -986,6 +1007,7 @@ Container {
     currentIndex
     currentItem
 }
+
 cont.addItem(Item item)
 cont.decrementCurrentIndex()
 cont.incrementCurrentIndex()
@@ -1048,6 +1070,7 @@ Flickable {
     onMovementEnded: {}
     onMovementStarted: {}   
 }
+
 flick.cancelFlick()
 flick.flick(xVelocity, yVelocity)
 flick.resizeContent(width, height, center)
@@ -1084,6 +1107,7 @@ MenuBar {
     delegate
     menus
 }
+
 menu.addMenu(menu)
 menu.insertMenu(index, menu)
 menu.menuAt(index)
@@ -1147,6 +1171,7 @@ DialogButtonBox {
     onRejected: {}
     onReset: {}
 }
+
 box.standardButton(button) // Returns AbstractButton
 
 ------------------------------------------------------------------------------------------------------------
@@ -1159,6 +1184,7 @@ ControlsLegacy.SplitView {
     orientation
     resizing
 }
+
 view.addItem(item)
 view.removeItem(item)
     
@@ -1172,6 +1198,7 @@ ScrollView {
     contentHeight: 100 // Height of the scrollable content, if not set, auto calculated based off contents
     contentWidth: 100 // Width of the scrollable content, if not set, auto calculated based off contents
 }
+
 scroll.contentChildren // list<Item> of children, does not include non-visual QML objects
 scroll.contentData //  list<Object> of children, does include non-visual QML objects
     
@@ -1206,6 +1233,7 @@ StackView {
         StackView.onRemoved: {}
     }
 }
+
 view.clear(transition)
 view.find(callback, behavior)
 view.get(index, behavior)
@@ -1290,6 +1318,7 @@ Popup {
     onClosed: {}
     onOpened: {}
 }
+
 popup.availableHeight // height available to contentItem after deducting vertical padding popup height
 popup.availableWidth // width available to contentItem after deducting horizontal padding popup width
 popup.close()
@@ -1322,6 +1351,7 @@ Dialog {
     onRejected: {}
     onReset: {}
 }
+
 dialog.accept()
 dialog.done(result)
 dialog.reject()
@@ -1348,6 +1378,7 @@ Menu {
        onObjectRemoved: menu.removeItem(object)
     }
 }
+
 menu.contentData // list<Object> of children of the menu
 menu.contentModel // model for the menu to use in a view
 menu.count // Number of menu children
@@ -1474,6 +1505,7 @@ Text {
     onLinkActivated: { link } // when the user clicks on a link embedded in the text, link is string
     onLinkHovered: { link } // when the user hovers on a link embedded in the text, link is string    
 }
+
 text.advance // pixel distance from first char of text to first char of another Text if in a text flow
 text.lineCount // Number of lines visible in the text item
 text.truncated // If the text has been truncated due to maximumLineCount or elid, RichText unsupported
@@ -1508,6 +1540,7 @@ TextInput {
     onEditingFinished: {} // when Return/Enter key pressed or focus lost and text passed validation
     onTextEdited: {} // whenever the text is edited by user, not explicitly set
 }
+
 input.acceptableInput // if validator/input mask has been set, true if valid, if not set, always true
 input.canUndo // If writable and there are previous operations that can be undone
 input.canPaste // If writable and the content of the clipboard can be pasted into input
@@ -1566,6 +1599,7 @@ TextEdit {
     onLinkActivated: { link } // when the user clicks on a link embedded in the text, link is string
     onLinkHovered: { link } // when the user hovers on a link embedded in the text, link is string
 }
+
 edit.canUndo // If writable and there are previous operations that can be undone
 edit.canPaste // If writable and the content of the clipboard can be pasted into textedit
 edit.canRedo // If writable and there are undone operations that can be redone
@@ -1608,6 +1642,7 @@ edit.undo() // Undos if possible
 Label {
     background: Rectangle {} // If no size set, auto follows the control's size, must set implicit sizes if using
 }
+
 lbl.palette // QML palette used for control, default application palette
 
 ------------------------------------------------------------------------------------------------------------
@@ -1623,6 +1658,7 @@ TextField {
     onPressed: { event } // MouseEvent given on press
     onReleased: { event } // MouseEvent given on release
 }
+
 field.focusReason // Holds the reason of the last focus change, Input Focus Reason enum
 field.hovered // Whether the control is hovered
 field.palette // QML palette used for control, default application palette
@@ -1640,6 +1676,7 @@ TextArea {
     onPressed: { event } // MouseEvent given on press
     onReleased: { event } // MouseEvent given on release
 }
+
 area.focusReason // Holds the reason of the last focus change, Input Focus Reason enum
 area.hovered // Whether the control is hovered
 area.palette // QML palette used for control, default application palette
@@ -1652,6 +1689,7 @@ area.palette // QML palette used for control, default application palette
 TextMetrics {
     text: "str"
 }
+
 metrics.advanceWidth // Distance from the position of str where the next string should be drawn in pixels
 metrics.boundingRect // Bounding rectangle of str
 metrics.elide // Elide Mode Enum
@@ -1787,6 +1825,7 @@ DoubleValidator {
     decimals: 1 // n digits after decimal point, default 1000
     notation: DoubleValidator.ScientificNotation // default 
 }
+
 DoubleValidator.StandardNotation     // disables E in value
 DoubleValidator.ScientificNotation   // allow E in value
 
@@ -1797,507 +1836,4 @@ DoubleValidator.ScientificNotation   // allow E in value
 // Instantiates QRegExpValidator
 RegExpValidator {
     regExp
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QML GRAPHICS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// RECTANGLE
-// import QtQuick 2.11
-// Inherits Item
-Rectangle {
-    color: "red"
-    radius: 2
-    antialiasing: true // Default true if using radius, false otherwise, gives performance hit
-    border.color: "red"
-    border.width: 1
-    gradient: Gradient {}
-}
-
-// Slice off rounded corners on one side
-Item {
-    anchors.fill: parent
-    clip: true
-    Rectangle {
-        anchors.fill: parent
-        anchors.topMargin: -radius
-        radius: 10
-    }
-}    
-
-------------------------------------------------------------------------------------------------------------
-
-// IMAGE
-// import QtQuick 2.11
-// SVG must have <style type="text/css"> not <style>
-// Can have artifacts if some graphics effects are children
-Image {
-    asynchronous
-    autoTransform
-    cache
-    fillMode
-    horizontalAlignment
-    mipmap
-    mirror
-    paintedHeight
-    paintedWidth
-    progress
-    smooth
-    source
-    sourceSize
-    status
-    verticalAlignment
-    
-    // Image with rounded corners
-    OpacityMask {
-        maskSource: Rectangle {
-            anchors.fill: parent
-            radius: 6
-        }  
-    }
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// BORDERIMAGE
-// import QtQuick 2.11
-// Inherits Item, paints a border based on an image
-BorderImage {
-    asynchronous
-    border.left 
-    border.right 
-    border.top 
-    border.bottom 
-    cache
-    horizontalTileMode
-    mirror
-    progress
-    smooth
-    source
-    sourceSize 
-    status
-    verticalTileMode
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// TRANSITION
-// import QtQuick 2.11
-// Defines animated transitions that occur on state changes
-Transition {
-    animations
-    enabled
-    from
-    reversible
-    running
-    to    
-}
-
-------------------------------------------------------------------------------------------------------------
-   
-// BLEND
-// import QtGraphicalEffects 1.0
-// Inherits Item, Merges two source items by using a blend mode
-Blend {
-    cached
-    foregroundSource
-    mode
-    source
-}
- 
-------------------------------------------------------------------------------------------------------------
- 
-// BRIGHTNESSCONTRAST
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Adjusts brightness and contrast
-BrightnessContrast {
-    brightness
-    cached
-    contrast
-    source    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// COLOROVERLAY
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Alters the colors of the source item by applying an overlay color
-ColorOverlay {
-    cached
-    color
-    source    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// COLORIZE
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Sets the color in the HSL color space
-Colorize {
-    cached
-    color
-    source    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// DESATURATE
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Reduces the saturation of the colors
-Desaturate {
-    cached
-    desaturation
-    source    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// GAMMAADJUST
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Alters the luminance of the source item
-GammaAdjust {
-    cached
-    gamma
-    source    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// HUESATURATION
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Alters the source item colors in the HSL color space
-HueSaturation {
-    cached
-    hue
-    lightness 
-    saturation
-    source
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// LEVELADJUST
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Adjusts color levels in the RGBA color space
-LevelAdjust {
-    cached
-    gamma
-    maximumInput
-    maximumOutput
-    minimumInput
-    minimumOutput
-    source    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// GRADIENT
-// import QtQuick 2.11
-Gradient {
-    stops
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// CONICALGRADIENT
-// import QtGraphicalEffects 1.0
-// Inherits Item, Draws a conical gradient
-ConicalGradient {
-    angle
-    cached
-    gradient
-    horizontalOffset
-    source
-    verticalOffset    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// LINEARGRADIENT
-// import QtGraphicalEffects 1.0
-// Inherits Item, Draws a linear gradient
-LinearGradient {
-    cached
-    end
-    gradient
-    source
-    start    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// RADIALGRADIENT
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Draws a radial gradient
-RadialGradient {
-    angle
-    cached
-    gradient
-    horizontalOffset
-    horizontalRadius
-    source
-    verticalOffset
-    verticalRadius    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// DISPLACE
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Moves the pixels of the source item according to a displacement map
-Displace {
-    cached
-    displacement
-    displacementSource
-    source    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// DROPSHADOW
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Generates a soft shadow behind the source item
-DropShadow {
-    cached
-    color
-    horizontalOffset
-    radius
-    samples
-    source
-    spread
-    transparentBorder
-    verticalOffset    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// INNERSHADOW
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Generates a colorized and blurred shadow inside the source
-InnerShadow {
-    cached
-    color
-    fast
-    horizontalOffset
-    radius
-    samples
-    source
-    spread
-    verticalOffset
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// FASTBLUR
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Applies a fast blur effect to one or more source items
-FastBlur {
-    id: fastBlur
-    radius: 64 // Amount of blurring [0,64]
-    cached
-    transparentBorder   
-    source: ShaderEffectSource {
-        sourceItem: myItem // Can't be parent of fastBlur
-        sourceRect: Qt.rect(0, 0, fastBlur.width, fastBlur.height)
-    }
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// GAUSSIANBLUR
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Applies a higher quality blur effect
-GaussianBlur {
-    cached
-    deviation
-    radius
-    samples
-    source
-    transparentBorder    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// MASKEDBLUR
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Applies a blur effect with a varying intesity
-MaskedBlur {
-    cached
-    maskSource
-    radius
-    samples
-    source    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// RECURSIVEBLUR
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Blurs repeatedly, providing a strong blur effect
-RecursiveBlur {
-    cached
-    loops
-    progress
-    radius
-    source
-    transparentBorder    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// DIRECTIONALBLUR
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Applies blur effect to the specified direction
-DirectionalBlur {
-    angle
-    cached
-    length
-    samples
-    source
-    transparentBorder    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// RADIALBLUR
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Applies blur in a circular direction around the item center point
-RadialBlur {
-    angle
-    cached
-    horizontalOffset
-    samples
-    source
-    transparentBorder
-    verticalOffset    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// ZOOMBLUR
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Applies directional blur effect towards source items center point
-ZoomBlur {
-    cached
-    horizontalOffset 
-    length
-    samples
-    source
-    transparentBorder
-    verticalOffset    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// GLOW
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Generates a halo like glow around the source item
-Glow {
-    cached
-    color
-    radius
-    samples
-    source
-    spread
-    transparentBorder    
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// RECTANGULARGLOW
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Generates a blurred and colorized rectangle
-RectangularGlow {
-    cached
-    color
-    cornerRadius
-    glowRadius
-    spread    
-}
-
-------------------------------------------------------------------------------------------------------------
-    
-// OPACITYMASK
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Masks the source item with another item
-// By default only draws parts of source inside maskSource
-OpacityMask {
-    cached: false // Default, caches results, use if not animated, improves performance
-    invert: false // Default, inverts the mask to only draw what's outside it
-    maskSource: Rectangle {}
-    source: myItem // Can't be parent of OpacityMask
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// THRESHOLDMASK
-// import QtGraphicalEffects 1.0    
-// Inherits Item, Masks the source item with another item and applies a threshold value
-ThresholdMask {
-    cached
-    maskSource
-    source
-    spread
-    threshold
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QML SHAPES
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// SHAPE
-// import QtQuick.Shapes 1.0
-// Inherits Item, defines area which any child paths will be drawn
-Shape {
-    asynchronous
-    containsMode
-    data
-    rendererType
-    status
-    vendorExtensionsEnabled
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// PATH
-// import QtQuick 2.11
-Path {
-    closed
-    pathElements
-    startX
-    startY
-}
-
-------------------------------------------------------------------------------------------------------------
-
-// SHAPEPATH
-// import QtQuick.Shapes 1.0
-// Inherits Path
-// First PathLine draws from startX/Y to x/y, next PathLine draws from previous to x/y etc.
-// Can't be used with MouseArea (only Shape can)
-ShapePath {
-    capStyle
-    dashOffset
-    dashPattern: [3, 2] // [n * strokeWidth dash, n * strokeWidth blank]
-    fillColor
-    fillGradient
-    fillRule
-    joinStyle
-    miterLimit
-    strokeColor
-    strokeWidth: 2
-    strokeStyle: ShapePath.DashLine
-               
-    PathLine { 
-        x
-        y
-    }
-
-    PathArc {
-        x
-        y
-        radiusX
-        radiusY
-    }
 }
