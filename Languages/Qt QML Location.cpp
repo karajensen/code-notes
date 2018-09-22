@@ -31,8 +31,6 @@ Map {
     color: "red" // Background color of map
     copyrightsVisible: true // Default, render copyright overlap
     fieldOfView: 45.0 // Default degrees, field of view of the camera used to look at the map
-    mapParameters
-    mapReady 
     maximumFieldOfView
     maximumTilt
     maximumZoomLevel
@@ -76,9 +74,11 @@ Map {
     }
 }
 
-map.mapItems // list<MapItem> of all items that have been added to map
 map.error // Last Mapping Provider Error Enum
 map.errorString // Last mapping provider error
+map.mapItems // list<MapItem> of all items that have been added to map    
+map.mapParameters // list<MapParameters>
+map.mapReady // Whether map has initialized and is ready to be used
 map.addMapItem(item) // Add MapItem
 map.addMapItemGroup(itemGroup) // Add MapItemGroup
 map.addMapItemView(itemView) // Add MapItemView
@@ -112,12 +112,12 @@ Map.ConnectionError                  // The plugin could not connect to its back
 // import QtLocation 5.11
 // Auto transforms with Map if added to it
 MapCircle {
-    center: QtPositioning.coordinate()
-    border.width
-    border.color
-    color
-    opacity
-    radius
+    center: QtPositioning.coordinate() // Center of circle
+    border.width: 2 // Width of circle border
+    border.color: "red" // Color of circle border
+    color: "red" // Color of circle
+    opacity: 1.0 // Opacity of circle
+    radius: 1.0 // Radius in meters of circle
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -126,12 +126,12 @@ MapCircle {
 // import QtLocation 5.11
 // Auto transforms with Map if added to it
 MapRectangle {
-    border.width 
-    border.color
-    bottomRight
-    color
-    opacity
-    topLeft    
+    border.width: 2 // Width of rectangle border
+    border.color: "red" // Color of rectangle border
+    bottomRight: QtPositioning.coordinate() // Bottom right corner of rectangle
+    color: "red" // Color of rectangle
+    opacity: 1.0 // Opacity of rectangle
+    topLeft: QtPositioning.coordinate() // Top left corder of rectangle
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -140,11 +140,14 @@ MapRectangle {
 // import QtLocation 5.11
 // Auto transforms with Map if added to it
 MapPolygon {
-    border.width
-    border.color
-    color
+    border.width: 2 // Width of polygon border
+    border.color: "red" // Color of polygon border
+    color: "red" // Color of polygon
     path: [] // QVariantList with QGeoLocation/QML coord, Must reassign whole list when modifying any item
 }
+
+polygon.addCoordinate(coordinate)  // Add a new QGeoCoordinate/QML coord
+polygon.removeCoordinate(coordinate) // Remove QGeoCoordinate/QML coord
 
 ------------------------------------------------------------------------------------------------------------
     
@@ -152,20 +155,20 @@ MapPolygon {
 // import QtLocation 5.11
 // Auto transforms with Map if added to it
 MapPolyLine {
-    line.width
-    line.color
+    line.width: 2 // Width of line
+    line.color: "red" // Color of line
     path: [] // QVariantList with QGeoLocation/QML coord, Must reassign whole list when modifying any item
 }
 
-line.addCoordinate(coordinate)
-line.containsCoordinate(coordinate)
-line.coordinateAt(index)
-line.insertCoordinate(index, coordinate)
-line.pathLength()
-line.removeCoordinate(index)
-line.removeCoordinate(coordinate)
-line.replaceCoordinate(index, coordinate)
-line.setPath(geopath path)
+line.addCoordinate(coordinate) // Add a new QGeoCoordinate/QML coord
+line.containsCoordinate(coordinate) // Whether path contains coordinate
+line.coordinateAt(index) // Returns coordinate at index
+line.insertCoordinate(index, coordinate) // Insert a new coordinate at index
+line.pathLength() // Returns the number of coordinates of the polyline
+line.removeCoordinate(index) // Remove coordinate at index
+line.removeCoordinate(coordinate) // Remove QGeoCoordinate/QML coord
+line.replaceCoordinate(index, coordinate) // Change coordinate at index
+line.setPath(path) // Set QGeoPath
 
 ------------------------------------------------------------------------------------------------------------
 
