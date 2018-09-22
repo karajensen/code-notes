@@ -96,19 +96,6 @@ MapCircle {
 
 ------------------------------------------------------------------------------------------------------------
 
-// MAPPOLYGON
-// import QtLocation 5.11
-// Auto transforms with Map if added to it
-// Modifying elements of path does not auto update path, have to reassign whole path
-MapPolygon {
-    border.width
-    border.color
-    color
-    path
-}
-
-------------------------------------------------------------------------------------------------------------
-
 // MAPRECTANGLE
 // import QtLocation 5.11
 // Auto transforms with Map if added to it
@@ -123,15 +110,49 @@ MapRectangle {
 
 ------------------------------------------------------------------------------------------------------------
 
+// MAPPOLYGON
+// import QtLocation 5.11
+// Auto transforms with Map if added to it
+MapPolygon {
+    border.width
+    border.color
+    color
+    path: [] // QVariantList with QGeoLocation/QML coord, Must reassign whole list when modifying any item
+}
+
+------------------------------------------------------------------------------------------------------------
+    
+// MAPPOLYLINE
+// import QtLocation 5.11
+// Auto transforms with Map if added to it
+MapPolyLine {
+    line.width
+    line.color
+    path: [] // QVariantList with QGeoLocation/QML coord, Must reassign whole list when modifying any item
+}
+
+line.addCoordinate(coordinate)
+line.containsCoordinate(coordinate)
+line.coordinateAt(index)
+line.insertCoordinate(index, coordinate)
+line.pathLength()
+line.removeCoordinate(index)
+line.removeCoordinate(coordinate)
+line.replaceCoordinate(index, coordinate)
+line.setPath(geopath path)
+
+------------------------------------------------------------------------------------------------------------
+
 // MAPQUICKITEM
 // import QtLocation 5.11
 // Auto translates (no scaling) with Map if added to it
 // Requires zoomLevel to be set for scaling
 MapQuickItem {
-    anchorPoint
-    coordinate
-    sourceItem
-    zoomLevel
+    anchorPoint.x: sourceItem.width / 2   // Position on sourceItem to anchor to coordinate
+    anchorPoint.y: sourceItem.height / 2  // Position on sourceItem to anchor to coordinate
+    coordinate: QtPositioning.coordinate(0, 0)
+    sourceItem: Item {} // QML Item to render
+    zoomLevel: map.zoomLevel // Size to render at zoom, set to map's level to scale with map
 }    
 
 ------------------------------------------------------------------------------------------------------------
