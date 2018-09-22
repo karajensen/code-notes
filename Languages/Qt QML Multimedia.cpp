@@ -174,7 +174,86 @@ camera.videoRecorder. stop()
 // import QtMultimedia 5.8
 // Add media playback to a scene
 MediaPlayer {
+    audioRole
+    autoLoad
+    autoPlay
+    availability
+    bufferProgress
+    customAudioRole
+    duration
+    error
+    errorString
+    hasAudio
+    hasVideo
+    loops
+    mediaObject
+    metaData.title
+    metaData.subTitle
+    metaData.author
+    metaData.comment
+    metaData.description
+    metaData.category
+    metaData.genre
+    metaData.year
+    metaData.date
+    metaData.userRating
+    metaData.keywords
+    metaData.language
+    metaData.publisher
+    metaData.copyright
+    metaData.parentalRating
+    metaData.ratingOrganization
+    metaData.size
+    metaData.mediaType
+    metaData.audioBitRate
+    metaData.audioCodec
+    metaData.averageLevel
+    metaData.channelCount
+    metaData.peakValue
+    metaData.sampleRate
+    metaData.albumTitle
+    metaData.albumArtist
+    metaData.contributingArtist
+    metaData.composer
+    metaData.conductor
+    metaData.lyrics
+    metaData.mood
+    metaData.trackNumber
+    metaData.trackCount
+    metaData.coverArtUrlSmall
+    metaData.coverArtUrlLarge
+    metaData.resolution
+    metaData.pixelAspectRatio
+    metaData.videoFrameRate
+    metaData.videoBitRate
+    metaData.videoCodec
+    metaData.posterUrl
+    metaData.chapterNumber
+    metaData.director
+    metaData.leadPerformer 
+    metaData.writer
+    muted
+    notifyInterval
+    playbackRate
+    playbackState
+    playlist
+    position
+    seekable
+    source
+    status
+    volume
+    onError: { error, errorString }
+    onPaused: {}
+    onPlaybackStateChanged: {}
+    onPlaying: {}
+    onStopped: {}
 }
+
+player.pause()
+playerplay()
+playerseek(offset)
+playerstop()
+playersupportedAudioRoles()
 
 ------------------------------------------------------------------------------------------------------------
 
@@ -182,7 +261,41 @@ MediaPlayer {
 // import QtMultimedia 5.8, Inherits Item
 // A convenience type for showing a specified video
 Video {
+    audioRole
+    autoLoad
+    autoPlay
+    availability
+    bufferProgress
+    customAudioRole
+    duration
+    error
+    errorString
+    fillMode
+    hasAudio
+    hasVideo
+    loops
+    metaData
+    muted
+    notifyInterval
+    orientation
+    playbackRate
+    playbackState
+    playlist
+    position
+    seekable
+    source
+    status
+    volume
+    onPaused()
+    onPlaying()
+    onStopped()    
 }
+
+video.pause()
+video.play()
+video.seek(offset)
+video.stop()
+video.supportedAudioRoles()
 
 ------------------------------------------------------------------------------------------------------------
 
@@ -190,5 +303,21 @@ Video {
 // import QtMultimedia 5.8
 // Render video or camera viewfinder
 VideoOutput {
+    autoOrientation 
+    contentRect
+    fillMode
+    filters
+    orientation
+    source
+    sourceRect    
 }
+
+output.mapNormalizedPointToItem (point)
+output.mapNormalizedRectToItem(rectangle)
+output.mapPointToItem(point)
+output.mapPointToSource(point)
+output.mapPointToSourceNormalized(point)
+output.mapRectToItem(rectangle)
+output.mapRectToSource(rectangle)
+output.mapRectToSourceNormalized(rectangle)
 
