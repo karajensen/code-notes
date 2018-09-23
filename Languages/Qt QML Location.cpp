@@ -35,7 +35,7 @@ Map {
     maximumTilt: 89.5 // Default, maximum valid tilt for the map in degrees
     maximumZoomLevel: 30.0 // Default, maximum valid zoom level for the map
     minimumFieldOfView: 1.0 // Default, minimum valid field of view for the map, in degrees
-    minimumTilt: 0. 0// Default, minimum valid tilt for the map in degrees
+    minimumTilt: 0.0 // Default, minimum valid tilt for the map in degrees
     minimumZoomLevel: 0.0 // Default, minimum valid zoom level for the map
     tilt: 0.0 // Default, current tilt for the map in degrees
     visibleRegion: myRegion // QGeoShape region, map centers and zooms to fit to screen, no property signal
