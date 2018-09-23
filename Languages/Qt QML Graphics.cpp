@@ -789,9 +789,9 @@ Video {
     source
     status
     volume
-    onPaused()
-    onPlaying()
-    onStopped()    
+    onPaused: {}
+    onPlaying: {}
+    onStopped: {}    
 }
 
 video.pause()
