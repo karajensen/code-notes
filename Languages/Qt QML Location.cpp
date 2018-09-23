@@ -31,16 +31,16 @@ Map {
     color: "red" // Background color of map
     copyrightsVisible: true // Default, render copyright overlap
     fieldOfView: 45.0 // Default degrees, field of view of the camera used to look at the map
-    maximumFieldOfView
-    maximumTilt
-    maximumZoomLevel
-    minimumFieldOfView
-    minimumTilt
-    minimumZoomLevel
-    supportedMapTypes
-    tilt
-    visibleRegion
-    zoomLevel
+    maximumFieldOfView: 179.0 // Default, maximum valid field of view for the map, in degrees
+    maximumTilt: 89.5 // Default, maximum valid tilt for the map in degrees
+    maximumZoomLevel: 30.0 // Default, maximum valid zoom level for the map
+    minimumFieldOfView: 1.0 // Default, minimum valid field of view for the map, in degrees
+    minimumTilt: 0. 0// Default, minimum valid tilt for the map in degrees
+    minimumZoomLevel: 0.0 // Default, minimum valid zoom level for the map
+    tilt: 0.0 // Default, current tilt for the map in degrees
+    visibleRegion: myRegion // QGeoShape region, map centers and zooms to fit to screen, no property signal
+    zoomLevel: 8.0 // Default, current zoom for the map
+    onCopyrightLinkActivated: { link } // emitted when the user clicks on a link in the copyright notice
         
     // MapGestureArea
     // Provides Map gesture interaction
@@ -79,7 +79,8 @@ map.errorString // Last mapping provider error
 map.mapItems // list<MapItem> of all items that have been added to map    
 map.mapParameters // list<MapParameters>
 map.mapReady // Whether map has initialized and is ready to be used
-map.addMapItem(item) // Add MapItem
+map.supportedMapTypes // list<MapType> the set of map types supported by this map
+map.addMapItem(item) // Add MapItem, will not re-add if already added
 map.addMapItemGroup(itemGroup) // Add MapItemGroup
 map.addMapItemView(itemView) // Add MapItemView
 map.addMapParameter(parameter) // Add MapParameter
