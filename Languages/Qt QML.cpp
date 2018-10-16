@@ -113,8 +113,8 @@ Item {
 item.mySignal.connect(mySlot)     // Connect signal and slot, forward optional, no auto disconnect
 item.mySignal.disconnect(mySlot)  // Signals must be disconnected
 
-// MyGlobal.qml
-// Requires registering with QQmlEngine
+// GLOBAL OBJECTS
+// MyGlobal.qml, Requires registering with QQmlEngine
 pragma Singleton
 import QtQuick 2.4
 QtObject {
@@ -124,11 +124,26 @@ QtObject {
     }
 }
 
-// MyJavascript.js
-// Make a library to enable sharing across all QML files
+// JAVASCRIPT FILES
+// MyJavascript.js, Makes a library to enable sharing across all QML files
 var value = 0;
 function fn() {
     return 0;
+}
+
+// QML DEFAULT PROPERTIES
+// Useful for positioning derived components inside base components
+Item /*MyBaseQml.qml*/ {
+    default property alias contentItem: outerRect.children
+    Rectangle {
+        id: outerRect
+    }
+}
+MyBaseQml {
+    // Can omit the contentItem, can be array of items or many child items
+    contentItem: Rectangle {
+        id: innerRect
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
