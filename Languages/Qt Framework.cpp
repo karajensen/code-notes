@@ -256,6 +256,7 @@ QObject::connect(sender, SIGNAL(mySignal()), reciever, SLOT(mySlot()), type);
 QObject::connect(sender, SIGNAL(mySignalArgs(int,float)), reciever, SLOT(mySlotArgs(int,float)), type);
 QObject::disconnect(sender, &Sender::mySignal, reciever, &Receiver::mySlot);
 QObject::disconnect(connection);
+QObject::disconnect(); // Disconnect all signals
 
 // CONNECTION TYPE FLAGS
 // Optional, AutoConnection is default
@@ -502,10 +503,12 @@ Qt::CoarseTimer         // Try to keep accuracy within 5% of the desired interva
 Qt::VeryCoarseTimer     // Only keep full second accuracy
                                
 // QUrl
-// Interface for working with URLs
+// Interface for working with URLs with prefix qrc:/, file:/// etc.
+QUrl url(path) // Set the path directly, does not add any prefix
 url.clear(); // clears the URL
-url.toLocalFile() // Convert QUrl to local file path, normalizes seperators to /
-QUrl::fromLocalFile(path) // Convert a local file path to QUrl
+url.toLocalFile() // Convert QUrl to local file path without prefix, normalizes seperators to /
+url.toString() // Returns path with prefix file:///, qrc with qrc:/
+QUrl::fromLocalFile(path) // Convert a local file path to QUrl; adds file:/// in front
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT WIDGETS
