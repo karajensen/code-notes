@@ -116,6 +116,23 @@ template MyClass<int>;
 template void MyFunction<int>(int x);
 template void MyFunction<int>(MyClass<int>& x);
 
+// TEMPLATES IN CPP
+// In Header File:
+template<typename T> class MyClass
+{
+public:
+    MyClass();
+};
+// In Cpp File:
+template MyClass<int>; // for every use of template add an explicit instantiation to .cpp file
+template<typename T> MyClass<T>::MyClass()
+{
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// TEMPLATE SPECIALISATION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // EXPLICIT SPECIALISATION
 // Tells compiler to not use template; use a specialised function instead for the given types
 template <> void MyFunction(int x); 
@@ -135,17 +152,28 @@ template <typename T, typename S> void MyFunction(T t, S s){}
 template <typename T> void MyFunction(T t, float s){} // overloads MyFunction
 MyFunction(x, y); // uses overload resolution
 
-// TEMPLATES IN CPP
-// In Header File:
-template<typename T> class MyClass
+// TAG DISPATCH
+// Uses tags std::false_type and std::true_type to force overload
+template<typename T> void MyFn(T x) { MyFn(x, std::is_integral<typename std::remove_reference<T>::type>()); }
+template<typename T> void MyFn(T x, std::false_type){}; // overload if a non-integral type
+template<typename T> void MyFn(T x, std::true_type){};  // overload if an integral type
+
+// ENABLE_IF
+// Enables/disables overloads
+template <typename T> // Only instantiate for T*
+typename std::enable_if<std::is_pointer<T>::value, T>::type fn(const std::vector<T>& vec, int index) const
 {
-public:
-    MyClass();
-};
-// In Cpp File:
-template MyClass<int>; // for every use of template add an explicit instantiation to .cpp file
-template<typename T> MyClass<T>::MyClass()
+    return vec[index];
+}
+template <typename T> // Only instantiate for T
+typename std::enable_if<!std::is_pointer<T>::value, const T*>::type fn(const std::vector<T>& vec, int index) const
 {
+    return &vec[index];
+}
+template <typename T1, typename T2> // Only instantiate if T2 is derived from T1
+typename std::enable_if<std::is_base_of<T1, T2>::value, ReturnObject>::type fn()
+{
+    return ReturnObject();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -160,12 +188,6 @@ class MyClass
     T[n] m_myArray;
 };
 MyClass<double, 20> myObj;
-
-// TAG DISPATCH
-// Uses tags std::false_type and std::true_type to force overload
-template<typename T> void MyFn(T x) { MyFn(x, std::is_integral<typename std::remove_reference<T>::type>()); }
-template<typename T> void MyFn(T x, std::false_type){}; // overload if a non-integral type
-template<typename T> void MyFn(T x, std::true_type){};  // overload if an integral type
 
 // TEMPLATE TEMPLATE PARAMETERS
 // Allows a parameter that is a template itself to be passed in as a type
