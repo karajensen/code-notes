@@ -191,6 +191,23 @@ qRegisterMetaTypeStreamOperators<N::MyClass>("MyClass");
 QDataStream& operator<<(QDataStream& out, const MyClass& obj);
 QDataStream& operator>>(QDataStream& in, MyClass& obj);
 
+// INVOKING A METHOD FROM QOBJECT
+auto metaObject = myObj->metaObject();
+auto methodIndex = metaObject->indexOfMethod("myFn(QVariant,bool)");
+if (methodIndex != -1)
+{
+    QMetaMethod method = metaObject->method(methodIndex);
+    if(method.isValid())
+    {
+        QVariant variant;
+        if (method.invoke(myObj, Q_RETURN_ARG(QVariant, variant), 
+            Q_ARG(QVariant, QVariant::fromValue(true)), Q_ARG(bool, false)))
+        {
+            return variant.value<bool>();
+        }
+    }
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // SIGNALS / SLOTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -717,6 +734,9 @@ SIGNALS / SLOTS
 • QueuedConnection signals will be sent to slot object's event queue and called synchronously
 **************************************************************************************************************/
 
+QThread::sleep(3); //seconds
+QThread::currentThread(); // id of current execution thread
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT QUICK / QML
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -951,20 +971,4 @@ qCountTrailingZeroBits(v) // Takes all quints, returns uint of no. of consecutiv
 qDeleteAll(begin, end) // Takes container iterator with pointers, calls delete on pointers, doesn't clear
 qDeleteAll(container) // Takes container with pointers, calls delete on pointers, doesn't clear
 qPopulationCount(v) // Takes all quints, returns no. of bits set in v, or the 'Hamming Weight of v'
-                               
-// INVOKING A METHOD FROM QOBJECT
-auto metaObject = myObj->metaObject();
-auto methodIndex = metaObject->indexOfMethod("myFn(QVariant,bool)");
-if (methodIndex != -1)
-{
-    QMetaMethod method = metaObject->method(methodIndex);
-    if(method.isValid())
-    {
-        QVariant variant;
-        if (method.invoke(myObj, Q_RETURN_ARG(QVariant, variant), 
-            Q_ARG(QVariant, QVariant::fromValue(true)), Q_ARG(bool, false)))
-        {
-            return variant.value<bool>();
-        }
-    }
-}
+
