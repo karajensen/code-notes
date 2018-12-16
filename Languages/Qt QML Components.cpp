@@ -157,6 +157,7 @@ Binding {
 // Inherits Item, instantiates n items
 // creates all of its delegate items when the repeater is first created
 // Changing model or setting to null will destroy all previous items
+// Delegate has properties 'index' and 'modelData'
 Repeater {
     id: repeater
     model: 3
@@ -167,7 +168,7 @@ Repeater {
     Text { text: "Data: " + modelData }
 }
 Repeater {
-    model: listView
+    model: myModel
     Text { text: "Data: " + modelData.role_name }
 }
 
@@ -176,11 +177,12 @@ Repeater {
 // INSTANTIATOR
 // import QtQml 2.11
 // Dynamically create objects parented to the Instantiator
+// Delegate has properties 'index' and 'modelData'
 Instantiator {
    active: true // Changing will create/destroy objects
    asynchronous: true 
    model: myModel
-   delegate: Rectangle { index } // delegate Component to be instantiated, int index avaliable
+   delegate: Rectangle { index }
    onObjectAdded: { index, object }
    onObjectRemoved: { index, object }
 }
@@ -599,12 +601,12 @@ Qt.NoFocus      // The control does not accept focus
 // COMBOBOX
 // import QtQuick.Controls 2.4
 // Inherits Control, Combined button and popup list for selecting options
+// Delegate has properties 'index' and 'modelData'
 ComboBox {
     acceptableInput
     count
     currentIndex
     currentText
-    delegate
     displayText
     down
     editText
@@ -622,6 +624,13 @@ ComboBox {
     onAccepted: {}
     onActivated: { index }
     onHighlighted: { index }
+    delegate: MenuItem {
+        width: cb.width
+        highlighted: cb.highlightedIndex == index
+        hoverEnabled: cb.hoverEnabled
+        text: cb.textRole ? (Array.isArray(cb.model) ? 
+            modelData[cb.textRole] : model[cb.textRole]) : modelData        
+    }    
 }
 
 cb.decrementCurrentIndex()
@@ -1500,10 +1509,13 @@ Text {
     minimumPointSize: 1 // Minimum font point size, requires !Text.FixedSize and font.pointSize != -1
     style: Text.Normal // Text Style Enum
     styleColor: "red" // Color used depending on style property
-    textFormat: Text.PlainText // Text Format Enum
+    textFormat: Text.PlainText // Text Format Enum, when using RichText, linkColor cannot be used.
     onLineLaidOut: { line } // Emitted for each line of text that is laid out during the layout process
     onLinkActivated: { link } // when the user clicks on a link embedded in the text, link is string
-    onLinkHovered: { link } // when the user hovers on a link embedded in the text, link is string    
+    onLinkHovered: { link } // when the user hovers on a link embedded in the text, link is string
+    
+    // If Text.RichText is used, need to set link color before text
+    text: "<style>a:link { color: " + textLinkColor + "; }</style>" + myText
 }
 
 text.advance // pixel distance from first char of text to first char of another Text if in a text flow
