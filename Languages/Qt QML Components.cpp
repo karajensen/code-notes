@@ -1055,7 +1055,7 @@ Flickable {
     flickingVertically
     horizontalOvershoot
     horizontalVelocity
-    interactive
+    interactive: false // Disable scrolling for the view
     leftMargin
     maximumFlickVelocity
     moving
@@ -1204,8 +1204,13 @@ view.removeItem(item)
 // Inherits Control, Auto uses Flickable if child
 ScrollView {
     clip: true // defaults off, clips contents when scrolling outside width/height
-    contentHeight: 100 // Height of the scrollable content, if not set, auto calculated based off contents
-    contentWidth: 100 // Width of the scrollable content, if not set, auto calculated based off contents
+        
+    // Width/Height of the scrollable content
+    // Needs to be set if ScrollView has more than 1 child to scroll
+    // If not set, auto calculated based off contents
+    // Set -1 to disable scroll, if inherting Flickable use interactive: false
+    contentHeight: 100
+    contentWidth: 100
 }
 
 scroll.contentChildren // list<Item> of children, does not include non-visual QML objects
