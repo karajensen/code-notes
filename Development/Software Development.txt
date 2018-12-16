@@ -150,10 +150,10 @@ git submodule update --recursive           // Update all submodules, recursive o
 git config --global --edit                 // Show the git config file
 git commit --amend -e                      // Add changes to previous commit in local repro
 git reset --soft HEAD~NUMBER OF COMMITS    // Soft reset: Remove all commits, puts all changes into git add
+Git reset --hard origin/remote_branch      // To reset branch to what is on remote_branch, commits are lost after
 git reset HEAD <file>                      // Remove file from git add
 git stash                                  // Save changes
 git stash pop                              // Apply changes
-
 
 INITIALISING GIT
 git config --global user.name "Kara Jensen"
