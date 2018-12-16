@@ -12,6 +12,8 @@
 ScrollView {
     Layout.fillWidth: true
     Layout.fillHeight: true 
+    Layout.preferredHeight: contentHeight
+        
     ListView {
         id: listView
         Layout.fillWidth: true
