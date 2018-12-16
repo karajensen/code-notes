@@ -823,3 +823,62 @@ output.mapPointToSourceNormalized(point)
 output.mapRectToItem(rectangle)
 output.mapRectToSource(rectangle)
 output.mapRectToSourceNormalized(rectangle)
+    
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML MATERIAL STYLE
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+// MATERIAL ATTACHED PROPERTIES
+// import QtQuick.Controls.Material 2.2
+Material.theme: Material.Dark
+Material.accent: "red"
+Material.primary: "red"
+Material.foreground: "red"
+Material.background: "red"
+    
+// MATERIAL READONLY ATTACHED PROPERTIES
+// import QtQuick.Controls.Material 2.2
+Material.primaryTextColor
+Material.primaryHighlightedTextColor
+Material.secondaryTextColor
+Material.hintTextColor
+Material.textSelectionColor
+Material.dropShadowColor
+Material.dividerColor
+Material.iconColor
+Material.iconDisabledColor
+Material.buttonColor
+Material.buttonDisabledColor
+Material.highlightedButtonColor
+Material.frameColor
+Material.rippleColor
+Material.highlightedRippleColor
+Material.switchUncheckedTrackColor
+Material.switchCheckedTrackColor
+Material.switchUncheckedHandleColor
+Material.switchCheckedHandleColor
+Material.switchDisabledTrackColor
+Material.switchDisabledHandleColor
+Material.scrollBarColor
+Material.scrollBarHoveredColor
+Material.scrollBarPressedColor
+Material.dialogColor
+Material.backgroundDimColor
+Material.listHighlightColor
+Material.tooltipColor
+Material.toolBarColor
+Material.toolTextColor
+Material.spinBoxDisabledIconColor
+    
+// RIPPLE
+// import QtQuick.Controls.Material.impl 2.2
+Ripple
+{
+    clipRadius: 1 // Use 0 for circle
+    width: parent.width
+    height: parent.height
+    pressed: mouseArea.pressed
+    anchor: parent
+    active: mouseArea.pressed
+    color: parent.Material.rippleColor
+}
