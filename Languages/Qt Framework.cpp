@@ -735,7 +735,7 @@ SIGNALS / SLOTS
 **************************************************************************************************************/
 
 QThread::sleep(3); //seconds
-QThread::currentThread(); // id of current execution thread
+QThread::currentThreadId(); // id of current execution thread
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT QUICK / QML
