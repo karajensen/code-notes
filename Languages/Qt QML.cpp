@@ -150,20 +150,6 @@ MyBaseQml {
 // QML BASIC TYPES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/************************************************************************************************************
-ARRAY CONVERSION
-• QVariantList converts to/from QML list or Javascript array (both different types)
-• All QML basic types convert to/from cpp equivalent but not in a container- must use QVariantList
-• Converted Javascript arrays have a few differences from native Javascript arrays:
-   - delete myArray[i] sets element as default constructed instead of undefined
-   - resizing larger will default construct elements instead of be undefined
-   - Using index > INT_MAX will fail as Qt container class indexing is signed, not unsigned
-
-OBJECT CONVERSION
-• QVariantMap converts to/from Javascript objects
-• QML basic types convert to/from cpp equivalent
-**************************************************************************************************************/
-
 property bool myBool: true
 property double myDouble: 0.0
 property int myInt: 0
