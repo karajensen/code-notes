@@ -887,53 +887,45 @@ void MyClass::onQmlLoad()
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  
 /************************************************************************************************************
-ARRAY CONVERSION
-• QVariantList converts to/from QML list or Javascript array (both different types)
-• All QML basic types convert to/from cpp equivalent but not in a container- must use QVariantList
+CPP                                       QML              JAVASCRIPT
+------------------------------------------------------------------------------------------------------------
+bool                                      bool             boolean 
+unsigned int/int                          int              number
+double                                    double           number
+float/qreal                               real             number
+QString                                   string           string
+QUrl                                      url
+QColor                                    color
+QFont                                     font
+QDate                                     date             Date
+QTime                                     var              Date
+QPoint/QPointF                            point
+QSize/QSizeF                              size
+QRect/QRectF                              rect
+QMatrix4x4                                matrix4x4
+QQuaternion                               quaternion
+QVector2D                                 vector2d
+QVector3D                                 vector3d
+QVector4D                                 vector4d
+QByteArray                                var              ArrayBuffer
+QObject*                                  var              object
+QMap<QString, QVariant> (QVariantMap)     var              object
+QList<QVariant> (QVariantList)            var/list         Array (with differences)
+QList/QVector/std::vector<int>            var/list         Array (with differences)
+QList/QVector/std::vector<bool>           var/list         Array (with differences)
+QList/QVector/std::vector<qreal>          var/list         Array (with differences)
+QList/QVector/std::vector<QUrl>           var/list         Array (with differences)
+QList/QVector/std::vector<QString>        var/list         Array (with differences)
+QStringList                               var/list         Array (with differences)
+QList<QObject*>                           var/list         Array (with differences)
+
+• Non-registered types convert to/from QVariant using 'var'
+• Non-registered container with type convert to/from QVariantList, even if type is registered
 • Converted Javascript arrays have a few differences from native Javascript arrays:
    - delete myArray[i] sets element as default constructed instead of undefined
    - resizing larger will default construct elements instead of be undefined
    - Using index > INT_MAX will fail as Qt container class indexing is signed, not unsigned
-
-TYPE CONVERSION
-• QVariantMap converts to/from Javascript objects
-• QML basic types convert to/from cpp equivalent
 **************************************************************************************************************/
-      
-// AUTO REGISTERED TYPES
-bool              bool
-unsigned int/int  int
-double            double
-float/qreal       real
-QString           string
-QUrl              url
-QColor            color
-QFont             font
-QDate             date
-QDate/QTime       Date (javascript)
-QPoint/QPointF    point
-QSize/QSizeF      size
-QRect/QRectF      rect
-QMatrix4x4        matrix4x4
-QQuaternion       quaternion
-QVector2D         vector2d
-QVector3D         vector3d
-QVector4D         vector4d
-QByteArray        ArrayBuffer (javascript)
-QObject*          var
-
-// AUTO REGISTERED CONTAINERS
-// Converts to modified javascript Array or Map (see QML 'var')
-// Other basic types need QVariantList/QVariantMap
-QList<int>        QVector<int>        std::vector<int>
-QList<qreal>      QVector<qreal>      std::vector<qreal>
-QList<bool>       QVector<bool>       std::vector<bool>
-QList<QUrl>       QVector<QUrl>       std::vector<QUrl>
-QList<QString>    QVector<QString>    std::vector<QString>
-QStringList
-QList<QVariant> (typedef QVariantList)
-QMap<QString, QVariant> (typedef QVariantMap)
-QList<QObject*>
 
 // USING QOBJECTS WITH QML
 // Data passed via Q_PROPERTY or Q_INVOKABLE
