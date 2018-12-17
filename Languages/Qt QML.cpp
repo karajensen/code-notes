@@ -779,7 +779,7 @@ Drag.XAxis
 Drag.YAxis
 Drag.XAndYAxis
 
-// Using Dragged Item as Image Source Example
+// USING DRAGGED ITEM AS IMAGE SOURCE
 Rectangle {
     Drag.active: dragArea.drag.active
     Drag.dragType: Drag.Automatic
@@ -795,7 +795,69 @@ Rectangle {
         })
     }
 }
-  
+
+// DRAGGING ITEMS LISTVIEW
+DelegateModel {
+    id: myDelegateModel
+    model: myModel
+    delegate: DraggableItem {
+      readonly property int delegateIndex: DelegateModel.itemsIndex
+      
+      MouseArea {
+          id: dragArea
+          anchors.fill: parent
+          readonly property alias delegateIndex: control.delegateIndex
+          property int previousDelegateIndex: -1
+          property bool dragging: false
+          pressAndHoldInterval: 250
+          drag.target: dragging ? content : undefined
+          drag.axis: Drag.YAxis
+          drag.minimumY: 0
+          drag.maximumY: myView.height - parent.height
+
+          onPressAndHold: {
+              previousDelegateIndex = delegateIndex;
+              dragging = true
+          }
+
+          onReleased: {
+              dragging = false
+              if (previousDelegateIndex != delegateIndex) {
+                  moveItems(previousDelegateIndex, delegateIndex); // Move items in cpp
+              }
+          }
+
+          Rectangle {
+              id: content
+              Drag.active: dragArea.dragging
+              Drag.source: dragArea
+              Drag.hotSpot.x: width / 2
+              Drag.hotSpot.y: height / 2
+              states: State  {
+                  when: dragArea.dragging
+                  ParentChange { 
+                      target: content; 
+                      parent: view
+                  }
+                  AnchorChanges {
+                      target: content
+                      anchors { horizontalCenter: undefined; verticalCenter: undefined }
+                  }
+              }
+          }
+
+          DropArea {
+              anchors.fill: parent
+              anchors.margins: 10
+              onEntered: {
+                  myDelegateModel.items.move(
+                      drag.source.delegateIndex, 
+                      dragArea.delegateIndex);
+              }
+        }
+    }
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML GLOBAL ITEMS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
