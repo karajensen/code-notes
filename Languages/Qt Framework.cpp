@@ -907,9 +907,10 @@ QQuaternion                               quaternion
 QVector2D                                 vector2d
 QVector3D                                 vector3d
 QVector4D                                 vector4d
-QByteArray                                var              ArrayBuffer
+QVariant                                  var
 QObject*                                  var              object
 QMap<QString, QVariant> (QVariantMap)     var              object
+QByteArray                                var              ArrayBuffer
 QList<QVariant> (QVariantList)            var/list         Array (with differences)
 QList/QVector/std::vector<int>            var/list         Array (with differences)
 QList/QVector/std::vector<bool>           var/list         Array (with differences)
