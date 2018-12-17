@@ -831,56 +831,6 @@ context.setContextProperty("context_model", model); // Sends to QML, does not up
 
 // QQmlEngine
 QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Must be used on cpp QObjects without parents
-                               
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT QUICK LOADING
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- 
-qmlEngine.load(QUrl("qrc:/MyQml.qml"));
-          
-/** OR **/
-                   
-m_qmlContext = std::make_unique<QQmlContext>(qmlEngine, qmlEngine);
-m_qmlContext->setContextProperty("MyClass", this);
-m_qmlComponent = std::make_unique<QQmlComponent>(qmlEngine, QUrl(qmlFile));
-if (m_qmlComponent->isLoading())
-{
-    connect(m_qmlComponent.get(), &QQmlComponent::statusChanged, this, &MyClass::onQmlLoad);
-}
-else
-{
-    onQmlLoad();
-}                          
-      
-void MyClass::onQmlLoad()
-{
-    disconnect(m_qmlComponent.get(), &QQmlComponent::statusChanged, this, &MyClass::onQmlLoad);
-
-    if (m_qmlComponent->isError())
-    {
-        // Log errors for m_qmlComponent->errors()
-        return;
-    }
-
-    QObject* rootObject = m_qmlComponent->create(m_qmlContext.get());
-    if (m_qmlComponent->isError())
-    {
-        // Log errors for m_qmlComponent->errors()
-        return;
-    }
-
-    auto rootItem = qobject_cast<QQuickItem*>(rootObject);
-    if (!rootItem)
-    {
-        // Log error: Not a QQuickItem
-        delete rootObject;
-        return;
-    }
-
-    rootItem->setParentItem(m_quickWindow->contentItem());
-    m_quickWindow->setWidth(rootItem->width());
-    m_quickWindow->setHeight(rootItem->height());
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT QUICK / QML DATA CONVERSIONS

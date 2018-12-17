@@ -201,17 +201,31 @@ bool SampleModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int
 // Custom Methods
 //===========================================================================================================
 
+void SampleModel::moveItems(int oldIndex, int newIndex)
+{
+    if (oldIndex >= 0 && newIndex >= 0 && oldIndex != newIndex)
+    {
+        beginRemoveRows({}, oldIndex, oldIndex);
+        const auto item = m_items.takeAt(oldIndex);
+        endRemoveRows();
+
+        beginInsertRows({}, newIndex, newIndex);
+        m_items.insert(newIndex, item);
+        endInsertRows();
+    }
+}
+
 int SampleModel::itemToRow(const SampleItem* item) const
 {
     const auto itr = std::find_if(m_items.begin(), m_items.end(),
-        [item](const auto& itemPtr) { return itemPtr.get() == item; });
+        [item](const auto itemPtr) { return itemPtr == item; });
     return itr != m_items.end() ? std::distance(m_items.begin(), itr) : -1;
 }
 
 SampleItem* SampleModel::rowToItem(int row) const
 {
     return row >= 0 && row < static_cast<int>(m_items.size())
-        ? m_items[row].get() : nullptr;
+        ? m_items[row] : nullptr;
 }
 
 void SampleModel::tick()
@@ -235,7 +249,7 @@ void SampleModel::createItem(const QString& name)
     };
 
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    m_items.push_back(std::make_unique<SampleItem>(name, onDataChanged));
+    m_items.push_back(new SampleItem(name, onDataChanged, this));
     endInsertRows();
 }
 
@@ -244,9 +258,8 @@ void SampleModel::deleteItem(int row)
     if (row >= 0 && row < static_cast<int>(m_items.size()))
     {
         beginRemoveRows(QModelIndex(), row, row);
-        auto itr = m_items.begin();
-        std::advance(itr, row);
-        m_items.erase(itr);
+        auto item = m_items.takeAt(row);
+        item->deleteLater();
         endRemoveRows();
     }
 }

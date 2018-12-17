@@ -1,6 +1,7 @@
-import QtQuick 2.6
+import QtQuick 2.9
 import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.3
+import QtQml.Models 2.1
 import SampleModel 1.0
 
 Rectangle {
@@ -9,19 +10,214 @@ Rectangle {
     height: 260
 
     /** Style properties */
-    property int buttonHeight: 30
-    property int rowHeight: 25
-    property color darkShade: "#DDDDDD"
-    property color midShade: "#DFDFDF"
-    property color lightAltShade: "#F5F5F5"
-    property color lightShade: "white"
-    property color darkHighlight: "#8EACFF"
-    property color midHighlight: "#B2C6FF"
-    property color lightHighlight: "#E0E8FF"
-    property int smallFont: 8
-    property int largeFont: 10
-    property int marginSize: 4
-    property int iconsSize: 16
+    readonly property int buttonHeight: 30
+    readonly property int rowHeight: 25
+    readonly property color darkShade: "#DDDDDD"
+    readonly property color midShade: "#DFDFDF"
+    readonly property color lightAltShade: "#F5F5F5"
+    readonly property color lightShade: "white"
+    readonly property color dragHighlight: "red"
+    readonly property color darkHighlight: "#8EACFF"
+    readonly property color midHighlight: "#B2C6FF"
+    readonly property color lightHighlight: "#E0E8FF"
+    readonly property int smallFont: 8
+    readonly property int largeFont: 10
+    readonly property int marginSize: 4
+    readonly property int iconsSize: 16
+
+    /** Delegate model allows for drag/drop behaviour */
+    DelegateModel {
+        id: delegateModel
+        model: context_model
+
+        delegate: Item {
+            id: control
+            readonly property int delegateIndex: DelegateModel.itemsIndex
+            readonly property bool isHighlighted: dragArea.containsMouse || progressBar.containsMouse
+            readonly property bool isSelected: listView.currentIndex == index
+            width: listView.width
+            height: root.rowHeight
+            
+            /** Everything needs to be wrapped in a MouseArea */
+            MouseArea {
+                id: dragArea
+                anchors.fill: parent
+                pressAndHoldInterval: 250
+                hoverEnabled: true
+                acceptedButtons: Qt.RightButton | Qt.LeftButton
+
+                readonly property alias delegateIndex: control.delegateIndex
+                property int previousDelegateIndex: -1
+                property bool dragging: false
+
+                drag.target: dragging ? content : undefined
+                drag.axis: Drag.YAxis
+                drag.minimumY: 0
+                drag.maximumY: listView.height - parent.height
+
+                onPressed: {
+                    listView.currentIndex = index;
+                }
+                
+                onPressAndHold: {
+                    previousDelegateIndex = delegateIndex;
+                    dragging = true
+                }
+                
+                onReleased: {
+                    dragging = false
+                    if (previousDelegateIndex != delegateIndex) {
+                        context_model.moveItems(previousDelegateIndex, delegateIndex);
+                    }
+
+                    listView.currentIndex = index;
+                    if(mouse.button == Qt.RightButton) {
+                        contextMenu.popup()
+                    }
+                }
+     
+                /** The visible elements that will drag */
+                Rectangle {
+                    id: content
+                    width: listView.width
+                    height: root.rowHeight
+
+                    Drag.active: dragArea.dragging
+                    Drag.source: dragArea
+                    Drag.hotSpot.x: width / 2
+                    Drag.hotSpot.y: height / 2
+
+                    states: State  {
+                        when: dragArea.dragging
+                        ParentChange { 
+                            target: content; 
+                            parent: listView
+                        }
+                        AnchorChanges {
+                            target: content
+                            anchors { horizontalCenter: undefined; verticalCenter: undefined }
+                        }
+                    }
+
+                    color: {
+                        if(dragArea.dragging) {
+                            return dragHighlight
+                        }
+                        if(isSelected) {
+                            return darkHighlight
+                        }
+                        if(isHighlighted) {
+                            return lightHighlight
+                        }
+                        return (index & 1) ? lightShade : lightAltShade;
+                    }
+
+                    RowLayout {
+                        anchors.fill: parent
+
+                        Text {
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            Layout.alignment: Qt.AlignVCenter
+                            Layout.margins: marginSize
+                            text: role_name
+                            font.bold: true
+                            font.pointSize: smallFont
+                        }
+                        Text {
+                            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+                            Layout.fillHeight: true
+                            Layout.margins: marginSize
+                            width: 100
+                            text: role_state_desc
+                            font.pointSize: smallFont
+                        }
+                        ProgressBar {
+                            id: progressBar
+                            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+                            Layout.fillHeight: true
+                            Layout.margins: marginSize
+                            width: 100
+                            from: 0
+                            to: role_maxstep
+                            property alias containsMouse: mouseAreaBar.containsMouse
+                                        
+                            property var roleStep: role_step
+                            onRoleStepChanged: {
+                                value = roleStep;
+                            }                                       
+                                        
+                            MouseArea {
+                                id: mouseAreaBar
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                acceptedButtons: Qt.RightButton | Qt.LeftButton
+                                onPressed: { onMousePress(); }
+                                onClicked: { onMouseClick(mouse); }
+                            }                                       
+                        }
+                        Button {
+                            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+                            Layout.preferredHeight: iconsSize
+                            Layout.preferredWidth: iconsSize
+                            padding: 0
+                            icon.source: "qrc:///start.png"
+                            enabled: control.role_state_value != SampleItemState.STEPPING
+                            onClicked: {
+                                context_model.startItemProgress(index)
+                            }
+                        }
+                        Button {
+                            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+                            Layout.preferredHeight: iconsSize
+                            Layout.preferredWidth: iconsSize
+                            padding: 0
+                            icon.source: "qrc:///pause.png"
+                            enabled: control.role_state_value == SampleItemState.STEPPING
+                            onClicked: {
+                                context_model.pauseItemProgress(index)
+                            }
+                        }
+                        Button {
+                            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+                            Layout.preferredHeight: iconsSize
+                            Layout.preferredWidth: iconsSize
+                            padding: 0
+                            icon.source: "qrc:///stop.png"
+                            enabled: control.role_state_value == SampleItemState.STEPPING || control.role_state_value == SampleItemState.PAUSED
+                            onClicked: {
+                                context_model.stopItemProgress(index)
+                            }
+                        }
+                        Button {
+                            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+                            Layout.preferredHeight: iconsSize
+                            Layout.preferredWidth: iconsSize
+                            Layout.margins: marginSize
+                            padding: 0
+                            icon.source: "qrc:///delete.png"
+                            onClicked: {
+                                context_model.deleteItem(index)
+                            }
+                        }
+                        Item {
+                            Layout.margins: marginSize
+                        }
+                    }
+                }
+
+                DropArea {
+                    anchors.fill: parent
+                    anchors.margins: 10
+                    onEntered: {
+                        delegateModel.items.move(
+                            drag.source.delegateIndex, 
+                            dragArea.delegateIndex);
+                    }
+                }
+            }
+        }
+    }
 
     Rectangle {
         anchors.fill: parent
@@ -44,23 +240,23 @@ Rectangle {
                     id: listView
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    model: context_model
+                    model: delegateModel
                     clip: true
                     currentIndex: 0
                     focus: true
 
                     onModelChanged: {
-                        if(model) {
-                            console.log(model.gadgetTest.id + " " + typeof(model.gadgetTest));
+                        if(context_model) {
+                            console.log(context_model.gadgetTest.id + " " + typeof(context_model.gadgetTest));
                             console.log(Test.Enum.ONE + " " + Test.Enum.TWO + " " + Test.Enum.THREE);
                             console.log(ObjectEnum.ONE + " " + ObjectEnum.TWO + " " + ObjectEnum.THREE);
 
                             for(var i = 0; i < 3; i++) {
-                                console.log(model.intListTest[i] + " " + typeof(model.intListTest[i]));
-                                console.log(model.colorListTest[i] + " " + typeof(model.colorListTest[i]));
-                                console.log(model.objectListTest[i].id + " " + typeof(model.objectListTest[i]));
+                                console.log(context_model.intListTest[i] + " " + typeof(context_model.intListTest[i]));
+                                console.log(context_model.colorListTest[i] + " " + typeof(context_model.colorListTest[i]));
+                                console.log(context_model.objectListTest[i].id + " " + typeof(context_model.objectListTest[i]));
                             }
-                            var test = model.returnObjectList();
+                            var test = context_model.returnObjectList();
                         }
                     }
 
@@ -77,7 +273,8 @@ Rectangle {
                             icon.width: iconsSize
                             icon.height: iconsSize
                             enabled: {
-                                return listView.currentItem != null && listView.currentItem.canStart()
+                                return listView.currentItem != null && 
+                                    listView.currentItem.role_state_value != SampleItemState.STEPPING
                             }
                             onTriggered: {
                                 context_model.startItemProgress(listView.currentIndex);
@@ -89,7 +286,8 @@ Rectangle {
                             icon.width: iconsSize
                             icon.height: iconsSize
                             enabled: {
-                                return listView.currentItem != null && listView.currentItem.canPause()
+                                return listView.currentItem != null &&
+                                    listView.currentItem.role_state_value == SampleItemState.STEPPING
                             }
                             onTriggered: {
                                 context_model.pauseItemProgress(listView.currentIndex);
@@ -101,7 +299,9 @@ Rectangle {
                             icon.width: iconsSize
                             icon.height: iconsSize
                             enabled: {
-                                return listView.currentItem != null && listView.currentItem.canStop()
+                                return listView.currentItem != null && 
+                                    (listView.currentItem.role_state_value == SampleItemState.STEPPING || 
+                                    listView.currentItem.role_state_value == SampleItemState.PAUSED)
                             }
                             onTriggered: {
                                 context_model.stopItemProgress(listView.currentIndex);
@@ -114,150 +314,6 @@ Rectangle {
                             icon.height: iconsSize
                             onTriggered: {
                                 context_model.deleteItem(listView.currentIndex);
-                            }
-                        }
-                    }
-
-                    delegate: Item {
-                        id: listDelegate
-                        property bool isHighlighted: mouseArea.containsMouse || progressBar.containsMouse
-                        property bool isSelected: listView.currentIndex == index
-                        width: listView.width
-                        height: root.rowHeight
-
-                        function canStart() {
-                            return role_state_value != SampleItemState.STEPPING;
-                        }
-                        function canPause() {
-                            return role_state_value == SampleItemState.STEPPING;
-                        }
-                        function canStop() {
-                            return role_state_value == SampleItemState.STEPPING ||
-                                role_state_value == SampleItemState.PAUSED;
-                        }
-                        function onMousePress() {
-                            listView.currentIndex = index;
-                        }
-                        function onMouseClick(mouse) {
-                            listView.currentIndex = index;
-                            if(mouse.button == Qt.RightButton) {
-                                contextMenu.popup()
-                            }
-                        }                           
-                            
-                        MouseArea {
-                            id: mouseArea
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            acceptedButtons: Qt.RightButton | Qt.LeftButton
-                            onPressed: { onMousePress(); }
-                            onClicked: { onMouseClick(mouse); }
-                        }                           
-
-                        Rectangle {
-                            anchors.fill: parent
-
-                            color: {
-                                if(isSelected) {
-                                    return darkHighlight
-                                }
-                                if(isHighlighted) {
-                                    return lightHighlight
-                                }
-                                return (index & 1) ? lightShade : lightAltShade;
-                            }
-
-                            RowLayout {
-                                anchors.fill: parent
-
-                                Text {
-                                    Layout.fillWidth: true
-                                    Layout.fillHeight: true
-                                    Layout.alignment: Qt.AlignVCenter
-                                    Layout.margins: marginSize
-                                    text: role_name
-                                    font.bold: true
-                                    font.pointSize: smallFont
-                                }
-                                Text {
-                                    Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-                                    Layout.fillHeight: true
-                                    Layout.margins: marginSize
-                                    width: 100
-                                    text: role_state_desc
-                                    font.pointSize: smallFont
-                                }
-                                ProgressBar {
-                                    id: progressBar
-                                    Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-                                    Layout.fillHeight: true
-                                    Layout.margins: marginSize
-                                    width: 100
-                                    from: 0
-                                    to: role_maxstep
-                                    property alias containsMouse: mouseAreaBar.containsMouse
-                                        
-                                    property var roleStep: role_step
-                                    onRoleStepChanged: {
-                                        value = roleStep;
-                                    }                                       
-                                        
-                                    MouseArea {
-                                        id: mouseAreaBar
-                                        anchors.fill: parent
-                                        hoverEnabled: true
-                                        acceptedButtons: Qt.RightButton | Qt.LeftButton
-                                        onPressed: { onMousePress(); }
-                                        onClicked: { onMouseClick(mouse); }
-                                    }                                       
-                                }
-                                Button {
-                                    Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-                                    Layout.preferredHeight: iconsSize
-                                    Layout.preferredWidth: iconsSize
-                                    padding: 0
-                                    icon.source: "qrc:///start.png"
-                                    enabled: canStart()
-                                    onClicked: {
-                                        context_model.startItemProgress(index)
-                                    }
-                                }
-                                Button {
-                                    Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-                                    Layout.preferredHeight: iconsSize
-                                    Layout.preferredWidth: iconsSize
-                                    padding: 0
-                                    icon.source: "qrc:///pause.png"
-                                    enabled: canPause()
-                                    onClicked: {
-                                        context_model.pauseItemProgress(index)
-                                    }
-                                }
-                                Button {
-                                    Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-                                    Layout.preferredHeight: iconsSize
-                                    Layout.preferredWidth: iconsSize
-                                    padding: 0
-                                    icon.source: "qrc:///stop.png"
-                                    enabled: canStop()
-                                    onClicked: {
-                                        context_model.stopItemProgress(index)
-                                    }
-                                }
-                                Button {
-                                    Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-                                    Layout.preferredHeight: iconsSize
-                                    Layout.preferredWidth: iconsSize
-                                    Layout.margins: marginSize
-                                    padding: 0
-                                    icon.source: "qrc:///delete.png"
-                                    onClicked: {
-                                        context_model.deleteItem(index)
-                                    }
-                                }
-                                Item {
-                                    Layout.margins: marginSize
-                                }
                             }
                         }
                     }

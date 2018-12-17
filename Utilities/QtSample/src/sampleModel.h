@@ -7,6 +7,7 @@
 #include <qdatastream.h>
 #include <qmimedata.h>
 #include <qcolor.h>
+#include <qvector.h>
 
 class SampleItem;
 
@@ -47,15 +48,6 @@ public:
     */
     virtual QHash<int, QByteArray> roleNames() const override;
     virtual bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
-    //virtual QMap<int, QVariant> itemData(const QModelIndex &index) const override;
-    //virtual bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
-    //virtual bool insertColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override;
-    //virtual bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
-    //virtual bool removeColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override;
-    //virtual bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild) override;
-    //virtual bool moveColumns(const QModelIndex &sourceParent, int sourceColumn, int count, const QModelIndex &destinationParent, int destinationChild) override;
-    //virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
-    //virtual bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role = Qt::EditRole) override;
 
     /**
     * Drag and Drop
@@ -76,6 +68,7 @@ public:
     Q_INVOKABLE void startItemProgress(int row);
     Q_INVOKABLE void stopItemProgress(int row);
     Q_INVOKABLE void pauseItemProgress(int row);
+    Q_INVOKABLE void moveItems(int oldIndex, int newIndex);
     SampleItem* rowToItem(int row) const;
     int itemToRow(const SampleItem* item) const;
     void tick();
@@ -88,9 +81,7 @@ public:
     Q_INVOKABLE QList<QObject*> returnObjectList();
 
 private:
-
-    std::vector<std::unique_ptr<SampleItem>> m_items;
-
+    QVector<SampleItem*> m_items;
     Test::Gadget m_gadgetTest;
     QList<int> m_intListTest;
     QVariantList m_colorListTest;
