@@ -831,11 +831,75 @@ context.setContextProperty("context_model", model); // Sends to QML, does not up
 
 // QQmlEngine
 QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Must be used on cpp QObjects without parents
+                               
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT QUICK LOADING
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+qmlEngine.load(QUrl("qrc:/MyQml.qml"));
+          
+/** OR **/
+                   
+m_qmlContext = std::make_unique<QQmlContext>(qmlEngine, qmlEngine);
+m_qmlContext->setContextProperty("MyClass", this);
+m_qmlComponent = std::make_unique<QQmlComponent>(qmlEngine, QUrl(qmlFile));
+if (m_qmlComponent->isLoading())
+{
+    connect(m_qmlComponent.get(), &QQmlComponent::statusChanged, this, &MyClass::onQmlLoad);
+}
+else
+{
+    onQmlLoad();
+}                          
+      
+void MyClass::onQmlLoad()
+{
+    disconnect(m_qmlComponent.get(), &QQmlComponent::statusChanged, this, &MyClass::onQmlLoad);
+
+    if (m_qmlComponent->isError())
+    {
+        // Log errors for m_qmlComponent->errors()
+        return;
+    }
+
+    QObject* rootObject = m_qmlComponent->create(m_qmlContext.get());
+    if (m_qmlComponent->isError())
+    {
+        // Log errors for m_qmlComponent->errors()
+        return;
+    }
+
+    auto rootItem = qobject_cast<QQuickItem*>(rootObject);
+    if (!rootItem)
+    {
+        // Log error: Not a QQuickItem
+        delete rootObject;
+        return;
+    }
+
+    rootItem->setParentItem(m_quickWindow->contentItem());
+    m_quickWindow->setWidth(rootItem->width());
+    m_quickWindow->setHeight(rootItem->height());
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT QUICK / QML DATA CONVERSIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  
+/************************************************************************************************************
+ARRAY CONVERSION
+• QVariantList converts to/from QML list or Javascript array (both different types)
+• All QML basic types convert to/from cpp equivalent but not in a container- must use QVariantList
+• Converted Javascript arrays have a few differences from native Javascript arrays:
+   - delete myArray[i] sets element as default constructed instead of undefined
+   - resizing larger will default construct elements instead of be undefined
+   - Using index > INT_MAX will fail as Qt container class indexing is signed, not unsigned
+
+TYPE CONVERSION
+• QVariantMap converts to/from Javascript objects
+• QML basic types convert to/from cpp equivalent
+**************************************************************************************************************/
+      
 // AUTO REGISTERED TYPES
 bool              bool
 unsigned int/int  int
@@ -871,7 +935,7 @@ QList<QVariant> (typedef QVariantList)
 QMap<QString, QVariant> (typedef QVariantMap)
 QList<QObject*>
 
-// USING OBJECTS WITH QML
+// USING QOBJECTS WITH QML
 // Data passed via Q_PROPERTY or Q_INVOKABLE
 // Avoid std::vectors as they are copied each access whether Q_PROPERTY or Q_INVOKABLE
 // Q_PROPERTY container more expensive to read/write than Q_INVOKABLE returned container
