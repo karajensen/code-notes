@@ -25,10 +25,28 @@ Rectangle {
     readonly property int marginSize: 4
     readonly property int iconsSize: 16
 
+    /** Test some model properties */
+    property var sampleModel: context_model
+    onSampleModelChanged: {
+        if (sampleModel) {
+            console.log("----------------------------------")
+            console.log(Test.Enum.ONE + " " + Test.Enum.TWO + " " + Test.Enum.THREE);
+            console.log(ObjectEnum.ONE + " " + ObjectEnum.TWO + " " + ObjectEnum.THREE);
+
+            for(var i = 0; i < 3; i++) {
+                console.log(sampleModel.intListTest[i] + " " + typeof(sampleModel.intListTest[i]));
+                console.log(sampleModel.colorListTest[i] + " " + typeof(sampleModel.colorListTest[i]));
+                console.log(sampleModel.objectListTest[i].id + " " + typeof(sampleModel.objectListTest[i]));
+            }
+            var test = sampleModel.returnObjectList();
+            console.log("----------------------------------")
+        }
+    }
+
     /** Delegate model allows for drag/drop behaviour */
     DelegateModel {
         id: delegateModel
-        model: context_model
+        model: sampleModel
 
         delegate: Item {
             id: control
@@ -37,6 +55,12 @@ Rectangle {
             readonly property bool isSelected: listView.currentIndex == index
             width: listView.width
             height: root.rowHeight
+
+            /** Anything here can also be seen by the ListView delegate */
+            readonly property bool canStart: role_state_value != SampleItemState.STEPPING
+            readonly property bool canPause: role_state_value == SampleItemState.STEPPING
+            readonly property bool canStop: role_state_value == SampleItemState.STEPPING ||
+                role_state_value == SampleItemState.PAUSED
             
             /** Everything needs to be wrapped in a MouseArea */
             MouseArea {
@@ -162,7 +186,7 @@ Rectangle {
                             Layout.preferredWidth: iconsSize
                             padding: 0
                             icon.source: "qrc:///start.png"
-                            enabled: control.role_state_value != SampleItemState.STEPPING
+                            enabled: control.canStart
                             onClicked: {
                                 context_model.startItemProgress(index)
                             }
@@ -173,7 +197,7 @@ Rectangle {
                             Layout.preferredWidth: iconsSize
                             padding: 0
                             icon.source: "qrc:///pause.png"
-                            enabled: control.role_state_value == SampleItemState.STEPPING
+                            enabled: control.canPause
                             onClicked: {
                                 context_model.pauseItemProgress(index)
                             }
@@ -184,7 +208,7 @@ Rectangle {
                             Layout.preferredWidth: iconsSize
                             padding: 0
                             icon.source: "qrc:///stop.png"
-                            enabled: control.role_state_value == SampleItemState.STEPPING || control.role_state_value == SampleItemState.PAUSED
+                            enabled: control.canStop
                             onClicked: {
                                 context_model.stopItemProgress(index)
                             }
@@ -245,21 +269,6 @@ Rectangle {
                     currentIndex: 0
                     focus: true
 
-                    onModelChanged: {
-                        if(context_model) {
-                            console.log(context_model.gadgetTest.id + " " + typeof(context_model.gadgetTest));
-                            console.log(Test.Enum.ONE + " " + Test.Enum.TWO + " " + Test.Enum.THREE);
-                            console.log(ObjectEnum.ONE + " " + ObjectEnum.TWO + " " + ObjectEnum.THREE);
-
-                            for(var i = 0; i < 3; i++) {
-                                console.log(context_model.intListTest[i] + " " + typeof(context_model.intListTest[i]));
-                                console.log(context_model.colorListTest[i] + " " + typeof(context_model.colorListTest[i]));
-                                console.log(context_model.objectListTest[i].id + " " + typeof(context_model.objectListTest[i]));
-                            }
-                            var test = context_model.returnObjectList();
-                        }
-                    }
-
                     ScrollBar.vertical: ScrollBar {
                         contentItem.opacity: 1
                     }
@@ -272,10 +281,7 @@ Rectangle {
                             icon.source: "qrc:///start.png"
                             icon.width: iconsSize
                             icon.height: iconsSize
-                            enabled: {
-                                return listView.currentItem != null && 
-                                    listView.currentItem.role_state_value != SampleItemState.STEPPING
-                            }
+                            enabled: listView.currentItem != null && listView.currentItem.canStart
                             onTriggered: {
                                 context_model.startItemProgress(listView.currentIndex);
                             }
@@ -285,10 +291,7 @@ Rectangle {
                             icon.source: "qrc:///pause.png"
                             icon.width: iconsSize
                             icon.height: iconsSize
-                            enabled: {
-                                return listView.currentItem != null &&
-                                    listView.currentItem.role_state_value == SampleItemState.STEPPING
-                            }
+                            enabled: listView.currentItem != null && listView.currentItem.canPause
                             onTriggered: {
                                 context_model.pauseItemProgress(listView.currentIndex);
                             }
@@ -298,11 +301,7 @@ Rectangle {
                             icon.source: "qrc:///stop.png"
                             icon.width: iconsSize
                             icon.height: iconsSize
-                            enabled: {
-                                return listView.currentItem != null && 
-                                    (listView.currentItem.role_state_value == SampleItemState.STEPPING || 
-                                    listView.currentItem.role_state_value == SampleItemState.PAUSED)
-                            }
+                            enabled: listView.currentItem != null && listView.currentItem.canStop
                             onTriggered: {
                                 context_model.stopItemProgress(listView.currentIndex);
                             }
