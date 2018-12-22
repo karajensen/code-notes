@@ -1,9 +1,0 @@
-D:\Projects\CodeNotes\Utilities\ColourBlender\ColourBlender\bin\Debug\WindowsFormsApplication1.exe.config
-D:\Projects\CodeNotes\Utilities\ColourBlender\ColourBlender\bin\Debug\WindowsFormsApplication1.exe
-D:\Projects\CodeNotes\Utilities\ColourBlender\ColourBlender\bin\Debug\WindowsFormsApplication1.pdb
-D:\Projects\CodeNotes\Utilities\ColourBlender\ColourBlender\obj\Debug\ColourBlender.csprojResolveAssemblyReference.cache
-D:\Projects\CodeNotes\Utilities\ColourBlender\ColourBlender\obj\Debug\WindowsFormsApplication1.ColourBlender.resources
-D:\Projects\CodeNotes\Utilities\ColourBlender\ColourBlender\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
-D:\Projects\CodeNotes\Utilities\ColourBlender\ColourBlender\obj\Debug\ColourBlender.csproj.GenerateResource.Cache
-D:\Projects\CodeNotes\Utilities\ColourBlender\ColourBlender\obj\Debug\WindowsFormsApplication1.exe
-D:\Projects\CodeNotes\Utilities\ColourBlender\ColourBlender\obj\Debug\WindowsFormsApplication1.pdb
