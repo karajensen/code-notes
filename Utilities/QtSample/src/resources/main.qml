@@ -51,7 +51,7 @@ Rectangle {
         delegate: Item {
             id: control
             readonly property int delegateIndex: DelegateModel.itemsIndex
-            readonly property bool isHighlighted: dragArea.containsMouse || progressBar.containsMouse
+            readonly property bool isHighlighted: dragArea.containsMouse
             readonly property bool isSelected: listView.currentIndex == index
             width: listView.width
             height: root.rowHeight
@@ -79,16 +79,16 @@ Rectangle {
                 drag.minimumY: 0
                 drag.maximumY: listView.height - parent.height
 
-                onPressed: {
-                    listView.currentIndex = index;
-                }
-                
-                onPressAndHold: {
+				function onMousePressed() {
+					listView.currentIndex = index;
+				}
+
+				function onMousePressAndHold() {
                     previousDelegateIndex = delegateIndex;
                     dragging = true
-                }
-                
-                onReleased: {
+				}
+
+				function onMouseReleased(mouse) {
                     dragging = false
                     if (previousDelegateIndex != delegateIndex) {
                         context_model.moveItems(previousDelegateIndex, delegateIndex);
@@ -98,6 +98,18 @@ Rectangle {
                     if(mouse.button == Qt.RightButton) {
                         contextMenu.popup()
                     }
+				}
+
+                onPressed: {
+                    onMousePressed();
+                }
+                
+                onPressAndHold: {
+					onMousePressAndHold();
+                }
+                
+                onReleased: {
+					onMouseReleased(mouse);
                 }
      
                 /** The visible elements that will drag */
@@ -164,21 +176,11 @@ Rectangle {
                             width: 100
                             from: 0
                             to: role_maxstep
-                            property alias containsMouse: mouseAreaBar.containsMouse
                                         
                             property var roleStep: role_step
                             onRoleStepChanged: {
                                 value = roleStep;
-                            }                                       
-                                        
-                            MouseArea {
-                                id: mouseAreaBar
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                acceptedButtons: Qt.RightButton | Qt.LeftButton
-                                onPressed: { onMousePress(); }
-                                onClicked: { onMouseClick(mouse); }
-                            }                                       
+                            }                                    
                         }
                         Button {
                             Layout.alignment: Qt.AlignVCenter | Qt.AlignRight

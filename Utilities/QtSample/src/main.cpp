@@ -5,6 +5,7 @@
 #include <qabstracteventdispatcher.h>
 #include <qtimer.h>
 #include "sampleModel.h"
+#include <iostream>
 
 int main(int argc, char *argv[])
 {
@@ -31,6 +32,13 @@ int main(int argc, char *argv[])
     timer.setInterval(10);
     QObject::connect(&timer, &QTimer::timeout, [&model]() { model.tick(); });
     timer.start();
+
+	auto connection = std::make_shared<QMetaObject::Connection>();
+	*connection = QObject::connect(&timer, &QTimer::timeout, [connection]()
+	{
+		std::cout << "Testing Auto Disconnect" << std::endl;
+		QObject::disconnect(*connection);
+	});
 
     return app.exec();
 }
