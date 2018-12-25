@@ -63,6 +63,7 @@ IMPLICIT SHARING (COPY-ON-WRITE):
 • Can be dangerous for iterators when container detaches from shared block:
 
 PROPERTY SYSTEM:
+• To create dynamic properties use QQmlPropertyMap (see Qt Containers)
 MEMBER     Required if READ not used
 READ       Required if MEMBER not used
 WRITE      Optional, can be used with either READ or MEMBER
