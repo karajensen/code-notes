@@ -351,7 +351,33 @@ variant.toUuid() // QUuid
 variant.type() // Returns QVariant::Type
 variant.typeName() // Returns const char* or 0 if invalid
 variant.value<T>() // If the value cannot be converted a default-constructed value will be returned
-  
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT QML PROPERTY MAP
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+/*************************************************************************************************************
+• Used to create dynamic QObject properties for use in QML
+**************************************************************************************************************/
+    
+QQmlPropertyMap map
+map.insert("property", variant)
+map.clear("property")
+map.contains("property")
+map.count() / map.size() 
+map.isEmpty()
+map.keys() // Returns QStringList of all property names
+map.value("property") // Returns QVariant value at key or invalid QVariant if doesn't exist
+map.valueChanged() // Signal emitted only when value is changed in QML
+
+// ADDING TO QML
+QQmlPropertyMap subMap(&map)
+map.insert("property", QVariant::fromValue(0))
+subMap.insert("property", QVariant::fromValue("test"))
+map.insert("subMap", QVariant::fromValue(subMap))
+context->setContextProperty("map", &map)
+console.log(map.subMap.property)
+    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT MIME DATA
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
