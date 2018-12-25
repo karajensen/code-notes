@@ -135,7 +135,7 @@ obj.signalsBlocked() // Whether signals blocked
 obj.children() // Returns const QList<QObject*>& for children, order changes when child raised/lowered
 obj.dumpObjectInfo() // Outputs to debug log
 obj.dumpObjectTree() // Outputs to debug log
-obj.dynamicPropertyNames() // Returns QList<QByteArray> for all dynamic properties
+obj.dynamicPropertyNames() // Returns QList<QByteArray> for all dynamic properties, not in QML
 obj.findChild<T*>("objectName") // Optional objectName, returns T* or null
 obj.findChild<T*>("objectName", Qt::FindDirectChildrenOnly) // Non recursive version
 obj.findChildren<T*>("objectName") // Optional objectName, returns QList<T*> =
@@ -294,7 +294,7 @@ auto connection = std::make_shared<QMetaObject::Connection>();
 *connection = QObject::connect(sender, &Sender::mySignal, [this, connection]()
 {
     QObject::disconnect(*connection);
-}
+});
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT SMART POINTERS
