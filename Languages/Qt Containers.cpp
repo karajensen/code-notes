@@ -250,9 +250,6 @@ lst.removeDuplicates() // Removes all duplicate strings, doesn't require sorting
 lst.replaceInStrings("str1", "str2", caseFlag) // Replace 'str1' with 'str2' in all strings
 lst.sort(case) // Sort all strings using std::sort
   
-// QLocale
-// Converts between numbers and their string representations in various languages
-  
 // QRegularExpression
 // Provides pattern matching using regular expressions
   
