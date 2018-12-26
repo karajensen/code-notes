@@ -297,10 +297,10 @@ char buffer[256];
 sprintf(buf, "%%")          // display % sign
 
 // Conversion Specifiers:
-sprintf(buf, "%d", value)     // display integer
+sprintf(buf, "%d", value)     // display integer (length modifier required for some types)
 sprintf(buf, "%x", value)     // display integer in hexadecimal
 sprintf(buf, "%X", value)     // display integer in hexadecimal in caps
-sprintf(buf, "%f", value)     // display float/double
+sprintf(buf, "%f", value)     // display float/double (length modifier required for some types)
 sprintf(buf, "%e", value)     // display float/double using scientific notation with e (eg. 1.86e6)
 sprintf(buf, "%E", value)     // display float/double using scientific notation with E (eg. 1.86E6)
 sprintf(buf, "%g", value)     // display float/double using the shorter of %f or %e
@@ -308,13 +308,16 @@ sprintf(buf, "%G", value)     // display float/double using the shorter of %f or
 sprintf(buf, "%s", value)     // display cstring, using empty str will not give any output
     
 // Length Modifiers:
+// Required for numbers using 'short', 'long' etc. otherwise gives garbage values
 sprintf(buf, "%hd", value)    // requires 'h' in front for short int/unsigned short int
 sprintf(buf, "%ld", value)    // requires 'l' in front for long int/unsigned long int
 sprintf(buf, "%Ld", value)    // requires 'L' in front for long double
 sprintf(buf, "%ls", value)    // requires 'l' in front for wide strings
 
 // Width.Precision:
-sprintf(buf, "%.3f", value);  // precision of 3 decimal, will round up/down
+// Precision: Controls padding for integers, precision for floats
+// Width: Controls padding for floats/strings
+sprintf(buf, "%.3f", value);  // number of values after decimal point, will round up/down
 sprintf(buf, "%.3g", value);  // number of significant numbers (not 0) used for whole number
 sprintf(buf, "%.3d", value);  // minimum number of digits, will pad with 0 in front
 sprintf(buf, "%.3s", value);  // maximum characters to use in string
