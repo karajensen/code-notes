@@ -501,6 +501,18 @@ flow.forceLayout() // Triggers an update instead of waiting for scheduled one
 
 ------------------------------------------------------------------------------------------------------------
 
+// STACKLAYOUT
+// import QtQuick 2.11
+// Inherits Item, Stack of items where only one item is visible at a time
+StackLayout {
+    count
+    currentIndex: 0 // Current visible item
+    Page {} // item 1
+    Page {} // item 2
+}
+
+------------------------------------------------------------------------------------------------------------
+
 // Layout Alignment Flags
 Qt.AlignLeft       Qt.AlignTop
 Qt.AlignHCenter    Qt.AlignVCenter
@@ -602,6 +614,7 @@ Qt.NoFocus      // The control does not accept focus
 // import QtQuick.Controls 2.4
 // Inherits Control, Combined button and popup list for selecting options
 // Delegate has properties 'index' and 'modelData'
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-combobox
 ComboBox {
     acceptableInput
     count
@@ -644,6 +657,7 @@ cb.textAt(index)
 // SPINBOX
 // import QtQuick.Controls 2.4
 // Inherits Control, Allows the user to select from a set of preset values
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-spinbox
 SpinBox {
     down.pressed
     down.indicator
@@ -673,6 +687,7 @@ sb.decrease()
 // DIAL
 // import QtQuick.Controls 2.4
 // Inherits Control, Circular dial that is rotated to set a value
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-dial
 Dial {
     angle
     from
@@ -696,6 +711,7 @@ dial.decrease()
 // BUSYINDICATOR
 // import QtQuick.Controls 2.4
 // Inherits Control, Indicates background activity
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-busyindicator
 BusyIndicator {
     running
 }
@@ -704,7 +720,8 @@ BusyIndicator {
 
 // SCROLLINDICATOR
 // import QtQuick.Controls 2.4
-// Inherits Control, Vertical or horizontal non-interactive scroll indicator.
+// Inherits Control, Vertical or horizontal non-interactive scroll indicator
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-scrollindicator
 ScrollIndicator {
     active
     horizontal
@@ -724,6 +741,7 @@ Flickable {
 // PROGRESSBAR
 // import QtQuick.Controls 2.4
 // Inherits Control, Indicates the progress of an operation
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-progressbar
 ProgressBar {
     from
     indeterminate
@@ -738,6 +756,7 @@ ProgressBar {
 // SLIDER
 // import QtQuick.Controls 2.4
 // Inherits Control, Used to select a value by sliding a handle along a track
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-slider
 Slider {
     from 
     handle
@@ -764,6 +783,7 @@ slider.valueAt(real position)
 // RANGESLIDER
 // import QtQuick.Controls 2.4
 // Inherits Control, Used to select a range of values by sliding two handles along a track
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-rangeslider
 RangeSlider {
     first.value
     first.position
@@ -798,6 +818,7 @@ slider.setValues(firstValue, secondValue)
 // TUMBLER
 // import QtQuick.Controls 2.4
 // Inherits Control, Spinnable wheel of items that can be selected
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-tumbler
 Tumbler {
     count
     currentIndex
@@ -814,6 +835,7 @@ Tumbler {
 // SCROLLBAR
 // import QtQuick.Controls 2.4
 // Inherits Control, Vertical or horizontal interactive scroll bar
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-scrollbar
 ScrollBar {
     horizontal: true // Whether horizontal
     interactive: true // Default, whether interactible
@@ -857,10 +879,37 @@ Qt.Vertical    Q.Horizontal
 // TOOLSEPARATOR
 // import QtQuick.Controls 2.4
 // Inherits Control, Separates a group of items in a toolbar from adjacent items
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-toolseparator
 ToolSeparator {
     horizontal
     orientation
     vertical
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// PAGE
+// import QtQuick.Controls 2.4
+// Styled page control with support for a header and footer
+Page {
+    contentChildren
+    contentData
+    contentHeight
+    contentWidth
+    footer
+    header
+    title
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// PAGEINDICATOR
+// import QtQuick.Controls 2.4
+// Indicates the currently active page in a container or layout of multiple pages
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-pageindicator
+PageIndicator {
+    currentIndex: stackLayout.currentIndex
+    count: stackLayout.count
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -904,6 +953,7 @@ AbstractButton.TextBesideIcon
 // BUTTON
 // import QtQuick.Controls 2.4
 // Inherits AbstractButton
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-button
 Button {
     autoRepeat: false // default, whether repeats pressed, released and clicked signals
     flat: false // default, whether draws a background when pressed or checked
@@ -913,9 +963,23 @@ btn.highlighted // Whether button is highlighted
 
 ------------------------------------------------------------------------------------------------------------
 
+// DELAYBUTTON
+// import QtQuick.Controls 2.4
+// Inherits AbstractButton, Button with that checks when pressed long enough
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-delaybutton
+DelayButton {
+    delay: 3000 // Default in ms
+    progress: 0.0 // Pressed progress from 0.0->1.0
+    transition
+    onActivated: {}
+}
+
+------------------------------------------------------------------------------------------------------------
+
 // ROUNDBUTTON
 // import QtQuick.Controls 2.4
 // Inherits AbstractButton, Button with rounded corners
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-roundbutton
 RoundButton {
     radius
 }
@@ -925,6 +989,7 @@ RoundButton {
 // CHECKBOX
 // import QtQuick.Controls 2.4
 // Inherits AbstractButton
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-checkbox
 CheckBox {
     checkState
     tristate
@@ -935,6 +1000,7 @@ CheckBox {
 // RADIOBUTTON
 // import QtQuick.Controls 2.4
 // Inherits AbstractButton, Exclusive radio button that can be toggled on or off
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-radiobutton
 RadioButton {
 }
 
@@ -943,7 +1009,17 @@ RadioButton {
 // TABBUTTON
 // import QtQuick.Controls 2.4
 // Inherits AbstractButton, Button with a look suitable for a TabBar
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-tabbutton
 TabButton {
+}
+
+------------------------------------------------------------------------------------------------------------
+
+// TOOLBUTTON
+// import QtQuick.Controls 2.4
+// Inherits Button, Button with a look that is more suitable within a ToolBar
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-toolbutton
+ToolButton {
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -951,6 +1027,7 @@ TabButton {
 // SWITCH
 // import QtQuick.Controls 2.4
 // Inherits AbstractButton, Switch button that can be toggled on or off
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-switch
 Switch {
     position
     visualPosition
@@ -1090,6 +1167,7 @@ flick.returnToBounds()
 // PANE
 // import QtQuick.Controls 2.4
 // Inherits Control, Provides a background matching with the application style and theme
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-pane
 Pane {
     contentChildren
     contentData
@@ -1102,6 +1180,7 @@ Pane {
 // FRAME
 // import QtQuick.Controls 2.4    
 // Inherits Pane, Visual frame for a logical group of controls
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-frame
 Frame {
 }
 
@@ -1110,6 +1189,7 @@ Frame {
 // MENUBAR
 // import QtQuick.Controls 2.4
 // Inherits Container, Provides a window menu bar
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-menubar
 MenuBar {
     contentHeight
     contentWidth
@@ -1128,6 +1208,7 @@ menu.takeMenu(index)
 // TABBAR
 // import QtQuick.Controls 2.4
 // Inherits Container, Allows the user to switch between different views or subtasks
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-tabbar
 TabBar {
     contentHeight
     contentWidth
@@ -1146,6 +1227,7 @@ TabBar {
 // TOOLBAR
 // import QtQuick.Controls 2.4
 // Inherits Pane, Container for context-sensitive controls
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-toolbar
 ToolBar {
     position
 }
@@ -1155,6 +1237,7 @@ ToolBar {
 // GROUPBOX
 // import QtQuick.Controls 2.4
 // Inherits Frame, Visual frame and title for a logical group of controls
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-groupbox
 GroupBox {
     label
     title
@@ -1202,6 +1285,7 @@ view.removeItem(item)
 // SCROLLVIEW
 // import QtQuick.Controls 2.4
 // Inherits Control, Auto uses Flickable if child
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-scrollview
 ScrollView {
     clip: true // defaults off, clips contents when scrolling outside width/height
         
@@ -1221,6 +1305,7 @@ scroll.contentData //  list<Object> of children, does include non-visual QML obj
 // STACKVIEW
 // import QtQuick.Controls 2.4
 // Inherits Control, Provides a stack-based navigation mode
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-stackview
 StackView {
     busy
     currentItem
@@ -1260,6 +1345,7 @@ view.replace(target, item, properties, operation)
 // SWIPEVIEW
 // import QtQuick.Controls 2.4
 // Inherits Container, Enables the user to navigate pages by swiping sideways
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-swipeview
 SwipeView {
     horizontal
     interactive
@@ -1283,6 +1369,7 @@ SwipeView {
 // POPUP
 // import QtQuick.Controls 2.4
 // Inherits QtObject, base class for all popups
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-popup
 Popup {
     activeFocus: true // Read only, whether item has active focus
     background: Item {} // If no size set, auto follows the control's size, must set implicit sizes if using
@@ -1376,6 +1463,7 @@ dialog.standardButton(button) // Returns AbstractButton
 // MENU
 // import QtQuick.Controls 2.4
 // Inherits Popup, For context and popup menus
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-menu
 Menu {
     cascade: true // default true for desktops, whether submenus offset or fill over parent menus
     currentIndex: 0 // Index of highlighted item
@@ -1424,6 +1512,7 @@ menu.takeMenu(index) // Removes and returns Menu at index
 // TOOLTIP
 // import QtQuick.Controls 2.4
 // Inherits Popup, Provides tool tips for any control
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-tooltip
 ToolTip {
    text: "str" // text to show
    delay: 0 // delay in ms after which the tool tip is shown, default 0, negative shown immediately
@@ -1444,6 +1533,7 @@ Item {
 // DRAWER
 // import QtQuick.Controls 2.4
 // Inherits Popup, Side panel that can be opened and closed using a swipe gesture
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-drawer
 Drawer {
     dragMargin
     edge
@@ -1656,6 +1746,7 @@ edit.undo() // Undos if possible
 // LABEL
 // import QtQuick.Controls 2.4
 // Inherits Text, Styled text label
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-label
 Label {
     background: Rectangle {} // If no size set, auto follows the control's size, must set implicit sizes if using
 }
@@ -1667,6 +1758,7 @@ lbl.palette // QML palette used for control, default application palette
 // TEXTFIELD
 // import QtQuick.Controls 2.4    
 // Inherits TextInput, Displays a single line of editable plain text
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-textfield
 TextField {
     background: Rectangle {} // If no size set, auto follows the control's size, must set implicit sizes
     hoverEnabled: true // Whether the control accepts hover events
@@ -1685,6 +1777,7 @@ field.palette // QML palette used for control, default application palette
 // TEXTAREA
 // import QtQuick.Controls 2.4
 // Inherits TextEdit, Displays multiple lines of editable formatted text
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-textarea
 TextArea {
     background: Rectangle {} // If no size set, auto follows the control's size, must set implicit sizes
     hoverEnabled: true // Whether the control accepts hover events
