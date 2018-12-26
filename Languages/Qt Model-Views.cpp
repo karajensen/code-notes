@@ -243,6 +243,7 @@ del.PathView.onPath // Whether the item is currently on the path
 // ITEMDELEGATE
 // import QtQuick.Controls 2.4
 // Inherits AbstractButton, Basic item delegate
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-itemdelegate
 ItemDelegate {
     highlighted: ListView.isCurrentItem // set whether the delegate is highlighted
 }
@@ -250,24 +251,28 @@ ItemDelegate {
 // CHECKDELEGATE
 // import QtQuick.Controls 2.4
 // Inherits ItemDelegate, has check indicator that can be toggled on or off
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-checkdelegate
 CheckDelegate {
 }
 
 // RADIODELEGATE
 // import QtQuick.Controls 2.4
 // Inherits ItemDelegate, has radio indicator that can be toggled on or off
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-radiodelegate
 RadioDelegate {
 }
 
 // SWITCHDELEGATE
 // import QtQuick.Controls 2.4
 // Inherits ItemDelegate, has a switch indicator that can be toggled on or off
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-switchdelegate
 SwitchDelegate {
 }
 
 // SWIPEDELEGATE
 // import QtQuick.Controls 2.4
 // Inherits ItemDelegate, Swipable item delegate
+// https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-swipedelegate
 SwipeDelegate {
 }
 
