@@ -890,7 +890,7 @@ ToolSeparator {
 
 // PAGE
 // import QtQuick.Controls 2.4
-// Styled page control with support for a header and footer
+// Inherits Control, Styled page control with support for a header and footer
 Page {
     contentChildren
     contentData
@@ -905,7 +905,7 @@ Page {
 
 // PAGEINDICATOR
 // import QtQuick.Controls 2.4
-// Indicates the currently active page in a container or layout of multiple pages
+// Inherits Control, Indicates the currently active page in a container or layout of multiple pages
 // https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-pageindicator
 PageIndicator {
     currentIndex: stackLayout.currentIndex
