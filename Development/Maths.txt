@@ -906,15 +906,12 @@ Projection Matrix (Q): | u v || uᵀ |
 REFLECTIONS IN THE PLANE
 ===============================================================================================================
 
-v = vector in plane
-v' = reflection of v in the plane
+v = vector hitting plane
+v' = reflection of v
 n = unit normal vector of plane
 
- proj a onto b = (a.b̂)b̂ = (b̂⊗b̂)a
  ------------------
 | v' = v - 2(v.n)n |
- ------------------
-| v' = v - 2(n⊗n)v |
  ------------------
 
 ===============================================================================================================
