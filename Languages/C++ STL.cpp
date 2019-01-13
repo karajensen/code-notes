@@ -396,6 +396,8 @@ std::regex_search(line, matches, pattern); // returns true if match found
 //Will terminate if out of scope
 std::thread thread(&MyFunction, arg1, arg2);
 thread.join(); //stop thread once function call is finished
+std::this_thread::get_id() // Returns std::thread::id which can be used in std::cout or compared
+std::this_thread::sleep_for(std::chrono::seconds(1)); // Sleep this current thread
 
 //MUTEX
 //Move-only object
