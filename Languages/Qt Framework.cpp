@@ -159,7 +159,7 @@ metaObj.methodCount() // Number of methods including inherited, signals, slots
 metaObj.enumeratorCount() // Number of enums including inherited
 metaObj.enumerator(index) // Get QMetaEnum from index
 metaObj.indexOfEnumerator(name) // Get index of enum from name, or -1 if not found
-QMetaObject::
+QMetaObject::invokeMethod(myObj, []{}); // Calls with Auto Connection (see Signals connection types)
 
 // QMetaEnum
 QMetaEnum metaEnum(QMetaEnum::fromType<N::MyEnum>());
@@ -739,6 +739,15 @@ SIGNALS / SLOTS
 
 QThread::sleep(3); //seconds
 QThread::currentThreadId(); // id of current execution thread
+
+// ENFORCING THREAD
+// Can either use signals/slots or QMetaObject::invokeMethod with an Auto Connection
+QMetaObject::invokeMethod(myObj, [myObj]() {
+    Q_ASSERT(myObj->thread() == QThread::currentThread());
+});
+QObject::connect(myObj, &MyClass::signal, [myObj]() {
+    Q_ASSERT(myObj->thread() == QThread::currentThread());
+});
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT QUICK / QML
