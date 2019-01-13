@@ -735,10 +735,30 @@ SIGNALS / SLOTS
 • Becomes QueuedConnection if signal/slot objects have different thread affinity
 • Signals must not be sent from the same object across threads unless that object is thread safe
 • QueuedConnection signals will be sent to slot object's event queue and called synchronously
+
+LIMITATIONS ON NON-MAIN THREAD
+• Cannot modify gui (QQuick, QWidgets etc.)
+• Cannot call OpenGL unless QOpenGLContext::supportsThreadedOpenGL is true
 **************************************************************************************************************/
 
+class MyThread : public QThread
+{
+    Q_OBJECT
+    void run() override {
+        emit resultReady(result);
+    }
+signals:
+    void resultReady(const QString &s);
+};
+
+MyThread* myThread = new MyThread(this);
+connect(myThread, &MyThread::resultReady, this, &MyObject::handleResults);
+connect(myThread, &MyThread::finished, myThread, &QObject::deleteLater);
+workerThread->start();
+
 QThread::sleep(3); //seconds
-QThread::currentThreadId(); // id of current execution thread
+QThread::currentThreadId();
+QThread::currentThread();
 
 // ENFORCING THREAD
 // Can either use signals/slots or QMetaObject::invokeMethod with an Auto Connection
