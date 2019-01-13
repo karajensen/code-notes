@@ -127,6 +127,8 @@ struct MyFunctor
 //Slower and bigger than using actual function object types (lambda, functors, pointers)
 std::function<double(int)> myFn = [](int x){ return x+2.0; }
 std::function<double(int)> myFn = &MyFunction;
+typedef double(MyFnType)(int); // Typedef for function return/params
+typedef std::function<MyFnType> MyFn; // Typedef for std::function
 
 //LAMBDAS
 //If inside a class, may become friends to access/capture internals
