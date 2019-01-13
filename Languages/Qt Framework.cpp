@@ -50,6 +50,7 @@ MOC QOBJECT LIMITATIONS:
 • Multiple Inheritance requires QObject to be first
 • Moc doesn't support virtual inheritance
 • Moc doesn't support templates with Q_OBJECT
+• Moc doesn't support OS #defines, must use Q_MOC_RUN if moc is skipping because of them
 
 PARENT-CHILD RELATIONSHIP:
 • Parent needs to be explicitly deleted, either by delete or stack scope
@@ -158,6 +159,7 @@ metaObj.methodCount() // Number of methods including inherited, signals, slots
 metaObj.enumeratorCount() // Number of enums including inherited
 metaObj.enumerator(index) // Get QMetaEnum from index
 metaObj.indexOfEnumerator(name) // Get index of enum from name, or -1 if not found
+QMetaObject::
 
 // QMetaEnum
 QMetaEnum metaEnum(QMetaEnum::fromType<N::MyEnum>());
