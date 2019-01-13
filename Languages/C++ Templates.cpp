@@ -1,4 +1,4 @@
-﻿/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GENERIC TYPE DEDUCTION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -348,14 +348,12 @@ void MyFn(const T& value, const Args&... args) // args is a function parameter p
     MyFn(args...);
 }
 
-auto MyFn = [](const auto& value, const Args&... args)
-{
-    cout << value << ",";
-    MyFn(args...);
-}
-
-MyFn(2.0,"hello",4,'c'); //can use any number, order or type of arguments
-MyFn(1.0,'d',"astring");
+// Perfect Forwarding for function arguments
+template<typename T, typename... Args>
+std::unique_ptr<T> MyFn(Args&&... args)
+{    
+    return std::move(std::make_unique<T>(std::forward<Args>(args)...));
+};
 
 // VARIADIC CLASSES
 // Used for the visiter pattern and tuples, inherits itself minus one arg each time
@@ -385,51 +383,24 @@ struct MyClass<T> // Specialized for one
 
 MyClass<int, float, double> myClass;
 
-// VARIADIC PERFECT FORWADING
+// VARIADIC LAMBDAS
+auto MyFn = [](const auto& value, const Args&... args)
+{
+    cout << value << ",";
+    MyFn(args...);
+}
+MyFn(2.0,"hello",4,'c'); //can use any number, order or type of arguments
+MyFn(1.0,'d',"astring");
+
+// Perfect Forwarding for lambda arguments
 auto MyFn = [](auto&&... x)
 {
     MyFn2(std::foward<decltype(x)>(x)...);
 }
 
-template<typename T, typename... Args>
-std::unique_ptr<T> MyFn(Args&&... args)
-{    
-    return std::move(std::make_unique<T>(std::forward<Args>(args)...));
-};
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// REFLECTION USING TEMPLATES
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// GET ARGUMENT TYPES FOR FUNCTION WITH 2 ARGS
-template <typename>
-struct argType;
-
-template <typename R, typename A1, typename A2>
-struct argType<R(A1, A2)> { using type = A2; };
-
-std::argType<decltype(myFn)>::type  obj;
-
-// GET N RETURN/ARGUMENT TYPES FOR FUNCTION
-template <std::size_t N, typename T0, typename ... Ts>
-struct typeN { using type = typename typeN<N-1U, Ts...>::type; };
-
-template <typename T0, typename ... Ts>
-struct typeN<0U, T0, Ts...> { using type = T0; };
-
-template <std::size_t, typename>
-struct argN;
-
-template <std::size_t N, typename R, typename ... As>
-struct argN<N, R(As...)> { using type = typename typeN<N, As...>::type; };
-
-template <typename>
-struct returnType;
-
-template <typename R, typename ... As>
-struct returnType<R(As...)> { using type = R; };
-
-// Cast to type of return/argument for myFunction
-static_cast<typename argN<0U, decltype(myFunction)>::type>(myValue);
-static_cast<typename argN<1U, decltype(myFunction)>::type>(myValue);
-static_cast<typename returnType<decltype(myFunction)>::type>::value>(myValue);
+// Passing Variadic arguments to lambda callback
+template<typename... Args>
+void MyFn(Args&&... args)
+{
+    m_fn(std::forward<Args>(args)...);
+}
