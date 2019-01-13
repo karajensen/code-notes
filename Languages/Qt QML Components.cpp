@@ -2,6 +2,10 @@
 // QML COMPONENTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Log all properties of an object or component id
+console.log(JSON.stringify(myQmlComponent));
+console.log(JSON.stringify(myObject));
+
 // ITEM
 // import QtQuick 2.11
 // Base for most QML components, instantiates QQuickItem
