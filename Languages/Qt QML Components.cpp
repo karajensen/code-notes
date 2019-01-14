@@ -122,9 +122,9 @@ QtObject {
 // COMPONENT
 // import QtQml 2.11
 // Instantiates QQmlComponent, Used for sourceComponent and contentItem properties
+// Template for creating a type, no memory allocated until dynamically created
 Component {
     Rectangle {
-        signal mySignal(int value)
     }
 }
 
