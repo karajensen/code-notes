@@ -443,11 +443,12 @@ var obj = Qt.createQmlObject('import QtQuick 2.0; Rectangle {width: 20; height: 
 // Dynamic loading from a URL or Component
 // If an explicit size is not set for Loader, automatically resized to the size of the loaded item
 // Signals emitted from the loaded object can be received using the Connections type
-// Use myLoader.item to access dynamic-created item
-// If using external myComponent, it can only see properties in myLoader, not in any of myLoader parents
+// Use myLoader.item to access dynamic-created item, null if not loaded
+// myComponent doesn't load until used in a loader
+Component { id: myComponent }
 Loader {
     id: loader
-    sourceComponent: component // set to undefined or change to destroy items
+    sourceComponent: myComponent // set to undefined or change to destroy items
     sourceComponent: Component { } // Supports inline
     source: "MyItem.qml" // set to "" or change to destroy items
     focus: true // must be set to true for any of its children to get the active focus
