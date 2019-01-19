@@ -14,6 +14,8 @@ ScrollView {
     Layout.fillHeight: true 
     Layout.preferredHeight: contentHeight
         
+    // ScrollView takes ListView's Flickable if only/direct child
+    // If not only/direct child some functions will not work (eg positionViewAtEnd)
     ListView {
         id: listView
         Layout.fillWidth: true
