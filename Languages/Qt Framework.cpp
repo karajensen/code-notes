@@ -736,9 +736,10 @@ SIGNALS / SLOTS
 • Signals must not be sent from the same object across threads unless that object is thread safe
 • QueuedConnection signals will be sent to slot object's event queue and called synchronously
 
-LIMITATIONS ON NON-MAIN THREAD
+LIMITATIONS ON QTHREAD
 • Cannot modify gui (QQuick, QWidgets etc.)
 • Cannot call OpenGL unless QOpenGLContext::supportsThreadedOpenGL is true
+• All QObjects must be destroyed before QThread is destroyed- can connect deleteLater to QThread::finished
 **************************************************************************************************************/
 
 class MyThread : public QThread
