@@ -168,12 +168,12 @@ Repeater {
     Text { text: "Item " + index + "/" + repeater.count }
 }
 Repeater {
-    model: ["one", "two", "three"]
+    model: ["one", "two", "three"] /*or*/ myList
     Text { text: "Data: " + modelData }
 }
 Repeater {
-    model: myModel
-    Text { text: "Data: " + modelData.role_name }
+    model: myModel // doesn't use modelData, access roles directly
+    Text { text: "Data: " + role_name }
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1288,7 +1288,7 @@ view.removeItem(item)
    
 // SCROLLVIEW
 // import QtQuick.Controls 2.4
-// Inherits Control, Auto uses Flickable if child
+// Inherits Control, Auto uses single child's Flickable if it has one
 // https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-scrollview
 ScrollView {
     clip: true // defaults off, clips contents when scrolling outside width/height
