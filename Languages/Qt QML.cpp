@@ -70,7 +70,16 @@ Item {
     function myFunction(x, y) {
         return x + y;
     }  
+    
+    /* QML only enum */
+    enum MyEnum {
+        ZERO,
+        ONE,
+        TWO
+    }
+    property int myEnum: MyQml.MyEnum.ZERO // Must use QML file/component name
 }
+
 item.mySignal.connect(mySlot)     // Connect signal and slot, forward optional, no auto disconnect
 item.mySignal.disconnect(mySlot)  // Signals must be disconnected
 
