@@ -173,8 +173,9 @@ i = ++i    // BAD: i is modified more than once
 //===============================================================================================================
 
 // COMMA-SEPERATION
-int x = a, b    // a assigned to x, b assigned to nothing
-int x = (a, b)  // a assigned to nothing, b assigned to x
+int x = a, b;      // a assigned to x, b assigned to nothing
+int x = (a, b);    // a assigned to nothing, b assigned to x
+int x = a, y = b;  // a assigned to x, b assigned to y (both new vars)
 
 // FUNCTION PARAMETERS
 // Compilier specific, callFunc(getA(), getB()); can either be:
