@@ -234,6 +234,7 @@ QByteArray::fromRawData(data) // Returns QByteArray with data without any deep c
   
 // QTextStream
 QTextStream(&str) << "str" << value; // QString streamstream
+stream.setCodec("UTF-8") // Required for windows reading non-ANSI characters
 
 // QStringList
 // Inherits from QList<QString>
