@@ -52,10 +52,19 @@ MOC QOBJECT LIMITATIONS:
 • Moc doesn't support templates with Q_OBJECT
 • Moc doesn't support OS #defines, must use Q_MOC_RUN if moc is skipping because of them
 
-PARENT-CHILD RELATIONSHIP:
-• Parent needs to be explicitly deleted, either by delete or stack scope
+DELETING QOBJECTS:
+• Root parent needs to be explicitly deleted, either by delete (deleteLater, qDeleteAll) or stack scope
 • Children deleted by parent automatically, if child is deleted first, parent is notified
 • Children should not be created on the stack unless deleted first, as parent assumes children are on heap
+• qDeleteAll used for containers of QObject* and calls 'delete' on all items
+
+DELETE LATER:
+• Calls 'delete' on object when control returns to the event loop
+• If called before main loop, will be deleted when it starts. If called after, will not be deleted
+• Safe to call multiple times
+• Should be used unless you can ensure:
+    - Object isn't used in any pending events or callbacks (eg. QTimer)
+    - Object isn't the signaller if being deleted in a slot
 
 IMPLICIT SHARING (COPY-ON-WRITE):
 • Objects share the same memory in a 'shared block' if have the same values
@@ -760,6 +769,7 @@ workerThread->start();
 QThread::sleep(3); //seconds
 QThread::currentThreadId();
 QThread::currentThread();
+QtConcurrent::run([](){});
 
 // ENFORCING THREAD
 // Can either use signals/slots or QMetaObject::invokeMethod with an Auto Connection
@@ -866,7 +876,7 @@ context.setContextProperty("context_model", model); // Sends to QML, does not up
 QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Must be used on cpp QObjects without parents
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT QUICK / QML DATA CONVERSIONS
+// QT QUICK / QML COMMUNICATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  
 /************************************************************************************************************
@@ -909,14 +919,16 @@ QList<QObject*>                           var/list         Array (with differenc
    - delete myArray[i] sets element as default constructed instead of undefined
    - resizing larger will default construct elements instead of be undefined
    - Using index > INT_MAX will fail as Qt container class indexing is signed, not unsigned
+• Avoid std::vectors as they are copied each access whether Q_PROPERTY or Q_INVOKABLE
+• Q_PROPERTY container more expensive to read/write than Q_INVOKABLE returned container
 **************************************************************************************************************/
 
 // USING QOBJECTS WITH QML
-// Data passed via Q_PROPERTY or Q_INVOKABLE
-// Avoid std::vectors as they are copied each access whether Q_PROPERTY or Q_INVOKABLE
-// Q_PROPERTY container more expensive to read/write than Q_INVOKABLE returned container
+// Data passed via Q_PROPERTY, Q_INVOKABLE, setContextProperty or setRootContext
+// Best to set CppOwnership for all parentless QObjects passed to QML
+// Officially, only Q_INVOKABLE will automatically take ownership of parentless QObjects unless CppOwnership
 // QGadgets: to use, needs Q_GADGET registration with Variant/Property system and is passed by value
-// QObjects: to use, doesn't need any registration and is passed as QObject*, be aware of ownership
+// QObjects: to use, doesn't need any registration and is passed as QObject*
 Q_PROPERTY(QList<QObject*> objList MEMBER m_objList) // Has cpp owernship
 Q_PROPERTY(QObject* obj MEMBER m_obj) // Has cpp owernship
 Q_INVOKABLE QObject* myFn() { ... } // Returning parentless QObject* has qml ownership
