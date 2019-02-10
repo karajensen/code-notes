@@ -80,8 +80,10 @@ Item {
     property int myEnum: MyQml.MyEnum.ZERO // Must use QML file/component name
 }
 
-item.mySignal.connect(mySlot)     // Connect signal and slot, forward optional, no auto disconnect
-item.mySignal.disconnect(mySlot)  // Signals must be disconnected
+mySignal.connect(mySlot) // Connect signal and slot, forward optional, no auto disconnect
+mySignal.disconnect(mySlot) // Signals must be disconnected
+myProp1 = value; // Sets value of property once off, doesn't overwrite binding
+myProp1 = Qt.binding(function() { return myProp2; }); // Change binding of property
 
 // GLOBAL OBJECTS
 // MyGlobal.qml, Requires registering with QQmlEngine
