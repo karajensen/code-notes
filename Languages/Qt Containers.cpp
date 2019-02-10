@@ -349,72 +349,6 @@ variant.toUuid() // QUuid
 variant.type() // Returns QVariant::Type
 variant.typeName() // Returns const char* or 0 if invalid
 variant.value<T>() // If the value cannot be converted a default-constructed value will be returned
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT QML PROPERTY MAP
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-/*************************************************************************************************************
-• Used to create dynamic QObject properties for use in QML
-**************************************************************************************************************/
-    
-QQmlPropertyMap map
-map.insert("property", variant)
-map.clear("property")
-map.contains("property")
-map.count() / map.size() 
-map.isEmpty()
-map.keys() // Returns QStringList of all property names
-map.value("property") // Returns QVariant value at key or invalid QVariant if doesn't exist
-map.valueChanged() // Signal emitted only when value is changed in QML
-
-// ADDING TO QML
-QQmlPropertyMap subMap(&map)
-map.insert("property", QVariant::fromValue(0))
-subMap.insert("property", QVariant::fromValue("test"))
-map.insert("subMap", QVariant::fromValue(subMap))
-context->setContextProperty("map", &map)
-console.log(map.subMap.property)
-    
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT MIME DATA
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
-/*************************************************************************************************************
-• Used to describe information that can be stored in clipboard / transferred via drag and drop mechanism
-• To use custom types, must be registered with Q_DECLARE_METATYPE / qRegisterMetaTypeStreamOperators 
-**************************************************************************************************************/
-
-QMimeData data;
-data.colorData() // Returns QVariant with QColor or null if can't return a color
-data.data(mimeType) // Returns QByteArray from type
-data.formats() // Returns QStringList of mimeTypes supported by the object
-data.hasColor() // Returns true if object can return a color
-data.hasFormat(mimeType) // Returns true if the object can return data for the MIME type specified by mimeType
-data.hasHtml() // Returns true if the object can return HTML
-data.hasImage() // Returns true if the object can return an image
-data.hasText() // Returns true if the object can return plain text
-data.hasUrls() // Returns true if the object can return a list of urls
-data.html() // Returns QString if the data stored in the object is HTML, else empty
-data.imageData() // Returns QVariant with QImage or null if can't return an image
-data.removeFormat(mimeType) // Removes the data entry for mimeType in the object
-data.retrieveData(mimeType, variantType) // Returns QVariant, see Variant section for Variant Type Enum
-data.setColorData(color) // Takes QVariant with QColor
-data.setData(mimeType, data) // Takes QByteArray, sets data for mime type
-data.setHtml(html) // Takes QString
-data.setImageData(image) // Takes QVariant with QImage
-data.setText(text) // Takes QString
-data.setUrls(urls) // Takes QList<QUrl>
-data.text() // Returns QString or empty
-data.urls() // Returns QList<QUrl> or empty
-    
-// Mime Types
-"application/x-qabstractitemmodeldatalist"
-"application/x-color"                          // QColor      
-"text/uri-list"                                // QList<QUrl> 
-"text/html"                                    // QString
-"text/plain"                                   // QString
-"image/ *"                                     // QImage      
   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT CONTAINERS
@@ -891,4 +825,126 @@ QVector<int>::iterator i = a.begin();
 b = a;    // Make both implicity share
 *i = 10;  // Iterator points to share block, will modify both a and b
 a[0] = 5; // Detach a by modifying only it, i still points to b though  
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT JSON
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// QJsonObject
+// Key is case sensitive string, value is QJsonValue
+QJsonObject obj
+QJsonObject obj = { {"key1", 1}, {"key2", 2} };
+obj.constFind("key") // Returns QJsonObject::const_iterator or end()
+obj.contains("key") // Returns true if key exists
+obj.count() / obj.length() / obj.size() // Number of key-value pairs
+obj.empty() / obj.isEmpty() // Whether the object is empty
+obj.erase(itr) // Erases key-value pair at itr
+obj.find("key") // Returns QJsonObject::iterator or end()
+obj.insert("key", value) // Insert or replace, returns QJsonObject::iterator for entry
+obj.insert("key", QJsonValue::Undefined) // Will remove 'key'
+obj.keys() // Returns QStringList of all keys
+obj.remove("key") // Removes 'key'
+obj.take("key") // Removes 'key' and returns QJsonValue
+obj.toVariantHash() // Returns QVariantHash
+obj.toVariantMap() // Returns QVariantMap
+obj.value("key") // Returns QJsonValue object
+obj.begin() // QJsonObject::iterator or QJsonObject::const_iterator
+obj.end() // QJsonObject::iterator or QJsonObject::const_iterator
+obj.constBegin() // QJsonObject::const_iterator
+obj.constEnd() // QJsonObject::const_iterator
+QJsonObject::fromVariantHash(hash) // Converts from a QVariantHash
+QJsonObject::fromVariantMap(map) // Converts from a QVariantMap
+
+// QJsonValue
+QJsonValue value
+value.isArray() // Whether value holds a QJsonArray
+value.isBool() // Whether value holds a boolean
+value.isDouble() // Whether value holds a double
+value.isNull() // Whether value is null
+value.isObject() // Whether value holds a QJsonObject
+value.isString() // Whether value holds a QString
+value.isUndefined() // Whether value holds an array
+value.toArray(default) // Default optional, returns default or QJsonArray() if failed
+value.toBool(default) // Default optional, returns default or false if failed
+value.toDouble(default) // Default optional, returns default or 0 if failed
+value.toInt(default) // Default optional, returns default or 0 if failed
+value.toObject(default) // Default optional, returns QJsonObject() if failed
+value.toString(default) // Default optional, returns a null QString() if failed
+value.toVariant(default) // See QJsonValue to QVariant Conversion
+value.type() // Returns QJsonValue::Type
+    
+// QJsonValue to QVariant Conversion
+Null       ->   QMetaType::Nullptr
+Bool       ->   QMetaType::Bool
+Double     ->   QMetaType::Double
+String     ->   QString
+Array      ->   QVariantList
+Object     ->   QVariantMap
+Undefined  ->   QVariant()
+    
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT QML PROPERTY MAP
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+/*************************************************************************************************************
+• Used to create dynamic QObject properties for use in QML
+**************************************************************************************************************/
+    
+QQmlPropertyMap map
+map.insert("property", variant)
+map.clear("property")
+map.contains("property")
+map.count() / map.size() 
+map.isEmpty()
+map.keys() // Returns QStringList of all property names
+map.value("property") // Returns QVariant value at key or invalid QVariant if doesn't exist
+map.valueChanged() // Signal emitted only when value is changed in QML
+
+// ADDING TO QML
+QQmlPropertyMap subMap(&map)
+map.insert("property", QVariant::fromValue(0))
+subMap.insert("property", QVariant::fromValue("test"))
+map.insert("subMap", QVariant::fromValue(subMap))
+context->setContextProperty("map", &map)
+console.log(map.subMap.property)
+    
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT MIME DATA
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+/*************************************************************************************************************
+• Used to describe information that can be stored in clipboard / transferred via drag and drop mechanism
+• To use custom types, must be registered with Q_DECLARE_METATYPE / qRegisterMetaTypeStreamOperators 
+**************************************************************************************************************/
+
+QMimeData data;
+data.colorData() // Returns QVariant with QColor or null if can't return a color
+data.data(mimeType) // Returns QByteArray from type
+data.formats() // Returns QStringList of mimeTypes supported by the object
+data.hasColor() // Returns true if object can return a color
+data.hasFormat(mimeType) // Returns true if the object can return data for the MIME type specified by mimeType
+data.hasHtml() // Returns true if the object can return HTML
+data.hasImage() // Returns true if the object can return an image
+data.hasText() // Returns true if the object can return plain text
+data.hasUrls() // Returns true if the object can return a list of urls
+data.html() // Returns QString if the data stored in the object is HTML, else empty
+data.imageData() // Returns QVariant with QImage or null if can't return an image
+data.removeFormat(mimeType) // Removes the data entry for mimeType in the object
+data.retrieveData(mimeType, variantType) // Returns QVariant, see Variant section for Variant Type Enum
+data.setColorData(color) // Takes QVariant with QColor
+data.setData(mimeType, data) // Takes QByteArray, sets data for mime type
+data.setHtml(html) // Takes QString
+data.setImageData(image) // Takes QVariant with QImage
+data.setText(text) // Takes QString
+data.setUrls(urls) // Takes QList<QUrl>
+data.text() // Returns QString or empty
+data.urls() // Returns QList<QUrl> or empty
+    
+// Mime Types
+"application/x-qabstractitemmodeldatalist"
+"application/x-color"                          // QColor      
+"text/uri-list"                                // QList<QUrl> 
+"text/html"                                    // QString
+"text/plain"                                   // QString
+"image/ *"                                     // QImage      
 
