@@ -739,9 +739,10 @@ QOBJECTS
 • Will recieve queued signals/event from same or other threads, slot is always called in own thread
 • If no thread affinity or in thread without event loop, cannot process queued signals/events
 • Can change with object.moveToThread(), must not have a parent, all children auto changed too
+• Use deleteLater if object is accessed across multiple threads
 
 SIGNALS / SLOTS
-• Thread safe to connect, disconnect and emit signals if signalling object is thread safe
+• Thread safe to connect, disconnect and emit signals
 • Connection type default is AutoConnection, thread safe and auto copies arguments
 • AutoConnection Becomes QueuedConnection if signal/slot objects have different thread affinity
 • QueuedConnection signals will be sent to slot object's event queue and called synchronously
