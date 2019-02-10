@@ -935,4 +935,15 @@ Behavior on opacity {
     }
 } 
 
+// Loop property change
+NumberAnimation on x 
+{
+    loops: Animation.Infinite
+    duration: 1000
+    easing.type: Easing.InOutQuad
+    from: 0
+    to: 100
+    running: true
+    onStopped: { parent.x = 0; }
+}
 
