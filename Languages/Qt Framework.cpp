@@ -239,13 +239,14 @@ MOC SIGNAL LIMITATIONS:
 • Enums/typedefs cannot be forward decl for signal/slot parameters
 • Nested Classes cannot have signals or slots
 
-CONNECTING:
+CONNECTIONS:
 • Returns QMetaObject::Connection or can call QObject::disconnect with same signature
 • QObject destruction auto disconnects signals/slots
 • Can duplicate connections, multiple signals are then emitted, all are broken with single disconnect call 
 • Signatures must match: SIGNAL/SLOT macros give runtime error, functions give compile error
 • Use normalised form from moc cpp for SIGNAL/SLOT macros, otherwise performance hit
-• Thread safe to connect/disconnect, thread safe when connection invoked if Qt::QueuedConnection is set
+• QueuedConnection auto copies values, DirectConnection/BlockedConnection doesn't
+• BlockingQueuedConnection dangerous if connecting two objects with same thread affinity
 **************************************************************************************************************/
 
 Class MyClass : QObject
@@ -740,9 +741,9 @@ QOBJECTS
 • Can change with object.moveToThread(), must not have a parent, all children auto changed too
 
 SIGNALS / SLOTS
-• QObject::connect default is AutoConnection and thread safe
-• Becomes QueuedConnection if signal/slot objects have different thread affinity
-• Signals must not be sent from the same object across threads unless that object is thread safe
+• Thread safe to connect, disconnect and emit signals if signalling object is thread safe
+• Connection type default is AutoConnection, thread safe and auto copies arguments
+• AutoConnection Becomes QueuedConnection if signal/slot objects have different thread affinity
 • QueuedConnection signals will be sent to slot object's event queue and called synchronously
 
 LIMITATIONS ON QTHREAD
@@ -771,7 +772,7 @@ QThread::currentThreadId();
 QThread::currentThread();
 QtConcurrent::run([](){});
 
-// ENFORCING THREAD
+// ENFORCING THREAD AFFINITY
 // Can either use signals/slots or QMetaObject::invokeMethod with an Auto Connection
 QMetaObject::invokeMethod(myObj, [myObj]() {
     Q_ASSERT(myObj->thread() == QThread::currentThread());
