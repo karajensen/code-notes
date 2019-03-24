@@ -144,6 +144,9 @@ transform(str.begin(), str.end(), str.begin(), toupper); //Modifying; can be cop
 transform(S, E, back_inserter(myCon), doCopyLam); //insert at end rather than copying
 unique_copy(S, E, S2) //copies into 2 and removes double values, returns iterator in 2 to new end
     
+//MOVING BETWEEN SEQUENCE CONTAINERS
+O.insert(O.end(), make_move_iterator(O2.begin()), make_move_iterator(O2.end()));
+  
 //REMOVING FROM SEQUENCE CONTAINERS
 //Only works for array/vector/deque/list, better to use list.remove though
 //Requires Erase remove idiom to actually remove, std::remove only moves wanted items to start of range, overwriting values if needed
