@@ -83,58 +83,62 @@ CONSTANT   Optional, makes readonly
 FINAL      Optional, can enable optimizations, indicates shouldn't override though not enforced by moc
 **************************************************************************************************************/
 
+// OBJECTS/GADGETS
 namespace N
 {
     Q_NAMESPACE
     
-// OBJECTS
-class MyClass : public QObject
-{
-    Q_OBJECT // required for all moc provided features
-    Q_CLASSINFO("Author", "Name") // attach additional name/value pairs to the class's meta-object
-    Q_DISABLE_COPY(MyClass) // Required for singleton classes
-     
-public:
-    MyClass(QObject *parent = 0) { }
-    Q_PROPERTY(MyValue value MEMBER m_value NOTIFY myValueSignal)
-    Q_PROPERTY(MyValue value READ getValue WRITE setValue NOTIFY mySignal)
-    
-    enum class MyClassEnum { ONE, TWO, THREE };
-    Q_ENUM(MyClassEnum)
-    
-    enum MyClassFlag { One=0x01, Two=0x02, Three=0x04 };
-    Q_ENUM(MyClassFlag)
-    
-    // Can be overloaded, virtual, pure virtual, with defaults
-    const MyValue& getValue() const { return m_value; }
-    void setValue(const MyValue& value) { m_value = value; }
-    Q_INVOKABLE void myFn() { }
-};
-    
-// ENUMS
-// Enums must start with capital letter
-enum class MyEnum { ONE, TWO, THREE };
-Q_ENUM_NS(MyEnum) 
-    
-// FLAGS
-// Flags must start with capital letter
-enum MyFlag { One=0x01, Two=0x02, Three=0x04 };
-Q_FLAG_NS(MyFlag) 
+    class MyClass : public QObject
+    {
+        Q_OBJECT // required for all moc provided features
+        Q_CLASSINFO("Author", "Name") // attach additional name/value pairs to the class's meta-object
+        Q_DISABLE_COPY(MyClass) // Required for singleton classes
 
-// GADGETS
-// Don't derived from QObject, value-type used with variant
-struct MyGadget
-{
-    Q_GADGET
-        
-public:
-    Q_PROPERTY(QString name MEMBER m_name)
-    Q_INVOKABLE void myFn() { }
-    bool operator==(const Gadget& g) const { ... }
-    bool operator!=(const Gadget& g) const { ... }
-};
-Q_DECLARE_METATYPE(MyGadget) 
+    public:
+        MyClass(QObject *parent = 0) { }
+        Q_PROPERTY(MyValue value MEMBER m_value NOTIFY myValueSignal)
+        Q_PROPERTY(MyValue value READ getValue WRITE setValue NOTIFY mySignal)
+
+        enum class MyClassEnum { ONE, TWO, THREE };
+        Q_ENUM(MyClassEnum)
+
+        enum MyClassFlag { One=0x01, Two=0x02, Three=0x04 };
+        Q_FLAG(MyClassFlag)
+
+        // Can be overloaded, virtual, pure virtual, with defaults
+        const MyValue& getValue() const { return m_value; }
+        void setValue(const MyValue& value) { m_value = value; }
+        Q_INVOKABLE void myFn() { }
+    };
+    
+    // Don't derived from QObject, value-type used with variant
+    struct MyGadget
+    {
+        Q_GADGET
+
+    public:
+        Q_PROPERTY(QString name MEMBER m_name)
+        Q_INVOKABLE void myFn() { }
+        bool operator==(const Gadget& g) const { ... }
+        bool operator!=(const Gadget& g) const { ... }
+    };
+    Q_DECLARE_METATYPE(MyGadget) 
 }
+
+// ENUMS/FLAGS
+// Must start with capital letter
+namespace N
+{
+    Q_NAMESPACE
+    
+    enum class MyEnum { ONE, TWO, THREE };
+    Q_ENUM_NS(MyEnum) 
+
+    enum MyFlag { One=0x01, Two=0x02, Three=0x04 };
+    Q_FLAG_NS(MyFlag) 
+    Q_DECLARE_FLAGS(MyFlags, MyFlag) // Creates type 'Flags'
+}
+Q_DECLARE_OPERATORS_FOR_FLAGS(N::MyFlags) // Allows operator use, must be outside namespace
 
 // QObject
 obj.objectName // Property; User-defined name of object instance, blank as default
@@ -177,6 +181,12 @@ metaEnum.keyToValue("ONE", &isValid) // Returns int or -1 if not found, optional
 metaEnum.keyCount() // Returns number of keys/values
 metaEnum.key(index) // Returns const char* key from int index, or null if doesn't exist
 metaEnum.value(index) // Returns int value with the given index, or returns -1 if none found
+    
+// QFlags
+// Requires Q_DECLARE_FLAGS and Q_DECLARE_OPERATORS_FOR_FLAGS, can implicity convert to unsigned int
+N::MyFlags flags = N::ONE | N::TWO
+flags.testFlag(a::ONE) // returns true if flags includes ONE
+flags ^= N::TWO // add TWO
 
 // TYPE INFO
 // Macro must placed after class in .h
