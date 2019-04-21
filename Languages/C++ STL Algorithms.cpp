@@ -142,21 +142,27 @@ swap_ranges(S, E, S2) //exchange values of two ranges, returns iterato to E2
 transform(S, E, S2, doCopyLam) //Modifying; each element calls lambda then is copied to second container
 transform(str.begin(), str.end(), str.begin(), toupper); //Modifying; can be copied in place
 transform(S, E, back_inserter(myCon), doCopyLam); //insert at end rather than copying
-unique_copy(S, E, S2) //copies into 2 and removes double values, returns iterator in 2 to new end
+unique_copy(S, E, S2) //copies into 2 and removes double values, returns iterator in 2 to new end  
     
 //MOVING BETWEEN SEQUENCE CONTAINERS
 O.insert(O.end(), make_move_iterator(O2.begin()), make_move_iterator(O2.end()));
+
+//REMOVING DUPLICATES
+//Fastest is unordered_set, then std::unique
+unique(S, E) //moves all unique items to front of range; returns iterator to end of this range, requires sorting
+unordered_set<int> set; //Faster to fill a set manually than use its constructor
+for (int i : vec) { set.insert(i); }
+vec.assign(set.begin(), set.end());
   
 //REMOVING FROM SEQUENCE CONTAINERS
 //Only works for array/vector/deque/list, better to use list.remove though
 //Requires Erase remove idiom to actually remove, std::remove only moves wanted items to start of range, overwriting values if needed
 remove(S, E,"A") //moves all items that aren't A to front of range; returns iterator to end of this range
 remove_if(S, E, boolLam) ///moves all items that return false to front of range; returns iterator to end of this range
-unique(S, E) //moves all unique items to front of range; returns iterator to end of this range, requires sorting
 O.erase(remove(O.begin(), O.end(), "A"), O.end()); //Erase-remove idiom
 O.erase(remove_if(S, E, boolLam), O.end());
 O.erase(unique(S, E), O.end());
-    
+  
 //REMOVING FROM ASSOCIATIVE CONTAINERS
 O.erase("A"); //remove all with key for associative containers
 for(auto it = O.begin(); it != O.end(); ) //remove_if
