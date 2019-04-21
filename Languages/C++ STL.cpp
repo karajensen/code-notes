@@ -418,3 +418,7 @@ handle.get()  //blocks until result is available and returns result
 //FUTURE POLICIES
 std::launch::async     //A new thread is launched to execute the task asynchronously 
 std::launch::deferred  //Task is executed on the calling thread the first time its result is requested 
+    
+//ATOMIC
+//Threadsafe, not copyable or movable, unless to T, T can be basic bool, integers, floats, char etc.
+std::atomic<T> myThreadsafeVar; 
