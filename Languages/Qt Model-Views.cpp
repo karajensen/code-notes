@@ -14,8 +14,10 @@ ScrollView {
     Layout.fillHeight: true 
     Layout.preferredHeight: contentHeight
         
+    // VIEWS INSIDE A SCROLL VIEW
     // ScrollView takes ListView's Flickable if only/direct child
     // If not only/direct child some functions will not work (eg positionViewAtEnd)
+    // And also ensure 'interactive' is set to false
     ListView {
         id: listView
         Layout.fillWidth: true
@@ -346,6 +348,33 @@ ItemSelectionModel.ClearAndSelect  // Clear | Select
 // QT MODELS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Custom Model
+class MyAbstractItemModel : public QAbstractListModel
+{
+    Q_OBJECT
+    enum ModelRoles { MyRole = Qt::UserRole + 1 }
+public:
+    MyAbstractItemModel(QObject* parent = nullptr);
+    
+    // Required QAbstractItemModel and QAbstractListModel
+    virtual int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+    
+    // Required for QAbstractItemModel
+    virtual int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+    virtual QModelIndex index(int row, int column = 0, const QModelIndex& parent = QModelIndex()) const override;
+    virtual QModelIndex parent(const QModelIndex& child) const override;
+    
+    // Optional
+    virtual bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
+    virtual QHash<int, QByteArray> roleNames() const override
+    {
+        QHash<int, QByteArray> roles;
+        roles[MyRole] = "my_role";
+        return roles;
+    }
+};
+    
 // QAbstractItemModel
 // Inherits QObject, Abstract interface for item model classes
 // Parent/index is always const QModelIndex&
@@ -443,42 +472,6 @@ model.stringList() // Return QStringList
 
 // QItemSelectionModel
 // Instantiated By ItemSelectionModel, Inherits QObject, keeps track of a view's selected items
-
-// QAbstractProxyModel
-// Inherits QAbstractItemModel, Base class for proxy item models that can do sorting, filtering etc
-// To subclass, override mapFromSource / mapToSource
-proxy.sourceModel // Takes QAbstractItemModel*
-proxy.mapSelectionFromSource(srcSel) // map src to proxy selections, takes/returns QItemSelection
-proxy.mapSelectionToSource(proxySel) // map proxy to src selections, takes/returns QItemSelection
-proxy.mapToSource(srcIndex) // map src to proxy index, takes/returns QModelIndex 
-proxy.mapFromSource(proxyIndex) // map proxy to src index, takes/returns QModelIndex 
-proxy.setSourceModel(srcModel) // Takes QAbstractItemModel*
-proxy.sourceModel() // Returns QAbstractItemModel*
-emit sourceModelChanged() // Emitted when source model is changed
-    
-// QIdentityProxyModel
-// Inherits QAbstractProxyModel, Proxies its source model unmodified
-
-// QSortFilterProxyModel
-// Inherits QAbstractProxyModel, support for sorting/filtering data passed between another model and a view
-// Properties have accessors proxy.property() and proxy.setProperty()
-proxy.dynamicSortFilter // Whether to dynamically sort/filter when source model contents change, default true
-proxy.filterCaseSensitivity // Case sensitivity of the QRegExp pattern, default Qt::CaseSensitive
-proxy.filterKeyColumn // Column to use to filter whole column, default 0
-proxy.filterRegExp // QRegExp used to filter the contents
-proxy.filterRole // Item role used to query the source model's data, default Qt::DisplayRole
-proxy.recursiveFilteringEnabled // Whether the filter to be applied recursively on children, default false
-proxy.sortCaseSensitivity // Case sensitivity used for comparing strings, default Qt::CaseSensitive
-proxy.sortRole // Item role used to query the source model's data when sorting items, default Qt::DisplayRole
-proxy.filterAcceptsColumn(srcColumn, srcParent) // Returns true if filter accepts column with parent
-proxy.filterAcceptsRow(srcRow, srcParent) // Returns true if filter accepts row with parent
-proxy.invalidate() // Invalidates the current sorting and filtering
-proxy.invalidateFilter() // Invalidates the current filtering
-proxy.setFilterFixedString(str) // Sets the fixed string used to filter the contents of the source model
-proxy.setFilterRegExp(str) // Sets the regular expression used to filter the contents of the source model
-proxy.setFilterWildcard(str) // Sets the wildcard expression used to filter the contents of the source model
-proxy.sortColumn() // The column currently used for sorting
-proxy.sortOrder() // Returns Qt::SortOrder
     
 // QModelIndex
 // Created/obtained from QAbstractItemModel::createIndex / QAbstractItemModel::index
@@ -547,6 +540,44 @@ Qt::MatchWildcard         // Performs string-based matching using a string with 
 Qt::MatchWrap             // Perform a search that wraps around so all items are searched
 Qt::MatchRecursive        // Searches the entire hierarchy including children
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT PROXY MODELS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Custom Sort Filter Proxy Model
+class MySortFilterProxyModel : public QSortFilterProxyModel
+{
+    Q_OBJECT
+public:
+    MySortFilterProxyModel(QObject* parent = nullptr);
+    bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override
+    {
+        QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+        return sourceModel()->data(index, filterRole()).toString().contains(filterRegExp());
+    }
+};
+
+// QSortFilterProxyModel
+// Inherits QAbstractProxyModel, support for sorting/filtering data passed between another model and a view
+// Properties have accessors proxy.property() and proxy.setProperty()
+proxy.dynamicSortFilter // Whether to dynamically sort/filter when source model contents change, default true
+proxy.filterCaseSensitivity // Case sensitivity of the QRegExp pattern, default Qt::CaseSensitive
+proxy.filterKeyColumn // Column to use to filter whole column, default 0
+proxy.filterRegExp // QRegExp used to filter the contents
+proxy.filterRole // Item role used to query the source model's data, default Qt::DisplayRole
+proxy.recursiveFilteringEnabled // Whether the filter to be applied recursively on children, default false
+proxy.sortCaseSensitivity // Case sensitivity used for comparing strings, default Qt::CaseSensitive
+proxy.sortRole // Item role used to query the source model's data when sorting items, default Qt::DisplayRole
+proxy.filterAcceptsColumn(srcColumn, srcParent) // Returns true if filter accepts column with parent
+proxy.filterAcceptsRow(srcRow, srcParent) // Returns true if filter accepts row with parent
+proxy.invalidate() // Invalidates the current sorting and filtering
+proxy.invalidateFilter() // Invalidates the current filtering
+proxy.setFilterFixedString(str) // Sets the fixed string used to filter the contents of the source model
+proxy.setFilterRegExp(str) // Sets the regular expression used to filter the contents of the source model
+proxy.setFilterWildcard(str) // Sets the wildcard expression used to filter the contents of the source model
+proxy.sortColumn() // The column currently used for sorting
+proxy.sortOrder() // Returns Qt::SortOrder
+
 // QSortFilterProxyModel Qt::CaseSensitivity
 Qt::CaseInsensitive
 Qt::CaseSensitive
@@ -554,3 +585,18 @@ Qt::CaseSensitive
 // QSortFilterProxyModel Qt::SortOrder
 Qt::AscendingOrder
 Qt::DescendingOrder
+
+// QAbstractProxyModel
+// Inherits QAbstractItemModel, Base class for proxy item models that can do sorting, filtering etc
+// To subclass, override mapFromSource / mapToSource
+proxy.sourceModel // Takes QAbstractItemModel*
+proxy.mapSelectionFromSource(srcSel) // map src to proxy selections, takes/returns QItemSelection
+proxy.mapSelectionToSource(proxySel) // map proxy to src selections, takes/returns QItemSelection
+proxy.mapToSource(srcIndex) // map src to proxy index, takes/returns QModelIndex 
+proxy.mapFromSource(proxyIndex) // map proxy to src index, takes/returns QModelIndex 
+proxy.setSourceModel(srcModel) // Takes QAbstractItemModel*
+proxy.sourceModel() // Returns QAbstractItemModel*
+emit sourceModelChanged() // Emitted when source model is changed
+    
+// QIdentityProxyModel
+// Inherits QAbstractProxyModel, Proxies its source model unmodified
