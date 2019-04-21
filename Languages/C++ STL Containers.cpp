@@ -224,27 +224,28 @@ vector<int> V(O.begin(), O.end());
 vector<int> V = { 1 };
 vector<int> V{ 1 };
 
-V[i]                     // No bounds checking
-V.at(0)                  // Bounds checking
-V.empty()                // returns true/false if empty (faster than size)
-V.size()                 // number of elements
-V.assign(n, value)       // assigns reference to value over first n elements
-V.clear()                // removes all from container
-V.back()                 // returns reference to last element
-V.front()                // returns reference to first element
-V.swap(V2)               // swaps two of SAME containers around
-V.erase(itr1, itr2)      // Erases the elements in the range
-V.erase(itr)             // Erases at particular place
-V.max_size()             // returns maximum possible size
-V.resize(x)              // resizes container for x units
-V.capacity()             // returns number of elements vector can contain before more memory needed
-V.reserve(100)           // reserves 100 spots (but doesn't create any objects) of vector's type (doesn't affect size)
-V.pop_back()             // Deletes the element at the end of a list.
-V.push_back(x)           // Adds an element to the end of a list.
-V.emplace_back(2.0, 1)   // constructs directly into container; takes constructor arguments for type inside container
-V.insert(Begin(V),t)                   // Inserts a reference of t before iterator
-V.insert(Begin(V),n,t)                 // Inserts n references of t before iterator
-V.insert(Begin(V),V2.begin(),V2.end()) // Insert copies of elements in the range before iterator
+V[i]                    // No bounds checking
+V.at(0)                 // Bounds checking
+V.empty()               // returns true/false if empty (faster than size)
+V.size()                // number of elements
+V.clear()               // removes all from container
+V.back()                // returns reference to last element
+V.front()               // returns reference to first element
+V.swap(V2)              // swaps two of SAME containers around
+V.erase(itr1, itr2)     // Erases the elements in the range
+V.erase(itr)            // Erases at particular place
+V.max_size()            // returns maximum possible size
+V.resize(x)             // resizes container for x units
+V.capacity()            // returns number of elements vector can contain before more memory needed
+V.reserve(100)          // reserves 100 spots (but doesn't create any objects) of vector's type (doesn't affect size)
+V.pop_back()            // Deletes the element at the end of a list.
+V.push_back(x)          // Adds an element to the end of a list.
+V.emplace_back(2.0, 1)  // constructs directly into container; takes constructor arguments for type inside container
+V.assign(n, value)                       // assigns value over first n elements, resizes if assigning more than capacity
+V.assign(V2.begin(), V2.end())           // assigns values from another container, resizes if assigning more than capacity
+V.insert(Begin(V), t)                    // Inserts a reference of t before iterator
+V.insert(Begin(V), n, t)                 // Inserts n references of t before iterator
+V.insert(Begin(V), V2.begin(), V2.end()) // Insert copies of elements in the range before iterator
 
 //ITERATORS
 begin()   end()   cbegin()   cend()
@@ -263,27 +264,26 @@ deque<int> D = { 1 };
 deque<int> D{ 1 };
 
 D[i]
-D.empty()           // returns true/false if empty (faster than size)
-D.size()            // number of elements
-D.pop_back()        // Deletes the element at the end of a list.
-D.pop_front()       // Deletes the element at the beginning of a list.
-D.push_back(x)      // Adds an element to the end of a list.
-D.push_front(x)     // Adds an element to the beginning of a list.
-D.assign(n,value)   // assigns reference to value over first n elements
-D.clear()           // removes all from container
-D.back()            // returns reference to last element
-D.front()           // returns reference to first element
-D.swap(D2)          // swaps two of SAME containers around
-D.erase(itr1, itr2) // Erases the elements in the range
-D.erase(itr)        // Erases at particular place
-D.max_size()        // returns maximum possible size
-D.resize(x)         // resizes container for x units
-D.capacity()        // returns number of elements vector can contain before more memory needed
-D.reserve(100)      // reserves 100 spots (but doesn't create any objects) of vector's type (doesn't affect size)
-
-D.insert(D.begin(),t)                   // Inserts a reference of t before iterator
-D.insert(D.begin(),n,t)                 // Inserts n references of t before iterator
-D.insert(D.begin(),D2.begin(),D2.end()) // Insert copies of elements in the range before iterator
+D.empty()               // returns true/false if empty (faster than size)
+D.size()                // number of elements
+D.pop_back()            // Deletes the element at the end of a list.
+D.pop_front()           // Deletes the element at the beginning of a list.
+D.push_back(x)          // Adds an element to the end of a list.
+D.push_front(x)         // Adds an element to the beginning of a list.
+D.assign(n,value)       // assigns reference to value over first n elements
+D.clear()               // removes all from container
+D.back()                // returns reference to last element
+D.front()               // returns reference to first element
+D.swap(D2)              // swaps two of SAME containers around
+D.erase(itr1, itr2)     // Erases the elements in the range
+D.erase(itr)            // Erases at particular place
+D.max_size()            // returns maximum possible size
+D.resize(x)             // resizes container for x units
+D.capacity()            // returns number of elements vector can contain before more memory needed
+D.reserve(100)          // reserves 100 spots (but doesn't create any objects) of vector's type (doesn't affect size)
+D.insert(D.begin(),t)                     // Inserts a reference of t before iterator
+D.insert(D.begin(),n,t)                   // Inserts n references of t before iterator
+D.insert(D.begin(),D2.begin(),D2.end())   // Insert copies of elements in the range before iterator
 
 //ITERATORS
 begin()   end()   cbegin()   cend()
@@ -307,7 +307,7 @@ L.remove_if(boolLambda)  // Removes all elements returning true from lamda
 L.sort()                 // sorts using < in ascending order  speed: L(N*logN)  stable sort
 L.merge(one)             // merges one into two, leaving one empty  assumes both are sorted
 L.splice(L.begin(), L2)  // inserts L2 in front of L.begin(), leaving one empty
-L.unique()               // removes duplicate values in list  assumes list is sorted
+L.unique()               // removes duplicate values in list, assumes list is sorted
 L.clear()                // removes all from container
 L.front()                // returns reference to first element
 L.swap(L2)               // swaps two of SAME containers around
