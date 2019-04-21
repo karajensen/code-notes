@@ -50,7 +50,7 @@ auto boolLam = [](const auto& obj) ->bool { return o.Exists(); };
 auto equalLam = [](const auto& obj1, const auto& obj2) -> bool { return obj1 == obj2; };
 auto sortLam = [](const auto& obj1, const auto& obj2) -> bool { return obj1.myInt < obj2.myInt; };
 auto reverseSortLam = [](const auto& obj1, const auto& obj2) -> bool { return obj1.myInt > obj2.myInt; };
-auto createLam = []() -> int { return rand()%10; }
+auto createLam = [i = 0]() mutable -> MyClass { return MyClass(i++); });
 struct DelFunctor { template<typename T> void operator()(const T* ptr) const { delete ptr; ptr = nullptr; } };
 
 // ACCEPTED FUNCTION OBJECTS
@@ -143,7 +143,7 @@ transform(S, E, S2, doCopyLam) //Modifying; each element calls lambda then is co
 transform(str.begin(), str.end(), str.begin(), toupper); //Modifying; can be copied in place
 transform(S, E, back_inserter(myCon), doCopyLam); //insert at end rather than copying
 unique_copy(S, E, S2) //copies into 2 and removes double values, returns iterator in 2 to new end  
-    
+
 //MOVING BETWEEN SEQUENCE CONTAINERS
 O.insert(O.end(), make_move_iterator(O2.begin()), make_move_iterator(O2.end()));
 
