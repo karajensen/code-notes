@@ -467,11 +467,32 @@ QStringListModel model(strings); // const QStringList&
 model.setStringList(strings); // set the strings
 model.stringList() // Return QStringList
 
-// QHelpIndexModel
-// Inherits QStringListModel, supplies index keywords to views
-
 // QItemSelectionModel
 // Instantiated By ItemSelectionModel, Inherits QObject, keeps track of a view's selected items
+QItemSelectionModel model;
+QItemSelectionModel model(sourceModel);
+model.selectedIndexes // QModelIndexList property
+model.clear() // emits selectionChanged and currentChanged
+model.clearCurrentIndex() // emits currentChanged
+model.clearSelection() // emits selectionChanged 
+model.columnIntersectsSelection(column) // Returns true if any items selected in column int
+model.isColumnSelected(column) // Returns true if all items selected in column int
+model.rowIntersectsSelection(row) // Returns true if any items selected in row int
+model.isRowSelected(row) // Returns true if all items selected in row int
+model.currentIndex() // Returns QModelIndex
+model.emitSelectionChanged(newSelection, oldSelection) // const QItemSelection& args, emits if different
+model.hasSelection() // Returns true if any selection
+model.isSelected(index) // Returns true if const QModelIndex& is selected
+model.model() // Returns source model as QAbstractItemModel* or const
+model.reset() // Clears selection without firing any signals
+model.select(index, flags) // Select const QModelIndex& with QItemSelectionModel::SelectionFlags flags
+model.select(selection, flags) // Select const QItemSelection& with QItemSelectionModel::SelectionFlags flags
+model.selectedColumns(row) // For columns with all rows selected, returns QModelIndexList for int row
+model.selectedIndexes() // Returns unsorted, duplicate-free QModelIndexList of selected indexes
+model.selectedRows(column) // For rows with all columns selected, returns QModelIndexList for int column
+model.selection() // Returns const QItemSelection
+model.setCurrentIndex(index, flags) // Select const QModelIndex& with QItemSelectionModel::SelectionFlags flags
+model.setModel(model) // Sets QAbstractItemModel* model
     
 // QModelIndex
 // Created/obtained from QAbstractItemModel::createIndex / QAbstractItemModel::index
@@ -539,6 +560,19 @@ Qt::MatchRegExp           // Performs string-based matching using a regular expr
 Qt::MatchWildcard         // Performs string-based matching using a string with wildcards as the search term
 Qt::MatchWrap             // Perform a search that wraps around so all items are searched
 Qt::MatchRecursive        // Searches the entire hierarchy including children
+
+// QItemSelectionModel  QItemSelectionModel::SelectionFlags
+QItemSelectionModel::NoUpdate           // No selection will be made
+QItemSelectionModel::Clear              // The complete selection will be cleared
+QItemSelectionModel::Select             // All specified indexes will be selected
+QItemSelectionModel::Deselect           // All specified indexes will be deselected
+QItemSelectionModel::Toggle             // All specified indexes will be toggled in selection
+QItemSelectionModel::Current            // The current selection will be updated
+QItemSelectionModel::Rows               // All indexes will be expanded to span rows
+QItemSelectionModel::Columns            // All indexes will be expanded to span columns.
+QItemSelectionModel::SelectCurrent      // Select | Current
+QItemSelectionModel::ToggleCurrent      // Toggle | Current
+QItemSelectionModel::ClearAndSelect     // Clear | Select
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT PROXY MODELS
