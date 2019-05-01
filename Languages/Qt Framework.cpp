@@ -550,6 +550,15 @@ url.toLocalFile() // Convert QUrl to local file path without prefix, normalizes 
 url.toString() // Returns path with prefix file:///, qrc with qrc:/
 QUrl::fromLocalFile(path) // Convert a local file path to QUrl; adds file:/// in front
 
+// QUuid
+// 128-bit unique number
+QUuid id // Null ("{00000000-0000-0000-0000-000000000000}") by default
+QUuid id(str) // Format "{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}", {} optional, if fails will be null
+id.isNull() // Returns if null id
+id.toString(QUuid::StringFormat::WithBraces) // Default, QUuid::WithoutBraces also possible
+QUuid::createUuid() // Generate a new unique QUuid
+QUuid::fromString(str) // Format "{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}", {} optional, if fails will be null
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT WIDGETS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
