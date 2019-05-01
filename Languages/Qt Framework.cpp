@@ -1003,6 +1003,9 @@ qRadiansToDegrees(v) // Takes float/double degrees, returns float/double degrees
 qSin(v) // Takes qreal radians, returns qreal
 qSqrt(v) // Takes qreal, returns square root qreal
 qTan(v) // Takes qreal radians, returns qreal
+M_PI // π
+M_PI_2 // π / 2
+M_PI_4 // π / 4
     
 // QtGlobal
 qAbs(v) // Templated, returns absolute value of v
