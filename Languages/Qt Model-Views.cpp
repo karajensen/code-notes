@@ -634,3 +634,4 @@ emit sourceModelChanged() // Emitted when source model is changed
     
 // QIdentityProxyModel
 // Inherits QAbstractProxyModel, Proxies its source model unmodified
+QIdentityProxyModel model
