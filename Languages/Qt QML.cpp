@@ -103,6 +103,12 @@ function fn() {
     return 0;
 }
 
+// JAVASCRIPT LIMITATIONS
+function fn() {
+    myGlobalVar = 10; // CANNOT modify global properties, use 'var' instead
+    this.myProperty = 10; // CANNOT use 'this', in most places is undefined, use id instead
+}
+
 // QML DEFAULT PROPERTIES
 // Useful for positioning derived components inside base components
 Item /*MyBaseQml.qml*/ {
@@ -187,6 +193,7 @@ Qt.resolvedUrl(myUrl) // Returns url resolved relative to the URL of the caller
 // Attributes do not have signals, use onMyStrChanged instead
 property string myStr: "str"
 myStr.length
+myStr.arg(10) // Replace %1, %2 etc with value, can chain
 Qt.qsTrId(id) // returns translated string at id, else id if no translation
 Qt.qsTrIdNoOp(id) // Marks id for dynamic translation, returns id
 
