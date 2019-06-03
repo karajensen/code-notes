@@ -94,22 +94,12 @@ fn("MyValue");                  // automatically assigns b = null
 fn({ a:"MyValue", b:0 });       // Using named arguments
 
 // FUNCTION DECLARACTIONS
-// Hoisted to top of scope, body is also hoisted
+// Hoisted to top of scope, body is also hoisted, cannot see variables in parent scope
 function fn(a, b) { return 0; }
 
 // FUNCTION EXPRESSIONS
-// Non-hoisted to top of scope, even with var
+// Non-hoisted to top of scope, even with var, can take reference to variables in parent scope
 var fn = function(a, b) { return 0; };
-
-// NESTED FUNCTION
-// Inner function has access to outer variables
-// Does it take copy??
-function fnOuter(a, b) {
-  function fnInner() {
-    return a + b;
-  }
-  return fnInner(a) + fnInner(b);
-}
 
 // ARROW FUNCTIONS
 // Shorthand way of writing function expression
@@ -133,6 +123,26 @@ function fn(a, b = 0) {
 function fn(value, ...args) {
   args.map(x => console.log(x));
 }
+
+// NESTED FUNCTION
+// Inner function has reference to outer variables
+function fnOuter(a, b) {
+  function fnInner() {
+    return a + b;
+  }
+  return fnInner(a) + fnInner(b);
+}
+
+// CLOSURES
+// Allows keeping variables alive through scope
+function outerFn() {
+    var value = 2;
+    return function innerFn() {
+        value = 3;
+    };
+}
+var myFn = outerFn(); // value is kept alive
+myFn();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // OBJECT / CLASSES
