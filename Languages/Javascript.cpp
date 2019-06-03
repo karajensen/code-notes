@@ -7,9 +7,18 @@
 // Type determined by assignment, undefined if not assigned, type changes with assigning
 // Undefined value converts to NaN when used as a number, false when used as a boolean
 value = true;         // Global variable
-var value = true;     // Local variable to function, rest of function can see even if inside block scope
-const value = true;   // Same as var but const, must be initialized
-let value = true;     // Local variable to scope, rest of function cannot see
+var value = true;     // Hoisted local variable to whole function
+const value = true;   // Non-hoisted local variable to scope, must be initialized, can't be changed
+let value = true;     // Non-hoisted local variable to scope
+
+// VARIABLE HOISTING
+// Hoisted variable declarations are implicitly moved to the top of the function/scope
+// Initializations are not hoisted
+function fn()
+{
+    value = 10; // value is valid due to hoisting
+    var value = 2; // 'var value;' is implicitly hoisted to top of fn(), =2 still occurs on this line
+}
 
 // OPERATORS
 x++ / ++x
@@ -80,20 +89,23 @@ switch (myInt) {
   it just points the variable to a new primitive or object
 • Changing a property of an object referenced by a variable does change the underlying object
 • Parameters of functions default to undefined
-• 'this' is calling object in a method, use as normal object
+• Return optional- returns 'undefined' otherwise
 **************************************************************************************************************/
 
-// FUNCTION
-function fn(a, b) { return 0; } // Return optional, can use 'arguments' array inside fn which holds a/b
-fn("MyValue");                  // Any arguments to right not used become null
+fn("MyValue");                  // automatically assigns b = null
 fn({ a:"MyValue", b:0 });       // Using named arguments
 
+// FUNCTION DECLARACTIONS
+// Hoisted to top of scope
+function fn(a, b) { return 0; }
+
 // FUNCTION EXPRESSIONS
-var fn = function(value) { return value; };
-fn("MyValue");
+// Non-hoisted to top of scope, does 'var' also hoist??
+var fn = function(a, b) { return value; };
 
 // NESTED FUNCTION
 // Inner function has access to outer variables
+// Does it take copy??
 function fnOuter(a, b) {
   function fnInner() {
     return a + b;
