@@ -73,19 +73,19 @@ Item {
 // SVG must have <style type="text/css"> not <style>
 // Can have artifacts if some graphics effects are children
 Image {
-    asynchronous
-    autoTransform
-    cache
-    fillMode
+    asynchronous // Whether to load async or not
+    autoTransform // Whether to use image's internal transform data to change orientation
+    cache // Whether to store this image in the cache
+    fillMode // Stretch, keep aspect ratio etc
     horizontalAlignment
     mipmap
     mirror
-    paintedHeight
-    paintedWidth
+    paintedHeight // actual height of visible image
+    paintedWidth // actual width of visible image
     progress
     smooth
     source
-    sourceSize
+    sourceSize // recommeded to set for all images, use Qt.size(w,h) else blurrinesd
     status
     verticalAlignment
     
