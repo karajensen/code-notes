@@ -109,18 +109,32 @@ function fn() {
     this.myProperty = 10; // CANNOT use 'this', in most places is undefined, use id instead
 }
 
-// QML DEFAULT PROPERTIES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML INHERITANCE
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// OVERRIDING PROPERTIES
+Item /*MyBase.qml*/ {
+    property int myProperty: 10 // MyBase.qml uses 10
+    property int myDerivedProperty: 0
+    property alias myBaseProperty: myProperty
+}
+MyBaseQml /*MyDerived.qml*/ {
+    property int myProperty: 20 // MyDerived.qml and any uses of it uses 20
+    myDerivedProperty: myProperty
+}
+
+// DEFAULT PROPERTIES
 // Useful for positioning derived components inside base components
-Item /*MyBaseQml.qml*/ {
-    default property alias contentItem: outerRect.children
-    Rectangle {
-        id: outerRect
+Item /*MyBase.qml*/ {
+    default property alias contentItem: holder.children
+    Item {
+        id: holder
     }
 }
-MyBaseQml {
+MyBase /*MyDerived.qml*/ {
     // Can omit the contentItem, can be array of items or many child items
     contentItem: Rectangle {
-        id: innerRect
     }
 }
 
