@@ -11,6 +11,13 @@ var value = true;     // Hoisted local variable to whole function
 const value = true;   // Non-hoisted local variable to scope, must be initialized, can't be changed
 let value = true;     // Non-hoisted local variable to scope
 
+// HOISTING
+// Hoisted variable declarations (var) are implicitly moved to the top of the function/scope
+// Variable initialization is not hoisted
+// Function declarations are hoisted with their body
+// Function expressions are not hoisted, even if 'var' is used
+{ x = 10; { var x = 2; } } /*becomes*/ { var x; x = 10; { x = 2; } }
+
 // OPERATORS
 x++ / ++x
 x ** y                           // x ^ y
@@ -69,13 +76,6 @@ switch (myInt) {
     break;
   default:
 }
-
-// HOISTING
-// Hoisted variable declarations (var) are implicitly moved to the top of the function/scope
-// Variable initialization is not hoisted
-// Function declarations are hoisted with their body
-// Function expressions are not hoisted, even if 'var' is used
-function fn(){ x = 10; var x = 2; } /*becomes*/ function fn(){ var x; x = 10; x = 2; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS
