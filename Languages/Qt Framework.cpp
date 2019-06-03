@@ -213,6 +213,10 @@ qRegisterMetaTypeStreamOperators<N::MyClass>("MyClass");
 QDataStream& operator<<(QDataStream& out, const MyClass& obj);
 QDataStream& operator>>(QDataStream& in, MyClass& obj);
 
+// DELETING AN OBJECT
+obj.deleteLater() /*or*/ delete obj /*or*/ qDeleteAll(objs) /*or*/ { obj }
+emit destroyed() // Emitted just before obj deleted, children deleted after signal
+
 // INVOKING A METHOD FROM QOBJECT
 auto metaObject = myObj->metaObject();
 auto methodIndex = metaObject->indexOfMethod("myFn(QVariant,bool)");
