@@ -209,7 +209,7 @@ GammaAdjust {
 // Inherits Item, Alters the source item colors in the HSL color space
 HueSaturation {
     cached
-    hue
+    hue // from -1.0 to 1.0
     lightness 
     saturation
     source
