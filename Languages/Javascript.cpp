@@ -11,15 +11,6 @@ var value = true;     // Hoisted local variable to whole function
 const value = true;   // Non-hoisted local variable to scope, must be initialized, can't be changed
 let value = true;     // Non-hoisted local variable to scope
 
-// VARIABLE HOISTING
-// Hoisted variable declarations are implicitly moved to the top of the function/scope
-// Initializations are not hoisted
-function fn()
-{
-    value = 10; // value is valid due to hoisting
-    var value = 2; // 'var value;' is implicitly hoisted to top of fn(), =2 still occurs on this line
-}
-
 // OPERATORS
 x++ / ++x
 x ** y                           // x ^ y
@@ -79,6 +70,13 @@ switch (myInt) {
   default:
 }
 
+// HOISTING
+// Hoisted variable declarations (var) are implicitly moved to the top of the function/scope
+// Variable initialization is not hoisted
+// Function declarations are hoisted with their body
+// Function expressions are not hoisted, even if 'var' is used
+function fn(){ x = 10; var x = 2; } /*becomes*/ function fn(){ var x; x = 10; x = 2; }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,12 +94,12 @@ fn("MyValue");                  // automatically assigns b = null
 fn({ a:"MyValue", b:0 });       // Using named arguments
 
 // FUNCTION DECLARACTIONS
-// Hoisted to top of scope
+// Hoisted to top of scope, body is also hoisted
 function fn(a, b) { return 0; }
 
 // FUNCTION EXPRESSIONS
-// Non-hoisted to top of scope, does 'var' also hoist??
-var fn = function(a, b) { return value; };
+// Non-hoisted to top of scope, even with var
+var fn = function(a, b) { return 0; };
 
 // NESTED FUNCTION
 // Inner function has access to outer variables
