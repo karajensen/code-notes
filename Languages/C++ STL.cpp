@@ -61,28 +61,31 @@ typeid(myObject).name()
 #include <type_traits>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-std::is_arithmetic<T>::value //Whether a numeric type
-std::is_base_of<A,B>::value //returns true if A is a base class of B
-std::is_assignable<A,B>::value //returns true if A==B is possible
-std::is_move_assignable<A>::value //returns true if A has a move assignment operator
-std::is_move_constructible<A>::value //returns true if A has a move constructor
-std::has_virtual_destructor<A>::value //returns true if A has a virtual destructor
-std::is_same<A,B>::value //returns true if A and B are of the same type and constness
-std::is_integral<A>::value //returns true if A is int/char/bool reguardless of constness, note if int& will be false
-std::is_void<A>::value //returns true if A is void reguardless of constness
-std::is_null_pointer<A>::value //returns true if A is nullptr reguardless of constness
-std::is_const<A>::value //returns true if A is const
-std::is_pointer<A>::value //returns true if A is a pointer
-std::is_array<A>::value //returns true if A is an array
+std::is_arithmetic<T>::value // Whether a numeric type
+std::is_base_of<A,B>::value // returns true if A is a base class of B
+std::is_assignable<A,B>::value // returns true if A==B is possible
+std::is_move_assignable<A>::value // returns true if A has a move assignment operator
+std::is_move_constructible<A>::value // returns true if A has a move constructor
+std::has_virtual_destructor<A>::value // returns true if A has a virtual destructor
+std::is_same<A,B>::value // returns true if A and B are of the same type and constness
+std::is_integral<A>::value // returns true if A is int/char/bool reguardless of constness, note if int& will be false
+std::is_void<A>::value // returns true if A is void reguardless of constness
+std::is_null_pointer<A>::value // returns true if A is nullptr reguardless of constness
+std::is_const<A>::value // returns true if A is const
+std::is_pointer<A>::value // returns true if A is a pointer
+std::is_array<A>::value // returns true if A is an array
 std::is_reference<A>::value // returns true if A is a reference
-std::is_polymorphic<A>::value //returns true if A is a non-union class with at least 1 virtual function
-std::is_abstract<A>::value //returns true if A is a non-union class with a pure virtual function
-std::remove_cv<A>::type //returns A with any const or volitile or both modifiers removed
-std::remove_const<A>::type //returns A with any const modifiers removed
-std::remove_volatile<A>::type //returns A with any volitile modifiers removed
-std::remove_reference<A>::type //returns A with any reference removed
-std::remove_pointer<A>::type //returns A with any pointer removed
-std::decay<A>::type //functions/arrays will decay to pointer, other types is remove_cv with remove_reference
+std::is_polymorphic<A>::value // returns true if A is a non-union class with at least 1 virtual function
+std::is_abstract<A>::value // returns true if A is a non-union class with a pure virtual function
+std::is_enum<A>::value // returns true if enum or enum class
+std::is_signed<A>::value // returns true if type is signed
+std::remove_cv<A>::type // returns A with any const or volitile or both modifiers removed
+std::remove_const<A>::type // returns A with any const modifiers removed
+std::remove_volatile<A>::type // returns A with any volitile modifiers removed
+std::remove_reference<A>::type // returns A with any reference removed
+std::remove_pointer<A>::type // returns A with any pointer removed
+std::decay<A>::type // functions/arrays will decay to pointer, other types is remove_cv with remove_reference
+std::underlying_type<A>::type // Underlying type of enum
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <tuple>
