@@ -323,6 +323,13 @@ auto connection = std::make_shared<QMetaObject::Connection>();
     QObject::disconnect(*connection);
 });
 
+// SIGNAL MAPPER
+// Deprecated, used to combine multiple signals into one, and/or signal with different arguments
+QSignalMapper signalMapper;
+connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
+signalMapper->setMapping(button, button);
+connect(signalMapper, SIGNAL(mapped(QObject)), this, SIGNAL(clicked(QObject)));
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT SMART POINTERS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
