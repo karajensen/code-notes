@@ -548,11 +548,18 @@ Qt::VeryCoarseTimer     // Only keep full second accuracy
                                
 // QUrl
 // Interface for working with URLs with prefix qrc:/, file:/// etc.
-QUrl url(path) // Set the path directly, does not add any prefix
+// Structure is scheme:path or scheme://useinfo@host:port/path/query
+// If path passed in has no scheme, considered relative even if absolute path
+QUrl url(str) // Set the path directly, does not auto add any scheme
 url.clear(); // clears the URL
+url.setUrl(str); // Sets the URL
+url.isValid(); // Returns true if non-empty and conforms to encoding tests
+url.isRelative(); // Returns true if scheme is undefined (same as scheme().isEmpty())
 url.toLocalFile() // Convert QUrl to local file path without prefix, normalizes seperators to /
 url.toString() // Returns path with prefix file:///, qrc with qrc:/
-QUrl::fromLocalFile(path) // Convert a local file path to QUrl; adds file:/// in front
+url.setScheme(str) // Sets type (or protocol) component
+url.setPath(str) // Sets path component
+QUrl::fromLocalFile(str) // Convert a local file path to QUrl; adds file:/// in front
 
 // QUuid
 // 128-bit unique number
