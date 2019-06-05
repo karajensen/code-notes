@@ -147,6 +147,7 @@ obj.property("value") // Returns QVariant, invalid if doesn't exist
 obj.metaObject() // Returns const QMetaObject*
 obj.blockSignals(true) // Prevents any signals from calling slots, doesnt block destroyed() signal
 obj.signalsBlocked() // Whether signals blocked
+obj.event(evt) // Internally called method that can be overridden to catch QEvents, return true if caught
 obj.children() // Returns const QList<QObject*>& for children, order changes when child raised/lowered
 obj.dumpObjectInfo() // Outputs to debug log
 obj.dumpObjectTree() // Outputs to debug log
@@ -608,9 +609,46 @@ window.visible // Whether window is visible
 window.width // Width of the window
 window.x / window.y // Position of the window
 window.baseSize() / window.setBaseSize(size) // QSize
-window.cursor() // QCursor
+window.cursor() / window.setCursor(cursor) // QCursor
+window.unsetCursor() // Restore default cursor
 window.destroy() // Releases window allocations
 window.devicePixelRatio() // Ratio between physical pixels and device-independent pixels for the window
+window.filePath() / window.setFilePath() // the file name this window is representing
+window.focusObject() // Object in focus in the window, has focusObjectChanged signal
+window.format() / window.setFormat(format) // QSurfaceFormat, setFormat may not set invalid options
+window.frameGeometry() // QRect geometry of the window including its window frame
+window.frameMargins() // QMargins margin size of window
+window.geometry() / window.setGeometry(rect) // QRect geometry of the window excluding its window frame
+window.setGeometry(x, y, w, h) // geometry of the window excluding its window frame
+window.hide() // Hides the window
+window.show() // Shows the window
+window.showFullScreen() // Shows the window as fullscreen
+window.showMaximized() // Shows the window as maximised
+window.showMinimized() // Shows the window as minimised
+window.showNormal() // Shows the window as default state based on platform
+window.icon() / window.setIcon(icon) // QIcon
+window.isModal() // Whether window is receiving any input
+window.isTopLevel() // Whether window has no parent window
+window.isAncestorOf(window2) // Whether window2 is a parent of window
+window.lower() // Lower the window below other windows
+window.raise() // Raise the window above other windows
+window.mapFromGlobal(pos) // Global QPoint screen coord to window QPoint coord
+window.mapToGlobal(pos) // Window QPoint coord to Global QPoint screen coord
+window.parent() / window.setParent(window) // QWindow*, null means top-most window
+window.position() / window.setPosition(pos) // QPoint of window excluding any window frame
+window.resize(size) // Change the QSize of the window, excluding any window frame
+window.resize(w, h) // Change width/height, excluding any window frame
+window.screen() // QScreen*, For child windows, this returns the screen of top level window
+window.setFlag(flag, on) // Sets Qt::WindowType flag to on/off
+window.setKeyboardGrabEnabled(enabled) // Sets whether keyboard events all forced to window
+window.setMouseGrabEnabled(enabled) // Sets whether mouse events all forced to window
+window.sizeIncrement() / window.setSizeIncrement(size) // QSize increase when user resizes the window
+window.windowState() / window.setWindowState(state) // Qt::WindowState
+window.windowStates() / window.setWindowStates(state) // Qt::WindowStates
+window.size() // QSize size of the window excluding any window frame
+window.transientParent() // Parent for dialogs/popups
+window.type() // Qt::WindowType
+window.id() // window's WId platform id
     
 // QQuickWindow
 // Inherits QWindow, window for QML applications
@@ -638,6 +676,13 @@ QWindow::FullScreen           // Window full screen, is not resizable, no titleb
 QWindow::AutomaticVisibility  // Default visible state based on platform
 QWindow::Hidden               // Window not visible in any way
 
+// Qt::WindowState / Qt::WindowStates
+Qt::WindowNoState             // Normal state
+Qt::WindowMinimized           // Minimised
+Qt::WindowMaximized           // Maximised
+Qt::WindowFullScreen          // Fullscreen
+Qt::WindowActive              // Has focus
+    
 // Qt::ScreenOrientation
 Qt::PrimaryOrientation             // The display's primary orientation
 Qt::LandscapeOrientation           // Width > height
