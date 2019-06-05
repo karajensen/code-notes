@@ -513,12 +513,6 @@ ushort       // generic typedef for unsigned short
 // QT COMPONENTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// QWindow
-// Window for non-widgets based applications (QML)
-// If has a parent, becomes a native child window of their parent window
-// Uses QBackingStore for rendering with QPainter using QSurface::RasterSurface
-// Or can use QOpenGLContext for rendering with OpenGL using QSurface::OpenGLSurface
-
 // QPair<T1, T2>
 auto pair = qMakePair(v1, v2);
 pair.first;
@@ -578,9 +572,9 @@ QUuid::createUuid() // Generate a new unique QUuid
 QUuid::fromString(str) // Format "{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}", {} optional, if fails will be null
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT WIDGETS
+// QT WINDOWS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        
 // QWidget
 // If no parent, window for widgets based applications (non-QML), else base class for widgets
 // Uses QBackingStore for rendering with QPainter using QSurface::RasterSurface
@@ -592,6 +586,100 @@ widget.setLayout(layout); // Add a layout to the window, automatically parents
 // QOpenGLWidget
 // Inherits QWidget but uses QOpenGLContext for rendering with OpenGL using QSurface::OpenGLSurface
 
+// QWindow
+// Window for non-widgets based applications (eg. QML)
+// If has a parent, becomes a native child window of their parent window
+// Inherits QOBject and QSurface, inherited by QPaintDeviceWindow and QVulkanWindow
+// Properties have accessors item.property() or item.isProperty() and item.setProperty()
+QWindow window;
+window.active // Whether window is active
+window.contentOrientation // Qt::ScreenOrientation, orientation of the window's contents, used for popups etc.
+window.flags // Qt::WindowFlags, setFlags will modify any invalid flags out
+window.height // Height of window
+window.maximumHeight // Maximum height of window
+window.maximumWidth // Maximum width of window
+window.minimumHeight // Minimum height of window
+window.minimumWidth // Minimum width of window
+window.modality // Qt::WindowModality, prevents other windows from receiving input events
+window.opacity // Window transparency [0.0, 1.0]
+window.title // QString title of window
+window.visibility // QWindow::Visibility enum
+window.visible // Whether window is visible
+window.width // Width of the window
+window.x / window.y // Position of the window
+window.baseSize() / window.setBaseSize(size) // QSize
+window.cursor() // QCursor
+window.destroy() // Releases window allocations
+window.devicePixelRatio() // Ratio between physical pixels and device-independent pixels for the window
+    
+// QQuickWindow
+// Inherits QWindow, window for QML applications
+
+// QQuickView 
+// Wrapper for QQuickWindow to automatically load and display a QML scene from an url
+QQuickView view;
+view.rootContext(); // Returns QQmlContext*
+view.setSource(QUrl("qrc:/main.qml"));
+view.setTitle("title");
+view.setResizeMode(QQuickView::SizeRootObjectToView);
+view.show();
+
+// QQuickWidget
+// Wrapper for QQuickWindow to automatically load and display a QML scene from an url
+// Less stacking order restrictions, though slower compared to QQuickWindow/QQuickView
+// Disables the threaded render loop on all platforms
+// Avoid calling winId; triggers creation of a native window, resulting in reduced performance
+
+// QWindow::Visibility
+QWindow::Windowed             // Window allowed to be resized/moved to part of screen
+QWindow::Minimized            // Window minimized to dock, start bar etc.
+QWindow::Maximized            // Window full screen but with status bar
+QWindow::FullScreen           // Window full screen, is not resizable, no titlebar
+QWindow::AutomaticVisibility  // Default visible state based on platform
+QWindow::Hidden               // Window not visible in any way
+
+// Qt::ScreenOrientation
+Qt::PrimaryOrientation             // The display's primary orientation
+Qt::LandscapeOrientation           // Width > height
+Qt::PortraitOrientation            // Height > width, rotated 90 degree clockwise relative to landscape
+Qt::InvertedLandscapeOrientation   // Inverted landscape orientation, rotated 180 degrees relative to landscape
+Qt::InvertedPortraitOrientation    // Inverted portrait orientation, rotated 180 degrees relative to portrait
+
+// Qt::WindowModality
+Qt::NonModal           // Does not block input to other windows
+Qt::WindowModal        // Blocks input to all parents and their siblings windows
+Qt::ApplicationModal   // Blocks input to all windows
+    
+// Qt::WindowFlags /  Qt::WindowType
+Qt::Widget           // Default type for QWidget
+Qt::Window           // Indicates window
+Qt::SubWindow        // Indicates subwindow
+Qt::Dialog           // value|Window, Indicates is a dialog window
+Qt::Popup            // value|Window, Indicates is popup menu window
+Qt::Sheet            // value|Window, Indicates modal osx window
+Qt::Desktop          // value|Window, Default type for QDesktopWidget
+Qt::CoverWindow      // value|Window, Indicates is a cover window (shown when app minimised)
+Qt::ForeignWindow    // value|Window, Handle of a native platform window created by another process/native code
+Qt::Tool             // Popup|Dialog, Indicates tool window always on top of parent
+Qt::ToolTip          // Popup|Sheet, Indicates tooltip window
+Qt::SplashScreen     // Dialog|ToolTip, Default type for QSplashScreen
+Qt::CustomizeWindowHint           // Required for most window hints
+Qt::FramelessWindowHint           // Make window without a border
+Qt::NoDropShadowWindowHint        // Disables window drop shadow on supporting platforms
+Qt::WindowTitleHint               // Gives the window a title bar
+Qt::WindowSystemMenuHint          // Adds a window system menu and a close button on some systems
+Qt::WindowMinimizeButtonHint      // Adds a minimize button, may require WindowSystemMenuHint
+Qt::WindowMaximizeButtonHint      // Adds a maximize button, may require WindowSystemMenuHint
+Qt::WindowMinMaxButtonsHint       // WindowMaximizeButtonHint|WindowMaximizeButtonHint
+Qt::WindowCloseButtonHint         // Adds a close button, may require WindowSystemMenuHint
+Qt::WindowContextHelpButtonHint   // Adds a context help button to dialog, may require WindowSystemMenuHint
+Qt::WindowStaysOnTopHint          // Window should always be on top
+Qt::WindowStaysOnBottomHint       // Window should always be on bottom
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT WIDGETS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
 // QLabel
 QLabel lbl("Message"); // Allows use of html tags to customise text
 
@@ -611,10 +699,6 @@ slider.setRange(min, max);
 slider.setValue(value);
 QObject::connect(slider, SIGNAL(valueChanged(int)), fn);
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT LAYOUTS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 // QHBoxLayout
 // Lays out widgets horizontally from left to right
 QHBoxLayout layout;
@@ -629,6 +713,168 @@ layout.addWidget(spinBox); // Add a widget to the layout, automatically parents 
 // Lays out widgets in a grid.
 QGridLayout layout;
 layout.addWidget(spinBox, r, c); // Add a widget to the layout, automatically parents and resizes
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT QUICK / QML
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// QQuickItem
+// Inherits QObject, instantiated by Item
+// Properties have accessors item.property() or item.isProperty() and item.setProperty()
+item.activeFocus // Read only, whether item has active focus
+item.activeFocusOnTab // Whether included in active focus on tab, default false
+item.antialiasing // Whether antialiasing enable, default false
+item.baselineOffset // Position offset, default 0, used for text
+item.childrenRect // Read only, QRectF collective position and size of the item's children
+item.clip // Whether clipping enabled, default false, hides part of item/children, performance hit
+item.enabled // Recursive, whether the item receives mouse and keyboard events
+item.focus // Whether item has input focus
+item.height // Actual height of item
+item.width // Actual width of item
+item.implicitHeight // Default height of the Item if no height is specified
+item.implicitWidth // Default width of the Item if no width is specified
+item.opacity // Alpha of item, values outside [0,1] clamped
+item.objectName // Inherited from QObject
+item.parent // QQuickItem*, visual parent of the item
+item.rotation // rotation of the item in degrees clockwise around its transformOrigin, default 0
+item.scale // size of item, negative mirror's item, default 1
+item.smooth // Image interpolation, true is linear, false is nearest neighbour, default true
+item.state // QString state name, default empty
+item.transformOrigin // TransformOrigin type which scale/rotate use
+item.visible // Recursive, whether item is rendered
+item.x / item.y / item.z // Position and stacking depth of item, negative z draws under parent
+item.childAt(x, y) // Returns first visible QQuickItem* child found at point within item coord system
+item.childItems() // Returns QList<QQuickItem*>
+item.componentComplete() // Called when the item has been instantiated
+item.contains(point) // If item contains QPointF (in local coordinates)
+item.cursor() // Returns QCursor enum for cursor type when mouse over item, default Qt::ArrowCursor
+item.flag() // Returns Flags enum value
+item.forceActiveFocus(reason) // Focuses item and any parent FocusScopes, reason optional
+item.grabMouse() // Item will receive all mouse events until ungrabMouse is called
+item.isComponentComplete() // If construction of the QML component is complete
+item.isFocusScope() // If item is a FocusScope
+item.keepMouseGrab() // Whether mouse input should exclusively remain with this item
+item.mapFromGlobal(point) // Converts global coords into item local coords, returns QPointF
+item.mapFromItem(item2, point) // Converts item2 local coords into item local coords, returns QPointF
+item.mapFromScene(point) // Converts scene coords into item local coords, returns QPointF
+item.mapRectFromItem(item2, rect) // Converts item2 local coords into item local coords, returns QRectF
+item.mapRectFromScene(rect) // Converts scene coords into item local coords, returns QRectF
+item.mapRectToItem(item2, rect) // Converts item local coords into item2 local coords, returns QRectF
+item.mapRectToScene(rect) // Converts item local coords into scene coords, returns QRectF
+item.mapToGlobal(point) // Converts item local coords into global coords, returns QPointF
+item.mapToItem(item2, point) // Converts item local coords into item2 local coords, returns QPointF
+item.mapToScene(point) // Converts item local coords into scene coords, returns QPointF
+item.nextItemInFocusChain(forward) // Returns next QQuickItem* in the focus chain, whether to move forward
+item.scopedFocusItem() // If item is a FocusScope, returns the item in its focus chain with current focus
+item.setCursor(cursor) // Sets the cursor shape for this item
+item.setFlags(flags) // Enables the specified flags for this item
+item.stackAfter(sibling) // Moves sibling QQuickItem* to the index after item in the list of children
+item.stackAfter(sibling) // Moves sibling QQuickItem* to the index before item in the list of children
+item.ungrabMouse() // Releases the mouse grab following a call to grabMouse
+item.unsetCursor() // Clears the cursor shape for this item
+item.update() // Schedules a call to updatePaintNode
+item.updatePaintNode(oldNode, nodeData) // Called on render thread to sync the item with scene graph
+item.updatePolish() // Called to do item layout before rendering the next frame
+item.widthValid() // whether the width property has been set explicitly
+item.heightValid() //whether the height property has been set explicitly
+item.window() // Return QQuickWindow* in which this item is rendered
+ 
+// QQuickPaintedItem
+// Inherits QQuickItem, allows rendering content using QPainter
+    
+// QQmlComponent
+// Inherits QObject, instantiated by Component
+                               
+// QQmlContext
+context.setContextProperty("context_model", model); // Sends to QML, does not update if QML already loaded
+
+// QQmlEngine
+QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Must be used on cpp QObjects without parents
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT QUICK / QML COMMUNICATION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+/************************************************************************************************************
+CPP                                       QML              JAVASCRIPT
+------------------------------------------------------------------------------------------------------------
+bool                                      bool             boolean 
+unsigned int/int                          int              number
+double                                    double           number
+float/qreal                               real             number
+QString                                   string           string
+QUrl                                      url
+QColor                                    color
+QFont                                     font
+QDate                                     date             Date
+QTime                                     var              Date
+QPoint/QPointF                            point
+QSize/QSizeF                              size
+QRect/QRectF                              rect
+QMatrix4x4                                matrix4x4
+QQuaternion                               quaternion
+QVector2D                                 vector2d
+QVector3D                                 vector3d
+QVector4D                                 vector4d
+QVariant                                  var
+QObject*                                  var              object
+QMap<QString, QVariant> (QVariantMap)     var              object
+QByteArray                                var              ArrayBuffer
+QList<QVariant> (QVariantList)            var/list         Array (with differences)
+QList/QVector/std::vector<int>            var/list         Array (with differences)
+QList/QVector/std::vector<bool>           var/list         Array (with differences)
+QList/QVector/std::vector<qreal>          var/list         Array (with differences)
+QList/QVector/std::vector<QUrl>           var/list         Array (with differences)
+QList/QVector/std::vector<QString>        var/list         Array (with differences)
+QStringList                               var/list         Array (with differences)
+QList<QObject*>                           var/list         Array (with differences)
+
+• Non-registered types convert to/from QVariant using 'var'
+• Non-registered container with type convert to/from QVariantList, even if type is registered
+• Converted Javascript arrays have a few differences from native Javascript arrays:
+   - delete myArray[i] sets element as default constructed instead of undefined
+   - resizing larger will default construct elements instead of be undefined
+   - Using index > INT_MAX will fail as Qt container class indexing is signed, not unsigned
+• Avoid std::vectors as they are copied each access whether Q_PROPERTY or Q_INVOKABLE
+• Q_PROPERTY container more expensive to read/write than Q_INVOKABLE returned container
+**************************************************************************************************************/
+
+// USING QOBJECTS WITH QML
+// Data passed via Q_PROPERTY, Q_INVOKABLE, setContextProperty or setRootContext
+// Best to set CppOwnership for all parentless QObjects passed to QML
+// Officially, only Q_INVOKABLE will automatically take ownership of parentless QObjects unless CppOwnership
+// QGadgets: to use, needs Q_GADGET registration with Variant/Property system and is passed by value
+// QObjects: to use, doesn't need any registration and is passed as QObject*
+Q_PROPERTY(QList<QObject*> objList MEMBER m_objList) // Has cpp owernship
+Q_PROPERTY(QObject* obj MEMBER m_obj) // Has cpp owernship
+Q_INVOKABLE QObject* myFn() { ... } // Returning parentless QObject* has qml ownership
+Q_INVOKABLE QList<QObject*> myFn()  { ... } // Returning parentless QList<QObject*> has cpp ownership
+QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership); // Force cpp ownership
+QQmlEngine::setObjectOwnership(myObj, QQmlEngine::JavaScriptOwnership); // Force QML ownership
+
+// REGISTERING COMPONENTS WITH QML
+// To create QML Component, must be QObject derived
+// use 'import MyInclude 1.0' / MyClass {}
+qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClass");
+
+// REGISTERING CLASS ENUMS WITH QML
+// Requires Q_ENUM registration with Variant
+// Does not need further registration to use for class property/signals
+// Requires further registration to use named enums in QML
+// use 'import MyInclude 1.0' / 'MyClassEnum.ONE'
+qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClassEnum"); 
+
+// REGISTERING Q_NAMESPACE ENUMS WITH QML
+// Requires Q_ENUM_NS registration with Variant
+// use 'import MyInclude 1.0' / 'N.MyEnum.ONE'
+qmlRegisterUncreatableMetaObject(N::staticMetaObject, "MyInclude", 1, 0,
+    "N", "Error msg if try to create MyEnum object");
+
+// REGISTERING SINGLETONS WITH QML
+// Will be owned by QML, use 'import MyInclude 1.0' and 'MySingleton.Member'
+qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyInclude", 1, 0, "MySingleton")
+qmlRegisterSingletonType("MyInclude", 1, 0, "MySingleton", 
+    [](QQmlEngine*, QJSEngine*)->QObject* { return new MySingleton(); });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT FILE SYSTEM
@@ -818,186 +1064,6 @@ QMetaObject::invokeMethod(myObj, [myObj]() {
 QObject::connect(myObj, &MyClass::signal, [myObj]() {
     Q_ASSERT(myObj->thread() == QThread::currentThread());
 });
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT QUICK / QML
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// QQuickWindow
-// Inherits QWindow, window for QML applications
-
-// QQuickView 
-// Wrapper for QQuickWindow to automatically load and display a QML scene from an url
-QQuickView view;
-view.rootContext(); // Returns QQmlContext*
-view.setSource(QUrl("qrc:/main.qml"));
-view.setTitle("title");
-view.setResizeMode(QQuickView::SizeRootObjectToView);
-view.show();
-
-// QQuickWidget
-// Wrapper for QQuickWindow to automatically load and display a QML scene from an url
-// Less stacking order restrictions, though slower compared to QQuickWindow/QQuickView
-// Disables the threaded render loop on all platforms
-// Avoid calling winId; triggers creation of a native window, resulting in reduced performance
-
-// QQuickItem
-// Inherits QObject, instantiated by Item
-// Properties have accessors item.property() and item.setProperty()
-item.activeFocus // Read only, whether item has active focus
-item.activeFocusOnTab // Whether included in active focus on tab, default false
-item.antialiasing // Whether antialiasing enable, default false
-item.baselineOffset // Position offset, default 0, used for text
-item.childrenRect // Read only, QRectF collective position and size of the item's children
-item.clip // Whether clipping enabled, default false, hides part of item/children, performance hit
-item.enabled // Recursive, whether the item receives mouse and keyboard events
-item.focus // Whether item has input focus
-item.height // Actual height of item
-item.width // Actual width of item
-item.implicitHeight // Default height of the Item if no height is specified
-item.implicitWidth // Default width of the Item if no width is specified
-item.opacity // Alpha of item, values outside [0,1] clamped
-item.objectName // Inherited from QObject
-item.parent // QQuickItem*, visual parent of the item
-item.rotation // rotation of the item in degrees clockwise around its transformOrigin, default 0
-item.scale // size of item, negative mirror's item, default 1
-item.smooth // Image interpolation, true is linear, false is nearest neighbour, default true
-item.state // QString state name, default empty
-item.transformOrigin // TransformOrigin type which scale/rotate use
-item.visible // Recursive, whether item is rendered
-item.x / item.y / item.z // Position and stacking depth of item, negative z draws under parent
-item.childAt(x, y) // Returns first visible QQuickItem* child found at point within item coord system
-item.childItems() // Returns QList<QQuickItem*>
-item.componentComplete() // Called when the item has been instantiated
-item.contains(point) // If item contains QPointF (in local coordinates)
-item.cursor() // Returns QCursor enum for cursor type when mouse over item, default Qt::ArrowCursor
-item.flag() // Returns Flags enum value
-item.forceActiveFocus(reason) // Focuses item and any parent FocusScopes, reason optional
-item.grabMouse() // Item will receive all mouse events until ungrabMouse is called
-item.isComponentComplete() // If construction of the QML component is complete
-item.isFocusScope() // If item is a FocusScope
-item.keepMouseGrab() // Whether mouse input should exclusively remain with this item
-item.mapFromGlobal(point) // Converts global coords into item local coords, returns QPointF
-item.mapFromItem(item2, point) // Converts item2 local coords into item local coords, returns QPointF
-item.mapFromScene(point) // Converts scene coords into item local coords, returns QPointF
-item.mapRectFromItem(item2, rect) // Converts item2 local coords into item local coords, returns QRectF
-item.mapRectFromScene(rect) // Converts scene coords into item local coords, returns QRectF
-item.mapRectToItem(item2, rect) // Converts item local coords into item2 local coords, returns QRectF
-item.mapRectToScene(rect) // Converts item local coords into scene coords, returns QRectF
-item.mapToGlobal(point) // Converts item local coords into global coords, returns QPointF
-item.mapToItem(item2, point) // Converts item local coords into item2 local coords, returns QPointF
-item.mapToScene(point) // Converts item local coords into scene coords, returns QPointF
-item.nextItemInFocusChain(forward) // Returns next QQuickItem* in the focus chain, whether to move forward
-item.scopedFocusItem() // If item is a FocusScope, returns the item in its focus chain with current focus
-item.setCursor(cursor) // Sets the cursor shape for this item
-item.setFlags(flags) // Enables the specified flags for this item
-item.stackAfter(sibling) // Moves sibling QQuickItem* to the index after item in the list of children
-item.stackAfter(sibling) // Moves sibling QQuickItem* to the index before item in the list of children
-item.ungrabMouse() // Releases the mouse grab following a call to grabMouse
-item.unsetCursor() // Clears the cursor shape for this item
-item.update() // Schedules a call to updatePaintNode
-item.updatePaintNode(oldNode, nodeData) // Called on render thread to sync the item with scene graph
-item.updatePolish() // Called to do item layout before rendering the next frame
-item.widthValid() // whether the width property has been set explicitly
-item.heightValid() //whether the height property has been set explicitly
-item.window() // Return QQuickWindow* in which this item is rendered
- 
-// QQuickPaintedItem
-// Inherits QQuickItem, allows rendering content using QPainter
-    
-// QQmlComponent
-// Inherits QObject, instantiated by Component
-                               
-// QQmlContext
-context.setContextProperty("context_model", model); // Sends to QML, does not update if QML already loaded
-
-// QQmlEngine
-QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Must be used on cpp QObjects without parents
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT QUICK / QML COMMUNICATION
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- 
-/************************************************************************************************************
-CPP                                       QML              JAVASCRIPT
-------------------------------------------------------------------------------------------------------------
-bool                                      bool             boolean 
-unsigned int/int                          int              number
-double                                    double           number
-float/qreal                               real             number
-QString                                   string           string
-QUrl                                      url
-QColor                                    color
-QFont                                     font
-QDate                                     date             Date
-QTime                                     var              Date
-QPoint/QPointF                            point
-QSize/QSizeF                              size
-QRect/QRectF                              rect
-QMatrix4x4                                matrix4x4
-QQuaternion                               quaternion
-QVector2D                                 vector2d
-QVector3D                                 vector3d
-QVector4D                                 vector4d
-QVariant                                  var
-QObject*                                  var              object
-QMap<QString, QVariant> (QVariantMap)     var              object
-QByteArray                                var              ArrayBuffer
-QList<QVariant> (QVariantList)            var/list         Array (with differences)
-QList/QVector/std::vector<int>            var/list         Array (with differences)
-QList/QVector/std::vector<bool>           var/list         Array (with differences)
-QList/QVector/std::vector<qreal>          var/list         Array (with differences)
-QList/QVector/std::vector<QUrl>           var/list         Array (with differences)
-QList/QVector/std::vector<QString>        var/list         Array (with differences)
-QStringList                               var/list         Array (with differences)
-QList<QObject*>                           var/list         Array (with differences)
-
-• Non-registered types convert to/from QVariant using 'var'
-• Non-registered container with type convert to/from QVariantList, even if type is registered
-• Converted Javascript arrays have a few differences from native Javascript arrays:
-   - delete myArray[i] sets element as default constructed instead of undefined
-   - resizing larger will default construct elements instead of be undefined
-   - Using index > INT_MAX will fail as Qt container class indexing is signed, not unsigned
-• Avoid std::vectors as they are copied each access whether Q_PROPERTY or Q_INVOKABLE
-• Q_PROPERTY container more expensive to read/write than Q_INVOKABLE returned container
-**************************************************************************************************************/
-
-// USING QOBJECTS WITH QML
-// Data passed via Q_PROPERTY, Q_INVOKABLE, setContextProperty or setRootContext
-// Best to set CppOwnership for all parentless QObjects passed to QML
-// Officially, only Q_INVOKABLE will automatically take ownership of parentless QObjects unless CppOwnership
-// QGadgets: to use, needs Q_GADGET registration with Variant/Property system and is passed by value
-// QObjects: to use, doesn't need any registration and is passed as QObject*
-Q_PROPERTY(QList<QObject*> objList MEMBER m_objList) // Has cpp owernship
-Q_PROPERTY(QObject* obj MEMBER m_obj) // Has cpp owernship
-Q_INVOKABLE QObject* myFn() { ... } // Returning parentless QObject* has qml ownership
-Q_INVOKABLE QList<QObject*> myFn()  { ... } // Returning parentless QList<QObject*> has cpp ownership
-QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership); // Force cpp ownership
-QQmlEngine::setObjectOwnership(myObj, QQmlEngine::JavaScriptOwnership); // Force QML ownership
-
-// REGISTERING COMPONENTS WITH QML
-// To create QML Component, must be QObject derived
-// use 'import MyInclude 1.0' / MyClass {}
-qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClass");
-
-// REGISTERING CLASS ENUMS WITH QML
-// Requires Q_ENUM registration with Variant
-// Does not need further registration to use for class property/signals
-// Requires further registration to use named enums in QML
-// use 'import MyInclude 1.0' / 'MyClassEnum.ONE'
-qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClassEnum"); 
-
-// REGISTERING Q_NAMESPACE ENUMS WITH QML
-// Requires Q_ENUM_NS registration with Variant
-// use 'import MyInclude 1.0' / 'N.MyEnum.ONE'
-qmlRegisterUncreatableMetaObject(N::staticMetaObject, "MyInclude", 1, 0,
-    "N", "Error msg if try to create MyEnum object");
-
-// REGISTERING SINGLETONS WITH QML
-// Will be owned by QML, use 'import MyInclude 1.0' and 'MySingleton.Member'
-qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyInclude", 1, 0, "MySingleton")
-qmlRegisterSingletonType("MyInclude", 1, 0, "MySingleton", 
-    [](QQmlEngine*, QJSEngine*)->QObject* { return new MySingleton(); });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT ALGORITHMS
