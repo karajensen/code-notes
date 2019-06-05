@@ -578,7 +578,7 @@ QUuid::fromString(str) // Format "{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}", {} op
         
 // QWidget
 // If no parent, window for widgets based applications (non-QML), else base class for widgets
-// Uses QBackingStore for rendering with QPainter using QSurface::RasterSurface
+// Inherits QObject and QPaintDevice, inherited by QOpenGLWidget and QWidget components (eg. QLabel)
 QWidget widget;
 widget.setWindowTitle("Title");
 widget.show();
