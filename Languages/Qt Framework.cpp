@@ -576,22 +576,16 @@ QUuid::fromString(str) // Format "{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}", {} op
 // QT WINDOWS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
-// QWidget
-// If no parent, window for widgets based applications (non-QML), else base class for widgets
-// Inherits QObject and QPaintDevice, inherited by QOpenGLWidget and QWidget components (eg. QLabel)
-QWidget widget;
-widget.setWindowTitle("Title");
-widget.show();
-widget.setLayout(layout); // Add a layout to the window, automatically parents
-
-// QOpenGLWidget
-// Inherits QWidget but uses QOpenGLContext for rendering with OpenGL using QSurface::OpenGLSurface
+/*************************************************************************************************************
+• QWidget <- QMainWindow / QOpenGLWidget / QQuickWidget
+• QWindow <- QQuickWindow <- QQuickView
+• Properties have accessors item.property() or item.isProperty() and item.setProperty()
+**************************************************************************************************************/
 
 // QWindow
 // Window for non-widgets based applications (eg. QML)
 // If has a parent, becomes a native child window of their parent window
 // Inherits QOBject and QSurface, inherited by QPaintDeviceWindow and QVulkanWindow
-// Properties have accessors item.property() or item.isProperty() and item.setProperty()
 QWindow window;
 window.active // Whether window is active
 window.contentOrientation // Qt::ScreenOrientation, orientation of the window's contents, used for popups etc.
@@ -654,7 +648,7 @@ window.id() // window's WId platform id
 // Inherits QWindow, window for QML applications
 
 // QQuickView 
-// Wrapper for QQuickWindow to automatically load and display a QML scene from an url
+// Inherits QQuickWindow, automatically load and display a QML scene from an url
 QQuickView view;
 view.rootContext(); // Returns QQmlContext*
 view.setSource(QUrl("qrc:/main.qml"));
@@ -662,8 +656,54 @@ view.setTitle("title");
 view.setResizeMode(QQuickView::SizeRootObjectToView);
 view.show();
 
+// QWidget
+// If no parent, window for widgets based applications (non-QML), else base class for widgets
+// Inherits QObject and QPaintDevice, inherited by QOpenGLWidget and QWidget components (eg. QLabel)
+QWidget widget;
+widget.setWindowTitle("Title");
+widget.show();
+widget.setLayout(layout); // Add a layout to the window, automatically parents
+
+// QMainWindow
+// Inherits QWidget, must have a central widget set
+QMainWindow window;
+window.animated // Whether docking/tool bars are animated
+window.dockOptions // QMainWindow::DockOption / QMainWindow::DockOptions
+window.documentMode // Whether tab bar for tabbed dockwidgets is set to document mode
+window.iconSize // QSize
+window.tabShape // QTabWidget::TabShape
+window.toolButtonStyle // Qt::ToolButtonStyle
+window.addDockWidget(area, widget, orientation) // Qt::DockWidgetArea, QDockWidget*, Qt::Orientation
+window.addToolBar(area, toolbar) // Qt::ToolBarArea, QToolBar*
+window.addToolBar(title) // returns QToolBar* parented to window
+window.centralWidget() // returns QWidget*
+window.corner(corner) // returns Qt::DockWidgetArea for Qt::Corner
+window.createPopupMenu() // returns QMenu*, ownership transfers to caller
+window.dockWidgetArea(widget) // returns Qt::DockWidgetArea for QDockWidget*
+window.insertToolBar(before, toolbar) // QToolBar*
+window.menuBar() // returns main QMenuBar*, creates and returns if does not exist
+window.menuWidget() // returns main QWidget*, returns null if does not exist
+window.removeDockWidget(widget) // remove QDockWidget*
+window.removeToolBar(toolbar) // remove QToolBar*
+window.resizeDocks(docks, sizes, orientation) // QList<QDockWidget*>, QList<int>, Qt::Orientation
+window.restoreState(state) // const QByteArray&
+window.saveState() // QByteArray
+window.setCentralWidget(widget) // QWidget*, takes ownership
+window.setCorner(corner, area) // Qt::Corner, Qt::DockWidgetArea
+window.setMenuBar(menuBar) // QMenuBar*, takes ownership
+window.setMenuWidget(menuBar) // QWidget*, takes ownership
+window.setStatusBar(statusbar) // QStatusBar*, takes ownership
+window.setTabPosition(areas, tabPosition) // Qt::DockWidgetAreas, QTabWidget::TabPosition
+window.statusBar() // returns QStatusBar*, creates and returns if does not exist
+window.tabPosition(area) // returns QTabWidget::TabPosition, takes Qt::DockWidgetArea
+window.takeCentralWidget() // removes and returns QWidget*, transfers ownership to caller
+window.toolBarArea(toolbar) // returns Qt::ToolBarArea, takes QToolBar*
+    
+// QOpenGLWidget
+// Inherits QWidget but uses QOpenGLContext for rendering with OpenGL
+    
 // QQuickWidget
-// Wrapper for QQuickWindow to automatically load and display a QML scene from an url
+// Inherits QWidget, wrapper for QQuickWindow, allows integrating QML with QWidgets UI
 // Less stacking order restrictions, though slower compared to QQuickWindow/QQuickView
 // Disables the threaded render loop on all platforms
 // Avoid calling winId; triggers creation of a native window, resulting in reduced performance
