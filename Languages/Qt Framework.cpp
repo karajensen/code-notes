@@ -577,9 +577,10 @@ QUuid::fromString(str) // Format "{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}", {} op
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
 /*************************************************************************************************************
-• QWidget <- QMainWindow / QOpenGLWidget / QQuickWidget
+• QWidget <- QMainWindow
+• QWidget <- QQuickWidget
 • QWindow <- QQuickWindow <- QQuickView
-• Properties have accessors item.property() or item.isProperty() and item.setProperty()
+• Properties have accessors item.property() or item.isProperty() or item.hasProperty() and item.setProperty()
 **************************************************************************************************************/
 
 // QWindow
@@ -660,6 +661,16 @@ view.show();
 // If no parent, window for widgets based applications (non-QML), else base class for widgets
 // Inherits QObject and QPaintDevice, inherited by QOpenGLWidget and QWidget components (eg. QLabel)
 QWidget widget;
+widget.acceptDrops // Whether dropping is enabled
+widget.baseSize // QSize
+widget.childrenRect // QRect of the children (excluding hidden)
+widget.childrenRegion // QRegion of the children (excluding hidden)
+widget.contextMenuPolicy // Qt::ContextMenuPolicy, how the widget shows a context menu
+widget.cursor // QCursor
+widget.enabled
+widget.focus // readonly
+widget.focusPolicy // Qt::FocusPolicy
+widget.font // QFont
 widget.setWindowTitle("Title");
 widget.show();
 widget.setLayout(layout); // Add a layout to the window, automatically parents
@@ -698,9 +709,6 @@ window.statusBar() // returns QStatusBar*, creates and returns if does not exist
 window.tabPosition(area) // returns QTabWidget::TabPosition, takes Qt::DockWidgetArea
 window.takeCentralWidget() // removes and returns QWidget*, transfers ownership to caller
 window.toolBarArea(toolbar) // returns Qt::ToolBarArea, takes QToolBar*
-    
-// QOpenGLWidget
-// Inherits QWidget but uses QOpenGLContext for rendering with OpenGL
     
 // QQuickWidget
 // Inherits QWidget, wrapper for QQuickWindow, allows integrating QML with QWidgets UI
@@ -765,39 +773,47 @@ Qt::WindowStaysOnBottomHint       // Window should always be on bottom
 // QT WIDGETS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
+// QOpenGLWidget
+// Inherits QWidget but uses QOpenGLContext for rendering with OpenGL into a framebuffer object
+QOpenGLWidget widget
+widget.context() // returns QOpenGLContext*
+widget.initializeGL() // Reimplement this to initialize any needed resources
+widget.paintGL() // Reimplement this for when the widget needs to be rendered
+widget.resizeGL(w, h) // Reimplement this for when the widget needs to be resized   
+
 // QLabel
-QLabel lbl("Message"); // Allows use of html tags to customise text
+QLabel lbl("Message") // Allows use of html tags to customise text
 
 // QPushButton
-QPushButton btn("Text");
-QObject::connect(button, SIGNAL(clicked()), fn);  // Connect to button's click event
+QPushButton btn("Text")
+QObject::connect(button, SIGNAL(clicked()), fn)  // Connect to button's click event
 
 // QSpinBox
-QSpinBox spinbox;
-spinbox.setRange(min, max);
-spinBox.setValue(value);
-QObject::connect(spinBox, SIGNAL(valueChanged(int)), fn);
+QSpinBox spinbox
+spinbox.setRange(min, max)
+spinBox.setValue(value)
+QObject::connect(spinBox, SIGNAL(valueChanged(int)), fn)
 
 // QSlider 
-QSlider slider(Qt::Horizontal);
-slider.setRange(min, max);
-slider.setValue(value);
-QObject::connect(slider, SIGNAL(valueChanged(int)), fn);
+QSlider slider(Qt::Horizontal)
+slider.setRange(min, max)
+slider.setValue(value)
+QObject::connect(slider, SIGNAL(valueChanged(int)), fn)
 
 // QHBoxLayout
 // Lays out widgets horizontally from left to right
-QHBoxLayout layout;
-layout.addWidget(spinBox); // Add a widget to the layout, automatically parents and resizes
+QHBoxLayout layout
+layout.addWidget(spinBox) // Add a widget to the layout, automatically parents and resizes
 
 // QVBoxLayout
 // Lays out widgets vertically from top to bottom
-QVBoxLayout layout;
-layout.addWidget(spinBox); // Add a widget to the layout, automatically parents and resizes
+QVBoxLayout layout
+layout.addWidget(spinBox) // Add a widget to the layout, automatically parents and resizes
 
 // QGridLayout
 // Lays out widgets in a grid.
-QGridLayout layout;
-layout.addWidget(spinBox, r, c); // Add a widget to the layout, automatically parents and resizes
+QGridLayout layout
+layout.addWidget(spinBox, r, c) // Add a widget to the layout, automatically parents and resizes
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT QUICK / QML
