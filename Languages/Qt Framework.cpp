@@ -163,6 +163,9 @@ obj.isWindowType() // Whether obj inherits QWindow
 obj.parent() // Returns QObject*
 obj.setParent(obj2) // Sets parent
 obj.thread() // Returns QThread* where the object lives
+obj.startTimer(interval, timerType) // Returns ID, takes ms, Qt::TimerType
+obj.killTimer(id) // Stop timer with ID
+obj.timerEvent(event) // QTimerEvent when timer interval is hit, QTimerEvent gives timerId() 
 qobject_cast<N::MyClass*>(obj); // dynamic_cast without requiring RTTI
 N::MyClass::staticMetaObject // QMetaObject for class
     
@@ -606,7 +609,6 @@ window.x / window.y // Position of the window
 window.baseSize() / window.setBaseSize(size) // QSize
 window.cursor() / window.setCursor(cursor) // QCursor
 window.unsetCursor() // Restore default cursor
-window.destroy() // Releases window allocations
 window.devicePixelRatio() // Ratio between physical pixels and device-independent pixels for the window
 window.filePath() / window.setFilePath() // the file name this window is representing
 window.focusObject() // Object in focus in the window, has focusObjectChanged signal
@@ -660,6 +662,7 @@ view.show();
 // QWidget
 // If no parent, window for widgets based applications (non-QML), else base class for widgets
 // Inherits QObject and QPaintDevice, inherited by QOpenGLWidget and QWidget components (eg. QLabel)
+// 'Native' Widgets are a toplevel window, QGLWidget, or has had winId() called to create a WId
 QWidget widget;
 widget.acceptDrops // Whether dropping is enabled
 widget.baseSize // QSize
@@ -711,16 +714,74 @@ widget.windowModified // Whether the document shown in the window has unsaved ch
 widget.windowOpacity // [0.0, 1.0]
 widget.windowTitle // QString
 widget.x / widget.y
-widget.actions() // QList<QAction*> of actions assigned to this widget
-widget.addAction(action) // Assign QAction* to this widget, ownership not transferred
-widget.addActions(actions) // Assign QList<QAction*> to this widget, ownership not transferred
 widget.adjustSize() // Adjusts the size of the widget to fit its contents
 widget.backgroundRole() / widget.setBackgroundRole() // QPalette::ColorRole
+widget.forgroundRole() / widget.setForegroundRole() // QPalette::ColorRole
 widget.backingStore() // Returns the QBackingStore* this widget will be drawn into
-
-widget.setWindowTitle("Title");
-widget.show();
-widget.setLayout(layout); // Add a layout to the window, automatically parents
+widget.childAt(x, y) // Returns QWidget*
+widget.childAt(point) // Returns QWidget*, QPoint 
+widget.clearFocus() // Takes keyboard input focus from the widget
+widget.contentsMargins() // QMargins
+widget.contentsRect() // QRect area inside the widget's margins
+widget.ensurePolished() // Force update widget
+widget.find(id) // Returns QWidget*, takes WId
+widget.focusNextChild() // Force focus onto next in tab chain
+widget.focusNextPrevChild() // Force focus onto previous in tab chain
+widget.nextInFocusChain() // QWidget*
+widget.previousInFocusChain() // QWidget*
+widget.focusWidget() // QWidget* in focus
+widget.fontInfo() // Returns QFontInfo for widget
+widget.fontMetrics() // Returns QFontMetrics for widget
+widget.getContentsMargins(left, top, right, bottom) // Takes int*
+widget.grab(rect, size) // Render widget and children into optional rect/size, returns QPixmap
+widget.grabKeyboard() / widget.releaseKeyboard() // Sets whether keyboard events all forced to window
+widget.grabMouse() / widget.releaseMouse() // Sets whether mouse events all forced to window
+widget.isAncestorOf(child) // Whether a parent of QWidget* child
+widget.isEnabledTo(ancestor) // if this widget would become enabled if ancestor is enabled
+widget.isHidden() // Not the same as !isVisible(), can be hidden if parent is hidden etc.
+widget.isEnabledTo(ancestor) // if this widget would become enabled if ancestor is enabled
+widget.isVisibleTo(ancestor) // if this widget would become visible if ancestor is shown
+widget.isWindow() // Returns true if the widget is an independent window
+widget.layout() // Returns QLayout*
+widget.lower() // Lower the window below other windows
+widget.raise() // Raise the window above other windows
+widget.mapFromGlobal(pos) // Global QPoint screen coord to window QPoint coord
+widget.mapFrom(parent, pos) // QPoint pos in QWidget parent coord to window QPoint coord, must be a parent
+widget.mapFromParent(pos) // QPoint pos in QWidget parent coord to window QPoint coord
+widget.mapTo(parent, pos) // Window QPoint coord to QWidget parent coord, must be a parent
+widget.mapToParent(pos) // Window QPoint coord to QWidget parent coord
+widget.mapToGlobal(pos) // Window QPoint coord to Global QPoint screen coord
+widget.parentWidget() // Returns QWidget*
+widget.repaint() // Force render the widget
+widget.resize(w, h) // Resize the widget
+widget.actions() // QList<QAction*> of actions0assigned to this widget
+widget.addAction(action) // Assign QAction* to this widget, ownership not transferred
+widget.addActions(actions) // Assign QList<QAction*> to this widget, ownership not transferred    
+widget.insertAction(before, action) // Insert QAction* before QAction*
+widget.insertActions(before, actions) // Insert QList<QAction*> before QAction*
+widget.removeAction(action) // QAction*
+widget.restoreGeometry(geometry) // QByteArray
+widget.saveGeometry() // QByteArray
+widget.scroll(dx, dy) // Scrolls widget including children, can be negative values
+widget.setFocus(reason) // Qt::FocusReason optional
+widget.setHidden(hidden) // setVisible(!hidden)
+widget.setLayout(layout) // QLayout*, will take ownership
+widget.setWindowFlag(flag, on) // Sets Qt::WindowType flag to on/off
+widget.windowState() / widget.setWindowState(state) // Qt::WindowState
+widget.hide() // Hides the window
+widget.show() // Shows the window
+widget.showFullScreen() // Shows the window as fullscreen
+widget.showMaximized() // Shows the window as maximised
+widget.showMinimized() // Shows the window as minimised
+widget.showNormal() // Shows the window as default state based on platform
+widget.close()
+widget.stackUnder(widget) // Places under widget in parent's stack. Must be siblings
+widget.underMouse() // Whether mouse hovered
+widget.effectiveWinId() // WId platform id of first native widget, may change
+widget.id() // WId platform id, may change, if non-native widget, will create an id
+widget.window() // Returns QWidget* for widget's window (or itself if a window)
+widget.windowHandle() // Returns QWindow* if a toplevel window, QGLWidget, or has had winId called
+QWidget::setTabOrder(first, second) // QWidget*, QWidget*
 
 // QMainWindow
 // Inherits QWidget, must have a central widget set
@@ -755,7 +816,7 @@ window.setTabPosition(areas, tabPosition) // Qt::DockWidgetAreas, QTabWidget::Ta
 window.statusBar() // returns QStatusBar*, creates and returns if does not exist
 window.tabPosition(area) // returns QTabWidget::TabPosition, takes Qt::DockWidgetArea
 window.takeCentralWidget() // removes and returns QWidget*, transfers ownership to caller
-window.toolBarArea(toolbar) // returns Qt::ToolBarArea, takes QToolBar*
+window.toolBarArea(toolbar) // Returns Qt::ToolBarArea, takes QToolBar*
     
 // QQuickWidget
 // Inherits QWidget, wrapper for QQuickWindow, allows integrating QML with QWidgets UI
