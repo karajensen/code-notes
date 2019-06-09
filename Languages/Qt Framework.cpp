@@ -671,6 +671,53 @@ widget.enabled
 widget.focus // readonly
 widget.focusPolicy // Qt::FocusPolicy
 widget.font // QFont
+widget.frameGeometry // QRect geometry of the window including its window frame
+widget.frameSize // QSize geometry of window including parents including window frame
+widget.fullScreen // Whether fullscreen window mode
+widget.geometry // QRect geometry of window excluding window frame
+widget.height / widget.width
+widget.inputMethodHints // Qt::InputMethodHints
+widget.isActiveWindow // Whether this widget's window is the active window
+widget.layoutDirection // Qt::LayoutDirection
+widget.locale // QLocale, if not set will use parents or default locale
+widget.maximized // Whether maximised window mode
+widget.minimized // Whether minimized window mode
+widget.maximumHeight / widget.minimumHeight
+widget.maximumWidth / widget.minimumWidth
+widget.maximumSize / widget.minimumSize // QSize
+widget.minimumSizeHint // QSize recommended minimum size for the widget
+widget.modal // whether the widget is a modal widget
+widget.mouseTracking // default false, same as hoverEnabled
+widget.normalGeometry // QRect used when not maximized or full screen, empty for child widgets
+widget.palette // QPalette
+widget.pos // QPoint
+widget.rect // QRect without window frame
+widget.size // QSize without window frame
+widget.sizeHint // QSize recommended size for the widget
+widget.sizeIncrement // QSize to increment window when resizing
+widget.sizePolicy // QSizePolicy
+widget.statusTip // QString
+widget.styleSheet // QString
+widget.toolTip // QString
+widget.toolTipDuration // ms display time, -1 (default) auto calculates based on length
+widget.updatesEnabled // Whether to prevent update/repaint calls, to help prevent flickering when resizing
+widget.visible
+widget.whatsThis // QString What's This help text
+widget.filePath // the file name this window is representing
+widget.windowFlags // Qt::WindowFlags
+widget.windowIcon // QIcon
+widget.windowModality // Qt::WindowModality
+widget.windowModified // Whether the document shown in the window has unsaved changes
+widget.windowOpacity // [0.0, 1.0]
+widget.windowTitle // QString
+widget.x / widget.y
+widget.actions() // QList<QAction*> of actions assigned to this widget
+widget.addAction(action) // Assign QAction* to this widget, ownership not transferred
+widget.addActions(actions) // Assign QList<QAction*> to this widget, ownership not transferred
+widget.adjustSize() // Adjusts the size of the widget to fit its contents
+widget.backgroundRole() / widget.setBackgroundRole() // QPalette::ColorRole
+widget.backingStore() // Returns the QBackingStore* this widget will be drawn into
+
 widget.setWindowTitle("Title");
 widget.show();
 widget.setLayout(layout); // Add a layout to the window, automatically parents
