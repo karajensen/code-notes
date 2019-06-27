@@ -74,7 +74,7 @@ IMPLICIT SHARING (COPY-ON-WRITE):
 
 PROPERTY SYSTEM:
 • To create dynamic properties use QQmlPropertyMap (see Qt Containers)
-MEMBER     Required if READ not used
+MEMBER     Required if READ not used, implicitly creates getter/setter with emitting signal
 READ       Required if MEMBER not used
 WRITE      Optional, can be used with either READ or MEMBER
 NOTIFY     Optional, takes signal with one or no arguments
@@ -245,7 +245,6 @@ if (methodIndex != -1)
 /*************************************************************************************************************
 • Can only be used by Q_OBJECT, not Q_GADGET, due to moc requirements
 • On signal emit, all slots in order of connection are immediately notified, can't be async
-• Type safe: The signature of a signal must match the signature of the receiving slot
 • No return values, slots can be virtual/pure virtual
 • Default argument type must match between signals/slots, don't have to both have default
 
@@ -261,7 +260,8 @@ CONNECTIONS:
 • Returns QMetaObject::Connection or can call QObject::disconnect with same signature
 • QObject destruction auto disconnects signals/slots
 • Can duplicate connections, multiple signals are then emitted, all are broken with single disconnect call 
-• Signatures must match: SIGNAL/SLOT macros give runtime error, functions give compile error
+• Slot must have <= arguments of signal: can ignore values but cannot have more or different types to signal
+• SIGNAL/SLOT macros give runtime error, functions give compile error if signal/slot incompatible
 • Use normalised form from moc cpp for SIGNAL/SLOT macros, otherwise performance hit
 • QueuedConnection auto copies values, DirectConnection/BlockedConnection doesn't
 • BlockingQueuedConnection dangerous if connecting two objects with same thread affinity
@@ -1304,9 +1304,6 @@ M_PI_4 // π / 4
 qAbs(v) // Templated, returns absolute value of v
 qAsConst(v) // Templated, takes T& and returns const T&
 qBound(min, v, max) // Templated, returns v clamped
-qConstOverload<Arg1, Arg2>(&MyClass::fn) // Converts address to const version
-qNonConstOverload<Arg1, Arg2>(&MyClass::fn) // Converts address to non-const version
-qOverload<Arg1, Arg2>(&MyClass::fn) // Converts address to an overloaded version
 qEnvironmentVariable(name) // Returns QString of env var with name
 qEnvironmentVariable(name, default) // Returns QString of env var with name or default if doesn't exist
 qEnvironmentVariableIntValue(name, &ok) // Returns int of env var with name, ok set to false if doesn't exist
@@ -1332,6 +1329,10 @@ qUtf8Printable(str) // Takes QString, does str.toUtf8().constData()
 qSNaN() // Returns the bit pattern of a signalling NaN as a double
 qVersion() // Returns the version number of Qt
 qtTrId(id) // Finds and returns a translated QString
+qConstOverload<Arg1, Arg2>(&MyClass::fn) // Converts address to const version
+qNonConstOverload<Arg1, Arg2>(&MyClass::fn) // Converts address to non-const version
+qOverload<Arg1, Arg2>(&MyClass::fn) // Converts address to an overloaded version
+QOverload<Arg1, Arg2>::of(&MyClass::fn) // Alternate syntax
     
 // QtAlgorithm
 // STL algorithms should be used for Qt containers rather than deprecated QtAlgorithm
