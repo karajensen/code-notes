@@ -111,7 +111,7 @@ namespace N
         Q_INVOKABLE void myFn() { }
     };
     
-    // Don't derived from QObject, value-type used with variant
+    // Value-type used with variant, doesn't increase class size
     struct MyGadget
     {
         Q_GADGET
