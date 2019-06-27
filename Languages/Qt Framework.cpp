@@ -927,6 +927,116 @@ layout.addWidget(spinBox, r, c) // Add a widget to the layout, automatically par
 // QT QUICK / QML
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/************************************************************************************************************
+CONVERTING BETWEEN C++ / QML
+------------------------------------------------------------------------------------------------------------
+CPP                                       QML              JAVASCRIPT
+------------------------------------------------------------------------------------------------------------
+bool                                      bool             Boolean 
+unsigned int/int                          int              Number
+double                                    double           Number
+float/qreal                               real             Number
+QString                                   string           String
+QUrl                                      url
+QColor                                    color
+QFont                                     font
+QDate                                     date             Date
+QTime                                     var              Date
+QPoint/QPointF                            point
+QSize/QSizeF                              size
+QRect/QRectF                              rect
+QMatrix4x4                                matrix4x4
+QQuaternion                               quaternion
+QVector2D                                 vector2d
+QVector3D                                 vector3d
+QVector4D                                 vector4d
+QVariant                                  var
+QObject*                                  var              Object
+QMap<QString, QVariant> (QVariantMap)     var              Object
+QByteArray                                var              ArrayBuffer
+QList<QVariant> (QVariantList)            var/list         Array (with differences)
+QList/QVector/std::vector<int>            var/list         Array (with differences)
+QList/QVector/std::vector<bool>           var/list         Array (with differences)
+QList/QVector/std::vector<qreal>          var/list         Array (with differences)
+QList/QVector/std::vector<QUrl>           var/list         Array (with differences)
+QList/QVector/std::vector<QString>        var/list         Array (with differences)
+QStringList                               var/list         Array (with differences)
+QList<QObject*>                           var/list         Array (with differences)
+QJSValue                                  any              Any
+
+• Non-registered types convert to/from QVariant using 'var'
+• Javascript values, objects and functions can convert to/from QJSValue
+• Non-registered container with type convert to/from QVariantList, even if type is registered
+• Converted Javascript arrays have a few differences from native Javascript arrays:
+   - delete myArray[i] sets element as default constructed instead of undefined
+   - resizing larger will default construct elements instead of be undefined
+   - Using index > INT_MAX will fail as Qt container class indexing is signed, not unsigned
+• Avoid std::vectors as they are copied each access whether Q_PROPERTY or Q_INVOKABLE
+• Q_PROPERTY container more expensive to read/write than Q_INVOKABLE returned container
+
+FOUR WAYS TO CREATE QML ITEMS
+• QObject: Not graphical
+• QQuickItem: graphical with Scene Graph Nodes (QQuickItem::updatePaintNode)
+• QQuickPaintedItem: graphical with QPainter (QQuickPaintedItem::paint), slow
+• QQuickFramebufferObject: requires QQuickFramebufferObject::Renderer, uses render targets
+**************************************************************************************************************/
+
+// USING QOBJECTS WITH QML
+// Data passed via Q_PROPERTY, Q_INVOKABLE, setContextProperty or setRootContext
+// Best to set CppOwnership for all parentless QObjects passed to QML
+// Officially, only Q_INVOKABLE will automatically take ownership of parentless QObjects unless CppOwnership
+// QGadgets: to use, needs Q_GADGET registration with Variant/Property system and is passed by value
+// QObjects: to use, doesn't need any registration and is passed as QObject*
+Q_PROPERTY(QList<QObject*> objList MEMBER m_objList) // Has cpp owernship
+Q_PROPERTY(QObject* obj MEMBER m_obj) // Has cpp owernship
+Q_INVOKABLE QObject* myFn() { ... } // Returning parentless QObject* has qml ownership
+Q_INVOKABLE QList<QObject*> myFn()  { ... } // Returning parentless QList<QObject*> has cpp ownership
+QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership); // Force cpp ownership
+QQmlEngine::setObjectOwnership(myObj, QQmlEngine::JavaScriptOwnership); // Force QML ownership
+
+// REGISTERING COMPONENTS WITH QML
+// To create QML Component, must be QObject derived
+// use 'import MyInclude 1.0' / MyClass {}
+qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClass");
+
+// REGISTERING CLASS ENUMS WITH QML
+// Requires Q_ENUM registration with Variant
+// Does not need further registration to use for class property/signals
+// Requires further registration to use named enums in QML
+// use 'import MyInclude 1.0' / 'MyClassEnum.ONE'
+qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClassEnum"); 
+
+// REGISTERING Q_NAMESPACE ENUMS WITH QML
+// Requires Q_ENUM_NS registration with Variant
+// use 'import MyInclude 1.0' / 'N.MyEnum.ONE'
+qmlRegisterUncreatableMetaObject(N::staticMetaObject, "MyInclude", 1, 0,
+    "N", "Error msg if try to create MyEnum object");
+
+// REGISTERING SINGLETONS WITH QML
+// Will be owned by QML, use 'import MyInclude 1.0' and 'MySingleton.Member'
+qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyInclude", 1, 0, "MySingleton")
+qmlRegisterSingletonType("MyInclude", 1, 0, "MySingleton", 
+    [](QQmlEngine*, QJSEngine*)->QObject* { return new MySingleton(); });
+
+// CREATING ATTACHED PROPERTIES
+// Auto has parent set to QML Component used it. Usage: MyAttachedProperty.value
+class MyAttachedProperty : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(bool value MEMBER value valueChanged)
+public:
+    using QObject::QObject;
+    static MyAttachedProperty* qmlAttachedProperties(QObject* parent)
+    {
+        return new MyAttachedProperty(parent);
+    }
+signals:
+    void valueChanged();
+private:
+    bool value = false;
+};
+QML_DECLARE_TYPEINFO(MyAttachedProperty, QML_HAS_ATTACHED_PROPERTIES)
+
 // QQuickItem
 // Inherits QObject, instantiated by Item
 // Properties have accessors item.property() or item.isProperty() and item.setProperty()
@@ -999,91 +1109,6 @@ context.setContextProperty("context_model", model); // Sends to QML, does not up
 
 // QQmlEngine
 QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Must be used on cpp QObjects without parents
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT QUICK / QML COMMUNICATION
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- 
-/************************************************************************************************************
-CPP                                       QML              JAVASCRIPT
-------------------------------------------------------------------------------------------------------------
-bool                                      bool             boolean 
-unsigned int/int                          int              number
-double                                    double           number
-float/qreal                               real             number
-QString                                   string           string
-QUrl                                      url
-QColor                                    color
-QFont                                     font
-QDate                                     date             Date
-QTime                                     var              Date
-QPoint/QPointF                            point
-QSize/QSizeF                              size
-QRect/QRectF                              rect
-QMatrix4x4                                matrix4x4
-QQuaternion                               quaternion
-QVector2D                                 vector2d
-QVector3D                                 vector3d
-QVector4D                                 vector4d
-QVariant                                  var
-QObject*                                  var              object
-QMap<QString, QVariant> (QVariantMap)     var              object
-QByteArray                                var              ArrayBuffer
-QList<QVariant> (QVariantList)            var/list         Array (with differences)
-QList/QVector/std::vector<int>            var/list         Array (with differences)
-QList/QVector/std::vector<bool>           var/list         Array (with differences)
-QList/QVector/std::vector<qreal>          var/list         Array (with differences)
-QList/QVector/std::vector<QUrl>           var/list         Array (with differences)
-QList/QVector/std::vector<QString>        var/list         Array (with differences)
-QStringList                               var/list         Array (with differences)
-QList<QObject*>                           var/list         Array (with differences)
-
-• Non-registered types convert to/from QVariant using 'var'
-• Non-registered container with type convert to/from QVariantList, even if type is registered
-• Converted Javascript arrays have a few differences from native Javascript arrays:
-   - delete myArray[i] sets element as default constructed instead of undefined
-   - resizing larger will default construct elements instead of be undefined
-   - Using index > INT_MAX will fail as Qt container class indexing is signed, not unsigned
-• Avoid std::vectors as they are copied each access whether Q_PROPERTY or Q_INVOKABLE
-• Q_PROPERTY container more expensive to read/write than Q_INVOKABLE returned container
-**************************************************************************************************************/
-
-// USING QOBJECTS WITH QML
-// Data passed via Q_PROPERTY, Q_INVOKABLE, setContextProperty or setRootContext
-// Best to set CppOwnership for all parentless QObjects passed to QML
-// Officially, only Q_INVOKABLE will automatically take ownership of parentless QObjects unless CppOwnership
-// QGadgets: to use, needs Q_GADGET registration with Variant/Property system and is passed by value
-// QObjects: to use, doesn't need any registration and is passed as QObject*
-Q_PROPERTY(QList<QObject*> objList MEMBER m_objList) // Has cpp owernship
-Q_PROPERTY(QObject* obj MEMBER m_obj) // Has cpp owernship
-Q_INVOKABLE QObject* myFn() { ... } // Returning parentless QObject* has qml ownership
-Q_INVOKABLE QList<QObject*> myFn()  { ... } // Returning parentless QList<QObject*> has cpp ownership
-QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership); // Force cpp ownership
-QQmlEngine::setObjectOwnership(myObj, QQmlEngine::JavaScriptOwnership); // Force QML ownership
-
-// REGISTERING COMPONENTS WITH QML
-// To create QML Component, must be QObject derived
-// use 'import MyInclude 1.0' / MyClass {}
-qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClass");
-
-// REGISTERING CLASS ENUMS WITH QML
-// Requires Q_ENUM registration with Variant
-// Does not need further registration to use for class property/signals
-// Requires further registration to use named enums in QML
-// use 'import MyInclude 1.0' / 'MyClassEnum.ONE'
-qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClassEnum"); 
-
-// REGISTERING Q_NAMESPACE ENUMS WITH QML
-// Requires Q_ENUM_NS registration with Variant
-// use 'import MyInclude 1.0' / 'N.MyEnum.ONE'
-qmlRegisterUncreatableMetaObject(N::staticMetaObject, "MyInclude", 1, 0,
-    "N", "Error msg if try to create MyEnum object");
-
-// REGISTERING SINGLETONS WITH QML
-// Will be owned by QML, use 'import MyInclude 1.0' and 'MySingleton.Member'
-qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyInclude", 1, 0, "MySingleton")
-qmlRegisterSingletonType("MyInclude", 1, 0, "MySingleton", 
-    [](QQmlEngine*, QJSEngine*)->QObject* { return new MySingleton(); });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT FILE SYSTEM
