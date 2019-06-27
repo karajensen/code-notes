@@ -972,6 +972,33 @@ context->setContextProperty("map", &map)
 console.log(map.subMap.property)
     
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT QML PROPERTY LIST
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+/*************************************************************************************************************
+• Used to store QML created lists on C++ side
+**************************************************************************************************************/
+
+ListHolder
+{
+    list: [
+        ListItem { value: 0 },
+        ListItem { value: 1 },
+        ListItem { value: 2 }
+    ]
+}
+ 
+class ListHolder: public QObject
+{
+    Q_PROPERTY(QQmlListProperty<ListItem> list READ list NOTIFY listChanged) // WRITE auto, ListItem is QObject
+    QQmlListProperty<ListItem> list()
+    {
+        // Can also set own functions for append, count, clear, at
+        return QQmlListProperty<ListItem>(this, m_list);
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT MIME DATA
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
