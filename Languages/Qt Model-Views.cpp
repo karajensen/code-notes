@@ -227,22 +227,23 @@ toolTip       // Qt::ToolTipRole, QString
 statusTip     // Qt::StatusTipRole, QString
 whatsThis     // Qt::WhatsThisRole, QString
 
-// DELEGATE PROPERTIES
-// Given to any delegate Item, don't have to use ItemDelegate type
-Item {
-    <T>.onAdd: {} // Emitted immediately after an item is added to the view for List/GridView
-    <T>.onRemove: {} // Emitted immediately before an item is removed from the view for List/GridView
-} 
-del.model // Role data for each delegate item, eg. model.role_name
-del.modelData // If view's model has no roles, use to access item data for delegate
-del.index // Index in view, can be -1 if removed from view
-del.<T>.view // Use to access List/Grid/PathView if delegate created outside it
-del.<T>.isCurrentItem // Whether the delegate is the currently selected item of List/Grid/PathView
-del.<T>.delayRemove // Whether delegate has to delay destruction (eg. to finish animation) of List/GridView
-del.ListView.nextSection // Section string of the next item
-del.ListView.previousSection  // Section string of the previous item
-del.ListView.section // Section string of the item
-del.PathView.onPath // Whether the item is currently on the path
+// DELEGATE GLOBAL PROPERTIES
+// Accessible throughout the whole delegate hierarchy
+model // Role data for each delegate item, eg. model.role_name
+modelData // If view's model has no roles, use to access item data for delegate
+index // Index in view, can be -1 if removed from view
+    
+// DELEGATE ROOT PROPERTIES
+// Only accessible on the top-most parent of the delegate
+<T>.onAdd: {} // Emitted immediately after an item is added to the view for List/GridView
+<T>.onRemove: {} // Emitted immediately before an item is removed from the view for List/GridView
+<T>.view // Use to access List/Grid/PathView if delegate created outside it
+<T>.isCurrentItem // Whether the delegate is the currently selected item of List/Grid/PathView
+<T>.delayRemove // Whether delegate has to delay destruction (eg. to finish animation) of List/GridView
+ListView.nextSection // Section string of the next item
+ListView.previousSection  // Section string of the previous item
+ListView.section // Section string of the item
+PathView.onPath // Whether the item is currently on the path
 
 // ITEMDELEGATE
 // import QtQuick.Controls 2.4
