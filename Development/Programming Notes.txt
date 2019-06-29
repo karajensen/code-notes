@@ -477,6 +477,7 @@ x|y              Matches 'x', or 'y' (if there is no match for 'x')
 \W               Matches any non-alphanumeric character/underscore. Equivalent to [^A-Za-z0-9_]
 
 EXAMPLES
+#\w{8}           8 any characters after #
 \w{2}            2 letters
 \s*              Arbitrary number of spaces
 \d{5}            5 digits
