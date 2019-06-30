@@ -118,7 +118,7 @@ namespace N
             return new MyClass(parent);
         }        
     };
-    QML_DECLARE_TYPEINFO(MyClass, QML_HAS_ATTACHED_PROPERTIES) // Required for Attached Properties
+    QML_DECLARE_TYPEINFO(MyClass, QML_HAS_ATTACHED_PROPERTIES) // Requires QQml include for attached properties
 }
     
 // GADGETS
@@ -942,9 +942,17 @@ layout.addWidget(spinBox, r, c) // Add a widget to the layout, automatically par
 
 /************************************************************************************************************
 CONVERTING BETWEEN C++ / QML
-------------------------------------------------------------------------------------------------------------
+• Non-registered types convert to/from QVariant using 'var'
+• Javascript values, objects and functions can convert to/from QJSValue
+• Non-registered container with type convert to/from QVariantList, even if type is registered
+• Converted Javascript arrays have a few differences from native Javascript arrays:
+   - delete myArray[i] sets element as default constructed instead of undefined
+   - resizing larger will default construct elements instead of be undefined
+   - Using index > INT_MAX will fail as Qt container class indexing is signed, not unsigned
+• Avoid std::vectors as they are copied each access whether Q_PROPERTY or Q_INVOKABLE
+• Q_PROPERTY container more expensive to read/write than Q_INVOKABLE returned container
+
 CPP                                       QML              JAVASCRIPT
-------------------------------------------------------------------------------------------------------------
 bool                                      bool             Boolean 
 unsigned int/int                          int              Number
 double                                    double           Number
@@ -977,27 +985,19 @@ QStringList                               var/list         Array (with differenc
 QList<QObject*>                           var/list         Array (with differences)
 QJSValue                                  any              Any
 
-• Non-registered types convert to/from QVariant using 'var'
-• Javascript values, objects and functions can convert to/from QJSValue
-• Non-registered container with type convert to/from QVariantList, even if type is registered
-• Converted Javascript arrays have a few differences from native Javascript arrays:
-   - delete myArray[i] sets element as default constructed instead of undefined
-   - resizing larger will default construct elements instead of be undefined
-   - Using index > INT_MAX will fail as Qt container class indexing is signed, not unsigned
-• Avoid std::vectors as they are copied each access whether Q_PROPERTY or Q_INVOKABLE
-• Q_PROPERTY container more expensive to read/write than Q_INVOKABLE returned container
-
 FOUR WAYS TO CREATE QML ITEMS
 • QObject: Not graphical
 • QQuickItem: graphical with Scene Graph Nodes (QQuickItem::updatePaintNode)
 • QQuickPaintedItem: graphical with QPainter (QQuickPaintedItem::paint), slow
 • QQuickFramebufferObject: requires QQuickFramebufferObject::Renderer, uses render targets
+
+OWNERSHIP WITH QML
+• Data passed via Q_PROPERTY, Q_INVOKABLE, setContextProperty or setRootContext
+• Best to set CppOwnership for all parentless QObjects passed to QML
+• Officially, only Q_INVOKABLE will automatically take ownership of parentless QObjects unless CppOwnership
 **************************************************************************************************************/
 
 // USING QOBJECTS WITH QML
-// Data passed via Q_PROPERTY, Q_INVOKABLE, setContextProperty or setRootContext
-// Best to set CppOwnership for all parentless QObjects passed to QML
-// Officially, only Q_INVOKABLE will automatically take ownership of parentless QObjects unless CppOwnership
 // QGadgets: to use, needs Q_GADGET registration with Variant/Property system and is passed by value
 // QObjects: to use, doesn't need any registration and is passed as QObject*
 Q_PROPERTY(QList<QObject*> objList MEMBER m_objList) // Has cpp owernship
@@ -1030,6 +1030,40 @@ qmlRegisterUncreatableMetaObject(N::staticMetaObject, "MyInclude", 1, 0,
 qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyInclude", 1, 0, "MySingleton")
 qmlRegisterSingletonType("MyInclude", 1, 0, "MySingleton", 
     [](QQmlEngine*, QJSEngine*)->QObject* { return new MySingleton(); });
+
+// LOADING QML FILES
+qmlEngine->load(QUrl("qrc:/Main.qml"));
+/*OR*/
+QQuickView view;
+view.setResizeMode(QQuickView::SizeRootObjectToView);
+QQmlContext* context = view.rootContext();
+context->setContextProperty("_model", &model);
+view.setSource(QUrl("qrc:/Main.qml"));
+view.show();
+
+// LOADING QML FILES WITH QQMLCOMPONENT
+context = new QQmlContext(&qmlEngine, &qmlEngine);
+context->setContextProperty("_model", &model);
+component = new QQmlComponent(&qmlEngine, QUrl("qrc:/Main.qml"));
+auto onLoaded = [this]()
+{
+    auto myObject = std::make_unique<QObject>(component->create(&context));
+    if (!myObject || component->isError())
+    {
+        for (const auto& error : component->errors())
+        {
+            qDebug() << error.toString();
+        }
+    }
+};
+if (component->isLoading())
+{
+    connectOnce(component, &QQmlComponent::statusChanged, this, onLoaded);
+}
+else
+{
+    onLoaded();
+}
 
 // QQuickItem
 // Inherits QObject, instantiated by Item
@@ -1097,12 +1131,35 @@ item.window() // Return QQuickWindow* in which this item is rendered
     
 // QQmlComponent
 // Inherits QObject, instantiated by Component
-                               
+QQmlComponent component(&qmlEngine, QUrl("qrc:/Main.qml"));
+component.progress // [0.0, 1.0] for loading progress, readonly property
+component.status // QQmlComponent Status Enum, readonly property
+component.url // QUrl, reonly property
+component.loadUrl(url, mode) // QQmlComponent Compilation Mode Enum, loads the url
+component.isLoading() // status() == QQmlComponent::Loading
+component.isError() // status() == QQmlComponent::Error
+component.isNull() // status() == QQmlComponent::Null
+component.isReady() // status() == QQmlComponent::Ready
+component.create(&context) // Takes QQmlContext, returns QObject*, caller takes ownership
+component.errors() // Returns QList<QQmlError>, empty if no errors
+component.engine() // Returns QML engine used
+
 // QQmlContext
+QQmlContext context(&qmlEngine, &qmlEngine);
 context.setContextProperty("context_model", model); // Sends to QML, does not update if QML already loaded
 
 // QQmlEngine
 QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Must be used on cpp QObjects without parents
+    
+// QQmlComponent Status Enum
+QQmlComponent::Null     // This QQmlComponent has no data
+QQmlComponent::Ready    // This QQmlComponent is ready and create() may be called
+QQmlComponent::Loading  // This QQmlComponent is loading network data
+QQmlComponent::Error    // An error has occurred. Call errors() to retrieve a list of errors
+    
+// QQmlComponent Compilation Mode Enum
+QQmlComponent::PreferSynchronous // Block the thread, except for remote URLs which always load asynchronously
+QQmlComponent::Asynchronous      // Load async
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT THREADING
