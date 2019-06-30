@@ -1056,14 +1056,8 @@ auto onLoaded = [this]()
         }
     }
 };
-if (component->isLoading())
-{
+!component->isLoading() ? onLoaded() :
     connectOnce(component, &QQmlComponent::statusChanged, this, onLoaded);
-}
-else
-{
-    onLoaded();
-}
 
 // QQuickItem
 // Inherits QObject, instantiated by Item
