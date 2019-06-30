@@ -13,6 +13,21 @@ if(file.open(QIODevice::ReadOnly))
         line = stream.readLine();
     }
 }
+
+// Iterate over all files in directory (non-recursive)
+QDir dir(path);
+for (const auto& fileName : dir.entryList(QStringList("*.qml")))
+{
+    qDebug() << (path + "/" + fileName); // absolute path
+}
+
+// Iterate over all files in directory (recursive)
+QDir dir(path);
+QDirIterator it(dir, QStringList() << "*.qml", QDir::Files, QDirIterator::Subdirectories)
+while (it.hasNext())
+{
+    qDebug() << it.next(); // absolute path
+}
                                
 // QFileInfo
 // If path is a directory, treat as filepath but without a name/extension
