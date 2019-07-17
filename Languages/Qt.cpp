@@ -1200,6 +1200,11 @@ QThread::currentThreadId();
 QThread::currentThread();
 QtConcurrent::run([](){});
 
+// CHANGING THREAD AFFINITY
+// Can only 'push' an object from its current thread to another thread
+// Must do this before setting a parent with different affinity
+myObj->moveToThread(myObj2->thread());
+
 // ENFORCING THREAD AFFINITY
 // Can either use signals/slots or QMetaObject::invokeMethod with an Auto Connection
 QMetaObject::invokeMethod(myObj, [myObj]() {
