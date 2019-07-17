@@ -273,8 +273,10 @@ union MyUnion
 // ENUMERATIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// compiler replaces name with integer value when encountering it
-enum class MyEnum
+enum MyEnum                 // Unscoped enum, type chosen by compilier 
+enum MyEnum : int           // Unscoped enum with fixed underlying type
+enum class MyEnum           // Scoped Enum with auto fixed underlying type as int
+enum class MyEnum : short   // Scoped Enum with fixed underlying type
 {
     ONE,           // Value = 0
     TWO = 100,     // Value = 100
@@ -283,31 +285,16 @@ enum class MyEnum
     FIVE           // Value = 1
 }
 
-// UNSCOPED ENUM
-// Underlying type chosen by compiler
-double ONE = 2.0;                           // CAN'T DO: Pollutes namespace
-MyEnum myEnum = static_cast<MyEnum>(myInt); // requires cast from int to enum
-int myInt = myEnum;                         // auto casts from enum to int
+// SCOPED/UNSCOPED ENUM
+double ONE = 2.0;  // Error for unscoped enum as it pollutes the namespace
+auto value = static_cast<MyEnum>(2); // Both require cast from int to enum
+int value = myEnum; // Unscoped auto cases from enum to int, scoped requires static cast
 
-// SCOPED (CLASS) ENUM
-// Underlying type always int
-// Has operator=, operator==, operator<
-// can add own methods
-double ONE = 2.0;                           // CAN DO: Does not pollute namespace
-MyEnum myEnum = static_cast<MyEnum>(2);     // requires cast from int to enum
-int myInt = static_cast<int>(myEnum)        // requires cast from enum to int
-
-// UNDERLYING TYPE
-// Can change for both scoped/unscoped
-// Choose underlying type from #include <stdint.h>
-enum MyEnum : std::uint8_t { ONE };
-enum class MyEnum : std::uint32_t { ONE }; 
-
-// SHARING NAMES
-enum MyEnum1 { ONE };
-enum MyEnum2 { ONE };
-int x = MyEnum2::ONE; // Requires type only if enums clash
-
+// FIXED UNDERLYING TYPE ENUMS
+// Enums without fixed underlying type can only be cast to values between min->max of enum
+// Enums with fixed underlying type can only be cast to values between min->max of type
+auto value = static_cast<MyEnum>(-1); // Undefined for enums without fixed underlying type
+    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BIT FIELDS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
