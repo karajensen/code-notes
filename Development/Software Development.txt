@@ -132,6 +132,7 @@ git status                                          // Show changed files in bra
 git add -A                                          // Add changes to next commit
 git commit -am "description"                        // Commit changes
 git commit --amend -e                               // Add changes to previous commit in local repro
+git commit <file_path> -m "description"             // Commit a single file, even if multiple have been added
 git checkout <file_path>                            // Revert uncommited changes to file
 git branch -m <old_name> <new_name>                 // Rename a local branch
 git push                                            // Push local changes to remote branch
