@@ -1578,6 +1578,9 @@ Drawer {
     font.weight: Font.Normal // default, see QML font type for enums
     font.wordSpacing: 1 // real, spacing between words
     wrapMode: <T>.NoWrap // default, Wrap Mode Enum    
+        
+    // Wrap and elide will only work if a width or left/right anchors are set
+    width: Math.min(maximumWidth, implicitWidth) // Restrict to maximum width
 }
 
 ------------------------------------------------------------------------------------------------------------
