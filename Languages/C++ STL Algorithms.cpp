@@ -215,13 +215,14 @@ upper_bound(S, E, myObj, sortLam) //returns first value found > myObj, requires 
 // SET OPERATIONS
 //===============================================================================================================
 
-//Only used on sorted ranges, all elements remain in sorted ascending order
-includes(S, E, S2, E2) //returns true if range 2 is in range 1; both ranges must be sorted in ascending order
-merge(S, E, S2, E2, back_inserter(S3)) //copies 1 and 2 into 3
-set_union(S, E, S2, E2, back_inserter(S3)) //copies 1 and 2 into 3 and removes duplicates
-set_intersection(S, E, S2, E2, back_inserter(S3)) //copies elements in 1 that are also in 2 into 3
-set_difference(S, E, S2, E2, back_inserter(S3)) //copies elements in 1 that are not in 2 into 3
-set_symmetric_difference(S, E, S2, E2, back_inserter(S3)) //copies elements in 1 that don't exist in 2 and vice versa into 3
+// Only used on sorted ranges, all elements remain in sorted ascending order
+// Use inserter(S3, S3.begin())
+includes(S, E, S2, E2) // returns true if range 2 is in range 1; both ranges must be sorted in ascending order
+merge(S, E, S2, E2, inserter) // copies 1 and 2 into 3
+set_union(S, E, S2, E2, inserter) // copies 1 and 2 into 3 and removes duplicates
+set_intersection(S, E, S2, E2, inserter) // copies elements in 1 that are also in 2 into 3
+set_difference(S, E, S2, E2, inserter) // copies elements in 1 that are not in 2 into 3
+set_symmetric_difference(S, E, S2, E2, inserter) // copies elements in 1 that don't exist in 2 and vice versa into 3
 
 //===============================================================================================================
 // HEAP OPERATIONS
