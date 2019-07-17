@@ -305,7 +305,7 @@ arr.shift()                        // Remove from front of array and return its 
 arr.unshift(0)                     // Adds one or more elements to the front of an array, returns arr length
 arr.slice(start, end)              // starts at index start and extracts all elements until index end
 arr.splice(index, n)               // Remove n items starting from index, returns removed items
-arr.splice(index, n, 0, 1)         // Additional args inserted after remove at index
+arr.splice(index, 0, value)        // Remove 0 items starting from index, insert new value at index
 arr.reverse()                      // Reverses array in-place
 arr.indexOf(0, start)              // Returns index of first value 0 found from optional start index
 arr.lastIndexOf(0, start)          // Returns index of first value 0 found backwards from optional start index
