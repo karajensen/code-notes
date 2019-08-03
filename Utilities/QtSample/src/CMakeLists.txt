@@ -9,7 +9,7 @@ if(CMAKE_PREFIX_PATH)
 
     # For now, just copy what we need for this project
     file(COPY ${CMAKE_PREFIX_PATH}/bin/opengl32sw.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
-    file(COPY ${CMAKE_PREFIX_PATH}/bin/opengl32sw.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)	
+    file(COPY ${CMAKE_PREFIX_PATH}/bin/opengl32sw.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)  
     file(COPY ${CMAKE_PREFIX_PATH}/bin/Qt5Cored.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
     file(COPY ${CMAKE_PREFIX_PATH}/bin/Qt5Core.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Release)
     file(COPY ${CMAKE_PREFIX_PATH}/bin/Qt5Widgetsd.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug)
@@ -38,8 +38,9 @@ if(CMAKE_PREFIX_PATH)
                  sampleItem.cpp
                  sampleModel.h
                  sampleModel.cpp
-				 testClasses.h
-                 resources/main.qml)
+                 testClasses.h
+                 resources/main.qml
+                 resources/palette.qml)
 
     find_package(Qt5 COMPONENTS Core Widgets Quick)
     qt5_add_resources(RESOURCES resources/images.qrc)

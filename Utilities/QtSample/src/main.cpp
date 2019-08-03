@@ -28,17 +28,23 @@ int main(int argc, char *argv[])
     view.setSource(QUrl("qrc:/main.qml"));
     view.show();
 
+    QQuickView palette;
+    palette.setResizeMode(QQuickView::SizeRootObjectToView);
+    palette.setTitle("Qt Palette");
+    palette.setSource(QUrl("qrc:/palette.qml"));
+    palette.show();
+
     QTimer timer;
     timer.setInterval(10);
     QObject::connect(&timer, &QTimer::timeout, [&model]() { model.tick(); });
     timer.start();
 
-	auto connection = std::make_shared<QMetaObject::Connection>();
-	*connection = QObject::connect(&timer, &QTimer::timeout, [connection]()
-	{
-		std::cout << "Testing Auto Disconnect" << std::endl;
-		QObject::disconnect(*connection);
-	});
+    auto connection = std::make_shared<QMetaObject::Connection>();
+    *connection = QObject::connect(&timer, &QTimer::timeout, [connection]()
+    {
+        std::cout << "Testing Auto Disconnect" << std::endl;
+        QObject::disconnect(*connection);
+    });
 
     return app.exec();
 }
