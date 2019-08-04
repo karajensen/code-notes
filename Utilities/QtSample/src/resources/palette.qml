@@ -76,12 +76,10 @@ Rectangle {
                 onPressAndHold: {
                     gridView.currentIndex = -1;
                     dragging = true
-                    content.opacity = 0.75;
                 }
                 
                 onReleased: {
                     dragging = false
-                    content.opacity = 1.0;
                 }
 
                 Rectangle {
@@ -92,8 +90,9 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
 
                     color: colorData.values[index]
-                    border.width: gridView.currentIndex == index ? 2 : 0
+                    border.width: (dragArea.dragging || gridView.currentIndex == index) ? 2 : 0
                     border.color: "white"
+                    opacity: dragArea.dragging ? 0.75 : 1.0
 
                     Drag.active: dragArea.dragging
                     Drag.source: dragArea
