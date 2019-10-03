@@ -302,9 +302,11 @@ __TIME__    //time file was compiled
 __DATE__    //date file was compiled
 
 DEBUGGING:
-• Debug/Release require PDB files for any library / application you want to step through
-• Release additionally requires options /Zi /Od /Ob0 /DEBUG /OPT:REF /OPT:ICF
-• Release can be built only partially with debug options, those without cannot be stepped through
+• Debug/Release require debug information for any library / application you want to step through
+• Debug information is always placed in obj (/Z7) or pdb files (/Zi)
+• PDBs use a GUID that matches its to it's dll/exe. For every build, this changes
+• Release flags to generate PDBs: /Zi /DEBUG /OPT:REF /OPT:ICF
+• Release flags to generate PDBs and disable optimizations: /Zi /Od /Ob0 /DEBUG /OPT:REF /OPT:ICF
 
 COMBINING DEBUG AND RELEASE:
 • Combining will output 'mismatch detected for _ITERATOR_DEBUG_LEVEL'
