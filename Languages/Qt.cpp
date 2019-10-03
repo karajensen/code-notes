@@ -1282,3 +1282,30 @@ qDeleteAll(begin, end) // Takes container iterator with pointers, calls delete o
 qDeleteAll(container) // Takes container with pointers, calls delete on pointers, doesn't clear
 qPopulationCount(v) // Takes all quints, returns no. of bits set in v, or the 'Hamming Weight of v'
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// LOCALISATION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
+• All strings in application that use tr or qsTr are picked up by lupdate
+• ts files are then translated by translator
+• qm files are loaded by application and can be switched at runtime
+• Avoid static strings as they are initialised before translator is set
+• Avoid using tr in threads, if used in threads, must not switch translators at same time
+
+LUPDATE: Command line tool that looks through source code and creates ts file from strings
+LRELEASE: Converts ts files to qm files 
+LINGUIST: GUI app that edits ts files and can save qml files
+**************************************************************************************************************/
+
+QTranslator translator
+translator.load("app_EN_US.qml", ":/qrc_path")
+application.installTranslator(&translator)
+application.qmlEngine()->retranslate()
+
+//: This is a comment that will be added to 'MyString' in the ts file
+qsTr("MyString")
+tr("%1%) // Percentages need to be translated
+tr("%n plural(s)", "", value) // Plurals, %n is optional
+QObject::tr("MyString", "Context") // Without QObject:: context is auto set as class
+QLocale{}.toString(value, 'f', precision)
