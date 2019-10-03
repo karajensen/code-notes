@@ -1170,8 +1170,8 @@ QOBJECTS
 
 SIGNALS / SLOTS
 • Thread safe to connect, disconnect and emit signals
-• Connection type default is AutoConnection, thread safe and auto copies arguments
-• AutoConnection Becomes QueuedConnection if signal/slot objects have different thread affinity
+• Connection type default is AutoConnection, connections are thread safe and auto copies arguments
+• AutoConnection Becomes QueuedConnection when signal is fired from different thread to reciever
 • QueuedConnection signals will be sent to slot object's event queue and called synchronously
 
 LIMITATIONS ON QTHREAD
