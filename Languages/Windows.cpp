@@ -2,6 +2,9 @@
 // WINDOWS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/** Turn on intensive run time checks, useful for debugging heap corruptions */
+_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF );
+
 /** Get the executable Path */
 wchar_t exePath[MAX_PATH];
 ::GetModuleFileNameW(NULL, exePath, MAX_PATH);
