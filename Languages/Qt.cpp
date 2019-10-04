@@ -1287,7 +1287,9 @@ qPopulationCount(v) // Takes all quints, returns no. of bits set in v, or the 'H
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*************************************************************************************************************
+• Run lupdate -recursive '.' -ts MyApp_en_US.ts
 • All strings in application that use tr or qsTr are picked up by lupdate
+• Resources can also be translated
 • ts files are then translated by translator
 • qm files are loaded by application and can be switched at runtime
 • Avoid static strings as they are initialised before translator is set
@@ -1299,13 +1301,14 @@ LINGUIST: GUI app that edits ts files and can save qml files
 **************************************************************************************************************/
 
 QTranslator translator
-translator.load("app_EN_US.qml", ":/qrc_path")
+translator.load("MyApp_en_US.qm", ":/qrc_path")
 application.installTranslator(&translator)
 application.qmlEngine()->retranslate()
-
+    
 //: This is a comment that will be added to 'MyString' in the ts file
 qsTr("MyString")
 tr("%1%) // Percentages need to be translated
 tr("%n plural(s)", "", value) // Plurals, %n is optional
 QObject::tr("MyString", "Context") // Without QObject:: context is auto set as class
-QLocale{}.toString(value, 'f', precision)
+QLocale().toString(value, 'f', precision) // Convert number, uses system locale, same as QLocale::system()
+
