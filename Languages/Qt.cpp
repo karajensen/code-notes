@@ -535,9 +535,6 @@ auto pair = qMakePair(v1, v2);
 pair.first;
 pair.second;
 
-// QSettings
-// Provides persistent platform-independent application settings
-
 // QTimer
 // Provides repetitive and single-shot timers, takes milliseconds
 // Interval of 0 will time out as soon as all events in the event queue have been processed
@@ -588,6 +585,71 @@ id.toString(QUuid::StringFormat::WithBraces) // Default, QUuid::WithoutBraces al
 QUuid::createUuid() // Generate a new unique QUuid
 QUuid::fromString(str) // Format "{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}", {} optional, if fails will be null
 
+// QDateTime
+// Combines a QDate and QTime
+QDateTime dateTime
+QDateTime::currentDateTime() // Returns QDateTime
+QDateTime::fromString("2019-01-01", Qt::ISODate) // Takes QString and returns QDateTime
+dateTime.toString(Qt::ISODate) // Returns QString
+dateTime.toUTC() // Used for comparing date times with < and >
+dateTime.addSecs(1) // Add seconds to the date time
+dateTime.addMins(1) // Add minutes to the date time
+dateTime.addHours(1) // Add hours to the date time
+dateTime.addDays(1) // Add days to the date time
+dateTime.addYears(1) // Add years to the date time
+
+// QTime
+QTime time
+QTime::currentTime() // Returns QTime
+time.secsTo(time2) // Difference in time in seconds
+
+// QColor
+// Uses typedef QRgb unsigned int
+// 'F' uses float [0,1], otherwise int [0,255] or [0, 359] (hue)
+// Comparison will also take into account last set color mode
+QColor color(r, g, b, a) // int only
+QColor color("red")
+QColor color(Qt::GlobalColor::red)
+QColor color(QRgb(0)) // Ignores alpha
+color.name() // QString "#RRGGBB", same as color.name(QColor::NameFormat::HexRgb)
+color.name(QColor::NameFormat::HexArgb) // QString "#AARRGGBB", Also can have QColor::HexRgb
+color.alpha() / color.alphaF() / color.setAlpha(0) / color.setAlphaF(0)
+color.red() / color.redF() / color.setRed(0) / color.setRedF(0)
+color.blue() / color.blueF() / color.setBlue(0) / color.setBlueF(0)
+color.green() / color.greenF() / color.setGreen(0) / color.setGreenF(0)
+color.hue() / color.hueF() // HSV
+color.saturation() / color.saturationF() // HSV
+color.value() / color.valueF() // HSV
+color.lightness() / color.lightnessF() // HSL
+color.hslHue() / color.hslHueF()
+color.hslSaturation() / color.hslSaturationF()
+color.hsvHue() / color.hsvHueF()
+color.hsvSaturation() / color.hsvSaturationF()
+color.setHsl(h, s, l, a) / color.setHslF(h, s, l, a) // Alpha optional
+color.setHsv(h, s, v, a) / color.setHsvF(h, s, v, a) // Alpha optional
+color.setRgb(r, g, b, a) / color.setRgbF(r, g, b, a) // Alpha optional
+color.setRgb(QRgb(0)) // Ignores alpha
+color.setRgb(QRgb(0)) // Keeps alpha component
+color.lighter(factor) // Returns QColor lighter by int factor, default is 150
+color.darker(factor) // Returns QColor darker by int factor, default is 200
+color.rgb() // Returns unsigned int, use for comparison as QColor comparison also uses color mode
+color.rgba() // Returns unsigned int, use for comparison as QColor comparison also uses color mode
+color.toCmyk() // Returns QColor with color mode CMYK
+color.toHsl() // Returns QColor with color mode HSL
+color.toHsv() // Returns QColor with color mode HSV
+color.toRgb() // Returns QColor with color mode RGB
+QColor::colorNames() // Returns QStringList with all valid color names (eg. "red")
+QColor::fromCmyk(c, m, y, k, a) // Alpha optional
+QColor::fromCmykF c, m, y, k, a) // Alpha optional
+QColor::fromHsl(h, s, l, a) // Alpha optional
+QColor::fromHslF(h, s, l, a) // Alpha optional
+QColor::fromHsv(h, s, v, a) // Alpha optional
+QColor::fromHsvF(h, s, v, a) // Alpha optional
+QColor::fromRgb(QRgb(0)) // Ignores alpha
+QColor::fromRgb(r, g, b, a) // Alpha optional
+QColor::fromRgbF(r, g, b, a) // Alpha optional
+QColor::fromRgba(QRgb(0)) // Keeps alpha component
+              
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT WINDOWS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1169,10 +1231,10 @@ QOBJECTS
 • Use deleteLater if object is accessed across multiple threads
 
 SIGNALS / SLOTS
-• Thread safe to connect, disconnect and emit signals
-• Connection type default is AutoConnection, connections are thread safe and auto copies arguments
+• Thread safe to connect, disconnect and emit signals, defaults to AutoConnection
 • AutoConnection Becomes QueuedConnection when signal is fired from different thread to reciever
 • QueuedConnection signals will be sent to slot object's event queue and called synchronously
+• QueuedConnection will copy arguments, if slot object doesn't have an event queue, signal is lost
 
 LIMITATIONS ON QTHREAD
 • Cannot modify gui (QQuick, QWidgets etc.)
