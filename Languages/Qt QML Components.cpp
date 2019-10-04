@@ -2,10 +2,6 @@
 // QML COMPONENTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Log all properties of an object or component id
-console.log(JSON.stringify(myQmlComponent));
-console.log(JSON.stringify(myObject));
-
 // ITEM
 // import QtQuick 2.11
 // Base for most QML components, instantiates QQuickItem
@@ -162,6 +158,7 @@ Binding {
 // creates all of its delegate items when the repeater is first created
 // Changing model or setting to null will destroy all previous items
 // Delegate has properties 'index' and 'modelData'
+// Delegate cannot be switched at runtime
 Repeater {
     id: repeater
     model: 3
@@ -344,6 +341,29 @@ Item {
     ApplicationWindow.header
     ApplicationWindow.menuBar
     ApplicationWindow.window
+}
+
+------------------------------------------------------------------------------------------------------------
+	
+// SCREEN
+// import QtQuick.Window 2.11
+// Provides information about the screen of the parent
+Screen {
+    desktopAvailableHeight
+    desktopAvailableWidth
+    devicePixelRatio
+    height
+    manufacturer
+    model
+    name
+    orientation
+    orientationUpdateMask
+    pixelDensity
+    primaryOrientation
+    serialNumber
+    virtualX
+    virtualY
+    width
 }
    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
