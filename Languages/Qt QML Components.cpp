@@ -573,6 +573,20 @@ group.actions // list<Action> of actions
 group.addAction(myAction) // Add an action
 group.removeAction(myAction) // Remove an action
 
+------------------------------------------------------------------------------------------------------------
+
+// SHORTCUT
+// import QtQuick 2.11
+// Window or application wide key listening
+Shortcut  {
+	sequence: "F5" // Can also use StandardKey enum (eg. StandardKey.Cut)
+    sequences: ["Ctrl+E,Ctrl+W"]
+    autoRepeat: true // Default, whether user can continue to use it after once
+    context: Qt.WindowShortcut // Default, other option is Qt.ApplicationShortcut
+    enabled: true // Default, whether allowed to use
+	onActivated: {}
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML CONTROLS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
