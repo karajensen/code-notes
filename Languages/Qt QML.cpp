@@ -110,10 +110,12 @@ function fn() {
 }
 
 // LOG QML ITEM PROPERTIES
+console.error(JSON.stringify(myQmlComponent));
+console.error(JSON.stringify(myObject));
 for (var key in myObject) 
 { 
-	console.error(key);
-	console.error(myObject[key]);
+    console.error(key);
+    console.error(myObject[key]);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -529,6 +531,8 @@ KEY HANDLING STEPS:
 **************************************************************************************************************/
 
 // FOCUSSCOPE
+// Only one direct child can have focus set as true
+// When FocusScope receives focus, the focus is auto shifted to this child
 FocusScope {
 }
 
