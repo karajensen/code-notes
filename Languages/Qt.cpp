@@ -1262,6 +1262,11 @@ QThread::currentThreadId();
 QThread::currentThread();
 QtConcurrent::run([](){});
 
+QMutex mutex;
+QMutexLocker lock(&mutex);
+mutex.lock();
+mutex.unlock();
+
 // CHANGING THREAD AFFINITY
 // Can only 'push' an object from its current thread to another thread
 // Must do this before setting a parent with different affinity
@@ -1275,6 +1280,15 @@ QMetaObject::invokeMethod(myObj, [myObj]() {
 QObject::connect(myObj, &MyClass::signal, [myObj]() {
     Q_ASSERT(myObj->thread() == QThread::currentThread());
 });
+
+// WAITING FOR ANOTHER THREAD
+// If multiple threads are waiting on condition, order of waking is undefined, wakeOne will be random
+QMutex mutex;
+QWaitCondition waitCondition;
+mutex.lock();
+waitCondition.wait(&mutex, timeout); // Waits for a wakeOne or wakeAll call, or till optional timeout
+waitCondition.wakeOne() /*or*/ waitCondition.wakeAll(); // Called on other thread
+mutex.unlock();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT ALGORITHMS
