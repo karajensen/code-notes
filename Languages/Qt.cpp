@@ -1222,24 +1222,32 @@ QQmlComponent::Asynchronous      // Load async
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*************************************************************************************************************
+REENTRANCY/THREAD SAFETY
+• Class is reentrant if members are threadsafe with different instances of class (eg. no static vars used)
+• Class is threadsafe if members are threadsafe with same instance of class (eg. uses mutexes)
+• Thread-safe is always reentrant, but reentrant is not always thread-safe
+• QObject is reentrant, QWidget/GUI classes are not reentrant and can only be used in GUI thread
+
 QOBJECTS
-• Has thread affinity: lives on a specific thread, query using obj.thread()
+• Lives on a specific thread (thread affinity) query using obj.thread()
 • Must have same thread as parent, obj.setParent will fail if not
-• Will recieve queued signals/event from same or other threads, slot is always called in own thread
-• If no thread affinity or in thread without event loop, cannot process queued signals/events
 • Can change with object.moveToThread(), must not have a parent, all children auto changed too
-• Use deleteLater if object is accessed across multiple threads
+• Use deleteLater if object is accessed across multiple threads, using delete in wrong thread affinity unsafe
+• Can recieve queued signals/events from same/other threads, slot is always called in own thread
+• If thread without event loop or thread is destroyed, cannot process queued signals/events including deleteLater
+• Creating QObject (including static QObjects) before QApplication is undefined behaviour
 
 SIGNALS / SLOTS
-• Thread safe to connect, disconnect and emit signals, defaults to AutoConnection
+• Threadsafe to connect, disconnect and emit signals, defaults to AutoConnection
 • AutoConnection Becomes QueuedConnection when signal is fired from different thread to reciever
 • QueuedConnection signals will be sent to slot object's event queue and called synchronously
 • QueuedConnection will copy arguments, if slot object doesn't have an event queue, signal is lost
 
-LIMITATIONS ON QTHREAD
+QTHREAD
 • Cannot modify gui (QQuick, QWidgets etc.)
 • Cannot call OpenGL unless QOpenGLContext::supportsThreadedOpenGL is true
 • All QObjects must be destroyed before QThread is destroyed- can connect deleteLater to QThread::finished
+• Has a parallel event loop, subclassing QThread gives control over when to start or use the loop
 **************************************************************************************************************/
 
 class MyThread : public QThread
