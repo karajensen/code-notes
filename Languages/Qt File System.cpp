@@ -107,7 +107,9 @@ QDir::temp() // Returns folder for temp files as QDir
 QDir::toNativeSeparators(path) // Converts seperators to native seperator
     
 // QIODevice
-// base interface class of all I/O devices
+// base interface class of all I/O devices (QFile)
+connect(io, &QIODevice::aboutToClose, fn);
+connect(io, &QIODevice::bytesWritten, fn); // qint64 bytes
 
 // QDataStream
 // serialization of binary data to a QIODevice
