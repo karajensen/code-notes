@@ -108,14 +108,24 @@ QDir::toNativeSeparators(path) // Converts seperators to native seperator
     
 // QIODevice
 // base interface class of all I/O devices (QFile)
-connect(io, &QIODevice::aboutToClose, fn);
-connect(io, &QIODevice::bytesWritten, fn); // qint64 bytes
-
-// QDataStream
-// serialization of binary data to a QIODevice
+file.close()
+file.errorString() // Returns QString
+file.isOpen()
+file.isReadable() // Returns true if data can be read from the device
+file.isWritable()
+file.open(mode) // QIODevice OpenMode
+file.openMode() // Returns QIODevice OpenMode
+file.readAll() // Returns QByteArray
+file.readLine() // Returns QByteArray
+file.write(data) // Can be const char* or QByteArray
+connect(file, &QIODevice::aboutToClose, fn);
+connect(file, &QIODevice::bytesWritten, fn); // qint64 bytes
 
 // QFile
 // Interface for reading from and writing to files
+
+// QDataStream
+// serialization of binary data to a QIODevice
 
 // QDir Filter Flags
 QDir::NoFilter         // No filter flag used
@@ -149,3 +159,15 @@ QDir::DirsLast         // Put the files first, then the directories
 QDir::Reversed         // Reverse the sort order
 QDir::IgnoreCase       // Sort case-insensitively
 QDir::LocaleAware      // Sort using the current locale settings
+
+// QIODevice OpenMode
+QIODevice::NotOpen
+QIODevice::ReadOnly
+QIODevice::WriteOnly    // For file-system subclasses implies Truncate unless combined with ReadOnly/Append/NewOnly
+QIODevice::ReadWrite    // ReadOnly | WriteOnly
+QIODevice::Append       // Data written to end of file
+QIODevice::Truncate     // Truncated before opening (All earlier contents of the device are lost)
+QIODevice::Text         // Reading uses '\n', Writing uses local encoding for end of line
+QIODevice::Unbuffered   // Any buffer in the device is bypassed
+QIODevice::NewOnly      // Create and open the file only if it does not exist
+QIODevice::ExistingOnly // Fail if the file to be opened does not exist
