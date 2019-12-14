@@ -1583,20 +1583,43 @@ Drawer {
 // QML TEXT
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*************************************************************************************************************
+WAYS TO FIT TEXT
+• Wrap     wrapMode       Text / TextEdit / TextInput
+• Elide    elide          Text
+• Shrink   fontSizeMode   Text
+• Scroll   -              TextEdit / TextInput
+
+FITTING TEXT
+• Always set text 'width' or width anchors, without setting it, fontSizeMode, wrapMode and elide won't work
+• Always set minimumPixelSize alongside fontSizeMode, otherwise it will not work
+• Text will wrap before shrinking, to combine both, use margins/padding to force a minimum height
+• Text with scroll will always display the end. To display the start, set autoScroll to activeFocus
+
+TEXT SIZE PROPERTIES
+width            Auto set to 'contentWidth', override to fit text, eg. Math.min(contentWidth, maximumWidth)
+height           Auto set to 'contentHeight'
+implicitWidth    Width of text before any fitting occured (elide, wrap, shrink)
+implicitHeight   Height of text before any fitting occured (elide, wrap, shrink)
+contentWidth     Width of text after all fitting
+contentHeight    Height of text after all fitting
+**************************************************************************************************************/
+
 // TEXT / TEXTINPUT / TEXTEDIT SHARED PROPERTIES
 {
     text: "str"
-    color: "red" // text color
+    color: "red"
     renderType: Text.QtRendering // RenderType Enum, Default given by QQuickWindow::textRenderType
     horizontalAlignment: <T>.AlignHCenter // Alignment Enum
     verticalAlignment: <T>.AlignVCenter // Alignment Enum    
-    contentHeight: 200 // height of the unclipped text
-    contentWidth: 200 // width of the unclipped text
     bottomPadding: 1.0 // padding around the content, not part of contentHeight, overrides 'padding'
     leftPadding: 1.0 // padding around the content, not part of contentWidth, overrides 'padding'
     rightPadding: 1.0 // padding around the content, not part of contentWidth, overrides 'padding'
     topPadding: 1.0 // padding around the content, not part of contentHeight, overrides 'padding'
     padding: 1.0 // padding around the content, not part of contentHeight/contentHeight
+    wrapMode: <T>.NoWrap // default, Wrap Mode Enum
+
+    // For querying font details, use 'fontInfo.<p>' for Text only
     font.bold: true
     font.capitalization: Font.MixedCase // default, see QML font type for enums
     font.family: "Helvetica"
@@ -1611,10 +1634,6 @@ Drawer {
     font.underline: true
     font.weight: Font.Normal // default, see QML font type for enums
     font.wordSpacing: 1 // real, spacing between words
-    wrapMode: <T>.NoWrap // default, Wrap Mode Enum    
-        
-    // Wrap and elide will only work if a width or left/right anchors are set
-    width: Math.min(maximumWidth, implicitWidth) // Restrict to maximum width
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1630,12 +1649,12 @@ line.height // Can modify to change height of line
     
 // TEXT
 // import QtQuick 2.11
-// Inherits item, Styled text label
+// Inherits item, Styled text label, unselectable
 Text {
     baseUrl: "http://qt-project.org/" // Used to resolve relative URLs within the text (eg. images/logo.png)
     clip: true // Whether the text is clipped
-    elide: Text.ElideNone // default, Elide Mode Enum
-    fontSizeMode: Text.FixedSize // default, Font Size Mode Enum
+    elide: Text.ElideNone // default, adds ... to text, Elide Mode Enum
+    fontSizeMode: Text.FixedSize // default, requires minimumPixelSize to be set, Font Size Mode Enum
     hoveredLink: "" // link string when the user hovers a link embedded in the text
     lineHeight: 1.0 // Text line height, in pixels or a multiplier depending on lineHeightMode
     lineHeightMode: Text.ProportionalHeight // default, Line Height Mode Enum
@@ -1664,11 +1683,11 @@ text.linkAt(x, y) // Returns ink string at point x, y in content coordinates, em
     
 // TEXTINPUT
 // import QtQuick 2.11
-// Inherits Item, single line of editable plain text
+// Inherits Item, single line of editable plain text, selectable
 TextInput {
     displayText: "str" // Dependent on echo mode, holds input as editing    
     activeFocusOnPress: true // If gain active focus on a mouse press
-    autoScroll: true
+    autoScroll: true // Default, set to 'activeFocus' to only scroll to end when user clicks
     cursorDelegate: Rectangle {} // Override cursor
     echoMode: TextInput.Normal // Echo Mode Enum
     inputMask: ">AAAAA-AAAAA-AAAAA;#" // Input Mask Characters
@@ -1724,7 +1743,7 @@ input.undo() // Undos if possible
 
 // TEXTEDIT
 // import QtQuick 2.11
-// Inherits Item, multiple lines of editable formatted text
+// Inherits Item, multiple lines of editable formatted text, selectable
 // Requires Flickable or ScrollView to implement scrolling, following the cursor etc
 TextEdit {
     activeFocusOnPress: true // If gain active focus on a mouse press
@@ -1760,7 +1779,7 @@ edit.preeditText // partial text input from an input method
 edit.selectedText // currently selected text
 edit.selectionEnd // index after last character where selection ends in 'text', read-only
 edit.selectionStart // index of first character where selection starts in 'text', read-only
-edit.textDocument // Returns QQuickTextDocument, can be used to implement syntax highlighting
+edit.textDocument // Returns QQuickTextDocument, can be used to implement syntax highlighting / undo-redo
 edit.append("str") // Appends a new paragraph to text
 edit.clear() // clears text
 edit.copy() // Copies selected text to system clipboard
