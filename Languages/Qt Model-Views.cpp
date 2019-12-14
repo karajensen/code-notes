@@ -282,6 +282,7 @@ SwipeDelegate {
 }
 
 // DELEGATECHOOSER
+// import Qt.labs.qmlmodels 1.0
 // Allows switching between delegates based on item role
 // Directly assign 'delegateChooser' to the view's 'model' property
 DelegateChooser {
