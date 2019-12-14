@@ -281,6 +281,22 @@ SwitchDelegate {
 SwipeDelegate {
 }
 
+// DELEGATECHOOSER
+// Allows switching between delegates based on item role
+// Directly assign 'delegateChooser' to the view's 'model' property
+DelegateChooser {
+    id: delegateChooser
+    role: "myRole"
+    DelegateChoice {
+        roleValue: "first"
+        MyFirstDelegate {}
+    }
+    DelegateChoice {
+        roleValue: "second"
+        MySecondDelegate {}
+    }
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML MODELS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
