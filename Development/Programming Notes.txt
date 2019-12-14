@@ -477,16 +477,17 @@ x|y              Matches 'x', or 'y' (if there is no match for 'x')
 \W               Matches any non-alphanumeric character/underscore. Equivalent to [^A-Za-z0-9_]
 
 EXAMPLES
-#\w{8}           8 any characters after #
-\w{2}            2 letters
-\s*              Arbitrary number of spaces
-\d{5}            5 digits
-//.*?\n          All between // and \n
-//.*?$           All between // and end
-abc              Search for substring 'abc'
-ab*c             Search for a, then 0 or more of b, then c
-ab+c             Search for a, then 1 or more of b, then c
-[abc] or [a-c]   Search for any that has a, b and/or c
+#\w{8}                8 any characters after #
+\w{2}                 2 letters
+\s*                   Arbitrary number of spaces
+\d{5}                 5 digits
+//.*?\n               All between // and \n
+//.*?$                All between // and end
+abc                   Search for substring 'abc'
+ab*c                  Search for a, then 0 or more of b, then c
+ab+c                  Search for a, then 1 or more of b, then c
+[abc] or [a-c]        Search for any that has a, b and/or c
+(?<=abc)(.*)(?=efg)   Search for substrings that start with abc and end with efg
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // EXCEPTIONS
