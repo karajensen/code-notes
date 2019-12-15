@@ -1307,17 +1307,28 @@ box.standardButton(button) // Returns AbstractButton
 ------------------------------------------------------------------------------------------------------------
     
 // SPLITVIEW
-// import QtQuick.Controls 1.4
-// No QML Controls 2 version
-ControlsLegacy.SplitView {
-    handleDelegate
+// import QtQuick.Controls 2.14
+// inherits Control
+SplitView {
+    handle
     orientation
     resizing
+
+    // Each child is auto added to 'handle', layed out by orientation and have attached properties
+    Item {
+        SplitView.minimumWidth
+        SplitView.minimumHeight
+        SplitView.preferredWidth
+        SplitView.preferredHeight
+        SplitView.maximumWidth
+        SplitView.maximumHeight
+        SplitView.fillWidth // true for only one child
+        SplitView.fillHeight // true for only one child
+        SplitHandle.hovered
+        SplitHandle.pressed
+    }
 }
 
-view.addItem(item)
-view.removeItem(item)
-    
 ------------------------------------------------------------------------------------------------------------
    
 // SCROLLVIEW
