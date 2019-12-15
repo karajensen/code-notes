@@ -14,8 +14,14 @@ Wrapper/wrapper/Release/
 Wrapper/native/Debug/
 Wrapper/native/Release/
 Wrapper/managed/obj/
+Wrapper/.vs/
 ColourBlender/obj/
 ColourBlender/bin/
+ColourBlender/.vs/
+ColourBlender/ColourBlender/obj/
+ColourBlender/ColourBlender/bin/
 ToneMapping/obj/
 ToneMapping/bin/
+ToneMapping/ToneMapping/obj/
+ToneMapping/ToneMapping/bin/
 QtSample/build/ 
