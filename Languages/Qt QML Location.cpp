@@ -68,7 +68,12 @@ Map {
         onTiltStarted: { event }
         onTiltUpdated: { event }
     }
+    
+    // Gestured rather than tapped/clicked
+    readonly property bool gestured: gesture.panActive || gesture.pinchActive
+        || gesture.rotationActive || gesture.tiltActive    
         
+    // Can only be set once and params not updated
     plugin: Plugin {
         name: "osm" // "mapboxgl", "esri", "osm" or custom
     }
