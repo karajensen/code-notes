@@ -933,8 +933,7 @@ Material.spinBoxDisabledIconColor
     
 // RIPPLE
 // import QtQuick.Controls.Material.impl 2.2
-Ripple
-{
+Ripple {
     clipRadius: 1 // Use 0 for circle
     width: parent.width
     height: parent.height
