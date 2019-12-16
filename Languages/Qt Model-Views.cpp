@@ -340,6 +340,28 @@ XmlListModel {
 ObjectModel {
 }
 
+// FOLDERLISTMODEL
+// import Qt.labs.folderlistmodel 2.12
+// Provides a model of the contents of a file system folder
+FolderListModel {
+    caseSensitive
+    count
+    folder
+    nameFilters
+    parentFolder
+    rootFolder
+    showDirs
+    showDirsFirst
+    showDotAndDotDot
+    showFiles
+    showHidden
+    showOnlyReadable
+    sortCaseSensitive
+    sortField
+    sortReversed
+    status
+}
+
 // ITEMSELECTIONMODEL
 // import QtQml.Models 2.11
 // Instantiates QItemSelectionModel, Allows keeping the selection state of multiple views in sync
