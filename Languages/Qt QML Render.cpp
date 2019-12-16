@@ -948,16 +948,78 @@ Ripple
 // QML ANIMATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Fade a property change (changing opacity to 0.0 -> 1.0 and back)
-Behavior on opacity {
+// ANIMATION
+Animation {
+    alwaysRunToEnd
+    loops
+    paused
+    running
+    onFinished: {}
+    onStarted: {}
+    onStopped: {}
+}
+
+animation.complete()
+animation.pause()
+animation.restart()
+animation.resume()
+animation.start()
+animation.stop()
+
+------------------------------------------------------------------------------------------------------------
+
+// PROPERTYANIMATION
+PropertyAnimation {
+    duration
+    easing.type // Easing Type Enum
+    easing.amplitude
+    easing.overshoot
+    easing.period
+    easing.bezierCurve
+    exclude
+    from
+    properties
+    property
+    target
+    targets
+    to
+}
+
+// Easing Type Enum
+// Images: https://doc.qt.io/qt-5/qml-qtquick-propertyanimation.html#easing.type-prop
+Easing.InQuad       Easing.InQuart      Easing.InSine      Easing.OutCirc       Easing.InOutBack
+Easing.OutQuad      Easing.OutQuart     Easing.OutSine     Easing.InOutCirc     Easing.OutInBack
+Easing.OutQuad      Easing.InOutQuart   Easing.InOutSine   Easing.OutInCirc     Easing.InBounce
+Easing.InOutQuad    Easing.OutInQuart   Easing.OutInSine   Easing.InElastic     Easing.OutBounce
+Easing.OutInQuad    Easing.InQuint      Easing.InExpo      Easing.OutElastic    Easing.InOutBounce
+Easing.InCubic      Easing.OutQuint     Easing.OutExpo     Easing.InOutElastic  Easing.OutInBounce
+Easing.OutCubic     Easing.InOutQuint   Easing.InOutExpo   Easing.OutInElastic  Easing.Bezier
+Easing.InOutCubic   Easing.OutInQuint   Easing.OutInExpo   Easing.InBack
+Easing.OutInCubic   Easing.Linear       Easing.InCirc      Easing.OutBack
+
+------------------------------------------------------------------------------------------------------------
+
+// ANIMATE ON PROPERTY CHANGE
+myProperty: myBool ? 1.0 : 0.0
+Behavior on myProperty {
+  
+    // NUMBERANIMATION
+    // Inherits PropertyAnimation/Animation
     NumberAnimation {
         duration: 150 
     }
-} 
+  
+    // COORDINATEANIMATION
+    // Inherits Animation
+    CoordinateAnimation {
+        duration: 150
+        easing.type: Easing.InOutQuad
+    }
+}
 
-// Loop property change
-NumberAnimation on x 
-{
+// ANIMATE PROPERTY DIRECTLY
+// Loop property in and out
+NumberAnimation on x {
     loops: Animation.Infinite
     duration: 1000
     easing.type: Easing.InOutQuad
@@ -966,4 +1028,3 @@ NumberAnimation on x
     running: true
     onStopped: { parent.x = 0; }
 }
-
