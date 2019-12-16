@@ -528,17 +528,37 @@ ShapePath {
     strokeColor
     strokeWidth: 2
     strokeStyle: ShapePath.DashLine
-               
+            
+    // PATHLINE
     PathLine { 
         x
         y
     }
 
+    // PATHARC
     PathArc {
         x
         y
         radiusX
         radiusY
+    }
+  
+    // PATHANGLEARC
+    // Useful for making a progress circle
+    PathAngleArc {
+      centerX
+      centerY
+      moveToStart
+      radiusX
+      radiusY
+      startAngle // degrees
+      sweepAngle // degrees
+    }
+  
+    // PATHPOLYLINE
+    PathPolyline {
+        path: [] // list<point>
+        start: Qt.Point(0, 0) // point
     }
 }
 
