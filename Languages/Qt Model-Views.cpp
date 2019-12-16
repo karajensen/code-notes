@@ -7,50 +7,51 @@
 • View: A container that displays the data. The view might display the data in a list or a grid.
 • Delegate: Determines how each element of data should appear in the view. Can also access each element.
 • Role: Used to access different attributes of a data element in the model
+
+VIEWS INSIDE A SCROLL VIEW
+• ScrollView takes the view's Flickable if only/direct child
+• If not only/direct child some functions will not work (eg positionViewAtEnd)
+• And also ensure 'interactive' is set to false
+• If not inside a ScrollView, just attach a ScrollBar for scrolling
 **************************************************************************************************************/
 
-ScrollView {
-    Layout.fillWidth: true
-    Layout.fillHeight: true 
-    Layout.preferredHeight: contentHeight
-        
-    // VIEWS INSIDE A SCROLL VIEW
-    // ScrollView takes ListView's Flickable if only/direct child
-    // If not only/direct child some functions will not work (eg positionViewAtEnd)
-    // And also ensure 'interactive' is set to false
-    ListView {
-        id: listView
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        model: context_model // Set through C++
+ListView {
+    id: listView
+    
+    width: parent.width
+    height: Math.min(maximumHeight, contentHeight)
+    model: context_model // Set through C++
 
-        onCurrentIndexChanged: {
-            console.log("Selected " + currentIndex);
-        }          
-        onCurrentItemChanged: {
-            console.log("Selected " + currentItem);
-        }
-        
-        // Each item of the model is instantiated with the delegate
-        delegate: Item {
-            id: del
-            property bool isHighlighted: mouseArea.containsMouse
-            property bool isSelected: listView.currentIndex == index
-            property bool isSelected: ListView.isCurrentItem // Alternative
-              
-            MouseArea {
-                id: mouseArea
-                anchors.fill: parent
-                hoverEnabled: true
-                acceptedButtons: Qt.RightButton | Qt.LeftButton
-                onPressed: { listView.currentIndex = index; }
-                onClicked: { listView.currentIndex = index; }
-            }                   
-            Text {
-                width: listView.width
-                height: 30
-                text: role_name // Set through C++
-            }
+    onCurrentIndexChanged: {
+        console.log("Selected " + currentIndex);
+    }          
+    onCurrentItemChanged: {
+        console.log("Selected " + currentItem);
+    }
+
+    // Each item of the model is instantiated with the delegate
+    delegate: Item {
+        id: delegate
+        width: listView.width
+        height: textItem.contentHeight
+            
+        property bool isHighlighted: mouseArea.containsMouse
+        property bool isSelected: listView.currentIndex == index
+        property bool isSelected: ListView.isCurrentItem // Alternative
+
+        MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+            acceptedButtons: Qt.RightButton | Qt.LeftButton
+            onPressed: { listView.currentIndex = index; }
+            onClicked: { listView.currentIndex = index; }
+        }                   
+        Text {
+            id: textItem
+            width: listView.width
+            height: 30
+            text: role_name // Set through C++
         }
     }
 }
@@ -59,10 +60,17 @@ ScrollView {
 // QML VIEWS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// LISTVIEW / GRIDVIEW / PATHVIEW / TABLEVIEW SHARED PROPERTIES
+{
+    delegate: Component {} // Template defining each item instantiated by the view
+    model: myModel // Contains data to display   
+}
+view.contentHeight // Full height of all items
+view.contentWidth // Full width of all items
+
 // LISTVIEW / GRIDVIEW / PATHVIEW SHARED PROPERTIES
 {
     currentIndex: 0 // Index of currently selected item, -1 is no selection
-    delegate: Component {} // Template defining each item instantiated by the view
     highlight: Component {} // Only creates one which follows selected item
     highlightItem: Item {} // Only creates one which follows selected item 
     highlightMoveDuration: -1 // Default -1, take as many seconds as needed
@@ -70,7 +78,6 @@ ScrollView {
     preferredHighlightBegin: 1.0 // Preferred range of the highlight, affected by highlightRangeMode
     preferredHighlightEnd: 2.0 // Preferred range of the highlight, affected by highlightRangeMode
     snapMode: <T>.NoSnap // default, View Snap Mode Enum
-    model: myModel // Contains data to display            
 }
 view.currentItem // Currently selected Item, null is no selection
 view.count // Number of items in the view
@@ -123,7 +130,7 @@ ListView {
 }
 view.decrementCurrentIndex() // Decrements the current index, will wrap depending on keyNavigationWraps
 view.incrementCurrentIndex() // Increments the current index, will wrap depending on keyNavigationWraps
-  
+    
 // GRIDVIEW
 // import QtQuick 2.11    
 // Inherits Flickable, Display items from a model in a grid
@@ -162,6 +169,19 @@ PathView {
 }
 view.decrementCurrentIndex() // Decrements the current index
 view.incrementCurrentIndex() // Increments the current index
+    
+// TABLEVIEW
+// import QtQuick 2.12
+// Inherits Flickable, Display items from a model in a table
+TableView {
+    columnSpacing
+    columnWidthProvider
+    columns
+    reuseItems
+    rowHeightProvider
+    rowSpacing
+    rows    
+}    
 
 // View Layout Direction Enum
 Qt.LeftToRight   // Items will be laid out from left to right
