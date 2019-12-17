@@ -121,20 +121,6 @@ BorderImage {
 }
 
 ------------------------------------------------------------------------------------------------------------
-
-// TRANSITION
-// import QtQuick 2.11
-// Defines animated transitions that occur on state changes
-Transition {
-    animations
-    enabled
-    from
-    reversible
-    running
-    to    
-}
-
-------------------------------------------------------------------------------------------------------------
    
 // BLEND
 // import QtGraphicalEffects 1.0
@@ -943,9 +929,41 @@ Ripple {
     color: parent.Material.rippleColor
 }
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML CHARTS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// CHARTVIEW
+// import QtCharts 2.14
+// View for different chart series
+ChartView {
+
+    // PIESERIES
+    // Instantiates QPieSeries
+    PieSeries {
+        PieSlice { label: "a"; value: 90.0 }
+        PieSlice { label: "b"; value: 10.0 }
+    }  
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML ANIMATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// TRANSITION
+// import QtQuick 2.11
+// Defines animated transitions that occur on state changes
+Transition {
+    animations
+    enabled
+    from
+    reversible
+    running
+    to    
+}
+
+------------------------------------------------------------------------------------------------------------
 
 // ANIMATION
 Animation {
