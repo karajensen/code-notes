@@ -1,27 +1,28 @@
 
-                                                                   QQuickItem       
-                                                                       |
-                                                                      Item          
-                                                                       |
-       ------------------------------------------------------------------------------------------------------------------------------------
-       |                                                    |                                             |          |         |          |
-    Repeater                                             Control                                       Flickable    Text    TextInput   TextEdit 
-   PathView                                                 |                                             |          |         |          |
-   MouseArea            --------------------------------------------------------------------------     ListView     Label   TextField   TextArea
-   RowLayout            |                                |                              |        |     GridView
-      Row            ComboBox                      AbstractButton                       |        |
-  ColumnLayout       SpinBox                             |                              |        ----------
-     Column         ScrollView            -------------------------------               |                 |         
-   GridLayout        ScrollBar            |              |              |           Container            Pane       
-     Grid              Dial           DelayButton   ItemDelegate      Button            |                 |
-     Flow          BusyIndicator      RoundButton        |              |            SwipeView        ---------
-   Rectangle       ProgressBar         CheckBox     CheckDelegate   ToolButton    DialogButtonBox     |       |
-  StackLayout        Slider           RadioButton   RadioDelegate                    MenuBar        Frame   ToolBar
-                   RangeSlider         TabButton    SwitchDelegate                    TabBar          |            
-                     Tumbler            Switch      SwipeDelegate                                  GroupBox        
-                       Page            MenuItem                                                                    
+                                                                           QQuickItem       
+                                                                               |
+                                                                              Item          
+                                                                               |                                        
+       ---------------------------------------------------------------------------------------------------------------------------------------------
+       |                                                    |                                                      |          |         |          |
+    Repeater                                             Control                                                Flickable    Text    TextInput   TextEdit 
+   PathView                                                 |                                                      |          |         |          |
+   MouseArea            ---------------------------------------------------------------------------------       ListView     Label   TextField   TextArea
+   RowLayout            |                                |                             |                 |      GridView
+      Row            ComboBox                      AbstractButton                      |                 |      TableView
+  ColumnLayout       SpinBox                             |                             |                 |     
+     Column         ScrollView            -------------------------------              |                 |     
+   GridLayout        ScrollBar            |              |              |          Container            Pane   
+     Grid              Dial           DelayButton   ItemDelegate      Button           |                 |     
+     Flow          BusyIndicator      RoundButton        |              |           SwipeView        --------- 
+   Rectangle       ProgressBar         CheckBox     CheckDelegate   ToolButton   DialogButtonBox     |       | 
+  StackLayout        Slider           RadioButton   RadioDelegate                   MenuBar        Frame   ToolBar
+                   RangeSlider         TabButton    SwitchDelegate                   TabBar          |            
+                     Tumbler            Switch      SwipeDelegate                                 GroupBox        
+                       Page            MenuItem                                                                   
                   PageIndicator       DelayButton                                
-                                                                       
+                    SplitView                     
+					 
 
      ?????                 QtObject            QQuickWindow        QDoubleValidator    QIntValidator   QQmlComponent   QItemSelectionModel
        |                      |                    |                     |                  |               |                  |
