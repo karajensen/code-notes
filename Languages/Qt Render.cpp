@@ -52,8 +52,23 @@ QColor::fromRgba(QRgb(0)) // Keeps alpha component
 // QImage
   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QPAINTER RENDERING
+// PDF RENDERING
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Initialise PdfWriter
+QPainter painter;
+QPdfWriter writer;
+writer.setPageLayout(
+  QPageLayout(QPageSize(QPageSize::A4)),  // Page size/layout
+  QPageLayout::Portrait, // Page orientation
+  QMarginsF(0, 0, 0, 0), // Page margins in inches
+  QPageLayout::Inch); // Units for margins and other measurements
+writer.setResolution(300) // Dots per inch
+writer.setCreator(QString()) // Creator of pdf
+writer.setTitle(QString()) // Title of pdf
   
-  
-  
+// Render pages
+writer.begin(&painter);
+writer.newPage(); // For each page, call 'newPage' until end
+painter.drawText(0, 0, "Test"); // Draw on the page
+writer.end();
