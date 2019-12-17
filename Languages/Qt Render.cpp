@@ -50,14 +50,22 @@ QColor::fromRgbF(r, g, b, a) // Alpha optional
 QColor::fromRgba(QRgb(0)) // Keeps alpha component
 
 // QImage
+// Can read/write/save/manipulate images from disk
+// Can use QPainter to draw directly into a QImage
+QImage image(widthPx, heightPx, QImage::Format_RGB32)
+image.setPixel(1, 1, qRgb(255, 255, 255)) // Set pixel [1][1] with rgb value
+image.fill(Qt::GlobalColor::darkBlue) // Fill all pixels with color
+image.fill(QColor(255, 0, 0)) // Fill all pixels with color
+image.width() // Return width of image in px
+image.height() // Return height of image in px
+image.save(fileName) // Returns true if image successfully saved to file
   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // PDF RENDERING
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Initialise PdfWriter
-QPainter painter;
-QPdfWriter writer;
+QPainter painter
+QPdfWriter writer
 writer.setPageLayout(
   QPageLayout(QPageSize(QPageSize::A4)),  // Page size/layout
   QPageLayout::Portrait, // Page orientation
@@ -66,9 +74,7 @@ writer.setPageLayout(
 writer.setResolution(300) // Dots per inch
 writer.setCreator(QString()) // Creator of pdf
 writer.setTitle(QString()) // Title of pdf
-  
-// Render pages
-writer.begin(&painter);
-writer.newPage(); // For each page, call 'newPage' until end
-painter.drawText(0, 0, "Test"); // Draw on the page
-writer.end();
+writer.begin(&painter)
+writer.newPage() // For each page, call 'newPage' until end
+painter.drawText(0, 0, "Test") // Draw on the page
+writer.end()
