@@ -113,7 +113,7 @@ file.errorString() // Returns QString
 file.isOpen()
 file.isReadable() // Returns true if data can be read from the device
 file.isWritable()
-file.open(mode) // QIODevice OpenMode
+file.open(mode) // QIODevice OpenMode, returns true if successful
 file.openMode() // Returns QIODevice OpenMode
 file.readAll() // Returns QByteArray
 file.readLine() // Returns QByteArray
@@ -122,10 +122,31 @@ connect(file, &QIODevice::aboutToClose, fn);
 connect(file, &QIODevice::bytesWritten, fn); // qint64 bytes
 
 // QFile
-// Interface for reading from and writing to files
+// Interface for reading from and writing to files, inherits QIODevice
+QFile file("myFile.txt");
+file.remove() // Close the file and remove it, returns true if successful
+file.rename(newName) // Close the file, renames and returns true if successful
+file.setPermissions(permissions) // QFileDevice Permissions flags
+file.permissions() // Returns QFileDevice Permissions flags
+file.exists() // Returns true if exists on disk
+file.flush() // Flush data to file
 
 // QDataStream
 // serialization of binary data to a QIODevice
+QDataStream stream(&file)
+stream << value // write value to binary
+stream >> value // read value from binary
+
+// QTextStream
+// Can write to QString and QFile
+QTextStream stream(&file)
+stream << "str" << value // Write value to stream
+stream.setCodec("UTF-8") // Required for windows reading non-ANSI characters
+stream.read(count) // Read 'count' characters from stream and return QString
+stream.readAll() // Read all and return QString
+stream.readNext() // Read next line and return QString
+stream.readLineInto(&line) // Read next line into QString
+stream.flush() // Write everything to desk
 
 // QDir Filter Flags
 QDir::NoFilter         // No filter flag used
@@ -159,6 +180,20 @@ QDir::DirsLast         // Put the files first, then the directories
 QDir::Reversed         // Reverse the sort order
 QDir::IgnoreCase       // Sort case-insensitively
 QDir::LocaleAware      // Sort using the current locale settings
+
+// QFileDevice Permissions
+QFileDevice::ReadOwner      // The file is readable by the owner of the file
+QFileDevice::WriteOwner     // The file is writable by the owner of the file
+QFileDevice::ExeOwner       // The file is executable by the owner of the file
+QFileDevice::ReadUser       // The file is readable by the user
+QFileDevice::WriteUser      // The file is writable by the user
+QFileDevice::ExeUser        // The file is executable by the user
+QFileDevice::ReadGroup      // The file is readable by the group
+QFileDevice::WriteGroup     // The file is writable by the group
+QFileDevice::ExeGroup       // The file is executable by the group
+QFileDevice::ReadOther      // The file is readable by anyone
+QFileDevice::WriteOther     // The file is writable by anyone
+QFileDevice::ExeOther       // The file is executable by anyone
 
 // QIODevice OpenMode
 QIODevice::NotOpen
