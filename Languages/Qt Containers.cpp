@@ -231,10 +231,6 @@ arr.crbegin() / arr.crEnd() // const_reverse_iterator
 QByteArray::fromBase64(arr, options) // Returns Base64 decoded copy, QByteArray Base64 Options Enum optional
 QByteArray::fromHex(arr) // Returns Hex decoded copy
 QByteArray::fromRawData(data) // Returns QByteArray with data without any deep copy
-  
-// QTextStream
-QTextStream(&str) << "str" << value; // QString streamstream
-stream.setCodec("UTF-8") // Required for windows reading non-ANSI characters
 
 // QStringList
 // Inherits from QList<QString>
