@@ -291,7 +291,18 @@ QRegularExpression re("pattern");
 re.setPattern("pattern")
 re.pattern() // Returns QString() pattern
 re.setPatternOptions(options) // QRegularExpression PatternOptions Flags
-  
+re.patternOptions() // Return QRegularExpression PatternOptions Flags
+re.match("a string") // Returns QRegularExpressionMatch
+re.isValid() // Whether pattern is valid or not
+re.errorString() // Returns QString error for regex pattern
+re.patternErrorOffset() // Returns index where the error begins
+QRegularExpression::escape("pattern") // Adds \ so characters aren't regex characters
+    
+// QRegularExpressionMatch
+match.hasMatch() // Returns bool
+match.capturedTexts() // Returns QStringList of all captured strings
+math.regularExpression() // Returns QRegularExpression that generated the QRegularExpressionMatch
+    
 // QRegularExpression PatternOptions Flags
 NoPatternOption                 // No pattern options are set.
 CaseInsensitiveOption           // When matching, ignore case
