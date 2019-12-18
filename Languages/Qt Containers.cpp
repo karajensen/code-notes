@@ -250,13 +250,7 @@ lst.lastIndexOf(regex, i) // Returns index of last match from regex backwards fr
 lst.removeDuplicates() // Removes all duplicate strings, doesn't require sorting
 lst.replaceInStrings("str1", "str2", caseFlag) // Replace 'str1' with 'str2' in all strings
 lst.sort(case) // Sort all strings using std::sort
-  
-// QRegularExpression
-// Provides pattern matching using regular expressions
-  
-// QRegExp
-// Provides pattern matching using regular expressions
-  
+
 // QString / QByteArray Format Characters
 e   // format as [-]9.9e[+|-]999
 E   // format as [-]9.9E[+|-]999
@@ -284,6 +278,29 @@ QByteArray::Base64Encoding       // The regular Base64 alphabet
 QByteArray::Base64UrlEncoding    // An alternate alphabet which replaces two characters to be URL friendly
 QByteArray::KeepTrailingEquals   // Make data always a size multiple of four by keeping trailing equal characters
 QByteArray::OmitTrailingEquals   // Omits adding the padding equal signs at the end of the encoded data
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT REGEX
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// QRegularExpression
+// Provides pattern matching using regular expressions
+// QRegExp is older, less effeciant version of QRegularExpression
+// All \ must be backslashed to \\
+QRegularExpression re("pattern");
+re.setPattern("pattern")
+re.pattern() // Returns QString() pattern
+re.setPatternOptions(options) // QRegularExpression PatternOptions Flags
+  
+// QRegularExpression PatternOptions Flags
+NoPatternOption                 // No pattern options are set.
+CaseInsensitiveOption           // When matching, ignore case
+DotMatchesEverythingOption      // . includes characters it normally doesn't include (eg. newlines)
+MultilineOption	                // Change expression behaviour for ^ and $
+ExtendedPatternSyntaxOption     // Change expression behaviour for whitespace and #
+InvertedGreedinessOption        // The greediness of the quantifiers is inverted (eg. *, becomes *?,)
+DontCaptureOption               // Non-named capturing groups do not capture substrings
+UseUnicodePropertiesOption      // Change meaning of the \w, \d, etc. character classes
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT VARIANT
