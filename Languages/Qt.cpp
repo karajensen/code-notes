@@ -677,7 +677,18 @@ window.id() // window's WId platform id
     
 // QQuickWindow
 // Inherits QWindow, window for QML applications
-
+// Has a single invisible root item
+// Has its own scene graph which is invalidated when window is hidden
+QQuickWindow window;
+window.color // QColor used to clear the back buffer, default white
+window.activeFocusItem // readonly property QQuickItem* const which has active focus or null
+window.contentItem // readonly property QQuickItem* const for inivisble root item
+window.releaseResources() // Release redundant resources currently held
+window.sceneGraphError(error, message) // Signal emitted when error occurs
+window.update() // Schedules the window to render another frame
+window.effectiveDevicePixelRatio() // Returns the device pixel ratio for this window
+window.grabWindow() // Returns QImage of window contents
+    
 // QQuickView 
 // Inherits QQuickWindow, automatically load and display a QML scene from an url
 QQuickView view;
