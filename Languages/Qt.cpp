@@ -619,18 +619,14 @@ QCoreApplication::instance()
 QCoreApplication::applicationDirPath()
 QCoreApplication::applicationFilePath()
 QCoreApplication::applicationName()
-QCoreApplication::applicationPid()
 QCoreApplication::applicationVersion()
-QCoreApplication::organizationDomain()
 QCoreApplication::organizationName()
 QCoreApplication::setApplicationName(str) // Required for QSettings
 QCoreApplication::setApplicationVersion(str)
-QCoreApplication::setOrganizationDomain(str)
 QCoreApplication::setOrganizationName(str) // Required for QSettings
 QCoreApplication::arguments()
 QCoreApplication::eventDispatcher() // Returns QAbstractEventDispatcher*
 QCoreApplication::setEventDispatcher(dispatcher) // Takes QAbstractEventDispatcher
-QCoreApplication::exec()
 QCoreApplication::exit(code) // Code defaults 0, 
 QCoreApplication::installTranslator() // Takes QTranslator
 QCoreApplication::removeTranslator() // Takes QTranslator
@@ -672,8 +668,6 @@ QGuiApplication::focusObject() // Returns QObject*
 QGuiApplication::focusWindow() // Returns QWindow*
 QGuiApplication::highDpiScaleFactorRoundingPolicy() // Returns Qt::HighDpiScaleFactorRoundingPolicy
 QGuiApplication::inputMethod() // Returns QInputMethod*
-QGuiApplication::isLeftToRight()
-QGuiApplication::isRightToLeft()
 QGuiApplication::keyboardModifiers() // Returns Qt::KeyboardModifiers
 QGuiApplication::modalWindow() // Returns QWindow*
 QGuiApplication::mouseButtons() // Returns Qt::MouseButtons
@@ -822,12 +816,16 @@ window.grabWindow() // Returns QImage of window contents
     
 // QQuickView 
 // Inherits QQuickWindow, automatically load and display a QML scene from an url
-QQuickView view;
-view.rootContext(); // Returns QQmlContext*
-view.setSource(QUrl("qrc:/main.qml"));
-view.setTitle("title");
-view.setResizeMode(QQuickView::SizeRootObjectToView);
-view.show();
+// Best to also listen to the Qt message handler for errors / warnings when using
+QQuickView view
+view.source // QUrl
+view.rootContext() // Returns QQmlContext*
+view.rootObject() // Returns QQuickItem*
+view.setSource(QUrl("qrc:/main.qml"))
+view.setTitle("title")
+view.show()
+view.engine() // Returns QQmlEngine*
+view.errors() // Returns QList<QQmlError>
 
 // QWidget
 // If no parent, window for widgets based applications (non-QML), else base class for widgets
@@ -993,6 +991,14 @@ window.toolBarArea(toolbar) // Returns Qt::ToolBarArea, takes QToolBar*
 // Less stacking order restrictions, though slower compared to QQuickWindow/QQuickView
 // Disables the threaded render loop on all platforms
 // Avoid calling winId; triggers creation of a native window, resulting in reduced performance
+QQuickWidget widget
+widget.source // QUrl
+widget.rootContext() // Returns QQmlContext*
+widget.rootObject() // Returns QQuickItem*
+widget.setSource(QUrl("qrc:/main.qml"))
+widget.engine() // Returns QQmlEngine*
+widget.errors() // Returns QList<QQmlError>
+widget.show()
 
 // QWindow::Visibility
 QWindow::Windowed             // Window allowed to be resized/moved to part of screen
@@ -1279,6 +1285,20 @@ item.window() // Return QQuickWindow* in which this item is rendered
  
 // QQuickPaintedItem
 // Inherits QQuickItem, allows rendering content using QPainter
+// Must derive from it and implement paint(QPainter *painter)
+QQuickPaintedItem item
+item.fillColor // QColor
+item.renderTarget // QQuickPaintedItem::RenderTarget
+item.textureSize // QSize
+item.setAntialiasing(enable)
+item.antialiasing()
+item.setMipmap(enable)
+item.mipmap() const
+item.setOpaquePainting(enable)
+item.opaquePainting() const
+item.setPerformanceHint(hint, enabled)
+item.performanceHints() // Returns QQuickPaintedItem::PerformanceHints
+item.setPerformanceHints(hints)
     
 // QQmlComponent
 // Inherits QObject, instantiated by Component
@@ -1296,11 +1316,29 @@ component.errors() // Returns QList<QQmlError>, empty if no errors
 component.engine() // Returns QML engine used
 
 // QQmlContext
+// Use with QQmlComponent or QQmlEngine::rootContext to set properties
 QQmlContext context(&qmlEngine, &qmlEngine);
-context.setContextProperty("context_model", model); // Sends to QML, does not update if QML already loaded
+context.setContextProperty("key", value) // Sends to QML, does not update if QML already loaded
+context.engine() // Returns QQmlEngine*
+context.contextProperty("key") // Returns value as QVariant
 
 // QQmlEngine
-QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership) // Must be used on cpp QObjects without parents
+QQmlEngine engine
+engine.addImageProvider(providerId, provider)
+engine.imageProvider(providerId) // Return QQmlImageProviderBase*
+engine.addImportPath(path)
+engine.addPluginPath(path)
+engine.importPathList() // Return QStringList
+engine.pluginPathList() // Return QStringList
+engine.setImportPathList(paths)
+engine.clearComponentCache() // Reload for QML
+engine.trimComponentCache()
+engine.retranslate() // Reloads all translated text for qml
+engine.rootContext() // Return QQmlContext*, used to set global context properties for qml
+engine.warnings(warnings) // Signal with QList<QQmlError> when qml warnings occur
+QQmlEngine::contextForObject(obj) // Takes QObject, returns QQmlContext*
+QQmlEngine::objectOwnership(obj) // Takes QObject, returns QQmlEngine::ObjectOwnership
+QQmlEngine::setObjectOwnership(obj, QQmlEngine::CppOwnership) // Must be used on cpp QObjects without parents
     
 // QQmlComponent Status Enum
 QQmlComponent::Null     // This QQmlComponent has no data
