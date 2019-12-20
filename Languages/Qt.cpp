@@ -189,7 +189,7 @@ metaObj.methodCount() // Number of methods including inherited, signals, slots
 metaObj.enumeratorCount() // Number of enums including inherited
 metaObj.enumerator(index) // Get QMetaEnum from index
 metaObj.indexOfEnumerator(name) // Get index of enum from name, or -1 if not found
-QMetaObject::invokeMethod(myObj, []{}); // Calls with Auto Connection (see Signals connection types)
+QMetaObject::invokeMethod(myObj, []{}, connection); // Connection default arg is AutoConnection
 
 // QMetaEnum
 QMetaEnum metaEnum(QMetaEnum::fromType<N::MyEnum>());
@@ -560,21 +560,6 @@ connect(timer, SIGNAL(timeout()), fn); // timeout signal called when interval re
 Qt::PreciseTimer        // Try to keep millisecond accuracy
 Qt::CoarseTimer         // Try to keep accuracy within 5% of the desired interval
 Qt::VeryCoarseTimer     // Only keep full second accuracy
-                               
-// QUrl
-// Interface for working with URLs with prefix qrc:/, file:/// etc.
-// Structure is scheme:path or scheme://useinfo@host:port/path/query
-// If path passed in has no scheme, considered relative even if absolute path
-QUrl url(str) // Set the path directly, does not auto add any scheme
-url.clear(); // clears the URL
-url.setUrl(str); // Sets the URL
-url.isValid(); // Returns true if non-empty and conforms to encoding tests
-url.isRelative(); // Returns true if scheme is undefined (same as scheme().isEmpty())
-url.toLocalFile() // Convert QUrl to local file path without prefix, normalizes seperators to /
-url.toString() // Returns path with prefix file:///, qrc with qrc:/
-url.setScheme(str) // Sets type (or protocol) component
-url.setPath(str) // Sets path component
-QUrl::fromLocalFile(str) // Convert a local file path to QUrl; adds file:/// in front
 
 // QUuid
 // 128-bit unique number
@@ -602,7 +587,144 @@ dateTime.addYears(1) // Add years to the date time
 QTime time
 QTime::currentTime() // Returns QTime
 time.secsTo(time2) // Difference in time in seconds
-              
+
+// QSettings
+// Persistent platform-independent application settings
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT APPLICATION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// QCoreApplication
+// Singleton
+app.organizationName
+app.applicationName
+app.applicationVersion
+app.organizationDomain
+app.installNativeEventFilter(filter) // Takes QAbstractNativeEventFilter
+app.removeNativeEventFilter(filter) // Takes QAbstractNativeEventFilter
+app.notify(receiver, event)
+app.quit()
+app.aboutToQuit() // Signal
+QCoreApplication::instance()
+QCoreApplication::applicationDirPath()
+QCoreApplication::applicationFilePath()
+QCoreApplication::applicationName()
+QCoreApplication::applicationPid()
+QCoreApplication::applicationVersion()
+QCoreApplication::organizationDomain()
+QCoreApplication::organizationName()
+QCoreApplication::setApplicationName(str) // Required for QSettings
+QCoreApplication::setApplicationVersion(str)
+QCoreApplication::setOrganizationDomain(str)
+QCoreApplication::setOrganizationName(str) // Required for QSettings
+QCoreApplication::arguments()
+QCoreApplication::eventDispatcher() // Returns QAbstractEventDispatcher*
+QCoreApplication::setEventDispatcher(dispatcher) // Takes QAbstractEventDispatcher
+QCoreApplication::exec()
+QCoreApplication::exit(code) // Code defaults 0, 
+QCoreApplication::installTranslator() // Takes QTranslator
+QCoreApplication::removeTranslator() // Takes QTranslator
+QCoreApplication::libraryPaths() // Returns QStringList
+QCoreApplication::addLibraryPath(path)
+QCoreApplication::removeLibraryPath(path)
+QCoreApplication::setLibraryPaths(paths)    
+QCoreApplication::postEvent(receiver, event)
+QCoreApplication::postEvent(receiver, event, priority)
+QCoreApplication::processEvents()
+QCoreApplication::processEvents(flags)
+QCoreApplication::processEvents(flags, ms)
+QCoreApplication::removePostedEvents(receiver)
+QCoreApplication::removePostedEvents(receiver, eventType)
+QCoreApplication::sendEvent(receiver, event)
+QCoreApplication::sendPostedEvents()
+QCoreApplication::sendPostedEvents(receiver)
+QCoreApplication::sendPostedEvents(receiver, eventType)
+QCoreApplication::setAttribute(attribute, on) // Qt::ApplicationAttribute, on defaults to true
+QCoreApplication::testAttribute(attribute) // Qt::ApplicationAttribute
+QCoreApplication::translate("context", "text") // Translate text directly instead of using QObject::tr
+
+// QGuiApplication
+// Inherits QCoreApplication, Singleton
+app.applicationDisplayName
+app.desktopFileName
+app.primaryScreen // Returns QScreen* const
+app.platformName // Readonly 
+app.layoutDirection // Qt::LayoutDirection
+app.windowIcon // QIcon
+app.devicePixelRatio()
+app.sessionId()
+app.sessionKey()
+app.focusObjectChanged(focusObject) // Signal when focus object changes, QObject*
+QGuiApplication::allWindows() // QWindowList
+QGuiApplication::applicationState() // Qt::ApplicationState
+QGuiApplication::clipboard() // Returns QClipboard*
+QGuiApplication::focusObject() // Returns QObject*
+QGuiApplication::focusWindow() // Returns QWindow*
+QGuiApplication::highDpiScaleFactorRoundingPolicy() // Returns Qt::HighDpiScaleFactorRoundingPolicy
+QGuiApplication::inputMethod() // Returns QInputMethod*
+QGuiApplication::isLeftToRight()
+QGuiApplication::isRightToLeft()
+QGuiApplication::keyboardModifiers() // Returns Qt::KeyboardModifiers
+QGuiApplication::modalWindow() // Returns QWindow*
+QGuiApplication::mouseButtons() // Returns Qt::MouseButtons
+QGuiApplication::palette() // Returns QPalette
+QGuiApplication::platformNativeInterface() // Returns QPlatformNativeInterface*
+QGuiApplication::primaryScreen() // Returns QScreen*
+QGuiApplication::screenAt(point) // Returns QScreen*, takes QPoint
+QGuiApplication::screens() // Returns QList<QScreen*>
+QGuiApplication::setHighDpiScaleFactorRoundingPolicy(policy) // Qt::HighDpiScaleFactorRoundingPolicy
+QGuiApplication::setPalette(palette) // QPalette
+QGuiApplication::styleHints() // Returns QStyleHints*
+QGuiApplication::topLevelAt(point) // Returns QWindow*, takes QPoint
+QGuiApplication::topLevelWindows() // Returns QWindowList
+    
+// QApplication
+// Inherits QGuiApplication, Singleton
+// Handles QWidget specific initialization, finalization
+app.doubleClickInterval
+app.keyboardInputInterval
+app.startDragDistance
+app.startDragTime
+app.styleSheet
+app.wheelScrollLines
+app.windowIcon
+app.closeAllWindows()
+app.focusChanged(old, now) // Signal, QWidget* for both
+QApplication::activeModalWidget() // Returns QWidget*
+QApplication::activePopupWidget() // Returns QWidget*
+QApplication::activeWindow() // Returns QWidget*
+QApplication::allWidgets() // Returns QWidgetList
+QApplication::desktop() // Returns QDesktopWidget*
+QApplication::focusWidget() // Returns QWidget*
+QApplication::palette(widget) // Takes const QWidget*
+QApplication::palette("className") // Returns QPalette
+QApplication::setActiveWindow(widget) // Takes QWidget*
+QApplication::setPalette(palette, "className") // Takes const QPalette&
+QApplication::setStyle(style) // Takes QStyle*
+QApplication::setStyle(styleStr) // Takes str, returns QStyle*
+QApplication::style() // Returns QStyle*
+QApplication::topLevelAt(point) // Returns QWidget*, takes QPoint
+QApplication::topLevelAt(x, y) // Returns QWidget*, takes int
+QApplication::topLevelWidgets() // Returns QWidgetList
+QApplication::widgetAt(const QPoint &point) // Returns QWidget*, takes QPoint
+QApplication::widgetAt(x, y) // Returns QWidget*, takes int
+    
+// Qt::ApplicationAttribute Enum
+AA_NativeWindows // Ensures that widgets have native windows
+AA_DontCreateNativeWidgetSiblings // Siblings of native widgets stay non-native
+AA_PluginApplication // Application is a Qt plugin, suppressing some initalization
+AA_DontUseNativeMenuBar // Suppress native menu bars
+AA_UseHighDpiPixmaps // Scales pixmaps, should divide by devicePixelRatio if this is on
+AA_SetPalette // Indicates whether a palette was explicitly set on the QGuiApplication
+AA_EnableHighDpiScaling // Enables high-DPI scaling, must be set before QGuiApplication is created
+AA_UseStyleSheetPropagationInWidgetStyles // Allow QWidget stylesheet palette and font propagation
+AA_DontUseNativeDialogs // Don't use native dialogs provided by the platform
+AA_DisableShaderDiskCache // Disables caching of shader program binaries on disk
+    
+// QT ENVIRONMENT VARIABLES
+qputenv("QML_DISABLE_DISK_CACHE", "1"); // Disables caching of qml files
+    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT WINDOWS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
