@@ -725,9 +725,6 @@ AA_UseStyleSheetPropagationInWidgetStyles // Allow QWidget stylesheet palette an
 AA_DontUseNativeDialogs // Don't use native dialogs provided by the platform
 AA_DisableShaderDiskCache // Disables caching of shader program binaries on disk
     
-// QT ENVIRONMENT VARIABLES
-qputenv("QML_DISABLE_DISK_CACHE", "1"); // Disables caching of qml files
-    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT WINDOWS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1457,18 +1454,18 @@ M_PI // π
 M_PI_2 // π / 2
 M_PI_4 // π / 4
     
+// QtAlgorithm
+// STL algorithms should be used for Qt containers rather than deprecated QtAlgorithm
+qCountLeadingZeroBits(v) // Takes all quints, returns uint of no. of consecutive zero bits
+qCountTrailingZeroBits(v) // Takes all quints, returns uint of no. of consecutive zero bits
+qDeleteAll(begin, end) // Takes container iterator with pointers, calls delete on pointers, doesn't clear
+qDeleteAll(container) // Takes container with pointers, calls delete on pointers, doesn't clear
+qPopulationCount(v) // Takes all quints, returns no. of bits set in v, or the 'Hamming Weight of v'
+    
 // QtGlobal
 qAbs(v) // Templated, returns absolute value of v
 qAsConst(v) // Templated, takes T& and returns const T&
 qBound(min, v, max) // Templated, returns v clamped
-qEnvironmentVariable(name) // Returns QString of env var with name
-qEnvironmentVariable(name, default) // Returns QString of env var with name or default if doesn't exist
-qEnvironmentVariableIntValue(name, &ok) // Returns int of env var with name, ok set to false if doesn't exist
-qEnvironmentVariableIsEmpty(name) // Returns if env var with name is empty
-qEnvironmentVariableIsSet(name) // Returns if env var with name is set
-qgetenv(name) // Returns env var with name as QByteArray
-qputenv(name, value) // Sets env var with value const QByteArray&, will create, returns false if failed
-qunsetenv(name) // Deletes the env var, returns true if success
 qFuzzyCompare(a, b) // Takes double/float, returns true if considered equal
 qFuzzyIsNull(v) // Takes double/float, returns truen if absolute value of v is within 0.000000000001 of 0.0
 qInf() // Returns the bit pattern for an infinite number as a double
@@ -1491,13 +1488,16 @@ qNonConstOverload<Arg1, Arg2>(&MyClass::fn) // Converts address to non-const ver
 qOverload<Arg1, Arg2>(&MyClass::fn) // Converts address to an overloaded version
 QOverload<Arg1, Arg2>::of(&MyClass::fn) // Alternate syntax
     
-// QtAlgorithm
-// STL algorithms should be used for Qt containers rather than deprecated QtAlgorithm
-qCountLeadingZeroBits(v) // Takes all quints, returns uint of no. of consecutive zero bits
-qCountTrailingZeroBits(v) // Takes all quints, returns uint of no. of consecutive zero bits
-qDeleteAll(begin, end) // Takes container iterator with pointers, calls delete on pointers, doesn't clear
-qDeleteAll(container) // Takes container with pointers, calls delete on pointers, doesn't clear
-qPopulationCount(v) // Takes all quints, returns no. of bits set in v, or the 'Hamming Weight of v'
+// QtGlobal Environment Variables
+qEnvironmentVariable(name) // Returns QString of env var with name
+qEnvironmentVariable(name, default) // Returns QString of env var with name or default if doesn't exist
+qEnvironmentVariableIntValue(name, &ok) // Returns int of env var with name, ok set to false if doesn't exist
+qEnvironmentVariableIsEmpty(name) // Returns if env var with name is empty
+qEnvironmentVariableIsSet(name) // Returns if env var with name is set
+qunsetenv(name) // Deletes the env var, returns true if success
+qgetenv(name) // Returns env var with name as QByteArray
+qputenv(name, value) // Sets env var with value const QByteArray&, will create, returns false if failed
+qputenv("QML_DISABLE_DISK_CACHE", "1"); // Disables caching of qml files
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // LOCALISATION
