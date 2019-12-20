@@ -590,6 +590,15 @@ time.secsTo(time2) // Difference in time in seconds
 
 // QSettings
 // Persistent platform-independent application settings
+QSettings settings
+settings.setValue("key", value);
+settings.value("key", defaultValue) // Returns value or QVariant default value if doesn't exist
+settings.sync() // Writes to registry, auto called by QSettings destructor
+settings.status() // Returns QSettings::Status, call sync first to ensure up to date value
+settings.remove("key")
+settings.contains("key") 
+settings.clear()
+settings.allKeys() // Returns QStringList
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT APPLICATION
