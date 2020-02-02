@@ -487,7 +487,8 @@ abc                   Search for substring 'abc'
 ab*c                  Search for a, then 0 or more of b, then c
 ab+c                  Search for a, then 1 or more of b, then c
 [abc] or [a-c]        Search for any that has a, b and/or c
-(?<=abc)(.*)(?=efg)   Search for substrings that start with abc and end with efg
+abc.*?efg             Search for substrings that start with abc and end with efg
+(?<=abc)(.*)(?=efg)   Search for substrings that start with abc and end with efg, will search newlines
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // EXCEPTIONS
