@@ -43,7 +43,8 @@ Item {
     property int myProperty: MyEnum.ONE    // Use int type for enums, Requires registering with QQmlEngine
     property var myProperty: myObj         // Context Q_OBJECT, Requires registering with QQuickView
     property int myProperty: myObj.value   // Context Q_OBJECT with Q_PROPERTY 'value' with NOTIFY
-    property Item myItem: Rectangle {}     // QML component as a property
+    property Item myItem: Rectangle {}     // QML component as a property, creates instance
+    property Component myItem: Item {}     // QML component as a property, does not create instance
     readonly property int myProperty: 0    // read-only property
     property alias myAlias: myProperty     // reference for property    
     signal mySignal(int value)             // call with item.mySignal(0)
