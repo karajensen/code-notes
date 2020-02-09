@@ -39,7 +39,7 @@ NOEXCEPT FUNCTIONS
 EXCEPTIONS IN CONSTRUCTORS
 • On exception construction has failed and the object never existed
 • On exception the destructor does not need to be called
-• On exception the try-catch block cannot suppress; implicitly rethrows if trying to suppress
+• On exception the try-catch block cannot suppress; implicitly rethrows if catch is trying to suppress
 • On exception any members requiring explicit cleanup in destructor will be leaked
 • Cannot access any class members in catch block as out of scope
 
