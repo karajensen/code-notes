@@ -1191,6 +1191,19 @@ qmlRegisterSingletonType(QUrl("qrc:///MyGlobal.qml"), "MyInclude", 1, 0, "MySing
 qmlRegisterSingletonType("MyInclude", 1, 0, "MySingleton", 
     [](QQmlEngine*, QJSEngine*)->QObject* { return new MySingleton(); });
 
+// REGISTERING GLOBAL FUNCTIONS WIH QML
+// Call using 'globalFn(10, "str")' without namespaces
+class GlobalFnHolder : public QObject
+{
+    Q_OBJECT
+public:
+    Q_INVOKABLE bool globalFn(int myInt, QString myString);
+};
+m_globalFnHolder = new GlobalFnHolder(this);
+m_globalFnObject = m_qmlEngine->newQObject(m_globalFnHolder); // QJSValue
+m_qmlEngine->globalObject().setProperty(QLatin1String("globalFn"), 
+    m_globalFnObject.property(QLatin1String("globalFn")));
+
 // LOADING QML FILES
 qmlEngine->load(QUrl("qrc:/Main.qml"));
 /*OR*/
