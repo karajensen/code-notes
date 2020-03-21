@@ -22,8 +22,8 @@ for (const auto& fileName : dir.entryList(QStringList("*.qml")))
 }
 
 // Iterate over all files in directory (recursive)
-QDir dir(path);
-QDirIterator it(dir, QStringList() << "*.qml", QDir::Files, QDirIterator::Subdirectories)
+QDirIterator it(path, QStringList() << "*.qml", QDir::Files, QDirIterator::Subdirectories); // files
+QDirIterator itr(path, QStringList(), QDir::Dirs|QDir::NoDotAndDotDot, QDirIterator::Subdirectories); // dirs
 while (it.hasNext())
 {
     qDebug() << it.next(); // absolute path
