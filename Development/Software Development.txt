@@ -112,6 +112,7 @@ tig                                                 // View commit information
 git log                                             // List commits and commitIDs
 git --no-pager log > log.txt                        // Save list of commits and commitIDs to a file
 git config --global --edit                          // Show the git config file
+git format-patch -1 HEAD                            // Create diff patch
 git remote show origin                              // Show remote branch of local and URL
 git tag                                             // List all remote tags
 git branch                                          // List all branches locally
