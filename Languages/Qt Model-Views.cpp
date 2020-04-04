@@ -301,23 +301,6 @@ SwitchDelegate {
 SwipeDelegate {
 }
 
-// DELEGATECHOOSER
-// import Qt.labs.qmlmodels 1.0
-// Allows switching between delegates based on item role
-// Directly assign 'delegateChooser' to the view's 'model' property
-DelegateChooser {
-    id: delegateChooser
-    role: "myRole"
-    DelegateChoice {
-        roleValue: "first"
-        MyFirstDelegate {}
-    }
-    DelegateChoice {
-        roleValue: "second"
-        MySecondDelegate {}
-    }
-}
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML MODELS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -408,6 +391,37 @@ ItemSelectionModel.ClearAndSelect  // Clear | Select
 // QML DELEGATE MODELS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// DELEGATECHOOSER
+// import Qt.labs.qmlmodels 1.0
+// Allows switching between delegates based on item role
+// Directly assign 'delegateChooser' to the view's 'model' property
+DelegateChooser {
+    id: delegateChooser
+    role: "myRole"
+    DelegateChoice {
+        roleValue: "first"
+        MyFirstDelegate {}
+    }
+    DelegateChoice {
+        roleValue: "second"
+        MySecondDelegate {}
+    }
+}
+
+// PACKAGE
+// Delegate chooser alternative
+ListView {
+    model: delegateModel.parts.delegate1
+    DelegateModel {
+        id: delegateModel
+        model: myModel
+        delegate: Package {
+            Rectangle { Package.name: "delegate1" }
+            Rectangle { Package.name: "delegate2" }
+        }
+    }
+}
+    
 // DELEGATEMODEL
 // import QtQml.Models 2.14
 // Allows combinating a delegate/model into another model
@@ -415,22 +429,31 @@ ItemSelectionModel.ClearAndSelect  // Clear | Select
 ListView {
     model: DelegateModel {
         model: myModel
-        delegate: Rectangle {}
-        
-        groups: [  
-            DelegateModelGroup {  
-                includeByDefault: false  
+        filterOnGroup: "myGroup"
+
+        // For every delegate:
+        // +2 properties for every group: DelegateModel.groupNameIndex, DelegateModel.inGroupName
+        // DelegateModel.itemsIndex, DelegateModel.inItems for whether in default items group
+        // Can delegates be part of multiple groups?
+        delegate: Button {
+            id: button
+            Component.onCompleted: {
+                button.DelegateModel.inMyGroup = model.myRole;
+            }
+            onClicked: {
+                button.DelegateModel.inMyGroup = !button.DelegateModel.inMyGroup;
+            }
+        }
+        // Default group is 'items', all items auto added to this group
+        groups: [
+            DelegateModelGroup {
                 name: "myGroup"  
             }  
         ]
-        filterOnGroup: "myGroup"
     }
 }
 delegateModel.count // Number of items instantiated
-
-// PACKAGE
-Package {
-}   
+delegateModel.items // Default group
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT MODELS
