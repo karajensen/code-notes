@@ -409,7 +409,7 @@ DelegateChooser {
 }
 
 // PACKAGE
-// Delegate chooser alternative
+// Allows holding different delegate 'versions' which can be used in multiple views
 ListView {
     model: delegateModel.parts.delegate1
     DelegateModel {
