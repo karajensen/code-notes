@@ -257,6 +257,7 @@ str.indexOf("substring");         // Returns first index of or -1 if not found
 str.length                        // Number of characters in string
 str.replace(str1, str2);          // Replace str1 with str2, returns new string
 str.split(",")                    // Returns array of string without seperator
+str.split('a').join('b')          // Replace all a with b
 str.slice(start, end)             // Returns string between index [start, end), end optional
 str.trim()                        // Returns string, trims whitespace from the beginning and end
 str.repeat(count);                // Returns string as str repeated count times
