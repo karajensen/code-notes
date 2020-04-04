@@ -405,6 +405,34 @@ ItemSelectionModel.ToggleCurrent   // Toggle | Current
 ItemSelectionModel.ClearAndSelect  // Clear | Select
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML DELEGATE MODELS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// DELEGATEMODEL
+// import QtQml.Models 2.14
+// Allows combinating a delegate/model into another model
+// Used for drag/drop, sorting and filtering
+ListView {
+    model: DelegateModel {
+        model: myModel
+        delegate: Rectangle {}
+        
+        groups: [  
+            DelegateModelGroup {  
+                includeByDefault: false  
+                name: "myGroup"  
+            }  
+        ]
+        filterOnGroup: "myGroup"
+    }
+}
+delegateModel.count // Number of items instantiated
+
+// PACKAGE
+Package {
+}   
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT MODELS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
