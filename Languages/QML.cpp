@@ -513,9 +513,6 @@ Loader.Error    // an error occurred while loading the QML source
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /************************************************************************************************************
-Qt.Key            http://doc.qt.io/qt-5/qt.html#Key-enum
-StandardKey.Key   http://doc.qt.io/qt-5/qkeysequence.html#StandardKey-enum
-
 TAB STOP: The location the cursor stops after the tab key is pressed
 ACTIVE FOCUS: Item or FocusScope child currently receiving keyboard input
 
@@ -543,7 +540,7 @@ FocusScope {
 // Can be transformed though will call onPositionChanged when transform applied
 // Do mouse.accepted = false; to send events to parent
 MouseArea {
-    acceptedButtons: Qt.LeftButton // default
+    acceptedButtons: Qt.LeftButton // default, use Qt.NoButton for just hover/wheel capture
     cursorShape: Qt.ArrowCursor // default
     drag.target: item // Item to drag
     drag.axis: Drag.XAxis // Axis mask, does not rotate
@@ -581,6 +578,8 @@ area.pressedButtons // mouse buttons currently pressed, can't be Qt.AllButtons
 
 // KEYS
 // Add to any Item, each signal has key event
+// Qt.Key: http://doc.qt.io/qt-5/qt.html#Key-enum
+// StandardKey.Key: http://doc.qt.io/qt-5/qkeysequence.html#StandardKey-enum
 Item {
     Keys.enabled: true // enable signals for this item, default true
     Keys.forwardTo: [item1, item2] // forwards event to each item, once accepted stops forwarding
