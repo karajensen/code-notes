@@ -166,6 +166,7 @@ INITIALIZED DATA SEGMENT (GLOBAL/STATIC)
 
 INITIALIZED DATA SEGMENT (CONST DATA)
 • Contains const data and string literals whose values are known at compile time
+  (eg. const char* a = "b", the "b" is stored in the segment, the a is stored on the stack)
 • All data read-only and modifying it is undefined behaviour due to optimizations
 • Segmentation fault caused if trying to write to const data
 
