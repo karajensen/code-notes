@@ -323,18 +323,23 @@ cmake -G "Visual Studio 14 2015 Win64" -DCMAKE_PREFIX_PATH=C:/Qt/Qt5.6.1/5.6/msv
 
 cmake_minimum_required(VERSION 2.8.11)
 project(my_project_name)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+link_directories(${MY_DIRECTOR}) # additional library directories
 add_executable(my_exe_name ${SRC_LIST})
+target_link_libraries(my_exe_name ${CMAKE_CURRENT_SOURCE_DIR}/mylib.lib)
 
 # DEFINES
 add_definitions(-DMY_DEFINE)
 add_definitions(-DMY_DEFINE="${MY_VARIABLE}")
 
 # VARIABLES
+set(ENV_VAR $ENV{ENV_VAR}) # Environment variable
 set(MY_VARIABLE ON)        # Bool variable
 set(MY_PATH c:/folder)     # String variable
 set(SRC_LIST a.cpp b.cpp)  # String list
 
 # CONDITION LOGIC
+if (CMAKE_BUILD_TYPE EQUAL "DEBUG")
 if(MY_VARIABLE OR MY_VARIABLE2 AND MY_VARIABLE3)
 elseif(MY_VARIABLE)
 else()
