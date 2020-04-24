@@ -320,17 +320,21 @@ COMBINING DEBUG AND RELEASE:
 // CMAKE
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-# Call cmake, will use CMakeLists.txt file one folder up
+# call cmake, will use CMakeLists.txt file one folder up
 cmake -G "Visual Studio 14 2015 Win64" -DCMAKE_PREFIX_PATH=C:/Qt/Qt5.6.1/5.6/msvc2015_64 ..
 
 cmake_minimum_required(VERSION 2.8.11)
-project(my_project_name)
+project(project_name)
+set(MY_FILES myFile.cpp myFile.h)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 link_directories(${MY_DIRECTOR}) # additional library directories
-add_executable(my_exe_name ${SRC_LIST})
-target_link_libraries(my_exe_name ${CMAKE_CURRENT_SOURCE_DIR}/mylib.lib) // all configs
-target_link_libraries(my_exe_name debug ${CMAKE_CURRENT_SOURCE_DIR}/mylibD.lib)
-target_link_libraries(my_exe_name optimized ${CMAKE_CURRENT_SOURCE_DIR}/mylib.lib)
+add_executable(project_name ${MY_FILES})
+add_library(project_name ${SRC_LIST})
+source_group("MyGroup" FILES ${MY_FILES}) # must be after add_executable/add_library
+set_target_properties(project_name PROPERTIES LINK_FLAGS "/ignore:4286")
+target_link_libraries(project_name ${CMAKE_CURRENT_SOURCE_DIR}/mylib.lib) # all configs
+target_link_libraries(project_name debug ${CMAKE_CURRENT_SOURCE_DIR}/mylibD.lib)
+target_link_libraries(project_name optimized ${CMAKE_CURRENT_SOURCE_DIR}/mylib.lib)
 
 # DEFINES
 add_definitions(-DMY_DEFINE)
@@ -363,8 +367,8 @@ endfunction(MY_FUNCTION)
 MY_FUNCTION("value1" "value2" ...)
 
 # SET RELEASE WITH DEBUG INFO ON WINDOWS
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi /Od /Ob0")
-set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF /OPT:ICF")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /Zi /Od /Ob0")
+set(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "${CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO} /DEBUG /OPT:REF /OPT:ICF")
 
 # FIND ALL CPP/H FILES AND SHOW IN VISUAL STUDIO
 set(_src_root_path "${CMAKE_CURRENT_SOURCE_DIR}")
