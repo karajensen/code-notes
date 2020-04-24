@@ -57,19 +57,21 @@ Dependency walker for 32/64 bit modules (dll,exe) and builds heirarchical tree
 diagrams of all dependent modules, shows exported functions
 
 CONSOLE COMMANDS:
-%cd%                              // current directory
-dir /w                            // gives directory contents
-mklink /J "dst" "src"             // dst final folder must not exist and be named the same as src final folder
-cd path                           // move up a folder or switch to absolute path
-cd ..                             // move down a folder
-start.                            // open folder
-mkdir "path"                      // create new folder
-rmdir "path" /s /q                // delete a non-empty folder
-del "file"                        // delete a file
-xcopy "src" "dst" /e /i /h        // copy folder at src to dst, dst final folder must not exist
-echo f | xcopy "src" "dst" /f /y  // copy src file to dst file
-myFile.bat >C:\output.txt         // Output results to file, overwrites
-myFile.bat >>C:\output.txt        // Output results to file, appends
+command & command                   // Execute both commands
+%cd%                                // current directory
+dir /w                              // gives directory contents
+mklink /J "dst" "src"               // dst final folder must not exist and be named the same as src final folder
+cd path                             // move up a folder or switch to absolute path
+cd ..                               // move down a folder
+start.                              // open folder
+mkdir "path"                        // create new folder
+rmdir "path" /s /q                  // delete a non-empty folder
+del "file"                          // delete a file
+xcopy "src" "dst" /e /i /h          // copy folder at src to dst, dst final folder must not exist
+copy /Y "c:\src.txt" "C:\dest.txt"  // Dest path must exist
+copy /Y "c:\src\" "C:\dest\"        // Dest path must exist, copies all files only in folder
+myFile.bat >C:\output.txt           // Output results to file, overwrites
+myFile.bat >>C:\output.txt          // Output results to file, appends
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MAC DEVELOPMENT
@@ -326,7 +328,9 @@ project(my_project_name)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 link_directories(${MY_DIRECTOR}) # additional library directories
 add_executable(my_exe_name ${SRC_LIST})
-target_link_libraries(my_exe_name ${CMAKE_CURRENT_SOURCE_DIR}/mylib.lib)
+target_link_libraries(my_exe_name ${CMAKE_CURRENT_SOURCE_DIR}/mylib.lib) // all configs
+target_link_libraries(my_exe_name debug ${CMAKE_CURRENT_SOURCE_DIR}/mylibD.lib)
+target_link_libraries(my_exe_name optimized ${CMAKE_CURRENT_SOURCE_DIR}/mylib.lib)
 
 # DEFINES
 add_definitions(-DMY_DEFINE)
