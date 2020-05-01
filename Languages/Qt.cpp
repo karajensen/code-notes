@@ -1178,7 +1178,8 @@ QQmlEngine::setObjectOwnership(myObj, QQmlEngine::JavaScriptOwnership); // Force
 // REGISTERING COMPONENTS WITH QML
 // To create QML Component, must be QObject derived
 // use 'import MyInclude 1.0' / MyClass {}
-qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClass");
+qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClass"); // Allows it to be used as MyClass {}
+qmlRegisterUncreatableType<N::MyClass>("MyInclude", 1, 0, "MyClass", "Cannot be instantiated in QML");
 
 // REGISTERING CLASS ENUMS WITH QML
 // Requires Q_ENUM registration with Variant
