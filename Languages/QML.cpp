@@ -83,8 +83,8 @@ Item {
 
 mySignal.connect(mySlot) // Connect signal and slot, forward optional, no auto disconnect
 mySignal.disconnect(mySlot) // Signals must be disconnected
-myProp1 = value; // Sets value of property once off, doesn't overwrite binding
-myProp1 = Qt.binding(function() { return myProp2; }); // Change binding of property
+myProp1 = value; // Sets value of property and kills the binding
+myProp1 = Qt.binding(function() { return myProp2; }); // Set a binding on a property
 
 // GLOBAL OBJECTS
 // MyGlobal.qml, Requires registering with QQmlEngine
@@ -216,6 +216,7 @@ Qt.resolvedUrl(myUrl) // Returns url resolved relative to the URL of the caller
 // Auto converts to/from QString
 // Attributes do not have signals, use onMyStrChanged instead
 property string myStr: "str"
+property string myStr: value.toLocaleString(Qt.locale(), 'f', 0)
 myStr.length
 myStr.arg(10) // Replace %1, %2 etc with value, can chain
 Qt.qsTrId(id) // returns translated string at id, else id if no translation
