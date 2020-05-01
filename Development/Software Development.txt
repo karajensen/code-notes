@@ -321,6 +321,8 @@ COMBINING DEBUG AND RELEASE:
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 # call cmake, will use CMakeLists.txt file one folder up
+# VS is a multi-generator build which lets you change configuration
+# Because of this checking CMAKE_BUILD_TYPE will not work
 cmake -G "Visual Studio 14 2015 Win64" -DCMAKE_PREFIX_PATH=C:/Qt/Qt5.6.1/5.6/msvc2015_64 ..
 
 cmake_minimum_required(VERSION 2.8.11)
@@ -339,6 +341,10 @@ target_link_libraries(project_name optimized ${CMAKE_CURRENT_SOURCE_DIR}/mylib.l
 # DEFINES
 add_definitions(-DMY_DEFINE)
 add_definitions(-DMY_DEFINE="${MY_VARIABLE}")
+target_compile_definitions(project_name PRIVATE # For Mult-Generator builds (VS)
+	$<$<CONFIG:DEBUG>:MY_DEFINE="${MY_VARIABLE}">
+	$<$<CONFIG:RELWITHDEBINFO>:MY_DEFINE="${MY_VARIABLE}">
+)
 
 # VARIABLES
 set(ENV_VAR $ENV{ENV_VAR}) # Environment variable
