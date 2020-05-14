@@ -155,7 +155,7 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(N::MyFlags) // Allows operator use, must be outsid
 
 // QObject
 obj.objectName // Property; User-defined name of object instance, blank as default
-obj.setProperty("value", v); // Return true if existed and set, auto creates if doesn't exist only for obj
+obj.setProperty("value", v); // Auto creates if doesn't exist, fires signal if set on qml object
 obj.property("value") // Returns QVariant, invalid if doesn't exist
 obj.metaObject() // Returns const QMetaObject*
 obj.blockSignals(true) // Prevents any signals from calling slots, doesnt block destroyed() signal
@@ -1543,11 +1543,26 @@ QTranslator translator
 translator.load("MyApp_en_US.qm", ":/qrc_path")
 application.installTranslator(&translator)
 application.qmlEngine()->retranslate()
+   
+QLocale("invalid") // Fallback to c locale
+QLocale() // System locale unless QLocale::setDefault called
+QLocale::system() // System locale
+QLocale("C") // C locale
+QLocale::c() // C locale
+QLocale::setDefault(locale) // Sets what QLocale() will default to
+QLocale().groupSeparator() // comma for locales that use it
     
 //: This is a comment that will be added to 'MyString' in the ts file
-qsTr("MyString")
-tr("%1%) // Percentages need to be translated
-tr("%n plural(s)", "", value) // Plurals, %n is optional
-QObject::tr("MyString", "Context") // Without QObject:: context is auto set as class
-QLocale().toString(value, 'f', precision) // Convert number, uses system locale, same as QLocale::system()
+QObject::tr("MyString");
+
+// Numeric form translations (qStr also supported)
+tr("%L1 item%2").arg(count).arg(count == 1 ? "" : "s");
+tr("%Ln item(s)", "", count);
+tr("%n item(s)", "", count); // without locale
+
+// Number translations (qStr also supported)
+tr(%L1 item).arg(count)
+tr(%1 item).arg(count) // without locale
+tr(%1 item).arg(QLocale().toString(count, 'f', precision))
+qsTr(%1 item).arg(count.toLocaleString(Qt.locale(), 'f', precision))
 
