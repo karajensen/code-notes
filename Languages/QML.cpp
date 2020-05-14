@@ -83,7 +83,7 @@ Item {
 
 mySignal.connect(mySlot) // Connect signal and slot, forward optional, no auto disconnect
 mySignal.disconnect(mySlot) // Signals must be disconnected
-myProp1 = value; // Sets value of property and kills the binding
+myProp1 = value; // Sets value of property and kills the binding- to not break, call setProperty on object in cpp
 myProp1 = Qt.binding(function() { return myProp2; }); // Set a binding on a property
 
 // GLOBAL OBJECTS
