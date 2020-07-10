@@ -394,7 +394,7 @@ ItemSelectionModel.ClearAndSelect  // Clear | Select
 // DELEGATECHOOSER
 // import Qt.labs.qmlmodels 1.0
 // Allows switching between delegates based on item role
-// Directly assign 'delegateChooser' to the view's 'model' property
+// Directly assign 'delegateChooser' to the view's 'delegate' property
 DelegateChooser {
     id: delegateChooser
     role: "myRole"
