@@ -1418,6 +1418,7 @@ SwipeView {
 // POPUP
 // import QtQuick.Controls 2.4
 // Inherits QtObject, base class for all popups
+// Doesn't guarantee auto placement inside application window
 // https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-popup
 Popup {
     activeFocus: true // Read only, whether item has active focus
@@ -1514,6 +1515,7 @@ dialog.standardButton(button) // Returns AbstractButton
 // MENU
 // import QtQuick.Controls 2.4
 // Inherits Popup, For context and popup menus
+// Guarantees auto placement inside application window
 // https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-menu
 Menu {
     cascade: true // default true for desktops, whether submenus offset or fill over parent menus
