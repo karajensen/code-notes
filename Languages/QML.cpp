@@ -288,6 +288,7 @@ Qt.lighter(myColor, v) // Returns lighter color by converting to HSV then value*
 Qt.lighter(myColor) // Returns color 50% lighter than myColor
 Qt.tint(myColor, tintColor) // Returns color with tintColor overlaying myColor
 Qt.colorEqual(myColor, myColor2) // Either argument can be Color or string type
+myColor.toString().toUpperCase() // Returns name in hex format
 myColor.r / myColor.g / myColor.b / myColor.a
 myColor.hsvHue
 myColor.hsvSaturation
