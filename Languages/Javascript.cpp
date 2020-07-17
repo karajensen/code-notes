@@ -171,6 +171,7 @@ MyClass.prototype = new MyBaseClass(); // Set prototype for all instances
 
 // OBJECTS
 var obj = new MyClass(2)
+var obj = new Object()
 var obj = {}                      // Empty object
 var obj = null                    // Null object
 var obj = { x: 2, y : 1 }
@@ -178,7 +179,7 @@ var obj = { "x": 2, "y" : 1 }
 var obj = { fn: function() {} }
 var obj = { obj2: { x: 2 } }
 
-obj.x /*or*/ obj["x"]             // Access/create object properties
+obj.x /*or*/ obj["x"]             // Access/create object properties, will create if doesn't exist
 obj = obj || "default value"      // If null use default value
 "x" in obj                        // If 'x' is a property in obj
 obj.hasOwnProperty("x")           // If 'x' is a property in obj, doesn't search prototype chain
