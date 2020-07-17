@@ -116,7 +116,7 @@ template MyClass<int>;
 template void MyFunction<int>(int x);
 template void MyFunction<int>(MyClass<int>& x);
 
-// TEMPLATES IN CPP
+// CLASS TEMPLATES IN CPP
 // In Header File:
 template<typename T> class MyClass
 {
@@ -126,6 +126,15 @@ public:
 // In Cpp File:
 template MyClass<int>; // for every use of template add an explicit instantiation to .cpp file
 template<typename T> MyClass<T>::MyClass()
+{
+}
+
+// FUNCTION TEMPLATES IN CPP
+// In Header File:
+template <typename T> void MyFn();
+// In Cpp File:
+template MyClass::MyFn<int>; // for every use of template add an explicit instantiation to .cpp file
+template <typename T> void MyClass::MyFn()
 {
 }
 
