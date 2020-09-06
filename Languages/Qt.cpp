@@ -1142,6 +1142,7 @@ QVector4D                                 vector4d
 QVariant                                  var
 QObject*                                  var              Object
 QMap<QString, QVariant> (QVariantMap)     var              Object
+QQmlPropertyMap                           var              Object
 QByteArray                                var              ArrayBuffer
 QList<QVariant> (QVariantList)            var/list         Array (with differences)
 QList/QVector/std::vector<int>            var/list         Array (with differences)
