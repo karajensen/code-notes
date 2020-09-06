@@ -1418,16 +1418,16 @@ SwipeView {
 // POPUP
 // import QtQuick.Controls 2.4
 // Inherits QtObject, base class for all popups
-// Doesn't guarantee auto placement inside application window
+// 'margins' property determines if auto moves to be inside window, defaults to -1 or 'don’t auto move'
 // https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-popup
 Popup {
     activeFocus: true // Read only, whether item has active focus
     background: Item {} // If no size set, auto follows the control's size, must set implicit sizes if using
-    bottomMargin: -1 // default no margin
-    leftMargin: -1 // default no margin
-    rightMargin: -1 // default no margin
-    topMargin: -1 // default no margin
-    margins: -1 // default no margins
+    bottomMargin: -1 // default no margin, ensures inside window if not -1
+    leftMargin: -1 // default no margin, ensures inside window if not -1
+    rightMargin: -1 // default no margin, ensures inside window if not -1
+    topMargin: -1 // default no margin, ensures inside window if not -1
+    margins: -1 // default no margins, ensures inside window if not -1
     bottomPadding: 1 // padding around the contentItem, overrides 'padding'
     leftPadding: 1 // padding around the contentItem, overrides 'padding'
     rightPadding: 1 // padding around the contentItem, overrides 'padding'
@@ -1435,10 +1435,11 @@ Popup {
     padding: 1 // padding around the contentItem
     clip: false // default, whether clipping is enabled
     closePolicy: Popup.CloseOnEscape|Popup.CloseOnPressOutside // default, Popup Close Policy Enum
+    background: Item {} // Auto sizes to fit popup
+    contentItem: Item {} // If popup has explicit size, auto sets size on item. If not, item's implicit sizes used
     contentChildren
     contentData
     contentHeight
-    contentItem
     contentWidth
     dim
     enabled
@@ -1468,8 +1469,6 @@ Popup {
     onAboutToShow: {}
     onClosed: {}
     onOpened: {}
-	
-	
 }
 
 popup.availableHeight // height available to contentItem after deducting vertical padding popup height
