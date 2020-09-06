@@ -247,6 +247,15 @@ lst.removeDuplicates() // Removes all duplicate strings, doesn't require sorting
 lst.replaceInStrings("str1", "str2", caseFlag) // Replace 'str1' with 'str2' in all strings
 lst.sort(case) // Sort all strings using std::sort
 
+// QStringList to Std Vector
+std::vector<std::string> toStdVector(const QStringList& list)
+{
+    std::vector<std::string> vec;
+    std::transform(std::begin(list), std::end(list), std::back_inserter(vec),
+        [](const auto& item) { return item.toStdString(); });
+    return vec;
+}
+
 // QString / QByteArray Format Characters
 e   // format as [-]9.9e[+|-]999
 E   // format as [-]9.9E[+|-]999
