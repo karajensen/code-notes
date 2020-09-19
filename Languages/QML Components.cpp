@@ -140,15 +140,25 @@ Connections {
 
 // BINDING
 // import QtQml 2.11
-// Will become active and assign value to myProperty when myBoolean becomes true
-// When active, will disable any direct bindings myProperty may have until myBoolean is false
+// Overrides the current binding/value when active, when inactive reassigns binding/value
+// < 5.14 restoreMode not avaliable and uses Binding.RestoreBinding (value not restored)
 Binding {
     target: item // required if not a child of item with property
     property: "myProperty" // can be QML basic type attribute (eg. "myRectProperty.x")
     when: myBoolean
     value: 10 // Can be value, another property etc
     delayed: true // wait until event queue cleared before assigning
+    restoreMode: Binding.RestoreBinding // default pre 6.0, Binding.RestoreBindingOrValue 6.0+
 }
+Binding on x { // Automatically assigns target as parent and property as "x"
+    value: 10
+}
+
+// Binding Restore Mode
+Binding.RestoreNone    // The original value is not restored at all
+Binding.RestoreBinding // The original value is restored if it was another binding
+Binding.RestoreValue   // The original value is restored if it was a plain value rather than a binding
+Binding.RestoreBindingOrValue // The original value is always restored
 
 ------------------------------------------------------------------------------------------------------------
 
@@ -1228,11 +1238,21 @@ Frame {
 // import QtQuick.Controls 2.4
 // Inherits Container, Provides a window menu bar
 // https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-menubar
+// QQC1 provides default styles for submenus but no dynamic options
+// Mac 'Quit' and 'About' default menus overidden by last MenuItem that uses specific shortcuts/title
 MenuBar {
     contentHeight
     contentWidth
-    delegate
-    menus
+    delegate: MenuItem {} // Top level menu buttons
+    menus: [ // default property
+        Menu {
+            title: qsTr("&File")
+            MenuItem { text: "&Open..." }
+            MenuSeparator {}
+            Action { text: "&New..." } // Will be internally wrapped in MenuItem
+            Menu {} // Submenu, will be internally wrapped in MenuItem
+        }
+    ]
 }
 
 menu.addMenu(menu)
@@ -1530,6 +1550,22 @@ Menu {
        MenuItem { text: model.text }
        onObjectAdded: menu.insertItem(index, object)
        onObjectRemoved: menu.removeItem(object)
+    }
+	
+    // Automatically size menu item based on content
+    property int _menuItemWidth: 0
+    onOpened: {
+        var menuItemWidth = 0;
+        for (var i = 0; i < count; i++) {
+            var menuItem = itemAt(i);
+            if (menuItem.visible) {
+                menuItemWidth = Math.max(menuItemWidth, menuItem.implicitWidth);
+            }
+        }
+        _menuItemWidth = Math.min(Math.max(menuItemWidth, minMenuItemWidth), maxMenuItemWidth);
+        for (var i = 0; i < count; i++) {
+            itemAt(i).width = _menuItemWidth;
+        }
     }
 }
 
