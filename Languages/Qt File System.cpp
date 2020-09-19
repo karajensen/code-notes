@@ -221,3 +221,45 @@ QIODevice::Text         // Reading uses '\n', Writing uses local encoding for en
 QIODevice::Unbuffered   // Any buffer in the device is bypassed
 QIODevice::NewOnly      // Create and open the file only if it does not exist
 QIODevice::ExistingOnly // Fail if the file to be opened does not exist
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT XML
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// QXmlStreamWriter
+/************************************************************
+<?xml version="1.0" encoding="UTF-8"?>
+<A aa="attr">value</A>
+<B bb="attr">
+    <bbb>value</bbb>
+</B>
+************************************************************/
+QFile file("c:/file.xml");
+QXmlStreamWriter stream(&file);
+file.open(QIODevice::WriteOnly | QIODevice::Text); // creates if doesn't exist
+stream.writeStartDocument();
+stream.setCodec("UTF-8");
+stream.setAutoFormatting(true);
+stream.writeStartElement("A");
+stream.writeAttribute("aa", "attr");
+stream.writeCharacters("value");
+stream.writeEndElement();
+stream.writeStartElement("B");
+stream.writeAttribute("bb", "attr");
+stream.writeTextElement("bbb", "value");
+stream.writeEndElement();
+stream.writeEndDocument();
+stream.hasError(); // Returns true if failed to write to document
+file.errorString(); // Returns error as string
+
+// QXmlSchema / QXmlSchemaValidator
+// Requires Qt5::XmlPatterns
+// Requires QCoreApplication as will output errors in message loop
+QXmlSchema schema;
+schema.load(QUrl::fromFile("c:/schema.xsd")); // Returns true if success
+if (schema.isValid()) {
+    QFile file("c:/file.xml");
+    file.open(QIODevice::ReadOnly);
+    QXmlSchemaValidator validator(schema);
+    validator.validate(&file, QUrl::fromLocalFile(file.fileName())); // Returns true if success
+}
