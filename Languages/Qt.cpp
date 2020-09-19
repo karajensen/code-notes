@@ -355,6 +355,12 @@ connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
 signalMapper->setMapping(button, button);
 connect(signalMapper, SIGNAL(mapped(QObject)), this, SIGNAL(clicked(QObject)));
 
+// SIGNAL SPY
+// Requires Qt5::Test
+QSignalSpy spy(sender, &Sender::mySignal)
+spy.isValid() // Returns true if setup correctly
+spy.wait(timeoutMs) // Starts an event loop until signal or timed out (returns false if timed out)
+    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT SMART POINTERS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -584,6 +590,7 @@ QDateTime dateTime
 QDateTime::currentDateTime() // Returns QDateTime
 QDateTime::fromString("2019-01-01", Qt::ISODate) // Takes QString and returns QDateTime
 dateTime.toString(Qt::ISODate) // Returns QString
+dateTime.toString("yyyy-MM-ddThh:mm:ss") // XML datetime format
 dateTime.toUTC() // Used for comparing date times with < and >
 dateTime.addSecs(1) // Add seconds to the date time
 dateTime.addMins(1) // Add minutes to the date time
@@ -591,10 +598,16 @@ dateTime.addHours(1) // Add hours to the date time
 dateTime.addDays(1) // Add days to the date time
 dateTime.addYears(1) // Add years to the date time
 
+// QDate
+QDate date
+QDate::currentDate() // Returns QDate
+date.toString("yyyy-MM-dd") // XML date format
+
 // QTime
 QTime time
 QTime::currentTime() // Returns QTime
 time.secsTo(time2) // Difference in time in seconds
+time.toString("hh:mm:ss") // XML time format
 
 // QSettings
 // Persistent platform-independent application settings
