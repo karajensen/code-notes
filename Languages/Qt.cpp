@@ -74,13 +74,16 @@ IMPLICIT SHARING (COPY-ON-WRITE):
 
 PROPERTY SYSTEM:
 • To create dynamic properties use QQmlPropertyMap (see Qt Containers)
-MEMBER     Required if READ not used, implicitly creates getter/setter with emitting signal
-READ       Required if MEMBER not used
-WRITE      Optional, can be used with either READ or MEMBER
-NOTIFY     Optional, takes signal with one or no arguments
-STORED     Default true, indicates whether property value must be saved when storing the object's state
-CONSTANT   Optional, makes readonly
-FINAL      Optional, can enable optimizations, indicates shouldn't override though not enforced by moc
+MEMBER    [var]   Required if READ not used, implicitly creates getter/setter with emitting signal
+READ      [fn]    Required if MEMBER not used, must be 'arg fn()'
+WRITE     [fn]    Optional, can be used with either READ or MEMBER, must be 'void fn(arg)'
+NOTIFY    [fn]    Optional, takes signal with one or no arguments, 'fn(arg)' or 'fn()'
+RESET     [fn]    Optional, called when assigned 'undefined' in qml, must be 'void fn()'
+STORED    [bool]  Optionals, default true, whether property value must be saved when storing object's state
+REVISION  [int]   Optional, which qml import is supported, defaults all/0
+CONSTANT          Optional, makes readonly
+FINAL             Optional, can enable optimizations, indicates shouldn't override though not enforced by moc
+REQUIRED          Optional, enforces that property must be set in qml otherwise error
 **************************************************************************************************************/
 
 // OBJECTS
