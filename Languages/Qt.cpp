@@ -269,8 +269,9 @@ for (int i = 0; i < metaObject->propertyCount(); ++i)
 /*************************************************************************************************************
 • Can only be used by Q_OBJECT, not Q_GADGET, due to moc requirements
 • On signal emit, all slots in order of connection are immediately notified, can't be async
-• No return values, slots can be virtual/pure virtual
+• Slots can be virtual/pure virtual
 • Default argument type must match between signals/slots, don't have to both have default
+• Good design to not have return values for signals/slots but not disallowed
 
 MOC SIGNAL LIMITATIONS:
 • Only signals and slots can live in the signals and slots sections
@@ -518,30 +519,6 @@ public:
     static QEvent::Type CustomEventType;
 };
 QEvent::Type MyCustomEvent::CustomEventType = static_cast<QEvent::Type>(QEvent::registerEventType());
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT BASIC TYPES
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-qint8        // signed char, guaranteed to be 8-bit
-qint16       // signed short, guaranteed to be 16-bit
-qint32       // signed int, guaranteed to be 32-bit
-qint64       // signed long long int (__int64 on Windows), guaranteed to be 64-bit, use Q_INT64_C to create
-qintptr      // signed integral type for representing pointers
-qlonglong    // same as qint64
-qptrdiff     // signed integral type for representing pointer differences.
-qreal        // double unless Qt is configured with the -qreal float
-qsizetype    // size_t
-quint8       // unsigned char, guaranteed to be 8-bit
-quint16      // unsigned short, guaranteed to be 16-bit
-quint32      // unsigned int, guaranteed to be 32-bit
-quint64      // unsigned long long int (__int64 on Windows), guaranteed to be 64-bit, use Q_UINT64_C to create
-quintptr     // unsigned integral type for representing pointers
-qulonglong   // same as quint64
-uchar        // generic typedef for unsigned char
-uint         // generic typedef for unsigned int
-ulong        // generic typedef for unsigned long
-ushort       // generic typedef for unsigned short
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT COMPONENTS
@@ -1121,6 +1098,30 @@ QGridLayout layout
 layout.addWidget(spinBox, r, c) // Add a widget to the layout, automatically parents and resizes
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT BASIC TYPES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+qint8        // signed char, guaranteed to be 8-bit
+qint16       // signed short, guaranteed to be 16-bit
+qint32       // signed int, guaranteed to be 32-bit
+qint64       // signed long long int (__int64 on Windows), guaranteed to be 64-bit, use Q_INT64_C to create
+qintptr      // signed integral type for representing pointers
+qlonglong    // same as qint64
+qptrdiff     // signed integral type for representing pointer differences.
+qreal        // double unless Qt is configured with the -qreal float
+qsizetype    // size_t
+quint8       // unsigned char, guaranteed to be 8-bit
+quint16      // unsigned short, guaranteed to be 16-bit
+quint32      // unsigned int, guaranteed to be 32-bit
+quint64      // unsigned long long int (__int64 on Windows), guaranteed to be 64-bit, use Q_UINT64_C to create
+quintptr     // unsigned integral type for representing pointers
+qulonglong   // same as quint64
+uchar        // generic typedef for unsigned char
+uint         // generic typedef for unsigned int
+ulong        // generic typedef for unsigned long
+ushort       // generic typedef for unsigned short
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT QUICK / QML
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1128,6 +1129,7 @@ layout.addWidget(spinBox, r, c) // Add a widget to the layout, automatically par
 CONVERTING BETWEEN C++ / QML
 • Non-registered types convert to/from QVariant using 'var'
 • Javascript values, objects and functions can convert to/from QJSValue
+• Large integers loose precision when passed to QML, wrap value inside a Q_GADGET or convert to double
 • Non-registered container with type convert to/from QVariantList, even if type is registered
 • Converted Javascript arrays have a few differences from native Javascript arrays:
    - delete myArray[i] sets element as default constructed instead of undefined
