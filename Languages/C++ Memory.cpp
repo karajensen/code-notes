@@ -127,18 +127,21 @@ struct MyFunctor
 //Slower and bigger than using actual function object types (lambda, functors, pointers)
 std::function<double(int)> myFn = [](int x){ return x+2.0; }
 std::function<double(int)> myFn = &MyFunction;
+std::function<double(int)> myFn = myLambda; // Copies the lambda
+std::function<double(int)> myFn = std::ref(myLambda); // Assigns lambda without copy
 typedef double(MyFnType)(int); // Typedef for function return/params
 typedef std::function<MyFnType> MyFn; // Typedef for std::function
 
 //LAMBDAS
 //If inside a class, may become friends to access/capture internals
-//Lamda creates a closure object which holds captured vars
-auto myLambda = [](int x)->float {}  // specify return type, only need if multilined
-auto myLambda = [&var](int x){}      // capture only myVar by reference
-auto myLambda = [=var](int x){}      // capture only myVar by value
-auto myLambda = [var](int x){}       // capture only myVar by value, doesn't work on member vars
-auto myLambda = [&](int x){}         // capture all by ref
-auto myLambda = [=](int x){}         // capture all non-static local variables (including this) by-val
+//Lamda creates a closure object which holds captured vars, byval captured 'const' unless 'mutable' used
+auto myLambda = [](int x)->float {}      // specify return type, only need if multilined
+auto myLambda = [&var](int x){}          // capture only myVar by reference
+auto myLambda = [=var](int x){}          // capture only myVar by value
+auto myLambda = [var](int x){}           // capture only myVar by value, doesn't work on member vars
+auto myLambda = [&](int x){}             // capture all by ref
+auto myLambda = [=](int x){}             // capture all non-static local variables (including this) by-val
+auto myLambda = [var] mutable (int x){}  // capture by-val but allow modifying the values
 
 //LAMBDA INIT/GENERALISED CAPTURE
 //Allows creation of variables inside the closure
@@ -354,7 +357,4 @@ char* buffer = new char[sizeof(MyClass)];
 MyClass* obj = new (buffer) MyClass;
 obj->~MyClass();
 delete [] buffer;
-
-
-
 
