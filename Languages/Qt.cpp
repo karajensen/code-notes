@@ -8,13 +8,11 @@ QtCore               Core non-graphical classes used by other modules
 QtGUI                Base classes for graphical user interface (GUI) components. Includes OpenGL
 QtMultimedia         Classes for audio, video, radio and camera functionality
 QtMultimediaWidgets  Widget-based classes for implementing multimedia functionality
-QtNetwork            Classes to make network programming easier and more portable
 QtQML                Classes for QML and JavaScript languages
 QtQuick              A declarative framework for building highly dynamic applications with custom UI
 QtQuickControls      Reusable Qt Quick based UI controls to create classic desktop-style user interfaces
 QtQuickDialogs       Types for creating and interacting with system dialogs from a Qt Quick application
 QtQuickLayouts       Layouts are items that are used to arrange Qt Quick 2 based items in the UI
-QtSQL                Classes for database integration using SQL
 QtTest               Classes for unit testing Qt applications and libraries
 QtWidgets            Classes to extend Qt GUI with C++ widgets
 **************************************************************************************************************/
@@ -24,10 +22,6 @@ QT_FORWARD_DECLARE_CLASS(QQuickItem)
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    QTimer timer;
-    timer.setInterval(10);
-    QObject::connect(&timer, &QTimer::timeout, []() { /*tick*/ });
-    timer.start();
     app.exec(); // Start the event loop
 }
 
@@ -42,9 +36,13 @@ Q_ASSERT_X(expression, "divide", "division by zero");
 /*************************************************************************************************************
 QOBJECTS:
 • Base class of all Qt objects, organised in an object tree
-• Doesn't have a copy constructor or assignment operator
 • Meta Object Compilier code generator uses Q_OBJECT macro to generate moc cpp file
 • Ability to use qobject_cast, signals, slots, property system
+
+QOBJECT LIMITATIONS:
+• Doesn't have a copy constructor or assignment operator
+• Can't be created before QApplication (undefined behaviour)
+• All MOC/Signal/Slot limitations
 
 MOC QOBJECT LIMITATIONS:
 • Multiple Inheritance requires QObject to be first
@@ -73,7 +71,8 @@ IMPLICIT SHARING (COPY-ON-WRITE):
 • Can be dangerous for iterators when container detaches from shared block:
 
 PROPERTY SYSTEM:
-• To create dynamic properties use QQmlPropertyMap (see Qt Containers)
+• To create dynamic QML properties use QQmlPropertyMap (Qt Containers)
+• To create dynamic C++ properties use QObject::setProperty
 MEMBER    [var]   Required if READ not used, implicitly creates getter/setter with emitting signal
 READ      [fn]    Required if MEMBER not used, must be 'arg fn()'
 WRITE     [fn]    Optional, can be used with either READ or MEMBER, must be 'void fn(arg)'
@@ -86,7 +85,6 @@ FINAL             Optional, can enable optimizations, indicates shouldn't overri
 REQUIRED          Optional, enforces that property must be set in qml otherwise error
 **************************************************************************************************************/
 
-// OBJECTS
 namespace N
 {
     Q_NAMESPACE
@@ -97,16 +95,17 @@ namespace N
         Q_DISABLE_COPY(MyClass) // Required for singleton classes
         Q_CLASSINFO("DefaultProperty", "children")
         
-        Q_PROPERTY(MyValue value MEMBER m_value NOTIFY myValueSignal)
+        Q_PROPERTY(MyValue value MEMBER m_value)
         Q_PROPERTY(MyValue value READ getValue WRITE setValue NOTIFY mySignal)
+        Q_PROPERTY(MyClass obj MEMBER m_obj) // Requires registration for QML use
+        Q_PROPERTY(N::MyClass obj MEMBER m_obj) // If forward declared type, must use full namespace
         Q_PROPERTY(QQmlListProperty<QObject> children READ children)
 
     public:
-        MyClass(QObject *parent = 0) { }   
+        explicit MyClass(QObject* parent = nullptr) : QObject(parent) {}   
 
         enum class MyClassEnum { ONE, TWO, THREE };
         Q_ENUM(MyClassEnum)
-
         enum MyClassFlag { One=0x01, Two=0x02, Three=0x04 };
         Q_FLAG(MyClassFlag)
 
@@ -131,9 +130,9 @@ namespace N
     struct MyGadget
     {
         Q_GADGET // Value-type used with variant, doesn't increase class size
-            
-    public:
         Q_PROPERTY(QString name MEMBER m_name)
+
+    public:
         Q_INVOKABLE void myFn() { }
         bool operator==(const Gadget& g) const { ... }
         bool operator!=(const Gadget& g) const { ... }
@@ -142,12 +141,11 @@ namespace N
 }
 
 // ENUMS/FLAGS
-// Must start with capital letter
-namespace N
+namespace N // Must start with capital letter
 {
     Q_NAMESPACE
     
-    enum class MyEnum { ONE, TWO, THREE };
+    enum class MyEnum { One, Two, Three };
     Q_ENUM_NS(MyEnum) 
 
     enum MyFlag { One=0x01, Two=0x02, Three=0x04 };
@@ -177,7 +175,7 @@ obj.removeEventFilter(&obj2) // Remove obj2 as an event filter
 obj.isWidgetType() // Whether obj inherits QWidget
 obj.isWindowType() // Whether obj inherits QWindow
 obj.parent() // Returns QObject*
-obj.setParent(obj2) // Sets parent
+obj.setParent(obj2) // Sets parent, must have same thread as parent
 obj.thread() // Returns QThread* where the object lives
 obj.startTimer(interval, timerType) // Returns ID, takes ms, Qt::TimerType
 obj.killTimer(id) // Stop timer with ID
@@ -273,7 +271,7 @@ for (int i = 0; i < metaObject->propertyCount(); ++i)
 • Default argument type must match between signals/slots, don't have to both have default
 • Good design to not have return values for signals/slots but not disallowed
 
-MOC SIGNAL LIMITATIONS:
+SIGNAL LIMITATIONS:
 • Only signals and slots can live in the signals and slots sections
 • Moc doesn't support templates with signals/slots
 • Moc doesn't expand #define: cannot use a macro to declare a signal/slot or used as a signal/slot parameter
@@ -364,79 +362,6 @@ connect(signalMapper, SIGNAL(mapped(QObject)), this, SIGNAL(clicked(QObject)));
 QSignalSpy spy(sender, &Sender::mySignal)
 spy.isValid() // Returns true if setup correctly
 spy.wait(timeoutMs) // Starts an event loop until signal or timed out (returns false if timed out)
-    
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT SMART POINTERS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
-// QSharedDataPointer
-// Requires T to be derived from QSharedData
-// Thread-safe reference counting pointer to an implicitly shared object
-// Calling non-const class methods auto detaches ptr from shared block
-QSharedDataPointer<T> ptr(new T());
-QSharedDataPointer<T> ptr2(ptr); // Implicity shares data with ptr
-ptr.constData();         // Returns const T*
-ptr.data();              // Returns T* or const T*
-ptr.detach();            // Detaches object from shared data
-
-// QExplicitlySharedDataPointer
-// Requires T to be derived from QSharedData
-// Thread-safe reference counting pointer to an implicitly shared object
-// Calling non-const class methods DOES NOT auto detach ptr from shared block
-QExplicitlySharedDataPointer<T> ptr(new T());
-QExplicitlySharedDataPointer<T> ptr2(ptr); // Implicity shares data with ptr
-ptr.constData();         // Returns const T*
-ptr.data();              // Returns T* or const T*
-ptr.detach();            // Detaches object from shared data
-
-// QSharedPointer  
-// Thread-safe reference counting shared pointer with control block
-QSharedPointer<T> ptr(new T());
-QSharedPointer<T> ptr(new T(), [](T* data){}); // With custom deleter
-auto ptr = QSharedPointer<T>::create(); // Allocates control block and memory together
-ptr.clear();             // Clears pointer and decrements ref count
-ptr.constCast();         // Returns QSharedPointer<T> with T stripped of const
-ptr.objectCast<T2>();    // Returns QSharedPointer<T2> by doing a qobject_cast
-ptr.dynamicCast<T2>();   // Returns QSharedPointer<T2>
-ptr.staticCast<T2>();    // Returns QSharedPointer<T2>
-ptr.toWeakRef();         // Returns QWeakPointer<T>
-ptr.isNull();            // Returns if null
-ptr.data();              // Returns T*
-ptr.reset();
-ptr.reset(new T());
-
-// QWeakPointer
-// Holds a weak reference to a QSharedPointer
-QWeakPointer<T> ptr(mySharedPtr->toWeakRef());
-ptr.clear();             // Clears pointer
-ptr.data();              // Returns T*, does not cast to QSharedPointer<T> or check if valid
-ptr.isNull();            // Returns if null
-ptr.lock();              // Returns QSharedPointer<T>, same as toStrongRef
-ptr.toStrongRef();       // Returns QSharedPointer<T>, same as lock
-
-// QScopedPointer
-QScopedPointer<T> ptr(new T());
-ptr.take();             // Returns T* and sets pointer to null
-ptr.data();             // Returns T*
-ptr.isNull();           // Returns if null
-ptr.reset();
-ptr.reset(new T());
-
-// QScopedArrayPointer
-QScopedArrayPointer<T> ptr(new T[n]);
-ptr[index];             // Returns T& at index
-ptr.take();             // Returns T* and sets pointer to null
-ptr.data();             // Returns T*
-ptr.isNull();           // Returns if null
-ptr.reset();
-ptr.reset(new T[n]);
-
-// QPointer
-// Same as QScopedPointer, kept for legacy support
-QPointer<T> ptr(new T());
-ptr.clear();             // Clears pointer and decrements ref count
-ptr.isNull();            // Returns if null
-ptr.data();              // Returns T*
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT EVENT SYSTEM
@@ -521,6 +446,30 @@ public:
 QEvent::Type MyCustomEvent::CustomEventType = static_cast<QEvent::Type>(QEvent::registerEventType());
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT BASIC TYPES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+qint8        // signed char, guaranteed to be 8-bit
+qint16       // signed short, guaranteed to be 16-bit
+qint32       // signed int, guaranteed to be 32-bit
+qint64       // signed long long int (__int64 on Windows), guaranteed to be 64-bit, use Q_INT64_C to create
+qintptr      // signed integral type for representing pointers
+qlonglong    // same as qint64
+qptrdiff     // signed integral type for representing pointer differences.
+qreal        // double unless Qt is configured with the -qreal float
+qsizetype    // size_t
+quint8       // unsigned char, guaranteed to be 8-bit
+quint16      // unsigned short, guaranteed to be 16-bit
+quint32      // unsigned int, guaranteed to be 32-bit
+quint64      // unsigned long long int (__int64 on Windows), guaranteed to be 64-bit, use Q_UINT64_C to create
+quintptr     // unsigned integral type for representing pointers
+qulonglong   // same as quint64
+uchar        // generic typedef for unsigned char
+uint         // generic typedef for unsigned int
+ulong        // generic typedef for unsigned long
+ushort       // generic typedef for unsigned short
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT COMPONENTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -600,6 +549,79 @@ settings.remove("key")
 settings.contains("key") 
 settings.clear()
 settings.allKeys() // Returns QStringList
+    
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QT SMART POINTERS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+// QSharedDataPointer
+// Requires T to be derived from QSharedData
+// Thread-safe reference counting pointer to an implicitly shared object
+// Calling non-const class methods auto detaches ptr from shared block
+QSharedDataPointer<T> ptr(new T());
+QSharedDataPointer<T> ptr2(ptr); // Implicity shares data with ptr
+ptr.constData();         // Returns const T*
+ptr.data();              // Returns T* or const T*
+ptr.detach();            // Detaches object from shared data
+
+// QExplicitlySharedDataPointer
+// Requires T to be derived from QSharedData
+// Thread-safe reference counting pointer to an implicitly shared object
+// Calling non-const class methods DOES NOT auto detach ptr from shared block
+QExplicitlySharedDataPointer<T> ptr(new T());
+QExplicitlySharedDataPointer<T> ptr2(ptr); // Implicity shares data with ptr
+ptr.constData();         // Returns const T*
+ptr.data();              // Returns T* or const T*
+ptr.detach();            // Detaches object from shared data
+
+// QSharedPointer  
+// Thread-safe reference counting shared pointer with control block
+QSharedPointer<T> ptr(new T());
+QSharedPointer<T> ptr(new T(), [](T* data){}); // With custom deleter
+auto ptr = QSharedPointer<T>::create(); // Allocates control block and memory together
+ptr.clear();             // Clears pointer and decrements ref count
+ptr.constCast();         // Returns QSharedPointer<T> with T stripped of const
+ptr.objectCast<T2>();    // Returns QSharedPointer<T2> by doing a qobject_cast
+ptr.dynamicCast<T2>();   // Returns QSharedPointer<T2>
+ptr.staticCast<T2>();    // Returns QSharedPointer<T2>
+ptr.toWeakRef();         // Returns QWeakPointer<T>
+ptr.isNull();            // Returns if null
+ptr.data();              // Returns T*
+ptr.reset();
+ptr.reset(new T());
+
+// QWeakPointer
+// Holds a weak reference to a QSharedPointer
+QWeakPointer<T> ptr(mySharedPtr->toWeakRef());
+ptr.clear();             // Clears pointer
+ptr.data();              // Returns T*, does not cast to QSharedPointer<T> or check if valid
+ptr.isNull();            // Returns if null
+ptr.lock();              // Returns QSharedPointer<T>, same as toStrongRef
+ptr.toStrongRef();       // Returns QSharedPointer<T>, same as lock
+
+// QScopedPointer
+QScopedPointer<T> ptr(new T());
+ptr.take();             // Returns T* and sets pointer to null
+ptr.data();             // Returns T*
+ptr.isNull();           // Returns if null
+ptr.reset();
+ptr.reset(new T());
+
+// QScopedArrayPointer
+QScopedArrayPointer<T> ptr(new T[n]);
+ptr[index];             // Returns T& at index
+ptr.take();             // Returns T* and sets pointer to null
+ptr.data();             // Returns T*
+ptr.isNull();           // Returns if null
+ptr.reset();
+ptr.reset(new T[n]);
+
+// QPointer
+// Same as QScopedPointer, kept for legacy support
+QPointer<T> ptr(new T());
+ptr.clear();             // Clears pointer and decrements ref count
+ptr.isNull();            // Returns if null
+ptr.data();              // Returns T*
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT APPLICATION
@@ -727,15 +749,8 @@ AA_DontUseNativeDialogs // Don't use native dialogs provided by the platform
 AA_DisableShaderDiskCache // Disables caching of shader program binaries on disk
     
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT WINDOWS
+// QT QUICK WINDOWS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-/*************************************************************************************************************
-• QWidget <- QMainWindow
-• QWidget <- QQuickWidget
-• QWindow <- QQuickWindow <- QQuickView
-• Properties have accessors item.property() or item.isProperty() or item.hasProperty() and item.setProperty()
-**************************************************************************************************************/
 
 // QWindow
 // Window for non-widgets based applications (eg. QML)
@@ -824,165 +839,6 @@ view.setTitle("title")
 view.show()
 view.engine() // Returns QQmlEngine*
 view.errors() // Returns QList<QQmlError>
-
-// QWidget
-// If no parent, window for widgets based applications (non-QML), else base class for widgets
-// Inherits QObject and QPaintDevice, inherited by QOpenGLWidget and QWidget components (eg. QLabel)
-// 'Native' Widgets are a toplevel window, QGLWidget, or has had winId() called to create a WId
-QWidget widget;
-widget.acceptDrops // Whether dropping is enabled
-widget.baseSize // QSize
-widget.childrenRect // QRect of the children (excluding hidden)
-widget.childrenRegion // QRegion of the children (excluding hidden)
-widget.contextMenuPolicy // Qt::ContextMenuPolicy, how the widget shows a context menu
-widget.cursor // QCursor
-widget.enabled
-widget.focus // readonly
-widget.focusPolicy // Qt::FocusPolicy
-widget.font // QFont
-widget.frameGeometry // QRect geometry of the window including its window frame
-widget.frameSize // QSize geometry of window including parents including window frame
-widget.fullScreen // Whether fullscreen window mode
-widget.geometry // QRect geometry of window excluding window frame
-widget.height / widget.width
-widget.inputMethodHints // Qt::InputMethodHints
-widget.isActiveWindow // Whether this widget's window is the active window
-widget.layoutDirection // Qt::LayoutDirection
-widget.locale // QLocale, if not set will use parents or default locale
-widget.maximized // Whether maximised window mode
-widget.minimized // Whether minimized window mode
-widget.maximumHeight / widget.minimumHeight
-widget.maximumWidth / widget.minimumWidth
-widget.maximumSize / widget.minimumSize // QSize
-widget.minimumSizeHint // QSize recommended minimum size for the widget
-widget.modal // whether the widget is a modal widget
-widget.mouseTracking // default false, same as hoverEnabled
-widget.normalGeometry // QRect used when not maximized or full screen, empty for child widgets
-widget.palette // QPalette
-widget.pos // QPoint
-widget.rect // QRect without window frame
-widget.size // QSize without window frame
-widget.sizeHint // QSize recommended size for the widget
-widget.sizeIncrement // QSize to increment window when resizing
-widget.sizePolicy // QSizePolicy
-widget.statusTip // QString
-widget.styleSheet // QString
-widget.toolTip // QString
-widget.toolTipDuration // ms display time, -1 (default) auto calculates based on length
-widget.updatesEnabled // Whether to prevent update/repaint calls, to help prevent flickering when resizing
-widget.visible
-widget.whatsThis // QString What's This help text
-widget.filePath // the file name this window is representing
-widget.windowFlags // Qt::WindowFlags
-widget.windowIcon // QIcon
-widget.windowModality // Qt::WindowModality
-widget.windowModified // Whether the document shown in the window has unsaved changes
-widget.windowOpacity // [0.0, 1.0]
-widget.windowTitle // QString
-widget.x / widget.y
-widget.adjustSize() // Adjusts the size of the widget to fit its contents
-widget.backgroundRole() / widget.setBackgroundRole() // QPalette::ColorRole
-widget.forgroundRole() / widget.setForegroundRole() // QPalette::ColorRole
-widget.backingStore() // Returns the QBackingStore* this widget will be drawn into
-widget.childAt(x, y) // Returns QWidget*
-widget.childAt(point) // Returns QWidget*, QPoint 
-widget.clearFocus() // Takes keyboard input focus from the widget
-widget.contentsMargins() // QMargins
-widget.contentsRect() // QRect area inside the widget's margins
-widget.ensurePolished() // Force update widget
-widget.find(id) // Returns QWidget*, takes WId
-widget.focusNextChild() // Force focus onto next in tab chain
-widget.focusNextPrevChild() // Force focus onto previous in tab chain
-widget.nextInFocusChain() // QWidget*
-widget.previousInFocusChain() // QWidget*
-widget.focusWidget() // QWidget* in focus
-widget.fontInfo() // Returns QFontInfo for widget
-widget.fontMetrics() // Returns QFontMetrics for widget
-widget.getContentsMargins(left, top, right, bottom) // Takes int*
-widget.grab(rect, size) // Render widget and children into optional rect/size, returns QPixmap
-widget.grabKeyboard() / widget.releaseKeyboard() // Sets whether keyboard events all forced to window
-widget.grabMouse() / widget.releaseMouse() // Sets whether mouse events all forced to window
-widget.isAncestorOf(child) // Whether a parent of QWidget* child
-widget.isEnabledTo(ancestor) // if this widget would become enabled if ancestor is enabled
-widget.isHidden() // Not the same as !isVisible(), can be hidden if parent is hidden etc.
-widget.isEnabledTo(ancestor) // if this widget would become enabled if ancestor is enabled
-widget.isVisibleTo(ancestor) // if this widget would become visible if ancestor is shown
-widget.isWindow() // Returns true if the widget is an independent window
-widget.layout() // Returns QLayout*
-widget.lower() // Lower the window below other windows
-widget.raise() // Raise the window above other windows
-widget.mapFromGlobal(pos) // Global QPoint screen coord to window QPoint coord
-widget.mapFrom(parent, pos) // QPoint pos in QWidget parent coord to window QPoint coord, must be a parent
-widget.mapFromParent(pos) // QPoint pos in QWidget parent coord to window QPoint coord
-widget.mapTo(parent, pos) // Window QPoint coord to QWidget parent coord, must be a parent
-widget.mapToParent(pos) // Window QPoint coord to QWidget parent coord
-widget.mapToGlobal(pos) // Window QPoint coord to Global QPoint screen coord
-widget.parentWidget() // Returns QWidget*
-widget.repaint() // Force render the widget
-widget.resize(w, h) // Resize the widget
-widget.actions() // QList<QAction*> of actions0assigned to this widget
-widget.addAction(action) // Assign QAction* to this widget, ownership not transferred
-widget.addActions(actions) // Assign QList<QAction*> to this widget, ownership not transferred    
-widget.insertAction(before, action) // Insert QAction* before QAction*
-widget.insertActions(before, actions) // Insert QList<QAction*> before QAction*
-widget.removeAction(action) // QAction*
-widget.restoreGeometry(geometry) // QByteArray
-widget.saveGeometry() // QByteArray
-widget.scroll(dx, dy) // Scrolls widget including children, can be negative values
-widget.setFocus(reason) // Qt::FocusReason optional
-widget.setHidden(hidden) // setVisible(!hidden)
-widget.setLayout(layout) // QLayout*, will take ownership
-widget.setWindowFlag(flag, on) // Sets Qt::WindowType flag to on/off
-widget.windowState() / widget.setWindowState(state) // Qt::WindowState
-widget.hide() // Hides the window
-widget.show() // Shows the window
-widget.showFullScreen() // Shows the window as fullscreen
-widget.showMaximized() // Shows the window as maximised
-widget.showMinimized() // Shows the window as minimised
-widget.showNormal() // Shows the window as default state based on platform
-widget.close()
-widget.stackUnder(widget) // Places under widget in parent's stack. Must be siblings
-widget.underMouse() // Whether mouse hovered
-widget.effectiveWinId() // WId platform id of first native widget, may change
-widget.id() // WId platform id, may change, if non-native widget, will create an id
-widget.window() // Returns QWidget* for widget's window (or itself if a window)
-widget.windowHandle() // Returns QWindow* if a toplevel window, QGLWidget, or has had winId called
-QWidget::setTabOrder(first, second) // QWidget*, QWidget*
-
-// QMainWindow
-// Inherits QWidget, must have a central widget set
-QMainWindow window;
-window.animated // Whether docking/tool bars are animated
-window.dockOptions // QMainWindow::DockOption / QMainWindow::DockOptions
-window.documentMode // Whether tab bar for tabbed dockwidgets is set to document mode
-window.iconSize // QSize
-window.tabShape // QTabWidget::TabShape
-window.toolButtonStyle // Qt::ToolButtonStyle
-window.addDockWidget(area, widget, orientation) // Qt::DockWidgetArea, QDockWidget*, Qt::Orientation
-window.addToolBar(area, toolbar) // Qt::ToolBarArea, QToolBar*
-window.addToolBar(title) // returns QToolBar* parented to window
-window.centralWidget() // returns QWidget*
-window.corner(corner) // returns Qt::DockWidgetArea for Qt::Corner
-window.createPopupMenu() // returns QMenu*, ownership transfers to caller
-window.dockWidgetArea(widget) // returns Qt::DockWidgetArea for QDockWidget*
-window.insertToolBar(before, toolbar) // QToolBar*
-window.menuBar() // returns main QMenuBar*, creates and returns if does not exist
-window.menuWidget() // returns main QWidget*, returns null if does not exist
-window.removeDockWidget(widget) // remove QDockWidget*
-window.removeToolBar(toolbar) // remove QToolBar*
-window.resizeDocks(docks, sizes, orientation) // QList<QDockWidget*>, QList<int>, Qt::Orientation
-window.restoreState(state) // const QByteArray&
-window.saveState() // QByteArray
-window.setCentralWidget(widget) // QWidget*, takes ownership
-window.setCorner(corner, area) // Qt::Corner, Qt::DockWidgetArea
-window.setMenuBar(menuBar) // QMenuBar*, takes ownership
-window.setMenuWidget(menuBar) // QWidget*, takes ownership
-window.setStatusBar(statusbar) // QStatusBar*, takes ownership
-window.setTabPosition(areas, tabPosition) // Qt::DockWidgetAreas, QTabWidget::TabPosition
-window.statusBar() // returns QStatusBar*, creates and returns if does not exist
-window.tabPosition(area) // returns QTabWidget::TabPosition, takes Qt::DockWidgetArea
-window.takeCentralWidget() // removes and returns QWidget*, transfers ownership to caller
-window.toolBarArea(toolbar) // Returns Qt::ToolBarArea, takes QToolBar*
     
 // QQuickWidget
 // Inherits QWidget, wrapper for QQuickWindow, allows integrating QML with QWidgets UI
@@ -1052,76 +908,6 @@ Qt::WindowStaysOnTopHint          // Window should always be on top
 Qt::WindowStaysOnBottomHint       // Window should always be on bottom
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT WIDGETS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-// QOpenGLWidget
-// Inherits QWidget but uses QOpenGLContext for rendering with OpenGL into a framebuffer object
-QOpenGLWidget widget
-widget.context() // returns QOpenGLContext*
-widget.initializeGL() // Reimplement this to initialize any needed resources
-widget.paintGL() // Reimplement this for when the widget needs to be rendered
-widget.resizeGL(w, h) // Reimplement this for when the widget needs to be resized   
-
-// QLabel
-QLabel lbl("Message") // Allows use of html tags to customise text
-
-// QPushButton
-QPushButton btn("Text")
-QObject::connect(button, SIGNAL(clicked()), fn)  // Connect to button's click event
-
-// QSpinBox
-QSpinBox spinbox
-spinbox.setRange(min, max)
-spinBox.setValue(value)
-QObject::connect(spinBox, SIGNAL(valueChanged(int)), fn)
-
-// QSlider 
-QSlider slider(Qt::Horizontal)
-slider.setRange(min, max)
-slider.setValue(value)
-QObject::connect(slider, SIGNAL(valueChanged(int)), fn)
-
-// QHBoxLayout
-// Lays out widgets horizontally from left to right
-QHBoxLayout layout
-layout.addWidget(spinBox) // Add a widget to the layout, automatically parents and resizes
-
-// QVBoxLayout
-// Lays out widgets vertically from top to bottom
-QVBoxLayout layout
-layout.addWidget(spinBox) // Add a widget to the layout, automatically parents and resizes
-
-// QGridLayout
-// Lays out widgets in a grid.
-QGridLayout layout
-layout.addWidget(spinBox, r, c) // Add a widget to the layout, automatically parents and resizes
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT BASIC TYPES
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-qint8        // signed char, guaranteed to be 8-bit
-qint16       // signed short, guaranteed to be 16-bit
-qint32       // signed int, guaranteed to be 32-bit
-qint64       // signed long long int (__int64 on Windows), guaranteed to be 64-bit, use Q_INT64_C to create
-qintptr      // signed integral type for representing pointers
-qlonglong    // same as qint64
-qptrdiff     // signed integral type for representing pointer differences.
-qreal        // double unless Qt is configured with the -qreal float
-qsizetype    // size_t
-quint8       // unsigned char, guaranteed to be 8-bit
-quint16      // unsigned short, guaranteed to be 16-bit
-quint32      // unsigned int, guaranteed to be 32-bit
-quint64      // unsigned long long int (__int64 on Windows), guaranteed to be 64-bit, use Q_UINT64_C to create
-quintptr     // unsigned integral type for representing pointers
-qulonglong   // same as quint64
-uchar        // generic typedef for unsigned char
-uint         // generic typedef for unsigned int
-ulong        // generic typedef for unsigned long
-ushort       // generic typedef for unsigned short
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT QUICK / QML
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1186,13 +972,20 @@ OWNERSHIP WITH QML
 
 // USING QOBJECTS WITH QML
 // QGadgets: to use, needs Q_GADGET registration with Variant/Property system and is passed by value
-// QObjects: to use, doesn't need any registration and is passed as QObject*
+// QObjects: QObject* doesn't need any registration, MyObject* needs registration
 Q_PROPERTY(QList<QObject*> objList MEMBER m_objList) // Has cpp owernship
 Q_PROPERTY(QObject* obj MEMBER m_obj) // Has cpp owernship
 Q_INVOKABLE QObject* myFn() { ... } // Returning parentless QObject* has qml ownership
 Q_INVOKABLE QList<QObject*> myFn()  { ... } // Returning parentless QList<QObject*> has cpp ownership
 QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership); // Force cpp ownership
 QQmlEngine::setObjectOwnership(myObj, QQmlEngine::JavaScriptOwnership); // Force QML ownership
+
+// USING QML FUNCTIONS IN C++
+// callFn(myId, function(){}), callFn(myId, myFunction), callFn(myId, "myFn")
+void callFn(QObject* object, QJsValue fn) {
+    QMetaObject::invokeMethod(object, [fn]() mutable { fn.call(); }, Qt::ConnectionType::QueuedConnection);
+    QMetaObject::invokeMethod(object, "myFn", Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, msg));
+}
 
 // REGISTERING COMPONENTS WITH QML
 // To create QML Component, must be QObject derived
@@ -1210,6 +1003,8 @@ qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClassEnum");
 // REGISTERING Q_NAMESPACE ENUMS WITH QML
 // Requires Q_ENUM_NS registration with Variant
 // use 'import MyInclude 1.0' / 'N.MyEnum.ONE'
+// any extra namespaces requires args to be in full eg. Q_INVOKABLE void fn(n::N::MyEnum e)
+qRegisterMetaType<N::MyEnum>();
 qmlRegisterUncreatableMetaObject(N::staticMetaObject, "MyInclude", 1, 0,
     "N", "Error msg if try to create MyEnum object");
 
@@ -1424,9 +1219,7 @@ QTHREAD
 class MyThread : public QThread
 {
     Q_OBJECT
-    void run() override {
-        emit resultReady(result);
-    }
+    void run() override { emit resultReady(result); }
 signals:
     void resultReady(const QString &s);
 };
