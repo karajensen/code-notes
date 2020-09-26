@@ -7,10 +7,10 @@ QFile file("myFile.txt");
 if(file.open(QIODevice::ReadOnly))
 {
     QTextStream stream(&file);
-    QString line = stream.readLine(); // read the next line
-    while(!line.isNull())
+    while(!file.atEnd())
     {
-        line = stream.readLine();
+        line = stream.readLine(); // returns QString
+        line = file.readLine(); // returns QByteArray
     }
 }
 
