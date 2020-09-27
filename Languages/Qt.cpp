@@ -23,8 +23,6 @@ IMPLICIT SHARING (COPY-ON-WRITE)
 • All copy-able components: QBrush, QImage, QDateTime, QDir, QFileInfo, QLocale, QUrl etc.
 **************************************************************************************************************/
 
-QT_FORWARD_DECLARE_CLASS(QQuickItem)
-
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -1263,7 +1261,7 @@ waitCondition.wakeOne() /*or*/ waitCondition.wakeAll(); // Called on other threa
 mutex.unlock();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT ALGORITHMS
+// QT GLOBAL / ALGORITHMS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
 // QtMath
@@ -1321,6 +1319,10 @@ qConstOverload<Arg1, Arg2>(&MyClass::fn) // Converts address to const version
 qNonConstOverload<Arg1, Arg2>(&MyClass::fn) // Converts address to non-const version
 qOverload<Arg1, Arg2>(&MyClass::fn) // Converts address to an overloaded version
 QOverload<Arg1, Arg2>::of(&MyClass::fn) // Alternate syntax
+    
+// QtGlobal Macros
+Q_UNREACHABLE()
+Q_UNUSED(arg)
     
 // QtGlobal Environment Variables
 qEnvironmentVariable(name) // Returns QString of env var with name
