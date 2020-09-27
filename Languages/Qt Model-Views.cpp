@@ -249,9 +249,11 @@ whatsThis     // Qt::WhatsThisRole, QString
 
 // DELEGATE GLOBAL PROPERTIES
 // Accessible throughout the whole delegate hierarchy
+// Cannot be used if delegate contains a required property unless specified
 model // Role data for each delegate item, eg. model.role_name
 modelData // If view's model has no roles, use to access item data for delegate
 index // Index in view, can be -1 if removed from view
+required property int index // Allow 'index' to be used when delegate has required properties
     
 // DELEGATE ROOT PROPERTIES
 // Only accessible on the top-most parent of the delegate
