@@ -914,122 +914,6 @@ String     ->   QString
 Array      ->   QVariantList
 Object     ->   QVariantMap
 Undefined  ->   QVariant()
-    
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT JAVASCRIPT OBJECT
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-/*************************************************************************************************************
-• Used to pass Javascript objects/functions to/from QML
-• Can be stored in QVariant
-• Has no comparison functions, cannot be used as Q_PROPERTY with MEMBER
-**************************************************************************************************************/    
-
-// Creating object in C++
-QJSEngine myEngine;
-QJSValue obj = myEngine.newObject();
-obj.setProperty("key", "value");
-
-// Calling QML Function in C++
-Q_INVOKABLE void fn(const QJSValue& callback)
-{
-    if (callback.isCallable()) 
-    {
-        QJSValueList args;
-        args << "one";
-        args << 2;
-        const QJSValue value = callback.call(args);
-        const bool exception = value.isError(); // will be error if exception happened
-        const bool undefined = value.isUndefined(); // will be undefined if callback isn't a function or no return
-    }
-}
-
-// QJSValue
-QJSValue obj("value") / QJSValue obj(0) / QJSValue obj(0.0) / QJSValue obj(true)
-obj.call(args) // See calling QML function in C++
-obj.deleteProperty("key") // Returns true if deleted key or key doesn't exist
-obj.equals(obj2) // Comparison using javascript == (compares values but not types)
-obj.strictlyEquals(obj2) // Comparison using javascript === (compares values and types)
-obj.errorType() // Returns QJSValue::ErrorType
-obj.hasProperty("key")
-obj.isArray() // Is javascript Array
-obj.isBool() // Is javascript Boolean
-obj.isUndefined() // Is javascript Undefined
-obj.isCallable() // Can be called as a function
-obj.isDate() // Is javacript Date
-obj.isError() // Is an object of the Error class
-obj.isNull() // Is javascript Null
-obj.isNumber() // Is javascript Number
-obj.isObject() // Is javascript Object
-obj.isQObject() // Is a QObject
-obj.isRegExp() // Is javascript RegExp
-obj.isString() // Is javascript String
-obj.isVariant() // Is a variant value
-obj.property("key") // Returns QJSValue which is undefined if doesn't exist
-obj.property(index)
-obj.setProperty("key", "value") // Creates if doesn't exist, does nothing if not an Object
-obj.setProperty(index, "value") 
-obj.toBool() // Returns bool
-obj.toDateTime() // Returns QDateTime
-obj.toInt() // Returns qint32
-obj.toNumber() // Returns double
-obj.toQObject() // Returns QObject*
-obj.toString() // Returns QString
-obj.toUInt() // Returns quint32
-obj.toVariant() // Returns QVariant, converts type if needed eg. Boolean -> QVariant(bool)
-    
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT QML PROPERTY MAP
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-/*************************************************************************************************************
-• Used to create dynamic QObject properties for use in QML
-**************************************************************************************************************/
-    
-QQmlPropertyMap map
-map.insert("property", variant)
-map.clear("property")
-map.contains("property")
-map.count() / map.size() 
-map.isEmpty()
-map.keys() // Returns QStringList of all property names
-map.value("property") // Returns QVariant value at key or invalid QVariant if doesn't exist
-map.valueChanged() // Signal emitted only when value is changed in QML
-
-// ADDING TO QML
-QQmlPropertyMap subMap(&map)
-map.insert("property", QVariant::fromValue(0))
-subMap.insert("property", QVariant::fromValue("test"))
-map.insert("subMap", QVariant::fromValue(subMap))
-context->setContextProperty("map", &map)
-console.log(map.subMap.property)
-    
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// QT QML PROPERTY LIST
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-/*************************************************************************************************************
-• Used to store QML created lists on C++ side
-**************************************************************************************************************/
-
-ListHolder
-{
-    list: [
-        ListItem { value: 0 },
-        ListItem { value: 1 },
-        ListItem { value: 2 }
-    ]
-}
- 
-class ListHolder: public QObject
-{
-    Q_PROPERTY(QQmlListProperty<ListItem> list READ list NOTIFY listChanged) // WRITE auto, ListItem is QObject
-    QQmlListProperty<ListItem> list()
-    {
-        // Can also set own functions for append, count, clear, at
-        return QQmlListProperty<ListItem>(this, m_list);
-    }
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT MIME DATA
@@ -1071,3 +955,102 @@ data.urls() // Returns QList<QUrl> or empty
 "text/plain"                                   // QString
 "image/ *"                                     // QImage      
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML SPECIFIC CONTAINERS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+/*************************************************************************************************************
+QJSValue
+• Used to pass Javascript objects/functions to/from QML
+• Can be stored in QVariant
+• Has no comparison functions, cannot be used as Q_PROPERTY with MEMBER
+
+QQmlPropertyMap
+• Used to create dynamic QObject properties for use in QML
+• No COW or copying (inherits QObject)
+
+QQmlListProperty<T>
+• Used to store QML created lists in C++
+• No COW
+**************************************************************************************************************/    
+
+// QJSValue
+QJSValue obj("value") / QJSValue obj(0) / QJSValue obj(0.0) / QJSValue obj(true)
+obj.call(args) // See calling QML function in C++
+obj.deleteProperty("key") // Returns true if deleted key or key doesn't exist
+obj.equals(obj2) // Comparison using javascript == (compares values but not types)
+obj.strictlyEquals(obj2) // Comparison using javascript === (compares values and types)
+obj.errorType() // Returns QJSValue::ErrorType
+obj.hasProperty("key")
+obj.isArray() // Is javascript Array
+obj.isBool() // Is javascript Boolean
+obj.isUndefined() // Is javascript Undefined
+obj.isCallable() // Can be called as a function
+obj.isDate() // Is javacript Date
+obj.isError() // Is an object of the Error class
+obj.isNull() // Is javascript Null
+obj.isNumber() // Is javascript Number
+obj.isObject() // Is javascript Object
+obj.isQObject() // Is a QObject
+obj.isRegExp() // Is javascript RegExp
+obj.isString() // Is javascript String
+obj.isVariant() // Is a variant value
+obj.property("key") // Returns QJSValue which is undefined if doesn't exist
+obj.property(index)
+obj.setProperty("key", "value") // Creates if doesn't exist, does nothing if not an Object
+obj.setProperty(index, "value") 
+obj.toBool() // Returns bool
+obj.toDateTime() // Returns QDateTime
+obj.toInt() // Returns qint32
+obj.toNumber() // Returns double
+obj.toQObject() // Returns QObject*
+obj.toString() // Returns QString
+obj.toUInt() // Returns quint32
+obj.toVariant() // Returns QVariant, converts type if needed eg. Boolean -> QVariant(bool)
+
+Q_INVOKABLE void callFn(const QJSValue& fn)
+{
+    if (!fn.isCallable()) { return; }
+    QJSValueList args;
+    args << "one";
+    args << 2;
+    const QJSValue value = fn.call(args);
+    const bool exception = value.isError(); // will be error if exception happened
+    const bool undefined = value.isUndefined(); // will be undefined if callback isn't a function or no return
+    QMetaObject::invokeMethod(object, [fn]() mutable { fn.call(); }, Qt::ConnectionType::QueuedConnection);
+}
+    
+// QQmlPropertyMap
+QQmlPropertyMap map
+map.insert("property", variant)
+map.clear("property")
+map.contains("property")
+map.count() / map.size() 
+map.isEmpty()
+map.keys() // Returns QStringList of all property names
+map.value("property") // Returns QVariant value at key or invalid QVariant if doesn't exist
+map.valueChanged() // Signal emitted only when value is changed in QML
+
+QQmlPropertyMap subMap(&map)
+map.insert("property", QVariant::fromValue(0))
+subMap.insert("property", QVariant::fromValue("test"))
+map.insert("subMap", QVariant::fromValue(subMap))
+
+// QQmlListProperty
+ListHolder {
+    list: [
+        ListItem { value: 0 },
+        ListItem { value: 1 },
+        ListItem { value: 2 }
+    ]
+}
+class ListHolder: public QObject
+{
+    Q_PROPERTY(QQmlListProperty<ListItem> list READ list NOTIFY listChanged) // WRITE auto, ListItem is QObject
+    QQmlListProperty<ListItem> list()
+    {
+        // Can also set own functions for append, count, clear, at
+        return QQmlListProperty<ListItem>(this, m_list);
+    }
+}
+    
