@@ -916,7 +916,7 @@ CONVERTING BETWEEN C++/QML
 • Unsupported types can be passed to/from QML without registering, but cannot be used unless registered
 • QObject* derived types don't require registering and can be fully used, except if MyClass* is used
 • QJSValue/QQmlPropertyMap can be used to pass dynamic objects/functions to/from QML
-• qint64/quint64 looses precision when passed to QML
+• quint64 looses precision when passed to QML as Javascript Number doesn't have enough precision
 
 CONVERTING CONTAINERS BETWEEN C++/QML
 • If unsupported Container<T>, must use QVariantList, even if T is supported
