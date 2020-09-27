@@ -39,10 +39,15 @@ UNARY OPERATOR: Act on single values
 BINARY OPERATOR: Act on two values
 TERNARY OPERATOR: Act on three values
 
-DEEP COPY: Underlying memory the reference/pointer points to is copied
-SHALLOW COPY: Reference/pointer is copied and points to original data
+DEEP COPY: A complete copy, underlying memory of all references/pointers duplicated
+SHALLOW COPY: A shared copy, references/pointers all point to same location
 TRIVIALLY COPYABLE: Can copy with memcpy; not types that have deep copy/hidden pointers
 TRIVIALLY RELOCATABLE: Can move with memcpy; not types that self refer (pimpl with ptr back to parent)
+
+COPY-ON-WRITE / IMPLICIT SHARING
+• Objects share the same memory in a 'shared block' if have the same values
+• Automatically detaches the object from a shared block when object changes and ref count is > 1
+• Can be dangerous for iterators when container detaches from shared block
 
 DECLARING VARIABLES
 • Determines how much memory is needed for a data object
