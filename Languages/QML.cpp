@@ -46,7 +46,8 @@ Item {
     property Item myItem: Rectangle {}     // QML component as a property, creates instance
     property Component myItem: Item {}     // QML component as a property, does not create instance
     readonly property int myProperty: 0    // read-only property
-    property alias myAlias: myProperty     // reference for property    
+    required property int myProperty       // Must be set when component used, cannot be assigned in onComplete
+    property alias myAlias: myProperty     // reference for property
     signal mySignal(int value)             // call with item.mySignal(0)
       
     /* Attached Property, Called when the item has been instantiated */
@@ -113,8 +114,7 @@ function fn() {
 // LOG QML ITEM PROPERTIES
 console.error(JSON.stringify(myQmlComponent));
 console.error(JSON.stringify(myObject));
-for (var key in myObject) 
-{ 
+for (var key in myObject) { 
     console.error(key);
     console.error(myObject[key]);
 }
