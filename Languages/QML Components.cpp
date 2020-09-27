@@ -25,22 +25,14 @@ Item {
     transformOrigin // TransformOrigin type which scale/rotate use
     visible // Recursive, whether item is rendered
     x / y / z // Position and stacking depth of item, negative z draws under parent
-    anchors.top
-    anchors.bottom
-    anchors.right
-    anchors.left
-    anchors.horizontalCenter
-    anchors.verticalCenter
+    anchors.top / bottom / right / left
+    anchors.horizontalCenter / verticalCenter
     anchors.baseLine
     anchors.fill // Takes QML Item parent or sibling, set to undefined to detach
     anchors.centerIn // Takes QML Item parent or sibling, set to undefined to detach
     anchors.margins // Set value for all margins
-    anchors.topMargin // Set value for top margin
-    anchors.bottomMargin // Set value for bottom margin
-    anchors.leftMargin // Set value for left margin
-    anchors.rightMargin // Set value for right margin
-    anchors.horizontalCenterOffset // Value offset from horizontal center
-    anchors.verticalCenterOffset // Value offset from vertical center
+    anchors.topMargin / bottomMargin / leftMargin / rightMargin
+    anchors.horizontalCenterOffset / verticalCenterOffset
     anchors.baselineOffset // Value offset from position
     anchors.alignWhenCentered // forces centered anchors to align to a whole pixel, default true
     state // QString state name, default empty
@@ -60,14 +52,12 @@ Item {
         
     /* list<Transform>, list of transformations to apply */
     transform: [  
-        Rotation // rotate item around its center, requires item id
-        {
+        Rotation { // rotate item around its center, requires item id
             angle: angleDegrees
             origin.x: item.width / 2
             origin.y: item.height / 2
         },
-        Translate // using x/y will change center of item, requires item id
-        {
+        Translate { // using x/y will change center of item, requires item id
             x: -item.width / 2
             y: -item.height / 2
         }
@@ -122,6 +112,8 @@ QtObject {
 Component {
     Rectangle {
     }
+}
+component MyObject: Rectangle {
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -220,12 +212,8 @@ State {
     
     /* Change some anchors */
     AnchorChange {
-        anchors.left
-        anchors.right
-        anchors.horizontalCenter
-        anchors.top
-        anchors.bottom
-        anchors.verticalCenter
+        anchors.left / right / top / bottom
+        anchors.horizontalCenter / verticalCenter
         anchors.baseline
         target
     }
@@ -238,8 +226,7 @@ State {
         scale: 0.0 // New scale after parent change
         target: item // Item to reparent
         width: 0.0 // New width after parent change
-        x: 0.0 // New offset from new parent
-        y: 0.0 // New offset from new parent
+        x / y: 0.0 // New offset from new parent
     }
 }
     
@@ -285,20 +272,16 @@ Window {
     contentOrientation
     data
     flags
-    height
-    maximumHeight
-    maximumWidth
-    minimumHeight
-    minimumWidth
+    height / width
+    maximumHeight / maximumWidth
+    minimumHeight / minimumWidth
     modality
     opacity
     screen
     title
     visibility
     visible
-    width
-    x
-    y
+    x / y
     onClosing: {}
 }
 
@@ -359,10 +342,9 @@ Item {
 // import QtQuick.Window 2.11
 // Provides information about the screen of the parent
 Screen {
-    desktopAvailableHeight
-    desktopAvailableWidth
+    desktopAvailableHeight / desktopAvailableWidth
     devicePixelRatio
-    height
+    height / width
     manufacturer
     model
     name
@@ -371,9 +353,7 @@ Screen {
     pixelDensity
     primaryOrientation
     serialNumber
-    virtualX
-    virtualY
-    width
+    virtualX / virtualY
 }
    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -383,23 +363,16 @@ Screen {
 // LAYOUT ATTACHED PROPERTIES
 // Use these on any components inside the layout
 Layout.alignment // Layout Alignment Flags
-Layout.bottomMargin // Overrides margin property if set
 Layout.column // column position of an item in a GridLayout
 Layout.columnSpan // column span of an item in a GridLayout
-Layout.fillHeight // Uses preferredHeight if false
-Layout.fillWidth // Uses preferredWidth if false
-Layout.leftMargin // Overrides margin property if set
+Layout.fillHeight / fillWidth // Uses preferredHeight / Width if false
+Layout.leftMargin / rightMargin / topMargin / bottomMargin // Overrides margin property if set
 Layout.margins // Spacing between items
-Layout.maximumHeight // Number.POSITIVE_INFINITY default
-Layout.maximumWidth // Number.POSITIVE_INFINITY default
-Layout.minimumHeight // 0 default
-Layout.minimumWidth // 0 default
-Layout.preferredHeight // if -1 (default), will be ignored, and item's implicitHeight used instead
-Layout.preferredWidth // if -1 (default), will be ignored, and item's implicitWidth used instead
-Layout.rightMargin // Overrides margin property if set
+Layout.maximumHeight / maximumWidth // Number.POSITIVE_INFINITY default
+Layout.minimumHeight / minimumWidth // 0 default
+Layout.preferredHeight / preferredWidth // if -1 (default), will be ignored, and item's implicit used instead
 Layout.row // row position of an item in a GridLayout
 Layout.rowSpan // row span of an item in a GridLayout
-Layout.topMargin // Overrides margin property if set
     
 // POSITIONER ATTACHED PROPERTIES
 // Attach to top-level children within a Column, Row, Flow or Grid
@@ -424,11 +397,7 @@ RowLayout {
 // import QtQuick 2.11
 // Inherits Item, Positions its child items along a single row
 Row {
-    bottomPadding: 1.0 // padding around the content, overrides 'padding'
-    leftPadding: 1.0 // padding around the content, overrides 'padding'
-    rightPadding: 1.0 // padding around the content, overrides 'padding'
-    topPadding: 1.0 // padding around the content, overrides 'padding'
-    padding: 1.0 // padding around the content
+    bottomPadding / leftPadding / rightPadding / topPadding // padding around the content
     spacing: 0 // default, amount in pixels left empty between adjacent items
     layoutDirection: Qt.LeftToRight // default, Layout Direction Enum, item add/insert direction
     add: Transition {} // Effect to apply when items added/visibility changed
@@ -456,11 +425,7 @@ ColumnLayout {
 // import QtQuick 2.11
 // Inherits Item, Positions its child items along a single column
 Column {
-    bottomPadding: 1.0 // padding around the content, overrides 'padding'
-    leftPadding: 1.0 // padding around the content, overrides 'padding'
-    rightPadding: 1.0 // padding around the content, overrides 'padding'
-    topPadding: 1.0 // padding around the content, overrides 'padding'
-    padding: 1.0 // padding around the content
+    bottomPadding / leftPadding / rightPadding / topPadding // padding around the content
     spacing: 0 // default, amount in pixels left empty between adjacent items
     add: Transition {} // Effect to apply when items added/visibility changed
     move: Transition {} // Effect to apply when items move
@@ -491,11 +456,7 @@ GridLayout {
 // import QtQuick 2.11
 // Inherits Item, Positions its child items in grid formation
 Grid {
-    bottomPadding: 1.0 // padding around the content, overrides 'padding'
-    leftPadding: 1.0 // padding around the content, overrides 'padding'
-    rightPadding: 1.0 // padding around the content, overrides 'padding'
-    topPadding: 1.0 // padding around the content, overrides 'padding'
-    padding: 1.0 // padding around the content
+    bottomPadding / leftPadding / rightPadding / topPadding // padding around the content
     columnSpacing: 1 // default not set, spacing in pixels between columns
     columns: 4 // default, number of columns in grid
     flow: <T>.LeftToRight // default, Grid Flow Enum, item wrapping with columns/rows properties
@@ -517,11 +478,7 @@ grid.forceLayout() // Triggers an update instead of waiting for scheduled one
 // import QtQuick 2.11
 // Inherits Item, Positions its children side by side, wrapping as necessary
 Flow {
-    bottomPadding: 1.0 // padding around the content, overrides 'padding'
-    leftPadding: 1.0 // padding around the content, overrides 'padding'
-    rightPadding: 1.0 // padding around the content, overrides 'padding'
-    topPadding: 1.0 // padding around the content, overrides 'padding'
-    padding: 1.0 // padding around the content
+    bottomPadding / leftPadding / rightPadding / topPadding // padding around the content
     flow: <T>.LeftToRight // default, Grid Flow Enum, item wrapping with columns/rows properties
     layoutDirection: Qt.LeftToRight // default, Layout Direction Enum, item add/insert direction
     spacing: 0 // default, amount in pixels left empty between adjacent items    
@@ -572,8 +529,7 @@ Action {
     ActionGroup.group: myAction // Add the action to the group
     checkable: true // defaults false
     checked: true
-    icon.width: 100 // maximum width of the icon
-    icon.height: 100 // maximum height of the icon
+    icon.width / height: 100 // maximum width / height of the icon
     icon.color: "red" // tints with colour    
     icon.source: "qrc:///icon.png"
     text: "str"
@@ -609,12 +565,12 @@ group.removeAction(myAction) // Remove an action
 // import QtQuick 2.11
 // Window or application wide key listening
 Shortcut  {
-	sequence: "F5" // Can also use StandardKey enum (eg. StandardKey.Cut)
+    sequence: "F5" // Can also use StandardKey enum (eg. StandardKey.Cut)
     sequences: ["Ctrl+E,Ctrl+W"]
     autoRepeat: true // Default, whether user can continue to use it after once
     context: Qt.WindowShortcut // Default, other option is Qt.ApplicationShortcut
     enabled: true // Default, whether allowed to use
-	onActivated: {}
+    onActivated: {}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -626,10 +582,7 @@ Shortcut  {
 // Inherits Item, base class for all controls
 // Controls (except non-interactive indicators) do not let clicks/touches through to children
 Control {
-    bottomPadding: 1 // padding around the contentItem, overrides 'padding'
-    leftPadding: 1 // padding around the contentItem, overrides 'padding'
-    rightPadding: 1 // padding around the contentItem, overrides 'padding'
-    topPadding: 1 // padding around the contentItem, overrides 'padding'
+    bottomPadding / leftPadding / rightPadding / topPadding // padding around the contentItem, overrides 'padding'
     padding: 1 // padding around the contentItem
     background: Rectangle {}
     contentItem: Label {} // Item automatically resized to fit within the padding of the control
@@ -689,8 +642,6 @@ ComboBox {
         width: cb.width
         highlighted: cb.highlightedIndex == index
         hoverEnabled: cb.hoverEnabled
-        text: cb.textRole ? (Array.isArray(cb.model) ? 
-            modelData[cb.textRole] : model[cb.textRole]) : modelData        
     }    
 }
 
@@ -974,8 +925,7 @@ AbstractButton {
     checkable: true // defaults false
     checked: true
     display: AbstractButton.IconOnly // Abstract Button Display Enum
-    icon.width: 100 // maximum width of the icon
-    icon.height: 100 // maximum height of the icon
+    icon.width / height: 100 // maximum width / height of the icon
     icon.color: "red" // tints with colour    
     icon.source: "qrc:///icon.png"
     onCanceled: {} // When loses mouse grab when pressed or not inside button when released emitted
@@ -1108,7 +1058,7 @@ AbstractButton {
 // Inherits AbstractButton
 MenuItem {
    menu: myMenu // Parent menu of the item
-   subMenu: Menu {} // Submenu to show if a submenu
+   subMenu: Menu {} // Submenu to show if a submenu, default property
    onTriggered: {} // Emitted when the menu item is triggered by the user
 }
 
@@ -1162,14 +1112,12 @@ Flickable {
     atXEnd
     atYBeginning
     atYEnd
-    bottomMargin
+    bottomMargin / topMargin / leftMargin / rightMargin
     boundsBehavior
     boundsMovement
-    contentHeight
+    contentHeight / contentWidth
     contentItem
-    contentWidth
-    contentX
-    contentY
+    contentX / contentY
     dragging
     draggingHorizontally
     draggingVertically
@@ -1181,18 +1129,14 @@ Flickable {
     horizontalOvershoot
     horizontalVelocity
     interactive: false // Disable scrolling for the view
-    leftMargin
     maximumFlickVelocity
     moving
     movingHorizontally
     movingVertically
-    originX
-    originY
+    originX / originY
     pixelAligned
     pressDelay
     rebound
-    rightMargin
-    topMargin
     verticalOvershoot
     verticalVelocity
     visibleArea.xPosition
@@ -1219,8 +1163,7 @@ flick.returnToBounds()
 Pane {
     contentChildren
     contentData
-    contentHeight
-    contentWidth
+    contentHeight / contentWidth
 }
 
 ------------------------------------------------------------------------------------------------------------
@@ -1241,8 +1184,7 @@ Frame {
 // QQC1 provides default styles for submenus but no dynamic options
 // Mac 'Quit' and 'About' default menus overidden by last MenuItem that uses specific shortcuts/title
 MenuBar {
-    contentHeight
-    contentWidth
+    contentHeight / contentWidth
     delegate: MenuItem {} // Top level menu buttons
     menus: [ // default property
         Menu {
@@ -1268,8 +1210,7 @@ menu.takeMenu(index)
 // Inherits Container, Allows the user to switch between different views or subtasks
 // https://doc.qt.io/qt-5.11/qtquickcontrols2-customize.html#customizing-tabbar
 TabBar {
-    contentHeight
-    contentWidth
+    contentHeight / contentWidth
     position
         
     // TabBar Attached poperties to every button child
@@ -1336,14 +1277,10 @@ SplitView {
 
     // Each child is auto added to 'handle', layed out by orientation and have attached properties
     Item {
-        SplitView.minimumWidth
-        SplitView.minimumHeight
-        SplitView.preferredWidth
-        SplitView.preferredHeight
-        SplitView.maximumWidth
-        SplitView.maximumHeight
-        SplitView.fillWidth // true for only one child
-        SplitView.fillHeight // true for only one child
+        SplitView.minimumWidth / minimumHeight
+        SplitView.preferredWidth / preferredHeight
+        SplitView.maximumWidth / maximumHeight
+        SplitView.fillWidth / fillHeight // true for only one child
         SplitHandle.hovered
         SplitHandle.pressed
     }
@@ -1362,8 +1299,7 @@ ScrollView {
     // Needs to be set if ScrollView has more than 1 child to scroll
     // If not set, auto calculated based off contents
     // Set -1 to disable scroll, if inherting Flickable use interactive: false
-    contentHeight: 100
-    contentWidth: 100
+    contentHeight / contentWidth
 }
 
 scroll.contentChildren // list<Item> of children, does not include non-visual QML objects
@@ -1459,16 +1395,14 @@ Popup {
     contentItem: Item {} // If popup has explicit size, auto sets size on item. If not, item's implicit sizes used
     contentChildren
     contentData
-    contentHeight
-    contentWidth
+    contentHeight / contentWidth
     dim
     enabled
     enter
     exit
     focus
     font
-    implicitHeight
-    implicitWidth
+    implicitHeight / implicitWidth
     locale
     mirrored
     modal
@@ -1480,11 +1414,8 @@ Popup {
     spacing    
     transformOrigin
     visible
-    width
-    height
-    x
-    y
-    z
+    width / height
+    x / y / z
     onAboutToHide: {}
     onAboutToShow: {}
     onClosed: {}
@@ -1553,7 +1484,6 @@ Menu {
     }
 	
     // Automatically size menu item based on content
-    property int _menuItemWidth: 0
     onOpened: {
         var menuItemWidth = 0;
         for (var i = 0; i < count; i++) {
@@ -1562,10 +1492,11 @@ Menu {
                 menuItemWidth = Math.max(menuItemWidth, menuItem.implicitWidth);
             }
         }
-        _menuItemWidth = Math.min(Math.max(menuItemWidth, minMenuItemWidth), maxMenuItemWidth);
+        menuItemWidth = Math.min(Math.max(menuItemWidth, minMenuItemWidth), maxMenuItemWidth);
         for (var i = 0; i < count; i++) {
-            itemAt(i).width = _menuItemWidth;
+            itemAt(i).width = menuItemWidth;
         }
+        control.width = menuItemWidth;
     }
 }
 
