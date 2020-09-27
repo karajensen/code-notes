@@ -15,6 +15,12 @@ QtQuickDialogs       Types for creating and interacting with system dialogs from
 QtQuickLayouts       Layouts are items that are used to arrange Qt Quick 2 based items in the UI
 QtTest               Classes for unit testing Qt applications and libraries
 QtWidgets            Classes to extend Qt GUI with C++ widgets
+
+IMPLICIT SHARING (COPY-ON-WRITE)
+• QObjects do not use it as they cannot be copied
+• All containers except: QVarLengthArray, QMimeData, QQmlListProperty, QQmlPropertyMap, QJSValue
+• QByteArray uses it but does not detach with [] as it returns QByteRef
+• All copy-able components: QBrush, QImage, QDateTime, QDir, QFileInfo, QLocale, QUrl etc.
 **************************************************************************************************************/
 
 QT_FORWARD_DECLARE_CLASS(QQuickItem)
@@ -63,12 +69,6 @@ DELETE LATER:
 • Should be used unless you can ensure:
     - Object isn't used in any pending events or callbacks (eg. QTimer)
     - Object isn't the signaller if being deleted in a slot
-
-IMPLICIT SHARING (COPY-ON-WRITE):
-• Objects share the same memory in a 'shared block' if have the same values
-• Automatically detaches the object from a shared block when object changes and ref count is > 1
-• Qt classes use it internally, doesn't require a shared data pointer for it to happen
-• Can be dangerous for iterators when container detaches from shared block:
 
 PROPERTY SYSTEM:
 • To create dynamic QML properties use QQmlPropertyMap (Qt Containers)
@@ -472,13 +472,14 @@ ushort       // generic typedef for unsigned short
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT COMPONENTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    
 // QPair<T1, T2>
 auto pair = qMakePair(v1, v2);
 pair.first;
 pair.second;
 
 // QTimer
+// Inherits QObject
 // Provides repetitive and single-shot timers, takes milliseconds
 // Interval of 0 will time out as soon as all events in the event queue have been processed
 QTimer timer;
@@ -912,10 +913,13 @@ Qt::WindowStaysOnBottomHint       // Window should always be on bottom
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /************************************************************************************************************
-CONVERTING BETWEEN C++ / QML
-• Non-registered types convert to/from QVariant using 'var'
-• Javascript values, objects and functions can convert to/from QJSValue
-• Large integers loose precision when passed to QML, wrap value inside a Q_GADGET or convert to double
+CONVERTING BETWEEN C++/QML
+• Data passed via Q_PROPERTY, Q_INVOKABLE/slots, setContextProperty or setRootContext
+• Objects can be passed to/from QML without registering, but cannot be used unless registered
+• qint64/quint64 looses precision when passed to QML
+• QJSValue/QQmlPropertyMap can be used to pass dynamic objects/functions to/from QML
+
+CONVERTING CONTAINERS BETWEEN C++/QML
 • Non-registered container with type convert to/from QVariantList, even if type is registered
 • Converted Javascript arrays have a few differences from native Javascript arrays:
    - delete myArray[i] sets element as default constructed instead of undefined
@@ -963,29 +967,16 @@ FOUR WAYS TO CREATE QML ITEMS
 • QQuickItem: graphical with Scene Graph Nodes (QQuickItem::updatePaintNode)
 • QQuickPaintedItem: graphical with QPainter (QQuickPaintedItem::paint), slow
 • QQuickFramebufferObject: requires QQuickFramebufferObject::Renderer, uses render targets
-
-OWNERSHIP WITH QML
-• Data passed via Q_PROPERTY, Q_INVOKABLE, setContextProperty or setRootContext
-• Best to set CppOwnership for all parentless QObjects passed to QML
-• Officially, only Q_INVOKABLE will automatically take ownership of parentless QObjects unless CppOwnership
 **************************************************************************************************************/
 
-// USING QOBJECTS WITH QML
-// QGadgets: to use, needs Q_GADGET registration with Variant/Property system and is passed by value
-// QObjects: QObject* doesn't need any registration, MyObject* needs registration
-Q_PROPERTY(QList<QObject*> objList MEMBER m_objList) // Has cpp owernship
+// OWNERSHIP WITH QML
+// Best to set CppOwnership for all parentless QObjects passed to QML
+// Officially only Q_INVOKABLE will automatically take ownership of parentless QObjects unless CppOwnership
 Q_PROPERTY(QObject* obj MEMBER m_obj) // Has cpp owernship
-Q_INVOKABLE QObject* myFn() { ... } // Returning parentless QObject* has qml ownership
-Q_INVOKABLE QList<QObject*> myFn()  { ... } // Returning parentless QList<QObject*> has cpp ownership
+Q_INVOKABLE QObject* myFn() {...} // Returning parentless QObject* has qml ownership
+Q_INVOKABLE QList<QObject*> myFn()  {...} // Returning parentless QList<QObject*> has cpp ownership
 QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership); // Force cpp ownership
 QQmlEngine::setObjectOwnership(myObj, QQmlEngine::JavaScriptOwnership); // Force QML ownership
-
-// USING QML FUNCTIONS IN C++
-// callFn(myId, function(){}), callFn(myId, myFunction), callFn(myId, "myFn")
-void callFn(QObject* object, QJsValue fn) {
-    QMetaObject::invokeMethod(object, [fn]() mutable { fn.call(); }, Qt::ConnectionType::QueuedConnection);
-    QMetaObject::invokeMethod(object, "myFn", Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, msg));
-}
 
 // REGISTERING COMPONENTS WITH QML
 // To create QML Component, must be QObject derived
