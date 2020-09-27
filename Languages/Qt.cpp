@@ -978,7 +978,7 @@ Q_INVOKABLE QList<QObject*> myFn()  {...} // Returning parentless QList<QObject*
 QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership); // Force cpp ownership
 QQmlEngine::setObjectOwnership(myObj, QQmlEngine::JavaScriptOwnership); // Force QML ownership
 
-// REGISTERING COMPONENTS WITH QML
+// REGISTERING OBJECTS WITH QML
 // To create QML Component, must be QObject derived
 // use 'import MyInclude 1.0' / MyClass {}
 qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClass"); // Allows it to be used as MyClass {}
@@ -1006,6 +1006,7 @@ qmlRegisterSingletonType("MyInclude", 1, 0, "MySingleton",
     [](QQmlEngine*, QJSEngine*)->QObject* { return new MySingleton(); });
 
 // REGISTERING GLOBAL FUNCTIONS WIH QML
+// Requires QQmlEngine which inherits QJSEngine
 // Call using 'globalFn(10, "str")' without namespaces
 class GlobalFnHolder : public QObject
 {
@@ -1014,9 +1015,16 @@ public:
     Q_INVOKABLE bool globalFn(int myInt, QString myString);
 };
 m_globalFnHolder = new GlobalFnHolder(this);
-m_globalFnObject = m_qmlEngine->newQObject(m_globalFnHolder); // QJSValue
-m_qmlEngine->globalObject().setProperty(QLatin1String("globalFn"), 
+m_globalFnObject = qmlEngine.newQObject(m_globalFnHolder); // QJSValue
+qmlEngine.globalObject().setProperty(QLatin1String("globalFn"), 
     m_globalFnObject.property(QLatin1String("globalFn")));
+
+// USING QML OBJECTS/FUNCTIONS IN C++
+// See QJSValue for more details, dangerous to store object but can be used as context object
+Q_INVOKABLE void myFunction(QObject* object, QJsValue fn) {
+    QMetaObject::invokeMethod(object, [fn]() mutable { fn.call(); }, Qt::ConnectionType::QueuedConnection);
+    QMetaObject::invokeMethod(object, "myFn", Q_RETURN_ARG(QVariant, returnedValue), Q_ARG(QVariant, msg));
+}
 
 // LOADING QML FILES
 qmlEngine->load(QUrl("qrc:/Main.qml"));
