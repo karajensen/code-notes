@@ -913,12 +913,13 @@ Qt::WindowStaysOnBottomHint       // Window should always be on bottom
 /************************************************************************************************************
 CONVERTING BETWEEN C++/QML
 • Data passed via Q_PROPERTY, Q_INVOKABLE/slots, setContextProperty or setRootContext
-• Objects can be passed to/from QML without registering, but cannot be used unless registered
-• qint64/quint64 looses precision when passed to QML
+• Unsupported types can be passed to/from QML without registering, but cannot be used unless registered
+• QObject* derived types don't require registering and can be fully used, except if MyClass* is used
 • QJSValue/QQmlPropertyMap can be used to pass dynamic objects/functions to/from QML
+• qint64/quint64 looses precision when passed to QML
 
 CONVERTING CONTAINERS BETWEEN C++/QML
-• Non-registered container with type convert to/from QVariantList, even if type is registered
+• If unsupported Container<T>, must use QVariantList, even if T is supported
 • Converted Javascript arrays have a few differences from native Javascript arrays:
    - delete myArray[i] sets element as default constructed instead of undefined
    - resizing larger will default construct elements instead of be undefined
@@ -926,6 +927,7 @@ CONVERTING CONTAINERS BETWEEN C++/QML
 • Avoid std::vectors as they are copied each access whether Q_PROPERTY or Q_INVOKABLE
 • Q_PROPERTY container more expensive to read/write than Q_INVOKABLE returned container
 
+QML SUPPORTED TYPES
 CPP                                       QML              JAVASCRIPT
 bool                                      bool             Boolean 
 unsigned int/int                          int              Number
