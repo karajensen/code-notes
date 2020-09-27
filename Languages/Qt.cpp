@@ -1155,6 +1155,7 @@ context.engine() // Returns QQmlEngine*
 context.contextProperty("key") // Returns value as QVariant
 
 // QQmlEngine
+// Inherits QJsEngine/QObject
 QQmlEngine engine
 engine.addImageProvider(providerId, provider)
 engine.imageProvider(providerId) // Return QQmlImageProviderBase*
