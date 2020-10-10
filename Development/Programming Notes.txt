@@ -564,6 +564,6 @@ WINDOWS:
 • API only supports ANSI in the user's locale (MessageBoxA) or UTF-16 (MessageBoxW)
 • MBSC option enables 'A' ANSI API versions and Unicode option enables 'W' UTF-16 API versions
 • STL file manipulation/streams take in std::string for ANSI and std::wstring for UTF-16
-• If have an UTF-8 encoded path that contain non-ANSI characters, must convert to UTF-16 for API 
+• If have an UTF-8 encoded filepath that contains non-ANSI characters, must convert to std::wstring
 • The STL std::wstring overloads are Windows only, not supported on other OS
 
