@@ -1350,15 +1350,23 @@ qputenv("QML_DISABLE_DISK_CACHE", "1"); // Disables caching of qml files
 • Avoid static strings as they are initialised before translator is set
 • Avoid using tr in threads, if used in threads, must not switch translators at same time
 
+TRANSLATION STRINGS:
+• Ensure ',' and ' ' are translated as some languages (Japanese) use different characters
+• Avoid translation word puzzles
+• Use //: to provide translation notes
+
 LUPDATE: Command line tool that looks through source code and creates ts file from strings
 LRELEASE: Converts ts files to qm files 
 LINGUIST: GUI app that edits ts files and can save qml files
 **************************************************************************************************************/
 
+// Can overload QTranslator::translate to provide custom/test translations
+// Can have multiple translators installed, searched last to first, first translation found is used
 QTranslator translator
 translator.load("MyApp_en_US.qm", ":/qrc_path")
 application.installTranslator(&translator)
-application.qmlEngine()->retranslate()
+application.removeTranslator(&translator)
+application.qmlEngine()->retranslate() // Only for qml, look at QEvent::LanguageChange for C++
    
 QLocale("invalid") // Fallback to c locale
 QLocale() // System locale unless QLocale::setDefault called
@@ -1368,13 +1376,9 @@ QLocale::c() // C locale
 QLocale::setDefault(locale) // Sets what QLocale() will default to
 QLocale().groupSeparator() // comma for locales that use it
     
-//: This is a comment that will be added to 'MyString' in the ts file
-QObject::tr("MyString");
-
 // Numeric form translations (qStr also supported)
 tr("%L1 item%2").arg(count).arg(count == 1 ? "" : "s");
 tr("%Ln item(s)", "", count);
-tr("%n item(s)", "", count); // without locale
 
 // Number translations (qStr also supported)
 tr(%L1 item).arg(count)
@@ -1382,3 +1386,8 @@ tr(%1 item).arg(count) // without locale
 tr(%1 item).arg(QLocale().toString(count, 'f', precision))
 qsTr(%1 item).arg(count.toLocaleString(Qt.locale(), 'f', precision))
 
+// Translate with custom context
+// context = grouping, disambiguation = for equal sourceText within context
+// disambiguation and n optional
+QCoreApplication::translate(context, sourceText, disambiguation, n)
+Qt.qsTranslate(context, sourceText, disambiguation, n) // qml
