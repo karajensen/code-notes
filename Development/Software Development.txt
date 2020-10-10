@@ -416,6 +416,14 @@ if [ ! -z "${MY_ENV_VARIABLE}" ]      # If env variable doesn't exist
 if [ -f "${CL_PATH}" ]                # If file exists
 read -p "Press any key to exit..."    # Pause the console
 
+# ITERATE OVER CHANGED FILES
+git status --porcelain | awk '$1 == "M" { print $2 }' | while read file
+do
+    if [[ ( $file == *.hpp ) || ( $file == *.cpp ) ]] ; then
+        echo $file
+    fi
+done
+
 # WINDOWS COMMANDS
 cmd //c copy ${MY_PATH} c:\\Folder\\file.exe
 cmd //c del c:\\Folder\\file.exe
