@@ -360,6 +360,10 @@ connect(signalMapper, SIGNAL(mapped(QObject)), this, SIGNAL(clicked(QObject)));
 QSignalSpy spy(sender, &Sender::mySignal)
 spy.isValid() // Returns true if setup correctly
 spy.wait(timeoutMs) // Starts an event loop until signal or timed out (returns false if timed out)
+    
+// SIGNAL BLOCKER
+// Blocks signals from obj in scope, same as turning on/off obj->blockSignals
+const QSignalBlocker blocker(obj);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT EVENT SYSTEM
