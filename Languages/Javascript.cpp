@@ -316,8 +316,8 @@ arr.map(x => return x * 2)         // Returns new array from transformed items
 arr.filter(x => return true)       // Returns new array from all items that return true
 arr.every(x => return true)        // Returns true if all item callbacks return true
 arr.some(x => return true)         // Returns true if at least one item callback returns true
-arr.reduce(a,b => return a+b)      // Iterates over all elements, returns single combined value
-arr.reduceRight(a,b => return a+b) // Iterates over all elements backwards, returns single combined value
+arr.reduce(total,x => return total+x)      // Iterates over all elements, returns single combined value
+arr.reduceRight(total,x => return total+x) // Iterates over all elements backwards, returns single combined value
 delete arr[i]                      // Only sets element to undefined, use splice instead to actually remove
     
 // SORTING
