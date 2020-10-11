@@ -841,11 +841,12 @@ console.debug("Message")
 console.info("Message")
 console.warn("Message")
 console.error("Message")
-console.assert(exp, "Message on fail")
+console.assert(exp, "Message on fail") // also prints stack trace
 console.time("timerName") / console.timeEnd("timerName") // log the time (in milliseconds) between the calls
 console.trace() // prints stack trace
 console.profile() / console.profileEnd() 
 console.exception("Message") // prints message and stack trace
+console.count("Message") // also prints number of times called
   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QML OPTIMIZATIONS
