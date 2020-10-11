@@ -31,6 +31,9 @@ int c = index % size;
 bool isOdd = x % 2;
 bool isOdd = x & 1;
 
+/** Check whether a number is divisible of n / is multiple of n */
+bool isMultiple = (x % 3) == 0;
+
 /** Swap two integers without using a temporary variable */
 a ^= b;
 b ^= a;
