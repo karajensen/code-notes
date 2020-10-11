@@ -616,8 +616,8 @@ ptr.reset();
 ptr.reset(new T[n]);
 
 // QPointer
-// Same as QScopedPointer, kept for legacy support
-QPointer<T> ptr(new T());
+// Weak pointer for QObject* that may have a parent
+QPointer<T> ptr(new T(parent));
 ptr.clear();             // Clears pointer and decrements ref count
 ptr.isNull();            // Returns if null
 ptr.data();              // Returns T*
