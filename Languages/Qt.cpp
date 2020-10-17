@@ -433,9 +433,14 @@ QApplication::sendEvent(myObject, &event);
 // POST EVENTS
 // Adds the event to an event queue run from the main loop and returns immediately
 // Takes ownership of event- not safe to access after post call
-QApplication::postEvent(myObject, 
-    new QMouseEvent(QEvent::MouseButtonPress, pos, 0, 0, 0), 
+const auto button = Qt::MouseButton::LeftButton; // QML Qt.LeftButton
+QCoreApplication::postEvent(object, 
+    new QMouseEvent(QEvent::MouseButtonPress, QPointF(0, 0), button, button, Qt::KeyboardModifier::NoModifier), 
     Qt::NormalEventPriority);
+const auto key = Qt::Key::Key_Escape; // QML Qt.Key_Escape
+QCoreApplication::postEvent(object,
+    new QKeyEvent(QEvent::KeyPress, key, Qt::NoModifier, QKeySequence(key).toString()),
+    Qt::HighEventPriority);
 
 // CUSTOM EVENTS
 class MyCustomEvent : public QEvent
