@@ -117,7 +117,7 @@ std::variant<int, float> myVariant; // can hold int or float
 myVariant = 20;                     // assign a value, current type is now int
 myVariant.index();                  // returns 0-based index for current type (eg. 0 for int, 1 for float)
 std::get<T>(myVariant);             // will throw std::bad_variant_access if asked for wrong current type
-std::get_if<T>(&myVariant);         // returns T* if the correct current type
+std::get_if<T>(&myVariant);         // returns T* if the correct current type, nullptr if incorrect
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <random>
