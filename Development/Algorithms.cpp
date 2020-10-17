@@ -241,6 +241,15 @@ for (int i = 0; i < size; ++i)
 }
 int uniqueInts = values.size();
 
+/** Find value count (and value with highest count) in an array **/
+std::map<float, int> values;
+for (const auto value : arr)
+{
+    ++values[value];
+}
+auto comparison = [](const auto& a, const auto& b){ return a.second < b.second; };
+const auto valueMaxCountPair = std::max_element(values.begin(), values.end(), comparison);
+
 /** Difference between n x n array diagonals */
 int primary = 0;
 int secondary = 0;
