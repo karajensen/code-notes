@@ -167,24 +167,6 @@ template<typename T> void MyFn(T x) { MyFn(x, std::is_integral<typename std::rem
 template<typename T> void MyFn(T x, std::false_type){}; // overload if a non-integral type
 template<typename T> void MyFn(T x, std::true_type){};  // overload if an integral type
 
-// ENABLE_IF
-// Enables/disables overloads
-template <typename T> // Only instantiate for T*
-typename std::enable_if<std::is_pointer<T>::value, T>::type fn(const std::vector<T>& vec, int index) const
-{
-    return vec[index];
-}
-template <typename T> // Only instantiate for T
-typename std::enable_if<!std::is_pointer<T>::value, const T*>::type fn(const std::vector<T>& vec, int index) const
-{
-    return &vec[index];
-}
-template <typename T1, typename T2> // Only instantiate if T2 is derived from T1
-typename std::enable_if<std::is_base_of<T1, T2>::value, ReturnObject>::type fn()
-{
-    return ReturnObject();
-}
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TEMPLATE PARAMETERS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -216,6 +198,38 @@ ClassA<ClassB<double, int>> obj;
 template <template <typename> class B, typename T> void MyFunction(C<T>& obj){}
 template <typename S> class ClassB {}; // signature of ClassB matches B
 MyFunction(ClassB<double>()); 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// TEMPLATE ENABLE-IF
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Only instantiate for T*
+template <typename T>
+typename std::enable_if<std::is_pointer<T>::value, T>::type fn(const std::vector<T>& vec, int index) const
+{
+    return vec[index];
+}
+
+// Only instantiate for T
+template <typename T>
+typename std::enable_if<!std::is_pointer<T>::value, const T*>::type fn(const std::vector<T>& vec, int index) const
+{
+    return &vec[index];
+}
+
+// Only instantiate if T2 is derived from T1
+template <typename T1, typename T2>
+typename std::enable_if<std::is_base_of<T1, T2>::value, ReturnObject>::type fn()
+{
+    return ReturnObject();
+}
+
+// Instantiate depending on value parameters
+template <int n>
+typename std::enable_if_t<(n < 1), float> getValue() { return 5.0f; }
+template <int n>
+typename std::enable_if_t<(n >= 1 && n < 3), float> getValue() { return 1.0f; }
+getValue<1>();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TEMPLATE INHERITANCE
