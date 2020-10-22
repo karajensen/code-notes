@@ -110,7 +110,7 @@ QString::fromUtf8(str, size) // Copies Utf8 const char* to QString
 QString::fromStdString(str) // Copies std::string using fromUtf8 to QString
 QString::fromStdWString(str) // Copies std::wstring to QString
     
-// QStringRef
+// QStringRef / QStringView (6.0+)
 // Most overload using QChar, QRegularExpression, QRegExp
 QStringRef ref(&str)
 QStringRef ref(&str, i, n) // Reference str from index i for n characters
@@ -290,7 +290,7 @@ QByteArray::OmitTrailingEquals   // Omits adding the padding equal signs at the 
 
 // QRegularExpression
 // Provides pattern matching using regular expressions
-// QRegExp is older, less effeciant version of QRegularExpression
+// QRegExp is older, less effeciant version of QRegularExpression, deprecated 6.0+
 // All \ must be backslashed to \\
 QRegularExpression re("pattern");
 re.setPattern("pattern")
@@ -401,6 +401,7 @@ QList<T>
   else void* becomes T*, copy-constructed into the heap using new
 • For Q_PRIMITIVE_TYPE objects doesn't call constructor/destructor
 • Wastes memory if sizeof(T) < sizeof(void*) or if allocated on heap due to extra T*
+• 6.0+ is same as QVector<T>
 
 QVector<T>
 • Continuous memory allocation, reallocates whole block when resizing
@@ -477,7 +478,7 @@ for (const auto& value : std::as_const(container)) {} // Enforce const container
 for (auto itr = container.begin(); itr != container.end(); ++itr) {} // COW detaches if container is mutable
 for (auto itr = container.cbegin(); itr != container.cend(); ++itr) {} // No COW detach
 
-// QList<T>
+// QList<T> (Pre 6.0)
 QList<T> lst = { value }
 lst[index]; // Returns const T& or T&, asserts out-of-range
 lst << value; // Allows streaming into container
