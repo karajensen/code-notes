@@ -325,6 +325,117 @@ template <typename T> class MyClass
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// VARIADIC TEMPLATES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//-----------------------------------------------------------------------------------------------
+// VARIADIC FUNCTIONS
+//-----------------------------------------------------------------------------------------------
+
+// Recursive function
+template<typename T, typename... Args> // Args is a template parameter pack
+void MyFn(const T& value, const Args&... args) // args is a function parameter pack
+{
+    //uses recursion to take first element from list
+    //sends rest (minus head) to next call of function
+    cout << value << ",";
+    MyFn(args...);
+}
+
+// Perfect Forwarding for arguments
+template<typename T, typename... Args>
+std::unique_ptr<T> MyFn(Args&&... args)
+{    
+    return std::move(std::make_unique<T>(std::forward<Args>(args)...));
+}
+
+// Functions with args using std forwarding
+template <typename... Args>
+std::vector<int> fn()
+{
+    // Can also use fold expressions with C++17
+    return std::initializer_list<int> { Args::myStaticFn()... };
+}
+fn<MyClassA, MyClassB>(); // calls MyCalssA::staticFun()...
+
+// Functions with args using static loop
+template <int First, int Last, typename Fn>
+inline void static_for(Fn const& fn)
+{
+    if constexpr (First < Last)
+    {
+        fn(std::integral_constant<int, First>{});
+        static_for<First + 1, Last>(fn);
+    }
+}
+template <typename... Args>
+std::vector<int> fn()
+{
+    std::vector<int> vec;
+    static_for<0, sizeof...(Args)>([&](auto index) {
+        vec.push_back(std::tuple_element_t<index, std::tuple<Args...>>::myStaticFn());
+    });
+    return vec;
+}
+fn<MyClassA, MyClassB>(); // calls MyCalssA::staticFun()...
+
+//-----------------------------------------------------------------------------------------------
+// VARIADIC CLASSES
+//-----------------------------------------------------------------------------------------------
+
+// Used for the visiter pattern and tuples, inherits itself minus one arg each time
+template<typename... Args> struct MyClass; // Forward Decl
+
+template<typename T, typename... Args> 
+struct MyClass<T, Args...> : MyClass<Args...>
+{
+     typedef MyClass<Args...> Base;
+     void MyFn()
+     {
+         std::cout << typeid(value).name() << std::endl;
+         Base::MyFn(); // Recurse down to one
+     }
+     T value;
+};
+
+template<typename T> 
+struct MyClass<T> // Specialized for one
+{
+    void MyFn() 
+    {
+        std::cout << typeid(value).name() << std::endl;
+    }
+    T value;
+};
+
+MyClass<int, float, double> myClass;
+
+//-----------------------------------------------------------------------------------------------
+// VARIADIC LAMBDAS
+//-----------------------------------------------------------------------------------------------
+
+auto MyFn = [](const auto& value, const Args&... args)
+{
+    cout << value << ",";
+    MyFn(args...);
+}
+MyFn(2.0,"hello",4,'c'); //can use any number, order or type of arguments
+MyFn(1.0,'d',"astring");
+
+// Perfect Forwarding for lambda arguments
+auto MyFn = [](auto&&... x)
+{
+    MyFn2(std::foward<decltype(x)>(x)...);
+}
+
+// Passing Variadic arguments to lambda callback
+template<typename... Args>
+void MyFn(Args&&... args)
+{
+    m_fn(std::forward<Args>(args)...);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UNIVERSAL REFERENCES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -358,74 +469,9 @@ auto MyFn = [](auto&& x){ MyFn2(std::foward<decltype(x)>(x)); };
 auto&& x = myObj; // initialised with lvalue reference, T/x = MyClass&
 auto&& x = 3;     // initialised with rvalue, T = MyClass, x = MyClass&&
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// VARIADIC TEMPLATES
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// VARIADIC FUNCTIONS
-// accept a variable number of arguments
-template<typename T, typename... Args> // Args is a template parameter pack
-void MyFn(const T& value, const Args&... args) // args is a function parameter pack
+// VARIADIC UNIVERSAL REFERENCES
+template<typename...T>
+void fn(T&&...v)
 {
-    //uses recursion to take first element from list
-    //sends rest (minus head) to next call of function
-    cout << value << ",";
-    MyFn(args...);
-}
-
-// Perfect Forwarding for function arguments
-template<typename T, typename... Args>
-std::unique_ptr<T> MyFn(Args&&... args)
-{    
-    return std::move(std::make_unique<T>(std::forward<Args>(args)...));
-};
-
-// VARIADIC CLASSES
-// Used for the visiter pattern and tuples, inherits itself minus one arg each time
-template<typename... Args> struct MyClass; // Forward Decl
- 
-template<typename T, typename... Args> 
-struct MyClass<T, Args...> : MyClass<Args...>
-{
-     typedef MyClass<Args...> Base;
-     void MyFn()
-     {
-         std::cout << typeid(value).name() << std::endl;
-         Base::MyFn(); // Recurse down to one
-     }
-     T value;
-};
-
-template<typename T> 
-struct MyClass<T> // Specialized for one
-{
-    void MyFn() 
-    {
-        std::cout << typeid(value).name() << std::endl;
-    }
-    T value;
-};
-
-MyClass<int, float, double> myClass;
-
-// VARIADIC LAMBDAS
-auto MyFn = [](const auto& value, const Args&... args)
-{
-    cout << value << ",";
-    MyFn(args...);
-}
-MyFn(2.0,"hello",4,'c'); //can use any number, order or type of arguments
-MyFn(1.0,'d',"astring");
-
-// Perfect Forwarding for lambda arguments
-auto MyFn = [](auto&&... x)
-{
-    MyFn2(std::foward<decltype(x)>(x)...);
-}
-
-// Passing Variadic arguments to lambda callback
-template<typename... Args>
-void MyFn(Args&&... args)
-{
-    m_fn(std::forward<Args>(args)...);
+     (..., vec.push_back(std::forward<T>(v))); // Fold expression
 }
