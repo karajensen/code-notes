@@ -297,43 +297,54 @@ CAN BE OVERLOADED
 ()      []      new     delete  new[]   delete[]
 **************************************************************************************************************/
 
-//USING OVERLOADS
+// USING OVERLOADS
 obj1*obj2  /*->*/  obj1.operator*(obj2);
 obj1+obj2  /*->*/  obj1.operator+(obj2);
 obj1[4]    /*->*/  obj1.operator[](4) 
 obj1[0][1] /*->*/  (obj1[0].operator[](1)).operator[0];
 
-//OVERLOAD DECLARATIONS
+// OVERLOAD DECLARATIONS
 MyClass operator++(int unused); //postfix: returns copy of value, then increments
 MyClass operator--(int unused); //postfix: returns copy of value, then decrements
 MyClass& operator++(); //prefix: increments, then returns reference to value
 MyClass& operator--(); //prefix: decrements, then returns reference to value
-const MyClass operator+(const MyClass& x) const;
-const MyClass operator*(const MyClass& x) const;
+const MyClass operator+(const MyClass& obj) const;
+const MyClass operator*(const MyClass& obj) const;
 MyClass& operator[](const int i);
 const MyClass& operator[](const int i) const;
 
-//NEW/DELETE OVERLOADING
+// NEW/DELETE OVERLOADING
 //User defined new/delete must be in done in pairs
 //Both automatically static even without keyword
 static void* operator new(std::size_t); 
 static void operator delete(void*);     
 
-//OVERLOADING FOR A*B ONLY
+// OVERLOADING FOR A*B ONLY
 A * B /*->*/ A.operator*(B);
-const MyClass operator*(const MyClass& x) const;
+const MyClass operator*(const MyClass& obj) const;
 
-//OVERLOADING FOR A*B AND B*A
+// OVERLOADING FOR A*B AND B*A
 B * A /*->*/ operator*(B, A); 
-friend const MyClass operator*(const MyClass& x1, const MyClass& x2) const;
+friend const MyClass operator*(const MyClass& obj1, const MyClass& obj2) const;
 
-//OVERLFOADING STD::COUT 
+// OVERLOADING STD::COUT 
 friend std::ostream & operator<<(std::ostream& os, const MyClass& obj)
 {
     os << obj.m_member;
     return os;
 }
 std::cout << obj;
+              
+// OVERLOADING COMPARISON
+bool operator==(const MyClass& rhs) const { return x == rhs.x; }
+bool operator!=(const MyClass& rhs) const { return !(*this == rhs); }
+bool operator<(const MyClass& rhs)  const { return x < rhs.x; }
+bool operator<=(const MyClass& rhs) const { return !(rhs < *this); }
+bool operator>(const MyClass& rhs)  const { return rhs < *this; }
+bool operator>=(const MyClass& rhs) const { return !(*this < rhs); }
+bool operator<=>(const MyClass& rhs) const = default; // Auto create all comparison operators using all members
+bool operator<=>(const MyClass& rhs) const { return x <=> rhs.x; } // Use specific members
+bool operator==(const MyClass& rhs) const { return x == rhs.x; } // Coupled with <=> will override for just ==
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FRIENDS
