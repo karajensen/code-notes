@@ -225,11 +225,10 @@ typename std::enable_if<std::is_base_of<T1, T2>::value, ReturnObject>::type fn()
 }
 
 // Instantiate depending on value parameters
-template <int n>
-typename std::enable_if_t<(n < 1), float> getValue() { return 5.0f; }
-template <int n>
-typename std::enable_if_t<(n >= 1 && n < 3), float> getValue() { return 1.0f; }
-getValue<1>();
+template <int n> typename std::enable_if_t<(n < 1), float> fn() { return 5.0f; };
+template <int n> typename std::enable_if_t<(n >= 1 && n < 3), float> fn() { return 1.0f; };
+template <int n> typename std::enable_if_t<(n == 10)> fn() {};
+fn<1>();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TEMPLATE INHERITANCE
