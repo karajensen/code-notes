@@ -138,9 +138,10 @@ const int& m_refMember; //Must be in initialisation list
 MyClass(const MyClass&) = delete;
 MyClass& operator=(const MyClass&) = delete;
 
-//===============================================================================================================
-// IMPLICIT CLASS METHODS
-//===============================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IMPLICIT CLASS MEMBERS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /*************************************************************************************************************
 • Are generated inline in class header
 • To generate in .cpp, delcare in header and use =default on definition
@@ -173,18 +174,11 @@ MyClass& operator=(const MyClass& obj);  // Copy assignnment operator
 MyClass& operator=(MyClass&& obj);       // Move assignment operator
 unsigned int MyClass::operator&();       // Address operator
 
-//===============================================================================================================
 // DESTRUCTOR
-//===============================================================================================================
-
 // All are implicitly noexcept
 // Derived are implicitly virtual if virtual base destructor
 virtual ~MyClass(){} 
 delete this; // calls destructor
-
-//===============================================================================================================
-// CONSTRUCTORS
-//===============================================================================================================
 
 // DEFAULT CONTRUCTOR
 // initialisation list must be in same order defined in class
@@ -230,10 +224,6 @@ MyClass obj(1, true)    // Uses MyClass(int x, bool y)
 // use explicit to stop implicit conversions from taking place
 // myObj = 4.3f; without explicit acts as cast operator
 explicit MyClass(float myFloat) {}
-
-//===============================================================================================================
-// ASSIGNMENT OPERATORS
-//===============================================================================================================
 
 // COPY ASSIGNMENT OPERATOR
 MyClass& operator=(const MyClass& obj)
