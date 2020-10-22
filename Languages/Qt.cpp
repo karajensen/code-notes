@@ -78,6 +78,7 @@ NOTIFY    [fn]    Optional, takes signal with one or no arguments, 'fn(arg)' or 
 RESET     [fn]    Optional, called when assigned 'undefined' in qml, must be 'void fn()'
 STORED    [bool]  Optionals, default true, whether property value must be saved when storing object's state
 REVISION  [int]   Optional, which qml import is supported, defaults all/0
+BINDING   [fn]    Optional, 6.0+ function to return the Bindable<T> of the property
 CONSTANT          Optional, makes readonly
 FINAL             Optional, can enable optimizations, indicates shouldn't override though not enforced by moc
 REQUIRED          Optional, enforces that property must be set in qml otherwise error
@@ -98,6 +99,10 @@ namespace N
         Q_PROPERTY(MyClass obj MEMBER m_obj) // Requires registration for QML use
         Q_PROPERTY(N::MyClass obj MEMBER m_obj) // If forward declared type, must use full namespace
         Q_PROPERTY(QQmlListProperty<QObject> children READ children)
+        
+        // Bindable properties (6.0+)
+        Q_PROPERTY(MyValue value READ getValue WRITE setValue BINDABLE bindableValue)
+        Q_OBJECT_BINDABLE_PROPERTY(MyClass, MyValue, m_value)
 
     public:
         explicit MyClass(QObject* parent = nullptr) : QObject(parent) {}   
@@ -106,6 +111,9 @@ namespace N
         Q_ENUM(MyClassEnum)
         enum MyClassFlag { One=0x01, Two=0x02, Three=0x04 };
         Q_FLAG(MyClassFlag)
+        
+        // Bindable properties (6.0+)
+        QBindable<MyValue> bindableValue() { return &m_value }
 
         // Can be overloaded, virtual, pure virtual, with defaults
         const MyValue& getValue() const { return m_value; }
@@ -197,14 +205,35 @@ metaEnum.keyToValue("ONE", &isValid) // Returns int or -1 if not found, optional
 metaEnum.keyCount() // Returns number of keys/values
 metaEnum.key(index) // Returns const char* key from int index, or null if doesn't exist
 metaEnum.value(index) // Returns int value with the given index, or returns -1 if none found
-    
+ 
 // QFlags
 // Requires Q_DECLARE_FLAGS and Q_DECLARE_OPERATORS_FOR_FLAGS, can implicity convert to unsigned int
 N::MyFlags flags = N::ONE | N::TWO
 flags.testFlag(a::ONE) // returns true if flags includes ONE
 flags ^= N::TWO // add TWO
 
-// TYPE INFO
+// QBindable (6.0+)
+myObject->bindableValue().setBinding([obj2](){ return obj2->x() });
+
+// Registering with QMetaType
+// Used to pass non-QObject types with QVariant and the property system (queued connections, Q_PROPERTY, Q_INVOKABLE)
+// Register Macros must be placed after class in .h
+// Type registered must be copy-constructable and have default constructor
+// Containers don't need to be registered for variant, but undefined if used in QML; Use QVariantList instead
+Q_DECLARE_METATYPE(MyGadget) // Allows use with variant: myVariant.value<N::MyGadget>()
+qRegisterMetaType<N::MyGadget>(); // Allows use with property system (eg. queued connections, Q_PROPERTY, Q_INVOKABLE)
+qRegisterMetaType<std::string>("std::string");
+qRegisterMetaType<std::unordered_map<std::string, std::string>>("std::unordered_map<std::string, std::string>");
+Q_ENUM(MyEnum) // Registers with variant and property system, _NS version for Q_NAMESPACE
+Q_FLAG(MyFlag) // Registers with variant and property system, _NS version for Q_NAMESPACE
+
+// Registering with Streaming
+// Allows use with drag/drop systems
+qRegisterMetaTypeStreamOperators<N::MyClass>("MyClass");
+QDataStream& operator<<(QDataStream& out, const MyClass& obj);
+QDataStream& operator>>(QDataStream& in, MyClass& obj);
+
+// Type Info
 // Macro must placed after class in .h
 // Q_PRIMITIVE_TYPE leaves obj memory unitialised, means trivally copyable
 // Q_MOVABLE_TYPE uses std::memcpy rather than copy ctor to move obs around, means trivally relocatable
@@ -214,26 +243,11 @@ Q_DECLARE_TYPEINFO(N::MyEnum, Q_PRIMITIVE_TYPE)
 Q_DECLARE_TYPEINFO(N::MyGadget, Q_MOVABLE_TYPE)
 QTypeInfoQuery<N::MyClass>::isRelocatable // Query type info
 
-// REGISTERING WITH VARIANT
-// Macros must be placed after class in .h
-// QObject classes can only register MyClass*, not MyClass as must be copy-constructable
-// Container don't need to be registered for variant, but undefined if used in QML; Use QVariantList instead
-Q_DECLARE_METATYPE(MyGadget) // Allows use with variant: myVariant.value<N::MyGadget>()
-qRegisterMetaType<N::MyGadget>(); // Allows use with property system
-Q_ENUM(MyEnum) // Registers with variant and property system, _NS version for Q_NAMESPACE
-Q_FLAG(MyFlag) // Registers with variant and property system, _NS version for Q_NAMESPACE
-
-// REGISTERING FOR STREAMING
-// Allows use with drag/drop systems
-qRegisterMetaTypeStreamOperators<N::MyClass>("MyClass");
-QDataStream& operator<<(QDataStream& out, const MyClass& obj);
-QDataStream& operator>>(QDataStream& in, MyClass& obj);
-
-// DELETING AN OBJECT
+// QObjects Deletion
 obj.deleteLater() /*or*/ delete obj /*or*/ qDeleteAll(objs) /*or*/ { obj }
 emit destroyed() // Emitted just before obj deleted, children deleted after signal
 
-// INVOKING A METHOD FROM QOBJECT
+// QObject Reflection
 auto metaObject = myObj->metaObject();
 auto methodIndex = metaObject->indexOfMethod("myFn(QVariant,bool)");
 if (methodIndex != -1)
@@ -250,7 +264,7 @@ if (methodIndex != -1)
     }
 }
 
-// ITERATE OVER PROPERTIES
+// QObject Iterate Properties
 auto metaObject = myObject->metaObject();
 for (int i = 0; i < metaObject->propertyCount(); ++i)
 {
@@ -285,6 +299,7 @@ CONNECTIONS:
 • SIGNAL/SLOT macros give runtime error, functions give compile error if signal/slot incompatible
 • Use normalised form from moc cpp for SIGNAL/SLOT macros, otherwise performance hit
 • QueuedConnection auto copies values, DirectConnection/BlockedConnection doesn't
+• QueuedConnection requires types requirested with qRegisterMetaType
 • BlockingQueuedConnection dangerous if connecting two objects with same thread affinity
 **************************************************************************************************************/
 
