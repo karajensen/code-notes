@@ -347,10 +347,10 @@ rbegin()  rend()  crbegin()  crend() // List only
 
 // ORDERED MAP
 // Every entry is sorted according to a compare function std::function<bool(const T&, const T&)>
-std::map<Key, T> MyMap;
+std::map<Key, T> myMap;
 std::map<key, T, std::function<bool(const T&, const T&)>> myMap(comparisonFn);
-std::map<Key, T, comparisonFunctor> MyMap;
-std::multi_map<Key, T> MyMultiMap // can have multiple entries for the one key
+std::map<Key, T, comparisonFunctor> myMap;
+std::multi_map<Key, T> myMultiMap // can have multiple entries for the one key
 std::map<Key, T>::iterator itr;   // iterator for map
 
 // UNORDERED MAP (HASH TABLE)
@@ -363,7 +363,8 @@ std::unordered_multimap<KeyType, ObjType> hashMap;
 // const Key is important when iterating
 // If std::pair<Key,T> used will create temporary copy of pair
 std::map<Key, T>::value_type; /*or*/ std::pair<const Key, T>
-for (const std::pair<const Key, T>& p : M){}
+for (const std::pair<const Key, T>& pair : M){}
+for (const auto& [key, value] : M) {}
 
 // METHODS
 M.empty();      // returns true/false if empty (faster than size)
