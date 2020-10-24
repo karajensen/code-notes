@@ -442,10 +442,11 @@ void MyFn(Args&&... args)
 /*************************************************************************************************************
 UNIVERSAL REFERENCES
 • Reference that can bind to rvalue and lvalue reference of form T&&
-• T&& (not const T&&) that uses Reference Collapsing to bind to both rvalue/lvalue references
+• T&& that uses Reference Collapsing to bind to both rvalue/lvalue references
 • Requires type deduction that must be determined each time its called (not class templates)
 • Requires Pefect Fowarding to pass on arguments
 • Bad for overloading: instantiate to create exact matches for almost any type of argument
+• Cannot be used with class templates, const or volitile
 
 PERFECT FORWARDING
 • Function templates that take arbitrary arguments and forward exactly the same arguments
