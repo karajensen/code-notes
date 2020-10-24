@@ -252,6 +252,23 @@ string MyFn(std::string x){ return x; } // Returning function argument by-val
 myVec.emplace_back("str")               // Emplacing rvalue/unique_ptr into container
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// STRUCTURED BINDINGS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*************************************************************************************************************
+• Can't be used with unions
+• Can be used with c-array, struct, class, std::pair, std::tuple, std::array
+• All members must be public and in brackets, works with public inheritance
+**************************************************************************************************************/
+struct MyStruct { int x; const char y[3]; };
+auto [x, y] = myStruct; // creates hidden copy of myStruct, x/y types stay the same (no decay)
+auto& [x, y] = myStruct; // creates hidden reference to myStruct
+auto [a, b, c] = myStruct.y; // Copies array, cannot be decayed array pointer or dynamic array
+auto [x, y] {myStruct};
+auto [x, y] (myStruct);
+auto [x, y] = MyStruct{};
+for (const auto& [key, value] : myMap) {}
+    
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UNIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
