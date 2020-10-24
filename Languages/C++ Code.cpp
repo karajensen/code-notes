@@ -4,8 +4,8 @@
 /*************************************************************************************************************
 C++11: Lambdas, move semantics
 C++14: Generic lambdas
-C++17: Fold expressions
-C++20: Ranges, Concepts
+C++17: Fold expressions, structured bindings
+C++20: Ranges, concepts
 *************************************************************************************************************/
 
 unsigned char         BYTE        ---
@@ -191,7 +191,33 @@ callFunc(a, b);           callFunc(a, b);
 int a = getA();
 int b = getB();
 callFunc({a, b});
-    
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CASTING
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//C++ CAST                C-STYLE CAST
+std::dynamic_cast         No equalivant
+std::static_cast          (int)x   /*or*/ int(x)
+std::reinterpret_cast     (int*)&x
+std::const_cast           (int*)&cx
+
+//SAFE CASTING
+//dynamic_cast only pointers/references of classes with virtual functions; slowest cast
+auto* myPtr = dynamic_cast<MyDerived*>(myBasePtr) // returns 0 if fail
+auto& myObj = dynamic_cast<MyDerived&>(myBaseObj) // throws std::bad_cast if fail
+auto* myPtr = static_cast<MyClass*>(myVoidPtr)    // use static for void*
+
+//UNSAFE CASTING
+auto* myPtr = reinterpret_cast<MyDerived>(myBasePtr) // only for pointers
+auto* myPtr = static_cast<MyDerived*>(myBasePtr)
+auto& myObj = static_cast<MyDerived&>(myBaseObject)
+
+//REMOVING CONST
+//converts const to non-const [only pointers]
+//bad if variable is stored in read-only memory- use only if underlying type is non-const
+auto* myPtr = const_cast<MyClass>(myPtr);
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MOVE SEMANTICS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -224,32 +250,6 @@ MyFn("str");                            // Passing rvalue to by-val function arg
 std::string x = MyFn()                  // Returning local by-val unless Return Value Optimization occurs
 string MyFn(std::string x){ return x; } // Returning function argument by-val 
 myVec.emplace_back("str")               // Emplacing rvalue/unique_ptr into container
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// CASTING
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//C++ CAST                C-STYLE CAST
-std::dynamic_cast         No equalivant
-std::static_cast          (int)x   /*or*/ int(x)
-std::reinterpret_cast     (int*)&x
-std::const_cast           (int*)&cx
-
-//SAFE CASTING
-//dynamic_cast only pointers/references of classes with virtual functions; slowest cast
-auto* myPtr = dynamic_cast<MyDerived*>(myBasePtr) // returns 0 if fail
-auto& myObj = dynamic_cast<MyDerived&>(myBaseObj) // throws std::bad_cast if fail
-auto* myPtr = static_cast<MyClass*>(myVoidPtr)    // use static for void*
-
-//UNSAFE CASTING
-auto* myPtr = reinterpret_cast<MyDerived>(myBasePtr) // only for pointers
-auto* myPtr = static_cast<MyDerived*>(myBasePtr)
-auto& myObj = static_cast<MyDerived&>(myBaseObject)
-
-//REMOVING CONST
-//converts const to non-const [only pointers]
-//bad if variable is stored in read-only memory- use only if underlying type is non-const
-auto* myPtr = const_cast<MyClass>(myPtr);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UNIONS
@@ -453,9 +453,9 @@ auto MyFn(int x, int y) -> double {}
 auto MyFn(int x, int y) -> decltype(x) {} // make return type same as x
 auto MyFn(MyCallback fn, int x) -> decltype(fn(x)) { return fn(x)); }
 
-//===============================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FUNCTION OVERLOADING
-//===============================================================================================================
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*************************************************************************************************************
 REQUIRES SIGNATURE DIFFERENCE
 • Type of parameters
