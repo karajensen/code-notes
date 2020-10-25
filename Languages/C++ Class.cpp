@@ -23,7 +23,7 @@ struct /* create a new struct */
 } m_struct;
 
 // AGGREGATES
-// NO: Constructors, virtual methods, private/protected non-static data members
+// NO: User constructors, virtual methods, private/protected non-static data members
 struct Aggregate
 {
 public:
