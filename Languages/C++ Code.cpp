@@ -84,12 +84,9 @@ CONST VARIABLES
 
 STATIC VARIABLES
 • Variables with static storage duration:
-    - Global variables: Doesn't require 'static' keyword
-    - Class member variables: Require 'static' keyword
-    - Local variables: Require 'static' keyword
-• All static variables zero-initialisated or initialised to constant before main() called
-• If dynamic initialisation is required, can be initialised any time between main() 
-  and first use of variable (or object if class member)
+   - Global variables: Doesn't require 'static' keyword
+   - Class member variables: Require 'static' keyword
+   - Local variables: Require 'static' keyword
 **************************************************************************************************************/
 
 register    // May store variable in register, not on stack, no address and can't be global
@@ -105,18 +102,16 @@ extern      // References (in .h) or declares (in .cpp) an externally linked glo
 // VARIABLE INITIALISATION / ASSIGNMENT
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*************************************************************************************************************
+STATIC-INITIALIZATION
+• All static variables zero-initialisated or initialised to constant before main() called
+• If dynamic initialisation is required, can be initialised any time between main() 
+  and first use of variable (or object if class member)
+
 ZERO-INITIALISATION
+Auto initializes to 0 (false / nullptr) for:
 • All Static variables before main()
 • Aggregates (array, struct, class, pair, tuple) after default constructor is called
-    - MyStruct obj = {};
-    - MyStruct[2] array = {};
-    - MyStruct* obj = new MyPOD{};
-    - MyStruct obj = MyPOD();
-    - MyStruct* obj = new MyPOD();
 • Aggregates type members that are not user initialised in {}
-    - MyStruct obj = {5};
-    - MyStruct[2] array = {5};
-    - MyStruct* obj = new MyPOD{5};
     
 SEQUENCE POINTS
 • Undefined behaviour when changing a variable and reading it again without a sequence point.
@@ -130,31 +125,45 @@ SEQUENCE POINTS
 ?:      x ? y : 0 
 **************************************************************************************************************/
 
-Type x                        // Default constructor
-Type x(y) /*or*/ Type x = y   // Copy constructor
-Type x(5) /*or*/ Type x = 5   // Conversion constructor (second not possible with explicit keyword)
-Type x{5} /*or*/ Type x = {5} // List constructor else conversion constructor; POD: auto initialises other members to 0
-Type x{}  /*or*/ Type x = {}  // Default constructor; Aggregate: auto initialises all members to 0
-Type x = Type()               // Default constructor; Aggregate: auto initialises all members to 0
-Type[5] x = {}                // Default constructor; Aggregate: auto initialises all members to 0
-Type x({})                    // Default constructor; Requires user-defined default constructor else compile error
-Type x()                      // Most vexing parse: compiles as function declaration
-Type x(Type2(y))              // Most vexing parse: compiles as function declaration
-Type x((Type2(y)))            // Extra () shows not function declaration
-Type x(Type2(5))              // Using temp var shows not function declaration
-5 + 1;                        // Temporary value on left side allowable but doesn't do anything
+Type x                      // Default constructor
+Type x(y) / Type x = y      // Copy constructor
+Type x(5) / Type x = 5      // Conversion constructor (second not possible with explicit keyword)
+Type x{5} / Type x = {5}    // List constructor, Conversion constructor or Aggregate init
+Type x{}  / Type x = {}     // Default constructor or Aggregate init
+Type x = Type()             // Default constructor or Aggregate init
+Type[5] x = {}              // Default constructor or Aggregate init
+Type x({})                  // Default constructor, requires user-defined default constructor else compile error
+Type x()                    // Most vexing parse: compiles as function declaration
+Type x(Type2(y))            // Most vexing parse: compiles as function declaration
+Type x((Type2(y)))          // Extra () shows not function declaration
+Type x(Type2(5))            // Using temp var shows not function declaration
+    
+// AGGREGATE INITIALISATION
+// Aggregates types only (array, struct, class, pair, tuple)
+Type x{}  / Type x = {}      // All members zero initialized
+Type x{5} / Type x = {5}     // Other members zero initialized
+Type[5] x = {}               // All members zero initialized
+Type[5] x = {5}              // Other members zero initialized
+Type* x = new Type()         // All members zero initialized
+Type* x = new Type{}         // All members zero initialized
+Type* x = new Type{5}        // Other members zero initialized
+Type x = Type()              // All members zero initialized
+Type x{{"a", true}, 5};      // Initialize base members in inner {}
+Type x{"a", true, 5};        // Inner {} not required
+Type x{{}, 5};               // Default init base members
+Type x{{}, {}, 5};           // Default init multiple inheritance base members
 
 // STRUCTURED BINDINGS
-// For all aggregates (array, struct, class, pair, tuple) except unions
+// Aggregates types only (array, struct, class, pair, tuple)
 // All members must be public (including those from inheritance) and in brackets
-struct { int x; const char arr[3]; } myStruct;
-auto [a, b] = myStruct; // creates hidden copy of myStruct, x/y types stay the same (no decay)
-auto& [a, b] = myStruct; // creates hidden reference to myStruct
-auto [a, b, c] = myStruct.arr; // Copies array, cannot be decayed array pointer or dynamic array
-auto [a, b] {myStruct};
-auto [a, b] (myStruct);
-auto [a, b] = MyStruct{};
-for (const auto& [key, value] : myMap) {}
+struct { int x; const char arr[3]; } obj;
+auto [a, b] = obj;           // Creates hidden copy of obj, x/y types stay the same (no decay)
+auto& [a, b] = obj;          // Creates hidden reference to obj
+auto [a, b, c] = obj.arr;    // Copies array, cannot be decayed array pointer or dynamic array
+auto [a, b] {obj};
+auto [a, b] (obj);
+auto [a, b] = obj{};
+for (const auto& [key, value] : map) {}
 
 // INCREMENTING
 b = ++a;   // increment a and then use it (before anything else)
