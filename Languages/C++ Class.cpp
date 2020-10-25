@@ -1,18 +1,93 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// CLASSES / STRUCTS
+// STRUCTS / CLASSES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*************************************************************************************************************
-STRUCTURE/CLASS DIFFERENCES
+STRUCTURE / CLASS DIFFERENCES
+Identical with same functionality except that:
 • Class members/inheritance is private by default
 • Struct members/inheritance is public by default
+**************************************************************************************************************/
 
+// CLASSES
+class MyClass /*doesn't require name*/
+{
+public:
+};
+
+// STRUCTURES
+struct MyStruct /* doesn't require name */
+{
+};
+struct /* create a new struct */
+{
+} m_struct;
+
+// AGGREGATES
+// NO: Constructors, virtual methods, private/protected non-static data members
+struct Aggregate
+{
+public:
+    int member;
+    Aggregate& operator=(const Aggregate&);
+    static int pubStaticMember;
+    static void staticFunction();
+    ~Aggregate();
+
+private:
+    void privateFunction();
+    static int privStaticMember;
+};
+Aggregate obj = {3}; // can be auto initialized with {}
+
+// PLAIN OLD DATA (POD)
+// NO: Constructors, virtual methods, private/protected non-static data members
+// NO: Destructors, assignment operators
+struct POD
+{
+public:
+    int member;
+    static int pubStaticMember;
+    static void staticFunction();
+
+private:
+    void privateFunction();
+    static int privStaticMember;
+};
+POD obj = {3}; // can be auto initialized with {}
+
+// LOCAL DEFINITION
+// Cannot define static member variables
+// Can't access nonstatic local variables to MyFn
+void MyFn()
+{
+    struct MyStruct {};
+    MyStruct localStruct;
+}
+
+// STRUCTURED BINDINGS
+// Can't be used with unions
+// Can be used with c-array, struct, class, std::pair, std::tuple, std::array
+// All members must be public and in brackets, works with public inheritance
+struct MyStruct { int x; const char y[3]; };
+auto [x, y] = myStruct; // creates hidden copy of myStruct, x/y types stay the same (no decay)
+auto& [x, y] = myStruct; // creates hidden reference to myStruct
+auto [a, b, c] = myStruct.y; // Copies array, cannot be decayed array pointer or dynamic array
+auto [x, y] {myStruct};
+auto [x, y] (myStruct);
+auto [x, y] = MyStruct{};
+for (const auto& [key, value] : myMap) {}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CLASS MEMBERS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*************************************************************************************************************
 RULE OF THREE
-• If you define a destructor, copy constructor or assignment 
-  operator, it's likely you need to define the other two
+• If you define a destructor, copy constructor or assignment operator, 
+  it's likely you need to define the other two
 
 BITWISE CONST CHECKING
 • Occurs if function doesn't modify any class non-static members 
-• Doesn't include what a member pointer points to or returned values
+• Doesn't include what a member pointer points to, returned values or mutable variables
 • Compilers check for this in functions to determine if function meets constness
 
 CLASS CONSTRUCTION
@@ -32,110 +107,47 @@ CLASS CONSTRUCTION
     2) Normal base classes in order of declaration
 **************************************************************************************************************/
 
-class MyClass /*doesn't require name*/
+// MEMBER VARIABLES
+// Initialization overridden by value set in constructor initialisation lists
+int m_x = 0;
+int m_x{0};
+int& m_x;                    // Must be in initialisation list
+mutable int m_x{0};          // Ignore bitwise const checking
+static int m_x;              // Must be defined in cpp, default-initialized if not assigned value
+static const int m_x{0};     // Only for POD / value types
+static constexpr int m_x{0}; // Auto adds inline
+inline static int m_x{0};
+
+// MEMBER FUNCTIONS         
+constexpr int fn();          // Auto adds inline, even if defined in cpp (still requires constexpr)
+void fn() {}                 // Auto adds inline if defined in header
+void fn(int x = 0);          // Default values only needed in declaration, not definition
+void fn() const;             // 'this' pointer will be const
+void fn(int x) = delete;     // Don't allow overload with this signature
+
+// STATIC MEMBER FUNCTIONS
+// cannot use const
+static void StaticMethod() // Cannot be const
 {
-public:
-};
-
-//STRUCTURES
-//Class with members public by default
-struct MyStruct /* doesn't require name */
-{
-};
-struct /* create a new struct */
-{
-} m_struct;
-
-//LOCAL CLASS/STRUCTURES
-//Cannot define static member variables
-//Can't access nonstatic local variables to MyFn
-void MyFn()
-{
-    class MyClass {};
-    MyClass myobj;
-}
-
-//AGGREGATES
-//NO: Constructors, virtual methods, private/protected non-static data members
-class Aggregate
-{
-public:
-    int member;
-    Aggregate& operator=(const Aggregate&);
-    static int pubStaticMember;
-    static void staticFunction();
-    ~Aggregate();
-
-private:
-    void privateFunction();
-    static int privStaticMember;
-};
-Aggregate obj = { 3 }; //can be auto initialized with {}
-
-//PLAIN OLD DATA (POD)
-//NO: Constructors, virtual methods, private/protected non-static data members
-//NO: Destructors, assignment operators
-class POD
-{
-public:
-    int member;
-    static int pubStaticMember;
-    static void staticFunction();
-
-private:
-    void privateFunction();
-    static int privStaticMember;
-};
-POD obj = { 3 }; //can be auto initialized with {}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// CLASS MEMBERS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// CLASS METHODS                   
-int MyMethod(){ return 0; }       // inline member
-void MyMethod(int x = 0);         // default values only needed in declaration, not definition
-void MyMethod() const;            // uses const 'this' pointer
-MyClass() = default;              // create a default constructor inline in .h
-MyClass::MyClass() = default;     // create a default constructor in .cpp (requires normal declaration in .h)
-MyClass() = delete;               // don't create a default constructor
-void MyFunction(int x) = delete;  // don't allow overload with this signature
-void MyClass::Set(Subclass& obj); // Subclass as parameter doesn't require namespace
-MyClass::Subclass& Get();         // Subclass as return value requires namespace
-    
-// STATIC METHODS
-// cannot use const keyword
-static void StaticMethod()  
-{
-    //only access static members and have friendship with class
+    // only access static members and have friendship with class
     sm_singleton->m_member = x;
 }
-
-// CAST OPERATOR
-// converts class type to another type
-explicit operator double() { return 2.0; } //definition: MyClass::operator double(){}
-explicit operator bool() const { return true; } //allows using in if(obj)
-double myDouble = obj; //called implicitly if explicit is not used
-double myDouble = double(obj); //called explicitly
 
 // REFERENCE QUALIFIERS
 void MyFunction() &;    // used when calling object is an lvalue: myObj.MyFunction()
 void MyFunction() &&;   // used when calling object is an rvalue: MyClass().MyFunction()
 
-// MEMBER INITIALISATION
-// Overridden by value set in initialisation lists
-float m_member = 3.0f;
-float m_member{ 3.0f };
-static float sm_member = 3.0f;
-const int m_constMember = 2; //If not initialised in-place, must be in initialisation list
-const int& m_refMember; //Must be in initialisation list
+// CAST OPERATOR
+// converts class type to another type
+explicit operator double() { return 2.0; } // definition: MyClass::operator double(){}
+explicit operator bool() const { return true; } // allows using in if(obj)
+double myDouble = obj; // called implicitly if explicit is not used
+double myDouble = double(obj); // called explicitly
 
-// PREVENT COPYING
-// Important if dynamic allocation occurs in class
-// delete preferred over no definition as compiler error 
-// occurs rather than linker error when trying to use the method
-MyClass(const MyClass&) = delete;
-MyClass& operator=(const MyClass&) = delete;
+// SUBCLASSING
+// Cannot be forward declared
+void MyClass::set(MyEnum e);  // Arguments have same scope as inside function- don't require MyClass::
+MyClass::MyEnum& Get();       // Return values require MyClass::
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // IMPLICIT CLASS MEMBERS
@@ -172,6 +184,9 @@ MyClass(MyClass&& obj);                  // Move constructor
 MyClass& operator=(const MyClass& obj);  // Copy assignnment operator
 MyClass& operator=(MyClass&& obj);       // Move assignment operator
 unsigned int MyClass::operator&();       // Address operator
+
+MyClass() = default;                    // create a default constructor inline in .h
+MyClass::MyClass() = default;           // create a default constructor in .cpp (requires normal declaration in .h)
 
 // DESTRUCTOR
 // All are implicitly noexcept
@@ -227,13 +242,10 @@ explicit MyClass(float myFloat) {}
 // COPY ASSIGNMENT OPERATOR
 MyClass& operator=(const MyClass& obj)
 {
-    if(&obj == this) //check not copying self
-    { 
-        return *this;
-    } 
-    delete[] m_pointer; //delete any dynamic allocation for object
-    m_pointer = new int(); //allocate new memory for deep copy
-    *m_pointer = *obj.m_pointer; //copy over values
+    if(&obj == this) { return *this; } // check not copying self
+    delete[] m_pointer; // delete any dynamic allocation for object
+    m_pointer = new int(); // allocate new memory for deep copy
+    *m_pointer = *obj.m_pointer; // copy over values
     return *this;
 }
 
@@ -241,13 +253,10 @@ MyClass& operator=(const MyClass& obj)
 // Doesn't take const objects as it modifies rvalue passed in
 MyClass& operator=(MyClass&& obj)
 {
-    if(this == &obj)
-    {
-        return *this;
-    }
-    delete [] m_pointer; //delete any dynamic allocation for object
-    m_pointer = obj.m_pointer; //steal the address
-    obj.myPointer = nullptr; //set to null
+    if(&obj == this) { return *this; } // check not moving self
+    delete [] m_pointer; // delete any dynamic allocation for object
+    m_pointer = obj.m_pointer; // steal the address
+    obj.myPointer = nullptr; // set to null
     return *this;
 }
 
@@ -262,6 +271,13 @@ MyClass& operator=(const MyClass obj)
     std::swap(*this, obj);
     return *this;
 }
+              
+// PREVENT COPYING
+// Important if dynamic allocation occurs in class
+// delete preferred over no definition as compiler error 
+// occurs rather than linker error when trying to use the method
+MyClass(const MyClass&) = delete;
+MyClass& operator=(const MyClass&) = delete;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // OPERATOR OVERLOADING
