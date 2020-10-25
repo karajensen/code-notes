@@ -28,7 +28,7 @@ char* str = "string literal";              // content/pointer modifiable, \0 aut
 char* const str ="string literal";         // content modifiable, pointer constant, \0 auto added
 const char* str = "string literal";        // pointer modifiable, content constant, \0 auto added
 const char* const str = "string literal";  // content/pointer constant, \0 auto added
-constexpr char* str                        // Same as char* const, Error
+constexpr char* str                        // Same as char* const
 constexpr const char*                      // Same as const char* const str
     
 // STRING LITERAL MODIFIERS
@@ -107,16 +107,16 @@ extern      // References (in .h) or declares (in .cpp) an externally linked glo
 /*************************************************************************************************************
 ZERO-INITIALISATION
 • All Static variables before main()
-• POD types after default constructor is called
-    - MyPOD obj = {};
-    - MyPOD[2] array = {};
-    - MyPOD* obj = new MyPOD{};
-    - MyPOD obj = MyPOD();
-    - MyPOD* obj = new MyPOD();
-• POD type members that are not user initialised in {}
-    - MyPOD obj = { 5 };
-    - MyPOD[2] array = { 5 };
-    - MyPOD* obj = new MyPOD{ 5 };
+• Aggregates (array, struct, class, pair, tuple) after default constructor is called
+    - MyStruct obj = {};
+    - MyStruct[2] array = {};
+    - MyStruct* obj = new MyPOD{};
+    - MyStruct obj = MyPOD();
+    - MyStruct* obj = new MyPOD();
+• Aggregates type members that are not user initialised in {}
+    - MyStruct obj = {5};
+    - MyStruct[2] array = {5};
+    - MyStruct* obj = new MyPOD{5};
     
 SEQUENCE POINTS
 • Undefined behaviour when changing a variable and reading it again without a sequence point.
@@ -134,9 +134,9 @@ Type x                        // Default constructor
 Type x(y) /*or*/ Type x = y   // Copy constructor
 Type x(5) /*or*/ Type x = 5   // Conversion constructor (second not possible with explicit keyword)
 Type x{5} /*or*/ Type x = {5} // List constructor else conversion constructor; POD: auto initialises other members to 0
-Type x{}  /*or*/ Type x = {}  // Default constructor; POD: auto initialises all members to 0
-Type x = Type()               // Default constructor; POD: auto initialises all members to 0
-Type[5] x = {}                // Default constructor; POD: auto initialises all members to 0
+Type x{}  /*or*/ Type x = {}  // Default constructor; Aggregate: auto initialises all members to 0
+Type x = Type()               // Default constructor; Aggregate: auto initialises all members to 0
+Type[5] x = {}                // Default constructor; Aggregate: auto initialises all members to 0
 Type x({})                    // Default constructor; Requires user-defined default constructor else compile error
 Type x()                      // Most vexing parse: compiles as function declaration
 Type x(Type2(y))              // Most vexing parse: compiles as function declaration
@@ -261,7 +261,7 @@ if (std::lock_guard<std::mutex> lg{mutex}; str.empty()) {}
 // TERNARY OPERATOR
 int value = (a < b) ? a : b;
 obj->Exists() ? obj->DoSomething() : throw ("exception");
-(a == 0 ? a : b) = 1; //if(a == 0) a = 1 else b = 1
+(a == 0 ? a : b) = 1; // if(a == 0) a = 1 else b = 1
 
 // SWITCH STATEMENTS
 // can have nothing inside the switch statement or just default
@@ -340,6 +340,18 @@ OR Template Overload                              template <typename T> void fn(
 3) Primary Template                               template <typename T, typename S> void fn(T x, S y)
 **************************************************************************************************************/
 
+// FUNCTION ORDER OF EVALUATION
+// Compilier specific, callFunc(getA(), getB()); can either be:
+int a = getA();           int b = getB();
+int b = getB();  /*OR*/   int a = getA();
+callFunc(a, b);           callFunc(a, b);
+
+// INITIALISER LIST ORDER OF EVALUATION
+// In order, callFunc({getA(), getB()}); will be:
+int a = getA();
+int b = getB();
+callFunc({a, b});
+
 // RETURN VALUE OPTIMIZATION(RVO)
 // If possible, a returned local var is constructed in memory allocated for function's return value
 // If not possible, a returned local var is treated as rvalue (automatically uses std::move)
@@ -347,11 +359,21 @@ OR Template Overload                              template <typename T> void fn(
 // Only use std::move / std::foward on return if returning by-value a T&& (or else copy will occur)
 int MyFn() { int x;  return x; }
 
-// MAIN ENTRY FUNCTION
-// argc is number of arguments, including the string used to invoke the program
-// argv is array of arguments, including the string used to invoke the program
-// must be called main or winmain
-int main(int argc, char* argv[]){ /*no return auto returns 0 (success)*/ }
+// DEFAULT VALUES
+void MyFn(int x, int y = 0);        // constant, parameters must be right to left
+void MyFn(int x = Fn(5));           // Non-member function with constant arguments
+void MyFn(int x = Fn(global));      // Non-member function with global variable
+void MyFn(int x = Fn(m_static));    // Non-member function with static member variable
+void MyFn(int x = StaticFn());      // Static member function
+void MyFn(int x = (global==0?1:2)   // Ternary expressions
+void MyFn(int x = m_member)         // CANT DO: can't use non-static class members
+          
+// TRAILING RETURN TYPE
+// shifts the return type to after the function arguments
+double MyFn(int x, int y) {} /*or*/
+auto MyFn(int x, int y) -> double {}
+auto MyFn(int x, int y) -> decltype(x) {} // make return type same as x
+auto MyFn(MyCallback fn, int x) -> decltype(fn(x)) { return fn(x)); }
 
 // PASSING C-STRING
 // Use strlen to get the length of string up to '\0'
@@ -386,40 +408,18 @@ void MyFn(char* text, ...)
     cout << buffer;
 }
 
-// DEFAULT VALUES
-void MyFn(int x, int y = 0);        // constant, parameters must be right to left
-void MyFn(int x = Fn(5));           // Non-member function with constant arguments
-void MyFn(int x = Fn(global));      // Non-member function with global variable
-void MyFn(int x = Fn(m_static));    // Non-member function with static member variable
-void MyFn(int x = StaticFn());      // Static member function
-void MyFn(int x = (global==0?1:2))  // Ternary expressions
-void MyFn(int x = m_member)         // CANT DO: can't use non-static class members
-
 // CONSTEXPR FUNCTIONS
 // All arguments constexpr then computed at compile time, else computed at runtime
 // Used if only literal types, no static variables, no virtual, no try/catch, no new/delete
 constexpr int MyFn(int x) { return x; }
 MyFn(2); // computed at compiletime
 MyFn(y); // computed at runtime unless y is constexpr
-
-// TRAILING RETURN TYPE
-// shifts the return type to after the function arguments
-double MyFn(int x, int y) {} /*or*/
-auto MyFn(int x, int y) -> double {}
-auto MyFn(int x, int y) -> decltype(x) {} // make return type same as x
-auto MyFn(MyCallback fn, int x) -> decltype(fn(x)) { return fn(x)); }
-
-// FUNCTION ORDER OF EVALUATION
-// Compilier specific, callFunc(getA(), getB()); can either be:
-int a = getA();           int b = getB();
-int b = getB();  /*OR*/   int a = getA();
-callFunc(a, b);           callFunc(a, b);
-
-// INITIALISER LIST ORDER OF EVALUATION
-// In order, callFunc({getA(), getB()}); will be:
-int a = getA();
-int b = getB();
-callFunc({a, b});
+          
+// MAIN ENTRY FUNCTION
+// argc is number of arguments, including the string used to invoke the program
+// argv is array of arguments, including the string used to invoke the program
+// must be called main or winmain
+int main(int argc, char* argv[]){ /*no return auto returns 0 (success)*/ }
     
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GLOBAL VARIABLES / FUNCTIONS
@@ -431,7 +431,7 @@ callFunc({a, b});
 • Functions auto have extern unless inline used
 **************************************************************************************************************/
 
-// GLOBAL
+// STATIC GLOBAL
 // Header: creates copy for every #include (avoid)
 // Cpp: creates only one
 // Internal Linkage, single usage
@@ -460,9 +460,21 @@ constexpr void fn() {};  // Auto adds inline
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*************************************************************************************************************
 • Allows resources to transfer between objects rather than copying
-• Automatically done if object has a valid move assignment/constructor
-• All function parameters are lvalue even if initialised with an rvalue
 • Don't use with const objects: move becomes copy operation
+
+             Expression can be
+            /                 \
+         glvalue             rvalue
+  (Generalized lvalue)    (Right value)
+      /            \       /          \
+   lvalue           xvalue          prvalue
+(Left value)   (Expiring value)   (Pure rvalue)
+ 
+LVALUE: name of variable, function args, string literal, result of *ptr, function return by-ref (type&)
+PRVALUE: literal value, nullptr, result of &var, result of x+y etc, function return by-value, lambdas, temporaries
+XVALUE: function return by type&&, result of std::move
+GLVALUE: xvalue or lvalue
+RVALUE: xvalue or prvalue
 
 TEMPORARY VARIABLES
 • Move semantics reduces creation of temp variables
@@ -470,31 +482,42 @@ TEMPORARY VARIABLES
    - reference initialization
    - expression evaluation
    - automatic type conversion
-   - function passing/returning if no move constructor
+   - function passing/returning if no move constructor   
 **************************************************************************************************************/
 
-int x =         // L-VALUES: Persisting variable on left side of assignment expression    
-= 3;            // R-VALUES: Temporary variable on right side of assignment expression
-int& x = y;     // L-VALUE REFERENCE
-int&& x = y;    // R-VALUE REFERENCE
-auto&& x = y;   // UNIVERSAL REFERENCE: requires type deduction, can bind to both rvalues/lvalue references
-int&& MyFn()    // X-VALUE: R-Value reference function return
-int MyFn()      // PR-VALUE: Non-reference function return
+4                      // prvalue
+x                      // lvalue
+std::move(x)           // xvalue
+int&                   // lvalue reference
+int&&                  // rvalue reference
+auto&&                 // universal reference
+         
+std::move              // unconditional cast to an r-value ref
+std::forward           // conditional cast to an r-value reference
 
-// PASSING AS ARGUMENTS
-// Moving values should not be const or copy is made
-void MyFn(std::string&& str)
+// PASSING ARGS TO FUNCTIONS
+void fn(const int&);   // accepts any types
+fn(x);                 // passes a modifiable lvalue
+fn(constX);            // passes a non-modifiable lvalue
+
+void fn(int&&);        // accepts prvalues and xvalues only
+void fn(const int&&);  // possible to do but not generally used
+fn(x());               // passes a prvalue
+fn(10);                // passes a prvalue
+fn(std::move(x));      // passes an xvalue
+fn(std::move(constX)); // will do a copy despite move
+          
+void MyFn(std::string&& str) // str is lvalue inside function scope
 { 
-    // str becomes an lvalue as a function argument even if initialised as rvalue
     // use std::move to convert to rvalue to pass on
     myVec.push_back(std::move(str));
 }
 
-// AUTOMATIC USES
-MyFn("str");                            // Passing rvalue to by-val function argument
-std::string x = MyFn()                  // Returning local by-val unless Return Value Optimization occurs
-string MyFn(std::string x){ return x; } // Returning function argument by-val 
-myVec.emplace_back("str")               // Emplacing rvalue/unique_ptr into container
+// AUTOMATIC MOVES
+MyFn("str");                             // Passing rvalue to by-val function argument
+std::string x = MyFn()                   // Returning local by-val unless Return Value Optimization occurs
+string MyFn(std::string x){ return x; }  // Returning function argument by-val 
+myVec.emplace_back("str")                // Emplacing rvalue/unique_ptr into container
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BIT MANIPULATION
