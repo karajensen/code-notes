@@ -63,17 +63,13 @@ namespace /*anon*/ {}
 namespace MySpace {}
 namespace MyAlias = MySpace;
 using namespace MySpace;
-MySpace::myVariable = 3;
+MySpace::myInt = 3;
+::myInt // Allows access to global variables when shadowed by local variables
 
 // VARIABLE ALIASES
 typedef int myType;
 typedef decltype(x) myType;
 using myType = int;
-
-// INCREMENTING
-b = ++a;   // increment a and then use it (before anything else)
-b = a++;   // use a and then increment it (after everything including assigment)
-++++++i;   // OKAY: parsed as (++(++(++i)))
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // VARIABLE MODIFIERS
@@ -103,9 +99,10 @@ const       // Can store variable in read-only memory or value repaced at compil
 constexpr   // Evaluates at compile time, will store in read-only memory
 inline      // Ensures there is only one definition even if included in multiple places
 static      // Variables with static storage duration
+extern      // References (in .h) or declares (in .cpp) an externally linked global variable    
     
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// VARIABLE INITIALISATION
+// VARIABLE INITIALISATION / ASSIGNMENT
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*************************************************************************************************************
 ZERO-INITIALISATION
@@ -120,6 +117,17 @@ ZERO-INITIALISATION
     - MyPOD obj = { 5 };
     - MyPOD[2] array = { 5 };
     - MyPOD* obj = new MyPOD{ 5 };
+    
+SEQUENCE POINTS
+• Undefined behaviour when changing a variable and reading it again without a sequence point.
+• After a function's returned object has been copied back to the caller
+• After evaluation of all a function's parameters when the function is called
+• After the initialization of each base and member for an object
+;       int x = 0;
+,       f(x,y) 
+||      x || y 
+&&      x && y 
+?:      x ? y : 0 
 **************************************************************************************************************/
 
 Type x                        // Default constructor
@@ -148,46 +156,20 @@ auto [a, b] (myStruct);
 auto [a, b] = MyStruct{};
 for (const auto& [key, value] : myMap) {}
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// SEQUENCE POINTS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*************************************************************************************************************
-• Undefined behaviour when changing a variable and reading it again without a sequence point.
-• After a function's returned object has been copied back to the caller
-• After evaluation of all a function's parameters when the function is called
-• After the initialization of each base and member for an object
-;       int x = 0;
-,       f(x,y) 
-||      x || y 
-&&      x && y 
-?:      x ? y : 0 
-**************************************************************************************************************/
-
-// BAD SEQUENCE POINTS
-i++ * ++i; // BAD: i is modified more than once
-i = ++i;   // BAD: i is modified more than once
-++i = 2;   // BAD: i is modified more than once
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ORDER OF EVALUATION
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// INCREMENTING
+b = ++a;   // increment a and then use it (before anything else)
+b = a++;   // use a and then increment it (after everything including assigment)
+++++++i;   // OKAY: parsed as (++(++(++i)))
 
 // COMMA-SEPERATION
 int x = a, b;      // a assigned to x, b assigned to nothing
 int x = (a, b);    // a assigned to nothing, b assigned to x
 int x = a, y = b;  // a assigned to x, b assigned to y (both new vars)
 
-// FUNCTION PARAMETERS
-// Compilier specific, callFunc(getA(), getB()); can either be:
-int a = getA();           int b = getB();
-int b = getB();  /*OR*/   int a = getA();
-callFunc(a, b);           callFunc(a, b);
-
-// INITIALISER LIST
-// In order, callFunc({getA(), getB()}); will be:
-int a = getA();
-int b = getB();
-callFunc({a, b});
+// BAD SEQUENCE POINTS
+i++ * ++i; // BAD: i is modified more than once
+i = ++i;   // BAD: i is modified more than once
+++i = 2;   // BAD: i is modified more than once
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CASTING
@@ -442,6 +424,52 @@ auto MyFn(int x, int y) -> double {}
 auto MyFn(int x, int y) -> decltype(x) {} // make return type same as x
 auto MyFn(MyCallback fn, int x) -> decltype(fn(x)) { return fn(x)); }
 
+// FUNCTION ORDER OF EVALUATION
+// Compilier specific, callFunc(getA(), getB()); can either be:
+int a = getA();           int b = getB();
+int b = getB();  /*OR*/   int a = getA();
+callFunc(a, b);           callFunc(a, b);
+
+// INITIALISER LIST ORDER OF EVALUATION
+// In order, callFunc({getA(), getB()}); will be:
+int a = getA();
+int b = getB();
+callFunc({a, b});
+    
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// GLOBAL VARIABLES / FUNCTIONS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*************************************************************************************************************
+• Defined outside function or class scope
+• Have static storage duration
+• Variables auto have static unless extern / inline used
+• Functions auto have extern unless inline used
+**************************************************************************************************************/
+
+// GLOBAL
+// Header: creates copy for every #include (avoid)
+// Cpp: creates only one
+// Internal Linkage, single usage
+int x;
+static int x;
+constexpr int x;
+
+// EXTERN GLOBAL
+// Header: references definition in cpp
+// Cpp: Definition
+// External Linkage, shared use
+extern int x; 
+void fn();
+
+// INLINE GLOBAL
+// Inline ensures there is only one definition, may expand in-place if simple fn
+// Header: creates only one for every #include
+// External Linkage, shared use
+inline int x;
+inline constexpr int x;
+inline void fn() {};
+constexpr void fn() {};  // Auto adds inline
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MOVE SEMANTICS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -482,33 +510,6 @@ MyFn("str");                            // Passing rvalue to by-val function arg
 std::string x = MyFn()                  // Returning local by-val unless Return Value Optimization occurs
 string MyFn(std::string x){ return x; } // Returning function argument by-val 
 myVec.emplace_back("str")               // Emplacing rvalue/unique_ptr into container
-    
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// GLOBAL VARIABLES
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*************************************************************************************************************
-• Defined outside function or class scope
-• Have static storage duration
-• Automatically has 'static' keyword unless 'extern' keyword is used, can't have both
-• If same named non-extern static and extern variable exist then error
-          -------------------------------------------
-          | static int x      |                     |
-          | int x             | extern int x        |
------------------------------------------------------
-|         | creates copy for  | References extern   |
-| .H      | every #include    | version in .cpp     |
-|         |                   |                     |
-| .CPP    | creates only one  | Definition for any  |
-|         | for .cpp use      | .h extern versions  |
-|         |                   |                     |
-| Linkage | Internal          | External            |
-|         | Single use        | Shared use          |
------------------------------------------------------
-**************************************************************************************************************/
-
-static      // Makes static storage, can be used on local, global or class member variable
-extern      // References (in .h) or declares (in .cpp) an externally linked global variable    
-::myInt     // Allows access to global variables when shadowed by local variables
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // PREPROCESSOR MACROS
