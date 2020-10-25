@@ -4,7 +4,8 @@
 
 std::forward    // Casts to rvalue only if argument was initialized with an rvalue, compile time
 std::move       // Casts to rvalue no matter what type it is, compile time, stl containers auto become empty
-std::swap       // swaps the value of two variables, non-throwing on primitive types
+std::swap       // Swaps the value of two variables, non-throwing on primitive types
+std::as_const   // Creates const lvalue reference, useful for forcing const function overloads
 
 std::pair<int, double> myPair = std::make_pair(1,2.0);
 myPair.first / myPair.second // access members of pair
