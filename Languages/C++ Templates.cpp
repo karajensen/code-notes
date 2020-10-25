@@ -89,6 +89,10 @@ decltype(auto) MyFn = [](){ int x = 1; return (x); } // Is returning int&!
 //- Keyword 'class' interchangable with 'typename'
 //- Definition must be in header unless explicit instantiation is used
 
+// TEMPLATED VARIABLES
+// Use as value<float>, value<int>
+template<typename T> constexpr T value = T(2.0);
+
 // FORWARD DECLARATION
 template <typename T> class MyClass;
 
