@@ -19,38 +19,35 @@ long long             ---         long long int / signed long long / signed long
 unsigned long long    DWORD       unsigned long long int
 float                 FLOAT       ---
 
-//CSTRINGS
-//Can change individual chars
-char cstring = 'C';               // single character; can read/write
-char cstring[256];                // character buffer, can read/write
-char cstring[] = "mystring"       // the \0 is done automatically
-char cstring[] = {'h','i','\0'};
+// CSTRINGS
+char cstring = 'C';                        // content modifiable, single character
+char cstring[256];                         // content modifiable, character buffer
+char cstring[] = "string literal";         // content modifiable, \0 auto added
+char cstring[] = {'h','i','\0'};           // content modifiable
+char* str = &cstring;                      // content/pointer modifiable
+char* const str = &cstring;                // content modifiable, pointer constant
+const char* str = "string literal";        // pointer modifiable, content constant, \0 auto added
+const char* const str = "string literal";  // content/pointer constant, \0 auto added
+constexpr char* str                        // Same as char* const, Error
+constexpr const char*                      // Same as const char* const str
+    
+// STRING LITERAL MODIFIERS
+const auto* str = R"(Raw string literal)" // anything between the() doesn't need to be escaped
+const auto* str = u8"UTF-8 string literal"
+const auto* str = u"UTF-16 string literal"
+const auto* str = U"UTF-32 string literal"
+const auto* str = L"Wide-string literal"
 
-//STRING LITERALS
-//Constant string literal, read only, \0 automatic
-//Cannot change individual chars
-char* str = "mystring"
-auto* str = R"(Raw string literal)" //anything between the() doesn't need to be escaped
-auto* str = u8"UTF-8 string literal"
-auto* str = u"UTF-16 string literal"
-auto* str = U"UTF-32 string literal"
-auto* str = L"Wide-string literal"
-
-//ARRAYS
-//must be constant size input
-//initialises first two values, sets rest to 0
+// ARRAYS
+// Must be constant size, initialises first two values, sets rest to 0
 int myArray[9] = { 1, 2 };
 
-//2D ARRAYS
-//creates an array with 2 rows, 2 columns
-//memory layout is row-major: [1 | 2 | 3 | 4] in continuous block
-int myArray[2][2] 
-{
-    {1, 2},
-    {3, 4}
-};
+// 2D ARRAYS
+// Must be constant size, 2 rows, 2 columns
+// Memory layout is row-major: [1 | 2 | 3 | 4] in continuous block
+int myArray[2][2] = {{1, 2}, {3, 4}};
 
-//SIZES
+// SIZES
 sizeof(myInt)                 // gives size of myInt in bytes
 sizeof(myObj)                 // gives size of class in bytes
 sizeof(myArray)               // gives number of elements for array
@@ -61,7 +58,7 @@ sizeof(myRef)                 // gives size of object referenced in bytes
 extent<int[3]>::value         // gives number of elements 3
 extent<decltype(arr)>::value  // gives number of elements for array
 
-//INCREMENTING
+// INCREMENTING
 b = ++a    // increment a and then use it (before anything else)
 b = a++    // use a and then increment it (after everything including assigment)
 ++++++i;   // OKAY: parsed as (++(++(++i)))
@@ -70,42 +67,6 @@ b = a++    // use a and then increment it (after everything including assigment)
 // VARIABLE MODIFIERS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*************************************************************************************************************
-STATIC VARIABLES
-• Variables with static storage duration:
-    - Global variables: Doesn't require 'static' keyword
-    - Class member variables: Require 'static' keyword
-    - Local variables: Require 'static' keyword
-• All static variables zero-initialisated or initialised to constant before main() called
-• If dynamic initialisation is required, can be initialised any time between main() 
-  and first use of variable (or object if class member)
-
-GLOBAL VARIABLES
-• Defined outside function or class scope
-• Have static storage duration
-• Automatically has 'static' keyword unless 'extern' keyword is used, can't have both
-• If same named non-extern static and extern variable exist then error
-          -------------------------------------------
-          | static int x      |                     |
-          | int x             | extern int x        |
------------------------------------------------------
-|         | creates copy for  | References extern   |
-| .H      | every #include    | version in .cpp     |
-|         |                   |                     |
-| .CPP    | creates only one  | Definition for any  |
-|         | for .cpp use      | .h extern versions  |
-|         |                   |                     |
-| Linkage | Internal          | External            |
-|         | Single use        | Shared use          |
------------------------------------------------------
-
-TEMPORARY VARIABLES
-• Move semantics reduces creation of temp variables
-• Value-typed variables auto created on the stack during:
-   - reference initialization
-   - expression evaluation
-   - automatic type conversion
-   - function passing/returning if no move constructor
-
 CONST VARIABLES
 • String constants and floating point constants are stored in static memory in optimized code
 • Integer constants are usually included as part of the instruction code
@@ -114,14 +75,11 @@ CONST VARIABLES
 • Cannot use move operations on const variables
 **************************************************************************************************************/
 
-static      // Makes static storage, can be used on local, global or class member variable
-extern      // References (in .h) or declares (in .cpp) an externally linked global variable
 register    // May store variable in register, not on stack, no address and can't be global
 volatile    // Don't cache or optimize value, can prevent cache race conditions
 mutable     // Value changes ignored for bitwise const checking; used to show internal synchronization
 const       // Can store variable in read-only memory or value repaced at compile time
 constexpr   // Evaluates at compile time, will store in read-only memory
-::myInt     // Allows access to global variables when shadowed by local variables
     
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // VARIABLE INITIALISATION
@@ -222,6 +180,14 @@ auto* myPtr = const_cast<MyClass>(myPtr);
 // MOVE SEMANTICS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*************************************************************************************************************
+TEMPORARY VARIABLES
+• Move semantics reduces creation of temp variables
+• Value-typed variables auto created on the stack during:
+   - reference initialization
+   - expression evaluation
+   - automatic type conversion
+   - function passing/returning if no move constructor
+
 • Allows resources to transfer between objects rather than copying
 • Automatically done if object has a valid move assignment/constructor
 • All function parameters are lvalue even if initialised with an rvalue
@@ -500,7 +466,7 @@ FN<FLOAT>(1.0F, 1.0F)
 2) Template Overloads with Exact type             template <typename T> void Fn(T x, float y)
 OR Template Overload                              template <typename T> void Fn(T x, T y)
 3) Primary Template                               template <typename T, typename S> void Fn(T x, S y)
-
+    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // NAMESPACES / ALIASES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -534,6 +500,43 @@ namespace B
     void MyFn(int x){ using namespace A; MyFn(x); }  // Error: ambiguous requires :: to set which one to call
     void MyFn(A::MyClass& x){ MyFn(x); }             // Error: auto adds 'using namespace A' when A::MyClass is added
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// STATIC / GLOBAL
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*************************************************************************************************************
+STATIC VARIABLES
+• Variables with static storage duration:
+    - Global variables: Doesn't require 'static' keyword
+    - Class member variables: Require 'static' keyword
+    - Local variables: Require 'static' keyword
+• All static variables zero-initialisated or initialised to constant before main() called
+• If dynamic initialisation is required, can be initialised any time between main() 
+  and first use of variable (or object if class member)
+
+GLOBAL VARIABLES
+• Defined outside function or class scope
+• Have static storage duration
+• Automatically has 'static' keyword unless 'extern' keyword is used, can't have both
+• If same named non-extern static and extern variable exist then error
+          -------------------------------------------
+          | static int x      |                     |
+          | int x             | extern int x        |
+-----------------------------------------------------
+|         | creates copy for  | References extern   |
+| .H      | every #include    | version in .cpp     |
+|         |                   |                     |
+| .CPP    | creates only one  | Definition for any  |
+|         | for .cpp use      | .h extern versions  |
+|         |                   |                     |
+| Linkage | Internal          | External            |
+|         | Single use        | Shared use          |
+-----------------------------------------------------
+**************************************************************************************************************/
+
+static      // Makes static storage, can be used on local, global or class member variable
+extern      // References (in .h) or declares (in .cpp) an externally linked global variable    
+::myInt     // Allows access to global variables when shadowed by local variables
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // PREPROCESSOR MACROS
