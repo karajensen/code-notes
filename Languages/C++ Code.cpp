@@ -485,27 +485,26 @@ TEMPORARY VARIABLES
    - function passing/returning if no move constructor   
 **************************************************************************************************************/
 
-4                      // prvalue
-x                      // lvalue
-std::move(x)           // xvalue
-int&                   // lvalue reference
-int&&                  // rvalue reference
-auto&&                 // universal reference
-         
-std::move              // unconditional cast to an r-value ref
-std::forward           // conditional cast to an r-value reference
+4;               // prvalue
+x;               // lvalue
+std::move(x);    // xvalue
+int&             // lvalue reference
+int&&            // rvalue reference
+auto&&           // universal reference
+std::move        // unconditional cast to an r-value ref
+std::forward     // conditional cast to an r-value reference
 
-// PASSING ARGS TO FUNCTIONS
-void fn(const int&);   // accepts any types
-fn(x);                 // passes a modifiable lvalue
-fn(constX);            // passes a non-modifiable lvalue
+// PASSING ARGS
+void fn(const int&);     // accepts any types
+fn(x);                   // passes a modifiable lvalue
+fn(constX);              // passes a non-modifiable lvalue
 
-void fn(int&&);        // accepts prvalues and xvalues only
-void fn(const int&&);  // possible to do but not generally used
-fn(x());               // passes a prvalue
-fn(10);                // passes a prvalue
-fn(std::move(x));      // passes an xvalue
-fn(std::move(constX)); // will do a copy despite move
+void fn(int&&);          // accepts prvalues and xvalues only
+void fn(const int&&);    // possible to do but not generally used
+fn(x());                 // passes a prvalue
+fn(10);                  // passes a prvalue
+fn(std::move(x));        // passes an xvalue
+fn(std::move(constX));   // will do a copy despite move
           
 void MyFn(std::string&& str) // str is lvalue inside function scope
 { 
