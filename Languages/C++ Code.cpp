@@ -243,21 +243,6 @@ int value = myEnum; // Unscoped auto cases from enum to int, scoped requires sta
 // Enums without fixed underlying type can only be cast to values between min->max of enum
 // Enums with fixed underlying type can only be cast to values between min->max of type
 auto value = static_cast<MyEnum>(-1); // Undefined for enums without fixed underlying type
-    
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// BIT FIELDS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Can be tightly packed if declared together
-// Type of a bit field can only be integral or enumeration type
-// Cannot be a static member
-struct
-{
-    unsigned char x : 3;  // 3-bits, allowed values 2^3 (0-7)
-    unsigned char x : 6;  // 6-bits, allowed values 2^6 (0-31)
-    unsigned char : 2;    // nameless means next 2-bits are padding
-    unsigned char : 0;    // start a new byte (any remaining bits are padding)
-};
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BRANCHING / LOOPING
@@ -510,6 +495,87 @@ MyFn("str");                            // Passing rvalue to by-val function arg
 std::string x = MyFn()                  // Returning local by-val unless Return Value Optimization occurs
 string MyFn(std::string x){ return x; } // Returning function argument by-val 
 myVec.emplace_back("str")               // Emplacing rvalue/unique_ptr into container
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// BIT MANIPULATION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*************************************************************************************************************
+• Bits go from least significant (b0) to most significant (bn-1) for n bits
+• Bits read from left to right (little endian)
+• Signed integers use most significant bit for +/-
+
+BITWISE OPERATORS
+~   bitwise NOT   Flips every bit                                   ~00000011 = 11111100
+|   bitwise OR    For every bit if a or b have 1 then use 1         00000011 | 00000100 = 00000111
+&   bitwise AND   For every bit if a and b have 1 then use 1        00000011 & 11111101 = 00000001
+^   bitwise XOR   If a or b (but not both) have 1 then use 1        00000011 ^ 00000001 = 00000010
+<<  left shift    Moves all bits to the left, adds 0 to the start   10000011 << 3 = 00011000
+>>  right shift   Moves all bits to the right, adds 0 to the end    10000011 >> 3 = 00010000
+**************************************************************************************************************/
+
+x = ∼x + 1                   // Negate a number (two's component)
+x = ~x                       // Flip all bits in a number
+on = x & (1 << b)            // Test if nth bit is on, b = n-1
+x = x | (1 << b)             // Set the nth bit on, b = n-1
+x = x & ~(1 << b)            // Set the nth bit off, b = n-1
+x = x ^ (1 << b)             // Toggle the nth bit on/off, b = n-1
+odd = x & 1                  // Test if x is even or odd number
+pow2 = x && !(x & (x - 1))   // Test if x is a power of 2 number
+
+// XOR PROPERTIES
+a ^ b = c
+c ^ a = b                    // Get access to b again
+c ^ b = a                    // Get access to a again
+a ^ a = 0
+a ^ 0 = a
+a ^ b ^ a = b
+
+// BIT SHIFTING
+1 << 3                       // Gives 2³
+value <<= 3                  // Multiply value by 2³
+value >>= 3                  // Divide value by 2³
+
+// PACKING BITS
+int i = (s1 << 16) | s2      // Storing 2 shorts in an int
+short s1 = i >> 16           // Retrieve short 1
+short s2 = i & 0xFFFF        // Retrieve short 2
+
+// BITWISE WITH BOOL
+bool b = bool1 & bool2       // Both are true
+bool b = bool1 | bool2       // Either are true
+bool b = bool1 ^ bool2       // Either are true but not both 
+success &= HasSucceeded();   // Init success to true, will lock in false if something fails
+success |= HasSucceeded();   // Init success to false, will lock in true if something succeeds
+
+// BIT MASKING
+value = value & ~Mask1       // Removing a mask
+value = value | Mask1        // Adding a mask
+value = value ^ Mask1        // Adding a mask
+value & Mask1                // If true then has the mask (C++ only as non-zero integers auto convert to true)
+(value & Mask1) == Mask1     // If true then has the mask
+
+// BIT MASK VALUES
+NoMask = 0     0x000    0x00000000    00000000    
+Mask1  = 1     0x001    0x00000001    00000001    1 << 0    b0
+Mask2  = 2     0x002    0x00000002    00000010    1 << 1    b1
+Mask3  = 4     0x004    0x00000004    00000100    1 << 2    b2
+Mask4  = 8     0x008    0x00000008    00001000    1 << 3    b3
+Mask5  = 16    0x010    0x00000010    00010000    1 << 4    b4
+Mask6  = 32    0x020    0x00000020    00100000    1 << 5    b5
+Mask7  = 64    0x040    0x00000040    01000000    1 << 6    b6
+Mask8  = 128   0x080    0x00000080    10000000    1 << 7    b7
+
+// BIT FIELDS
+// Can be tightly packed if declared together
+// Type of a bit field can only be integral or enumeration type
+// Cannot be a static member
+struct
+{
+    unsigned char x : 3;  // 3-bits, allowed values 2^3 (0-7)
+    unsigned char x : 6;  // 6-bits, allowed values 2^6 (0-31)
+    unsigned char : 2;    // nameless means next 2-bits are padding
+    unsigned char : 0;    // start a new byte (any remaining bits are padding)
+};
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // PREPROCESSOR MACROS
