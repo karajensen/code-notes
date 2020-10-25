@@ -220,7 +220,7 @@ VISUAL STUDIO DEBUG MEMORY ALLOCATION
 0xc0000005 : Exception Code Access Violation, accessing an null pointer
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// CLASSES/STRUCTS/FUNCTIONS
+// CLASSES / STRUCTS / FUNCTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 FUNCTION DECLARATION/PROTOTYPE: Function header
@@ -252,7 +252,7 @@ AGGREGATE:
 • Doesn't matter what static members it has
 
 PLAIN-OLD-DATA (POD):
-• Aggregate class with extra requirements
+• Aggregate class/struct with extra requirements
 • No user-declared assignment operator/destructor
 • Non-static members must be POD types
 • Non-static arrays/references/pointers must hold POD types
