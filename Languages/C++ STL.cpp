@@ -406,6 +406,7 @@ std::this_thread::sleep_for(std::chrono::seconds(1)); // Sleep this current thre
 //Move-only object
 std::mutex myMutex;
 std::lock_guard<std::mutex> lock(myMutex); //scoped locking/unlocking
+if (std::lock_guard<std::mutex> lg{mutex}; str.empty()) {}
 if(myMutex.try_lock()) //doesn't block if can't lock
 {
     myMutex.unlock()
