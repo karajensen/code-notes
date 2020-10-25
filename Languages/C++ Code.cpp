@@ -311,34 +311,6 @@ continue; //jumps to loop conditional- while, for etc.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*************************************************************************************************************
-FUNCTION OVERLOADING
-Functions can be overloaded by
-• Type of parameters
-• Number of parameters
-• Const or non-const reference/pointers
-
-FUNCTION OVERLOAD RESOLUTION ORDER
-• Template functions never implicitly cast
-• Prefer exact non-template type over template
-• Implicit casting always last priority, never explicitly casts
-• Uses SFINAE: substitution failure is not an error where the compilier
-  can reject template types without throwing any errors
-  
-fn(1.0f, 1.0f)
-1) Non-template Exact type                        void fn(float x, float y)
-2) Template Explicit Specialization Exact type    template <> void fn(float x, float y) [requires 3]
-3) Template Overloads with Exact type             template <typename T> void fn(T x, float y)
-OR Template Overload                              template <typename T> void fn(T x, T y)
-5) Primary Template                               template <typename T, typename S> void fn(T x, S y)
-6) Non-template with Implicit conversion          void fn(float x, double y)
-
-fn<float>(1.0f, 1.0f)
-1) Template Explicit Specialization Exact type    template <> void fn(float x, float y) [requires 2]
-2) Template Overloads with Exact type             template <typename T> void fn(T x, float y)
-OR Template Overload                              template <typename T> void fn(T x, T y)
-3) Primary Template                               template <typename T, typename S> void fn(T x, S y)
-**************************************************************************************************************/
 
 // FUNCTION ORDER OF EVALUATION
 // Compilier specific, callFunc(getA(), getB()); can either be:
@@ -420,6 +392,37 @@ MyFn(y); // computed at runtime unless y is constexpr
 // argv is array of arguments, including the string used to invoke the program
 // must be called main or winmain
 int main(int argc, char* argv[]){ /*no return auto returns 0 (success)*/ }
+          
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FUNCTION OVERLOADING
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*************************************************************************************************************
+Functions can be overloaded by
+• Type of parameters
+• Number of parameters
+• Const or non-const reference/pointers
+
+FUNCTION OVERLOAD RESOLUTION ORDER
+• Template functions never implicitly cast
+• Prefer exact non-template type over template
+• Implicit casting always last priority, never explicitly casts
+• Uses SFINAE: substitution failure is not an error where the compilier
+  can reject template types without throwing any errors
+**************************************************************************************************************/
+
+fn(1.0f, 1.0f)
+1) Non-template Exact type                        void fn(float x, float y)
+2) Template Explicit Specialization Exact type    template <> void fn(float x, float y) [requires 3]
+3) Template Overloads with Exact type             template <typename T> void fn(T x, float y)
+OR Template Overload                              template <typename T> void fn(T x, T y)
+5) Primary Template                               template <typename T, typename S> void fn(T x, S y)
+6) Non-template with Implicit conversion          void fn(float x, double y)
+
+fn<float>(1.0f, 1.0f)
+1) Template Explicit Specialization Exact type    template <> void fn(float x, float y) [requires 2]
+2) Template Overloads with Exact type             template <typename T> void fn(T x, float y)
+OR Template Overload                              template <typename T> void fn(T x, T y)
+3) Primary Template                               template <typename T, typename S> void fn(T x, S y)
     
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GLOBAL VARIABLES / FUNCTIONS
@@ -471,7 +474,7 @@ constexpr void fn() {};  // Auto adds inline
 (Left value)   (Expiring value)   (Pure rvalue)
  
 LVALUE: name of variable, function args, string literal, result of *ptr, function return by-ref (type&)
-PRVALUE: literal value, nullptr, result of &var, result of x+y etc, function return by-value, lambdas, temporaries
+PRVALUE: literal value, nullptr, result of &var, result of x+y etc, function return by-val, lambdas, temporaries
 XVALUE: function return by type&&, result of std::move
 GLVALUE: xvalue or lvalue
 RVALUE: xvalue or prvalue
