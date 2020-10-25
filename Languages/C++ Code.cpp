@@ -24,8 +24,8 @@ char cstring = 'C';                        // content modifiable, single charact
 char cstring[256];                         // content modifiable, character buffer
 char cstring[] = "string literal";         // content modifiable, \0 auto added
 char cstring[] = {'h','i','\0'};           // content modifiable
-char* str = &cstring;                      // content/pointer modifiable
-char* const str = &cstring;                // content modifiable, pointer constant
+char* str = "string literal";              // content/pointer modifiable, \0 auto added
+char* const str ="string literal";         // content modifiable, pointer constant, \0 auto added
 const char* str = "string literal";        // pointer modifiable, content constant, \0 auto added
 const char* const str = "string literal";  // content/pointer constant, \0 auto added
 constexpr char* str                        // Same as char* const, Error
@@ -58,9 +58,21 @@ sizeof(myRef)                 // gives size of object referenced in bytes
 extent<int[3]>::value         // gives number of elements 3
 extent<decltype(arr)>::value  // gives number of elements for array
 
+// NAMESPACES
+namespace /*anon*/ {}
+namespace MySpace {}
+namespace MyAlias = MySpace;
+using namespace MySpace;
+MySpace::myVariable = 3;
+
+// VARIABLE ALIASES
+typedef int myType;
+typedef decltype(x) myType;
+using myType = int;
+
 // INCREMENTING
-b = ++a    // increment a and then use it (before anything else)
-b = a++    // use a and then increment it (after everything including assigment)
+b = ++a;   // increment a and then use it (before anything else)
+b = a++;   // use a and then increment it (after everything including assigment)
 ++++++i;   // OKAY: parsed as (++(++(++i)))
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,14 +84,25 @@ CONST VARIABLES
 • Integer constants are usually included as part of the instruction code
 • If type unknown or is refered to, may be stored in fixed seperate memory/data segment
 • Variable const-casted remains in same location but cannot change values
-• Cannot use move operations on const variables
+• Cannot use move operations on const variables (will copy them instead)
+
+STATIC VARIABLES
+• Variables with static storage duration:
+    - Global variables: Doesn't require 'static' keyword
+    - Class member variables: Require 'static' keyword
+    - Local variables: Require 'static' keyword
+• All static variables zero-initialisated or initialised to constant before main() called
+• If dynamic initialisation is required, can be initialised any time between main() 
+  and first use of variable (or object if class member)
 **************************************************************************************************************/
 
 register    // May store variable in register, not on stack, no address and can't be global
-volatile    // Don't cache or optimize value, can prevent cache race conditions
 mutable     // Value changes ignored for bitwise const checking; used to show internal synchronization
+volatile    // Don't cache or optimize value, can prevent cache race conditions
 const       // Can store variable in read-only memory or value repaced at compile time
 constexpr   // Evaluates at compile time, will store in read-only memory
+inline      // Ensures there is only one definition even if included in multiple places
+static      // Variables with static storage duration
     
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // VARIABLE INITIALISATION
@@ -113,8 +136,20 @@ Type x((Type2(y)))            // Extra () shows not function declaration
 Type x(Type2(5))              // Using temp var shows not function declaration
 5 + 1;                        // Temporary value on left side allowable but doesn't do anything
 
+// STRUCTURED BINDINGS
+// For all aggregates (array, struct, class, pair, tuple) except unions
+// All members must be public (including those from inheritance) and in brackets
+struct { int x; const char arr[3]; } myStruct;
+auto [a, b] = myStruct; // creates hidden copy of myStruct, x/y types stay the same (no decay)
+auto& [a, b] = myStruct; // creates hidden reference to myStruct
+auto [a, b, c] = myStruct.arr; // Copies array, cannot be decayed array pointer or dynamic array
+auto [a, b] {myStruct};
+auto [a, b] (myStruct);
+auto [a, b] = MyStruct{};
+for (const auto& [key, value] : myMap) {}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// SEQUENCE POINTS / ORDER OF EVALUATION
+// SEQUENCE POINTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*************************************************************************************************************
 • Undefined behaviour when changing a variable and reading it again without a sequence point.
@@ -130,8 +165,12 @@ Type x(Type2(5))              // Using temp var shows not function declaration
 
 // BAD SEQUENCE POINTS
 i++ * ++i; // BAD: i is modified more than once
-i = ++i    // BAD: i is modified more than once
+i = ++i;   // BAD: i is modified more than once
 ++i = 2;   // BAD: i is modified more than once
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ORDER OF EVALUATION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // COMMA-SEPERATION
 int x = a, b;      // a assigned to x, b assigned to nothing
@@ -175,64 +214,6 @@ auto& myObj = static_cast<MyDerived&>(myBaseObject)
 //converts const to non-const [only pointers]
 //bad if variable is stored in read-only memory- use only if underlying type is non-const
 auto* myPtr = const_cast<MyClass>(myPtr);
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// MOVE SEMANTICS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*************************************************************************************************************
-TEMPORARY VARIABLES
-• Move semantics reduces creation of temp variables
-• Value-typed variables auto created on the stack during:
-   - reference initialization
-   - expression evaluation
-   - automatic type conversion
-   - function passing/returning if no move constructor
-
-• Allows resources to transfer between objects rather than copying
-• Automatically done if object has a valid move assignment/constructor
-• All function parameters are lvalue even if initialised with an rvalue
-• Don't use with const objects: move becomes copy operation
-**************************************************************************************************************/
-
-int x =         // L-VALUES: Persisting variable on left side of assignment expression    
-= 3;            // R-VALUES: Temporary variable on right side of assignment expression
-int& x = y;     // L-VALUE REFERENCE
-int&& x = y;    // R-VALUE REFERENCE
-auto&& x = y;   // UNIVERSAL REFERENCE: requires type deduction, can bind to both rvalues/lvalue references
-int&& MyFn()    // X-VALUE: R-Value reference function return
-int MyFn()      // PR-VALUE: Non-reference function return
-
-// PASSING AS ARGUMENTS
-// Moving values should not be const or copy is made
-void MyFn(std::string&& str)
-{ 
-    // str becomes an lvalue as a function argument even if initialised as rvalue
-    // use std::move to convert to rvalue to pass on
-    myVec.push_back(std::move(str));
-}
-
-// AUTOMATIC USES
-MyFn("str");                            // Passing rvalue to by-val function argument
-std::string x = MyFn()                  // Returning local by-val unless Return Value Optimization occurs
-string MyFn(std::string x){ return x; } // Returning function argument by-val 
-myVec.emplace_back("str")               // Emplacing rvalue/unique_ptr into container
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// STRUCTURED BINDINGS
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*************************************************************************************************************
-• Can't be used with unions
-• Can be used with c-array, struct, class, std::pair, std::tuple, std::array
-• All members must be public and in brackets, works with public inheritance
-**************************************************************************************************************/
-struct MyStruct { int x; const char y[3]; };
-auto [x, y] = myStruct; // creates hidden copy of myStruct, x/y types stay the same (no decay)
-auto& [x, y] = myStruct; // creates hidden reference to myStruct
-auto [a, b, c] = myStruct.y; // Copies array, cannot be decayed array pointer or dynamic array
-auto [x, y] {myStruct};
-auto [x, y] (myStruct);
-auto [x, y] = MyStruct{};
-for (const auto& [key, value] : myMap) {}
     
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UNIONS
@@ -285,9 +266,9 @@ auto value = static_cast<MyEnum>(-1); // Undefined for enums without fixed under
 // BIT FIELDS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//• Can be tightly packed if declared together
-//• Type of a bit field can only be integral or enumeration type
-//• Cannot be a static member
+// Can be tightly packed if declared together
+// Type of a bit field can only be integral or enumeration type
+// Cannot be a static member
 struct
 {
     unsigned char x : 3;  // 3-bits, allowed values 2^3 (0-7)
@@ -297,10 +278,46 @@ struct
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// LOOPING
+// BRANCHING / LOOPING
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//FOR LOOP
+// SHORT CIRCUITING EVALUATION
+if(myObj && myObj.Fn() == 2) // checks first and only checks next if first is true
+if(myObj || myObj.Fn() == 2) // checks first, if not true will check second else not check second
+
+// IF-THEN-ELSE
+if (myBool) {} else if (myBool2) {} else {}
+if (auto x = fn()) {} else {} // result scoped to if only, needs to eval to bool
+if (auto x = fn(), y = 0; x == y) {} else {} // result scoped to whole block, same as 'for' syntax
+if (std::lock_guard<std::mutex> lg{mutex}; str.empty()) {}
+
+// TERNARY OPERATOR
+int value = (a < b) ? a : b;
+obj->Exists() ? obj->DoSomething() : throw ("exception");
+(a == 0 ? a : b) = 1; //if(a == 0) a = 1 else b = 1
+
+// SWITCH STATEMENTS
+// can have nothing inside the switch statement or just default
+// break is needed to stop switch from executing code after each case
+// CAN'T DO: Ranges, floating points, comparing two variables
+switch(choice)
+switch(auto x = fn(); x.choice) // result scoped to whole block, same as 'for' syntax
+{
+case 1: 
+    break;
+case 'a': 
+case 'A': // do something for case 'a' and 'A'
+    break;
+case red: // can use enum names which are converted to ints
+    break;
+default:
+};
+
+// GOTO
+goto label;
+label:  //do something
+
+// FOR LOOP
 // Never use unsigned int when looping backwards to 0
 // unsigned int overflow wraps to 0, signed int overflow is undefined
 // When decrementing past zero the unsigned int will cycle over
@@ -325,53 +342,43 @@ break;    //stops the loop
 continue; //jumps to loop conditional- while, for etc.
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// BRANCHING/LOGIC
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//SHORT CIRCUITING EVALUATION
-if(myObj && myObj.Fn() == 2) // checks first and only checks next if first is true
-if(myObj || myObj.Fn() == 2) // checks first, if not true will check second else not check second
-
-//IF-ELSE
-if (testint == 2) {}
-else if (testint == 3) {}
-else {}
-
-//TERNARY OPERATOR
-int value = (a < b) ? a : b;
-obj->Exists() ? obj->DoSomething() : throw ("exception");
-(a == 0 ? a : b) = 1; //if(a == 0) a = 1 else b = 1
-
-//SWITCH STATEMENTS
-//can have nothing inside the switch statement or just default
-//break is needed to stop switch from executing code after each case
-//CAN'T DO: Ranges, floating points, comparing two variables
-switch(choice)
-{
-case 1 : 
-    break;
-case 'a' : 
-case 'A' : //do something for case 'a' and 'A'
-    break;
-case red : //can use enum names which are converted to ints
-    break;
-default :
-};
-
-//GOTO
-goto label;
-label:  //do something
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*************************************************************************************************************
+FUNCTION OVERLOADING
+Functions can be overloaded by
+• Type of parameters
+• Number of parameters
+• Const or non-const reference/pointers
+
+FUNCTION OVERLOAD RESOLUTION ORDER
+• Template functions never implicitly cast
+• Prefer exact non-template type over template
+• Implicit casting always last priority, never explicitly casts
+• Uses SFINAE: substitution failure is not an error where the compilier
+  can reject template types without throwing any errors
+  
+fn(1.0f, 1.0f)
+1) Non-template Exact type                        void fn(float x, float y)
+2) Template Explicit Specialization Exact type    template <> void fn(float x, float y) [requires 3]
+3) Template Overloads with Exact type             template <typename T> void fn(T x, float y)
+OR Template Overload                              template <typename T> void fn(T x, T y)
+5) Primary Template                               template <typename T, typename S> void fn(T x, S y)
+6) Non-template with Implicit conversion          void fn(float x, double y)
+
+fn<float>(1.0f, 1.0f)
+1) Template Explicit Specialization Exact type    template <> void fn(float x, float y) [requires 2]
+2) Template Overloads with Exact type             template <typename T> void fn(T x, float y)
+OR Template Overload                              template <typename T> void fn(T x, T y)
+3) Primary Template                               template <typename T, typename S> void fn(T x, S y)
+**************************************************************************************************************/
 
 // RETURN VALUE OPTIMIZATION(RVO)
 // If possible, a returned local var is constructed in memory allocated for function's return value
 // If not possible, a returned local var is treated as rvalue (automatically uses std::move)
 // Using std::move / std::foward explicitly will prevent RVO for ever occuring
-// Only use std::move / std::foward on return if returning by - value a T && (or else copy will occur)
-MyClass MyFn() { MyClass obj;  return obj; }
+// Only use std::move / std::foward on return if returning by-value a T&& (or else copy will occur)
+int MyFn() { int x;  return x; }
 
 // MAIN ENTRY FUNCTION
 // argc is number of arguments, including the string used to invoke the program
@@ -394,13 +401,11 @@ template<int n> void MyFn(char(&arr)[n]) // array of any size
 void MyFn(int* arr, int size) // decays to pointer
 
 // INLINE FUNCTIONS
-// Function call is replaced by function body
-// Compiler ultimately decides what is inlined
-// If in.h any internal static members are shared between files
+// Ensures there is only one definition: Any internal static members shared between files
+// Suggestion to expand in-place, ultimately up to compilier
 // May increase program size unless a very small inlined function
-// Large inlined functions used alot can increase execution time due to caching
 // Increases build time as all uses need to be recompiled rather than just relinked
-inline void MyFn(int x){}
+inline void MyFn(int x) {}
 
 // C-VARIADIC FUNCTION
 MyFn("This is a %i %f test",2,3.0f);
@@ -423,11 +428,12 @@ void MyFn(int x = StaticFn());      // Static member function
 void MyFn(int x = (global==0?1:2))  // Ternary expressions
 void MyFn(int x = m_member)         // CANT DO: can't use non-static class members
 
-// CONTEXPR FUNCTIONS
+// CONSTEXPR FUNCTIONS
 // All arguments constexpr then computed at compile time, else computed at runtime
-constexpr int MyFn(int x){ return x; }
-MyFn(2); //computed at compiletime
-MyFn(y); //computed at runtime unless y is constexpr
+// Used if only literal types, no static variables, no virtual, no try/catch, no new/delete
+constexpr int MyFn(int x) { return x; }
+MyFn(2); // computed at compiletime
+MyFn(y); // computed at runtime unless y is constexpr
 
 // TRAILING RETURN TYPE
 // shifts the return type to after the function arguments
@@ -437,84 +443,50 @@ auto MyFn(int x, int y) -> decltype(x) {} // make return type same as x
 auto MyFn(MyCallback fn, int x) -> decltype(fn(x)) { return fn(x)); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// FUNCTION OVERLOADING
+// MOVE SEMANTICS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*************************************************************************************************************
-REQUIRES SIGNATURE DIFFERENCE
-• Type of parameters
-• Number of parameters
-• Const or non-const reference/pointers
+• Allows resources to transfer between objects rather than copying
+• Automatically done if object has a valid move assignment/constructor
+• All function parameters are lvalue even if initialised with an rvalue
+• Don't use with const objects: move becomes copy operation
 
-OVERLOAD RESOLUTION ORDER
-• Template functions never implicitly cast
-• Prefer exact non-template type over template
-• Implicit casting always last priority, never explicitly casts
-• Uses SFINAE: substitution failure is not an error where the compilier
-  can reject template types without throwing any errors
+TEMPORARY VARIABLES
+• Move semantics reduces creation of temp variables
+• Value-typed variables auto created on the stack during:
+   - reference initialization
+   - expression evaluation
+   - automatic type conversion
+   - function passing/returning if no move constructor
 **************************************************************************************************************/
 
-FN(1.0F, 1.0F)
-1) Non-template Exact type                        void Fn(float x, float y)
-2) Template Explicit Specialization Exact type    template <> void Fn(float x, float y) [requires 3]
-3) Template Overloads with Exact type             template <typename T> void Fn(T x, float y)
-OR Template Overload                              template <typename T> void Fn(T x, T y)
-5) Primary Template                               template <typename T, typename S> void Fn(T x, S y)
-6) Non-template with Implicit conversion          void Fn(float x, double y)
+int x =         // L-VALUES: Persisting variable on left side of assignment expression    
+= 3;            // R-VALUES: Temporary variable on right side of assignment expression
+int& x = y;     // L-VALUE REFERENCE
+int&& x = y;    // R-VALUE REFERENCE
+auto&& x = y;   // UNIVERSAL REFERENCE: requires type deduction, can bind to both rvalues/lvalue references
+int&& MyFn()    // X-VALUE: R-Value reference function return
+int MyFn()      // PR-VALUE: Non-reference function return
 
-FN<FLOAT>(1.0F, 1.0F)
-1) Template Explicit Specialization Exact type    template <> void Fn(float x, float y) [requires 2]
-2) Template Overloads with Exact type             template <typename T> void Fn(T x, float y)
-OR Template Overload                              template <typename T> void Fn(T x, T y)
-3) Primary Template                               template <typename T, typename S> void Fn(T x, S y)
+// PASSING AS ARGUMENTS
+// Moving values should not be const or copy is made
+void MyFn(std::string&& str)
+{ 
+    // str becomes an lvalue as a function argument even if initialised as rvalue
+    // use std::move to convert to rvalue to pass on
+    myVec.push_back(std::move(str));
+}
+
+// AUTOMATIC USES
+MyFn("str");                            // Passing rvalue to by-val function argument
+std::string x = MyFn()                  // Returning local by-val unless Return Value Optimization occurs
+string MyFn(std::string x){ return x; } // Returning function argument by-val 
+myVec.emplace_back("str")               // Emplacing rvalue/unique_ptr into container
     
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// NAMESPACES / ALIASES
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-namespace /*anon*/ {}
-namespace MySpace {}
-MySpace::MyVariable = 3;
-using namespace MySpace;
-using namespace MySpace::MyFunction();
-
-//ALIAS DECLARATION
-typedef int myType;
-typedef decltype(x) myType;
-using myType = int;
-
-// ADDING NAMESPACE ALIAS
-namespace MyAlias = MySpace;
-
-// KOENIG LOOKUP
-// When a function argument of class type (A::) is supplied
-// complier will auto look at namespace of class type for matches
-namespace A
-{
-    class MyClass;
-    void MyFn(int x);
-    void MyFn(MyClass& x);
-}
-namespace B
-{
-    void MyFn(int x){ MyFn(x); }                     // Will call itself as namespace A not in scope
-    void MyFn(int x){ using namespace A; MyFn(x); }  // Error: ambiguous requires :: to set which one to call
-    void MyFn(A::MyClass& x){ MyFn(x); }             // Error: auto adds 'using namespace A' when A::MyClass is added
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// STATIC / GLOBAL
+// GLOBAL VARIABLES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*************************************************************************************************************
-STATIC VARIABLES
-• Variables with static storage duration:
-    - Global variables: Doesn't require 'static' keyword
-    - Class member variables: Require 'static' keyword
-    - Local variables: Require 'static' keyword
-• All static variables zero-initialisated or initialised to constant before main() called
-• If dynamic initialisation is required, can be initialised any time between main() 
-  and first use of variable (or object if class member)
-
-GLOBAL VARIABLES
 • Defined outside function or class scope
 • Have static storage duration
 • Automatically has 'static' keyword unless 'extern' keyword is used, can't have both
