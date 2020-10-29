@@ -62,6 +62,9 @@ typeid(myObject).name()
 #include <type_traits>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// is_const_v<A> == is_const<A>::value
+// decay_t<A> == decay<A>::type
+std::is_aggregate<T>::value // Whether a aggregate type
 std::is_arithmetic<T>::value // Whether a numeric type
 std::is_base_of<A,B>::value // returns true if A is a base class of B
 std::is_assignable<A,B>::value // returns true if A==B is possible
