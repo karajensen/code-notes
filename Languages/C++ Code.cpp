@@ -616,6 +616,7 @@ value & Mask1                // If true then has the mask (C++ only as non-zero 
 (value & Mask1) == Mask1     // If true then has the mask
 
 // BIT MASK VALUES
+// If flags go above 1 << 30, must use unsigned int as underlying type and do 1U << 31
 NoMask = 0     0x000    0x00000000    00000000    
 Mask1  = 1     0x001    0x00000001    00000001    1 << 0    b0
 Mask2  = 2     0x002    0x00000002    00000010    1 << 1    b1
