@@ -8,16 +8,17 @@ C++17: Fold expressions, structured bindings
 C++20: Ranges, concepts
 *************************************************************************************************************/
 
-unsigned char         BYTE        ---
-short                 ---         short int / signed short / signed short int
-unsigned short        WORD        unsigned short int
-int                   INT/BOOL    signed 
-unsigned int          UINT        unsigned
-long                  ---         long int / signed long / signed long int
-unsigned long         ULONG       unsigned long int
-long long             ---         long long int / signed long long / signed long long int
-unsigned long long    DWORD       unsigned long long int
-float                 FLOAT       ---
+unsigned char              BYTE        ---
+short                      ---         short int / signed short / signed short int
+unsigned short (U)         WORD        unsigned short int
+int                        INT/BOOL    signed 
+unsigned int (U)           UINT        unsigned
+long (L)                   ---         long int / signed long / signed long int
+unsigned long (UL)         ULONG       unsigned long int
+long long (LL)             ---         long long int / signed long long / signed long long int
+unsigned long long (ULL)   DWORD       unsigned long long int
+float                      FLOAT       ---
+long double (L)            ---         ---
 
 // CSTRINGS
 char cstring = 'C';                        // content modifiable, single character
