@@ -60,10 +60,9 @@ extent<decltype(arr)>::value  // gives number of elements for array
 
 // NAMESPACES
 namespace /*anon*/ {}
-namespace MySpace {}
-namespace MyAlias = MySpace;
+namespace A {}
+namespace A::B {} // same as namespace A { namespace B {} }
 using namespace MySpace;
-MySpace::myInt = 3;
 ::myInt // Allows access to global variables when shadowed by local variables
 
 // VARIABLE ALIASES
@@ -99,9 +98,12 @@ static      // Variables with static storage duration
 extern      // References (in .h) or declares (in .cpp) an externally linked global variable    
     
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// VARIABLE INITIALISATION / ASSIGNMENT
+// VARIABLE INITIALISATION
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*************************************************************************************************************
+Direct initialization: Type x{}
+Copy initialization: Type x = {}
+
 STATIC-INITIALIZATION
 • All static variables zero-initialisated or initialised to constant before main() called
 • If dynamic initialisation is required, can be initialised any time between main() 
@@ -112,19 +114,8 @@ Auto initializes to 0 (false / nullptr) for:
 • All Static variables before main()
 • Aggregates (array, struct, class, pair, tuple) after default constructor is called
 • Aggregates type members that are not user initialised in {}
-    
-SEQUENCE POINTS
-• Undefined behaviour when changing a variable and reading it again without a sequence point.
-• After a function's returned object has been copied back to the caller
-• After evaluation of all a function's parameters when the function is called
-• After the initialization of each base and member for an object
-;       int x = 0;
-,       f(x,y) 
-||      x || y 
-&&      x && y 
-?:      x ? y : 0 
 **************************************************************************************************************/
-
+    
 Type x                      // Default constructor
 Type x(y) / Type x = y      // Copy constructor
 Type x(5) / Type x = 5      // Conversion constructor (second not possible with explicit keyword)
@@ -153,6 +144,12 @@ Type x{"a", true, 5};        // Inner {} not required
 Type x{{}, 5};               // Default init base members
 Type x{{}, {}, 5};           // Default init multiple inheritance base members
 
+// AUTO INITIALISATION
+// Type determined differs using copy/direct initialization
+auto a{42};                  // initializes an int
+auto c = {42};               // initializes a std::initializer_list<int> 
+auto d = {1,2,3};            // initializes a std::initializer_list<int>
+
 // STRUCTURED BINDINGS
 // Aggregates types only (array, struct, class, pair, tuple)
 // All members must be public (including those from inheritance) and in brackets
@@ -164,21 +161,6 @@ auto [a, b] {obj};
 auto [a, b] (obj);
 auto [a, b] = obj{};
 for (const auto& [key, value] : map) {}
-
-// INCREMENTING
-b = ++a;   // increment a and then use it (before anything else)
-b = a++;   // use a and then increment it (after everything including assigment)
-++++++i;   // OKAY: parsed as (++(++(++i)))
-
-// COMMA-SEPERATION
-int x = a, b;      // a assigned to x, b assigned to nothing
-int x = (a, b);    // a assigned to nothing, b assigned to x
-int x = a, y = b;  // a assigned to x, b assigned to y (both new vars)
-
-// BAD SEQUENCE POINTS
-i++ * ++i; // BAD: i is modified more than once
-i = ++i;   // BAD: i is modified more than once
-++i = 2;   // BAD: i is modified more than once
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CASTING
@@ -248,10 +230,11 @@ double ONE = 2.0;  // Error for unscoped enum as it pollutes the namespace
 auto value = static_cast<MyEnum>(2); // Both require cast from int to enum
 int value = myEnum; // Unscoped auto cases from enum to int, scoped requires static cast
 
-// FIXED UNDERLYING TYPE ENUMS
+// UNDERLYING TYPE ENUMS
 // Enums without fixed underlying type can only be cast to values between min->max of enum
 // Enums with fixed underlying type can only be cast to values between min->max of type
 auto value = static_cast<MyEnum>(-1); // Undefined for enums without fixed underlying type
+MyEnum myEnum{5} // Underlyng type enums can only use, but cannot use = {5}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BRANCHING / LOOPING
@@ -266,6 +249,11 @@ if (myBool) {} else if (myBool2) {} else {}
 if (auto x = fn()) {} else {} // result scoped to if only, needs to eval to bool
 if (auto x = fn(), y = 0; x == y) {} else {} // result scoped to whole block, same as 'for' syntax
 if (std::lock_guard<std::mutex> lg{mutex}; str.empty()) {}
+
+// COMPILE-TIME-IF
+// During compilation unused branches discarded
+// Doesn't short circuit, all conditions evaluated
+if constexpr(myBool) {} else if constexpr(auto x = fn()) {} else {}
 
 // TERNARY OPERATOR
 int value = (a < b) ? a : b;
@@ -320,18 +308,6 @@ continue; //jumps to loop conditional- while, for etc.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// FUNCTION ORDER OF EVALUATION
-// Compilier specific, callFunc(getA(), getB()); can either be:
-int a = getA();           int b = getB();
-int b = getB();  /*OR*/   int a = getA();
-callFunc(a, b);           callFunc(a, b);
-
-// INITIALISER LIST ORDER OF EVALUATION
-// In order, callFunc({getA(), getB()}); will be:
-int a = getA();
-int b = getB();
-callFunc({a, b});
 
 // RETURN VALUE OPTIMIZATION(RVO)
 // If possible, a returned local var is constructed in memory allocated for function's return value
@@ -432,6 +408,56 @@ fn<float>(1.0f, 1.0f)
 2) Template Overloads with Exact type             template <typename T> void fn(T x, float y)
 OR Template Overload                              template <typename T> void fn(T x, T y)
 3) Primary Template                               template <typename T, typename S> void fn(T x, S y)
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ORDER OF EVALUATION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*************************************************************************************************************
+SEQUENCE POINTS
+• Undefined behaviour when changing a variable and reading it again without a sequence point.
+• After a function's returned object has been copied back to the caller
+• After evaluation of all a function's parameters when the function is called
+• After the initialization of each base and member for an object
+;       int x = 0;
+,       f(x,y) 
+||      x || y 
+&&      x && y 
+?:      x ? y : 0 
+**************************************************************************************************************/
+
+// INCREMENTING
+b = ++a;   // increment a and then use it (before anything else)
+b = a++;   // use a and then increment it (after everything including assigment)
+++++++i;   // OKAY: parsed as (++(++(++i)))
+
+// COMMA-SEPERATION
+int x = a, b;      // a assigned to x, b assigned to nothing
+int x = (a, b);    // a assigned to nothing, b assigned to x
+int x = a, y = b;  // a assigned to x, b assigned to y (both new vars)
+
+// ORDER OF EVALUATON
+// a is guaranteed to be evaluated before b c++17 only
+a[b]         a.b          a.*b         
+a->*b        a << b       a >> b 
+b = a        b += a       b *= a       
+new Type(e) // Memory allocation guaranteed to happen before e c++17
+
+// FUNCTION ORDER OF EVALUATION
+// Compilier specific, callFunc(getA(), getB()); can either be:
+int a = getA();           int b = getB();
+int b = getB();  /*OR*/   int a = getA();
+callFunc(a, b);           callFunc(a, b);
+
+// INITIALISER LIST ORDER OF EVALUATION
+// In order, callFunc({getA(), getB()}); will be:
+int a = getA();
+int b = getB();
+callFunc({a, b});
+
+// BAD SEQUENCE POINTS
+i++ * ++i; // BAD: i is modified more than once
+i = ++i;   // BAD: i is modified more than once
+++i = 2;   // BAD: i is modified more than once
     
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // GLOBAL VARIABLES / FUNCTIONS
@@ -658,14 +684,10 @@ struct CStruct
 // CHANGE STATIC INIT ORDER
 #pragma init_seg(lib) // Any statics in file will be initialised first
 
-// TRIGRAPH
-// Replaced at preprocessor stage, disabled VS, deprecated c++17
-??=  /*replaced with*/  #
-??/  /*replaced with*/  \
-??’  /*replaced with*/  ^
-??(  /*replaced with*/  [
-??)  /*replaced with*/  ]
-??!  /*replaced with*/  |
-??<  /*replaced with*/  {
-??>  /*replaced with*/  }
-??-  /*replaced with*/  ˜
+// ATTRIBUTES
+// Suggestion only
+[[nodiscard]] int* fn() { return new int; }           // Function return value should be used
+[[noreturn]] void fn() { throw; }                     // Function always throws an exception
+[[deprecated]] void fn() {};                          // Function should be avoided                  
+void fn([[maybe_unused]] int x)                       // Prevent warning if x is unused
+switch (x) { case 0: [[fallthrough]] case 1: break; } // Show fallthrough case is intended
