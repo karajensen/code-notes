@@ -2,9 +2,9 @@
 // ERROR HANDLING
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-assert(myPtr != nullptr);                    // break if myPtr is null
-assert(condition && "message");              // break with message
-static_assert(myConstInt > 0, "MyMessage");  // must use constant values, asserts at compile time
+assert(myPtr != nullptr);               // break if myPtr is null
+assert(condition && "message");         // break with message
+static_assert(condition, "MyMessage");  // must use constant values, asserts at compile time, message optional
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // C++ EXCEPTIONS
