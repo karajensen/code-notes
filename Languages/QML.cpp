@@ -461,7 +461,11 @@ console.log(component.errorString());
 if (component.status == Component.Ready) {
     var obj = component.createObject(parent, {"x": 100, "y": 100});
     var obj = component.createObject(parent, {"x": Qt.binding(function() { return item.x; })});
-  
+    
+    // Using 'parent' in createObject causes issues with destroy(), use null and then .parent
+    obj.parent = parent;
+    obj.destroy();
+    
     var incubator = component.incubateObject(parent, { x: 10, y: 10 });
     if (incubator.status != Component.Ready) {
         incubator.onStatusChanged = function(status) {
@@ -518,6 +522,11 @@ Loader.Error    // an error occurred while loading the QML source
 TAB STOP: The location the cursor stops after the tab key is pressed
 ACTIVE FOCUS: Item or FocusScope child currently receiving keyboard input
 
+COMPONENT FOCUS:
+• activeFocusOnTab used to determine automatic tab ordering (default false except for Controls)
+• forceActiveFocus will give a component focus
+• KeyNavigation.tab / Keys.onTabPressed overrides activeFocusOnTab
+
 COMPOSED MOUSE EVENT:
 • Clicked, doubleClicked and pressAndHold, composed of basic mouse events like pressed
 • Changing the accepted property of the mouse parameter has no effect unless propagateComposedEvents true
@@ -531,9 +540,10 @@ KEY HANDLING STEPS:
 **************************************************************************************************************/
 
 // FOCUSSCOPE
-// Only one direct child can have focus set as true
+// Only one direct child can have focus set as true, last one set is used
 // When FocusScope receives focus, the focus is auto shifted to this child
 FocusScope {
+    Item { focus: true }
 }
 
 // MOUSEAREA
@@ -585,6 +595,11 @@ area.pressedButtons // mouse buttons currently pressed, can't be Qt.AllButtons
 Item {
     Keys.enabled: true // enable signals for this item, default true
     Keys.forwardTo: [item1, item2] // forwards event to each item, once accepted stops forwarding
+    Keys.onShortcutOverride: { // Override any global Shortcut
+        if (event.key == Qt.Key_Tab)
+            event.accepted = true
+    }
+    
     Keys.onAsteriskPressed: { event }
     Keys.onBackPressed: { event }
     Keys.onBacktabPressed: { event }
@@ -606,13 +621,19 @@ Item {
     Keys.onReturnPressed: { event }
     Keys.onRightPressed: { event }
     Keys.onSelectPressed: { event }
-    Keys.onShortcutOverride: { event }
     Keys.onSpacePressed: { event }
     Keys.onTabPressed: { event }
     Keys.onUpPressed: { event }
     Keys.onVolumeDownPressed: { event }
     Keys.onVolumeUpPressed: { event }
     Keys.onYesPressed: { event }
+    
+    KeyNavigation.backtab: item
+    KeyNavigation.down: item
+    KeyNavigation.left: item
+    KeyNavigation.right: item
+    KeyNavigation.tab: item
+    KeyNavigation.up: item
 }
 
 // MOUSE EVENT
