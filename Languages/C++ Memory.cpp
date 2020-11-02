@@ -35,10 +35,7 @@ RESOURCE ACQUISITION IS INITIALIZATION(RAII)
 • Vital for exception and thread safe code
 **************************************************************************************************************/
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // POINTERS/REFERENCES
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 int* ptr = NULL;                 // 0 or 0L which zeros out pointer
 int* ptr = nullptr;              // store null of type std::nullptr_t
 int* ptr = &myInt;               // store address of variable
