@@ -36,16 +36,16 @@ int x = 1;             Fn(x);     // T is int&, param is int& (x is l-value)
 const int& y = x;      Fn(y);     // T is const int&, param is const int& (x is l-value)
                        Fn(1);     // T is int, param is int&& (1 is r-value)
 
-//GENERIC LAMDAS
-//Auto in lambda param/return type use template, not auto, type deduction
+// GENERIC LAMDAS
+// Auto in lambda param/return type use template, not auto, type deduction
 auto MyFn = [](auto x) -> int { return 2; } /*or*/
 decltype(auto) MyFn = [](auto x) { return 2; }
 
 //===============================================================================================================
 // AUTO TYPE DEDUCTION
 //===============================================================================================================
-//Uses same rules as template type deduction
-//Exception is auto assumes {} type is std::initializer_list
+// Uses same rules as template type deduction
+// Exception is auto assumes {} type is std::initializer_list
 
 auto x = 2.0;      // auto is type double
 auto x(2.0);       // auto is type double
@@ -64,7 +64,7 @@ auto& fn2 = fn1;   // auto is type void(&)(int)
 //===============================================================================================================
 // DECL TYPE DEDUCTION
 //===============================================================================================================
-//Unlike auto/template deduction, does not ignore const/references
+// Unlike auto/template deduction, does not ignore const/references
 
 const int x = 1;
 const int& y = x;
@@ -75,7 +75,7 @@ decltype(Fn(x)) value;      // Value is same return type of Fn
 decltype(auto) value = y;   // Value is const int&, if using just auto value would be int
 
 //EXTRA BRACKETS PITFALL
-//Putting extra () around variable name can affect the type returned
+// Putting extra () around variable name can affect the type returned
 decltype((x)) value;                                 // Value is int&
 decltype(auto) MyFn = [](){ int x = 1; return (x); } // Is returning int&!
 
@@ -101,12 +101,12 @@ template <typename T> class MyClass;
 template <typename T> void MyFunction(T x) {} 
 MyFunction<int>(x) /*or*/ MyFunction(x)
 
-template <typename T, typename S = int> //int = default type, only one allowed on class templates
+template <typename T, typename S = int> // int = default type, only one allowed on class templates
 class MyClass
 {
 public:
-    MyClass<T>() :     //<T> optional
-        m_member(S())  //initialise templated member to default
+    MyClass<T>() :     // <T> optional
+        m_member(S())  // initialise templated member to default
     {
     } 
 private:
@@ -129,18 +129,14 @@ public:
 };
 // In Cpp File:
 template MyClass<int>; // for every use of template add an explicit instantiation to .cpp file
-template<typename T> MyClass<T>::MyClass()
-{
-}
+template<typename T> MyClass<T>::MyClass() {}
 
 // FUNCTION TEMPLATES IN CPP
 // In Header File:
 template <typename T> void MyFn();
 // In Cpp File:
 template MyClass::MyFn<int>; // for every use of template add an explicit instantiation to .cpp file
-template <typename T> void MyClass::MyFn()
-{
-}
+template <typename T> void MyClass::MyFn() {}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TEMPLATE SPECIALISATION
@@ -183,6 +179,15 @@ class MyClass
     T[n] m_myArray;
 };
 MyClass<double, 20> myObj;
+
+// AUTO PARAMTERS
+template<typename T, auto N> 
+class MyClass
+{ 
+    MyClass(const std::array<T,N>&) {}
+}
+MyClass obj{"str"}
+MyClass obj{std::array<double,10>()}
 
 // TEMPLATE TEMPLATE PARAMETERS
 // Allows a parameter that is a template itself to be passed in as a type
@@ -255,14 +260,14 @@ template <typename T> class Derived : public Base<T>
     }
 };
 
-//CURIOUSLY RECURRING TEMPLATE PATTERN (CRTP)
-//class A has a base class which is a template specialization for the class A itself.
+// CURIOUSLY RECURRING TEMPLATE PATTERN (CRTP)
+// class A has a base class which is a template specialization for the class A itself.
 template <typename A> 
 class Base
 {
     A& DoSomething();
 };
-//Class A derives from base and passes own type in
+// Class A derives from base and passes own type in
 class A : public Base<A> 
 {
 };
@@ -329,6 +334,48 @@ template <typename T> class MyClass
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// UNIVERSAL REFERENCES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*************************************************************************************************************
+UNIVERSAL REFERENCES
+• Reference that can bind to rvalue and lvalue reference of form T&&
+• T&& that uses Reference Collapsing to bind to both rvalue/lvalue references
+• Requires type deduction that must be determined each time its called (not class templates)
+• Requires Pefect Fowarding to pass on arguments
+• Bad for overloading: instantiate to create exact matches for almost any type of argument
+• Cannot be used with class templates, const or volitile
+
+PERFECT FORWARDING
+• Function templates that take arbitrary arguments and forward exactly the same arguments
+• Preserves R/L value-ness of passed args as all function params are lvalues
+• std::foward used to pass on correct type by casting to rvalue if pass argument was an rvalue
+• Fails with {}, NULL, static const members without a definition, template/overloaded function names, bitfields
+
+REFERENCE COLLAPSING
+• Occurs in universal references, typedef T&& MyTypedef, aliases and decltype
+• When lvalue reference is passed to T&&, creates type MyClass& && which collapses to MyClass&
+• Only compiler can create type T& && for collapsing, otherwise error
+*************************************************************************************************************/
+
+void fn(T& x) {}
+void fn(T&& x) {}
+void MyFn(T&& x) { return fn(x); } // Calls fn(T& x) for rvalues/lvalues
+void MyFn(T&& x) { return fn(std::move(x)); } // Calls fn(T&& x) for rvalues/lvalues
+void MyFn(T&& x) { return fn(std::forward<T>(x)); } // Calls fn(T&& x) for rvalues, fn(T& x) for lvalues 
+                                              
+auto MyFn = [](auto&& x){ MyFn2(std::foward<decltype(x)>(x)); };
+auto&& x = myObj; // initialised with lvalue reference, T/x = MyClass&
+auto&& x = 3;     // initialised with rvalue, T = MyClass, x = MyClass&&
+
+// VARIADIC UNIVERSAL REFERENCES
+template<typename...T>
+void fn(T&&...v)
+{
+     (..., vec.push_back(std::forward<T>(v))); // Fold expression
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // VARIADIC TEMPLATES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -340,8 +387,8 @@ template <typename T> class MyClass
 template<typename T, typename... Args> // Args is a template parameter pack
 void MyFn(const T& value, const Args&... args) // args is a function parameter pack
 {
-    //uses recursion to take first element from list
-    //sends rest (minus head) to next call of function
+    // uses recursion to take first element from list
+    // sends rest (minus head) to next call of function
     cout << value << ",";
     MyFn(args...);
 }
@@ -423,7 +470,7 @@ auto MyFn = [](const auto& value, const Args&... args)
     cout << value << ",";
     MyFn(args...);
 }
-MyFn(2.0,"hello",4,'c'); //can use any number, order or type of arguments
+MyFn(2.0,"hello",4,'c'); // can use any number, order or type of arguments
 MyFn(1.0,'d',"astring");
 
 // Perfect Forwarding for lambda arguments
@@ -439,44 +486,34 @@ void MyFn(Args&&... args)
     m_fn(std::forward<Args>(args)...);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// UNIVERSAL REFERENCES
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------------------
+// FOLD EXPRESSIONS
+//-----------------------------------------------------------------------------------------------
 
-/*************************************************************************************************************
-UNIVERSAL REFERENCES
-• Reference that can bind to rvalue and lvalue reference of form T&&
-• T&& that uses Reference Collapsing to bind to both rvalue/lvalue references
-• Requires type deduction that must be determined each time its called (not class templates)
-• Requires Pefect Fowarding to pass on arguments
-• Bad for overloading: instantiate to create exact matches for almost any type of argument
-• Cannot be used with class templates, const or volitile
+// For accessing variadic template arguments
+// Order inside brackets matters except for comma operator which is always left to right
+(... op args ) = ((arg1 op arg2) op arg3) ... = left to right
+(args op ... ) = (arg1 op (arg2 op arg3)) ... = right to left
 
-PERFECT FORWARDING
-• Function templates that take arbitrary arguments and forward exactly the same arguments
-• Preserves R/L value-ness of passed args as all function params are lvalues
-• std::foward used to pass on correct type by casting to rvalue if pass argument was an rvalue
-• Fails with {}, NULL, static const members without a definition, template/overloaded function names, bitfields
-
-REFERENCE COLLAPSING
-• Occurs in universal references, typedef T&& MyTypedef, aliases and decltype
-• When lvalue reference is passed to T&&, creates type MyClass& && which collapses to MyClass&
-• Only compiler can create type T& && for collapsing, otherwise error
-*************************************************************************************************************/
-
-void fn(T& x) {}
-void fn(T&& x) {}
-void MyFn(T&& x) { return fn(x); } // Calls fn(T& x) for rvalues/lvalues
-void MyFn(T&& x) { return fn(std::move(x)); } // Calls fn(T&& x) for rvalues/lvalues
-void MyFn(T&& x) { return fn(std::forward<T>(x)); } // Calls fn(T&& x) for rvalues, fn(T& x) for lvalues 
-                                              
-auto MyFn = [](auto&& x){ MyFn2(std::foward<decltype(x)>(x)); };
-auto&& x = myObj; // initialised with lvalue reference, T/x = MyClass&
-auto&& x = 3;     // initialised with rvalue, T = MyClass, x = MyClass&&
-
-// VARIADIC UNIVERSAL REFERENCES
-template<typename...T>
-void fn(T&&...v)
-{
-     (..., vec.push_back(std::forward<T>(v))); // Fold expression
+// Empty parameter packs: 
+op = &&           // returns true
+op = ||           // returns false
+op = ,            // returns void
+op = all others   // undefined (must add initial value)
+  
+template<typename T, typename... Args> 
+auto sum(Args... args) 
+{ 
+    (std::cout << ... << fn(args));
+    (... , vec.push_back(args));
+    return (0 + ... + args); // init value required for empty args
+    return (std::is_same_v<T,Args> && ...); // will short circuit on first false
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// DEDUCTION GUIDES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template<typename T> struct S { T val; };
+S(const char*) -> S<std::string>; // map S<> for string literals to S<std::string>
+
