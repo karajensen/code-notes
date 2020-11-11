@@ -105,12 +105,15 @@ MyClass obj{std::make_from_tuple(myTuple)}; // allows initializing a POD from th
 #include <optional>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-std::optional<std::string> myOptional = make_optional("str");
-std::optional<std::string> myOptional(std::nullopt); // object of no type
-myOptional.reset(); // destroys the value
-myOptional.value(); // returns a reference to the value
-myOptional.has_value(); // whether has a value
-myOptional.value_or("empty"); // returns copy of value or default value
+std::optional<int> opt; // std::nullopt
+std::optional<int> opt = make_optional(0);
+*opt // Undefined if doesn't exist
+if (opt) {} // boolean cast operator if has a value
+if (opt == 0) {} // Comparison works on value
+opt.reset(); // destroys the value
+opt.value(); // returns a reference to the value, throws if doesn't exist
+opt.has_value(); // whether has a value
+opt.value_or(0); // returns copy of value or default value
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <variant>
