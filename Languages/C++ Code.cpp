@@ -4,7 +4,7 @@
 /*************************************************************************************************************
 C++11: Lambdas, move semantics
 C++14: Generic lambdas
-C++17: Fold expressions, structured bindings
+C++17: Fold expressions, structured bindings, filesystem
 C++20: Ranges, concepts
 *************************************************************************************************************/
 
