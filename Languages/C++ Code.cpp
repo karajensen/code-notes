@@ -64,6 +64,7 @@ namespace /*anon*/ {}
 namespace A {}
 namespace A::B {} // same as namespace A { namespace B {} }
 using namespace MySpace;
+namespace ab = A::B; // Alias, use as ab::myInt
 ::myInt // Allows access to global variables when shadowed by local variables
 
 // VARIABLE ALIASES
