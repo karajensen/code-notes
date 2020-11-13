@@ -15,44 +15,44 @@ myPair.first / myPair.second // access members of pair
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // works on character arrays and string temp/literals
 
-strlen(str) //gives the length of the string array minus the null character
-strcpy(str1, str2) //copy cstring2 to cstring1 including '\0'
-strncpy(str1, str2, 3) //copy 3 members of cstring2 to cstring1, must do cstring1[4] = '\0' after
-strcat(str1, str2) //append contents of cstring2 to cstring1
-strcmp(str1, str2) //checks each char until reaching a '\0', returns 0 if same or < or > 0 if 1 < or > 2
-strchr(str, ch) //returns ptr to first occurance of char chosen, or null if not there
-strrchr(str, ch) //returns ptr to last occurance of char chosen, or null if not there
-strpbrk(str1, str2) //returns ptr to first occurance of any character in str2 or null if none
-strtok(str, delim) //removes token from str and returns it using deliminators
-wcscpy(str1, str2) //strcpy for wide strings
-wcsncpy(str1, str2) //strncpy for wide strings
+strlen(str) // gives the length of the string array minus the null character
+strcpy(str1, str2) // copy cstring2 to cstring1 including '\0'
+strncpy(str1, str2, 3) // copy 3 members of cstring2 to cstring1, must do cstring1[4] = '\0' after
+strcat(str1, str2) // append contents of cstring2 to cstring1
+strcmp(str1, str2) // checks each char until reaching a '\0', returns 0 if same or < or > 0 if 1 < or > 2
+strchr(str, ch) // returns ptr to first occurance of char chosen, or null if not there
+strrchr(str, ch) // returns ptr to last occurance of char chosen, or null if not there
+strpbrk(str1, str2) // returns ptr to first occurance of any character in str2 or null if none
+strtok(str, delim) // removes token from str and returns it using deliminators
+wcscpy(str1, str2) // strcpy for wide strings
+wcsncpy(str1, str2) // strncpy for wide strings
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <cctype>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-isalpha(myChar)  //is character a letter
-isalnum(myChar)  //is character a letter or number
-isdigit(myChar)  //is character a decimal digit (0-9)
-isxdigit(myChar) //is character a hexadecimal digit (0-9, A-F)
-isspace(myChar)  //is character a whitespace characters (newlines, spaces, and tabs)
-isblank(myChar)  //is character a space or tab
-ispunct(myChar)  //is character a punctuation character
-iscntrl(myChar)  //is character a control character
-islower(myChar)  //is character lower case
-isupper(myChar)  //is character upper case
-tolower(myChar)  //returns lower case of character
-toupper(myChar)  //returns upper case of character
+isalpha(myChar)  // is character a letter
+isalnum(myChar)  // is character a letter or number
+isdigit(myChar)  // is character a decimal digit (0-9)
+isxdigit(myChar) // is character a hexadecimal digit (0-9, A-F)
+isspace(myChar)  // is character a whitespace characters (newlines, spaces, and tabs)
+isblank(myChar)  // is character a space or tab
+ispunct(myChar)  // is character a punctuation character
+iscntrl(myChar)  // is character a control character
+islower(myChar)  // is character lower case
+isupper(myChar)  // is character upper case
+tolower(myChar)  // returns lower case of character
+toupper(myChar)  // returns upper case of character
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <typeinfo>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-typeid(myObject)               //returns const type_info& for object
-typeid(MyClass)                //returns const type_info& for class
-typeid(*myBasePtr)             //will use most derived type as works on object
-typeid(*this)                  //if done in constructor/destructor will use actual type, not most derived type
-typeid(T) == typeid(const T)   //cv and * and & qualifiers ignored
+typeid(myObject)               // returns const type_info& for object
+typeid(MyClass)                // returns const type_info& for class
+typeid(*myBasePtr)             // will use most derived type as works on object
+typeid(*this)                  // if done in constructor/destructor will use actual type, not most derived type
+typeid(T) == typeid(const T)   // cv and * and & qualifiers ignored
 
 // String identifying class type, compilier dependent
 // Visual Studio: class MyNamespace::MyClass
@@ -118,19 +118,45 @@ opt.value_or(0); // returns copy of value or default value
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <variant>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Type-safe union that can hold multiple types, cannot hold references, arrays, or void
+// Union with internal memory for the maximum size of the underlying types plus overhead for management
+// No heap memory is allocated
+// Cannot hold references / void / C-style array
+// Cannot be empty except in undefined states from exceptions
+// First type must have a default constructor which is automatically called on creation
 
-std::variant<int, float> myVariant; // can hold int or float
-myVariant = 20;                     // assign a value, current type is now int
-myVariant.index();                  // returns 0-based index for current type (eg. 0 for int, 1 for float)
-std::get<T>(myVariant);             // will throw std::bad_variant_access if asked for wrong current type
-std::get_if<T>(&myVariant);         // returns T* if the correct current type, nullptr if incorrect
+std::variant<int, float> var;            // can hold int or float, default constructor called if needed
+std::variant<int, float> var{1.0};       // can hold int or float
+var = 20;                                // assign a value, current type is now int
+var.index();                             // returns 0-based index for current type (eg. 0 for int, 1 for float)
+std::get<int>(var);                      // throws std::bad_variant_access if wrong current type
+std::get<0>(var);                        // throws std::bad_variant_access if wrong current index
+std::get_if<int>(&var);                  // returns T* if the correct current type, nullptr if incorrect
+std::get_if<0>(&var);                    // returns T* if the correct current index, nullptr if incorrect
+var.emplace<0>(77);                      // initializes int, destroys float 
+std::variant<std::monostate, int, float> // use if first type has no default constructor
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <any>
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Allows changing type with type safety, can hold any type and be empty
+
+std::any a;                 // empty 
+a = 4;                      // assign new value/type
+a.type();                   // compare with typeid(int), empty is typeid(void)
+a.reset();                  // makes empty
+a = {}                      // makes empty
+a = std::make_any<short>(4) // force change type
+a.emplace_back<short>(4)    // allow force set type
+a.has_value()               // whether empty
+std::any_cast<int>(a)       // throws if empty or wrong type
+std::any_cast<int&>(a)      // throws if empty or wrong type
+std::any_cast<int>(&a)      // returns int* or null if empty or wrong type
+    
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <random>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-srand(time(0));                     //choose a seed
+srand(time(0));                     // choose a seed
 rand()                              // returns int between [0, RAND_MAX]
 (rand() % (max - min)) + min;       // [min, max)
 (rand() % (max - min + 1)) + min;   // [min, max]
@@ -138,10 +164,10 @@ rand()                              // returns int between [0, RAND_MAX]
 // Distribution
 // create one generator per application
 std::default_random_engine generator;
-std::uniform_int_distribution<int> dist(lower, upper); //integer distribution
-std::uniform_real_distribution<float> dist(lower, upper); //real distribution
-auto getRand = [&]() ->int { return dist(generator); } //Generates number in the range [lower,upper]
-auto getRand = std::bind(dist, generator); //Bind and use as function object
+std::uniform_int_distribution<int> dist(lower, upper); // integer distribution
+std::uniform_real_distribution<float> dist(lower, upper); // real distribution
+auto getRand = [&]() ->int { return dist(generator); } // Generates number in the range [lower,upper]
+auto getRand = std::bind(dist, generator); // Bind and use as function object
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <ctime> <chrono>
@@ -174,204 +200,48 @@ long   LONG_MIN   LONG_MAX   ULONG_MAX
 //minimum positive, maximum positive
 float  FLT_MIN  FLT_MAX 
 
-std::is_same<float, T>::value //true/false whether types are the same (including constness)
-std::remove_const<T>::type //returns the type without const
+std::is_same<float, T>::value // true/false whether types are the same (including constness)
+std::remove_const<T>::type // returns the type without const
 
-numeric_limits<int>::min() //mimimum negative for int, minimum positive for float
-numeric_limits<int>::max() //maximum positive for int/float
-numeric_limits<int>::lowest() //mimimum negative for int/float
-numeric_limits<int>::is_signed //whether signed/unsigned
-numeric_limits<int>::digits //number of non-signed bits for int, number of digits for float
-numeric_limits<int>::has_infinity //whether type can represent infinity
-numeric_limits<int>::infinity() //representation of positive infinity if possible
-numeric_limits<int>::round_style //returns rounding style used
-numeric_limits<float>::epsilon() //floating point error amount
+numeric_limits<int>::min() // mimimum negative for int, minimum positive for float
+numeric_limits<int>::max() // maximum positive for int/float
+numeric_limits<int>::lowest() // mimimum negative for int/float
+numeric_limits<int>::is_signed // whether signed/unsigned
+numeric_limits<int>::digits // number of non-signed bits for int, number of digits for float
+numeric_limits<int>::has_infinity // whether type can represent infinity
+numeric_limits<int>::infinity() // representation of positive infinity if possible
+numeric_limits<int>::round_style // returns rounding style used
+numeric_limits<float>::epsilon() // floating point error amount
 
-round_toward_zero //if it rounds toward zero.
-round_to_nearest //if it rounds to the nearest representable value.
-round_toward_infinity //if it rounds toward infinity.
-round_toward_neg_infinity //if it rounds toward negative infinity.
-round_indeterminate //if the rounding style is indeterminable at compile time.
+round_toward_zero // if it rounds toward zero.
+round_to_nearest // if it rounds to the nearest representable value.
+round_toward_infinity // if it rounds toward infinity.
+round_toward_neg_infinity // if it rounds toward negative infinity.
+round_indeterminate // if the rounding style is indeterminable at compile time.
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <cmath>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-modf(x, &y) //returns the fractional part of double x and puts integer part in double y
-abs(-1); //Gets absolute value for double
-fabs(-1); //Gets absolute value for float
-pow(2, 8); //finding 2⁸
-sqrt(4); //finding square root of 4
-ceil(4.3) //returns closest integer rounding up (5)
-floor(4.7) //returns closest integer rounding down (4)
-round(4.5) //math round- to closest integer up/down with 0.5 going up
-cos(angle) //angle in radians
-sin(angle) //angle in radians
-tan(angle) //angle in radians
-acos(x/r) //cosӨ = A/C, returns radians
-asin(y/r) //sinӨ = O/C, returns radians
-atan(x/y) //tanӨ = O/A, returns radians
-atan2(x, y) //calculates tan(x/y), returns radians
-_finite(0.0) //returns whether its a valid (not infinite/undefined) double
-_chgsign(x) //returns x with its sign reversed
-_copysign(x, y) //returns double with magnitude of x and sign of y
-copysign(x, y) //returns double with magnitude of x and sign of y
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <sstream> <iostream> <fstream> <iomanip>
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*************************************************************************************************************
-BUFFER
-• Bloack of memory for storage/transfer of information
-• Flushed when endl, when full or when specified
-• Controls rate of stream of bytes to/from buffer
-
-BITMASK TYPES    
-• OPENMODE: bitmask type for setting the file mode
-• FMTFLAGS: Setting the formatting for the stream
-• IOSTATE: A stream state contained in a cout/cin object
-           eofbit  = Is set to 1 if end-of-file reached.
-           badbit  = Is set to 1 if the stream has file read error
-           failbit = Is set to 1 if an input operation failed to read/write expected characters
-
-IOSTREAM
-• Creates 8 stream objects (four narrow/four wide character streams)
-  CIN/WCIN
-  COUT/WCOUT
-  CERR/WCERR (error stream unbuffered)
-  CLOG/WCLOG (error stream)
-
-FILESTREAM
-• Redirects the input/output streams to either use a file instead of console
-• This doesn't affect CERR or CLOG unless changed.
-
-OSTREAM CLASS
-• translates data as binary bit patterns to an output stream of char bytes
-• ostream & operator<<(type); returns reference back to the ostream object
-• all methods return ostream type allowing concatenation (cout.put(1).put(1))
-• cout << "one" << endl; "one" sent to buffer, returns cout. 
-• Endl reached, buffer flushes, inserts \n, no cout returned.
-
-ISTREAM CLASS
-• translates data as char from the input stream into binary bit patterns
-• istream & operator>>(type &); returns reference back to the istream object
-• all methods return istream type allowing concatenation
-
-BINARY FILES
-• Smaller, take up less room
-• No hidden conversions; written in computer binary language
-• More accurate as no conversion/round-off errors for numbers
-• Risky as different computers have different internal representation
-**************************************************************************************************************/
-
-//OUTPUT STREAMS
-cout << "Value" << 20; //Store values into stream
-cout << std::flush; //flushes buffer
-cout << std::endl; //flushes buffer and adds \n
-cout.put('V'); //Put character into stream
-
-//INPUT STREAMS
-cin >> "Value" >> 20; //adds values to stream
-cin.ignore(255, '\n') //reads up to 255 characters or up to the next deliminator
-cin.peek() //returns next character from input without taking from stream
-cin.gcount() //returns the number of characters read by the last unformatted extraction method
-cin.putback('\n')
-cin.get() //returns type int so you can't concatenate
-cin.get(mychar) //gets the next character in the input queue including \0, spaces etc.
-getline(cin, myString, 'M') //read line up to deliminator or \r, returns true if not eof
-
-//each reads the line up to 49 characters or the deliminator 
-//Failbit set if more characters exist than allocated size or no characters found
-cin.get(chararray, 50, 'M') //leaves deliminator in queue, adds \0 to last element
-cin.get(chararray, 50); 
-cin.getline(chararray, 50, 'M') //discards deliminator, adds \0 to last element
-cin.getline(chararray, 50) 
-
-//CHANGING CURSOR POSITION
-seekg() //moves the input pointer to a given file location
-seekp() //moves the output pointer to a given file location
-stream.seekg(0); // go to beginning
-stream.seekg(30, ios_base::beg); // 30 bytes beyond the beginning
-stream.seekg(-1, ios_base::cur); // back up one byte from current cursor spot
-stream.seekg(0, ios_base::end); // go to the end of the file
-
-//STREAM STATES: eofbit, badbit, failbit
-cin.eof() //returns true when eofbit set
-cin.fail() //returns true if input fails (eofbit or failbit set)
-cin.bad() //returns true if input operation failed (badbit set)
-cin.good() //returns true if stream can be used
-cin.rdstate() //returns the current stream state
-cin.clear() //clears all three states
-cin.clear(ios_base::eofbit) //clears badbit and failbit
-cin.exceptions(ios_base::badbit | ios_base::eofbit) //results in ios_base::failure thrown if either badbit or eofbit are set
-
-//STRINGSTREAM [OUTPUT STREAM]
-ostringstream sstream;
-stringstream sstream;
-sstream.str() //return std::string of stream
-sstream.seekp(0) //set stream pointer back to 0
-sstream.str("") //clear stream
-sstream.clear() //clear flags
-sstream.rdbuf()->in_avail() //whether stream is empty
-sstream.rdbuf() //Returns a pointer to the internal string
-
-//OFSTREAM [OUTPUT STREAM]
-ofstream myFile("file.txt") /*or*/ ofstream myFile;
-myFile.open("file.txt", filemode);
-myFile.is_open() //return true if file has opened
-myfile.sync(); //make sure all info has been written to file
-myfile.close(); //closing flushes the data ensuring none is lost
-myfile.clear(); //clear any flags set
-
-//IFSTREAM [INPUT STREAM]
-ifstream myFile("file.txt") /*or*/ ifstream myFile;
-myFile.open("file.txt", filemode);
-myFile.is_open() //return true if file has opened
-myfile.sync(); //make sure all info has been written to file
-myfile.close(); //closing flushes the data ensuring none is lost
-myfile.clear(); //clear any flags set
-myFile.read(myArray, x) //reads x characters from the file and places them in the array
-
-//Read whole file into string
-std::ifstream file(m_filepath, std::ios::in|std::ios::ate|std::ios::_Nocreate);
-const int size = static_cast<int>(file.tellg());
-file.seekg(0, std::ios::beg);
-myText.clear();
-myText.resize(size);
-file.read(&myText[0], myText.size());
-    
-//FSTREAM [INPUT/OUTPUT STREAM]
-fstream myFile; //requires filemode
-myFile.open("file.txt", ios_base::in|ios_base::out|ios_base::binary)
-
-//STREAM MANIPULATION
-// Use in stream or stream.setf to set flags, strea.unsetf to remove flags
-std::setw(3)              //for next item only expands item to fill the width with the fill character
-std::setfill('*')         //changes the fill character from the default " "
-std::boolalpha            //converts 1 or 0 to true or false
-std::skipws               //enable skipping of whitespace
-std::showpoint            //shows decimal point no matter what
-std::showpos              //use + for positive numbers
-std::hex                  //shows numbers as hex
-std::dec                  //shows number as decimal
-std::nouppercase          //don't use uppercase
-std::uppercase            //use uppercase
-std::fixed                //use fixed-point notation
-std::scientific           //uses scientific notation
-std::setprecision(2)      //will show trailing 0s, precision is number of digits to right
-std::right                //adjust output to right
-std::left                 //adjust output to right
-
-//FILEMODES
-std::ios_base::in         //Open file for reading.
-std::ios_base::out        //Open file for writing.
-std::ios_base::ate        //Seek to end-of-file upon opening file.
-std::ios_base::app        //Append to end-of-file.
-std::ios_base::trunc      //Wipe file if it exists.
-std::ios_base::binary     //open/create as Binary file
-std::ios_base::_Nocreate  //don't create file
-std::ios_base::_Noreplace //only create new files, existing will not open
+modf(x, &y) // returns the fractional part of double x and puts integer part in double y
+abs(-1); // Gets absolute value for double
+fabs(-1); // Gets absolute value for float
+pow(2, 8); // finding 2⁸
+sqrt(4); // finding square root of 4
+ceil(4.3) // returns closest integer rounding up (5)
+floor(4.7) // returns closest integer rounding down (4)
+round(4.5) // math round- to closest integer up/down with 0.5 going up
+cos(angle) // angle in radians
+sin(angle) // angle in radians
+tan(angle) // angle in radians
+acos(x/r) // cosӨ = A/C, returns radians
+asin(y/r) // sinӨ = O/C, returns radians
+atan(x/y) // tanӨ = O/A, returns radians
+atan2(x, y) // calculates tan(x/y), returns radians
+_finite(0.0) // returns whether its a valid (not infinite/undefined) double
+_chgsign(x) // returns x with its sign reversed
+_copysign(x, y) // returns double with magnitude of x and sign of y
+copysign(x, y) // returns double with magnitude of x and sign of y
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <stdint.h>
@@ -401,35 +271,35 @@ std::regex_search(line, matches, pattern); // returns true if match found
 #include <future> <thread> <mutex>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//THREADING
-//Moves arguments into thread
-//Will terminate if out of scope
+// THREADING
+// Moves arguments into thread
+// Will terminate if out of scope
 std::thread thread(&MyFunction, arg1, arg2);
-thread.join(); //stop thread once function call is finished
+thread.join(); // stop thread once function call is finished
 std::this_thread::get_id() // Returns std::thread::id which can be used in std::cout or compared
 std::this_thread::sleep_for(std::chrono::seconds(1)); // Sleep this current thread
 
-//MUTEX
-//Move-only object
+// MUTEX
+// Move-only object
 std::mutex myMutex;
-std::lock_guard<std::mutex> lock(myMutex); //scoped locking/unlocking
+std::lock_guard<std::mutex> lock(myMutex); // scoped locking/unlocking
 if (std::lock_guard<std::mutex> lg{mutex}; str.empty()) {}
-if(myMutex.try_lock()) //doesn't block if can't lock
+if(myMutex.try_lock()) // doesn't block if can't lock
 {
     myMutex.unlock()
 }
 
-//FUTURE
-//Do function asynchronously and hold return type once finished
-//Will terminate if out of scope
+// FUTURE
+// Do function asynchronously and hold return type once finished
+// Will terminate if out of scope
 std::future<T> handle = std::async(std::launch::async, &MyFunction);
-handle.wait() //blocks until result is available
-handle.get()  //blocks until result is available and returns result
+handle.wait() // blocks until result is available
+handle.get()  // blocks until result is available and returns result
 
-//FUTURE POLICIES
-std::launch::async     //A new thread is launched to execute the task asynchronously 
-std::launch::deferred  //Task is executed on the calling thread the first time its result is requested 
+// FUTURE POLICIES
+std::launch::async     // A new thread is launched to execute the task asynchronously 
+std::launch::deferred  // Task is executed on the calling thread the first time its result is requested 
     
-//ATOMIC
-//Threadsafe, not copyable or movable, unless to T, T can be basic bool, integers, floats, char etc.
+// ATOMIC
+// Threadsafe, not copyable or movable, unless to T, T can be basic bool, integers, floats, char etc.
 std::atomic<T> myThreadsafeVar; 
