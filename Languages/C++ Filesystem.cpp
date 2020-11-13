@@ -168,10 +168,11 @@ std::ios_base::_Noreplace // only create new files, existing will not open
 • Normalizing path uses native formatting (windows \)
 *************************************************************************************************************/
 
-current_path()              // Yields the path of the current working directory 
-temp_directory_path()       // Yields the path for temporary files
+std::current_path()         // The path of the current working directory 
+std::temp_directory_path()  // The path for temporary files
 
-std::filesystem::path p;    // Can be dir or file
+namespace fs = std::filesystem; 
+fs::path p;                 // Can be dir or file
 p = p / "data.txt"          // Combine dir with file
 p.string()
 p.is_absolute()             // Whether absolute or relative
@@ -189,41 +190,41 @@ p.replace_extension(ext)
 p.clear()
 p.lexically_normal()        // Normalize path
 p.empty()                   // Whether path p is empty
-is_empty(p)                 // True if inside file at path p is empty
-is_directory(p)
-is_regular_file(p)
-exists(p)
-equivalent(p1, p2)
-last_write_time(p)          // returns the timepoint of the last modification or write access of the file
-current_path(p)             // Sets the path of the current working directory to p
-file_size(p)                // In Bytes
-space(p)                    // Yields information about the disk space available at path p 
+fs::is_empty(p)             // True if inside file at path p is empty
+fs::is_directory(p)
+fs::is_regular_file(p)
+fs::exists(p)
+fs::equivalent(p1, p2)
+fs::last_write_time(p)     // returns the timepoint of the last modification or write access of the file
+fs::current_path(p)        // Sets the path of the current working directory to p
+fs::file_size(p)           // In Bytes
+fs::space(p)               // Yields information about the disk space available at path p 
   
 // STATUS
 auto status = status(p)
-status.type()               // returns file_type enum
-status.permissions()        // returns perms enum 
+status.type()              // returns file_type enum
+status.permissions()       // returns perms enum 
   
 // CREATE DIRECTORY
 // Creates all missing dirs in path, returns false if already exists,
-create_directory(p)         // Creates single directory, throws filesystem_error if fails
-create_directory(p, ec);    // Creates single directory, std::error_code instead of throwing
-create_directories(p)       // Creates all missing dirs in path, throws filesystem_error if fails
-create_directories(p, ec)   // Creates all missing dirs in path, std::error_code instead of throwing
+fs::create_directory(p)         // Creates single directory, throws filesystem_error if fails
+fs::create_directory(p, ec);    // Creates single directory, std::error_code instead of throwing
+fs::create_directories(p)       // Creates all missing dirs in path, throws filesystem_error if fails
+fs::create_directories(p, ec)   // Creates all missing dirs in path, std::error_code instead of throwing
 
 // REMOVE DIRECTORY
-remove(p)
+fs::remove(p)
   
 // ITERATE PATHS
-for (const auto& itr : std::filesystem::directory_iterator(p)) { std::cout << itr.path(); }
-for (const auto& itr : std::filesystem::recursive_directory_iterator(p)) { std::cout << itr.path(); }
-for (auto part : p) {}        // iterate parts of path, part is also std::filesystem::path  
+for (const auto& itr : fs::directory_iterator(p)) { std::cout << itr.path(); }
+for (const auto& itr : fs::recursive_directory_iterator(p)) { std::cout << itr.path(); }
+for (auto part : p) {} // iterate parts of path, part is also std::filesystem::path  
 
 // COPY PATHS
-copy(from, to)                // Copies a file of any type 
-copy(from, to, options)       // Copies a file of any type with options 
-copy_file(from, to)           // Copies a file (but not directory or symbolic link) 
-copy_file(from, to, options)  // Copies a file with options
+fs::copy(from, to)                // Copies a file of any type 
+fs::copy(from, to, options)       // Copies a file of any type with options 
+fs::copy_file(from, to)           // Copies a file (but not directory or symbolic link) 
+fs::copy_file(from, to, options)  // Copies a file with options
 
 // ERROR CODES
 std::error_code ec
