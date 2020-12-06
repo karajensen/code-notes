@@ -457,9 +457,10 @@ Font.PreferFullHinting       // hinting in both horizontal and vertical directio
 // Use createObject to create an object instance of this component, will return null if failed
 // incubator can be used to load instances asynchronously
 var component = Qt.createComponent("MyQML.qml");
+var component = Qt.createComponent("Rectangle.qml");
 console.log(component.errorString());
 if (component.status == Component.Ready) {
-    var obj = component.createObject(parent, {"x": 100, "y": 100});
+    var obj = component.createObject(parent, { x: 100, y: 100});
     var obj = component.createObject(parent, {"x": Qt.binding(function() { return item.x; })});
     
     // Using 'parent' in createObject causes issues with destroy(), use null and then .parent
