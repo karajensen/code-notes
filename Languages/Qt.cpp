@@ -119,20 +119,9 @@ namespace N
         const MyValue& getValue() const { return m_value; }
         void setValue(const MyValue& value) { m_value = value; }
         Q_INVOKABLE void myFn() { }
-        
-        // Create MyClass as an attached property (eg. MyClass.value), parent is Component defined in
-        static MyClass* qmlAttachedProperties(QObject* parent)
-        {
-            return new MyClass(parent);
-        }        
     };
-    QML_DECLARE_TYPEINFO(MyClass, QML_HAS_ATTACHED_PROPERTIES) // Requires QQml include for attached properties
-}
-    
-// GADGETS
-namespace N
-{
-    Q_NAMESPACE
+
+    // GADGETS
     struct MyGadget
     {
         Q_GADGET // Value-type used with variant, doesn't increase class size
@@ -144,16 +133,12 @@ namespace N
         bool operator!=(const Gadget& g) const { ... }
     };
     Q_DECLARE_METATYPE(MyGadget) 
-}
-
-// ENUMS/FLAGS
-namespace N // Must start with capital letter
-{
-    Q_NAMESPACE
-    
+     
+    // ENUMS
     enum class MyEnum { One, Two, Three };
     Q_ENUM_NS(MyEnum) 
 
+    // FLAGS
     enum MyFlag { One=0x01, Two=0x02, Three=0x04 };
     Q_FLAG_NS(MyFlag) 
     Q_DECLARE_FLAGS(MyFlags, MyFlag) // Creates type 'Flags'
@@ -1206,6 +1191,36 @@ QQmlComponent::Error    // An error has occurred. Call errors() to retrieve a li
 // QQmlComponent Compilation Mode Enum
 QQmlComponent::PreferSynchronous // Block the thread, except for remote URLs which always load asynchronously
 QQmlComponent::Asynchronous      // Load async
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// QML ATTACHED PROPERTIES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// ATTACHED PROPERTY (STAND-ALONE)
+class MyClass : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(int prop READ prop WRITE setProp)
+public:
+    static MyClass* qmlAttachedProperties(QObject* parent) { return new MyClass(parent); }        
+};
+QML_DECLARE_TYPEINFO(MyClass, QML_HAS_ATTACHED_PROPERTIES) // Requires #include <QtQml>
+qmlRegisterType<MyClass>(); // Usage: Item { MyClass.prop: 0 }
+ 
+// ATTACHED PROPERTY
+class MyClassAttached : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(int prop READ prop WRITE setProp)
+};
+class MyClass : public QObject
+{
+public:
+    static MyClassAttached* qmlAttachedProperties(QObject* parent)  { return new MyClassAttached(parent); }  
+};
+QML_DECLARE_TYPEINFO(MyClass, QML_HAS_ATTACHED_PROPERTIES) // Requires #include <QtQml>
+qmlRegisterType<MyClassAttached>(); // Usage: MyClass { MyClass.prop: 0 }
+qmlRegisterType<MyClass>(“MyImport”, 1, 0, “MyClass”);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // QT THREADING
