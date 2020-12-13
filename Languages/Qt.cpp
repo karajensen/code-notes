@@ -437,6 +437,8 @@ const auto button = Qt::MouseButton::LeftButton; // QML Qt.LeftButton
 QCoreApplication::postEvent(object, 
     new QMouseEvent(QEvent::MouseButtonPress, QPointF(0, 0), button, button, Qt::KeyboardModifier::NoModifier), 
     Qt::NormalEventPriority);
+
+const auto key = Qt::Key::Key_Control; // QML Qt.Key_Control, Qt::CTRL is an alternative for modifiers
 const auto key = Qt::Key::Key_Escape; // QML Qt.Key_Escape
 QCoreApplication::postEvent(object,
     new QKeyEvent(QEvent::KeyPress, key, Qt::NoModifier, QKeySequence(key).toString()),
