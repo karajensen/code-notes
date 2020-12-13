@@ -30,6 +30,12 @@ STRING
 • Data for strings not guaranteed to be stored in continuous memory
 • Internal representation of string not guaranteed to end with null character
 
+STRING VIEW
+• Reference to character sequence, points to original string, does not require a memory allocation
+• Underlying character sequence is read-only
+• Character sequence is not guaranteed to be null terminated
+• Avoid using, faster to pass around std::string and should never assign temporary strings to it
+
 VECTOR<BOOL>
 • Not a STL container and doesn't hold bools
 • Each element occupies single bit and represents bitfields
@@ -171,11 +177,10 @@ rbegin()  rend()  crbegin()  crend()
 // STRING VIEW
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <string_view>
-    
-// Slice in an existing string buffer, does not require a memory allocation
+
 string_view view("str");
 string_view view(array, sizeof(array)); // char array[3] = {'B', 'a', 'r'};
-string_view view(&str[0], str.size());    
+string_view view(&str[0], str.size());
 
 view[0]
 string::npos // maximum allowable size for string; maximum value of unsigned int
