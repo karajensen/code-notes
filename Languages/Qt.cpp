@@ -107,10 +107,13 @@ namespace N
     public:
         explicit MyClass(QObject* parent = nullptr) : QObject(parent) {}   
 
-        enum class MyClassEnum { ONE, TWO, THREE };
-        Q_ENUM(MyClassEnum)
-        enum MyClassFlag { One=0x01, Two=0x02, Three=0x04 };
-        Q_FLAG(MyClassFlag)
+        enum class MyEnum { ONE, TWO, THREE };
+        Q_ENUM(MyEnum)
+        enum MyFlag { One=0x01, Two=0x02, Three=0x04 };
+        Q_DECLARE_FLAGS(MyFlags, MyFlag) // Creates type 'MyFlags'
+        Q_FLAG(MyFlag)
+        Q_FLAGS(MyFlags) // Instead of Q_FLAG, use this with Q_ENUM for qml to allow exposing MyFlags
+        Q_ENUM(MyFlag)
         
         // Bindable properties (6.0+)
         QBindable<MyValue> bindableValue() { return &m_value }
@@ -144,6 +147,8 @@ namespace N
     Q_DECLARE_FLAGS(MyFlags, MyFlag) // Creates type 'Flags'
 }
 Q_DECLARE_OPERATORS_FOR_FLAGS(N::MyFlags) // Allows operator use, must be outside namespace
+Q_DECLARE_OPERATORS_FOR_FLAGS(MyClass::MyFlags) // Allows operator use, must be outside namespace
+Q_DECLARE_METATYPE(MyClass::MyFlags) // Required if using Q_FLAGS/Q_ENUM combination
 
 // QObject
 obj.objectName // Property; User-defined name of object instance, blank as default
@@ -209,6 +214,7 @@ Q_DECLARE_METATYPE(MyGadget) // Allows use with variant: myVariant.value<N::MyGa
 qRegisterMetaType<N::MyGadget>(); // Allows use with property system (eg. queued connections, Q_PROPERTY, Q_INVOKABLE)
 qRegisterMetaType<std::string>("std::string");
 qRegisterMetaType<std::unordered_map<std::string, std::string>>("std::unordered_map<std::string, std::string>");
+qRegisterMetaType<MyClass::MyFlags>();
 Q_ENUM(MyEnum) // Registers with variant and property system, _NS version for Q_NAMESPACE
 Q_FLAG(MyFlag) // Registers with variant and property system, _NS version for Q_NAMESPACE
 
