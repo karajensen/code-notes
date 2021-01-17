@@ -112,8 +112,7 @@ namespace N
         enum MyFlag { One=0x01, Two=0x02, Three=0x04 };
         Q_DECLARE_FLAGS(MyFlags, MyFlag) // Creates type 'MyFlags'
         Q_FLAG(MyFlag)
-        Q_FLAGS(MyFlags) // Instead of Q_FLAG, use this with Q_ENUM for qml to allow exposing MyFlags
-        Q_ENUM(MyFlag)
+        Q_FLAGS(MyFlags)
         
         // Bindable properties (6.0+)
         QBindable<MyValue> bindableValue() { return &m_value }
@@ -148,7 +147,7 @@ namespace N
 }
 Q_DECLARE_OPERATORS_FOR_FLAGS(N::MyFlags) // Allows operator use, must be outside namespace
 Q_DECLARE_OPERATORS_FOR_FLAGS(MyClass::MyFlags) // Allows operator use, must be outside namespace
-Q_DECLARE_METATYPE(MyClass::MyFlags) // Required if using Q_FLAGS/Q_ENUM combination
+Q_DECLARE_METATYPE(MyClass::MyFlags) // Must be outside namespace
 
 // QObject
 obj.objectName // Property; User-defined name of object instance, blank as default
@@ -198,6 +197,7 @@ metaEnum.value(index) // Returns int value with the given index, or returns -1 i
  
 // QFlags
 // Requires Q_DECLARE_FLAGS and Q_DECLARE_OPERATORS_FOR_FLAGS, can implicity convert to unsigned int
+// Requires Q_DECLARE_METATYPE if wanting to use it with property system
 N::MyFlags flags = N::ONE | N::TWO
 flags.testFlag(a::ONE) // returns true if flags includes ONE
 flags ^= N::TWO // add TWO
@@ -214,7 +214,7 @@ Q_DECLARE_METATYPE(MyGadget) // Allows use with variant: myVariant.value<N::MyGa
 qRegisterMetaType<N::MyGadget>(); // Allows use with property system (eg. queued connections, Q_PROPERTY, Q_INVOKABLE)
 qRegisterMetaType<std::string>("std::string");
 qRegisterMetaType<std::unordered_map<std::string, std::string>>("std::unordered_map<std::string, std::string>");
-qRegisterMetaType<MyClass::MyFlags>();
+qRegisterMetaType<MyClass::MyFlags>(); // Required as Q_FLAGS doesn't register
 Q_ENUM(MyEnum) // Registers with variant and property system, _NS version for Q_NAMESPACE
 Q_FLAG(MyFlag) // Registers with variant and property system, _NS version for Q_NAMESPACE
 
@@ -1003,8 +1003,6 @@ qmlRegisterUncreatableType<N::MyClass>("MyInclude", 1, 0, "MyClass", "Cannot be 
 
 // REGISTERING CLASS ENUMS WITH QML
 // Requires Q_ENUM registration with Variant
-// Does not need further registration to use for class property/signals
-// Requires further registration to use named enums in QML
 // use 'import MyInclude 1.0' / 'MyClassEnum.ONE'
 qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClassEnum"); 
 
@@ -1012,7 +1010,7 @@ qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClassEnum");
 // Requires Q_ENUM_NS registration with Variant
 // use 'import MyInclude 1.0' / 'N.MyEnum.ONE'
 // any extra namespaces requires args to be in full eg. Q_INVOKABLE void fn(n::N::MyEnum e)
-qRegisterMetaType<N::MyEnum>();
+qRegisterMetaType<N::MyEnum>(); // Required?
 qmlRegisterUncreatableMetaObject(N::staticMetaObject, "MyInclude", 1, 0,
     "N", "Error msg if try to create MyEnum object");
 
