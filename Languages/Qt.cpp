@@ -1001,18 +1001,13 @@ QQmlEngine::setObjectOwnership(myObj, QQmlEngine::JavaScriptOwnership); // Force
 qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClass"); // Allows it to be used as MyClass {}
 qmlRegisterUncreatableType<N::MyClass>("MyInclude", 1, 0, "MyClass", "Cannot be instantiated in QML");
 
-// REGISTERING CLASS ENUMS WITH QML
-// Requires Q_ENUM registration with Variant
-// use 'import MyInclude 1.0' / 'MyClassEnum.ONE'
-qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClassEnum"); 
-
-// REGISTERING Q_NAMESPACE ENUMS WITH QML
-// Requires Q_ENUM_NS registration with Variant
+// REGISTERING ENUMS WITH QML
+// Requires Q_ENUM_NS / Q_ENUM registration with Variant
 // use 'import MyInclude 1.0' / 'N.MyEnum.ONE'
 // any extra namespaces requires args to be in full eg. Q_INVOKABLE void fn(n::N::MyEnum e)
-qRegisterMetaType<N::MyEnum>(); // Required?
+qRegisterMetaType<MyClass::MyEnum>();
 qmlRegisterUncreatableMetaObject(N::staticMetaObject, "MyInclude", 1, 0,
-    "N", "Error msg if try to create MyEnum object");
+    "N", "Error msg if try to create MyEnum object"); // For namespace enums only
 
 // REGISTERING SINGLETONS WITH QML
 // Will be owned by QML, use 'import MyInclude 1.0' and 'MySingleton.Member'
