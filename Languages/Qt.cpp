@@ -1005,7 +1005,7 @@ qmlRegisterUncreatableType<N::MyClass>("MyInclude", 1, 0, "MyClass", "Cannot be 
 // Requires Q_ENUM_NS / Q_ENUM registration with Variant
 // use 'import MyInclude 1.0' / 'N.MyEnum.ONE'
 // any extra namespaces requires args to be in full eg. Q_INVOKABLE void fn(n::N::MyEnum e)
-qRegisterMetaType<MyClass::MyEnum>();
+qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClass"); // Auto registers any class enums for qml
 qmlRegisterUncreatableMetaObject(N::staticMetaObject, "MyInclude", 1, 0,
     "N", "Error msg if try to create MyEnum object"); // For namespace enums only
 
