@@ -996,7 +996,7 @@ QQmlEngine::setObjectOwnership(myObj, QQmlEngine::CppOwnership); // Force cpp ow
 QQmlEngine::setObjectOwnership(myObj, QQmlEngine::JavaScriptOwnership); // Force QML ownership
 
 // REGISTERING OBJECTS WITH QML
-// To create QML Component, must be QObject derived
+// To create QML Component, must be QObject derived and contain Q_OBJECT macro
 // use 'import MyInclude 1.0' / MyClass {}
 qmlRegisterType<N::MyClass>("MyInclude", 1, 0, "MyClass"); // Allows it to be used as MyClass {}
 qmlRegisterUncreatableType<N::MyClass>("MyInclude", 1, 0, "MyClass", "Cannot be instantiated in QML");
