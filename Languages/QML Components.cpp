@@ -125,7 +125,8 @@ component MyObject: Rectangle {
 Connections {
     target: loader.item
     ignoreUnknownSignals: true // if onMySignal does not exist, do not produce runtime errors
-    onMySignal: { value }
+    onMySignal: { arg } // < Qt 5.15
+    function onMySignal(arg) {} // >= Qt 5.15
 }
 
 ------------------------------------------------------------------------------------------------------------
