@@ -1067,6 +1067,7 @@ auto onLoaded = [this]()
 // QQuickItem
 // Inherits QObject, instantiated by Item
 // Properties have accessors item.property() or item.isProperty() and item.setProperty()
+qmlContext(&item)->nameForObject(&item) // Returns id property of QML item
 item.activeFocus // Read only, whether item has active focus
 item.activeFocusOnTab // Whether included in active focus on tab, default false
 item.antialiasing // Whether antialiasing enable, default false
