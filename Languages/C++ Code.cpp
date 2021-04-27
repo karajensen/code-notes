@@ -255,7 +255,10 @@ if (std::lock_guard<std::mutex> lg{mutex}; str.empty()) {}
 // COMPILE-TIME-IF
 // During compilation unused branches discarded
 // Doesn't short circuit, all conditions evaluated
-if constexpr(myBool) {} else if constexpr(auto x = fn()) {} else {}
+if constexpr(myBool) {} 
+else if constexpr(auto x = fn()) {} 
+else if constexpr(std::is_same_v<T1, T2>) {} 
+else {}
 
 // TERNARY OPERATOR
 int value = (a < b) ? a : b;
@@ -291,17 +294,17 @@ label:  //do something
 for (int i = 0; i < 5; ++i){}
 for (int i = 0, int j = 2; i < j; i = i + 15, j-- ){}
 
-//FOR EACH LOOP
+// FOR EACH LOOP
 // Only computes expression after : once
 for (double x : myDoubleArray){ x += 1.0; }     //by-val
 for (double &x : myDoubleArray){ x += 1.0; }    //by-ref
 for (auto x : myVectorArray){ DoSomething(x); } //with stl containers
 for (int x : {0,4,3,5,2,0}){ cout << x; }       //using initialisation list
 
-//WHILE LOOP
+// WHILE LOOP
 while (name[i] != '\0') { i++; }
 
-//DO WHILE LOOP
+// DO WHILE LOOP
 do { cin << n;} while (n != 7);
 
 break;    //stops the loop
