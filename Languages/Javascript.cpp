@@ -332,6 +332,7 @@ arr.sort(function(a, b) {
 // ITERATING
 // Only forEach skips unassigned values, though keeps manual undefined assigned
 for (var i = 0; i < arr.length; i++) { var x = arr[i]; } 
+for (var item in arr) {}
 arr.forEach(value => var x = value)); 
 arr.forEach(function(value) { var x = value; }
     
