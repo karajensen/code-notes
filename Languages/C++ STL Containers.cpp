@@ -586,6 +586,8 @@ std::end(c) // iterator pointing at one past end of container object
 std::begin(c) // iterator pointing at beginning of container object
 std::advance(itr, n) // advance iterator by n; Random access iterators use +=/-= else ++/-- 
 std::distance(itr1, itr2) // returns int distance between 2 iterators, it2 must be after it1
+std::next(itr) // undefined if itr is endl
+std::prev(itr) // undefined if itr is begin
 
 //ITERATING OVER CONTAINER
 auto endItr = c.end(); // to prevent recomputing each iteration
