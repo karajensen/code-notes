@@ -84,8 +84,9 @@ Item {
 
 mySignal.connect(mySlot) // Connect signal and slot, forward optional, no auto disconnect
 mySignal.disconnect(mySlot) // Signals must be disconnected
-myProp1 = value; // Sets value of property and kills the binding- to not break, call setProperty on object in cpp
-myProp1 = Qt.binding(function() { return myProp2; }); // Set a binding on a property
+myProp1 = value // Sets value of property and kills the binding- to not break, call setProperty on object in cpp
+myProp1 = Qt.binding(function() { return myProp2; }) // Set a binding on a property, will eval in-place as well
+item instanceof MyItem // Returns true if item is of type MyItem
 
 // GLOBAL OBJECTS
 // MyGlobal.qml, Requires registering with QQmlEngine
@@ -709,6 +710,8 @@ Qt.OtherFocusReason         // Another reason, usually application-specific
 
 // SHORTCUT
 // Takes StandardKey.Key or Key String eg. "Ctrl+E,Ctrl+W"
+// Takes priority over Keys.onEscapePressed etc.
+// To override, use Keys.onShortcutOverride
 Shortcut {
     autoRepeat: true // default true
     context: Qt.WindowShortcut // default
