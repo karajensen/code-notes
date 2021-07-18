@@ -129,6 +129,16 @@ Connections {
     function onMySignal(arg) {} // >= Qt 5.15
 }
 
+// Dynamic Connections
+Repeater {
+    model: myItemList
+    delegate: Item {
+        Connections {
+            target: myItemList[index]
+        }
+    }
+}
+
 ------------------------------------------------------------------------------------------------------------
 
 // BINDING
