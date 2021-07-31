@@ -1,4 +1,3 @@
-#include <QApplication>
 #include <QGuiApplication>
 #include <qquickview.h>
 #include <qqmlcontext.h>
@@ -9,7 +8,7 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
     QCoreApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
 
     SampleModel::qmlRegisterTypes();
@@ -33,6 +32,12 @@ int main(int argc, char *argv[])
     palette.setTitle("Qt Palette");
     palette.setSource(QUrl("qrc:/palette.qml"));
     palette.show();
+
+    QQuickView picker;
+    picker.setResizeMode(QQuickView::SizeRootObjectToView);
+    picker.setTitle("Qt Picker");
+    picker.setSource(QUrl("qrc:/picker.qml"));
+    picker.show();
 
     QTimer timer;
     timer.setInterval(10);

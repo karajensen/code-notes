@@ -13,11 +13,14 @@ set(SRC_LIST main.cpp
 			 sampleModel.cpp
 			 testClasses.h
 			 resources/main.qml
+			 resources/picker.qml
 			 resources/palette.qml)
 
-find_package(Qt5 COMPONENTS Core Widgets Quick)
+find_package(Qt5 COMPONENTS Core Quick)
 qt5_add_resources(RESOURCES resources/images.qrc)
 qt5_add_resources(RESOURCES resources/qml.qrc)
 
 add_executable(qtSample ${SRC_LIST} ${RESOURCES})
-qt5_use_modules(qtSample Core Widgets Quick)
+qt5_use_modules(qtSample Core Quick)
+
+set_target_properties(qtSample PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY  $ENV{Qt5_DIR}/bin/)
