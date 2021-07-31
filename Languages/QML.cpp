@@ -368,6 +368,7 @@ myVec.toString()
 
 // VECTOR3D
 // Attributes do not have signals, use onMyVecChanged instead
+// Converts to/from QVector3D
 property vector3d myVec: "0,1,0"
 property vector3d myVec: Qt.vector3d(0,1,0)
 myVec.x / myVec.y / myVec.z
