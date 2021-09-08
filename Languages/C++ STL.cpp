@@ -125,15 +125,16 @@ opt.value_or(0); // returns copy of value or default value
 // Cannot be empty except in undefined states from exceptions
 // First type must have a default constructor which is automatically called on creation
 
-std::variant<int, float> var;            // can hold int or float, default constructor called if needed
-std::variant<int, float> var{1.0};       // can hold int or float
-var = 20;                                // assign a value, current type is now int
-var.index();                             // returns 0-based index for current type (eg. 0 for int, 1 for float)
-std::get<int>(var);                      // throws std::bad_variant_access if wrong current type
-std::get<0>(var);                        // throws std::bad_variant_access if wrong current index
-std::get_if<int>(&var);                  // returns T* if the correct current type, nullptr if incorrect
-std::get_if<0>(&var);                    // returns T* if the correct current index, nullptr if incorrect
-var.emplace<0>(77);                      // initializes int, destroys float 
+std::variant<int, float> v;              // can hold int or float, default constructor called if needed
+std::variant<int, float> v{1.0};         // can hold int or float
+v = 20;                                  // assign a value, current type is now int
+v.emplace<0>(77);                        // initializes int, destroys float 
+v.index();                               // returns 0-based index for current type (eg. 0 for int, 1 for float)
+std::get<int>(v);                        // throws std::bad_variant_access if wrong current type
+std::get<0>(v);                          // throws std::bad_variant_access if wrong current index
+std::get_if<int>(&v);                    // returns T* if the correct current type, nullptr if incorrect
+std::get_if<0>(&v);                      // returns T* if the correct current index, nullptr if incorrect
+std::holds_alternative<int>(&v)          // returns true if currently holding type
 std::variant<std::monostate, int, float> // use if first type has no default constructor
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
