@@ -252,6 +252,20 @@ stream.writeEndDocument();
 stream.hasError(); // Returns true if failed to write to document
 file.errorString(); // Returns error as string
 
+// QXmlStreamReader
+QXmlStreamReader reader;
+reader.setDevice(&file);
+reader.errorString()
+while (!reader.atEnd() && !reader.hasError())
+{
+	reader.readNext();
+	if (reader.isStartElement() && reader.name() == "item")
+	{
+		reader.attributes().value("attr").toString(); // <item attr=0></item>
+		reader.readElementText()                      // <item>text</item>
+	}
+}
+
 // QXmlSchema / QXmlSchemaValidator
 // Requires Qt5::XmlPatterns
 // Requires QCoreApplication as will output errors in message loop
