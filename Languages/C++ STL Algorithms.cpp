@@ -131,7 +131,7 @@ remove_copy_if(S, E, S2, boolLam) // copies to range 2 with elements returning t
 replace(S, E, 'A', 'B') // replaces over range any values that are A with value B
 replace_copy(S, E, S2, 'A', 'B') // copies S to S2 and replaces in range 2 any A with B
 replace_copy_if(S, E, S2, boolLam, 'A') // copies S to S2, replaces with A if lambda returns true in range 2 
-replace_if(S, E, boolLam, 'A') // replaces element with A if lambda returns true
+replace_if(S, E, boolLam, 'A') // replaces element with A if lambda returns true, useful for replacing characters in a string
 reverse(S, E) // reverses order of elements
 reverse_copy(S, E, S2) // copies into 2 with the reverse order, returns iterator E2
 rotate(A, B, C) // ranges B-C and A-B swap places. B needs to be between A and C.
