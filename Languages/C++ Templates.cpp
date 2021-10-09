@@ -278,6 +278,7 @@ class A : public Base<A>
 
 // TYPEDEF TEMPLATE
 template <typename T> using my_unordered_map = std::unordered_map<T, MyClass>;
+using T = typename std::decay<decltype(*vec.begin())>::type; // Decay to vector type
 
 // NESTED TYPES
 // Type MyClass::MySubClass seen as static member of class unless typename is used
