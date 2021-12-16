@@ -55,6 +55,7 @@ STANDARD LIBRARY EXCEPTIONS
   if object constructor or assignment operator throws, otherwise strong guarantee
 *************************************************************************************************************/
 
+std::exception_ptr eptr;
 try 
 { 
     throw std::exception("Message goes here");   // throw c++ exception
@@ -68,30 +69,31 @@ catch(const std::exception& e)
     cout << e.what() << endl;
 
     throw e; // throws a copy of e, splices off any derived type
-    throw; //original exception is thrown again
+    throw; // original exception is thrown again
 }
 catch (...) //catches anything
 {
+    eptr = std::current_exception(); // save exception in shared ptr
 }
 
-//EXCEPTION SPECIFICATIONS
-//If exception type not on list is thrown, calls unexpected()
+// EXCEPTION SPECIFICATIONS
+// If exception type not on list is thrown, calls unexpected()
 void MyFn(); //can throw anything
 void MyFn() throw(const char*, std::exception&); //can only throw string or std::exception
 void MyFn() throw(); //Doesn't throw excpetions, not optimized: keeps unwindable stack state always
 void MyFn() noexcept; //Doesn't throw exceptions, optimizes: doesn't keep unwindable stack state if exception propagates
 
-//UNEXPECTED EXPECTION
-//If type wasn't explicitly thrown or on expected list: unexpected()->terminate()->abort()
+// UNEXPECTED EXPECTION
+// If type wasn't explicitly thrown or on expected list: unexpected()->terminate()->abort()
 unexpected() //calls terminate()
 set_unexpected([](){ /** do something */ });
 
-//UNCAUGHT EXCEPTION
-//If type was known but not caught: terminate()->abort()
+// UNCAUGHT EXCEPTION
+// If type was known but not caught: terminate()->abort()
 terminate() //calls abort()
 set_terminate([](){ /** do something */ });
  
-//EXCEPTIONS IN CONSTRUCTORS
+// EXCEPTIONS IN CONSTRUCTORS
 MyClass::MyClass()
 try : A()
     , B()
@@ -101,7 +103,7 @@ catch (...) // can't access class members in catch block
 {
 }
 
-//CREATING CUSTOM EXCEPTION
+// CREATING CUSTOM EXCEPTION
 class MyClass: public std::exception
 {
 public:
@@ -116,6 +118,14 @@ catch(const std::exception& e)
 {
     cout << e.what() << endl;
 }
+
+// EXCEPTION POINTER
+// An exception remains valid as long as there is at least one std::exception_ptr referencing it
+// Useful for catching exceptions in worker thread / async calls and rethrow them in main thread
+std::exception_ptr eptr; // Nullptr
+std::current_exception();
+std::rethrow_exception(eptr);
+if (eptr) {} // Null check
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // STRUCTURED EXCEPTIONS (SEH)
