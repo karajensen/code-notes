@@ -328,6 +328,7 @@ COMBINING DEBUG AND RELEASE:
 # VS is a multi-generator build which lets you change configuration
 # Because of this checking CMAKE_BUILD_TYPE will not work
 cmake -G "Visual Studio 14 2015 Win64" -DCMAKE_PREFIX_PATH=C:/Qt/Qt5.6.1/5.6/msvc2015_64 ..
+cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_PREFIX_PATH=C:/Qt/Qt5.6.1/5.6/msvc2015_64 ..
 
 cmake_minimum_required(VERSION 2.8.11)
 project(project_name)
