@@ -372,7 +372,7 @@ for (const std::pair<const Key, T>& pair : m){}
 for (const auto& [key, value] : m) {}
 
 // METHODS
-m["Key"]        // returns object if key exists or creates through default contructor if doesn't exist (insert_or_assign)
+m["Key"]        // returns object if key exists or creates through default contructor if doesn't exist
 m.at("Key")     // returns object at key or throws out_of_range exception if doesn't exist
 m.empty();      // returns true/false if empty (faster than size)
 m.size();       // number of element pairs
@@ -380,12 +380,12 @@ m.count("Key")  // returns number of items that have that key
 m.erase("Key")  // removes element with matching key, returns number of elements removed or 0 if none
 m.find("Key")   // returns MyMap.end() if not found or iterator MyMap::iterator if found
 m.merge(m2)
-m.try_emplace("Key", "v")       // If key doesn't exist adds 'value' else returns false
-m.insert_or_assign("Key", "v")  // Returns std::pair<iterator, bool>, bool is true for insertion, false for assignment
+m.try_emplace("Key", 1) // If key doesn't exist adds 'value' else returns false
 
 // INSERTING ITEMS
-// More effecient to use insert; operator[] creates default object then assigns if object doesn't exist 
-m.insert(MyMap::value_type("Key",2.0)); // value_type is typedef for maps pair
+// More effecient to use insert; operator[] creates default object then assigns if object doesn't exist
+m.insert_or_assign("Key", 1)  // Returns std::pair<iterator, bool>, bool is true for insertion, false for assignment
+m.insert(MyMap::value_type("Key", 1)); // value_type is typedef for maps pair
 m["Key"] = 2.0; // Adds entry if key doesn't exist otherwise overwrites
 
 //ITERATORS
