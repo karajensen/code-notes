@@ -917,6 +917,13 @@ COMPONENT OPTIMIZATIONS:
 • Consider using an asynchronous Loader component
 • Prefer Item over invisible Rectangles
 • For global data, use singleton types instead of pragma library scripts
+• Avoid giving items you override an id, as it means object will always be created
+  not adding it allows possible optimization to not create it if ‘background’ is overridden
+      MyControl {
+            background: Item {
+                id: myBackground // Avoid, use 'background'
+            }
+      }
   
 RENDERING OPTIMIZATIONS:
 • Set asynchronous property of images to true for loading
