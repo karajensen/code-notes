@@ -14,8 +14,9 @@ if(file.open(QIODevice::ReadOnly))
     }
 }
 
-// Iterate over all files in directory (non-recursive)
+// Iterate over all files/folders in directory (non-recursive)
 QDir dir(path);
+for (const auto& folderName : dir.entryList({}, QDir::Dirs|QDir::NoDotAndDotDot))
 for (const auto& fileName : dir.entryList(QStringList("*.qml")))
 {
     qDebug() << (path + "/" + fileName); // absolute path
