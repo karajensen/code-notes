@@ -258,12 +258,14 @@ reader.setDevice(&file);
 reader.errorString()
 while (!reader.atEnd() && !reader.hasError())
 {
-	reader.readNext();
-	if (reader.isStartElement() && reader.name() == "item")
-	{
-		reader.attributes().value("attr").toString(); // <item attr=0></item>
-		reader.readElementText()                      // <item>text</item>
-	}
+    // Goes through each element recursive
+    reader.readNext();
+    // Omit isStartElement to check for closing </item> or </>
+    if (reader.isStartElement() && reader.name() == "item")
+    {
+        reader.attributes().value("attr").toString(); // <item attr=0></item>
+        reader.readElementText()                      // <item>text</item>
+    }
 }
 
 // QXmlSchema / QXmlSchemaValidator
