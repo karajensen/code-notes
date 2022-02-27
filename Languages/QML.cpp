@@ -220,6 +220,7 @@ property string myStr: "str"
 property string myStr: value.toLocaleString(Qt.locale(), 'f', 0)
 myStr.length
 myStr.arg(10) // Replace %1, %2 etc with value, can chain
+myStr.padStart(3,'0') // Pads string if < 3 characters
 Qt.qsTrId(id) // returns translated string at id, else id if no translation
 Qt.qsTrIdNoOp(id) // Marks id for dynamic translation, returns id
 
