@@ -132,6 +132,12 @@ var angle = Math.atan2(x, y) * (180.0 / Math.PI);
 
 /** Limit floating point precision **/
 roundf(x * 100) / 100.0
+	
+/** Get average iteratively **/
+double avg = 0;
+for (int i = 0; i < myArray.size(); ++i) {
+    avg += (myArray[i] - avg) / (i + 1);
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // STRING ALGORITHMS
