@@ -882,6 +882,11 @@ console.count("Message") // also prints number of times called
 /************************************************************************************************************
 PROPERTY OPTIMIZATIONS:
 • Avoid declaring with var keyword unless needed
+• Avoid declaring intermediate JavaScript variables
+• Avoid constructing closures or defining functions within the binding expression
+• Avoid accessing properties outside of the immediate evaluation scope (non-component properties)
+• Avoid unqualified access- using parent properties in child component file, ensure all are in root
+• Prefer binding to anchors over using another component's height/width properties
 • Using a propery accesses it through cpp; faster to store result in local and access that
       var rectColor = rect.color; // resolve the common base.
       printValue("red", rectColor.r);
@@ -897,15 +902,8 @@ PROPERTY OPTIMIZATIONS:
       property int intermediateBinding: cointainer[index]
       property int firstBinding: intermediateBinding + x;
       property int secondBinding: intermediateBinding + y;
-
-PROPERTY BINDING OPTIMZATIONS:
-• Avoid declaring intermediate JavaScript variables
-• Avoid accessing "var" properties
-• Avoid calling JavaScript functions
-• Avoid constructing closures or defining functions within the binding expression
-• Avoid accessing properties outside of the immediate evaluation scope (non-component properties)
-• Avoid writing to other properties
-• Prefer binding to anchors over using another component's height/width properties
+• Use string interpolation:
+      `${myProperty} myText` instead of myProperty + " myText"
 
 JAVASCRIPT OPTIMIZATIONS:
 • Avoid using eval() if at all possible
