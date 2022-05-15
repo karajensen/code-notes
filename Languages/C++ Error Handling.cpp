@@ -136,12 +136,13 @@ SEH EXCEPTIONS:
 • Used for CPU exceptions such as access violation, illegal instruction, divide by zero
 • No exception guarantee; does not unwind the stack or call destructors
 • Can also catch C++ exceptions with error code 0xe06d7363
-• Using __try will add a new EXCEPTION_REGISTRATION to the list
-• When an exception occurs:
-    - linked list of EXCEPTION_REGISTRATION structures is walked util one handles the exception
-    - default EXCEPTION_REGISTRATION is always called last
-    - once handled, the list is walked again but with EH_UNWINDING (value 2) set in the exception flags
+• Using __try is the same as SetUnhandledExceptionFilter will add auto a new handler to a list
+• When an exception occurs
+    - The list is walked in order: AddVectoredExceptionHandler, __try/catch, SetUnhandledExceptionFilter
+    - The list will continue to be walked until told the exception was handled
+    - Once handled, the list is walked again but with EH_UNWINDING (value 2) set in the exception flags
     - EH_UNWINDING gives the oppotunity to do any cleanup
+• There's no reliable way to distinguish fatal and non-fatal exceptions until chain is unwound
 *************************************************************************************************************/
 __try
 {
