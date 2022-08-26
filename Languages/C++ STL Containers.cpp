@@ -214,7 +214,7 @@ arr.clear()   // clears array
 arr.front()   // get first element
 arr.back()    // get last element
 
-//ITERATORS
+// ITERATORS
 begin()   end()   cbegin()   cend()
 rbegin()  rend()  crbegin()  crend()
 
@@ -252,7 +252,7 @@ v.insert(v.begin(), t)                    // Inserts a reference of t before ite
 v.insert(v.begin(), n, t)                 // Inserts n references of t before iterator
 v.insert(v.begin(), v2.begin(), v2.end()) // Insert copies of elements in the range before iterator
 
-//ITERATORS
+// ITERATORS
 begin()   end()   cbegin()   cend()
 rbegin()  rend()  crbegin()  crend()
 
@@ -290,7 +290,7 @@ d.insert(d.begin(), t)                      // Inserts a reference of t before i
 d.insert(d.begin(), n, t)                   // Inserts n references of t before iterator
 d.insert(d.begin(), d2.begin(), d2.end())   // Insert copies of elements in the range before iterator
 
-//ITERATORS
+// ITERATORS
 begin()   end()   cbegin()   cend()
 rbegin()  rend()  crbegin()  crend()
 
@@ -321,7 +321,7 @@ l.erase(itr)             // Erases at particular place  erase_after() for forwar
 l.max_size()             // returns maximum possible size
 l.resize(x)              // resizes container for x units
 
-//LIST SPECIFIC METHODS
+// LIST SPECIFIC METHODS
 l.size()  // number of elements
 l.pop_back() // Deletes the element at the end of a list.
 l.push_back(x) // Adds an element to the end of a list.
@@ -334,13 +334,13 @@ l.insert(l.begin(), t) // Inserts a reference of t before iterator
 l.insert(l.begin(), n, t) // Inserts n references of t before iterator 
 l.insert(itr, l2.begin(), l2.end()) // Insert copies of elements in the range before itr
 
-//FORWARD LIST SPECIFIC METHODS
+// FORWARD LIST SPECIFIC METHODS
 fl.emplace_after(itr, obj, 0, "arg2") // Creates element at after itr and calls constructor with given arguments (varadic)
 fl.insert_after(fl.begin(), t) // Inserts a reference of t after iterator 
 fl.insert_after(fl.begin(), n, t) // Inserts n references of t after iterator
 fl.insert_after(itr, fl2.begin(), fl2.end()) // Insert copies of elements in the range after itr
 
-//ITERATORS
+// ITERATORS
 begin()   end()   cbegin()   cend()  // Both lists
 rbegin()  rend()  crbegin()  crend() // List only
 
@@ -409,12 +409,12 @@ s.erase(x);  // erase element
 s.erase(itr) // erase element at iterator 
 s.merge(s2)
 
-//ITERATORS
+// ITERATORS
 begin()   end()   cbegin()   cend()
 rbegin()  rend()  crbegin()  crend()
 
-//UNORDERED SET (HASH TABLE)
-//Organized into buckets depending on hash values to allow for fast access using keys
+// UNORDERED SET (HASH TABLE)
+// Organized into buckets depending on hash values to allow for fast access using keys
 std::unordered_set<int> us;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -441,7 +441,7 @@ std::swap(q, empty);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <stack> 
 
-stack<int> s; //LIFO stack
+stack<int> s; // LIFO stack
 
 s.empty()   // returns true/false if empty (faster than size)
 s.size()    // number of elements
@@ -591,7 +591,7 @@ std::distance(itr1, itr2) // returns int distance between 2 iterators, it2 must 
 std::next(itr) // undefined if itr is endl
 std::prev(itr) // undefined if itr is begin
 
-//ITERATING OVER CONTAINER
+// ITERATING OVER CONTAINER
 auto endItr = c.end(); // to prevent recomputing each iteration
 for (auto itr = c.begin(); itr != c; ++itr) {}
 
@@ -600,6 +600,26 @@ for (auto itr = c.rbegin(); itr != endItr; ++itr) {}
 
 for (auto& item : c) {}
 for (const auto& [key, value] : c) {}
+
+// ERASING AND ITERATING
+int index = 0;
+while (index < vec.size())
+{
+  if (/*should remove*/)
+  {
+    vec.erase(vec.begin() + index);
+    continue;
+  }
+  ++index;
+}
+for (auto itr = vec.begin(); itr != vec.end(); )
+{
+  if (/*should remove*/)
+  {
+    itr = vec.erase(itr);
+  }
+  ++itr;
+}
 
 //===============================================================================================================
 // CONTAINER ITERATORS
