@@ -133,6 +133,7 @@ typedef std::function<MyFnType> MyFn; // Typedef for std::function
 // If inside a class, may become friends to access/capture internals
 // Implicitly constexpr where possible (c++17)
 // Lamda creates a closure object which holds captured vars, byval captured 'const' unless 'mutable' used
+// If captures are large will dynamically allocate memory
 auto fn = []{}                             // Only need () with arguments, only need -> if multilined
 auto fn = [](int x) ->float {}             // specify return type
 auto fn = [&y](int x){}                    // capture only y by reference
