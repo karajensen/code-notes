@@ -73,7 +73,12 @@ copy /Y "c:\src\" "C:\dest\"        // Dest path must exist, copies all files on
 myFile.bat >C:\output.txt           // Output results to file, overwrites
 myFile.bat >>C:\output.txt          // Output results to file, appends
 
-WINDBG: http://www.windbg.info/doc/1-common-cmds.html
+WINDBG: 
+http://www.windbg.info/doc/1-common-cmds.html
+Open executable -> Set symbol path
+x /D /f AppName!myNamespace*
+x AppName!myNamespace::myFn
+ln 7FF639A50966
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MAC DEVELOPMENT
