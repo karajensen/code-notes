@@ -251,6 +251,10 @@ v.assign(v2.begin(), v2.end())            // assigns values from another contain
 v.insert(v.begin(), t)                    // Inserts a reference of t before iterator
 v.insert(v.begin(), n, t)                 // Inserts n references of t before iterator
 v.insert(v.begin(), v2.begin(), v2.end()) // Insert copies of elements in the range before iterator
+  
+// Move a vector into a vector, preallocates space in v1
+v1.insert(v1.end(), make_move_iterator(v2.begin()), make_move_iterator(v2.end()));
+v2.clear(); // v2 still has entries but moved, need to erase after
 
 // ITERATORS
 begin()   end()   cbegin()   cend()
