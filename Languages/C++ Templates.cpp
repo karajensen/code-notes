@@ -109,6 +109,12 @@ public:
         m_member(S())  // initialise templated member to default
     {
     } 
+  
+    // Template function inside template class
+    template <typename T>
+    template <typename U>
+    void MyClass<T>::fn() { }
+ 
 private:
     S m_member;
 };
