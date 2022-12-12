@@ -48,13 +48,51 @@ LESSER GENERAL PUBLIC LICENSE (LGPL)
 • ASP.NET applications
 • Web Services
 
-FUSLOGVW.EXE:
-Displays details for failed assembly binds. Allows diagnosing why .NET framework
-cannot locate an assembly at runtime (TypeLoadException)
-
-DEPENDS.EXE:
-Dependency walker for 32/64 bit modules (dll,exe) and builds heirarchical tree
-diagrams of all dependent modules, shows exported functions
+Dependency Walker: 
+- Shows dlls loaded for application
+- Allows solving dll hell issues where build paths point to multiple versions of the same dll
+ 
+Process Monitor (ProcMon): 
+- Filesystem, registry and process and thread activity
+ 
+Application Verifier: 
+- Picks up crashes that VS sometimes cannot
+ 
+Intel Inspector: 
+- More detailed memory crash and thread error detection
+- Use of unitialised and invalid memory
+- Wrong use of memory allocation calls
+- Memory growth and leak analysis
+- High CPU and memory cost to run
+- Threaded code doesn't run in parallel
+ 
+Sanitizers: 
+- Compilier checks for errors
+- Low CPU and memory cost to run
+- Threaded code runs in parallel
+- VS2019 16.7+ has support for Address Sanitizer (ASan)
+ 
+Sampling profilier: 
+- Take samples of location and create statistics to see hotspots and flamegraph
+- VTune, VS Sampling Profilier 
+ 
+Concurrency profilier: 
+- Check threading used
+- VTune, VS Concurrency Profilier (2019+)
+ 
+Memory profilier: 
+- Records heap memory use and number of allocations
+- MTuner, VS Memory Analyzer
+ 
+QML profilier:
+- Qt Creator
+ 
+System-wide profilier:
+- Event Tracing for Windows (ETW)
+- Easy to create and share trace files
+- Can see callstack for application if PDB files are kept
+- Can see if other processes interfering with application stability
+- Can see user mouse and key input
 
 CONSOLE COMMANDS:
 command & command                   // Execute both commands
@@ -297,6 +335,12 @@ WORKFLOW
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // VISUAL STUDIO
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- Alt+Shift+F11 allows stepping into chosen function
+- To see Qt types put natvis file in C:\...\Documents\Visual Studio 2019\Visualizers
+- /MD /MDd flags determine the runtime used (release or debug)
+- Application and any libraries built with it must use the same flag because 
+  runtime is a binary interface which allows accessing things like the filesystem
 
 VARIABLE WATCH
 str.c_str(),s8                       For utf-8 string str
