@@ -205,7 +205,7 @@ template <typename S> class ClassB {}; // signature of ClassB matches B
 ClassA<int, ClassB<double>> obj;
 
 // Template parameter with multiple parameters
-template <template <typename, typename> class B> class ClassA {} 
+template <template <typename, typename> class B> class ClassA {}
 template <typename T, typename S> ClassB {}; // signature of ClassB matches B
 ClassA<ClassB<double, int>> obj;
 
