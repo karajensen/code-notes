@@ -524,3 +524,19 @@ auto sum(Args... args)
 template<typename T> struct S { T val; };
 S(const char*) -> S<std::string>; // map S<> for string literals to S<std::string>
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// TEMPLATE TYPE CONVERSION
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template <typename T>
+struct ConvertType;
+template <>
+struct ConvertType<namespace1::MyClass1>
+{
+    using Type = namespace2::MyClass1;
+};
+template <>
+struct ConvertType<namespace1::MyClass2>
+{
+    using Type = namespace2::MyClass2;
+};
