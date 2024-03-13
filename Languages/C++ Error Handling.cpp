@@ -144,6 +144,28 @@ SEH EXCEPTIONS:
     - EH_UNWINDING gives the oppotunity to do any cleanup
 • There's no reliable way to distinguish fatal and non-fatal exceptions until chain is unwound
 *************************************************************************************************************/
+
+// RAISING EXCEPTIONS
+RaiseException(0xc0000374, 0, 0, NULL); // Exception code c0000374
+int* p1 = NULL;
+*p1 = 99; // Exception code c0000005
+
+// VECTORED EXCEPTION HANDLER
+LONG WINAPI customVectoredExceptionHandler(struct _EXCEPTION_POINTERS*)
+{
+    return EXCEPTION_CONTINUE_SEARCH;
+}
+AddVectoredExceptionHandler(0, customVectoredExceptionHandler);
+
+// UNHANDLED EXCEPTION FILTER
+LONG(WINAPI* previousExceptionHandler)(EXCEPTION_POINTERS*) = nullptr;
+LONG WINAPI customExceptionHandler(EXCEPTION_POINTERS* exceptionPointers)
+{
+    return previousExceptionHandler(exceptionPointers);
+}
+previousExceptionHandler = SetUnhandledExceptionFilter(customExceptionHandler);
+
+// TRY-EXCEPT EXCEPTION FILTER
 __try
 {
 }
