@@ -177,8 +177,9 @@ myList.length // item count in list
 myList[index] // access item
   
 // POINT
-// Auto converts to/from QPoint and QPoint
+// Auto converts to/from QPoint/QPointF
 // Attributes do not have signals, use onMyPointChanged instead
+// Has double precision reguardless if it comes from QPoint/QPointF
 property point myPoint: Qt.point(0, 20)
 property point myPoint: "0,20"
 myPoint.x / myPoint.y
