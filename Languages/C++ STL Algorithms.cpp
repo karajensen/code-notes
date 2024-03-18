@@ -167,7 +167,7 @@ O.erase(unique(S, E), O.end());
 O.erase("A"); //remove all with key for associative containers
 for(auto it = O.begin(); it != O.end(); ) //remove_if
 {
-    if(boolLam()){ O.erase(it++); }
+    if(boolLam()){ it = O.erase(it); }
     else { ++it; }
 }
 
