@@ -39,6 +39,7 @@ typeof value !== "undefined"     // Use === when comparing with undefined
 // CONVERSIONS
 myString = myInt.toString();
 myString = myInt.toLocaleString(Qt.locale(), 'f', 0)
+myString = myFloat.toFixed(3)    // Precision convert to string
 myString = myInt + "MyString";   // Auto converts and concatenates
 myInt = parseInt("8");           // Returns NaN if not a number
 myFloat = parseFloat("8.0");     // Returns NaN if not a number
