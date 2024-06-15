@@ -281,7 +281,7 @@ std::locale::global(systemLocale) // Returns previous set locale, sets locale us
 std::wcout.imbue(systemLocale); // Use locale in stream
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <future> <thread> <mutex>
+#include <future> <thread> <mutex> <condition_variable>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // THREADING
@@ -301,6 +301,25 @@ if(myMutex.try_lock()) // doesn't block if can't lock
 {
     myMutex.unlock()
 }
+
+// CONDITION VARIABLE
+// Used to block a thread until another thread notifies the variable
+std::condition_variable cv;
+std::mutex mutex;
+bool ready = false;
+
+// Main Thread
+std::thread worker(workerThread);
+std::lock_guard lock(mutex);
+ready = true;
+lock.unlock();
+cv.notify_one(); // Notifies one waiting thread
+cv.notify_all(); // Notifies all waiting threads
+
+// Worker Thread
+std::unique_lock lock(mutex);
+cv.wait(lock, []{ return ready; });
+lock.unlock();
 
 // FUTURE
 // Do function asynchronously and hold return type once finished
