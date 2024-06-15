@@ -74,6 +74,7 @@ catch(const std::exception& e)
 catch (...) //catches anything
 {
     eptr = std::current_exception(); // save exception in shared ptr
+    std::rethrow_exception(eptr);
 }
 
 // EXCEPTION SPECIFICATIONS
@@ -147,6 +148,7 @@ SEH EXCEPTIONS:
 
 // RAISING EXCEPTIONS
 RaiseException(0xc0000374, 0, 0, NULL); // Exception code c0000374
+RaiseException(EXCEPTION_ACCESS_VIOLATION, 0, 0, NULL); 
 int* p1 = NULL;
 *p1 = 99; // Exception code c0000005
 
@@ -166,93 +168,79 @@ LONG WINAPI customExceptionHandler(EXCEPTION_POINTERS* exceptionPointers)
 previousExceptionHandler = SetUnhandledExceptionFilter(customExceptionHandler);
 
 // TRY-EXCEPT EXCEPTION FILTER
-__try
-{
-}
-__except(ExceptionFilter(GetExceptionCode(), GetExceptionInformation()))
-{  
-}
-
-int ExceptionFilter(unsigned int code, struct _EXCEPTION_POINTERS* ep)
-{
-    static DWORD EH_UNWINDING = 0x00000002;
-    if (ep->ExceptionRecord->ExceptionFlags & EH_UNWINDING) 
+// Lambdas required for C2712 Cannot use __try in functions that require object unwinding
+[&]() {
+    __try
     {
-        // Do any cleanup
+        [&]() { /*do something*/ }();
     }
-    else
+    __except(customHandler(GetExceptionCode(), GetExceptionInformation()))
+    __except(EXCEPTION_EXECUTE_HANDLER) // Returns EXCEPTION_EXECUTE_HANDLER
+    {  
+    }
+}();
+
+int customHandler(unsigned int code, struct _EXCEPTION_POINTERS* ep)
+{
+    HMODULE hm;
+    ::GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, 
+        static_cast<LPCTSTR>(ep->ExceptionRecord->ExceptionAddress), &hm);
+    MODULEINFO mi;
+    ::GetModuleInformation(::GetCurrentProcess(), hm, &mi, sizeof(mi));
+    char modulePath[MAX_PATH];
+    ::GetModuleFileNameExA(::GetCurrentProcess(), hm, fn, MAX_PATH);
+
+    std::ostringstream oss;
+    oss << "SE " << seDescription(code) << " at address 0x" 
+        << std::hex << ep->ExceptionRecord->ExceptionAddress << std::dec 
+        << " inside " << modulePath << " loaded at base address 0x" 
+        << std::hex << mi.lpBaseOfDll << "\n"; 
+
+    if (code == EXCEPTION_ACCESS_VIOLATION || code == EXCEPTION_IN_PAGE_ERROR))
     {
-        auto info = InfoFromSE::information(code, ep);
-    }  
+        oss << "Invalid operation: " << opDescription(ep->ExceptionRecord->ExceptionInformation[0]) 
+            << " at address 0x" << std::hex << ep->ExceptionRecord->ExceptionInformation[1] << std::dec << "\n";
+    }
+
     return EXCEPTION_CONTINUE_SEARCH; // Continue to the next handler
+    return EXCEPTION_EXECUTE_HANDLER; // Don't continue
 }
 
-class InfoFromSE
+const char* opDescription(ULONG opcode)
 {
-public:
-   typedef unsigned int exception_code_t;
+    switch(opcode) 
+    {
+    case 0: return "read";
+    case 1: return "write";
+    case 8: return "user-mode data execution prevention (DEP) violation";
+    default: return "unknown";
+    }
+}
 
-   static const char* opDescription(const ULONG opcode)
-   {
-      switch(opcode) 
-      {
-      case 0: return "read";
-      case 1: return "write";
-      case 8: return "user-mode data execution prevention (DEP) violation";
-      default: return "unknown";
-      }
-   }
-
-   static const char* seDescription(const exception_code_t& code)
-   {
-      switch(code)
-      {
-         case EXCEPTION_ACCESS_VIOLATION:         return "EXCEPTION_ACCESS_VIOLATION";
-         case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:    return "EXCEPTION_ARRAY_BOUNDS_EXCEEDED";
-         case EXCEPTION_BREAKPOINT:               return "EXCEPTION_BREAKPOINT";
-         case EXCEPTION_DATATYPE_MISALIGNMENT:    return "EXCEPTION_DATATYPE_MISALIGNMENT";
-         case EXCEPTION_FLT_DENORMAL_OPERAND:     return "EXCEPTION_FLT_DENORMAL_OPERAND";
-         case EXCEPTION_FLT_DIVIDE_BY_ZERO:       return "EXCEPTION_FLT_DIVIDE_BY_ZERO";
-         case EXCEPTION_FLT_INEXACT_RESULT:       return "EXCEPTION_FLT_INEXACT_RESULT";
-         case EXCEPTION_FLT_INVALID_OPERATION:    return "EXCEPTION_FLT_INVALID_OPERATION";
-         case EXCEPTION_FLT_OVERFLOW:             return "EXCEPTION_FLT_OVERFLOW";
-         case EXCEPTION_FLT_STACK_CHECK:          return "EXCEPTION_FLT_STACK_CHECK";
-         case EXCEPTION_FLT_UNDERFLOW:            return "EXCEPTION_FLT_UNDERFLOW";
-         case EXCEPTION_ILLEGAL_INSTRUCTION:      return "EXCEPTION_ILLEGAL_INSTRUCTION";
-         case EXCEPTION_IN_PAGE_ERROR:            return "EXCEPTION_IN_PAGE_ERROR";
-         case EXCEPTION_INT_DIVIDE_BY_ZERO:       return "EXCEPTION_INT_DIVIDE_BY_ZERO";
-         case EXCEPTION_INT_OVERFLOW:             return "EXCEPTION_INT_OVERFLOW";
-         case EXCEPTION_INVALID_DISPOSITION:      return "EXCEPTION_INVALID_DISPOSITION";
-         case EXCEPTION_NONCONTINUABLE_EXCEPTION: return "EXCEPTION_NONCONTINUABLE_EXCEPTION";
-         case EXCEPTION_PRIV_INSTRUCTION:         return "EXCEPTION_PRIV_INSTRUCTION";
-         case EXCEPTION_SINGLE_STEP:              return "EXCEPTION_SINGLE_STEP";
-         case EXCEPTION_STACK_OVERFLOW:           return "EXCEPTION_STACK_OVERFLOW";
-         default: return "UNKNOWN EXCEPTION" ;
-      }
-   }
-
-   static std::string information(exception_code_t code, struct _EXCEPTION_POINTERS* ep)
-   {
-      HMODULE hm;
-      ::GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, 
-         static_cast<LPCTSTR>(ep->ExceptionRecord->ExceptionAddress), &hm);
-      MODULEINFO mi;
-      ::GetModuleInformation(::GetCurrentProcess(), hm, &mi, sizeof(mi));
-      char modulePath[MAX_PATH];
-      ::GetModuleFileNameExA(::GetCurrentProcess(), hm, fn, MAX_PATH);
-
-      std::ostringstream oss;
-      oss << "SE " << seDescription(code) << " at address 0x" 
-          << std::hex << ep->ExceptionRecord->ExceptionAddress << std::dec 
-          << " inside " << modulePath << " loaded at base address 0x" 
-          << std::hex << mi.lpBaseOfDll << "\n"; 
-
-      if (code == EXCEPTION_ACCESS_VIOLATION || code == EXCEPTION_IN_PAGE_ERROR))
-      {
-         oss << "Invalid operation: " << opDescription(ep->ExceptionRecord->ExceptionInformation[0]) 
-             << " at address 0x" << std::hex << ep->ExceptionRecord->ExceptionInformation[1] << std::dec << "\n";
-      }
-
-      return oss.str();
-   }
-};
+const char* seDescription(unsigned int code)
+{
+    switch(code)
+    {
+    case EXCEPTION_ACCESS_VIOLATION:         return "EXCEPTION_ACCESS_VIOLATION";
+    case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:    return "EXCEPTION_ARRAY_BOUNDS_EXCEEDED";
+    case EXCEPTION_BREAKPOINT:               return "EXCEPTION_BREAKPOINT";
+    case EXCEPTION_DATATYPE_MISALIGNMENT:    return "EXCEPTION_DATATYPE_MISALIGNMENT";
+    case EXCEPTION_FLT_DENORMAL_OPERAND:     return "EXCEPTION_FLT_DENORMAL_OPERAND";
+    case EXCEPTION_FLT_DIVIDE_BY_ZERO:       return "EXCEPTION_FLT_DIVIDE_BY_ZERO";
+    case EXCEPTION_FLT_INEXACT_RESULT:       return "EXCEPTION_FLT_INEXACT_RESULT";
+    case EXCEPTION_FLT_INVALID_OPERATION:    return "EXCEPTION_FLT_INVALID_OPERATION";
+    case EXCEPTION_FLT_OVERFLOW:             return "EXCEPTION_FLT_OVERFLOW";
+    case EXCEPTION_FLT_STACK_CHECK:          return "EXCEPTION_FLT_STACK_CHECK";
+    case EXCEPTION_FLT_UNDERFLOW:            return "EXCEPTION_FLT_UNDERFLOW";
+    case EXCEPTION_ILLEGAL_INSTRUCTION:      return "EXCEPTION_ILLEGAL_INSTRUCTION";
+    case EXCEPTION_IN_PAGE_ERROR:            return "EXCEPTION_IN_PAGE_ERROR";
+    case EXCEPTION_INT_DIVIDE_BY_ZERO:       return "EXCEPTION_INT_DIVIDE_BY_ZERO";
+    case EXCEPTION_INT_OVERFLOW:             return "EXCEPTION_INT_OVERFLOW";
+    case EXCEPTION_INVALID_DISPOSITION:      return "EXCEPTION_INVALID_DISPOSITION";
+    case EXCEPTION_NONCONTINUABLE_EXCEPTION: return "EXCEPTION_NONCONTINUABLE_EXCEPTION";
+    case EXCEPTION_PRIV_INSTRUCTION:         return "EXCEPTION_PRIV_INSTRUCTION";
+    case EXCEPTION_SINGLE_STEP:              return "EXCEPTION_SINGLE_STEP";
+    case EXCEPTION_STACK_OVERFLOW:           return "EXCEPTION_STACK_OVERFLOW";
+    default: return "UNKNOWN EXCEPTION" ;
+    }
+}
