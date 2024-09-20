@@ -174,6 +174,8 @@ std::temp_directory_path()  // The path for temporary files
 namespace fs = std::filesystem; 
 fs::path p;                 // Can be dir or file
 p = p / "data.txt"          // Combine dir with file
+p = std::string("path")     // Bad: on Windows only uses ANSI characters, even if std::string is utf8 and holds non-ANSI
+p = std::wstring("path")    // On Windows corrently sets path to use non-ANSI characters
 p.string()
 p.is_absolute()             // Whether absolute or relative
 p.is_relative()
