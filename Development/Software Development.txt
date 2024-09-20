@@ -56,7 +56,7 @@ Process Monitor (ProcMon):
 - Filesystem, registry and process and thread activity
  
 Application Verifier: 
-- Picks up crashes that VS sometimes cannot
+- Adds more verbose memory and crash checking at expense of speed
  
 Intel Inspector: 
 - More detailed memory crash and thread error detection
@@ -113,10 +113,7 @@ myFile.bat >>C:\output.txt          // Output results to file, appends
 
 WINDBG: 
 http://www.windbg.info/doc/1-common-cmds.html
-Open executable -> Set symbol path
-x /D /f AppName!myNamespace*
-x AppName!myNamespace::myFn
-ln 7FF639A50966
+Open executable -> Set symbol path, Set source path
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MAC DEVELOPMENT
@@ -335,12 +332,6 @@ WORKFLOW
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // VISUAL STUDIO
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-- Alt+Shift+F11 allows stepping into chosen function
-- To see Qt types put natvis file in C:\...\Documents\Visual Studio 2019\Visualizers
-- /MD /MDd flags determine the runtime used (release or debug)
-- Application and any libraries built with it must use the same flag because 
-  runtime is a binary interface which allows accessing things like the filesystem
 
 VARIABLE WATCH
 str.c_str(),s8                       For utf-8 string str
