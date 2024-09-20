@@ -278,6 +278,7 @@ inclusive_scan(S1, E1, S2) // same as partial_sum except non-associative contain
 // Requires #include <codecvt>
 str = wstring_convert<codecvt_utf8<wchar_t>>().to_bytes(wstr);
 wstr = wstring_convert<codecvt_utf8<wchar_t>>().from_bytes(str);
+wstr = std::wstring(str.begin(), str.end(); // Does not work for non-ANSI characters
     
 // STD::STRING TO CHAR*:
 std::string str = "test";
