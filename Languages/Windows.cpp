@@ -2,19 +2,20 @@
 // WINDOWS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/** Turn on intensive run time checks, useful for debugging heap corruptions */
-_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF );
+// By default C runtime functions (eg. filesystem) allow strings in the UTF-8 encoding
+// https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/setlocale-wsetlocale?view=msvc-170#utf-8-support
+setlocale(LC_ALL, ".UTF8")
 
-/** Get the executable Path */
+// Get the executable Path
 wchar_t exePath[MAX_PATH];
 ::GetModuleFileNameW(NULL, exePath, MAX_PATH);
 ::PathRemoveFileSpecW(exePath);
 
-/** Get the mouse position */
+// Get the mouse position
 POINT cursor;
 ::GetCursorPos(&cursor);
 
-/** Get short path from an existing file */
+// Get short path from an existing file
 auto length = GetShortPathNameW(longWPath.c_str(), NULL, 0);
 wchar_t* buffer = new wchar_t[length];
 length = GetShortPathNameW(longWPath.c_str(), buffer, length); 
@@ -22,8 +23,8 @@ if(length == 0){ /*show error*/ }
 std::wstring result(buffer);
 delete [] buffer;
 
-/** Get last error as string
-https://www.codeproject.com/Tips/479880/GetLastError-as-std-string */
+// Get last error as string
+// https://www.codeproject.com/Tips/479880/GetLastError-as-std-string
 DWORD error = GetLastError();
 if (error)
 {
