@@ -82,8 +82,9 @@ Item {
     property int myEnum: MyQml.MyEnum.ZERO // Must use QML file/component name
 }
 
-mySignal.connect(mySlot) // Connect signal and slot, forward optional, no auto disconnect, 'destroyed' cannot be connected to as blacklisted
+mySignal.connect(mySlot) // Connect signal and slot, forward optional, no auto disconnect
 mySignal.disconnect(mySlot) // Signals must be disconnected
+destroyed.connect(mySlot) // BAD 'destroyed' cannot be connected to as blacklisted
 myProp1 = value // Sets value of property and kills the binding- to not break, call setProperty on object in cpp
 myProp1 = Qt.binding(function() { return myProp2; }) // Set a binding on a property, will eval in-place as well
 item instanceof MyItem // Returns true if item is of type MyItem
