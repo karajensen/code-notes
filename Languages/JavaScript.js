@@ -3,13 +3,14 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // VARIABLES
-// Attempt to access an undeclared variable results in a ReferenceError exception
+// Attempt to access an undeclared (not existing) variable results in a ReferenceError exception
 // Type determined by assignment, undefined if not assigned, type changes with assigning
 // Undefined value converts to NaN when used as a number, false when used as a boolean
 value = true;         // Global variable
 var value = true;     // Hoisted local variable to whole function
 const value = true;   // Non-hoisted local variable to scope, must be initialized, can't be changed
 let value = true;     // Non-hoisted local variable to scope
+let value = true, value2 = 10   // Chaining assignments
 
 // HOISTING
 // Hoisted variable declarations (var) are implicitly moved to the top of the function/scope
@@ -26,6 +27,7 @@ x === y                          // equal value and equal type
 x !== y                          // not equal value or not equal type
 value !== null                   // Use === when comparing with null
 typeof value !== "undefined"     // Use === when comparing with undefined 
+typeof undeclaredValue           // Returns undefined
 !!x                              // Forces boolean type for object, 0/null/undefined becomes false
 
 // VARIABLE TYPES
