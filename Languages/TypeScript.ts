@@ -8,10 +8,29 @@
 • Use NVM for Windows Node.js and NPM management
 **************************************************************************************************************/
 
-let x: string = 'str';        // Define type of variable
+// VARIABLES
+let x: string;                     // Define type of variable  
+let x: boolean = true;
+let x: number = 100;               // All numbers are floating or bigint
+const x: number = "str";           // BAD Assigning string to number gives error (accepted in Javascript)
+let x = 10;                        // Auto adds the ': number' with first assignment
+
+// UNKNOWN
+let x: unknown;                    // Type not initially known but still requires type checking
+(x as number[]).length             // Requires calling methods with explicit type
+
+// ARRAYS
+let x: string[] = ['x', 'y']; 
+let x = [1, 2, 3, 'x'];            // Type set to array of numbers and strings only
 
 // OBJECTS
-// Define types of an object
+let obj: {};                       // Empty object
+let obj: {
+    str: string;
+    value: number;
+};
+
+// CLASSES
 interface MyObj {
     str: string,
     value: number
@@ -29,6 +48,11 @@ function fn() : MyObj {
   };
 }
 
+// ARROW FUNCTIONS
+let fn : (x: string) => string;
+fn = function (x: string) { return "str"};
+
+// TUPLE
 
 
 
