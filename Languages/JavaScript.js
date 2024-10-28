@@ -17,6 +17,7 @@ let value = true;     // Non-hoisted local variable to scope
 let value = true, value2 = 10;   // Chaining assignments
 
 // HOISTING
+// Allows using a variable or function before its declared
 // Hoisted variable declarations (var) are implicitly moved to the top of the function/scope
 // Variable initialization is not hoisted
 // Function declarations are hoisted with their body
@@ -119,7 +120,9 @@ fn({ a:"MyValue", b:0 });       // Using named arguments
 function fn(a, b) { return 0; }
 
 // FUNCTION EXPRESSIONS
-// Non-hoisted to top of scope, even with var, can take reference to variables in parent scope
+// Anonymous functions
+// Non-hoisted to top of scope, even with var
+// Can take reference to variables in parent scope
 var fn = function(a, b) { return 0; };
 
 // ARROW FUNCTIONS
