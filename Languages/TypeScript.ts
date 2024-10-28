@@ -49,13 +49,23 @@ let obj: {
     value: number;
 };
 
-// CLASSES
-interface MyObj {
-    str: string,
-    value: number
+// TYPE ALIAS
+type MyAlias = MyType;
+type MyObject = {  // Alias object
+  str: string;
+  x: number;
+};
+type MyConcat = MyObject & MyObject2;  // Combining types
+let myConcat: MyConcat = {
+    str: "str"
+    x: 10
+    x2: 20
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 function fn(x: number, y: number) : number { return x + y; } 
 function fn(x: number | string) { }      // Union as type
 function fn(x: MyEnum) { }               // Enum as type
@@ -73,19 +83,32 @@ function fn() : MyObj {
 let fn : (x: string) => string;
 fn = function (x: string) { return "str"};
 
-// TYPE ALIAS
-type MyAlias = MyType;
-type MyObject = {  // Alias object
-  str: string;
-  x: number;
-};
-type MyConcat = MyObject & MyObject2;  // Combining types
-let myConcat: MyConcat = {
-    str: "str"
-    x: 10
-    x2: 20
-};
+// REST PARAMETERS (VARIADIC ARGS)
+// A function has only one rest parameter
+// The rest parameter appear last in the parameter list
+// The type of the rest parameter is an array type
+function fn(...numbers: number[]) { numbers.forEach((num) => console.log(num)); }
+function fn(...numberAndStrings: (number | string)[] { } // Allow multiple types
 
+// FUNCTION OVERLOADING
+// Parameter count must be the same, optionals not part of count
+function fn(a: number, b: number): number;
+function fn(a: string, b: string, c?: number): string;
+function fn(a: any, b: any): any { } // Implementation uses any but only accepts types from overloads
+function fn2(a: number): number;
+function fn2(a: number, b?: string) { } // Implementation 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CLASSES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class MyClass {
+
+  // Function Overloading
+  count(): number;
+  count(target: number): number[];
+  count(target?: number): number | number[] { return 1 }
+}
 
 
 
