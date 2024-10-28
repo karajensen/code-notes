@@ -10,7 +10,7 @@ value = true;         // Global variable
 var value = true;     // Hoisted local variable to whole function
 const value = true;   // Non-hoisted local variable to scope, must be initialized, can't be changed
 let value = true;     // Non-hoisted local variable to scope
-let value = true, value2 = 10   // Chaining assignments
+let value = true, value2 = 10;   // Chaining assignments
 
 // HOISTING
 // Hoisted variable declarations (var) are implicitly moved to the top of the function/scope
@@ -28,6 +28,7 @@ x !== y                          // not equal value or not equal type
 value !== null                   // Use === when comparing with null
 typeof value !== "undefined"     // Use === when comparing with undefined 
 typeof undeclaredValue           // Returns undefined
+null == undefined                // Returns true
 !!x                              // Forces boolean type for object, 0/null/undefined becomes false
 
 // VARIABLE TYPES
@@ -37,15 +38,22 @@ typeof undeclaredValue           // Returns undefined
 "boolean"
 "number"
 "function"
+
+// BIGINT
+// Represents whole numbers that are larger than 2⁵³-1
+let value = 9007199254740991n;   // Add 'n' on end
     
 // CONVERSIONS
 myString = myInt.toString();
-myString = myInt.toLocaleString(Qt.locale(), 'f', 0)
-myString = myFloat.toFixed(3)    // Precision convert to string
+myString = myInt.toLocaleString(Qt.locale(), 'f', 0);
+myString = myFloat.toFixed(3);   // Precision convert to string
 myString = myInt + "MyString";   // Auto converts and concatenates
 myInt = parseInt("8");           // Returns NaN if not a number
 myFloat = parseFloat("8.0");     // Returns NaN if not a number
-myNumber = (+"8.0")              // Returns NaN if not a number
+myNumber = (+"8.0");             // Returns NaN if not a number
+myBoolean = Boolean(str);        // Returns true if non-empty string
+myBoolean = Boolean(value);      // Returns true if not 0 or NaN
+myBoolean = Boolean(obj);        // Returns true if not null or undefined
 
 // ENUMS
 MyEnum = {
@@ -173,6 +181,7 @@ function MyClass(value) { // Constructor Function
 MyClass.prototype = new MyBaseClass(); // Set prototype for all instances
 
 // OBJECTS
+// Collection of key-value properties
 var obj = new MyClass(2)
 var obj = new Object()
 var obj = {}                      // Empty object
@@ -182,7 +191,8 @@ var obj = { "x": 2, "y" : 1 }
 var obj = { fn: function() {} }
 var obj = { obj2: { x: 2 } }
 
-obj.x /*or*/ obj["x"]             // Access/create object properties, will create if doesn't exist
+obj.x                             // Access property, if doesn't exist will give undefined
+obj["x"] = 10;                    // Create object property
 obj = obj || "default value"      // If null use default value
 "x" in obj                        // If 'x' is a property in obj
 obj.hasOwnProperty("x")           // If 'x' is a property in obj, doesn't search prototype chain
@@ -252,7 +262,9 @@ if(result){ } // result will be null or 0 if cancel clicked
 
 // STRING
 // Each char is 16-bit unsigned integer (UTF-16) and immutable
+// Strings are immutable, characters cannot be changed
 str = new String("MyString");
+str[0] = 'S'                      // BAD Does not update the character
 str = "MyString\n";               // Allows using escaped characters
 str = `String Template`           // Allows using escaped characters and multiline
 str.charAt(index);                // Returns char at index
