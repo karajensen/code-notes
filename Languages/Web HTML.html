@@ -169,6 +169,10 @@ myElement.style.width;                    // access properties declared in <styl
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*************************************************************************************************************
 • Vue.js is a Javascript framework for UI built on top of HTML, CSS, and JavaScript
+• Can be inside .html file or in .vue file with:
+    - <template> where the HTML content is
+    - <script> for our Vue code
+    - <style> where we write the CSS styling
 **************************************************************************************************************/
 
 <!DOCTYPE html>
@@ -220,3 +224,29 @@ myElement.style.width;                    // access properties declared in <styl
   </script>
 </body>
 </html>
+
+// -----------------------------------------------------------------------------     
+// COMPONENTS
+// -----------------------------------------------------------------------------
+
+/* MyComponent.vue */
+<template>
+  <div>
+    <h2>{{ str }}</h2>
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      str: 'str'
+    }
+  }
+};
+</script>
+<style></style>
+
+/* App.vue */
+<div class="myClass">
+  <MyComponent></MyComponent>
+</div>
