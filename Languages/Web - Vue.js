@@ -11,6 +11,7 @@
 </head>
 <body>
   <div id="content" class="container">
+    // Template
     <h1>{{ pageTitle }}</h1>
   </div>
   <script>
@@ -20,7 +21,7 @@
             pageTitle: "My Title"
           };
       }
-    }).mount('#content')
+    }).mount('#content') // Mount in div element
   </script>
 </body>
 </html>
