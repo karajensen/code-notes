@@ -84,6 +84,7 @@ do { } while (bool)
 
 // SWITCH STATEMENTS
 // Uses strict === comparison
+// Continues through cases if break not used
 switch (myString) {
   case "one":
     break;
