@@ -188,24 +188,34 @@ myElement.style.width;                    // access properties declared in <styl
       :title="`This is some text ${myStr}`"  // Use in attribute string, requires `
       v-on:click="MyFunction()"              // Vue event handling
       @click="MyFunction()"                  // Same as v-on:click
-      @click.prevent="MyFunction()"          // Prevent navigating to href
+      @click.prevent="MyFunction()"          // Prevent default action when clicking (navigating to href)
       class="css-class"                      // Default class to apply
-      :class="{'css-class2': !myStr}"        // Bind class to change css for conditional expression
+      :class="{'css-class2': !value}"        // Bind class to change css for conditional expression, requires '' if name has -
+      :class="[`css-class${value}`]"         // Change class based on variable
+      :class="[value ? 'css-class' : 'css-class2']"
     >{{ myStr }}</a>
     // ------------------------------------------------------------------------------
   </div>
   <script>
     Vue.createApp({
+      // ----------------------------------------------------------------------------
+      // COMPUTED PROPERTY
+      computed: { // Properties computed dynamically
+      },
+      // ----------------------------------------------------------------------------
+      // APP STATE
       data() {
-        // --------------------------------------------------------------------------
-        // APP STATE
         return {
           myStr: "My String",
           myArr: ['One', 'Two'],
           myObjArr: [{ text: 'One', url: 'test.html' }]
         };
-        // --------------------------------------------------------------------------
-      }
+      },
+     // -----------------------------------------------------------------------------
+     // METHODS
+     methods: {
+         MyFun() { return 0; }
+     }  
     }).mount('#content') // Mount in div element with id 'content'
   </script>
 </body>
