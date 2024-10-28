@@ -207,6 +207,7 @@ var obj = { "x": 2, "y" : 1 }
 var obj = { fn: function() {} }
 var obj = { obj2: { x: 2 } }
 
+let {x, y} = obj;                 // Object destructuring (unpacking object)
 obj.x                             // Access property, if doesn't exist will give undefined
 obj.x = 10;                       // Assign or create if doesn't exist
 obj["x"] = 10;                    // Assign or create if doesn't exist
