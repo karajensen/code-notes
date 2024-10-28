@@ -2,10 +2,14 @@
 // JAVASCRIPT
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*************************************************************************************************************
+• Primitive values: null, undefined, boolean, number, string, bigint, references (no properties, stored on stack)
+• Reference values: object, function (properties, stored in heap)
+• Type determined by assignment, undefined if not assigned, type changes with assigning
+• Attempt to access an undeclared (not existing) variable results in a ReferenceError exception
+**************************************************************************************************************/
+
 // VARIABLES
-// Attempt to access an undeclared (not existing) variable results in a ReferenceError exception
-// Type determined by assignment, undefined if not assigned, type changes with assigning
-// Undefined value converts to NaN when used as a number, false when used as a boolean
 value = true;         // Global variable
 var value = true;     // Hoisted local variable to whole function
 const value = true;   // Non-hoisted local variable to scope, must be initialized, can't be changed
@@ -30,27 +34,31 @@ typeof value !== "undefined"     // Use === when comparing with undefined
 typeof undeclaredValue           // Returns undefined
 null == undefined                // Returns true
 !!x                              // Forces boolean type for object, 0/null/undefined becomes false
+x**2                             // Math.pow(x,2)
+x ? y : z                        // Ternary operator
 
-// VARIABLE TYPES
-"undefined"
-"object"
-"string" 
-"boolean"
-"number"
-"function"
+// NULLISH COALESCING OPERATOR
+// Nullish = null or undefined
+x ?? y                           // Returns y if x is null or undefined
+x ?? console.log("a")            // Short circuits: doesn't execute console.log if x is non-nullish
+x ??= y /*or*/  x ?? (x = y)     // Only assign y to x if x is null or undefined 
 
-// BIGINT
-// Represents whole numbers that are larger than 2⁵³-1
-let value = 9007199254740991n;   // Add 'n' on end
+// NUMBER
+let value = 0.01;                // Floating point numbers accurate up to 17 decimal places
+let value = 9007199254740991n;   // bigint represents whole numbers that are larger than 2⁵³-1
+let value = 0x1a;                // Hexadecimal
     
 // CONVERSIONS
-myString = myInt.toString();
+// Undefined value converts to NaN when used as a number, false when used as a boolean
+myString = myInt.toString();     // Doesn't work with undefined and null
+myString = String(myInt);
 myString = myInt.toLocaleString(Qt.locale(), 'f', 0);
 myString = myFloat.toFixed(3);   // Precision convert to string
 myString = myInt + "MyString";   // Auto converts and concatenates
 myInt = parseInt("8");           // Returns NaN if not a number
 myFloat = parseFloat("8.0");     // Returns NaN if not a number
-myNumber = (+"8.0");             // Returns NaN if not a number
+myNumber = +value                // Number(value), Returns NaN if not a number
+myNumber = -value                // -Number(value), Returns NaN if not a number
 myBoolean = Boolean(str);        // Returns true if non-empty string
 myBoolean = Boolean(value);      // Returns true if not 0 or NaN
 myBoolean = Boolean(obj);        // Returns true if not null or undefined
@@ -69,11 +77,12 @@ else if(!(myInt != n) || (myInt < n)) { }
 else { }
   
 // LOOPS
-for (i = 1; i <= n; i++) { break; }
-while(bool) { continue; }
+for (let i = 1; i <= n; i++) { break; }
+while (bool) { continue; }
 do { } while (bool)
 
 // SWITCH STATEMENTS
+// Uses strict === comparison
 switch (myString) {
   case "one":
     break;
@@ -171,14 +180,11 @@ class MyClass extends MyBaseClass { // MyBaseClass becomes prototype
     get getFn() { return this.x; }
     set setFn(value) { this.x = value; }
     static staticFn() { return 0; }
-}
 
-// FUNCTION CLASS
-function MyClass(value) { // Constructor Function
-    this.x = 0;
-    this.fn = function() { }
+    // Adds property with setter/getter, access like normal property 'obj.myProp'
+    get myProp() { return this.internalProp; }
+    set myProp(value) { this.internalProp = value; }
 }
-MyClass.prototype = new MyBaseClass(); // Set prototype for all instances
 
 // OBJECTS
 // Collection of key-value properties
@@ -192,7 +198,8 @@ var obj = { fn: function() {} }
 var obj = { obj2: { x: 2 } }
 
 obj.x                             // Access property, if doesn't exist will give undefined
-obj["x"] = 10;                    // Create object property
+obj.x = 10;                       // Assign or create if doesn't exist
+obj["x"] = 10;                    // Assign or create if doesn't exist
 obj = obj || "default value"      // If null use default value
 "x" in obj                        // If 'x' is a property in obj
 obj.hasOwnProperty("x")           // If 'x' is a property in obj, doesn't search prototype chain
@@ -209,11 +216,27 @@ Object.freeze(obj)                // Prevent obj from deleting or changing prope
 Object.isFrozen(obj)              // Whether freeze is on the object
 Object.seal(obj)                  // Prevent obj from deleting properties
 Object.isSealed(obj)              // Whether seal is on the object
+
+// READONLY PROPERTIES
+Object.defineProperty(obj, 'x', {
+    value: 10,
+    enumerable: true,
+    writable: false
+});
     
 // OBJECT DEEP COPY
 eval("x = 0;")                    // Evaluates JavaScript code represented as a string
 uneval(obj)                       // Creates a string representation of the source code of an Object
 eval(uneval(obj))                 // Make deep copy of object
+
+// OBJECT CLONE / EXTEND / MERGE
+// Spread operator: include all properties from object 1
+// Doesn't call any setters/getters, assigns directly
+const obj1 = { prop1: 10 };
+const obj2 = {
+    ...obj1, // Spread operator: include all properties from object 1
+    prop2: 'black'
+};
     
 // ITERATING PROPERTIES
 for (var key in obj) { var x = obj[key]; } // iterate over object property keys
@@ -232,6 +255,13 @@ Object.defineProperties(obj, {
     x: { enumerable: true, value: 2 },
     y: { enumerable: false, value: 1 },
 });
+
+// FUNCTION CLASS
+function MyClass(value) { // Constructor Function
+    this.x = 0;
+    this.fn = function() { }
+}
+MyClass.prototype = new MyBaseClass(); // Set prototype for all instances
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ERROR HANDLING
@@ -254,7 +284,7 @@ console.log("Message");
 console.error("Message");
 
 result = prompt("Question Text", "Default Answer");
-if(result){ } // result will be null or 0 if cancel clicked
+if (result){ } // result will be null or 0 if cancel clicked
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // STRINGS
@@ -305,11 +335,13 @@ m   // Multi-line search
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ARRAYS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   
-arr = new Array("a","b", 3.0)
-arr = Array("a","b", 3.0)
+
+// Can hold any type, automatically resize
+arr = new Array("a","b", 3.0)      // 'new' optional
+arr = Array()                      // Empty array
 arr = Array(2)                     // Creates array with size 2, not an item with value 2
 arr = Array.from(set)              // Create array from a set
+arr = []                           // Create empty array
 arr = ["a","b", 3.0,]              // Last , not needed and ignored
 arr = [, ,]                        // Adds undefined for the empty element between , , 
 arr[0] = "myEntry"                 // Creates new entry if key doesn't exist
@@ -334,7 +366,12 @@ arr.some(x => return true)         // Returns true if at least one item callback
 arr.reduce(total,x => return total+x)      // Iterates over all elements, returns single combined value
 arr.reduceRight(total,x => return total+x) // Iterates over all elements backwards, returns single combined value
 delete arr[i]                      // Only sets element to undefined, use splice instead to actually remove
-    
+
+// MERGING
+let rgb = [ 'red', 'green', 'blue' ];
+let cmyk = ['cyan', 'magenta', 'yellow', 'black'];
+let merge = [...rgb, ...cmyk]; // Object spread operator
+
 // SORTING
 // Sorts array ascending order in-place
 arr.sort()
