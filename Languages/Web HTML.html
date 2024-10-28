@@ -183,9 +183,14 @@ myElement.style.width;                    // access properties declared in <styl
     <p>{{ myArr[0] }}</p> 
     <p v-for="arr in myArr">{{ arr }}</p> // For loop over array, creates multiple <p> elements
     <p v-for="(arr, index) in myArr">{{ arr }}</p>
-    <a 
-      v-bind:href="{{ myStr }}", // Use in attribute, 'v-bind' optional
-      :title="`This is some text ${myStr}`" // Use in attribute string, requires `
+    <a       
+      v-bind:href="{{ myStr }}"              // Use in attribute, 'v-bind' optional
+      :title="`This is some text ${myStr}`"  // Use in attribute string, requires `
+      v-on:click="MyFunction()"              // Vue event handling
+      @click="MyFunction()"                  // Same as v-on:click
+      @click.prevent="MyFunction()"          // Prevent navigating to href
+      class="css-class"                      // Default class to apply
+      :class="{'css-class2': !myStr}"        // Bind class to change css for conditional expression
     >{{ myStr }}</a>
     // ------------------------------------------------------------------------------
   </div>
