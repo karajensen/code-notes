@@ -163,3 +163,45 @@ document.getElementsByTagName("MyElTag"); // Returns element by its tag or null 
 myElement.innerText                       // OR MyElementID.innerText
 myElement.bgColor;                        // can read/write all properties of element
 myElement.style.width;                    // access properties declared in <style></style> tags
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// VUE.JS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*************************************************************************************************************
+• Vue.js is a Javascript framework for UI built on top of HTML, CSS, and JavaScript
+**************************************************************************************************************/
+
+<!DOCTYPE html>
+<head>
+  <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+  <div id="content" class="container">
+    // ------------------------------------------------------------------------------
+    // TEMPLATE
+    <h1>{{ myStr }}</h1>
+    <p>{{ myArr[0] }}</p> 
+    <p v-for="arr in myArr">{{ arr }}</p> // For loop over array, creates multiple <p> elements
+    <p v-for="(arr, index) in myArr">{{ arr }}</p>
+    <a 
+      v-bind:href="{{ myStr }}", // Use in attribute, 'v-bind' optional
+      :title="`This is some text ${myStr}`" // Use in attribute string, requires `
+    >{{ myStr }}</a>
+    // ------------------------------------------------------------------------------
+  </div>
+  <script>
+    Vue.createApp({
+      data() {
+        // --------------------------------------------------------------------------
+        // APP STATE
+        return {
+          myStr: "My String",
+          myArr: ['One', 'Two'],
+          myObjArr: [{ text: 'One', url: 'test.html' }]
+        };
+        // --------------------------------------------------------------------------
+      }
+    }).mount('#content') // Mount in div element with id 'content'
+  </script>
+</body>
+</html>
