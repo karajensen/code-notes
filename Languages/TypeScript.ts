@@ -42,13 +42,6 @@ enum MyEnum {
 }
 MyEnum.One
 
-// OBJECTS
-let obj: {};   // Empty object
-let obj: {
-    str: string;
-    value: number;
-};
-
 // TYPE ALIAS
 type MyAlias = MyType;
 type MyObject = {  // Alias object
@@ -71,6 +64,7 @@ function fn(x: number | string) { }      // Union as type
 function fn(x: MyEnum) { }               // Enum as type
 function fn(x: number, y?: number) { }   // Optional parameter, if not set will be undefined, must be last in list
 function fn(x: number = 10) { }          // Default values, can be set in any order in list
+function fn({x, y}: MyObj) { }           // Object destructuring with type
 function fn() : void { }                 // Void for no return, implicit
 function fn() : MyObj {
   return {
@@ -99,18 +93,24 @@ function fn2(a: number): number;
 function fn2(a: number, b?: string) { } // Implementation 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// CLASSES
+// CLASSES / OBJECTS
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class MyClass {
-  x: string;                // Defaults to 'public'
-  protected y: number;      // Only access inside class and subclasses
-  private z: number;        // Only access inside class
-  readonly value: number;   // Const member
+  x: string;                                 // Defaults to 'public'
+  protected y: number;                       // Only access inside class and subclasses
+  private z: number;                         // Only access inside class
+  readonly value: number;                    // Const member
+  private static headcount: number = 0;      // Shared across all instances of class
 
   constructor(x: string) { this.x = ssn; }
   getFn(): string { return this.x }
   private getFn(): string { return this.x }
+  public static staticFn() { }
+
+  // Adds property with setter/getter, access like normal property 'obj.myProp'
+  get myProp() { return this.x }
+  set myProp(x: number) { this.x = x }
     
   // Function Overloading
   count(): number;
@@ -118,11 +118,117 @@ class MyClass {
   count(target?: number): number | number[] { return 1 }
 }
 
+// INHERITANCE
+class MyClass extends MyBaseClass { // MyBaseClass becomes prototype
+    constructor(value) {
+        super(value); // Call base constructor
+    }
 
+    // Override base function
+    myBaseFn(): string { 
+        return super.methodInParentClass();  // Call method from base class
+    }
+}
 
+// OBJECTS
+let obj: {};   // Empty object
+let obj: {
+    str: string;
+    value: number;
+};
 
+// ABSTRACT CLASSES
+// Define function without implemtation, requires implementation in derived classes
+abstract class MyAbstractClass {
+    abstract fn(): number; 
+}
+class MyClass extends MyAbstractClass {
+    fn(): number { return 1; }
+}
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// INTERFACES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Used to enforce types and contracts for objects, functions, classes
+interface MyInterface {
+    x: string;
+    y?: string;           // Optional, can be in any order
+    readonly z: number;   // Only modifiable when object first created
+}
+let value: MyInterface = {
+  x: 'x',
+  z: 10
+};
 
+// EXTEND INTERFACE
+interface MyInterface {
+    fn(): string;
+}
+interface MyInterface extends MyBaseInterface {
+    fn2(): boolean;
+}
+interface MyInterface extends A, B, C  {
+}
 
+// FUNCTION INTERFACES
+interface StringFormat {
+    (str: string, isUpper: boolean): string
+}
+let format: StringFormat = function (str: string, isUpper: boolean) {
+    return isUpper ? str.toLocaleUpperCase() : str.toLocaleLowerCase();
+};
 
+// CLASS INTERFACES
+interface MyInterface {
+  fn(): string;
+}
+class MyClass implements MyInterface {
+  constructor() {}
+  fn(): string { return ""; }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// GENERICS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// GENERIC FUNCTIONS
+function fn<T>(items: T[]): T { // Enforces passed in type and returned type are the same
+    return items[0];
+}
+fn<number>(arr); 
+fn<string>(arr); 
+fn<MyType>(arr); 
+
+function fn<T1, T2>(obj1: T1, obj2: T2) { }   // Multiple types
+function fn<T extends object>(T obj) { }      // Enforce specific types
+
+// Generic Keys
+function fn<T, K extends keyof T>(obj: T, key: K) {
+    return obj[key];
+}
+fn({ key: 'value' }, 'key');
+
+// GENERIC CLASSES
+class MyClass<T> { }
+class MyClass<T1,T2>{ }
+
+// GENERIC INTERFACES
+interface MyInterface<T> { 
+    x: T; 
+    fn(obj: T): void;
+}
+interface MyInterface<T1, T2> { }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MODULES
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// MyModule.ts
+export interface MyInterface { } // export will allow it to be used outside module
+export { MyInterface };          // export can be placed at bottom after types declared
+
+// App.ts
+import { MyInterface } from './MyInterface';
+import { MyInterface as MyAlias } from './MyInterface';
+import * from './MyInterface';  // Import everything
