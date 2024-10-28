@@ -103,7 +103,15 @@ function fn2(a: number, b?: string) { } // Implementation
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class MyClass {
+  x: string;                // Defaults to 'public'
+  protected y: number;      // Only access inside class and subclasses
+  private z: number;        // Only access inside class
+  readonly value: number;   // Const member
 
+  constructor(x: string) { this.x = ssn; }
+  getFn(): string { return this.x }
+  private getFn(): string { return this.x }
+    
   // Function Overloading
   count(): number;
   count(target: number): number[];
