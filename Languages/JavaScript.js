@@ -173,7 +173,6 @@ myFn();
 // OBJECT / CLASSES
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// CLASS
 class MyClass extends MyBaseClass { // MyBaseClass becomes prototype
     constructor(value) {
         super(value); // Call base constructor
@@ -188,6 +187,13 @@ class MyClass extends MyBaseClass { // MyBaseClass becomes prototype
     // Adds property with setter/getter, access like normal property 'obj.myProp'
     get myProp() { return this._myProp; }
     set myProp(value) { this._myProp = value; }
+}
+
+// INHERITANCE
+class MyClass extends MyBaseClass { // MyBaseClass becomes prototype
+    constructor(value) {
+        super(value); // Call base constructor
+    }
 }
 
 // OBJECTS
