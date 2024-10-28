@@ -51,6 +51,7 @@ WEB SERVICES
 // • Void element: cannot have content, requires no closing bracket (br, meta)
 
 <!DOCTYPE HTML>
+<!-- A comment -->
 <html> //begin page
   <head>
     <title>My Title</title>
@@ -58,78 +59,78 @@ WEB SERVICES
     <meta charset="utf-8"> // character set
   </head>
   <body>
-    
-    // ELEMENTS
-    // • Uses the CSS from the class
-    // • access element via 'this.property'
-    // • has a unique ID, must be unique
-    // • can set properties also through style
-    // • Can use single ' or double quotes " for properties
-    <MyElement class ="MyCustomClass" id = "MyID" style="visibility: hidden;"</MyElement>
-    <div></div>         // Container
-    <span></span>       // Formatting section
-    <section></section> // Page divisions
-    <article></article> // Section of the page that contains the main content
-    <aside></aside>     // Quotation, advertisement, sidebar
-    
-    // LINKS
-    <a href="mypage.html">MyLink</a>                       // Add Global styled Link to text
-    <a href="mypage.html" class ="MyClass">MyLink</a>      // Add Class styled Link to text
-    <a href="myPage.html" target="_blank">Open window</a>  // Open popup window
-
-    // IMAGES
-    <img src="/images/logo.jpg" height="50px" width="200px" border="0" alt="MyText"/>
-    <img src="myImage1.jpg" width="290" height="30" onmouseover="this.src='myImage1.jpg'" onmouseout="this.src='myImage2.jpg'" />
-
-    // TABLES
-    <table id="myTable" width="300" height="500" border="0" cellpadding="5">
-      <tr>
-        <td></td>
-      </tr>
-    </table>
-    
-    // MULTIMEDIA
-    <video src="myvideo.mp4" width="550" height="400"></video>
-    <audio src="mysong.mp3" controls="controls"></audio>
-    <button>My Button</button>
-
-    // TEXT
-    <sup></sup>       // superscript text:ᵃ
-    <sub></sub>       // subscript text:ₐ
-    <code></code>     // computer code
-    <p></p>           // paragraph
-    <strong></strong> // Bold 
-    <em></em>         // Italic
-    <small></small>   // small print
-    <br />            // Newline, void element
-    &nbsp;            // Space    
-    
-    // EVENTS
-    <div onload="MyFunction()"></div>
-    onabort       // interruption of image loading
-    onblur        // element loses focus
-    onchange      // change of data inside an element
-    onclick       // element is clicked
-    ondblclick    // element is double clicked
-    onerror       // when error in script or when loading image
-    onfocus       // when element gets focus
-    onkeydown     // pressing a key on keyboard
-    onkeypress    // pressing and releasing a key on the keyboard
-    onkeyup       // releasing a key on the keyboard
-    onload        // end of loading of element or image
-    onmousedown   // pressing mouse button
-    onmouseout    // mouse leaving element area
-    onmouseover   // mouse entering element area
-    onmouseup     // releasing mouse button
-    onmove        // window/frame moving
-    onresize      // changing size of window/frame
-    onselect      // selecting text
-    onunload      // leaving the page or closing the window
-    
   </body>
   <footer>
   </footer>
 </html>
+    
+// ELEMENTS
+// • Uses the CSS from the class
+// • access element via 'this.property'
+// • has a unique ID, must be unique
+// • can set properties also through style
+// • Can use single ' or double quotes " for properties
+<MyElement class ="MyCustomClass" id = "MyID" style="visibility: hidden;"</MyElement>
+<div></div>         // Container
+<span></span>       // Formatting section
+<section></section> // Page divisions
+<article></article> // Section of the page that contains the main content
+<aside></aside>     // Quotation, advertisement, sidebar
+
+// LINKS
+<a href="mypage.html">MyLink</a>                       // Add Global styled Link to text
+<a href="mypage.html" class ="MyClass">MyLink</a>      // Add Class styled Link to text
+<a href="myPage.html" target="_blank">Open window</a>  // Open popup window
+
+// IMAGES
+<img src="/images/logo.jpg" height="50px" width="200px" border="0" alt="MyText"/>
+<img src="myImage1.jpg" width="290" height="30" onmouseover="this.src='myImage1.jpg'" onmouseout="this.src='myImage2.jpg'" />
+
+// TABLES
+<table id="myTable" width="300" height="500" border="0" cellpadding="5">
+  <tr>
+    <td></td>
+  </tr>
+</table>
+
+// MULTIMEDIA
+<video src="myvideo.mp4" width="550" height="400"></video>
+<audio src="mysong.mp3" controls="controls"></audio>
+<button>My Button</button>
+
+// TEXT
+<sup></sup>       // superscript text:ᵃ
+<sub></sub>       // subscript text:ₐ
+<code></code>     // computer code
+<p></p>           // paragraph
+<strong></strong> // Bold 
+<em></em>         // Italic
+<small></small>   // small print
+<br />            // Newline, void element
+&nbsp;            // Space    
+
+// EVENTS
+<div onload="MyFunction()"></div>
+onabort       // interruption of image loading
+onblur        // element loses focus
+onchange      // change of data inside an element
+onclick       // element is clicked
+ondblclick    // element is double clicked
+onerror       // when error in script or when loading image
+onfocus       // when element gets focus
+onkeydown     // pressing a key on keyboard
+onkeypress    // pressing and releasing a key on the keyboard
+onkeyup       // releasing a key on the keyboard
+onload        // end of loading of element or image
+onmousedown   // pressing mouse button
+onmouseout    // mouse leaving element area
+onmouseover   // mouse entering element area
+onmouseup     // releasing mouse button
+onmove        // window/frame moving
+onresize      // changing size of window/frame
+onselect      // selecting text
+onunload      // leaving the page or closing the window
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // JAVASCRIPT
