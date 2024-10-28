@@ -186,8 +186,8 @@ class MyClass extends MyBaseClass { // MyBaseClass becomes prototype
     static staticFn() { return 0; }
 
     // Adds property with setter/getter, access like normal property 'obj.myProp'
-    get myProp() { return this.internalProp; }
-    set myProp(value) { this.internalProp = value; }
+    get myProp() { return this._myProp; }
+    set myProp(value) { this._myProp = value; }
 }
 
 // OBJECTS
