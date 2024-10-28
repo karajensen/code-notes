@@ -1,0 +1,108 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CASCADING STYLE SHEETS (CSS)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// INLINE STYLING: Add CSS to individual elements within style attribute
+<div class ="MyCustomClass"></div>
+
+// EXTERNAL STYLE: Uses <link> to connect to extenal .CSS
+<link rel="stylesheet" type="text/css" href="resumestyle.css" />
+
+// PAGE-LEVEL STYLE: Add CSS to entire page using <style> tag
+<style type="text/css"> div { font-family: Verdana; } </style>
+
+.MyCustomClass
+{
+  width: 888px;
+  height: 25px;
+  visibility: hidden; // visible
+  cursor: crosshair;
+  opacity: 1.0;
+
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 9pt;
+  font-style: normal; // italic
+  font-variant: normal;
+  font-weight: bold;  
+  line-height: 1;  
+  text-align: right; // center,left
+  text-transform: capitalize;
+  text-decoration: underline;
+ 
+  background-repeat: repeat-y; // no-repeat,repeat-x
+  background: #939393;
+  background-position: right top;
+  background-image: url("MyBground.PNG"); 
+  background-attachment: fixed; // fix bground to page
+
+  border: none;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #939393;
+  border-radius: 4px; // creates rounded corners
+  box-shadow: 5px 5px gray; // create drop shadow
+
+  margin: 0;
+  margin-top: 0;
+  margin-right: auto;
+  margin-bottom: 0px;
+  margin-left: auto;  
+  
+  padding: 0;
+  padding-right: 0px;
+  padding-left: 0px;  
+  
+  scrollbar-3dlight-color: #FFD700; 
+  scrollbar-arrow-color: #FFFF00;
+  scrollbar-base-color: #FF6347;
+  scrollbar-darkshadow-color: #FFA500;
+  scrollbar-face-color: #FF5522;
+  scrollbar-highlight-color: #FF69B4;
+  scrollbar-shadow-color: #FF00FF;
+  scrollbar-track-color: #FFAA22; 
+}
+
+// VERTICAL TEXT ALIGN
+#parent {display: table;}
+#child { display: table-cell; vertical-align: middle; }
+
+// CLASSES
+// comma for multiple classes or else seen as contextual selector
+.MyClass, div
+{ 
+    property:value; //declaration
+}
+
+//PSEUDO CLASS
+//elementSelector:pseudoclass
+a               { color: #e8e8eb; text-decoration: none; } // all links
+a:link          { color: #e8e8eb; text-decoration: none; }
+a:visited       { color: #e8e8eb; text-decoration: none; }
+a:hover         { color: #e8e8eb; text-decoration: none; }
+a:active        { color: #e8e8eb; text-decoration: none; }
+a:focus         { color: #e8e8eb; text-decoration: none; }
+a.MyClass:link  { color: #e8e8eb; text-decoration: none; }
+a img           { border: none; }
+
+// CONTEXTUAL SELECTORS
+// will only occur when <MyParent><MyChild>Testing</MyChild></MyParent>
+.MyParent .MyChild { }
+
+// UNIVERSAL SELECTORS
+// Apply properties to all elements
+* { }
+
+// ELEMENT CLASSES
+// Only be applied to a div <div class="MyClass"></div> and not a <span>
+div.MyClass { }
+
+// ID CLASSES
+// Only be applied to HTML elements with an id <div id="MyID"></div>
+// ID cannot start with number, cannot use symbols
+#MyID { }
+
+// CASCADING PROPERTY
+// Properties are kept and overwritten if needed
+<MyParent><MyChild>MyBold12Text</MyChild><MyParent> // will retain bold property
+.MyParent { font-size: 48px; font-weight: bold; }
+.MyChild { font-size: 12px; }
