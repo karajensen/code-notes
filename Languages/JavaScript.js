@@ -297,6 +297,7 @@ str = new String("MyString");
 str[0] = 'S'                      // BAD Does not update the character
 str = "MyString\n";               // Allows using escaped characters
 str = `String Template`           // Allows using escaped characters and multiline
+str = `Str ${value}`              // Inject variable into string, requires `
 str.charAt(index);                // Returns char at index
 str.toUpperCase();                // Returns upper case of string
 str.toLowerCase();                // Returns lower case of string
