@@ -16,6 +16,11 @@ let x: number = 100;               // All numbers are floating or bigint
 const x: number = "str";           // BAD Assigning string to number gives error (accepted in Javascript)
 let x = 10;                        // Auto adds the ': number' with first assignment
 
+// GLOBAL VARIABLES
+// Can be seen by whole app, requires 'var'
+declare var myGlobal: number                // For files without any import/exports, 'declare' optional
+declare global { var myGlobal: number; }    // For files with import/exports
+
 // UNKNOWN
 let x: unknown;                    // Type not initially known but still requires type checking
 (x as number[]).length             // Requires calling methods with explicit type
