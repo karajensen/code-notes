@@ -23,7 +23,7 @@ struct /* create a new struct */
 } m_struct;
 
 // AGGREGATES
-// NO: User constructors, virtual methods, private/protected non-static data members
+// NO: User constructors, virtual methods
 struct Aggregate
 {
 public:
@@ -40,8 +40,7 @@ private:
 Aggregate obj = {3}; // can be auto initialized with {}
 
 // PLAIN OLD DATA (POD)
-// NO: Constructors, virtual methods, private/protected non-static data members
-// NO: Destructors, assignment operators
+// NO: Constructors, virtual methods, Destructors, assignment operators
 struct POD
 {
 public:
