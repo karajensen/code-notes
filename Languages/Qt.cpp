@@ -512,8 +512,8 @@ timer.start(ms); // Starts or restarts the timer with a timeout interval of opti
 timer.stop(); // Stops the timer
 QTimer::singleShot(ms, fn); // Internally creates timer which calls slot when done
 QTimer::singleShot(ms, type, fn); // Internally creates timer which calls slot when done for TimerType Enum
-QTimer::singleShot(ms, receiver, SLOT(mySlot())); // Internally creates timer which calls slot when done
-connect(timer, SIGNAL(timeout()), fn); // timeout signal called when interval reached
+connect(timer, &Qtimer::timeout, fn); // timeout signal called when interval reached
+connect(obj, &MyObj::fn, &timer, qOverload<>(&QTimer::start)); // restart timer on condition
                                   
 // QTimer TimerType Enum
 Qt::PreciseTimer        // Try to keep millisecond accuracy
