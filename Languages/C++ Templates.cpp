@@ -41,6 +41,9 @@ const int& y = x;      Fn(y);     // T is const int&, param is const int& (x is 
 auto MyFn = [](auto x) -> int { return 2; } /*or*/
 decltype(auto) MyFn = [](auto x) { return 2; }
 
+// TEMPLATE LAMDAS
+[]<typename T>() { myFn<T>(); }
+
 //===============================================================================================================
 // AUTO TYPE DEDUCTION
 //===============================================================================================================
