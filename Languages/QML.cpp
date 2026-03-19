@@ -180,6 +180,8 @@ property var myArray: myObj.myQtContainerArray // Javascript modified array
 property list myList
 myList.length // item count in list
 myList[index] // access item
+myList1 = myList2 // takes reference (same as js arrays)
+myList1 = [...myList2] // takes deep copy
   
 // POINT
 // Auto converts to/from QPoint/QPointF
