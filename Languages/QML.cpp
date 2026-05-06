@@ -89,6 +89,12 @@ myProp1 = value // Sets value of property and kills the binding- to not break, c
 myProp1 = Qt.binding(function() { return myProp2; }) // Set a binding on a property, will eval in-place as well
 item instanceof MyItem // Returns true if item is of type MyItem
 
+// EXPLICIT TYPE ANNOTATIONS
+// Overloading not supported
+// Without types, worse performance
+function myIntFn(x: int) : int {}
+function myStrFn(x: string) : string {}
+
 // GLOBAL OBJECTS
 // MyGlobal.qml, Requires registering with QQmlEngine
 pragma Singleton
